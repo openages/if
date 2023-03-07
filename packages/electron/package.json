@@ -1,5 +1,5 @@
 {
-      "name": "@matrixages/if-electron",
+      "name": "@openages/if-electron",
       "version": "1.0.0",
       "description": "Electron shell for If.",
       "main": "dist/index.js",
