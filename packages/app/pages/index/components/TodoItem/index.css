@@ -8,6 +8,7 @@
 			font-size: 12px;
 			line-height: 1;
 			color: var(--color_text_grey);
+                  user-select: none;
 		}
 	}
 }
