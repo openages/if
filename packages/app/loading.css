@@ -1,0 +1,41 @@
+@keyframes light {
+	from {
+		clip: rect(96px 96px 96px 0);
+	}
+
+	to {
+		clip: rect(0 96px 96px 0);
+	}
+}
+
+
+._local {
+	&.dark {
+		:global {
+			.loading_wrap {
+				fill: white;
+			}
+		}
+	}
+
+	:global {
+		.loading_wrap {
+			width: 96px;
+			height: 96px;
+                  fill: var(--color_main);
+
+			.loading_icon {
+				&.top {
+					:local {
+						animation: light 1.2s infinite;
+						animation-direction: alternate-reverse;
+					}
+				}
+
+				&.bottom {
+					opacity: 0.3;
+				}
+			}
+		}
+	}
+}

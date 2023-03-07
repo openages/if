@@ -1,0 +1,3 @@
+[submodule "packages/knife"]
+	path = packages/knife
+	url = git@github.com:MatrixAges/knife.git

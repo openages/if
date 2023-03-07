@@ -1,0 +1,15 @@
+.clickable {
+	cursor: pointer;
+	transition: transform ease 0.12s;
+
+	&:active {
+		transform: scale(0.9);
+	}
+}
+
+.limited_content_wrap {
+      box-sizing: border-box;
+	max-width: var(--limited_width);
+	margin: 0 auto;
+	padding: 0 var(--limited_padding);
+}

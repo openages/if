@@ -1,0 +1,19 @@
+._local {
+	padding: 12px 0;
+	background-color: var(--color_bg);
+
+	:global {
+		.input_add_todo {
+			padding: 7px 12px;
+			border-radius: var(--radius);
+			outline: none;
+			box-shadow: none;
+			border: 1px dashed var(--color_border);
+			border-bottom: 2px solid var(--color_border);
+
+			&:focus {
+				border-color: var(--color_text);
+			}
+		}
+	}
+}

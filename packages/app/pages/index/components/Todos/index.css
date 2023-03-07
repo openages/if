@@ -1,0 +1,6 @@
+._local {
+      min-height: calc(100vh - 132px - 40px - 62px);
+      padding: 0 calc(var(--limited_padding) - 8px);
+	padding-top: 36px;
+	padding-bottom: 60px;
+}

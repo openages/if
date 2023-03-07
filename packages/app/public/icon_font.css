@@ -1,0 +1,83 @@
+@font-face {
+	font-weight: 400;
+	font-style: normal;
+	font-family: 'md_icon_outline';
+	src: local('md_icon'), url('./icon/md_icon_outline.otf') format('opentype');
+}
+
+@font-face {
+	font-weight: 400;
+	font-style: normal;
+	font-family: 'md_icon_filled';
+	src: local('md_icon'), url('./icon/md_icon_filled.ttf') format('truetype');
+}
+
+@font-face {
+	font-weight: 400;
+	font-style: normal;
+	font-family: 'fa_icon';
+	src: local('fa_icon'), url('./icon/fa_icon.woff') format('woff');
+}
+
+@font-face {
+	font-weight: 100;
+	font-style: normal;
+	font-family: 'Outfit';
+	src: local('Outfit'), url('./font/static/Outfit-Thin.ttf') format('truetype');
+}
+
+@font-face {
+	font-weight: 200;
+	font-style: normal;
+	font-family: 'Outfit';
+	src: local('Outfit'), url('./font/static/Outfit-ExtraLight.ttf') format('truetype');
+}
+
+@font-face {
+	font-weight: 300;
+	font-style: normal;
+	font-family: 'Outfit';
+	src: local('Outfit'), url('./font/static/Outfit-Light.ttf') format('truetype');
+}
+
+@font-face {
+	font-weight: 400;
+	font-style: normal;
+	font-family: 'Outfit';
+	src: local('Outfit'), url('./font/static/Outfit-Regular.ttf') format('truetype');
+}
+
+@font-face {
+	font-weight: 500;
+	font-style: normal;
+	font-family: 'Outfit';
+	src: local('Outfit'), url('./font/static/Outfit-Medium.ttf') format('truetype');
+}
+
+@font-face {
+	font-weight: 600;
+	font-style: normal;
+	font-family: 'Outfit';
+	src: local('Outfit'), url('./font/static/Outfit-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+	font-weight: 700;
+	font-style: normal;
+	font-family: 'Outfit';
+	src: local('Outfit'), url('./font/static/Outfit-Bold.ttf') format('truetype');
+}
+
+@font-face {
+	font-weight: 800;
+	font-style: normal;
+	font-family: 'Outfit';
+	src: local('Outfit'), url('./font/static/Outfit-ExtraBold.ttf') format('truetype');
+}
+
+@font-face {
+	font-weight: 900;
+	font-style: normal;
+	font-family: 'Outfit';
+	src: local('Outfit'), url('./font/static/Outfit-Black.ttf') format('truetype');
+}

@@ -1,0 +1,39 @@
+._local {
+      padding-top: 36px;
+      padding-bottom: 24px;
+      
+	--right_width: 180px;
+
+	:global {
+		.left_wrap {
+                  width: calc(100% - var(--right_width));
+
+			.name {
+				font-size: 24px;
+				font-weight: 500;
+				line-height: 1;
+			}
+
+			.desc {
+				margin-top: 12px;
+                        font-size: 12px;
+				color: var(--color_text_grey);
+			}
+		}
+
+		.right_wrap {
+			width: var(--right_width);
+
+                  .icon_wrap{
+                        width: 30px;
+                        height: 30px;
+                        border-radius: var(--radius);
+                        border: 1px solid var(--color_border_light);
+
+                        &:hover{
+                              border-color: var(--color_text);
+                        }
+                  }
+		}
+	}
+}

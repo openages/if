@@ -1,0 +1,9 @@
+.container {
+	width: calc(100% - var(--sidebar_width) - var(--dirtree_width));
+	margin-left: calc(var(--sidebar_width) + var(--dirtree_width));
+
+	&.no_dirtree {
+		width: calc(100% - var(--sidebar_width));
+		margin-left: var(--sidebar_width);
+	}
+}

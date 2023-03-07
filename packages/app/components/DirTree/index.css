@@ -1,0 +1,15 @@
+._local {
+	position: fixed;
+	left: var(--sidebar_width);
+	width: var(--dirtree_width);
+	padding-bottom: 60px;
+	border-right: 1px solid var(--color_border_light);
+	overflow-x: hidden;
+	overflow-y: scroll;
+
+	:global {
+		.dir_tree_wrap {
+			padding: 9px 0;
+		}
+	}
+}

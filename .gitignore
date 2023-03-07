@@ -1,0 +1,27 @@
+# dependencies
+node_modules
+npm-debug.log*
+package-lock.json
+
+# production
+**/dist
+
+# misc
+.DS_Store
+.idea
+.vscode
+.svn
+.swc
+
+# umi
+.umi
+.umi-production
+
+# 一些临时文件
+**/.tmp
+**/.umi
+
+# Electron 构建文件
+release
+src/main/bundle.js
+src/main/bundle.js.map

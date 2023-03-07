@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"target": "ES2022",
+		"module": "ESNext",
+		"skipLibCheck": true,
+		"lib": ["ESNEXT"],
+		"moduleResolution": "Node",
+		"strict": true,
+		"baseUrl": ".",
+		"esModuleInterop": true,
+		"paths": { "Root/*": ["./*"], "@/*": ["./src/*"] },
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true
+	},
+	"include": ["src"]
+}

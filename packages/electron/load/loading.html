@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+      <head>
+            <meta charset="UTF-8" />
+            <meta
+                  name="viewport"
+                  content="width=device-width, initial-scale=1.0"
+            />
+            <meta
+                  http-equiv="X-UA-Compatible"
+                  content="ie=edge"
+            />
+            <title>IF</title>
+            <style>
+                  ._loading_wrap {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        z-index: 1000;
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: white;
+                        overflow: hidden;
+                        -webkit-app-region: drag;
+                  }
+
+                  ._loading_wrap .logo {
+                        display: flex;
+                        transform: scale(0.48);
+                  }
+
+                  ._loading_wrap .part {
+                        width: 40px;
+                        height: 40px;
+                        background-color: #ff0000;
+                        margin-bottom: 2px;
+                  }
+
+                  ._loading_wrap .part.last {
+                        margin-bottom: 0;
+                  }
+
+                  ._loading_wrap .letter_i {
+                        margin-right: 40px;
+                  }
+
+                  ._loading_wrap .letter_f .row {
+                        display: flex;
+                  }
+
+                  ._loading_wrap .letter_f .row .part {
+                        margin-right: 2px;
+                  }
+            </style>
+      </head>
+
+      <body>
+            <div class='_loading_wrap'>
+                  <div class='logo'>
+                        <div class='letter_i'>
+                              <div class='part'></div>
+                              <div class='part'></div>
+                              <div class='part'></div>
+                              <div class='part'></div>
+                              <div class='part last'></div>
+                        </div>
+                        <div class='letter_f'>
+                              <div class='row'>
+                                    <div class='part'></div>
+                                    <div class='part'></div>
+                                    <div class='part'></div>
+                              </div>
+                              <div class='part'></div>
+                              <div class='row'>
+                                    <div class='part'></div>
+                                    <div class='part'></div>
+                                    <div class='part'></div>
+                              </div>
+                              <div class='part'></div>
+                              <div class='part last'></div>
+                        </div>
+                  </div>
+            </div>
+      </body>
+
+</html>

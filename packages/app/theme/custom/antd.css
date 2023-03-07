@@ -1,0 +1,7 @@
+/* Tooltip */
+.if-tooltip {
+	&-inner {
+            display: flex;
+            align-items: center;
+	}
+}

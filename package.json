@@ -1,0 +1,31 @@
+{
+      "private": true,
+      "license": "AGPL-3.0",
+      "homepage": "https://if.matrixages.com",
+      "scripts": {
+            "dev": "turbo run dev",
+            "build": "turbo run build",
+            "dev:app": "turbo run dev --filter=app",
+            "build:app": "turbo run build --filter=app",
+            "submodule:init": "git submodule update --init --recursive",
+            "submodule:update": "git submodule sync && git submodule update --recursive --remote --merge",
+            "prettier": "prettier --parser=typescript --write \"**/*.ts?(x)\""
+      },
+      "gitHooks": {
+            "pre-commit": "lint-staged --allow-empty"
+      },
+      "lint-staged": {
+            "*.{js,jsx,less,md,json}": [
+                  "prettier --write"
+            ],
+            "*.ts?(x)": [
+                  "prettier --parser=typescript --write"
+            ]
+      },
+      "devDependencies": {
+            "lint-staged": "^13.1.2",
+            "prettier": "^2.8.4",
+            "turbo": "^1.8.3",
+            "yorkie": "^2.0.0"
+      }
+}
