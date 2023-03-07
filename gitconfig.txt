@@ -1,0 +1,6 @@
+git config --local credential.helper store
+git config user.name "whatreal" --local    
+git config user.email "openages@163.com" --local
+
+# check git local
+git config --list --local  
