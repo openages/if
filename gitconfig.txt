@@ -1,2 +1,2 @@
-# 添加另一个ssh key的验证信息
-ssh-add ~/.ssh/whatreal/id_rsa
+# check git local qqq+x13439882350j
+git config --list --local  
