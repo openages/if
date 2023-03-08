@@ -26,8 +26,8 @@ export default [
 		checked: true
 	},
 	{
-		title: 'plan',
-		path: '/plan',
+		title: 'powers',
+		path: '/powers',
 		checked: true
 	}
 ] as Array<{ title: App.MuduleType; path: string; checked: boolean; readonly?: boolean }>

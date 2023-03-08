@@ -1,4 +1,7 @@
-import { App } from '@/types'
+import type { App } from '@/types'
+import type { MessageInstance } from 'antd/es/message/interface'
+import type { ModalStaticFunctions } from 'antd/es/modal/confirm'
+import type { NotificationInstance } from 'antd/es/notification/interface'
 
 type $CX = (...args: Array<string | boolean | null | undefined>) => string
 
@@ -8,16 +11,22 @@ declare global {
 			type: 'electron'
 			platform: 'android' | 'darwin' | 'linux' | 'win32'
 			stopLoading: () => void
-		}
-
+            }
+            
+		$cx: $CX
 		$app: $App
 		$l: App.Locales
-		$cx: $CX
-	}
-
+		$message: MessageInstance
+		$notification: NotificationInstance
+		$modal: Omit<ModalStaticFunctions, 'warn'>
+      }
+      
+	let $cx: $CX
 	let $app: $App
 	let $l: App.Locales
-	let $cx: $CX
+	let $message: MessageInstance
+	let $notification: NotificationInstance
+	let $modal: Omit<ModalStaticFunctions, 'warn'>
 }
 
 export {}

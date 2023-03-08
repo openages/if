@@ -34,8 +34,8 @@ const Index = () => {
 				counts: 30
 			},
 			{
-				id: 'plan',
-				title: 'Plan',
+				id: 'powers',
+				title: 'Powers',
 				type: 'file',
 				counts: 893
 			},
@@ -45,8 +45,8 @@ const Index = () => {
 				type: 'dir',
 				children: [
 					{
-						id: 'plan',
-						title: 'Plan',
+						id: 'powers',
+						title: 'Powers',
 						type: 'file',
 						counts: 10
 					},
@@ -58,7 +58,7 @@ const Index = () => {
 					},
 					{
 						id: 'trash',
-						title: 'Plan',
+						title: 'Powers',
 						type: 'file',
 						counts: 0
 					},
@@ -76,8 +76,8 @@ const Index = () => {
 				type: 'dir',
 				children: [
 					{
-						id: 'plan',
-						title: 'Plan',
+						id: 'powers',
+						title: 'Powers',
 						type: 'file',
 						counts: 10
 					},
@@ -89,7 +89,7 @@ const Index = () => {
 					},
 					{
 						id: 'trash',
-						title: 'Plan',
+						title: 'Powers',
 						type: 'file',
 						counts: 0
 					},

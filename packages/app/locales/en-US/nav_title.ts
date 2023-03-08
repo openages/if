@@ -3,7 +3,7 @@ export default {
 	note: 'Note',
 	schedule: 'Schedule',
 	table: 'Table',
-	plan: 'Plan',
+	powers: 'Powers',
 
 	collaboration: 'Collaboration',
 	setting: 'Setting',

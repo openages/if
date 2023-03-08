@@ -3,7 +3,7 @@ export default {
 	note: '笔记',
 	schedule: '安排',
 	table: '表格',
-	plan: '规划',
+	powers: '超能力',
 
 	collaboration: '协同',
 	setting: '设置',

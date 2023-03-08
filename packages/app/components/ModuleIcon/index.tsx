@@ -26,7 +26,7 @@ const Index = (props: IProps) => {
 		.with('note', () => <Notebook {...icon_props} />)
 		.with('schedule', () => <CalendarCheck {...icon_props} />)
 		.with('table', () => <Table {...icon_props} />)
-		.with('plan', () => <DiamondsFour {...icon_props} />)
+		.with('powers', () => <DiamondsFour {...icon_props} />)
 
 		.with('kanban', () => <Kanban {...icon_props} />)
 		.with('flow', () => <Path {...icon_props} />)

@@ -5,7 +5,7 @@ import Avatar from 'react-nice-avatar'
 
 import { bottom_items } from '@/appdata'
 import { LogoWithBg, ModuleIcon } from '@/components'
-import { useLocale } from '@/hooks'
+import { useAntdApp, useLocale } from '@/hooks'
 import { is_mac_electron } from '@/utils'
 import { NavLink } from '@umijs/max'
 
@@ -15,7 +15,9 @@ import type { IPropsSidebar } from '../../types'
 
 const Index = (props: IPropsSidebar) => {
 	const { theme, nav_items, show_bar_title, avatar } = props
-	const l = useLocale()
+      const l = useLocale()
+      
+	useAntdApp()
 
 	const icon_weight = useMemo(() => (theme === 'light' ? 'duotone' : 'bold'), [theme])
 

@@ -1,7 +1,7 @@
-import { ConfigProvider } from 'antd'
+import { App, ConfigProvider } from 'antd'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IconContext } from 'react-icons'
 import { container } from 'tsyringe'
 
@@ -12,6 +12,7 @@ import Sidebar from './component/Sidebar'
 import { useLayout, useLocales, useTheme } from './hooks'
 import styles from './index.css'
 
+import type { AppProps } from 'antd'
 import type { ConfigProviderProps } from 'antd/es/config-provider'
 import type { IPropsSidebar } from './types'
 
@@ -37,18 +38,24 @@ const Index = () => {
 		getPopupContainer: (n) => n?.parentElement!
 	}
 
+	const props_app: AppProps = {
+		prefixCls: 'if'
+	}
+
 	return (
 		<ConfigProvider {...props_config_provider}>
-			<GlobalContext.Provider value={global}>
-				<IconContext.Provider value={{ className: 'ricon', style: { verticalAlign: 'middle' } }}>
-					<div className='w_100 border_box flex'>
-						<Sidebar {...props_sidebar} />
-						<div className={$cx(styles.container, no_dirtree && styles.no_dirtree)}>
-							<Outlet />
+			<App {...props_app}>
+				<GlobalContext.Provider value={global}>
+					<IconContext.Provider value={{ className: 'ricon', style: { verticalAlign: 'middle' } }}>
+						<div className='w_100 border_box flex'>
+							<Sidebar {...props_sidebar} />
+							<div className={$cx(styles.container, no_dirtree && styles.no_dirtree)}>
+								<Outlet />
+							</div>
 						</div>
-					</div>
-				</IconContext.Provider>
-			</GlobalContext.Provider>
+					</IconContext.Provider>
+				</GlobalContext.Provider>
+			</App>
 		</ConfigProvider>
 	)
 }

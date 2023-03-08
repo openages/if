@@ -8,10 +8,7 @@ import { useDragWidth } from '@/hooks'
 
 import styles from './index.css'
 
-import type { IPropsDragLine } from '../../types'
-
-const Index = (props: IPropsDragLine) => {
-	const {} = props
+const Index = () => {
 	const ref = useRef<HTMLDivElement>(null)
 	const global = useGlobal()
 	const draging = useDragWidth(ref, '--dirtree_width', global.layout.setDirTreeWidth)

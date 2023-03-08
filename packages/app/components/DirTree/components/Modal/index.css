@@ -1,10 +1,7 @@
 ._local {
-	padding: 18px 0;
-	background-color: var(--color_bg);
-
 	:global {
-		.input_add_todo {
-                  padding: 7px 12px;
+		.input_title {
+			margin: 6px 0;
                   border-bottom-width: 2px;
                   border-bottom-style: solid;
 		}
