@@ -24,12 +24,12 @@ const Index = (props: IPropsTodoItem) => {
 	return (
 		<div
 			className={$cx(
-				'w_100 border_box flex align_start cursor_point transition_normal',
+				'w_100 border_box flex align_start transition_normal',
 				styles.todo_item,
 				styles[props.status]
 			)}
 		>
-			<div className='action_wrap flex justify_center align_center clickable'>
+			<div className='action_wrap flex justify_center align_center cursor_point clickable'>
 				<If condition={props.status === 'unchecked'}>
 					<Then>
 						<Square size={16} />
@@ -39,10 +39,7 @@ const Index = (props: IPropsTodoItem) => {
 					</Else>
 				</If>
 			</div>
-			<span className='text'>{props.text}</span>
-			<div className='detail_icon_wrap flex justify_center align_center clickable'>
-				<ClipboardText size={18} weight='bold' />
-			</div>
+			<span className='text cursor_point'>{props.text}</span>
 		</div>
 	)
 }

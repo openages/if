@@ -16,12 +16,12 @@ const Index = (props: IPropsHeader) => {
 			</div>
 			<div className='right_wrap flex justify_end align_center'>
 				<Tooltip title='参考资料' placement='top'>
-					<div className='icon_wrap flex justify_center align_center cursor_point transition_normal mr_12'>
+					<div className='icon_wrap flex justify_center align_center cursor_point clickable mr_12'>
 						<Files size={18}></Files>
 					</div>
 				</Tooltip>
 				<Tooltip title='归档' placement='top'>
-					<div className='icon_wrap flex justify_center align_center cursor_point transition_normal'>
+					<div className='icon_wrap flex justify_center align_center cursor_point clickable'>
 						<ArchiveBox size={18}></ArchiveBox>
 					</div>
 				</Tooltip>

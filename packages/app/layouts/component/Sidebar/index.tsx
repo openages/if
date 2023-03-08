@@ -22,7 +22,7 @@ const Index = (props: IPropsSidebar) => {
 	return (
 		<div
 			className={$cx(
-				'fixed h_100vh border_box flex flex_column',
+				'fixed h_100vh border_box flex flex_column z_index_1000',
 				styles._local,
 				is_mac_electron && styles.is_mac_electron
 			)}

@@ -10,6 +10,7 @@
 			.tab_item_wrap {
                         margin-right: 15px;
 				padding: 12px 0;
+                        padding-bottom: 11px;
 				border-bottom: 2px solid transparent;
 
                         &:hover{

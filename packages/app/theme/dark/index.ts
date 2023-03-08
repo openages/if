@@ -10,5 +10,6 @@ export default {
 	color_border: '#404046',
 	color_border_light: 'rgba(255, 255, 255, 0.02)',
 	color_border_soft: 'rgba(255, 255, 255, 0.01)',
-	shadow: '0 0 2px #333'
+	shadow: '0 0 2px #333',
+	shadow_right: '1px 0 1px #333',
 }

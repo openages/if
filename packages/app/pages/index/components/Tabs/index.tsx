@@ -6,7 +6,7 @@ const Index = (props: IPropsTabs) => {
 	const { tabs, active_tab_index, setActiveTabIndex } = props
 
 	return (
-		<div className={$cx('w_100 sticky top_0', styles._local)}>
+		<div className={$cx('w_100 sticky top_0 z_index_10', styles._local)}>
 			<div className='tabs_wrap limited_content_wrap flex'>
 				{tabs.map((item, index) => (
 					<div
