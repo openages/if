@@ -4,17 +4,16 @@ import { useState } from 'react'
 import { getComputedStyleValue } from '@/utils'
 
 import type { MouseEvent, RefObject } from 'react'
-import type { GlobalModel } from '@/context/app'
 
-export default (global: GlobalModel, ref: RefObject<HTMLDivElement>) => {
+export default (ref: RefObject<HTMLDivElement>, css_var: string, setWidth: (v: number) => void) => {
 	const [draging, setDraging] = useState(false)
 
 	const setDirTreeWidth = useMemoizedFn((e: MouseEvent) => {
 		if (!draging) return
 
-		const dirtree_width = getComputedStyleValue(document.documentElement, '--dirtree_width')
+		const width = getComputedStyleValue(document.documentElement, css_var)
 
-		global.layout.setDirTreeWidth(dirtree_width + e.movementX)
+		setWidth(width + e.movementX)
 	})
 
 	useEventListener('mousedown', () => setDraging(!draging), { target: ref })

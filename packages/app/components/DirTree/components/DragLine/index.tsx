@@ -4,8 +4,8 @@ import { useRef } from 'react'
 import { Else, If, Then } from 'react-if'
 
 import { useGlobal } from '@/context/app'
+import { useDragWidth } from '@/hooks'
 
-import { useDragDirTreeWidth } from '../../hooks'
 import styles from './index.css'
 
 import type { IPropsDragLine } from '../../types'
@@ -14,8 +14,7 @@ const Index = (props: IPropsDragLine) => {
 	const {} = props
 	const ref = useRef<HTMLDivElement>(null)
 	const global = useGlobal()
-
-	const draging = useDragDirTreeWidth(global, ref)
+	const draging = useDragWidth(ref, '--dirtree_width', global.layout.setDirTreeWidth)
 
 	return (
 		<div
