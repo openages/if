@@ -20,7 +20,8 @@ export const conventionRoutes = {
 		/model\//,
 		/types\//,
 		/hooks\//,
-		/locales\//,
+            /locales\//,
+            /services\//,
 		/_(.*)$/
 	]
 }
