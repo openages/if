@@ -21,8 +21,6 @@ const Index = (props: IPropsSidebar) => {
 
 	const icon_weight = useMemo(() => (theme === 'light' ? 'duotone' : 'regular'), [theme])
 
-	console.log(theme, icon_weight)
-
 	return (
 		<div
 			className={$cx(
