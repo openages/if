@@ -1,4 +1,4 @@
-import { CirclesThreePlus, FolderMinus, ListPlus } from 'phosphor-react'
+import { CirclesThreePlus, FolderMinus, ListPlus } from '@phosphor-icons/react'
 
 import styles from './index.css'
 

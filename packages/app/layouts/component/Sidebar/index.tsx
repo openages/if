@@ -15,11 +15,13 @@ import type { IPropsSidebar } from '../../types'
 
 const Index = (props: IPropsSidebar) => {
 	const { theme, nav_items, show_bar_title, avatar } = props
-      const l = useLocale()
-      
+	const l = useLocale()
+
 	useAntdApp()
 
-	const icon_weight = useMemo(() => (theme === 'light' ? 'duotone' : 'bold'), [theme])
+	const icon_weight = useMemo(() => (theme === 'light' ? 'duotone' : 'regular'), [theme])
+
+	console.log(theme, icon_weight)
 
 	return (
 		<div
@@ -32,7 +34,7 @@ const Index = (props: IPropsSidebar) => {
 			<div className='logo_wrap w_100 flex justify_center align_center'>
 				<LogoWithBg className='logo' size={42}></LogoWithBg>
 			</div>
-			<div className='sidebar_items flex flex_column justify_between'>
+			<div className={$cx('sidebar_items flex flex_column justify_between', theme === 'dark' && 'dark')}>
 				<div className='sidebar_top_wrap flex flex_column'>
 					{nav_items.map((item) => {
 						if (!item.checked) return null
@@ -51,7 +53,6 @@ const Index = (props: IPropsSidebar) => {
 									type={item.title}
 									size={24}
 									weight={icon_weight}
-									fill='inherit'
 								></ModuleIcon>
 								<When condition={show_bar_title}>
 									<span className='sidebar_item_title'>
@@ -67,7 +68,7 @@ const Index = (props: IPropsSidebar) => {
 							<Tooltip
 								title={l(`nav_title.${item.title}`)}
 								placement='right'
-                                                destroyTooltipOnHide
+								destroyTooltipOnHide
 								getTooltipContainer={() => document.body}
 								key={item.title}
 							>
@@ -80,9 +81,9 @@ const Index = (props: IPropsSidebar) => {
 					{bottom_items.map((item) => (
 						<Tooltip
 							title={l(`nav_title.${item.title}`)}
-                                          placement='right'
-                                          destroyTooltipOnHide
-                                          getTooltipContainer={() => document.body}
+							placement='right'
+							destroyTooltipOnHide
+							getTooltipContainer={() => document.body}
 							key={item.title}
 						>
 							<NavLink
@@ -93,7 +94,6 @@ const Index = (props: IPropsSidebar) => {
 									className='icon_bar'
 									size={24}
 									weight={icon_weight}
-									fill='inherit'
 								></item.icon>
 							</NavLink>
 						</Tooltip>

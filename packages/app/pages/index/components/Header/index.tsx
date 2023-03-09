@@ -1,5 +1,6 @@
 import { Tooltip } from 'antd'
-import { ArchiveBox, Files } from 'phosphor-react'
+
+import { Files, PencilSimple } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -11,20 +12,22 @@ const Index = (props: IPropsHeader) => {
 	return (
 		<div className={$cx('limited_content_wrap border_box flex', styles._local)}>
 			<div className='left_wrap flex flex_column'>
-				<span className='name'>{info.name}</span>
+				<div className='name flex justify_between align_center'>
+					{info.name}
+					<div className='actions_wrap flex align_center'>
+						<Tooltip title='编辑' placement='bottom'>
+							<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable'>
+								<PencilSimple className='icon_edit' size={16}></PencilSimple>
+							</div>
+						</Tooltip>
+						<Tooltip title='参考资料' placement='bottom'>
+							<div className='icon_wrap no_border border_box flex justify_center align_center cursor_point clickable'>
+								<Files size={16}></Files>
+							</div>
+						</Tooltip>
+					</div>
+				</div>
 				<span className='desc'>{info.desc}</span>
-			</div>
-			<div className='right_wrap flex justify_end align_center'>
-				<Tooltip title='参考资料' placement='top'>
-					<div className='icon_wrap flex justify_center align_center cursor_point clickable mr_12'>
-						<Files size={18}></Files>
-					</div>
-				</Tooltip>
-				<Tooltip title='归档' placement='top'>
-					<div className='icon_wrap flex justify_center align_center cursor_point clickable'>
-						<ArchiveBox size={18}></ArchiveBox>
-					</div>
-				</Tooltip>
 			</div>
 		</div>
 	)

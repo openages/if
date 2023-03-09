@@ -4,8 +4,7 @@
       "description": "Electron shell for If.",
       "main": "dist/index.js",
       "scripts": {
-            "dev": "electron .",
-            "dev:main": "concurrently \"rollup --c rollup.dev.ts --configPlugin swc3 -w\" \"tsx ./dev\"",
+            "dev": "concurrently \"rollup --c rollup.dev.ts --configPlugin swc3 -w\" \"tsx ./dev\"",
             "build:main:dev": "rollup --c rollup.build.ts --configPlugin swc3 -w",
             "build:main:prod": "rollup --c rollup.build.ts --configPlugin swc3"
       },

@@ -1,10 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
-import { CaretRight, DiceFour, ListBullets } from 'phosphor-react'
 import { useState } from 'react'
 import { match, P } from 'ts-pattern'
 
 import { deepEqual, useDeepMemo } from '@matrixages/knife/react'
+import { CaretRight, DiceFour, ListBullets } from '@phosphor-icons/react'
 
 import styles from './index.css'
 

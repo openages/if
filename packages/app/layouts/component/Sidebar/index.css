@@ -25,6 +25,20 @@
 			height: calc(100vh - 42px - 15px);
 			padding-top: 12px;
 
+                  &.dark {
+                        .sidebar_item{
+                              &:hover,
+                              &.active,
+                              &.avatar {
+                                    svg {
+                                          path:first-child {
+                                                fill: inherit;
+                                          }
+                                    }
+                              }
+                        }
+                  }
+
 			.sidebar_item {
 				width: 100%;
 				height: 57px;
@@ -37,7 +51,12 @@
 				&.active,
 				&.avatar {
 					opacity: 1;
-                              fill: var(--color_main);
+
+					svg {
+						path:first-child {
+							fill: var(--color_main);
+						}
+					}
 				}
 
 				&.show_bar_title {

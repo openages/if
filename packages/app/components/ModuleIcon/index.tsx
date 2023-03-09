@@ -1,3 +1,5 @@
+import { match } from 'ts-pattern'
+
 import {
 	CalendarCheck,
 	CheckCircle,
@@ -8,10 +10,9 @@ import {
 	Path,
 	ProjectorScreenChart,
 	Table
-} from 'phosphor-react'
-import { match } from 'ts-pattern'
+} from '@phosphor-icons/react'
 
-import type { IconProps } from 'phosphor-react'
+import type { IconProps } from '@phosphor-icons/react'
 import type { App } from '@/types'
 
 interface IProps extends IconProps {

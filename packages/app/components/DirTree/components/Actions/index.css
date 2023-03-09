@@ -6,6 +6,7 @@
 		.add_list_wrap {
 			width: calc(100% - 72px);
 			padding-left: 12px;
+                  user-select: none;
 
 			&:hover {
 				background-color: var(--color_bg_1);

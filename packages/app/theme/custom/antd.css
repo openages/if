@@ -3,6 +3,8 @@
 	&-inner {
 		display: flex;
 		align-items: center;
+            padding: 3px 6px !important;
+            min-height: unset !important;
 	}
 }
 

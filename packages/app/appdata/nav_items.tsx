@@ -1,4 +1,4 @@
-import { GearSix, Users } from 'phosphor-react'
+import { GearSix, Users } from '@phosphor-icons/react'
 
 import type { App } from '@/types'
 

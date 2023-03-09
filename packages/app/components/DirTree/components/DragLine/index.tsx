@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react-lite'
-import { CaretLeft, CaretRight } from 'phosphor-react'
 import { useRef } from 'react'
 import { Else, If, Then } from 'react-if'
 
 import { useGlobal } from '@/context/app'
 import { useDragWidth } from '@/hooks'
+import { CaretLeft, CaretRight } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
