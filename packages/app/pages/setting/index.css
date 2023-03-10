@@ -34,8 +34,9 @@
 				}
 
 				.nav_item_wrap {
-					width: calc((100% - 18px * 3) / 5);
-					padding: 6px 0;
+					width: calc(100% / 4);
+					padding: 6px;
+                              line-height: 1;
 
 					.nav_item {
 						width: 100%;

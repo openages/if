@@ -10,15 +10,16 @@ export default [
 		readonly: true
 	},
 	{
-		title: 'note',
-		path: '/note',
+		title: 'memo',
+		path: '/memo',
 		checked: true,
 		readonly: true
 	},
 	{
-		title: 'schedule',
-		path: '/schedule',
-		checked: true
+		title: 'note',
+		path: '/note',
+		checked: true,
+		readonly: true
 	},
 	{
 		title: 'table',
@@ -26,11 +27,22 @@ export default [
 		checked: true
 	},
 	{
-		title: 'powers',
-		path: '/powers',
+		title: 'ppt',
+		path: '/ppt',
+		checked: true
+	},
+	{
+		title: 'pomodoro',
+		path: '/pomodoro',
+		checked: true
+	},
+	{
+		title: 'plan',
+		match: '/plan/layout',
+		path: '/plan/layout/schedule',
 		checked: true
 	}
-] as Array<{ title: App.MuduleType; path: string; checked: boolean; readonly?: boolean }>
+] as Array<{ title: App.MuduleType; path: string; checked: boolean; match?: string; readonly?: boolean }>
 
 export const bottom_items = [
 	{
@@ -47,23 +59,28 @@ export const bottom_items = [
 
 export const plan_items = [
 	{
+		title: 'schedule',
+		path: '/plan/layout/schedule',
+		checked: true
+	},
+	{
 		title: 'kanban',
-		path: '/kanban',
+		path: '/plan/layout/kanban',
 		checked: true
 	},
 	{
 		title: 'flow',
-		path: '/flow',
+		path: '/plan/layout/flow',
 		checked: true
 	},
 	{
 		title: 'board',
-		path: '/board',
+		path: '/plan/layout/board',
 		checked: true
 	},
 	{
 		title: 'project',
-		path: '/project',
+		path: '/plan/layout/project',
 		checked: true
 	}
-]
+] as const

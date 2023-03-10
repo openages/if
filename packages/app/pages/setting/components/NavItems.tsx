@@ -20,19 +20,19 @@ const Index = () => {
 		<Fragment>
 			<span className='setting_title'>{l('setting.NavItems.title')}</span>
 			<div className='setting_items w_100 border_box flex flex_column'>
-				<div className='setting_item w_100 border_box flex justify_between flex_wrap'>
+				<div className='setting_item w_100 border_box flex flex_wrap'>
 					{global.setting.nav_items.map((item, index) => (
-						<div className='nav_item_wrap flex justify_center' key={item.title}>
+						<div className='nav_item_wrap border_box flex justify_center' key={item.title}>
 							<div
 								className={$cx(
-									'nav_item flex flex_column align_center cursor_point',
+									'nav_item border_box flex flex_column align_center cursor_point',
 									item.checked && 'checked',
 									item.readonly ? 'readonly' : 'clickable'
 								)}
 								onClick={() => onNavItem(index)}
 							>
 								<ModuleIcon
-									className='icon_bar'
+									className='icon_bar mb_4'
 									type={item.title}
 									size={24}
 									weight='bold'

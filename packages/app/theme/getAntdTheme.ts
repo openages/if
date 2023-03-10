@@ -28,6 +28,14 @@ export default (theme: Theme, color_main: string) => {
 			colorPrimaryHover: vars.color_text_grey,
 			colorPrimaryTextHover: vars.color_text_grey,
 			switchHeight: 34
+		},
+		components: {
+			Segmented: {
+				borderRadiusXS: 17,
+				borderRadiusSM: 17,
+				colorBgLayout: vars.color_bg,
+				colorBgElevated: vars.color_bg_2,
+			}
 		}
 	} as ThemeConfig
 }

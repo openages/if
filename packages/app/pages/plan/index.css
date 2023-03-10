@@ -1,0 +1,29 @@
+._local {
+	bottom: 60px;
+	left: calc((100vw - var(--sidebar_width)) / 2 - 354px / 2);
+
+	:global {
+		.nav_items {
+			box-shadow: var(--shadow);
+
+			.if-segmented-item {
+				&-selected {
+					box-shadow: none;
+
+					.if-segmented-item-label {
+						opacity: 1;
+					}
+				}
+
+				&-label {
+					padding: 0 12px;
+					opacity: 0.6;
+				}
+			}
+
+			.nav_item_wrap {
+				user-select: none;
+			}
+		}
+	}
+}

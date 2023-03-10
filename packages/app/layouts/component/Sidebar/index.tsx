@@ -7,8 +7,9 @@ import { bottom_items } from '@/appdata'
 import { LogoWithBg, ModuleIcon } from '@/components'
 import { useAntdApp, useLocale } from '@/hooks'
 import { is_mac_electron } from '@/utils'
-import { NavLink } from '@umijs/max'
+import { NavLink, useLocation } from '@umijs/max'
 
+import { useNavOverflow } from '../../hooks'
 import styles from './index.css'
 
 import type { IPropsSidebar } from '../../types'
@@ -16,6 +17,8 @@ import type { IPropsSidebar } from '../../types'
 const Index = (props: IPropsSidebar) => {
 	const { theme, nav_items, show_bar_title, avatar } = props
 	const l = useLocale()
+	const { pathname } = useLocation()
+	const { ref_sidebar, ref_items_wrap, overflow } = useNavOverflow()
 
 	useAntdApp()
 
@@ -28,52 +31,69 @@ const Index = (props: IPropsSidebar) => {
 				styles._local,
 				is_mac_electron && styles.is_mac_electron
 			)}
+			ref={ref_sidebar}
 		>
 			<div className='logo_wrap w_100 flex justify_center align_center'>
 				<LogoWithBg className='logo' size={42}></LogoWithBg>
 			</div>
-			<div className={$cx('sidebar_items flex flex_column justify_between', theme === 'dark' && 'dark')}>
-				<div className='sidebar_top_wrap flex flex_column'>
-					{nav_items.map((item) => {
-						if (!item.checked) return null
+			<div
+				className={$cx(
+					'sidebar_items flex flex_column justify_between relative',
+					theme === 'dark' && 'dark'
+				)}
+			>
+				<div className='scroll_wrap w_100'>
+					<When condition={overflow}>
+						<div className='scroll_mask top w_100 absolute top_0'></div>
+					</When>
+					<div className='sidebar_top_wrap flex flex_column' ref={ref_items_wrap}>
+						{nav_items.map((item) => {
+							if (!item.checked) return null
 
-						const LinkItem = (
-							<NavLink
-								className={$cx(
-									'sidebar_item clickable flex flex_column justify_center align_center transition_normal',
-									show_bar_title && 'show_bar_title'
-								)}
-								to={item.path}
-								key={item.title}
-							>
-								<ModuleIcon
-									className='icon_bar'
-									type={item.title}
-									size={24}
-									weight={icon_weight}
-								></ModuleIcon>
-								<When condition={show_bar_title}>
-									<span className='sidebar_item_title'>
-										{l(`nav_title.${item.title}`)}
-									</span>
-								</When>
-							</NavLink>
-						)
+							const LinkItem = (
+								<NavLink
+									className={$cx(
+										'sidebar_item clickable flex flex_column justify_center align_center transition_normal',
+										show_bar_title && 'show_bar_title',
+										item?.match &&
+											pathname.indexOf(item?.match) !== -1 &&
+											'active'
+									)}
+									to={item.path}
+									key={item.title}
+								>
+									<ModuleIcon
+										className='icon_bar'
+										type={item.title}
+										size={27}
+										weight={icon_weight}
+									></ModuleIcon>
+									<When condition={show_bar_title}>
+										<span className='sidebar_item_title'>
+											{l(`nav_title.${item.title}`)}
+										</span>
+									</When>
+								</NavLink>
+							)
 
-						if (show_bar_title) return LinkItem
+							if (show_bar_title) return LinkItem
 
-						return (
-							<Tooltip
-								title={l(`nav_title.${item.title}`)}
-								placement='right'
-								destroyTooltipOnHide
-								getTooltipContainer={() => document.body}
-								key={item.title}
-							>
-								{LinkItem}
-							</Tooltip>
-						)
-					})}
+							return (
+								<Tooltip
+									title={l(`nav_title.${item.title}`)}
+									placement='right'
+									destroyTooltipOnHide
+									getTooltipContainer={() => document.body}
+									key={item.title}
+								>
+									{LinkItem}
+								</Tooltip>
+							)
+						})}
+					</div>
+					<When condition={overflow}>
+						<div className='scroll_mask bottom w_100 sticky bottom_0'></div>
+					</When>
 				</div>
 				<div className='sidebar_bottom_wrap flex flex_column'>
 					{bottom_items.map((item) => (
@@ -90,13 +110,13 @@ const Index = (props: IPropsSidebar) => {
 							>
 								<item.icon
 									className='icon_bar'
-									size={24}
+									size={27}
 									weight={icon_weight}
 								></item.icon>
 							</NavLink>
 						</Tooltip>
 					))}
-					<div className='sidebar_item avatar flex flex_column justify_center align_center'>
+					<div className='avatar flex flex_column justify_center align_center'>
 						<Avatar className='user_avatar' {...avatar}></Avatar>
 					</div>
 				</div>

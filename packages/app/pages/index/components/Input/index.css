@@ -7,6 +7,10 @@
                   padding: 7px 12px;
                   border-bottom-width: 2px;
                   border-bottom-style: solid;
+
+                  &:focus{
+                        border-color: var(--color_text);
+                  }
 		}
 	}
 }

@@ -4,35 +4,13 @@
 
 	:global {
 		.left_wrap {
+                  width: calc(100% - 120px);
+                  
 			.name {
 				font-size: 24px;
 				font-weight: 500;
 				line-height: 1;
 				user-select: none;
-
-				.actions_wrap {
-					border-radius: 30px;
-					overflow: hidden;
-                              border: 1px solid var(--color_border_light);
-
-					.icon_wrap {
-						width: 30px;
-						height: 24px;
-						border-right: 1px solid var(--color_border_soft);
-
-						&:hover {
-							background-color: var(--color_bg_2);
-						}
-
-						&.no_border {
-							border: none;
-						}
-
-                                    .icon_edit{
-                                          margin-right: -3px;
-                                    }
-					}
-				}
 			}
 
 			.desc {
@@ -42,5 +20,29 @@
 				user-select: none;
 			}
 		}
+
+            .actions_wrap {
+                  border-radius: 30px;
+                  overflow: hidden;
+                  border: 1px solid var(--color_border_light);
+
+                  .icon_wrap {
+                        width: 30px;
+                        height: 24px;
+                        border-right: 1px solid var(--color_border_soft);
+
+                        &:hover {
+                              background-color: var(--color_bg_2);
+                        }
+
+                        &.no_border {
+                              border: none;
+                        }
+
+                        .icon_edit{
+                              margin-right: -3px;
+                        }
+                  }
+            }
 	}
 }

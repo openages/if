@@ -40,7 +40,7 @@ const Index = (props: IPropsTodoItem) => {
 					</Else>
 				</If>
 			</div>
-			<span className='text cursor_point'>{props.text}</span>
+			<span className='text'>{props.text}</span>
 		</div>
 	)
 }

@@ -1,11 +1,15 @@
 import { match } from 'ts-pattern'
 
 import {
+	BoundingBox,
 	CalendarCheck,
 	CheckCircle,
 	Clipboard,
-	DiamondsFour,
+	HourglassMedium,
 	Kanban,
+	LightbulbFilament,
+	MicrosoftPowerpointLogo,
+	Note,
 	Notebook,
 	Path,
 	ProjectorScreenChart,
@@ -24,11 +28,13 @@ const Index = (props: IProps) => {
 
 	return match(type)
 		.with('todo', () => <CheckCircle {...icon_props} />)
+		.with('memo', () => <Note {...icon_props} />)
 		.with('note', () => <Notebook {...icon_props} />)
-		.with('schedule', () => <CalendarCheck {...icon_props} />)
 		.with('table', () => <Table {...icon_props} />)
-		.with('powers', () => <DiamondsFour {...icon_props} />)
-
+		.with('ppt', () => <MicrosoftPowerpointLogo {...icon_props} />)
+		.with('pomodoro', () => <HourglassMedium {...icon_props} />)
+		.with('plan', () => <BoundingBox {...icon_props} />)
+		.with('schedule', () => <CalendarCheck {...icon_props} />)
 		.with('kanban', () => <Kanban {...icon_props} />)
 		.with('flow', () => <Path {...icon_props} />)
 		.with('board', () => <Clipboard {...icon_props} />)
