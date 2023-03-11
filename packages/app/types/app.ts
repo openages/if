@@ -13,7 +13,7 @@ export namespace App {
 		| 'table'
 		| 'ppt'
 		| 'pomodoro'
-		| 'plan'
+		| 'widgets'
 		| 'schedule'
 		| 'kanban'
 		| 'flow'

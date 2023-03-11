@@ -5,7 +5,7 @@ export default {
 	table: 'Table',
 	ppt: 'PPT',
 	pomodoro: 'Pomo',
-	plan: 'Plan',
+	widgets: 'Widgets',
 	schedule: 'Schedule',
 	kanban: 'Kanban',
 	flow: 'Flow',

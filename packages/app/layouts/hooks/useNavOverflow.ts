@@ -1,5 +1,5 @@
 import { useSize } from 'ahooks'
-import { useMemo, useRef } from 'react'
+import { useRef } from 'react'
 
 import { is_mac_electron } from '@/utils'
 import { useDeepMemo } from '@matrixages/knife/react'

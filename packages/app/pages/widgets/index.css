@@ -1,0 +1,50 @@
+._local {
+	top: 0px;
+	left: 50%;
+	padding: 4px;
+	transform: translateX(calc((-50% + var(--sidebar_width) / 2)));
+	box-shadow: var(--shadow);
+	border-bottom-left-radius: var(--radius);
+	border-bottom-right-radius: var(--radius);
+
+      &.dark{
+            :global{
+                  .nav_item_wrap {
+                        &:hover,
+                        &.active,
+                        &.avatar {
+                              svg {
+                                    path:first-child {
+                                          fill: inherit;
+                                    }
+                              }
+                        }
+                  }
+            }
+      }
+
+	:global {
+		.nav_item_wrap {
+			padding: 4px 8px;
+			opacity: 0.36;
+			line-height: 1;
+			user-select: none;
+
+			&:hover,
+			&.active,
+			&.avatar {
+				opacity: 1;
+
+				svg {
+					path:first-child {
+						fill: var(--color_main);
+					}
+				}
+			}
+
+			.title {
+				font-size: 10px;
+			}
+		}
+	}
+}

@@ -37,9 +37,9 @@ export default [
 		checked: true
 	},
 	{
-		title: 'plan',
-		match: '/plan/layout',
-		path: '/plan/layout/schedule',
+		title: 'widgets',
+		match: '/widgets/layout',
+		path: '/widgets/layout/schedule',
 		checked: true
 	}
 ] as Array<{ title: App.MuduleType; path: string; checked: boolean; match?: string; readonly?: boolean }>
@@ -57,30 +57,30 @@ export const bottom_items = [
 	}
 ] as const
 
-export const plan_items = [
+export const widgets = [
 	{
 		title: 'schedule',
-		path: '/plan/layout/schedule',
+		path: '/widgets/layout/schedule',
 		checked: true
 	},
 	{
 		title: 'kanban',
-		path: '/plan/layout/kanban',
+		path: '/widgets/layout/kanban',
 		checked: true
 	},
 	{
 		title: 'flow',
-		path: '/plan/layout/flow',
+		path: '/widgets/layout/flow',
 		checked: true
 	},
 	{
 		title: 'board',
-		path: '/plan/layout/board',
+		path: '/widgets/layout/board',
 		checked: true
 	},
 	{
 		title: 'project',
-		path: '/plan/layout/project',
+		path: '/widgets/layout/project',
 		checked: true
 	}
 ] as const

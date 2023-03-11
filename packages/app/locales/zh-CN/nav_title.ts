@@ -5,7 +5,7 @@ export default {
 	table: '表格',
 	ppt: '幻灯片',
 	pomodoro: '番茄钟',
-	plan: '计划',
+	widgets: '组件',
 	schedule: '安排',
 	kanban: '看板',
 	flow: '流程',

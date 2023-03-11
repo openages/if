@@ -1,10 +1,21 @@
 /* Tooltip */
+[data-theme='dark']{
+      .if-tooltip {
+            --antd-arrow-background-color:var(--color_bg_2);
+
+            &-inner {
+                  background-color: var(--color_bg_2);
+            }
+      }
+}
+
 .if-tooltip {
 	&-inner {
 		display: flex;
 		align-items: center;
             padding: 3px 6px !important;
             min-height: unset !important;
+            font-size: 12px;
 	}
 }
 

@@ -1,7 +1,7 @@
 import { App, ConfigProvider } from 'antd'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { IconContext } from 'react-icons'
 import { container } from 'tsyringe'
 

@@ -37,6 +37,7 @@
 					width: calc(100% / 4);
 					padding: 6px;
                               line-height: 1;
+                              fill: var(--color_text);
 
 					.nav_item {
 						width: 100%;
