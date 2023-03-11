@@ -1,3 +1,5 @@
 export * from './build'
 export * from './app'
+export * from './dirtree'
+export * from './doc'
 export * from './todo'

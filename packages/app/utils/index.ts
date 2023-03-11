@@ -4,3 +4,4 @@ export { default as setFavicon } from './setFavicon'
 
 export * from './is'
 export * from './filter'
+export * from './dirtree'

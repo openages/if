@@ -1,6 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
+import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { Else, If, Then, When } from 'react-if'
 import { container } from 'tsyringe'
 
@@ -12,11 +13,19 @@ import styles from './index.css'
 import Model from './model'
 
 import type { IProps, IPropsActions, IPropsModal } from './types'
-
 const Index = (props: IProps) => {
-	const { height = '100vh', onClick } = props
+	const { module, height = '100vh', onClick } = props
 	const [x] = useState(() => container.resolve(Model))
 	const global = useGlobal()
+
+	useLayoutEffect(() => {
+		x.module = module
+
+		x.find()
+		x.on()
+
+		return () => x.off()
+	}, [module])
 
 	const setModalOpen = useMemoizedFn((v: Model['modal_open'], type?: Model['modal_type']) => {
 		x.modal_open = v
@@ -36,6 +45,8 @@ const Index = (props: IProps) => {
 		add: useMemoizedFn(x.add),
 		setModalOpen
 	}
+
+	console.log(toJS(x.items))
 
 	return (
 		<div
@@ -59,8 +70,7 @@ const Index = (props: IProps) => {
 								{...{ onClick, setFoldAll }}
 								current_item={x.current_item}
 								fold_all={x.fold_all}
-								parent={null}
-								key={item.id}
+								key={item._id}
 							></DirItem>
 						))}
 					</Then>

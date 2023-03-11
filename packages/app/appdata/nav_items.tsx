@@ -1,7 +1,5 @@
 import { GearSix, Users } from '@phosphor-icons/react'
 
-import type { App } from '@/types'
-
 export default [
 	{
 		title: 'todo',
@@ -42,7 +40,7 @@ export default [
 		path: '/widgets/layout/schedule',
 		checked: true
 	}
-] as Array<{ title: App.MuduleType; path: string; checked: boolean; match?: string; readonly?: boolean }>
+] as const
 
 export const bottom_items = [
 	{

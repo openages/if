@@ -23,5 +23,5 @@ export default class Index {
 			() => this.current_angle,
 			(v) => {}
 		)
-	}
+      }
 }

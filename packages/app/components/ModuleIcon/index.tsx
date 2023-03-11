@@ -19,7 +19,7 @@ import type { IconProps } from '@phosphor-icons/react'
 import type { App } from '@/types'
 
 interface IProps extends IconProps {
-	type: App.MuduleType
+	type: App.ModuleType
 }
 
 const Index = (props: IProps) => {

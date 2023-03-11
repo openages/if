@@ -1,6 +1,6 @@
 export namespace Todo {
 	type Common = {
-		id: string | number
+		_id: string
 	}
 
 	type Group = Common & {
@@ -18,11 +18,7 @@ export namespace Todo {
 
 	export type TodoItem = Group | Todo
 
-	export interface TodoList {
-		name: string
-		desc?: string
-		angles: {
-			[key: string]: Array<TodoItem>
-		}
+	export interface TodoAngles {
+		[key: string]: Array<TodoItem>
 	}
 }

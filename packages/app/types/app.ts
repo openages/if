@@ -6,7 +6,7 @@ import type { Flatten } from '@matrixages/knife/types'
 
 export namespace App {
 	export type LocaleType = (typeof locale_options)[number]['value']
-	export type MuduleType =
+	export type ModuleType =
 		| 'todo'
 		| 'memo'
 		| 'note'
@@ -20,5 +20,5 @@ export namespace App {
 		| 'board'
 		| 'project'
 	export type Locales = Flatten<ObjectLocales>
-	export type LocaleKeys = keyof Locales
+      export type LocaleKeys = keyof Locales
 }

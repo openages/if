@@ -17,6 +17,7 @@ window.$app = {
 
 window.$cx = cx
 window.$l = {} as any
+window.$locale = 'en-US' as any
 window.$db = db
 window.$message = {} as MessageInstance
 window.$notification = {} as NotificationInstance

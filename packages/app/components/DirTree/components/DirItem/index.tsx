@@ -11,13 +11,13 @@ import styles from './index.css'
 import type { IPropsDirItem } from '../../types'
 
 const Index = (props: IPropsDirItem) => {
-	const { id, title, metadata, type, parent, activeItem, onClick } = props
+	const { _id, name, type, current_item, fold_all, onClick, setFoldAll } = props
 	const [open, setOpen] = useState(false)
 
 	const onItem = useMemoizedFn(() => {
 		if (type === 'dir') return setOpen(!open)
 
-		onClick({ parent, id, metadata })
+		onClick(_id)
 	})
 
 	const LeftIcon = useDeepMemo(() => {
@@ -28,16 +28,18 @@ const Index = (props: IPropsDirItem) => {
 	}, [props])
 
 	const RightIcon = useDeepMemo(() => {
-		return match({ ...props, open })
-			.with({ type: 'dir', open: P.select() }, (open) => (
-				<CaretRight
-					className={$cx('icon_fold transition_normal', open && 'opened')}
-					size={14}
-					weight='bold'
-				/>
-			))
-			.with({ type: 'file', counts: P.when((v) => v > 0) }, ({ counts }) => counts)
-			.otherwise(() => '')
+		return (
+			match({ ...props, open })
+				.with({ type: 'dir', open: P.select() }, (open) => (
+					<CaretRight
+						className={$cx('icon_fold transition_normal', open && 'opened')}
+						size={14}
+						weight='bold'
+					/>
+				))
+				// .with({ type: 'file' }, ({ counts }) => counts)
+				.otherwise(() => '')
+		)
 	}, [props, open])
 
 	return (
@@ -45,12 +47,12 @@ const Index = (props: IPropsDirItem) => {
 			<div
 				className={$cx(
 					'item_wrap w_100 border_box flex align_center relative transition_normal cursor_point',
-					type === 'file' && deepEqual(activeItem, { parent, id, metadata }) && 'active'
+					type === 'file' && current_item === _id && 'active'
 				)}
 				onClick={onItem}
 			>
 				<div className='left_icon_wrap flex justify_center align_center'>{LeftIcon}</div>
-				<span className={$cx('title_wrap')}>{title}</span>
+				<span className={$cx('title_wrap')}>{name}</span>
 				<span className='right_icon_wrap flex align_center justify_end'>{RightIcon}</span>
 			</div>
 			<AnimatePresence>
@@ -65,9 +67,8 @@ const Index = (props: IPropsDirItem) => {
 						{props.children?.map((it) => (
 							<Index
 								{...it}
-								{...{ activeItem, onClick }}
-								parent={parent ? `${parent}|${id}` : id}
-								key={it.id}
+								{...{ current_item, fold_all, onClick, setFoldAll }}
+								key={it._id}
 							></Index>
 						))}
 					</motion.div>

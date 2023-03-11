@@ -12,7 +12,7 @@ export default () => {
 		(id: App.LocaleKeys, options?: MessageDescriptor & { values: Record<string, string> }) => {
 			const { values, ...desc } = options || {}
 
-			return formatMessage({ id, ...desc }, values)
+			return formatMessage({ id, ...desc } as any, values)
 		},
 		[locale]
 	)

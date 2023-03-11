@@ -5,4 +5,4 @@ export { default as DirTree } from './DirTree'
 export { default as DataEmpty } from './DataEmpty'
 export { default as SimpleEmpty } from './SimpleEmpty'
 
-export type { IProps as IPropsDirTree } from './DirTree/types'
+export type { IProps as IPropsDirTree, Item as DirTreeItem } from './DirTree/types'

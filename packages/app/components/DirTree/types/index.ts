@@ -1,22 +1,20 @@
 import type { CSSProperties } from 'react'
 
-import type { Item, CurrentItem } from './dirtree'
+import type { DirTree } from '@/types'
+
 import type Model from '../model'
 import type { App } from '@/types'
 
-export * from './dirtree'
-
 export interface IProps {
-	module: App.MuduleType
+	module: App.ModuleType
 	height?: CSSProperties['height']
-	onClick: (v: CurrentItem) => void
+	onClick: (v: string) => void
 }
 
-export type IPropsDirItem = Item & {
-	parent: Item['id'] | null
-	current_item: CurrentItem
+export type IPropsDirItem = DirTree.Item & {
+	current_item: string
 	fold_all: Model['fold_all']
-	onClick: (args: CurrentItem) => void
+	onClick: (v: string) => void
 	setFoldAll: (v: Model['fold_all']) => boolean
 }
 

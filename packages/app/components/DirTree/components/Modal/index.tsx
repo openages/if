@@ -10,7 +10,7 @@ import styles from './index.css'
 import type { IPropsModal } from '../../types'
 
 const Index = (props: IPropsModal) => {
-	const { modal_open, modal_type, addFile, addDir, setModalOpen } = props
+	const { modal_open, modal_type, add, setModalOpen } = props
 	const [value, { onChange }] = useEventTarget<string>()
 	const limits = useLimits()
 
@@ -28,6 +28,8 @@ const Index = (props: IPropsModal) => {
 		if (value.length > limits.todo_list_title_max_length) {
 			return $message.warning(`${title}名称不能超过${limits.todo_list_title_max_length}个字`)
 		}
+
+		add(value)
 	}
 
 	return (
