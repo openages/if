@@ -3,9 +3,10 @@ import { Affix } from 'antd'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
+import { Else, If, Then } from 'react-if'
 import { container } from 'tsyringe'
 
-import { DirTree } from '@/components'
+import { DataEmpty, DirTree } from '@/components'
 
 import { Header, Input, Tabs, Todos } from './components'
 import styles from './index.css'
@@ -17,109 +18,22 @@ import type { IPropsHeader, IPropsTabs, IPropsTodos } from './types'
 const Index = () => {
 	const [x] = useState(() => container.resolve(Model))
 
-	const onClick = useMemoizedFn((v) => (x.active_item = v))
+	const onClick = useMemoizedFn((v) => {})
 
 	const props_dir_tree: IPropsDirTree = {
-		items: [
-			{
-				id: 'now',
-				title: 'Now',
-				type: 'file',
-				counts: 6
-			},
-			{
-				id: 'life',
-				title: 'Life',
-				type: 'file',
-				counts: 30
-			},
-			{
-				id: 'powers',
-				title: 'Powers',
-				type: 'file',
-				counts: 893
-			},
-			{
-				id: 'epc',
-				title: 'EPC',
-				type: 'dir',
-				children: [
-					{
-						id: 'powers',
-						title: 'Powers',
-						type: 'file',
-						counts: 10
-					},
-					{
-						id: 'now',
-						title: 'Now',
-						type: 'file',
-						counts: 3
-					},
-					{
-						id: 'trash',
-						title: 'Powers',
-						type: 'file',
-						counts: 0
-					},
-					{
-						id: 'callback',
-						title: 'callback',
-						type: 'file',
-						counts: 99
-					}
-				]
-			},
-			{
-				id: 'lanto',
-				title: 'Lanto',
-				type: 'dir',
-				children: [
-					{
-						id: 'powers',
-						title: 'Powers',
-						type: 'file',
-						counts: 10
-					},
-					{
-						id: 'now',
-						title: 'Now',
-						type: 'file',
-						counts: 3
-					},
-					{
-						id: 'trash',
-						title: 'Powers',
-						type: 'file',
-						counts: 0
-					},
-					{
-						id: 'callback',
-						title: 'callback',
-						type: 'file',
-						counts: 99
-					}
-				]
-			},
-			{
-				id: 'if',
-				title: 'if',
-				type: 'file',
-				counts: 77
-			}
-		],
-		activeItem: toJS(x.active_item),
+		module: 'todo',
 		onClick
 	}
 
 	const props_header: IPropsHeader = {
-		info: toJS(x.info)
+		name: x.todo_list.name,
+		desc: x.todo_list.desc
 	}
 
 	const props_tabs: IPropsTabs = {
-		tabs: toJS(x.tabs),
-		active_tab_index: x.active_tab_index,
-		setActiveTabIndex: useMemoizedFn(x.setActiveTabIndex)
+		angles: toJS(x.angles),
+		current_angle: x.current_angle,
+		setCurrentAngle: useMemoizedFn((v: string) => (x.current_angle = v))
 	}
 
 	const props_todos: IPropsTodos = {
@@ -129,12 +43,19 @@ const Index = () => {
 	return (
 		<div className={$cx(styles._local)}>
 			<DirTree {...props_dir_tree}></DirTree>
-			<Header {...props_header}></Header>
-			<Tabs {...props_tabs}></Tabs>
-			<Todos {...props_todos}></Todos>
-			<Affix offsetBottom={0}>
-				<Input></Input>
-			</Affix>
+			<If condition={x.todo_list?.name}>
+				<Then>
+					<Header {...props_header}></Header>
+					<Tabs {...props_tabs}></Tabs>
+					<Todos {...props_todos}></Todos>
+					<Affix offsetBottom={0}>
+						<Input></Input>
+					</Affix>
+				</Then>
+				<Else>
+					<DataEmpty></DataEmpty>
+				</Else>
+			</If>
 		</div>
 	)
 }

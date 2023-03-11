@@ -13,3 +13,7 @@
 	margin: 0 auto;
 	padding: 0 var(--limited_padding);
 }
+
+.color_bg{
+      background-color: var(--color_bg);
+}

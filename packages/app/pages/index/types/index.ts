@@ -1,20 +1,16 @@
-export * from './todo'
-
-import type { TodoItem } from './todo'
+import type { Todo } from '@/types'
 import type Model from '../model'
 
-export interface IPropsHeader {
-	info: Model['info']
-}
+export interface IPropsHeader extends Pick<Todo.TodoList, 'name' | 'desc'> {}
 
 export interface IPropsTabs {
-	tabs: Model['tabs']
-	active_tab_index: Model['active_tab_index']
-	setActiveTabIndex: Model['setActiveTabIndex']
+	angles: Model['angles']
+	current_angle: Model['current_angle']
+	setCurrentAngle: (v: Model['current_angle']) => void
 }
 
 export interface IPropsTodos {
 	todo_items: Model['todo_items']
 }
 
-export type IPropsTodoItem = TodoItem & {}
+export type IPropsTodoItem = Todo.TodoItem & {}

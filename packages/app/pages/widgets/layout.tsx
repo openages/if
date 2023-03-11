@@ -27,8 +27,8 @@ const Index = () => {
 			>
 				{widgets.map((item) => (
 					<NavItem
+                                    { ...{ icon_weight, item } }
 						show_bar_title={global.setting.show_bar_title}
-						{...{ icon_weight, item }}
 						key={item.title}
 					></NavItem>
 				))}

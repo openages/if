@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Else, If, Then, When } from 'react-if'
 import { container } from 'tsyringe'
 
+import { SimpleEmpty } from '@/components'
 import { useGlobal } from '@/context/app'
 
 import { Actions, DirItem, DragLine, Modal, Search } from './components'
@@ -13,7 +14,7 @@ import Model from './model'
 import type { IProps, IPropsActions, IPropsModal } from './types'
 
 const Index = (props: IProps) => {
-	const { items, activeItem, height = '100vh', onClick, addFile, addDir } = props
+	const { height = '100vh', onClick } = props
 	const [x] = useState(() => container.resolve(Model))
 	const global = useGlobal()
 
@@ -32,8 +33,7 @@ const Index = (props: IProps) => {
 	const props_modal: IPropsModal = {
 		modal_open: x.modal_open,
 		modal_type: x.modal_type,
-		addFile,
-		addDir,
+		add: useMemoizedFn(x.add),
 		setModalOpen
 	}
 
@@ -51,12 +51,13 @@ const Index = (props: IProps) => {
 			</When>
 			<DragLine></DragLine>
 			<div className='dir_tree_wrap w_100 border_box flex flex_column'>
-				<If condition={items?.length}>
+				<If condition={x.items?.length}>
 					<Then>
-						{items.map((item) => (
+						{x.items.map((item) => (
 							<DirItem
 								{...item}
-								{...{ activeItem, onClick, setFoldAll }}
+								{...{ onClick, setFoldAll }}
+								current_item={x.current_item}
 								fold_all={x.fold_all}
 								parent={null}
 								key={item.id}
@@ -64,7 +65,7 @@ const Index = (props: IProps) => {
 						))}
 					</Then>
 					<Else>
-						<div className='empty_wrap w_100 h_100 flex justify_center align_center'>empty</div>
+						<SimpleEmpty></SimpleEmpty>
 					</Else>
 				</If>
 			</div>

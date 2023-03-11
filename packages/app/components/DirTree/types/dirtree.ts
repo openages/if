@@ -17,4 +17,4 @@ export type File = Common & {
 
 export type Type = 'dir' | 'file'
 export type Item = Dir | File
-export type ActiveItem = { parent: Common['id'] | null; id: Common['id']; metadata?: Common['metadata'] }
+export type CurrentItem = { parent: Common['id'] | null; id: Common['id']; metadata?: Common['metadata'] }

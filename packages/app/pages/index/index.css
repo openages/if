@@ -1,5 +1,13 @@
-._local{
-      :global{
+._local {
+	z-index: 999;
 
-      }
+	:global {
+		.empty_icon_wrap {
+			max-width: 120px;
+
+			.if-empty-image {
+				display: flex;
+			}
+		}
+	}
 }

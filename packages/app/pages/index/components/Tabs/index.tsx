@@ -7,19 +7,19 @@ import styles from './index.css'
 import type { IPropsTabs } from '../../types'
 
 const Index = (props: IPropsTabs) => {
-	const { tabs, active_tab_index, setActiveTabIndex } = props
+	const { angles, current_angle, setCurrentAngle } = props
 
 	return (
 		<div className={$cx('w_100 sticky top_0 z_index_10', styles._local)}>
 			<div className='tabs_wrap limited_content_wrap flex align_center relative'>
 				<div className='tab_items_wrap flex'>
-					{tabs.map((item, index) => (
+					{angles.map((item) => (
 						<div
 							className={$cx(
 								'tab_item_wrap border_box flex justify_center align_center cursor_point transition_normal',
-								active_tab_index === index && 'active'
+								current_angle === item && 'active'
 							)}
-							onMouseDown={() => setActiveTabIndex(index)}
+							onMouseDown={() => setCurrentAngle(item)}
 							key={item}
 						>
 							<span className='tab_name transition_normal'>{item}</span>
