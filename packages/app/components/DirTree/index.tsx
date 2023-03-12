@@ -17,10 +17,10 @@ const Index = (props: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const global = useGlobal()
 
-	useLayoutEffect(() => {
-		// x.services.init(module)
+      useLayoutEffect(() => {
+		x.services.init(module)
 
-		// return () => x.services.off()
+		return () => x.services.off()
 	}, [module])
 
 	const onItemClick = useMemoizedFn((v: string) => {

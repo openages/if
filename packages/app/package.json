@@ -37,6 +37,7 @@
             "nanoid": "^4.0.1",
             "nice-try": "^3.0.1",
             "pouchdb": "^8.0.1",
+            "pouchdb-adapter-indexeddb": "^8.0.1",
             "pouchdb-debug": "^7.2.1",
             "pouchdb-find": "^8.0.1",
             "react": "^18.2.0",

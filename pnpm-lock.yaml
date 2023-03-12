@@ -48,6 +48,7 @@ importers:
       nice-try: ^3.0.1
       postcss-nested: ^6.0.1
       pouchdb: ^8.0.1
+      pouchdb-adapter-indexeddb: ^8.0.1
       pouchdb-debug: ^7.2.1
       pouchdb-find: ^8.0.1
       react: ^18.2.0
@@ -89,6 +90,7 @@ importers:
       nanoid: 4.0.1
       nice-try: 3.0.1
       pouchdb: 8.0.1
+      pouchdb-adapter-indexeddb: 8.0.1
       pouchdb-debug: 7.2.1
       pouchdb-find: 8.0.1
       react: 18.2.0
@@ -10282,6 +10284,28 @@ packages:
       - encoding
     dev: false
 
+  /pouchdb-adapter-indexeddb/8.0.1:
+    resolution: {integrity: sha512-pX4FdL2isG4uhYXXnBUQJnkwcu+mBUjN/TW+B6aQhU+b/ZpLzH1XU/aui3/X604vhyOwy+DE4MsZEIsohUkR4g==}
+    dependencies:
+      pouchdb-adapter-utils: 8.0.1
+      pouchdb-binary-utils: 8.0.1
+      pouchdb-errors: 8.0.1
+      pouchdb-md5: 8.0.1
+      pouchdb-merge: 8.0.1
+      pouchdb-utils: 8.0.1
+    dev: false
+
+  /pouchdb-adapter-utils/8.0.1:
+    resolution: {integrity: sha512-2nTeYaImu958BU4e46SSdv0IdkXYS/PSy5CXyfb7jK9g0aBAp/JRi7qh9nsTjk4FewpT6OpaE/7evxMQa7UuMg==}
+    dependencies:
+      pouchdb-binary-utils: 8.0.1
+      pouchdb-collections: 8.0.1
+      pouchdb-errors: 8.0.1
+      pouchdb-md5: 8.0.1
+      pouchdb-merge: 8.0.1
+      pouchdb-utils: 8.0.1
+    dev: false
+
   /pouchdb-binary-utils/8.0.1:
     resolution: {integrity: sha512-WsuR/S0aoUlcA0Alt99czkXsfuXWcrYXAcvGiTW02zawVXOafCnb/qHjA09TUaV0oy5HeHmYaNnDckoOUqspeA==}
     dependencies:
@@ -10344,6 +10368,12 @@ packages:
     dependencies:
       pouchdb-binary-utils: 8.0.1
       spark-md5: 3.0.2
+    dev: false
+
+  /pouchdb-merge/8.0.1:
+    resolution: {integrity: sha512-79dw6+K7js2+/kt9u4hKOkGCnz+ov0+yft2k21n6M+ylFEQyMKuWHEZRoFWr72o1vxwjhIXhUM1PB2PIdxIh0Q==}
+    dependencies:
+      pouchdb-utils: 8.0.1
     dev: false
 
   /pouchdb-selector-core/8.0.1:

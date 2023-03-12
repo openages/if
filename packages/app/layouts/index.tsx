@@ -1,7 +1,7 @@
 import { App, ConfigProvider } from 'antd'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { IconContext } from 'react-icons'
 import { container } from 'tsyringe'
 
@@ -19,10 +19,16 @@ import type { IPropsSidebar } from './types'
 const Index = () => {
 	const [global] = useState(() => container.resolve(GlobalModel))
 	const theme = useTheme(global.setting.theme, global.setting.color_main)
+	const { no_dirtree } = useLayout()
 
 	useLocales()
 
-	const { no_dirtree } = useLayout()
+	useLayoutEffect(() => {
+		return () => {
+			$db.compact()
+			$db.viewCleanup()
+		}
+	}, [])
 
 	const props_sidebar: IPropsSidebar = {
 		theme: global.setting.theme,
