@@ -29,7 +29,7 @@ const Index = (props: IPropsModal) => {
 			return $message.warning(`${title}名称不能超过${limits.todo_list_title_max_length}个字`)
 		}
 
-		add(value)
+		add(modal_type, value)
 	}
 
 	return (

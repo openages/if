@@ -10,4 +10,4 @@ export const getTodoDefaultAngles = () =>
 		total[item] = []
 
 		return total
-	}, {} as Todo.TodoList['angles'])
+	}, {} as Todo.TodoAngles)

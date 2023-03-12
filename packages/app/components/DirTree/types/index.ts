@@ -19,13 +19,13 @@ export type IPropsDirItem = DirTree.Item & {
 }
 
 export interface IPropsActions {
-	setModalOpen: (v: Model['modal_open'], type?: Model['modal_type']) => void
+	setModalOpen: (v: Model['services']['modal_open'], type?: Model['modal_type']) => void
 	setFoldAll: (v: Model['fold_all']) => boolean
 }
 
 export interface IPropsModal {
-	modal_open: Model['modal_open']
+	modal_open: Model['services']['modal_open']
 	modal_type: Model['modal_type']
-	add: Model['add']
-	setModalOpen: (v: Model['modal_open'], type?: Model['modal_type']) => void
+	add: Model['services']['add']
+	setModalOpen: (v: Model['services']['modal_open'], type?: Model['modal_type']) => void
 }

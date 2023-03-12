@@ -7,16 +7,17 @@ export namespace DirTree {
 
 	export type Type = 'dir' | 'file'
 
-	export type Dir<T = {}> = Common & {
+	export type Dir = Common & {
 		type: 'dir'
-		children: Array<File<T>>
+		children: Array<File>
 	}
 
-	export type File<T = {}> = Common & {
+	export type File = Common & {
 		type: 'file'
+		target_id: string
 		desc?: string
-		data: T
 	}
 
-	export type Item<T = {}> = Dir<T> | File<T>
+	export type Item = Dir | File
+	export type Items = Array<Item>
 }

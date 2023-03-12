@@ -19,16 +19,13 @@ const Index = (props: IProps) => {
 	const global = useGlobal()
 
 	useLayoutEffect(() => {
-		x.module = module
+		x.services.init(module)
 
-		x.find()
-		x.on()
-
-		return () => x.off()
+		return () => x.services.off()
 	}, [module])
 
-	const setModalOpen = useMemoizedFn((v: Model['modal_open'], type?: Model['modal_type']) => {
-		x.modal_open = v
+	const setModalOpen = useMemoizedFn((v: Model['services']['modal_open'], type?: Model['modal_type']) => {
+		x.services.modal_open = v
 		x.modal_type = type || 'file'
 	})
 
@@ -40,13 +37,11 @@ const Index = (props: IProps) => {
 	}
 
 	const props_modal: IPropsModal = {
-		modal_open: x.modal_open,
+		modal_open: x.services.modal_open,
 		modal_type: x.modal_type,
-		add: useMemoizedFn(x.add),
+		add: useMemoizedFn(x.services.add),
 		setModalOpen
 	}
-
-	console.log(toJS(x.items))
 
 	return (
 		<div
@@ -62,9 +57,9 @@ const Index = (props: IProps) => {
 			</When>
 			<DragLine></DragLine>
 			<div className='dir_tree_wrap w_100 border_box flex flex_column'>
-				<If condition={x.items?.length}>
+				<If condition={x.services.items?.length}>
 					<Then>
-						{x.items.map((item) => (
+						{x.services.items.map((item) => (
 							<DirItem
 								{...item}
 								{...{ onClick, setFoldAll }}
