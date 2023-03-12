@@ -4,14 +4,14 @@ import { nanoid } from 'nanoid'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
-import { getPresetData } from '@/appdata'
+import { getFileCounts, getPresetData } from '@/utils'
 
 import type { App, DirTree, Doc } from '@/types'
 
 @injectable()
 export default class Index {
 	module = '' as App.ModuleType
-	items = [] as DirTree.Items
+	tree = {} as Doc.Module
 	listener = null as PouchDB.Core.Changes<Doc.Module> | null
 	modal_open = false
 
@@ -19,10 +19,12 @@ export default class Index {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
-	private async addTarget(name: string) {
+	private async addTarget(name: string, file_id: string) {
 		const { id } = await $db.put({
 			_id: nanoid(),
 			name,
+			file_id,
+			module: this.module,
 			data: getPresetData(this.module)
 		})
 
@@ -41,10 +43,11 @@ export default class Index {
 	}
 
 	private async addFile(name: string, res: Doc.Module) {
-		const target_id = await this.addTarget(name)
+		const file_id = nanoid()
+		const target_id = await this.addTarget(name, file_id)
 
 		res.data.push({
-			_id: nanoid(),
+			_id: file_id,
 			type: 'file',
 			name,
 			target_id
@@ -75,7 +78,26 @@ export default class Index {
 
 		if (err) return
 
-		this.items = res.data
+		this.tree = res
+
+		this.getCounts()
+	}
+
+	async getCounts() {
+		if (!this.tree.data.length) return
+
+		this.tree.data.map(async (item) => {
+			if (item.type === 'dir') return
+
+			const { docs } = await $db.find({
+				selector: { _id: item.target_id },
+				fields: ['data.angles']
+			})
+
+			item.counts = getFileCounts(this.module, docs[0].data)
+		})
+
+		await $db.put(this.tree)
 	}
 
 	async init(module: App.ModuleType) {
@@ -86,6 +108,8 @@ export default class Index {
 	}
 
 	on() {
+		$app.Event.on(`${this.module}/getCounts`, this.getCounts)
+
 		this.listener = $db.changes({
 			live: true,
 			since: 'now',
@@ -93,12 +117,12 @@ export default class Index {
 			doc_ids: [this.module]
 		})
 
-		this.listener.on('change', ({ doc }) => {
-			this.items = doc?.data || []
-		})
+		this.listener.on('change', ({ doc }) => (this.tree = doc!))
 	}
 
 	off() {
+		$app.Event.off(`${this.module}/getCounts`, this.getCounts)
+
 		this.listener?.cancel()
 	}
 }

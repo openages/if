@@ -15,7 +15,7 @@ export namespace DirTree {
 	export type File = Common & {
 		type: 'file'
 		target_id: string
-		desc?: string
+		counts?: number
 	}
 
 	export type Item = Dir | File

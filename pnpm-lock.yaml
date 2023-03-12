@@ -48,6 +48,7 @@ importers:
       nice-try: ^3.0.1
       postcss-nested: ^6.0.1
       pouchdb: ^8.0.1
+      pouchdb-debug: ^7.2.1
       pouchdb-find: ^8.0.1
       react: ^18.2.0
       react-activation: ^0.12.2
@@ -88,6 +89,7 @@ importers:
       nanoid: 4.0.1
       nice-try: 3.0.1
       pouchdb: 8.0.1
+      pouchdb-debug: 7.2.1
       pouchdb-find: 8.0.1
       react: 18.2.0
       react-activation: 0.12.2_sh5qlbywuemxd2y3xkrw2y2kr4
@@ -6125,6 +6127,17 @@ packages:
       ms: 2.0.0
     dev: true
 
+  /debug/3.1.0:
+    resolution: {integrity: sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    dependencies:
+      ms: 2.0.0
+    dev: false
+
   /debug/3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
     peerDependencies:
@@ -9231,7 +9244,6 @@ packages:
 
   /ms/2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
-    dev: true
 
   /ms/2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
@@ -10282,6 +10294,14 @@ packages:
 
   /pouchdb-collections/8.0.1:
     resolution: {integrity: sha512-TlkQ2GGHJApJgL0b7bJMQcwX6eMfVenLeoK9mqHfC2fJssui+HWJJ5LYKHOWan11SeB90BQVFbO6rHN6CJQeDg==}
+    dev: false
+
+  /pouchdb-debug/7.2.1:
+    resolution: {integrity: sha512-eP3ht/AKavLF2RjTzBM6S9gaI2/apcW6xvaKRQhEdOfiANqerFuksFqHCal3aikVQuDO+cB/cw+a4RyJn/glBw==}
+    dependencies:
+      debug: 3.1.0
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /pouchdb-errors/8.0.1:

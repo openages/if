@@ -10,8 +10,6 @@ export namespace App {
 		| 'todo'
 		| 'memo'
 		| 'note'
-		| 'table'
-		| 'ppt'
 		| 'pomodoro'
 		| 'widgets'
 		| 'schedule'
@@ -19,6 +17,9 @@ export namespace App {
 		| 'flow'
 		| 'board'
 		| 'project'
+            | 'table'
+		| 'bi'
+		| 'ppt'
 	export type Locales = Flatten<ObjectLocales>
-      export type LocaleKeys = keyof Locales
+	export type LocaleKeys = keyof Locales
 }

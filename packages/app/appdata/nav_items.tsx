@@ -20,16 +20,6 @@ export default [
 		readonly: true
 	},
 	{
-		title: 'table',
-		path: '/table',
-		checked: true
-	},
-	{
-		title: 'ppt',
-		path: '/ppt',
-		checked: true
-	},
-	{
 		title: 'pomodoro',
 		path: '/pomodoro',
 		checked: true
@@ -58,27 +48,34 @@ export const bottom_items = [
 export const widgets = [
 	{
 		title: 'schedule',
-		path: '/widgets/layout/schedule',
-		checked: true
+		path: '/widgets/layout/schedule'
 	},
 	{
 		title: 'kanban',
-		path: '/widgets/layout/kanban',
-		checked: true
+		path: '/widgets/layout/kanban'
 	},
 	{
 		title: 'flow',
-		path: '/widgets/layout/flow',
-		checked: true
+		path: '/widgets/layout/flow'
 	},
 	{
 		title: 'board',
-		path: '/widgets/layout/board',
-		checked: true
+		path: '/widgets/layout/board'
 	},
 	{
 		title: 'project',
-		path: '/widgets/layout/project',
-		checked: true
+		path: '/widgets/layout/project'
+	},
+	{
+		title: 'table',
+		path: '/widgets/layout/table'
+      },
+      {
+		title: 'bi',
+		path: '/widgets/layout/bi'
+	},
+	{
+		title: 'ppt',
+		path: '/widgets/layout/ppt'
 	}
 ] as const

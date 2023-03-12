@@ -18,7 +18,10 @@ export namespace Todo {
 
 	export type TodoItem = Group | Todo
 
-	export interface TodoAngles {
-		[key: string]: Array<TodoItem>
+	export interface TodoData {
+		angles: {
+			[key: string]: Array<TodoItem>
+		}
+		archive: Array<TodoItem>
 	}
 }

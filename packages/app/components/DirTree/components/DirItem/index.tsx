@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 import { match, P } from 'ts-pattern'
 
-import { deepEqual, useDeepMemo } from '@matrixages/knife/react'
+import { useDeepMemo } from '@matrixages/knife/react'
 import { CaretRight, DiceFour, ListBullets } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -28,18 +28,16 @@ const Index = (props: IPropsDirItem) => {
 	}, [props])
 
 	const RightIcon = useDeepMemo(() => {
-		return (
-			match({ ...props, open })
-				.with({ type: 'dir', open: P.select() }, (open) => (
-					<CaretRight
-						className={$cx('icon_fold transition_normal', open && 'opened')}
-						size={14}
-						weight='bold'
-					/>
-				))
-				// .with({ type: 'file' }, ({ counts }) => counts)
-				.otherwise(() => '')
-		)
+		return match({ ...props, open })
+			.with({ type: 'dir', open: P.select() }, (open) => (
+				<CaretRight
+					className={$cx('icon_fold transition_normal', open && 'opened')}
+					size={14}
+					weight='bold'
+				/>
+			))
+			.with({ type: 'file' }, ({ counts }) => counts)
+			.otherwise(() => '')
 	}, [props, open])
 
 	return (

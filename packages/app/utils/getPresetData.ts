@@ -1,11 +1,11 @@
 import { match } from 'ts-pattern'
 
-import { getTodoDefaultAngles } from '@/appdata'
+import { getTodoDefaultData } from '@/appdata'
 
 import type { App } from '@/types'
 
 export default (module: App.ModuleType) => {
 	return match(module)
-		.with('todo', () => getTodoDefaultAngles())
+		.with('todo', () => getTodoDefaultData())
 		.otherwise(() => {})
 }

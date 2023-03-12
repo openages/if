@@ -16,7 +16,7 @@ export default defineConfig({
 	jsMinifier: 'swc',
 	publicPath: sp_build_config.base,
 	history: { type: sp_build_config.history_type },
-	links: getLinks(),
+      links: getLinks(),
 	monorepoRedirect: { srcDir: ['./'] },
 	mfsu: { esbuild: false, strategy: 'eager' },
 	codeSplitting: { jsStrategy: 'granularChunks' },

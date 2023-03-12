@@ -11,6 +11,14 @@ export interface IProps {
 	onClick: (v: string) => void
 }
 
+export interface IPropsDirItems {
+	data: Model['services']['tree']['data']
+	current_item: string
+	fold_all: Model['fold_all']
+	onClick: (v: string) => void
+	setFoldAll: (v: Model['fold_all']) => boolean
+}
+
 export type IPropsDirItem = DirTree.Item & {
 	current_item: string
 	fold_all: Model['fold_all']
