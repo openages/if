@@ -3,8 +3,6 @@ import EventEmitter from 'emittery'
 
 import { handle, memo } from '@matrixages/knife/react'
 
-import db from './pouchdb'
-
 import type { MessageInstance } from 'antd/es/message/interface'
 import type { ModalStaticFunctions } from 'antd/es/modal/confirm'
 import type { NotificationInstance } from 'antd/es/notification/interface'
@@ -18,7 +16,6 @@ window.$app = {
 window.$cx = cx
 window.$l = {} as any
 window.$locale = 'en-US' as any
-window.$db = db
 window.$message = {} as MessageInstance
 window.$notification = {} as NotificationInstance
 window.$modal = {} as Omit<ModalStaticFunctions, 'warn'>

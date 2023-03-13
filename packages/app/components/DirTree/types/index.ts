@@ -6,7 +6,7 @@ import type Model from '../model'
 import type { App } from '@/types'
 
 export interface IProps {
-	module: App.ModuleType
+	module: App.RealModuleType
 	height?: CSSProperties['height']
 	onClick: (v: string) => void
 }

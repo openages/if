@@ -6,16 +6,14 @@ export const todo_default_angles = {
 }
 
 export const getTodoDefaultData = () => {
-	const angles = todo_default_angles[$locale].reduce((total, item) => {
+	return todo_default_angles[$locale].reduce((total, item) => {
 		total[item] = []
 
 		return total
-	}, {} as Todo.TodoData['angles'])
-
-	return { angles, archive: [] }
+	}, {} as Todo.Data['angles'])
 }
 
-export const getTodoFileCounts = (angles: Todo.TodoData['angles']) => {
+export const getTodoFileCounts = (angles: Todo.Data['angles']) => {
 	return Object.keys(angles).reduce((total, key) => {
 		total += angles[key].reduce((_total, _item) => {
 			if (_item.type === 'group') {

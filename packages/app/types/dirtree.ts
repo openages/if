@@ -1,6 +1,6 @@
 export namespace DirTree {
 	type Common = {
-		_id: string
+            id: string
 		name: string
 		icon?: string
 	}

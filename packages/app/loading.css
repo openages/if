@@ -8,9 +8,12 @@
 	}
 }
 
-
 ._local {
+	z-index: 10000;
+
 	&.dark {
+		background-color: #232326;
+
 		:global {
 			.loading_wrap {
 				fill: white;
@@ -22,7 +25,7 @@
 		.loading_wrap {
 			width: 96px;
 			height: 96px;
-                  fill: var(--color_main);
+			fill: var(--color_main);
 
 			.loading_icon {
 				&.top {

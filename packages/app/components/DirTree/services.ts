@@ -1,4 +1,3 @@
-import to from 'await-to-js'
 import { makeAutoObservable } from 'mobx'
 import { nanoid } from 'nanoid'
 import { match } from 'ts-pattern'
@@ -6,64 +5,64 @@ import { injectable } from 'tsyringe'
 
 import { getFileCounts, getPresetData } from '@/utils'
 
-import type { App, DirTree, Doc } from '@/types'
+import type { RxDocument } from 'rxdb'
+import type { App, DirTree, Module, Todo } from '@/types'
 
 @injectable()
 export default class Index {
-	module = '' as App.ModuleType
-	tree = {} as Doc.Module
-	listener = null as PouchDB.Core.Changes<Doc.Module> | null
+	module = '' as App.RealModuleType
 	modal_open = false
+	doc = {} as RxDocument<Module.Item>
 
 	constructor() {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
 	private async addTarget(name: string, file_id: string) {
-		const { id } = await $db.put({
-			_id: nanoid(),
-			name,
+		const res = (await $db.collections.todo.insert({
+			id: nanoid(),
 			file_id,
-			module: this.module,
-			data: getPresetData(this.module)
-		})
-
-		return id
-	}
-
-	private async addDir(name: string, res: Doc.Module) {
-		res.data.push({
-			_id: nanoid(),
-			type: 'dir',
 			name,
-			children: []
-		})
+			angles: getPresetData(this.module) as any,
+			archive: []
+		})) as RxDocument<Todo.Data>
 
-		return await $db.put(res)
+		return res.toJSON().id
 	}
 
-	private async addFile(name: string, res: Doc.Module) {
+	private async addDir(name: string) {
+		await this.doc.update({
+			$push: {
+				dirtree: {
+					_id: nanoid(),
+					type: 'dir',
+					name,
+					children: []
+				}
+			}
+		})
+	}
+
+	private async addFile(name: string) {
 		const file_id = nanoid()
 		const target_id = await this.addTarget(name, file_id)
 
-		res.data.push({
-			_id: file_id,
-			type: 'file',
-			name,
-			target_id
+		await this.doc.update({
+			$push: {
+				dirtree: {
+					_id: file_id,
+					type: 'file',
+					name,
+					target_id
+				}
+			}
 		})
-
-		return await $db.put(res)
 	}
 
 	async add(type: DirTree.Type, name: string) {
-		const [err, res] = await to<Doc.Module>($db.get(this.module))
-
-		if (err) return
-
 		await match({ type })
-			.with({ type: 'dir' }, () => this.addDir(name, res))
-			.with({ type: 'file' }, () => this.addFile(name, res))
+			.with({ type: 'dir' }, () => this.addDir(name))
+			.with({ type: 'file' }, () => this.addFile(name))
 			.exhaustive()
 
 		this.modal_open = false
@@ -74,55 +73,43 @@ export default class Index {
 	async update() {}
 
 	async query() {
-		const [err, res] = await to<Doc.Module>($db.get(this.module))
+		this.doc = (await $db.module
+			.findOne({ selector: { module: this.module } })
+			.exec())! as RxDocument<Module.Item>
 
-		if (err) return
-
-		this.tree = res
-
-		this.getCounts()
+		// this.getCounts()
 	}
 
 	async getCounts() {
-		if (!this.tree.data.length) return
-
-		this.tree.data.map(async (item) => {
-			if (item.type === 'dir') return
-
-			const { docs } = await $db.find({
-				selector: { _id: item.target_id },
-				fields: ['data.angles']
-			})
-
-			item.counts = getFileCounts(this.module, docs[0].data)
-		})
-
-		await $db.put(this.tree)
+		// if (!this.tree.data.length) return
+		// this.tree.data.map(async (item) => {
+		// 	if (item.type === 'dir') return
+		// 	const { docs } = await $db.find({
+		// 		selector: { _id: item.target_id },
+		// 		fields: ['data.angles']
+		// 	})
+		// 	item.counts = getFileCounts(this.module, docs[0].data)
+		// })
+		// await $db.put(this.tree)
 	}
 
-	async init(module: App.ModuleType) {
+	async init(module: App.RealModuleType) {
 		this.module = module
 
-		this.query()
+		await this.query()
+
 		this.on()
 	}
 
 	on() {
+		this.doc.$.subscribe((v) => (this.doc = v))
+
 		$app.Event.on(`${this.module}/getCounts`, this.getCounts)
-
-		this.listener = $db.changes({
-			live: true,
-			since: 'now',
-			include_docs: true,
-			doc_ids: [this.module]
-		})
-
-		this.listener.on('change', ({ doc }) => (this.tree = doc!))
 	}
 
 	off() {
 		$app.Event.off(`${this.module}/getCounts`, this.getCounts)
 
-		this.listener?.cancel()
+		this.doc.destroy()
 	}
 }

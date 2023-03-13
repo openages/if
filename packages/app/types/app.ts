@@ -17,9 +17,12 @@ export namespace App {
 		| 'flow'
 		| 'board'
 		| 'project'
-            | 'table'
+		| 'table'
 		| 'bi'
-		| 'ppt'
+            | 'ppt'
+      
+	/** @maxLength 12 */
+	export type RealModuleType = Exclude<ModuleType, 'widgets'>
 	export type Locales = Flatten<ObjectLocales>
 	export type LocaleKeys = keyof Locales
 }

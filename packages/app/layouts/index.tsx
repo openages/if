@@ -6,6 +6,7 @@ import { IconContext } from 'react-icons'
 import { container } from 'tsyringe'
 
 import { GlobalContext, GlobalModel } from '@/context/app'
+import Loading from '@/loading'
 import { Outlet } from '@umijs/max'
 
 import Sidebar from './component/Sidebar'
@@ -24,9 +25,10 @@ const Index = () => {
 	useLocales()
 
 	useLayoutEffect(() => {
+		global.db.init()
+
 		return () => {
-			$db.compact()
-			$db.viewCleanup()
+			global.db.instance?.destroy()
 		}
 	}, [])
 
@@ -47,6 +49,8 @@ const Index = () => {
 	const props_app: AppProps = {
 		prefixCls: 'if'
 	}
+
+	if (!global.db.ready) return <Loading></Loading>
 
 	return (
 		<ConfigProvider {...props_config_provider}>

@@ -17,7 +17,7 @@ const Index = (props: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const global = useGlobal()
 
-      useLayoutEffect(() => {
+	useLayoutEffect(() => {
 		x.services.init(module)
 
 		return () => x.services.off()
@@ -34,10 +34,10 @@ const Index = (props: IProps) => {
 	const setModalOpen = useMemoizedFn((v: Model['services']['modal_open'], type?: Model['modal_type']) => {
 		x.services.modal_open = v
 		x.modal_type = type || 'file'
-	})
-
+      })
+      
 	const props_dir_items = {
-		data: toJS(x.services.tree?.data || []),
+		data: toJS(x.services.doc?.dirtree || []),
 		current_item: x.current_item,
 		fold_all: x.fold_all,
 		onClick: onItemClick,

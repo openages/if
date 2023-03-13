@@ -1,6 +1,4 @@
-import type { App } from '@/types'
-import type { Doc } from '@/types'
-
+import type { App, RxDB } from '@/types'
 import type { MessageInstance } from 'antd/es/message/interface'
 import type { ModalStaticFunctions } from 'antd/es/modal/confirm'
 import type { NotificationInstance } from 'antd/es/notification/interface'
@@ -19,7 +17,7 @@ declare global {
 		$app: $App
 		$l: App.Locales
 		$locale: App.LocaleType
-		$db: PouchDB.Database<Doc.Content>
+		$db: RxDB.DBContent
 		$message: MessageInstance
 		$notification: NotificationInstance
 		$modal: Omit<ModalStaticFunctions, 'warn'>
@@ -29,7 +27,7 @@ declare global {
 	let $app: $App
 	let $l: App.Locales
 	let $locale: App.LocaleType
-	let $db: PouchDB.Database<Doc.Content>
+	let $db: RxDB.DBContent
 	let $message: MessageInstance
 	let $notification: NotificationInstance
 	let $modal: Omit<ModalStaticFunctions, 'warn'>

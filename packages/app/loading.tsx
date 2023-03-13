@@ -7,7 +7,7 @@ const Index = () => {
 	return (
 		<div
 			className={$cx(
-				'w_100 h_100vh flex justify_center align_center',
+				'w_100vw h_100vh fixed top_0 left_0 flex justify_center align_center',
 				styles._local,
 				styles[local.theme]
 			)}

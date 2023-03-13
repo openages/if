@@ -1,15 +1,11 @@
 export namespace Todo {
-	type Common = {
-		_id: string
-	}
-
-	type Group = Common & {
+	type Group = {
 		type: 'group'
 		title: string
 		children: Array<Todo>
 	}
 
-	type Todo = Common & {
+	type Todo = {
 		type: 'todo'
 		text: string
 		status: 'checked' | 'unchecked' | 'closed'
@@ -18,10 +14,13 @@ export namespace Todo {
 
 	export type TodoItem = Group | Todo
 
-	export interface TodoData {
-		angles: {
-			[key: string]: Array<TodoItem>
-		}
+	export interface Data {
+		/** @maxLength 30 */
+		id: string
+		file_id: string
+		name: string
+		desc?: string
+		angles: { [key: string]: Array<TodoItem> }
 		archive: Array<TodoItem>
 	}
 }
