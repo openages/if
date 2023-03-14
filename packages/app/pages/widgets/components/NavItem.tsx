@@ -13,17 +13,16 @@ const Index = (props: IPropsNavItem) => {
 
 	const LinkItem = (
 		<NavLink
-			className={$cx(
-				'nav_item_wrap border_box flex flex_column align_center clickable',
-				item.line && 'line'
-			)}
+			className={$cx('nav_item_wrap border_box flex align_center clickable relative', item.line && 'line')}
 			to={item.path}
 			key={item.title}
 		>
-			<ModuleIcon className='icon_bar' type={item.title} size={18} weight={icon_weight}></ModuleIcon>
-			<When condition={show_bar_title}>
-				<span className='title'>{l(`nav_title.${item.title}`)}</span>
-			</When>
+			<div className='nav_item flex flex_column align_center'>
+				<ModuleIcon className='icon_bar' type={item.title} size={24} weight={icon_weight}></ModuleIcon>
+				<When condition={show_bar_title}>
+					<span className='title mt_2'>{l(`nav_title.${item.title}`)}</span>
+				</When>
+			</div>
 		</NavLink>
 	)
 

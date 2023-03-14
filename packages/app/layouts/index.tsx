@@ -1,5 +1,4 @@
 import { App, ConfigProvider } from 'antd'
-import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
 import { IconContext } from 'react-icons'
@@ -28,7 +27,7 @@ const Index = () => {
 	useLayoutEffect(() => {
 		global.db.init()
 
-		return () => {
+            return () => {
 			global.db.instance?.destroy()
 		}
 	}, [])

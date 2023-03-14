@@ -27,7 +27,8 @@ export default class Index {
 			storage: wrappedKeyCompressionStorage({
 				storage: wrappedKeyEncryptionCryptoJsStorage({ storage: getRxStorageDexie() })
 			}),
-			cleanupPolicy: { waitForLeadership: false }
+			cleanupPolicy: { waitForLeadership: false },
+			ignoreDuplicate: process.env.NODE_ENV !== 'production'
 		})
 
 		await db.addCollections({
