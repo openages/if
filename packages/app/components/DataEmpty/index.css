@@ -1,7 +1,7 @@
 ._local{
       :global{
             .empty_icon_wrap{
-                  width: 60px;
+                  width: 72px;
                   fill: var(--color_text_grey);
             }
       }

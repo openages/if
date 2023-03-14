@@ -11,7 +11,7 @@ const Index = (props: IPropsDirItems) => {
 
 	return (
 		<div className='dir_tree_wrap w_100 border_box flex flex_column'>
-			<If condition={data?.length}>
+			<If condition={data.length > 0}>
 				<Then>
 					{data.map((item) => (
 						<DirItem

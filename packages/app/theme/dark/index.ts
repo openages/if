@@ -10,7 +10,7 @@ export default {
 	color_border: '#404046',
 	color_border_light: 'rgba(255, 255, 255, 0.036)',
 	color_border_soft: 'rgba(255, 255, 255, 0.018)',
-	shadow: '0 0 1px #666',
-      shadow_right: '1px 0 1px #666',
-	shadow_top: '0 0 1px #666',
+	shadow: '0 0 1px #555',
+      shadow_right: '1px 0 1px #555',
+	shadow_top: '0 0 1px #555',
 }

@@ -9,7 +9,7 @@ import styles from './index.css'
 import type { IPropsOptions } from '../../types'
 
 const Index = (props: IPropsOptions) => {
-	const { focusing_item } = props
+	const { focusing_item, onOptions } = props
 
 	return (
 		<Menu className={styles._local} id='dirtree_options' animation='scale'>
@@ -26,7 +26,7 @@ const Index = (props: IPropsOptions) => {
 					<Item>ghost plan</Item>
 				</Submenu>
 			</When>
-			<Item>
+			<Item onClick={() => onOptions('delete')}>
 				<ContextMenuItem className='red' Icon={Trash} text='删除'></ContextMenuItem>
 			</Item>
 		</Menu>

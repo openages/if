@@ -1,3 +1,4 @@
+import { remove } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import { nanoid } from 'nanoid'
 import { match } from 'ts-pattern'
@@ -73,7 +74,13 @@ export default class Index {
 		this.modal_open = false
 	}
 
-	async delete() {}
+	async delete() {
+		await this.doc.modify((doc) => {
+			remove(doc.dirtree, (item) => item.id === this.focusing_item.id)
+
+			return doc
+		})
+	}
 
 	async update() {}
 
@@ -107,7 +114,7 @@ export default class Index {
 	}
 
 	on() {
-		this.doc.$.subscribe((v) => (this.doc = v))
+		this.doc.$.subscribe((v) => this.doc = v)
 
 		$app.Event.on(`${this.module}/getCounts`, this.getCounts)
 	}

@@ -43,5 +43,6 @@ export interface IPropsModal {
 }
 
 export interface IPropsOptions {
-	focusing_item: Model['services']['focusing_item']
+      focusing_item: Model[ 'services' ][ 'focusing_item' ]
+      onOptions:Model['onOptions']
 }

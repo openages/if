@@ -8,7 +8,7 @@ export namespace DirTree {
 	export type Type = 'dir' | 'file'
 
 	export type Dir = Common & {
-		type: 'dir'
+            type: 'dir'
 		children: Array<File>
 	}
 

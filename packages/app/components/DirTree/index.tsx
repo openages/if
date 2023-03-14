@@ -46,7 +46,7 @@ const Index = (props: IProps) => {
 	})
 
 	const props_dir_items: IPropsDirItems = {
-		data: toJS(x.services.doc?.dirtree || []),
+		data: x.services.doc?.toMutableJSON?.().dirtree || [],
 		current_item: x.current_item,
 		fold_all: x.fold_all,
 		onClick: onItemClick,
@@ -67,7 +67,8 @@ const Index = (props: IProps) => {
 	}
 
 	const props_options: IPropsOptions = {
-		focusing_item: toJS(x.services.focusing_item)
+		focusing_item: toJS(x.services.focusing_item),
+		onOptions: useMemoizedFn(x.onOptions)
 	}
 
 	return (
