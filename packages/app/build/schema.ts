@@ -2,7 +2,7 @@ import fs from 'fs'
 import * as globby from 'globby'
 import * as tsj from 'ts-json-schema-generator'
 
-import handleSchema from '../utils/handleSchema'
+import handleSchema from '../utils/rxdb/handleSchema'
 
 import type { Config } from 'ts-json-schema-generator'
 
@@ -16,7 +16,7 @@ const getConfig = (path: string) => {
 		skipTypeCheck: true,
 		topRef: true,
 		encodeRefs: true,
-		additionalProperties: false,
+		additionalProperties: true,
 		extraTags: ['x_ref']
 	} as Config
 }

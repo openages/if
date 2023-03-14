@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import { nanoid } from 'nanoid'
+import { isRxCollection } from 'rxdb'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
@@ -31,32 +32,36 @@ export default class Index {
 	}
 
 	private async addDir(name: string) {
-		await this.doc.update({
-			$push: {
-				dirtree: {
-					_id: nanoid(),
-					type: 'dir',
-					name,
-					children: []
+		await this.doc
+			.update({
+				$push: {
+					dirtree: {
+						_id: nanoid(),
+						type: 'dir',
+						name,
+						children: []
+					}
 				}
-			}
-		})
+			})
+			.catch((e) => console.log(e))
 	}
 
 	private async addFile(name: string) {
 		const file_id = nanoid()
 		const target_id = await this.addTarget(name, file_id)
 
-		await this.doc.update({
-			$push: {
-				dirtree: {
-					_id: file_id,
-					type: 'file',
-					name,
-					target_id
+		await this.doc
+			.update({
+				$push: {
+					dirtree: {
+						_id: file_id,
+						type: 'file',
+						name,
+						target_id
+					}
 				}
-			}
-		})
+			})
+			.catch((e) => console.log(e))
 	}
 
 	async add(type: DirTree.Type, name: string) {
@@ -109,7 +114,5 @@ export default class Index {
 
 	off() {
 		$app.Event.off(`${this.module}/getCounts`, this.getCounts)
-
-		this.doc.destroy()
 	}
 }

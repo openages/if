@@ -17,15 +17,14 @@ export default {
                               "closed"
                         ]
                   },
-                  "checked_point": {
+                  "achive_time": {
                         "type": "number",
                         "const": 0
                   }
             },
             "required": [
                   "type"
-            ],
-            "additionalProperties": false
+            ]
       },
       "Todo.Data": {
             "type": "object",
@@ -65,15 +64,14 @@ export default {
                                                       "closed"
                                                 ]
                                           },
-                                          "checked_point": {
+                                          "achive_time": {
                                                 "type": "number",
                                                 "const": 0
                                           }
                                     },
                                     "required": [
                                           "type"
-                                    ],
-                                    "additionalProperties": false
+                                    ]
                               }
                         }
                   },
@@ -97,15 +95,14 @@ export default {
                                                 "closed"
                                           ]
                                     },
-                                    "checked_point": {
+                                    "achive_time": {
                                           "type": "number",
                                           "const": 0
                                     }
                               },
                               "required": [
                                     "type"
-                              ],
-                              "additionalProperties": false
+                              ]
                         }
                   }
             },

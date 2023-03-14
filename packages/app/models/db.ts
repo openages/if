@@ -1,7 +1,8 @@
 import { dropRight } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
-import { addRxPlugin, createRxDatabase } from 'rxdb'
+import { createRxDatabase } from 'rxdb'
 import { wrappedKeyEncryptionCryptoJsStorage } from 'rxdb/plugins/encryption-crypto-js'
+import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 import { injectable } from 'tsyringe'
 
@@ -23,7 +24,10 @@ export default class Index {
 		const db = await createRxDatabase<RxDB.DBContent>({
 			name: 'if/db',
 			password: '+13439882350j',
-			storage: wrappedKeyEncryptionCryptoJsStorage({ storage: getRxStorageDexie() })
+			storage: wrappedKeyCompressionStorage({
+				storage: wrappedKeyEncryptionCryptoJsStorage({ storage: getRxStorageDexie() })
+			}),
+			cleanupPolicy: { waitForLeadership: false }
 		})
 
 		await db.addCollections({

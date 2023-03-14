@@ -9,7 +9,7 @@ export namespace Todo {
 		type: 'todo'
 		text: string
 		status: 'checked' | 'unchecked' | 'closed'
-		checked_point: 0
+		achive_time: 0
 	}
 
 	export type TodoItem = Group | Todo
