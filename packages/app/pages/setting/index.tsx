@@ -1,4 +1,4 @@
-import { ColorSelector, NavItems, Normal } from './components'
+import { ColorSelector, Normal } from './components'
 import styles from './index.css'
 
 const Index = () => {
@@ -6,7 +6,6 @@ const Index = () => {
 		<div className={$cx(styles._local, 'w_100 border_box flex flex_column')}>
 			<Normal></Normal>
 			<ColorSelector></ColorSelector>
-			<NavItems></NavItems>
 		</div>
 	)
 }

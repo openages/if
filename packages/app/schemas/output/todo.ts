@@ -4,7 +4,45 @@ export default {
             "properties": {
                   "type": {
                         "type": "string",
-                        "const": "todo"
+                        "enum": [
+                              "group",
+                              "todo"
+                        ]
+                  },
+                  "title": {
+                        "type": "string"
+                  },
+                  "children": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "properties": {
+                                    "type": {
+                                          "type": "string",
+                                          "const": "todo"
+                                    },
+                                    "text": {
+                                          "type": "string"
+                                    },
+                                    "status": {
+                                          "type": "string",
+                                          "enum": [
+                                                "checked",
+                                                "unchecked",
+                                                "closed"
+                                          ]
+                                    },
+                                    "achive_time": {
+                                          "type": "number"
+                                    }
+                              },
+                              "required": [
+                                    "achive_time",
+                                    "status",
+                                    "text",
+                                    "type"
+                              ]
+                        }
                   },
                   "text": {
                         "type": "string"
@@ -18,8 +56,7 @@ export default {
                         ]
                   },
                   "achive_time": {
-                        "type": "number",
-                        "const": 0
+                        "type": "number"
                   }
             },
             "required": [
@@ -51,7 +88,45 @@ export default {
                                     "properties": {
                                           "type": {
                                                 "type": "string",
-                                                "const": "todo"
+                                                "enum": [
+                                                      "group",
+                                                      "todo"
+                                                ]
+                                          },
+                                          "title": {
+                                                "type": "string"
+                                          },
+                                          "children": {
+                                                "type": "array",
+                                                "items": {
+                                                      "type": "object",
+                                                      "properties": {
+                                                            "type": {
+                                                                  "type": "string",
+                                                                  "const": "todo"
+                                                            },
+                                                            "text": {
+                                                                  "type": "string"
+                                                            },
+                                                            "status": {
+                                                                  "type": "string",
+                                                                  "enum": [
+                                                                        "checked",
+                                                                        "unchecked",
+                                                                        "closed"
+                                                                  ]
+                                                            },
+                                                            "achive_time": {
+                                                                  "type": "number"
+                                                            }
+                                                      },
+                                                      "required": [
+                                                            "achive_time",
+                                                            "status",
+                                                            "text",
+                                                            "type"
+                                                      ]
+                                                }
                                           },
                                           "text": {
                                                 "type": "string"
@@ -65,8 +140,7 @@ export default {
                                                 ]
                                           },
                                           "achive_time": {
-                                                "type": "number",
-                                                "const": 0
+                                                "type": "number"
                                           }
                                     },
                                     "required": [
@@ -82,7 +156,45 @@ export default {
                               "properties": {
                                     "type": {
                                           "type": "string",
-                                          "const": "todo"
+                                          "enum": [
+                                                "group",
+                                                "todo"
+                                          ]
+                                    },
+                                    "title": {
+                                          "type": "string"
+                                    },
+                                    "children": {
+                                          "type": "array",
+                                          "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                      "type": {
+                                                            "type": "string",
+                                                            "const": "todo"
+                                                      },
+                                                      "text": {
+                                                            "type": "string"
+                                                      },
+                                                      "status": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                  "checked",
+                                                                  "unchecked",
+                                                                  "closed"
+                                                            ]
+                                                      },
+                                                      "achive_time": {
+                                                            "type": "number"
+                                                      }
+                                                },
+                                                "required": [
+                                                      "achive_time",
+                                                      "status",
+                                                      "text",
+                                                      "type"
+                                                ]
+                                          }
                                     },
                                     "text": {
                                           "type": "string"
@@ -96,8 +208,7 @@ export default {
                                           ]
                                     },
                                     "achive_time": {
-                                          "type": "number",
-                                          "const": 0
+                                          "type": "number"
                                     }
                               },
                               "required": [

@@ -13,7 +13,10 @@ const Index = (props: IPropsNavItem) => {
 
 	const LinkItem = (
 		<NavLink
-			className='nav_item_wrap border_box flex flex_column align_center clickable'
+			className={$cx(
+				'nav_item_wrap border_box flex flex_column align_center clickable',
+				item.line && 'line'
+			)}
 			to={item.path}
 			key={item.title}
 		>
@@ -31,7 +34,7 @@ const Index = (props: IPropsNavItem) => {
 			title={l(`nav_title.${item.title}`)}
 			placement='bottom'
 			destroyTooltipOnHide
-                  getTooltipContainer={ () => document.body }
+			getTooltipContainer={() => document.body}
 		>
 			{LinkItem}
 		</Tooltip>

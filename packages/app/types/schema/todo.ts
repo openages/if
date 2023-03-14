@@ -1,15 +1,17 @@
 export namespace Todo {
-	type Group = {
+	type Common = {}
+
+	type Group = Common & {
 		type: 'group'
 		title: string
 		children: Array<Todo>
 	}
 
-	type Todo = {
+	type Todo = Common & {
 		type: 'todo'
 		text: string
 		status: 'checked' | 'unchecked' | 'closed'
-		achive_time: 0
+		achive_time: number
 	}
 
 	export type TodoItem = Group | Todo

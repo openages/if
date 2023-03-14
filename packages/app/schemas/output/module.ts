@@ -27,13 +27,43 @@ export default {
                               "properties": {
                                     "type": {
                                           "type": "string",
-                                          "const": "file"
+                                          "enum": [
+                                                "dir",
+                                                "file"
+                                          ]
                                     },
-                                    "target_id": {
-                                          "type": "string"
-                                    },
-                                    "counts": {
-                                          "type": "number"
+                                    "children": {
+                                          "type": "array",
+                                          "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                      "type": {
+                                                            "type": "string",
+                                                            "const": "file"
+                                                      },
+                                                      "target_id": {
+                                                            "type": "string"
+                                                      },
+                                                      "counts": {
+                                                            "type": "number"
+                                                      },
+                                                      "id": {
+                                                            "type": "string"
+                                                      },
+                                                      "name": {
+                                                            "type": "string"
+                                                      },
+                                                      "icon": {
+                                                            "type": "string"
+                                                      }
+                                                },
+                                                "required": [
+                                                      "id",
+                                                      "name",
+                                                      "target_id",
+                                                      "type"
+                                                ]
+                                          }
                                     },
                                     "id": {
                                           "type": "string"
@@ -43,6 +73,12 @@ export default {
                                     },
                                     "icon": {
                                           "type": "string"
+                                    },
+                                    "target_id": {
+                                          "type": "string"
+                                    },
+                                    "counts": {
+                                          "type": "number"
                                     }
                               },
                               "required": [
@@ -81,13 +117,43 @@ export default {
             "properties": {
                   "type": {
                         "type": "string",
-                        "const": "file"
+                        "enum": [
+                              "dir",
+                              "file"
+                        ]
                   },
-                  "target_id": {
-                        "type": "string"
-                  },
-                  "counts": {
-                        "type": "number"
+                  "children": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "properties": {
+                                    "type": {
+                                          "type": "string",
+                                          "const": "file"
+                                    },
+                                    "target_id": {
+                                          "type": "string"
+                                    },
+                                    "counts": {
+                                          "type": "number"
+                                    },
+                                    "id": {
+                                          "type": "string"
+                                    },
+                                    "name": {
+                                          "type": "string"
+                                    },
+                                    "icon": {
+                                          "type": "string"
+                                    }
+                              },
+                              "required": [
+                                    "id",
+                                    "name",
+                                    "target_id",
+                                    "type"
+                              ]
+                        }
                   },
                   "id": {
                         "type": "string"
@@ -97,6 +163,12 @@ export default {
                   },
                   "icon": {
                         "type": "string"
+                  },
+                  "target_id": {
+                        "type": "string"
+                  },
+                  "counts": {
+                        "type": "number"
                   }
             },
             "required": [

@@ -5,6 +5,7 @@ import { useLayoutEffect, useState } from 'react'
 import { IconContext } from 'react-icons'
 import { container } from 'tsyringe'
 
+import { nav_items } from '@/appdata'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import Loading from '@/loading'
 import { Outlet } from '@umijs/max'
@@ -34,9 +35,9 @@ const Index = () => {
 
 	const props_sidebar: IPropsSidebar = {
 		theme: global.setting.theme,
-		nav_items: toJS(global.setting.nav_items),
 		show_bar_title: global.setting.show_bar_title,
-		avatar: global.user.avatar
+		avatar: global.user.avatar,
+		nav_items
 	}
 
 	const props_config_provider: ConfigProviderProps = {

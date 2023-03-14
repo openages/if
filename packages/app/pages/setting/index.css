@@ -33,33 +33,6 @@
 					}
 				}
 
-				.nav_item_wrap {
-					width: calc(100% / 4);
-					padding: 6px;
-                              line-height: 1;
-                              fill: var(--color_text);
-
-					.nav_item {
-						width: 100%;
-						padding: 12px 0;
-						border-radius: var(--radius_large);
-
-						&.checked {
-							background-color: var(--color_bg);
-						}
-
-						&.readonly {
-							cursor: not-allowed;
-							border-color: var(--color_border);
-
-							.icon_bar,
-							.sidebar_item_title {
-								opacity: 0.3;
-							}
-						}
-					}
-				}
-
                         .color_item_wrap{
                               width: 24px;
                               height: 24px;

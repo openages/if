@@ -1,14 +1,22 @@
-import { intersection } from 'lodash-es'
+import { intersection, mergeWith, omit } from 'lodash-es'
+
+const mergeWithHandler = (value: any, srcValue: any, key: string, object: any, source: any) => {
+	if (value && srcValue && value['const']) {
+		return { ...omit(value, 'const'), enum: [value['const'], srcValue['const']] }
+	}
+
+	if (value && srcValue && value['enum']) {
+		return { ...value, enum: [...value['enum'], ...srcValue['enum']] }
+	}
+
+	if (key === 'required' && value && srcValue) {
+		return intersection(value, srcValue)
+	}
+}
 
 const mergeAnyOf = (arr: Array<any>) => {
 	return arr.reduce((total, item) => {
-		if (total['required'] && item['required']) {
-			total = { ...total, ...item, required: intersection(total['required'], item['required']) }
-		} else {
-			total = { ...total, ...item }
-		}
-
-		return total
+		return mergeWith(total, item, mergeWithHandler)
 	}, {} as any)
 }
 

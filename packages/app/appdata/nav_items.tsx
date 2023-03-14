@@ -1,5 +1,7 @@
 import { GearSix, Users } from '@phosphor-icons/react'
 
+import type { App } from '@/types'
+
 export default [
 	{
 		title: 'todo',
@@ -48,7 +50,8 @@ export const bottom_items = [
 export const widgets = [
 	{
 		title: 'schedule',
-		path: '/widgets/layout/schedule'
+		path: '/widgets/layout/schedule',
+		line: true
 	},
 	{
 		title: 'kanban',
@@ -64,13 +67,14 @@ export const widgets = [
 	},
 	{
 		title: 'project',
-		path: '/widgets/layout/project'
+		path: '/widgets/layout/project',
+		line: true
 	},
 	{
 		title: 'table',
 		path: '/widgets/layout/table'
-      },
-      {
+	},
+	{
 		title: 'bi',
 		path: '/widgets/layout/bi'
 	},
@@ -78,4 +82,4 @@ export const widgets = [
 		title: 'ppt',
 		path: '/widgets/layout/ppt'
 	}
-] as const
+] as Array<{ title: App.RealModuleType; path: string; line?: boolean }>

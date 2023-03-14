@@ -8,5 +8,5 @@ addRxPlugin(RxDBUpdatePlugin)
 addRxPlugin(RxDBcrdtPlugin)
 
 if (process.env.NODE_ENV !== 'production') {
-	// import('rxdb/plugins/dev-mode').then(({ RxDBDevModePlugin }) => addRxPlugin(RxDBDevModePlugin))
+	import('rxdb/plugins/dev-mode').then(({ RxDBDevModePlugin }) => addRxPlugin(RxDBDevModePlugin))
 }
