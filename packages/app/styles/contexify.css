@@ -1,0 +1,36 @@
+:root {
+	--contexify-menu-bgColor: var(--color_bg);
+	--contexify-separator-color: var(--color_border_light);
+	--contexify-item-color: var(--color_text);
+	--contexify-activeItem-color: var(--color_text);
+	--contexify-activeItem-bgColor: var(--color_bg_2);
+	--contexify-rightSlot-color: var(--color_text_grey);
+	--contexify-activeRightSlot-color: var(--color_text);
+	--contexify-arrow-color: var(--color_text_grey);
+	--contexify-activeArrow-color: var(--color_text);
+}
+
+[data-theme='dark'] {
+	--contexify-menu-bgColor: var(--color_bg_1);
+}
+
+.contexify {
+	min-width: 120px;
+	padding: 3px;
+	box-shadow: var(--shadow);
+	font-size: 13px;
+	box-sizing: border-box;
+
+	&_separator {
+		margin: 3px 0;
+	}
+
+	.contexify_item {
+		border-radius: 0;
+
+		&Content {
+			padding: 6px;
+			box-sizing: border-box;
+		}
+	}
+}

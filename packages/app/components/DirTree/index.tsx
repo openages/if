@@ -2,20 +2,23 @@ import { useMemoizedFn } from 'ahooks'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
+import { useContextMenu } from 'react-contexify'
 import { When } from 'react-if'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
 
-import { Actions, DirItems, DragLine, Modal, Search } from './components'
+import { Actions, DirItems, DragLine, Modal, Options, Search } from './components'
 import styles from './index.css'
 import Model from './model'
 
-import type { IProps, IPropsActions, IPropsModal } from './types'
+import type { IProps, IPropsActions, IPropsModal, IPropsDirItems, IPropsOptions } from './types'
+
 const Index = (props: IProps) => {
 	const { module, height = '100vh', onClick } = props
 	const [x] = useState(() => container.resolve(Model))
 	const global = useGlobal()
+	const { show } = useContextMenu({ id: 'dirtree_options' })
 
 	useLayoutEffect(() => {
 		x.services.init(module)
@@ -34,14 +37,21 @@ const Index = (props: IProps) => {
 	const setModalOpen = useMemoizedFn((v: Model['services']['modal_open'], type?: Model['modal_type']) => {
 		x.services.modal_open = v
 		x.modal_type = type || 'file'
-      })
-      
-	const props_dir_items = {
+	})
+
+	const showDirTreeOptions = useMemoizedFn((e, v) => {
+		x.services.focusing_item = v
+
+		show({ event: e })
+	})
+
+	const props_dir_items: IPropsDirItems = {
 		data: toJS(x.services.doc?.dirtree || []),
 		current_item: x.current_item,
 		fold_all: x.fold_all,
 		onClick: onItemClick,
-		setFoldAll
+		setFoldAll,
+		showDirTreeOptions
 	}
 
 	const props_actions: IPropsActions = {
@@ -54,6 +64,10 @@ const Index = (props: IProps) => {
 		modal_type: x.modal_type,
 		add: useMemoizedFn(x.services.add),
 		setModalOpen
+	}
+
+	const props_options: IPropsOptions = {
+		focusing_item: toJS(x.services.focusing_item)
 	}
 
 	return (
@@ -74,6 +88,7 @@ const Index = (props: IProps) => {
 				<Actions {...props_actions}></Actions>
 				<Modal {...props_modal}></Modal>
 			</When>
+			<Options {...props_options}></Options>
 		</div>
 	)
 }

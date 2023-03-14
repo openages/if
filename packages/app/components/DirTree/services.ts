@@ -1,6 +1,5 @@
 import { makeAutoObservable } from 'mobx'
 import { nanoid } from 'nanoid'
-import { isRxCollection } from 'rxdb'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
@@ -14,6 +13,7 @@ export default class Index {
 	module = '' as App.RealModuleType
 	modal_open = false
 	doc = {} as RxDocument<Module.Item>
+	focusing_item = {} as DirTree.Item
 
 	constructor() {
 		makeAutoObservable(this, {}, { autoBind: true })
@@ -36,7 +36,7 @@ export default class Index {
 			.update({
 				$push: {
 					dirtree: {
-						_id: nanoid(),
+						id: nanoid(),
 						type: 'dir',
 						name,
 						children: []
@@ -54,7 +54,7 @@ export default class Index {
 			.update({
 				$push: {
 					dirtree: {
-						_id: file_id,
+						id: file_id,
 						type: 'file',
 						name,
 						target_id
@@ -90,7 +90,7 @@ export default class Index {
 		// this.tree.data.map(async (item) => {
 		// 	if (item.type === 'dir') return
 		// 	const { docs } = await $db.find({
-		// 		selector: { _id: item.target_id },
+		// 		selector: { id: item.target_id },
 		// 		fields: ['data.angles']
 		// 	})
 		// 	item.counts = getFileCounts(this.module, docs[0].data)

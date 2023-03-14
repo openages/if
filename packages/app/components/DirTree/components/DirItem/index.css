@@ -3,12 +3,13 @@
 		.item_wrap {
 			padding: 9px 18px;
 
-                  &:hover {
+			&:hover,
+			&.active {
 				background-color: var(--color_bg_1);
 			}
 
-			&.active {
-				background-color: var(--color_bg_1);
+			&:context-menu {
+				background-color: red;
 			}
 
 			.left_icon_wrap {
@@ -19,7 +20,7 @@
 
 			.title_wrap {
 				width: calc(100% - 24px - 36px);
-                        overflow: hidden;
+				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
 				user-select: none;
@@ -33,15 +34,15 @@
 				color: var(--color_text_grey);
 				text-align: right;
 				font-size: 12px;
-                        user-select: none;
+				user-select: none;
 
-                        .icon_fold{
-                              margin-right: -2px;
-                              
-                              &.opened{
-                                    transform: rotate(90deg);
-                              }
-                        }
+				.icon_fold {
+					margin-right: -2px;
+
+					&.opened {
+						transform: rotate(90deg);
+					}
+				}
 			}
 		}
 

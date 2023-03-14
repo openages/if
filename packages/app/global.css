@@ -1,3 +1,5 @@
+@import 'react-contexify/dist/ReactContexify.css';
 @import './styles/vars.css';
 @import './styles/class.css';
+@import './styles/contexify.css';
 @import './theme/custom/antd.css';

@@ -11,24 +11,25 @@ import styles from './index.css'
 import type { IPropsDirItem } from '../../types'
 
 const Index = (props: IPropsDirItem) => {
-	const { _id, name, type, current_item, fold_all, onClick, setFoldAll } = props
+	const { item, current_item, fold_all, onClick, setFoldAll, showDirTreeOptions } = props
+	const { id, name, type } = item
 	const [open, setOpen] = useState(false)
 
 	const onItem = useMemoizedFn(() => {
 		if (type === 'dir') return setOpen(!open)
 
-		onClick(_id)
+		onClick(id)
 	})
 
 	const LeftIcon = useDeepMemo(() => {
-		return match(props)
+		return match(item)
 			.with({ type: 'dir' }, () => <DiceFour size={16} />)
 			.with({ type: 'file', icon: P.optional(P.nullish) }, () => <ListBullets size={16} />)
 			.otherwise(({ icon }) => icon)
-	}, [props])
+	}, [item])
 
 	const RightIcon = useDeepMemo(() => {
-		return match({ ...props, open })
+		return match({ ...item, open })
 			.with({ type: 'dir', open: P.select() }, (open) => (
 				<CaretRight
 					className={$cx('icon_fold transition_normal', open && 'opened')}
@@ -38,16 +39,17 @@ const Index = (props: IPropsDirItem) => {
 			))
 			.with({ type: 'file' }, ({ counts }) => counts)
 			.otherwise(() => '')
-	}, [props, open])
+	}, [item, open])
 
 	return (
 		<div className={$cx('w_100 border_box flex flex_column', styles._local)}>
 			<div
 				className={$cx(
 					'item_wrap w_100 border_box flex align_center relative transition_normal cursor_point',
-					type === 'file' && current_item === _id && 'active'
+					type === 'file' && current_item === id && 'active'
 				)}
 				onClick={onItem}
+				onContextMenu={(e) => showDirTreeOptions(e, item)}
 			>
 				<div className='left_icon_wrap flex justify_center align_center'>{LeftIcon}</div>
 				<span className={$cx('title_wrap')}>{name}</span>
@@ -62,11 +64,11 @@ const Index = (props: IPropsDirItem) => {
 						exit={{ opacity: 0, height: 0 }}
 						transition={{ duration: 0.18 }}
 					>
-						{props.children?.map((it) => (
+						{item.children?.map((it) => (
 							<Index
-								{...it}
-								{...{ current_item, fold_all, onClick, setFoldAll }}
-								key={it._id}
+								{...{ current_item, fold_all, onClick, setFoldAll, showDirTreeOptions }}
+								item={it}
+								key={it.id}
 							></Index>
 						))}
 					</motion.div>

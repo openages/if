@@ -1,21 +1,15 @@
 interface IProps {
 	className?: HTMLDivElement['className']
 	size?: number
-      color?: string
+	color?: string
 }
 
 const Index = (props: IProps) => {
 	const { className, size = 48, color = 'var(--color_main)' } = props
 
 	return (
-		<div className={$cx('flex', className)} style={{ maxWidth: size, fill: color }}>
-			<svg
-				className='w_100 h_100'
-				xmlns='http://www.w3.org/2000/svg'
-				width='300'
-				height='300'
-				viewBox='0 0 300 300'
-			>
+		<div className={$cx('flex', className)} style={{ width: size, height: size, fill: color }}>
+			<svg xmlns='http://www.w3.org/2000/svg' width='300' height='100%' viewBox='0 0 300 300'>
 				<g id='i'>
 					<g id='组_4' data-name='组 4'>
 						<rect

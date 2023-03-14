@@ -4,5 +4,6 @@ export { default as ModuleIcon } from './ModuleIcon'
 export { default as DirTree } from './DirTree'
 export { default as DataEmpty } from './DataEmpty'
 export { default as SimpleEmpty } from './SimpleEmpty'
+export { default as ContextMenuItem } from './ContextMenuItem'
 
-export type { IProps as IPropsDirTree, Item as DirTreeItem } from './DirTree/types'
+export type { IProps as IPropsDirTree } from './DirTree/types'
