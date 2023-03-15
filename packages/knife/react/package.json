@@ -1,0 +1,6 @@
+{
+      "name": "knife-react",
+      "main": "../dist/react/index.js",
+      "module": "../dist/react/index.js",
+      "types": "../dist/react/index.d.ts"
+}

@@ -1,6 +1,6 @@
 {
       "name": "@matrixages/knife",
-      "version": "1.1.1",
+      "version": "1.2.0",
       "description": "Util collections for react, nodejs, web.",
       "author": "Wendao",
       "license": "MIT",
@@ -28,6 +28,7 @@
             }
       },
       "files": [
+            "./dist",
             "./node",
             "./react",
             "./storage",
@@ -36,10 +37,8 @@
             "./README.md"
       ],
       "scripts": {
-            "clear": "tsx ./build/clear.ts",
-            "move": "tsx ./build/after.ts",
             "dev": "rollup --c rollup.dev.ts --configPlugin swc3 -w",
-            "build": "pnpm run clear && rollup --c rollup.build.ts --configPlugin swc3 && tsc && pnpm run move",
+            "build": "rollup --c rollup.build.ts --configPlugin swc3 && tsc",
             "exec": "rollup --c rollup.build.ts --configPlugin swc3 && node dist"
       },
       "keywords": [
