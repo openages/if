@@ -24,11 +24,12 @@ export default class Index {
 		const db = await createRxDatabase<RxDB.DBContent>({
 			name: 'if/db',
 			password: '+13439882350j',
+			eventReduce: true,
+			cleanupPolicy: { waitForLeadership: false },
+			ignoreDuplicate: process.env.NODE_ENV !== 'production',
 			storage: wrappedKeyCompressionStorage({
 				storage: wrappedKeyEncryptionCryptoJsStorage({ storage: getRxStorageDexie() })
-			}),
-			cleanupPolicy: { waitForLeadership: false },
-			ignoreDuplicate: process.env.NODE_ENV !== 'production'
+			})
 		})
 
 		await db.addCollections({
