@@ -70,9 +70,6 @@ export default {
                         "type": "string",
                         "maxLength": 30
                   },
-                  "file_id": {
-                        "type": "string"
-                  },
                   "name": {
                         "type": "string"
                   },
@@ -150,76 +147,11 @@ export default {
                         }
                   },
                   "archive": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "type": {
-                                          "type": "string",
-                                          "enum": [
-                                                "group",
-                                                "todo"
-                                          ]
-                                    },
-                                    "title": {
-                                          "type": "string"
-                                    },
-                                    "children": {
-                                          "type": "array",
-                                          "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                      "type": {
-                                                            "type": "string",
-                                                            "const": "todo"
-                                                      },
-                                                      "text": {
-                                                            "type": "string"
-                                                      },
-                                                      "status": {
-                                                            "type": "string",
-                                                            "enum": [
-                                                                  "checked",
-                                                                  "unchecked",
-                                                                  "closed"
-                                                            ]
-                                                      },
-                                                      "achive_time": {
-                                                            "type": "number"
-                                                      }
-                                                },
-                                                "required": [
-                                                      "achive_time",
-                                                      "status",
-                                                      "text",
-                                                      "type"
-                                                ]
-                                          }
-                                    },
-                                    "text": {
-                                          "type": "string"
-                                    },
-                                    "status": {
-                                          "type": "string",
-                                          "enum": [
-                                                "checked",
-                                                "unchecked",
-                                                "closed"
-                                          ]
-                                    },
-                                    "achive_time": {
-                                          "type": "number"
-                                    }
-                              },
-                              "required": [
-                                    "type"
-                              ]
-                        }
+                        "type": "string"
                   }
             },
             "required": [
                   "id",
-                  "file_id",
                   "name",
                   "angles",
                   "archive"

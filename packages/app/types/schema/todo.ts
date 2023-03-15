@@ -19,10 +19,9 @@ export namespace Todo {
 	export interface Data {
 		/** @maxLength 30 */
 		id: string
-		file_id: string
 		name: string
 		desc?: string
 		angles: { [key: string]: Array<TodoItem> }
-		archive: Array<TodoItem>
+		archive: string
 	}
 }

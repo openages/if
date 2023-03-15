@@ -4,10 +4,12 @@ import { nanoid } from 'nanoid'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
-import { getFileCounts, getPresetData } from '@/utils'
+import { getFileCounts } from '@/utils'
+
+import { addTargetTodo, deleteTargetTodo } from './utils'
 
 import type { RxDocument } from 'rxdb'
-import type { App, DirTree, Module, Todo } from '@/types'
+import type { App, DirTree, Module } from '@/types'
 
 @injectable()
 export default class Index {
@@ -21,15 +23,9 @@ export default class Index {
 	}
 
 	private async addTarget(name: string, file_id: string) {
-		const res = (await $db.collections.todo.insert({
-			id: nanoid(),
-			file_id,
-			name,
-			angles: getPresetData(this.module) as any,
-			archive: []
-		})) as RxDocument<Todo.Data>
-
-		return res.toJSON().id
+		return match(this.module)
+			.with('todo', () => addTargetTodo(name, file_id))
+			.otherwise(() => {})
 	}
 
 	private async addDir(name: string) {
@@ -80,6 +76,12 @@ export default class Index {
 
 			return doc
 		})
+
+		if (this.focusing_item.type !== 'file') return
+
+		return match(this.module)
+			.with('todo', () => deleteTargetTodo(this.focusing_item.id))
+			.otherwise(() => {})
 	}
 
 	async update() {}
@@ -114,7 +116,7 @@ export default class Index {
 	}
 
 	on() {
-		this.doc.$.subscribe((v) => this.doc = v)
+		this.doc.$.subscribe((v) => (this.doc = v))
 
 		$app.Event.on(`${this.module}/getCounts`, this.getCounts)
 	}

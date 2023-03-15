@@ -32,8 +32,8 @@ export default class Index {
 		})
 
 		await db.addCollections({
-			module: { schema: schema_module },
-			todo: { schema: schema_todo }
+			module: { schema: schema_module, autoMigrate: true },
+			todo: { schema: schema_todo, autoMigrate: true }
 		})
 
 		window.$db = db
