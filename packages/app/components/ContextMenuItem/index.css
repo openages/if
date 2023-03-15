@@ -1,0 +1,12 @@
+._local {
+	padding: 6px;
+	border-radius: var(--radius);
+
+	:global {
+		.bg_danger_wrap {
+                  z-index: 1;
+			border-radius: var(--radius);
+                  transition: width ease 0.1s;
+		}
+	}
+}

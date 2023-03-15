@@ -29,8 +29,9 @@
 		border-radius: 0;
 
 		&Content {
-			padding: 6px;
+			padding: 0;
 			box-sizing: border-box;
+			display: flex;
 		}
 	}
 }

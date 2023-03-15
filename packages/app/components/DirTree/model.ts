@@ -21,14 +21,7 @@ export default class Index {
 
 		match(type)
 			.with('rename', () => {})
-			.with('delete', () => {
-				$modal.confirm({
-					title: `确认删除当前${this.services.focusing_item.type === 'dir' ? '组' : '列表'}`,
-					onOk() {
-						_this.services.delete()
-					}
-				})
-			})
+			.with('delete', () => _this.services.delete())
 			.exhaustive()
 	}
 }
