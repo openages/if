@@ -4,15 +4,14 @@ export default {
 	note: 'Note',
 	pomodoro: 'Pomo',
 	widgets: 'Widgets',
+	schedule: 'Schedule',
 	kanban: 'Kanban',
 	flow: 'Flow',
 	board: 'Board',
       project: 'Project',
       table: 'Table',
       bi: 'BI',
-      ppt: 'PPT',
-	schedule: 'Schedule',
-	habbit: 'Habbit',
+	ppt: 'PPT',
 	collaboration: 'Collaboration',
 	setting: 'Setting'
 }

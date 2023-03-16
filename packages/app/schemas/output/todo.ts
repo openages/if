@@ -1,7 +1,6 @@
 export default {
       "Todo.TodoItem": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
                   "type": {
                         "type": "string",
@@ -17,7 +16,6 @@ export default {
                         "type": "array",
                         "items": {
                               "type": "object",
-                              "additionalProperties": false,
                               "properties": {
                                     "type": {
                                           "type": "string",
