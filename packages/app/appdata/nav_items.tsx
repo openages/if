@@ -6,31 +6,23 @@ export default [
 	{
 		title: 'todo',
 		path: '/',
-		checked: true,
-		readonly: true
 	},
 	{
 		title: 'memo',
 		path: '/memo',
-		checked: true,
-		readonly: true
 	},
 	{
 		title: 'note',
 		path: '/note',
-		checked: true,
-		readonly: true
 	},
 	{
 		title: 'pomodoro',
 		path: '/pomodoro',
-		checked: true
 	},
 	{
 		title: 'widgets',
-		match: '/widgets/layout',
-		path: '/widgets/layout/schedule',
-		checked: true
+		match: '/widgets',
+		path: '/widgets',
 	}
 ] as const
 
@@ -48,11 +40,7 @@ export const bottom_items = [
 ] as const
 
 export const widgets = [
-	{
-		title: 'schedule',
-		path: '/widgets/layout/schedule',
-		line: true
-	},
+
 	{
 		title: 'kanban',
 		path: '/widgets/layout/kanban'
@@ -80,6 +68,15 @@ export const widgets = [
 	},
 	{
 		title: 'ppt',
-		path: '/widgets/layout/ppt'
+            path: '/widgets/layout/ppt',
+		line: true
+      },
+      {
+		title: 'schedule',
+		path: '/widgets/layout/schedule',
+      },
+      {
+		title: 'habbit',
+		path: '/widgets/layout/habbit',
 	}
 ] as Array<{ title: App.RealModuleType; path: string; line?: boolean }>

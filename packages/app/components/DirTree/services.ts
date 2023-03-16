@@ -29,15 +29,13 @@ export default class Index {
 
 	private async addDir(name: string) {
 		await this.doc
-			.updateCRDT({
-				ifMatch: {
-					$push: {
-						dirtree: {
-							id: id(),
-							type: 'dir',
-							name,
-							children: []
-						}
+			.incrementalUpdate({
+				$push: {
+					dirtree: {
+						id: id(),
+						type: 'dir',
+						name,
+						children: []
 					}
 				}
 			})
@@ -45,19 +43,17 @@ export default class Index {
 	}
 
 	private async addFile(name: string) {
-            const file_id = id()
-            
+		const file_id = id()
+
 		await this.addTarget(name, file_id)
 
 		await this.doc
-			.updateCRDT({
-				ifMatch: {
-					$push: {
-						dirtree: {
-							id: file_id,
-							type: 'file',
-							name,
-						}
+			.incrementalUpdate({
+				$push: {
+					dirtree: {
+						id: file_id,
+						type: 'file',
+						name
 					}
 				}
 			})
@@ -74,16 +70,10 @@ export default class Index {
 	}
 
 	async delete() {
-		const dirtree = cloneDeep(this.doc.dirtree)
+		await this.doc.incrementalModify((doc) => {
+			remove(doc.dirtree, (item) => item.id === this.focusing_item.id)
 
-		remove(dirtree, (item) => item.id === this.focusing_item.id)
-
-		await this.doc.updateCRDT({
-			ifMatch: {
-				$set: {
-					dirtree
-				}
-			}
+			return doc
 		})
 
 		if (this.focusing_item.type !== 'file') return
