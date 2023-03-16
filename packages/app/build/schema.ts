@@ -16,7 +16,7 @@ const getConfig = (path: string) => {
 		skipTypeCheck: true,
 		topRef: true,
 		encodeRefs: true,
-		additionalProperties: true,
+		additionalProperties: false,
 		extraTags: ['x_ref']
 	} as Config
 }

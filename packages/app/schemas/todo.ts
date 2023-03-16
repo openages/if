@@ -7,7 +7,7 @@ import type { RxCollection, ExtractDocumentTypeFromTypedRxJsonSchema, RxJsonSche
 const schema = toTypedRxJsonSchema({
 	version: 0,
 	primaryKey: 'id',
-	keyCompression: true,
+	// keyCompression: true,
 	encrypted: ['name', 'desc', 'angles', 'tags'],
 	...schema_raw['Todo.Data']
 } as const)
