@@ -13,6 +13,7 @@ export interface IProps {
 }
 
 export interface IPropsDirItems {
+	module: App.RealModuleType
 	data: Model['services']['doc']['dirtree']
 	current_item: string
 	fold_all: Model['fold_all']
@@ -22,6 +23,7 @@ export interface IPropsDirItems {
 }
 
 export type IPropsDirItem = {
+	module: App.RealModuleType
 	item: DirTree.Item
 	current_item: string
 	fold_all: Model['fold_all']

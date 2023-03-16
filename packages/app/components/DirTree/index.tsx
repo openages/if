@@ -48,6 +48,7 @@ const Index = (props: IProps) => {
 	})
 
 	const props_dir_items: IPropsDirItems = {
+		module: x.services.module,
 		data: dirtree,
 		current_item: x.current_item,
 		fold_all: x.fold_all,

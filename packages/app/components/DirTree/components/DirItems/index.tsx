@@ -7,7 +7,7 @@ import DirItem from '../DirItem'
 import type { IPropsDirItems } from '../../types'
 
 const Index = (props: IPropsDirItems) => {
-	const { data, current_item, fold_all, onClick, setFoldAll, showDirTreeOptions } = props
+	const { module, data, current_item, fold_all, onClick, setFoldAll, showDirTreeOptions } = props
 
 	return (
 		<div className={$cx('dir_tree_wrap w_100 border_box flex flex_column', !data.length && 'empty')}>
@@ -15,7 +15,15 @@ const Index = (props: IPropsDirItems) => {
 				<Then>
 					{data.map((item) => (
 						<DirItem
-							{...{ item, current_item, fold_all, onClick, setFoldAll, showDirTreeOptions }}
+							{...{
+								module,
+								item,
+								current_item,
+								fold_all,
+								onClick,
+								setFoldAll,
+								showDirTreeOptions
+							}}
 							key={item.id}
 						></DirItem>
 					))}
