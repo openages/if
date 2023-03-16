@@ -27,8 +27,8 @@ export default class Index {
 			eventReduce: true,
 			cleanupPolicy: { waitForLeadership: false },
 			ignoreDuplicate: process.env.NODE_ENV !== 'production',
-			storage: wrappedKeyCompressionStorage({
-				storage: wrappedKeyEncryptionCryptoJsStorage({ storage: getRxStorageDexie() })
+			storage: wrappedKeyEncryptionCryptoJsStorage({
+				storage: wrappedKeyCompressionStorage({ storage: getRxStorageDexie() })
 			})
 		})
 
@@ -39,6 +39,10 @@ export default class Index {
 
 		window.$db = db
 		this.instance = db
+
+		// await $db.todo.remove().catch((e) => {
+		// 	console.warn(e)
+		// })
 
 		this.addModuleInitData()
 	}

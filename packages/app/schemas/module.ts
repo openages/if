@@ -1,20 +1,16 @@
 import { toTypedRxJsonSchema } from 'rxdb'
 
-import { getCrdtSchema } from '@/utils'
-
 import schema_raw from './output/module'
 
 import type { RxCollection, ExtractDocumentTypeFromTypedRxJsonSchema, RxJsonSchema } from 'rxdb'
 
-const schema = getCrdtSchema(
-	toTypedRxJsonSchema({
-		version: 0,
-		primaryKey: 'module',
-		keyCompression: true,
-		encrypted: ['dirtree.[].name'],
-		...schema_raw['Module.Item']
-	} as const)
-)
+const schema = toTypedRxJsonSchema({
+	version: 0,
+	primaryKey: 'module',
+	keyCompression: true,
+	encrypted: ['dirtree.[].name'],
+	...schema_raw['Module.Item']
+} as const)
 
 export type DocModule = ExtractDocumentTypeFromTypedRxJsonSchema<typeof schema>
 export type DBModule = RxCollection<DocModule>
