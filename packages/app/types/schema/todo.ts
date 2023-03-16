@@ -12,6 +12,11 @@ export namespace Todo {
 		text: string
 		status: 'checked' | 'unchecked' | 'closed'
 		achive_time: number
+		angle: string
+		tags: Array<{
+			color: string
+			text: string
+		}>
 	}
 
 	export type TodoItem = Group | Todo
@@ -21,7 +26,10 @@ export namespace Todo {
 		id: string
 		name: string
 		desc?: string
-		angles: { [key: string]: Array<TodoItem> }
-		archive: string
+		angles: Array<string>
+		tags: Array<{
+			color: string
+			text: string
+		}>
 	}
 }

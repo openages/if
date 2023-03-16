@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
-import { getFileCounts, id } from '@/utils'
+import { id } from '@/utils'
 
 import { addTargetTodo, deleteTargetTodo } from './utils'
 
@@ -45,8 +45,9 @@ export default class Index {
 	}
 
 	private async addFile(name: string) {
-		const file_id = id()
-		const target_id = await this.addTarget(name, file_id)
+            const file_id = id()
+            
+		await this.addTarget(name, file_id)
 
 		await this.doc
 			.updateCRDT({
@@ -56,7 +57,6 @@ export default class Index {
 							id: file_id,
 							type: 'file',
 							name,
-							target_id
 						}
 					}
 				}
@@ -99,21 +99,6 @@ export default class Index {
 		this.doc = (await $db.module
 			.findOne({ selector: { module: this.module } })
 			.exec())! as RxDocument<Module.Item>
-
-		// this.getCounts()
-	}
-
-	async getCounts() {
-		// if (!this.tree.data.length) return
-		// this.tree.data.map(async (item) => {
-		// 	if (item.type === 'dir') return
-		// 	const { docs } = await $db.find({
-		// 		selector: { id: item.target_id },
-		// 		fields: ['data.angles']
-		// 	})
-		// 	item.counts = getFileCounts(this.module, docs[0].data)
-		// })
-		// await $db.put(this.tree)
 	}
 
 	async init(module: App.RealModuleType) {
@@ -126,11 +111,7 @@ export default class Index {
 
 	on() {
 		this.doc.$.subscribe((v) => (this.doc = v))
-
-		$app.Event.on(`${this.module}/getCounts`, this.getCounts)
 	}
 
-	off() {
-		$app.Event.off(`${this.module}/getCounts`, this.getCounts)
-	}
+	off() {}
 }

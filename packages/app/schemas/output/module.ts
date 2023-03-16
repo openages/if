@@ -41,12 +41,6 @@ export default {
                                                             "type": "string",
                                                             "const": "file"
                                                       },
-                                                      "target_id": {
-                                                            "type": "string"
-                                                      },
-                                                      "counts": {
-                                                            "type": "number"
-                                                      },
                                                       "id": {
                                                             "type": "string"
                                                       },
@@ -60,7 +54,6 @@ export default {
                                                 "required": [
                                                       "id",
                                                       "name",
-                                                      "target_id",
                                                       "type"
                                                 ]
                                           }
@@ -73,12 +66,6 @@ export default {
                                     },
                                     "icon": {
                                           "type": "string"
-                                    },
-                                    "target_id": {
-                                          "type": "string"
-                                    },
-                                    "counts": {
-                                          "type": "number"
                                     }
                               },
                               "required": [
@@ -131,12 +118,6 @@ export default {
                                           "type": "string",
                                           "const": "file"
                                     },
-                                    "target_id": {
-                                          "type": "string"
-                                    },
-                                    "counts": {
-                                          "type": "number"
-                                    },
                                     "id": {
                                           "type": "string"
                                     },
@@ -150,7 +131,6 @@ export default {
                               "required": [
                                     "id",
                                     "name",
-                                    "target_id",
                                     "type"
                               ]
                         }
@@ -163,12 +143,6 @@ export default {
                   },
                   "icon": {
                         "type": "string"
-                  },
-                  "target_id": {
-                        "type": "string"
-                  },
-                  "counts": {
-                        "type": "number"
                   }
             },
             "required": [
@@ -193,12 +167,6 @@ export default {
                                           "type": "string",
                                           "const": "file"
                                     },
-                                    "target_id": {
-                                          "type": "string"
-                                    },
-                                    "counts": {
-                                          "type": "number"
-                                    },
                                     "id": {
                                           "type": "string"
                                     },
@@ -212,7 +180,6 @@ export default {
                               "required": [
                                     "id",
                                     "name",
-                                    "target_id",
                                     "type"
                               ]
                         }
@@ -241,12 +208,6 @@ export default {
                         "type": "string",
                         "const": "file"
                   },
-                  "target_id": {
-                        "type": "string"
-                  },
-                  "counts": {
-                        "type": "number"
-                  },
                   "id": {
                         "type": "string"
                   },
@@ -260,7 +221,6 @@ export default {
             "required": [
                   "id",
                   "name",
-                  "target_id",
                   "type"
             ]
       }

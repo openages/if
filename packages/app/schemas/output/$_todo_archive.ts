@@ -41,11 +41,34 @@ export default {
                                                 },
                                                 "achive_time": {
                                                       "type": "number"
+                                                },
+                                                "angle": {
+                                                      "type": "string"
+                                                },
+                                                "tags": {
+                                                      "type": "array",
+                                                      "items": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                  "color": {
+                                                                        "type": "string"
+                                                                  },
+                                                                  "text": {
+                                                                        "type": "string"
+                                                                  }
+                                                            },
+                                                            "required": [
+                                                                  "color",
+                                                                  "text"
+                                                            ]
+                                                      }
                                                 }
                                           },
                                           "required": [
                                                 "achive_time",
+                                                "angle",
                                                 "status",
+                                                "tags",
                                                 "text",
                                                 "type"
                                           ]
@@ -64,6 +87,27 @@ export default {
                               },
                               "achive_time": {
                                     "type": "number"
+                              },
+                              "angle": {
+                                    "type": "string"
+                              },
+                              "tags": {
+                                    "type": "array",
+                                    "items": {
+                                          "type": "object",
+                                          "properties": {
+                                                "color": {
+                                                      "type": "string"
+                                                },
+                                                "text": {
+                                                      "type": "string"
+                                                }
+                                          },
+                                          "required": [
+                                                "color",
+                                                "text"
+                                          ]
+                                    }
                               }
                         },
                         "required": [
@@ -111,11 +155,34 @@ export default {
                                     },
                                     "achive_time": {
                                           "type": "number"
+                                    },
+                                    "angle": {
+                                          "type": "string"
+                                    },
+                                    "tags": {
+                                          "type": "array",
+                                          "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                      "color": {
+                                                            "type": "string"
+                                                      },
+                                                      "text": {
+                                                            "type": "string"
+                                                      }
+                                                },
+                                                "required": [
+                                                      "color",
+                                                      "text"
+                                                ]
+                                          }
                                     }
                               },
                               "required": [
                                     "achive_time",
+                                    "angle",
                                     "status",
+                                    "tags",
                                     "text",
                                     "type"
                               ]
@@ -134,6 +201,27 @@ export default {
                   },
                   "achive_time": {
                         "type": "number"
+                  },
+                  "angle": {
+                        "type": "string"
+                  },
+                  "tags": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "properties": {
+                                    "color": {
+                                          "type": "string"
+                                    },
+                                    "text": {
+                                          "type": "string"
+                                    }
+                              },
+                              "required": [
+                                    "color",
+                                    "text"
+                              ]
+                        }
                   }
             },
             "required": [

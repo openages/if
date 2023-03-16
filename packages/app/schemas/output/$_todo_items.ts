@@ -1,7 +1,11 @@
 export default {
-      "Todo.TodoItem": {
+      "TodoItems.Item": {
             "type": "object",
             "properties": {
+                  "id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
                   "type": {
                         "type": "string",
                         "enum": [
@@ -104,52 +108,8 @@ export default {
                   }
             },
             "required": [
-                  "type"
-            ]
-      },
-      "Todo.Data": {
-            "type": "object",
-            "properties": {
-                  "id": {
-                        "type": "string",
-                        "maxLength": 30
-                  },
-                  "name": {
-                        "type": "string"
-                  },
-                  "desc": {
-                        "type": "string"
-                  },
-                  "angles": {
-                        "type": "array",
-                        "items": {
-                              "type": "string"
-                        }
-                  },
-                  "tags": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "color": {
-                                          "type": "string"
-                                    },
-                                    "text": {
-                                          "type": "string"
-                                    }
-                              },
-                              "required": [
-                                    "color",
-                                    "text"
-                              ]
-                        }
-                  }
-            },
-            "required": [
                   "id",
-                  "name",
-                  "angles",
-                  "tags"
+                  "type"
             ]
       }
 } as const

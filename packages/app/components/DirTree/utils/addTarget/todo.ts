@@ -1,8 +1,11 @@
-import { schema_$_todo_archive } from '@/schemas'
+import { schema_$_todo_archive, schema_$_todo_items } from '@/schemas'
 import { getPresetData } from '@/utils'
 
-import type { Todo } from '@/types'
-import type { RxDocument } from 'rxdb'
+const addTodoItemsCollection = async (file_id: string) => {
+	return await $db.addCollections({
+		[`${file_id}_todo_items`]: { schema: schema_$_todo_items, autoMigrate: true }
+	})
+}
 
 const addTodoAchiveCollection = async (file_id: string) => {
 	return await $db.addCollections({
@@ -11,14 +14,14 @@ const addTodoAchiveCollection = async (file_id: string) => {
 }
 
 export default async (name: string, file_id: string) => {
+	await addTodoItemsCollection(file_id)
 	await addTodoAchiveCollection(file_id)
 
-	const res = (await $db.collections.todo.insert({
+	await $db.collections.todo.insert({
 		id: file_id,
 		name,
-		angles: getPresetData('todo') as any,
-		archive: `${file_id}_todo_archive`
-	})) as RxDocument<Todo.Data>
+		...getPresetData('todo')
+	})
 
-	return res.toJSON().id
+	return
 }

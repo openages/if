@@ -10,7 +10,7 @@ const Index = (props: IPropsDirItems) => {
 	const { data, current_item, fold_all, onClick, setFoldAll, showDirTreeOptions } = props
 
 	return (
-		<div className='dir_tree_wrap w_100 border_box flex flex_column'>
+		<div className={$cx('dir_tree_wrap w_100 border_box flex flex_column', !data.length && 'empty')}>
 			<If condition={data.length > 0}>
 				<Then>
 					{data.map((item) => (

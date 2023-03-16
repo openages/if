@@ -7,6 +7,7 @@ import { When } from 'react-if'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
+import { useDeepMemo } from '@matrixages/knife/react'
 
 import { Actions, DirItems, DragLine, Modal, Options, Search } from './components'
 import styles from './index.css'
@@ -19,6 +20,7 @@ const Index = (props: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const global = useGlobal()
 	const { show } = useContextMenu({ id: 'dirtree_options' })
+	const dirtree = useDeepMemo(() => x.services.doc?.toMutableJSON?.().dirtree || [], [x.services.doc.dirtree])
 
 	useLayoutEffect(() => {
 		x.services.init(module)
@@ -46,7 +48,7 @@ const Index = (props: IProps) => {
 	})
 
 	const props_dir_items: IPropsDirItems = {
-		data: x.services.doc?.toMutableJSON?.().dirtree || [],
+		data: dirtree,
 		current_item: x.current_item,
 		fold_all: x.fold_all,
 		onClick: onItemClick,
