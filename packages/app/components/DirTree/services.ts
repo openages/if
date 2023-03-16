@@ -1,11 +1,11 @@
-import { cloneDeep, remove } from 'lodash-es'
+import { remove } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
 import { id } from '@/utils'
 
-import { addTargetTodo, deleteTargetTodo } from './utils'
+import { addTargetTodo, deleteTargetTodo, setName } from './utils'
 
 import type { RxDocument } from 'rxdb'
 import type { App, DirTree, Module } from '@/types'
@@ -58,6 +58,17 @@ export default class Index {
 				}
 			})
 			.catch((e) => console.log(e))
+	}
+
+	async rename(v: string) {
+		await this.doc.incrementalModify((doc) => {
+			setName(doc.dirtree, this.focusing_item.id, v)
+
+			return doc
+		})
+
+		this.modal_open = false
+		this.focusing_item = {} as DirTree.Item
 	}
 
 	async add(type: DirTree.Type, name: string) {

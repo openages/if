@@ -17,11 +17,9 @@ export default class Index {
 	}
 
 	onOptions(type: 'rename' | 'delete') {
-		const _this = this
-
 		match(type)
-			.with('rename', () => {})
-			.with('delete', () => _this.services.delete())
+			.with('rename', () => (this.services.modal_open = true))
+			.with('delete', () => this.services.delete())
 			.exhaustive()
 	}
 }

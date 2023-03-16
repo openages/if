@@ -7,6 +7,7 @@ import { useLocale } from '@/hooks'
 import { ArrowSquareRight, ListPlus, Pencil, Trash } from '@phosphor-icons/react'
 
 import type { IPropsOptions } from '../../types'
+
 const Index = (props: IPropsOptions) => {
 	const { focusing_item, onOptions } = props
 	const l = useLocale()
@@ -15,7 +16,7 @@ const Index = (props: IPropsOptions) => {
 
 	return (
 		<Menu id='dirtree_options' animation='scale'>
-			<Item>
+			<Item onClick={() => onOptions('rename')}>
 				<ContextMenuItem Icon={Pencil} text={l('dirtree.options.rename')}></ContextMenuItem>
 			</Item>
 			<When condition={focusing_item.type === 'dir'}>

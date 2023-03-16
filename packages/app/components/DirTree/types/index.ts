@@ -40,11 +40,14 @@ export interface IPropsActions {
 export interface IPropsModal {
 	modal_open: Model['services']['modal_open']
 	modal_type: Model['modal_type']
+	focusing_item: Model['services']['focusing_item']
 	add: Model['services']['add']
 	setModalOpen: (v: Model['services']['modal_open'], type?: Model['modal_type']) => void
+	resetFocusingItem: () => void
+	rename: Model['services']['rename']
 }
 
 export interface IPropsOptions {
-      focusing_item: Model[ 'services' ][ 'focusing_item' ]
-      onOptions:Model['onOptions']
+	focusing_item: Model['services']['focusing_item']
+	onOptions: Model['onOptions']
 }

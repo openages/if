@@ -14,6 +14,7 @@ import styles from './index.css'
 import Model from './model'
 
 import type { IProps, IPropsActions, IPropsModal, IPropsDirItems, IPropsOptions } from './types'
+import type { DirTree } from '@/types'
 
 const Index = (props: IProps) => {
 	const { module, height = '100vh', onClick } = props
@@ -65,8 +66,11 @@ const Index = (props: IProps) => {
 	const props_modal: IPropsModal = {
 		modal_open: x.services.modal_open,
 		modal_type: x.modal_type,
+		focusing_item: toJS(x.services.focusing_item),
 		add: useMemoizedFn(x.services.add),
-		setModalOpen
+		setModalOpen,
+		resetFocusingItem: () => (x.services.focusing_item = {} as DirTree.Item),
+		rename: useMemoizedFn(x.services.rename)
 	}
 
 	const props_options: IPropsOptions = {
