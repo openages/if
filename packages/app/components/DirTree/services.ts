@@ -1,10 +1,9 @@
-import { remove } from 'lodash-es'
+import { cloneDeep, remove } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
-import { nanoid } from 'nanoid'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
-import { getFileCounts } from '@/utils'
+import { getFileCounts, id } from '@/utils'
 
 import { addTargetTodo, deleteTargetTodo } from './utils'
 
@@ -30,13 +29,15 @@ export default class Index {
 
 	private async addDir(name: string) {
 		await this.doc
-			.update({
-				$push: {
-					dirtree: {
-						id: nanoid(),
-						type: 'dir',
-						name,
-						children: []
+			.updateCRDT({
+				ifMatch: {
+					$push: {
+						dirtree: {
+							id: id(),
+							type: 'dir',
+							name,
+							children: []
+						}
 					}
 				}
 			})
@@ -44,17 +45,19 @@ export default class Index {
 	}
 
 	private async addFile(name: string) {
-		const file_id = nanoid()
+		const file_id = id()
 		const target_id = await this.addTarget(name, file_id)
 
 		await this.doc
-			.update({
-				$push: {
-					dirtree: {
-						id: file_id,
-						type: 'file',
-						name,
-						target_id
+			.updateCRDT({
+				ifMatch: {
+					$push: {
+						dirtree: {
+							id: file_id,
+							type: 'file',
+							name,
+							target_id
+						}
 					}
 				}
 			})
@@ -71,10 +74,16 @@ export default class Index {
 	}
 
 	async delete() {
-		await this.doc.modify((doc) => {
-			remove(doc.dirtree, (item) => item.id === this.focusing_item.id)
+		const dirtree = cloneDeep(this.doc.dirtree)
 
-			return doc
+		remove(dirtree, (item) => item.id === this.focusing_item.id)
+
+		await this.doc.updateCRDT({
+			ifMatch: {
+				$set: {
+					dirtree
+				}
+			}
 		})
 
 		if (this.focusing_item.type !== 'file') return
