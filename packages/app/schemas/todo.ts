@@ -11,7 +11,6 @@ const schema = getCrdtSchema(
 		version: 0,
 		primaryKey: 'id',
 		keyCompression: true,
-		encrypted: ['name', 'desc', 'angles', 'tags.[].text'],
 		...schema_raw['Todo.Data']
 	} as const)
 )

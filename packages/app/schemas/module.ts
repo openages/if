@@ -11,7 +11,6 @@ const schema = getCrdtSchema(
 		version: 0,
 		primaryKey: 'module',
 		keyCompression: true,
-		encrypted: ['dirtree.[].name'],
 		...schema_raw['Module.Item']
 	} as const)
 )
