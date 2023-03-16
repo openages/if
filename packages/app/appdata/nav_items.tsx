@@ -49,11 +49,6 @@ export const bottom_items = [
 
 export const widgets = [
 	{
-		title: 'schedule',
-		path: '/widgets/layout/schedule',
-		line: true
-	},
-	{
 		title: 'kanban',
 		path: '/widgets/layout/kanban'
 	},
@@ -80,6 +75,15 @@ export const widgets = [
 	},
 	{
 		title: 'ppt',
-		path: '/widgets/layout/ppt'
-	}
+            path: '/widgets/layout/ppt',
+		line: true
+      },
+      {
+		title: 'schedule',
+		path: '/widgets/layout/schedule',
+	},
+	{
+		title: 'habbit',
+		path: '/widgets/layout/habbit',
+	},
 ] as Array<{ title: App.RealModuleType; path: string; line?: boolean }>

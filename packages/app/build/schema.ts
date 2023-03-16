@@ -16,15 +16,15 @@ const getConfig = (path: string) => {
 		skipTypeCheck: true,
 		topRef: true,
 		encodeRefs: true,
-		additionalProperties: true,
+		additionalProperties: false,
 		extraTags: ['x_ref']
 	} as Config
 }
 
 paths.map((item) => {
-      const buffer = tsj.createGenerator(getConfig(item)).createSchema('*')
-      
-      // console.log(JSON.stringify(buffer,null,4));
+	const buffer = tsj.createGenerator(getConfig(item)).createSchema('*')
+
+	// console.log(JSON.stringify(buffer,null,4));
 
 	const schema = handleSchema(buffer.definitions, buffer.definitions)
 

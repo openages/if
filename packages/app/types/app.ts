@@ -12,14 +12,15 @@ export namespace App {
 		| 'note'
 		| 'pomodoro'
 		| 'widgets'
-		| 'schedule'
 		| 'kanban'
 		| 'flow'
 		| 'board'
-		| 'project'
+            | 'project'
 		| 'table'
 		| 'bi'
             | 'ppt'
+		| 'schedule'
+		| 'habbit'
       
 	/** @maxLength 12 */
 	export type RealModuleType = Exclude<ModuleType, 'widgets'>

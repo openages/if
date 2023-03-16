@@ -25,6 +25,7 @@ export default class Index {
 			name: 'if/db',
 			password: '+13439882350j',
 			eventReduce: true,
+			multiInstance: false,
 			cleanupPolicy: { waitForLeadership: false },
 			ignoreDuplicate: process.env.NODE_ENV !== 'production',
 			storage: wrappedKeyEncryptionCryptoJsStorage({
@@ -33,12 +34,28 @@ export default class Index {
 		})
 
 		await db.addCollections({
-			module: { schema: schema_module, autoMigrate: true },
-			todo: { schema: schema_todo, autoMigrate: true }
+			module: {
+				schema: schema_module,
+				autoMigrate: true,
+				instanceCreationOptions: {
+					password: '+13439882350j'
+				}
+			},
+			todo: {
+				schema: schema_todo,
+				autoMigrate: true,
+				instanceCreationOptions: {
+					password: '+13439882350j'
+				}
+			}
 		})
 
 		window.$db = db
 		this.instance = db
+
+		await $db.todo.remove().catch((e) => {
+			console.warn(e)
+		})
 
 		this.addModuleInitData()
 	}
