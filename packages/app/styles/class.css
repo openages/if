@@ -8,12 +8,19 @@
 }
 
 .limited_content_wrap {
-      box-sizing: border-box;
+	box-sizing: border-box;
 	max-width: var(--limited_width);
 	margin: 0 auto;
 	padding: 0 var(--limited_padding);
 }
 
-.color_bg{
-      background-color: var(--color_bg);
+.limited_unchanged_content_wrap {
+	box-sizing: border-box;
+	max-width: var(--limited_width_unchanged);
+	margin: 0 auto;
+	padding: 0 var(--limited_padding);
+}
+
+.color_bg {
+	background-color: var(--color_bg);
 }

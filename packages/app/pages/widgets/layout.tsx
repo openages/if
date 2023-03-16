@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite'
-import { Fragment, useMemo } from 'react'
+import { Fragment } from 'react'
 
 import { widgets } from '@/appdata'
 import { useGlobal } from '@/context/app'
+import { useDarkIconWeight } from '@/hooks'
 import { Outlet } from '@umijs/max'
 
 import { NavItem } from './components'
@@ -10,11 +11,7 @@ import styles from './layout.css'
 
 const Index = () => {
 	const global = useGlobal()
-
-	const icon_weight = useMemo(
-		() => (global.setting.theme === 'light' ? 'duotone' : 'regular'),
-		[global.setting.theme]
-	)
+	const icon_weight = useDarkIconWeight()
 
 	return (
 		<Fragment>
@@ -27,7 +24,7 @@ const Index = () => {
 			>
 				{widgets.map((item) => (
 					<NavItem
-                                    { ...{ icon_weight, item } }
+						{...{ icon_weight, item }}
 						show_bar_title={global.setting.show_bar_title}
 						key={item.title}
 					></NavItem>
