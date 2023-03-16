@@ -20,8 +20,10 @@ export namespace Todo {
 		/** @maxLength 30 */
 		id: string
 		name: string
-		desc?: string
-		angles: { [key: string]: Array<TodoItem> }
-		archive: string
+            desc?: string
+		/** @default [] */
+            angles: Array<string>
+            /** @default [] */
+		tags: Array<string>
 	}
 }

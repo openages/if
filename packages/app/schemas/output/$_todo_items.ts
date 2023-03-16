@@ -1,7 +1,11 @@
 export default {
-      "Todo.TodoItem": {
+      "TodoItems.Item": {
             "type": "object",
             "properties": {
+                  "id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
                   "type": {
                         "type": "string",
                         "enum": [
@@ -60,42 +64,8 @@ export default {
                   }
             },
             "required": [
-                  "type"
-            ]
-      },
-      "Todo.Data": {
-            "type": "object",
-            "properties": {
-                  "id": {
-                        "type": "string",
-                        "maxLength": 30
-                  },
-                  "name": {
-                        "type": "string"
-                  },
-                  "desc": {
-                        "type": "string"
-                  },
-                  "angles": {
-                        "type": "array",
-                        "items": {
-                              "type": "string"
-                        },
-                        "default": []
-                  },
-                  "tags": {
-                        "type": "array",
-                        "items": {
-                              "type": "string"
-                        },
-                        "default": []
-                  }
-            },
-            "required": [
                   "id",
-                  "name",
-                  "angles",
-                  "tags"
+                  "type"
             ]
       }
 } as const

@@ -9,14 +9,15 @@ export default {
                               "memo",
                               "note",
                               "pomodoro",
-                              "schedule",
                               "kanban",
                               "flow",
                               "board",
                               "project",
                               "table",
                               "bi",
-                              "ppt"
+                              "ppt",
+                              "schedule",
+                              "habbit"
                         ],
                         "maxLength": 12
                   },
@@ -101,14 +102,15 @@ export default {
                   "memo",
                   "note",
                   "pomodoro",
-                  "schedule",
                   "kanban",
                   "flow",
                   "board",
                   "project",
                   "table",
                   "bi",
-                  "ppt"
+                  "ppt",
+                  "schedule",
+                  "habbit"
             ],
             "maxLength": 12
       },

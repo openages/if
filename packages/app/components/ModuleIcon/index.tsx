@@ -1,6 +1,7 @@
 import { match } from 'ts-pattern'
 
 import {
+	Barbell,
 	CalendarCheck,
 	ChartBarHorizontal,
 	CheckCircle,
@@ -32,7 +33,6 @@ const Index = (props: IProps) => {
 		.with('note', () => <Notebook {...icon_props} />)
 		.with('pomodoro', () => <HourglassMedium {...icon_props} />)
 		.with('widgets', () => <DiamondsFour {...icon_props} />)
-		.with('schedule', () => <CalendarCheck {...icon_props} />)
 		.with('kanban', () => <Kanban {...icon_props} />)
 		.with('flow', () => <Path {...icon_props} />)
 		.with('board', () => <Clipboard {...icon_props} />)
@@ -40,6 +40,8 @@ const Index = (props: IProps) => {
 		.with('table', () => <Table {...icon_props} />)
 		.with('bi', () => <ChartBarHorizontal {...icon_props} />)
 		.with('ppt', () => <MicrosoftPowerpointLogo {...icon_props} />)
+		.with('schedule', () => <CalendarCheck {...icon_props} />)
+		.with('habbit', () => <Barbell {...icon_props} />)
 		.exhaustive()
 }
 
