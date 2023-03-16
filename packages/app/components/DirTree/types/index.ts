@@ -34,7 +34,7 @@ export type IPropsDirItem = {
 
 export interface IPropsActions {
 	setModalOpen: (v: Model['services']['modal_open'], type?: Model['modal_type']) => void
-	setFoldAll: (v: Model['fold_all']) => boolean
+      setFoldAll: (v: Model[ 'fold_all' ]) => boolean
 }
 
 export interface IPropsModal {

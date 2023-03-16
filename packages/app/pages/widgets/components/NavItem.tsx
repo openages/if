@@ -17,7 +17,7 @@ const Index = (props: IPropsNavItem) => {
 			to={item.path}
 			key={item.title}
 		>
-			<div className='nav_item flex flex_column align_center'>
+			<div className='nav_item flex flex_column align_center justify_center'>
 				<ModuleIcon className='icon_bar' type={item.title} size={24} weight={icon_weight}></ModuleIcon>
 				<When condition={show_bar_title}>
 					<span className='title mt_2'>{l(`nav_title.${item.title}`)}</span>

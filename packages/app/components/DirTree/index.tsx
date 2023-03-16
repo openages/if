@@ -37,16 +37,17 @@ const Index = (props: IProps) => {
 
 	const setFoldAll = useMemoizedFn((v: Model['fold_all']) => (x.fold_all = v))
 
-	const setModalOpen = useMemoizedFn((v: Model['services']['modal_open'], type?: Model['modal_type']) => {
+      const setModalOpen = useMemoizedFn((v: Model[ 'services' ][ 'modal_open' ], type?: Model[ 'modal_type' ]) => {
+            x.services.focusing_item = {} as DirTree.Item
 		x.services.modal_open = v
 		x.modal_type = type || 'file'
 	})
 
-	const showDirTreeOptions = useMemoizedFn((e, v) => {
+      const showDirTreeOptions = useMemoizedFn((e, v) => {
 		x.services.focusing_item = v
 
 		show({ event: e })
-	})
+      })
 
 	const props_dir_items: IPropsDirItems = {
 		module: x.services.module,

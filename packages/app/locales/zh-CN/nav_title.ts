@@ -10,7 +10,7 @@ export default {
 	project: '项目',
 	table: '表格',
 	bi: '图表',
-	ppt: '幻灯片',
+	ppt: '报告',
 	schedule: '安排',
 	habbit: '习惯',
 	collaboration: '协同',

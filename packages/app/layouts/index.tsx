@@ -26,8 +26,8 @@ const Index = () => {
 	useLayoutEffect(() => {
 		global.db.init()
 
-            return () => {
-			global.db.instance?.destroy()
+		return () => {
+			global.db.instance?.destroy?.()
 		}
 	}, [])
 
