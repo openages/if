@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { When } from 'react-if'
 import Avatar from 'react-nice-avatar'
 
-import { bottom_items } from '@/appdata'
+import { bottom_items, nav_items } from '@/appdata'
 import { LogoWithBg } from '@/components'
 import { useAntdApp, useLocale } from '@/hooks'
 import { is_mac_electron } from '@/utils'
@@ -16,7 +16,7 @@ import styles from './index.css'
 import type { IPropsSidebar } from '../../types'
 
 const Index = (props: IPropsSidebar) => {
-	const { theme, nav_items, show_bar_title, avatar } = props
+	const { theme, show_bar_title, avatar } = props
 	const l = useLocale()
 	const { pathname } = useLocation()
 	const { ref_sidebar, ref_items_wrap, overflow } = useNavOverflow()

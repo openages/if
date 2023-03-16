@@ -1,1 +1,1 @@
-export const dirtree_excludes = ['/setting','/widgets/layout']
+export const dirtree_excludes = ['/setting','/widgets']

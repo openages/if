@@ -5,26 +5,26 @@ import type { App } from '@/types'
 export default [
 	{
 		title: 'todo',
-		path: '/',
+		path: '/'
 	},
 	{
 		title: 'memo',
-		path: '/memo',
+		path: '/memo'
 	},
 	{
 		title: 'note',
-		path: '/note',
+		path: '/note'
 	},
 	{
 		title: 'pomodoro',
-		path: '/pomodoro',
+		path: '/pomodoro'
 	},
 	{
 		title: 'widgets',
-		match: '/widgets',
 		path: '/widgets',
+		match: '/widgets/layout'
 	}
-] as const
+] as Array<{ title: App.RealModuleType; path: string; match?: string }>
 
 export const bottom_items = [
 	{
@@ -40,7 +40,6 @@ export const bottom_items = [
 ] as const
 
 export const widgets = [
-
 	{
 		title: 'kanban',
 		path: '/widgets/layout/kanban'
@@ -68,15 +67,15 @@ export const widgets = [
 	},
 	{
 		title: 'ppt',
-            path: '/widgets/layout/ppt',
+		path: '/widgets/layout/ppt',
 		line: true
-      },
-      {
+	},
+	{
 		title: 'schedule',
-		path: '/widgets/layout/schedule',
-      },
-      {
+		path: '/widgets/layout/schedule'
+	},
+	{
 		title: 'habbit',
-		path: '/widgets/layout/habbit',
+		path: '/widgets/layout/habbit'
 	}
 ] as Array<{ title: App.RealModuleType; path: string; line?: boolean }>

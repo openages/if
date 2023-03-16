@@ -11,8 +11,6 @@ const Index = (props: IPropsSidebarItem) => {
 	const { show_bar_title, icon_weight, pathname, item } = props
 	const l = useLocale()
 
-	if (!item.checked) return null
-
 	const LinkItem = (
 		<NavLink
 			className={$cx(
@@ -36,7 +34,7 @@ const Index = (props: IPropsSidebarItem) => {
 			title={l(`nav_title.${item.title}`)}
 			placement='right'
 			destroyTooltipOnHide
-                  getTooltipContainer={ () => document.body }
+			getTooltipContainer={() => document.body}
 		>
 			{LinkItem}
 		</Tooltip>

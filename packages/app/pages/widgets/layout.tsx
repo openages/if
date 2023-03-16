@@ -6,7 +6,7 @@ import { useGlobal } from '@/context/app'
 import { Outlet } from '@umijs/max'
 
 import { NavItem } from './components'
-import styles from './index.css'
+import styles from './layout.css'
 
 const Index = () => {
 	const global = useGlobal()

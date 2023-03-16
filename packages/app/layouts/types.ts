@@ -8,7 +8,6 @@ export interface IPropsSidebar {
 	theme: GlobalModel['setting']['theme']
 	show_bar_title: GlobalModel['setting']['show_bar_title']
       avatar: GlobalModel[ 'user' ][ 'avatar' ]
-      nav_items:typeof nav_items
 }
 
 export interface IPropsSidebarItem {
