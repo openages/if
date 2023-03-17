@@ -8,10 +8,6 @@
 				background-color: var(--color_bg_1);
 			}
 
-			&:context-menu {
-				background-color: red;
-			}
-
 			.left_icon_wrap {
 				width: 18px;
 				margin-right: 6px;

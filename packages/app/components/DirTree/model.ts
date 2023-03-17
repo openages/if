@@ -4,22 +4,55 @@ import { injectable } from 'tsyringe'
 
 import Services from './services'
 
-import type { DirTree } from '@/types'
+import type { App, DirTree } from '@/types'
 
 @injectable()
 export default class Index {
+	module = '' as App.RealModuleType
+	modal_open = false
+	focusing_item = {} as DirTree.Item
 	current_item = ''
 	modal_type = 'file' as DirTree.Type
 	fold_all = false
+	current_option = '' as 'rename' | 'add' | ''
 
 	constructor(public services: Services) {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
-	onOptions(type: 'rename' | 'delete') {
+	async init(module: App.RealModuleType) {
+		this.module = module
+		this.services.module = module
+
+		await this.services.query()
+
+		this.services.on()
+	}
+
+	async add(type: DirTree.Type, name: string, with_context_menu?: boolean) {
+		await this.services.add(this.focusing_item, type, name, with_context_menu)
+
+		this.modal_open = false
+	}
+
+	async rename(v: string) {
+		await this.services.rename(this.focusing_item, v)
+
+		this.modal_open = false
+		this.focusing_item = {} as DirTree.Item
+	}
+
+	onOptions(type: 'rename' | 'delete' | 'add') {
 		match(type)
-			.with('rename', () => (this.services.modal_open = true))
-			.with('delete', () => this.services.delete())
+			.with('rename', () => {
+				this.current_option = 'rename'
+				this.modal_open = true
+			})
+			.with('add', () => {
+				this.current_option = 'add'
+				this.modal_open = true
+			})
+			.with('delete', () => this.services.delete(this.focusing_item))
 			.exhaustive()
 	}
 }

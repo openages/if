@@ -24,9 +24,7 @@ const Index = (props: IProps) => {
 	const dirtree = useDeepMemo(() => x.services.doc?.toMutableJSON?.().dirtree || [], [x.services.doc.dirtree])
 
 	useLayoutEffect(() => {
-		x.services.init(module)
-
-		return () => x.services.off()
+		x.init(module)
 	}, [module])
 
 	const onItemClick = useMemoizedFn((v: string) => {
@@ -37,17 +35,17 @@ const Index = (props: IProps) => {
 
 	const setFoldAll = useMemoizedFn((v: Model['fold_all']) => (x.fold_all = v))
 
-      const setModalOpen = useMemoizedFn((v: Model[ 'services' ][ 'modal_open' ], type?: Model[ 'modal_type' ]) => {
-            x.services.focusing_item = {} as DirTree.Item
-		x.services.modal_open = v
+	const setModalOpen = useMemoizedFn((v: Model['modal_open'], type?: Model['modal_type']) => {
+		x.focusing_item = {} as DirTree.Item
+		x.modal_open = v
 		x.modal_type = type || 'file'
 	})
 
-      const showDirTreeOptions = useMemoizedFn((e, v) => {
-		x.services.focusing_item = v
+	const showDirTreeOptions = useMemoizedFn((e, v) => {
+		x.focusing_item = v
 
 		show({ event: e })
-      })
+	})
 
 	const props_dir_items: IPropsDirItems = {
 		module: x.services.module,
@@ -65,17 +63,21 @@ const Index = (props: IProps) => {
 	}
 
 	const props_modal: IPropsModal = {
-		modal_open: x.services.modal_open,
+		modal_open: x.modal_open,
 		modal_type: x.modal_type,
-		focusing_item: toJS(x.services.focusing_item),
-		add: useMemoizedFn(x.services.add),
+		current_option: x.current_option,
+		focusing_item: toJS(x.focusing_item),
+		add: useMemoizedFn(x.add),
 		setModalOpen,
-		resetFocusingItem: () => (x.services.focusing_item = {} as DirTree.Item),
-		rename: useMemoizedFn(x.services.rename)
+		resetFocusingItem: () => {
+			x.current_option = ''
+			x.focusing_item = {} as DirTree.Item
+		},
+		rename: useMemoizedFn(x.rename)
 	}
 
 	const props_options: IPropsOptions = {
-		focusing_item: toJS(x.services.focusing_item),
+		focusing_item: toJS(x.focusing_item),
 		onOptions: useMemoizedFn(x.onOptions)
 	}
 

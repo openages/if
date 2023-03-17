@@ -20,7 +20,7 @@ const Index = (props: IPropsOptions) => {
 				<ContextMenuItem Icon={Pencil} text={l('dirtree.options.rename')}></ContextMenuItem>
 			</Item>
 			<When condition={focusing_item.type === 'dir'}>
-				<Item>
+				<Item onClick={() => onOptions('add')}>
 					<ContextMenuItem
 						Icon={ListPlus}
 						text={l('dirtree.add') + l('dirtree.file')}

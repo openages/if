@@ -30,7 +30,7 @@ export default class Index {
 				storage: getRxStorageDexie()
 			})
 		})
-
+	
 		await db.addCollections({
 			module: { schema: schema_module, autoMigrate: true },
 			todo: { schema: schema_todo, autoMigrate: true }

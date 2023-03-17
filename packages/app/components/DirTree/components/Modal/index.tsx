@@ -10,19 +10,22 @@ import styles from './index.css'
 import type { IPropsModal } from '../../types'
 
 const Index = (props: IPropsModal) => {
-	const { modal_open, modal_type, focusing_item, add, setModalOpen, resetFocusingItem, rename } = props
+	const { modal_open, modal_type, current_option, focusing_item, add, setModalOpen, resetFocusingItem, rename } =
+		props
 	const [value, { onChange }] = useEventTarget<string>()
 	const limits = useLimits()
 	const l = useLocale()
 
-	const title = useMemo(
-		() =>
-			match(focusing_item.type ?? modal_type)
-				.with('file', () => l('dirtree.file'))
-				.with('dir', () => l('dirtree.dir'))
-				.exhaustive(),
-		[modal_type, focusing_item]
-	)
+	const title = useMemo(() => {
+		if (!current_option) return l('dirtree.add') + l(`dirtree.${modal_type}`)
+
+		if (!focusing_item.id) return ''
+
+		return match(current_option)
+			.with('add', () => focusing_item.name + '|' + l('dirtree.add') + l('dirtree.file'))
+			.with('rename', () => l('dirtree.options.rename') + l(`dirtree.${focusing_item.type}`))
+			.exhaustive()
+	}, [modal_type, current_option, focusing_item])
 
 	useEffect(() => {
 		if (!modal_open) onChange({ target: { value: '' } })
@@ -30,7 +33,8 @@ const Index = (props: IPropsModal) => {
 
 	const onOk = () => {
 		if (!value || value.length > limits.todo_list_title_max_length) return
-		if (focusing_item.id) return rename(value)
+		if (current_option === 'rename') return rename(value)
+		if (current_option === 'add') return add(modal_type, value, true)
 
 		add(modal_type, value)
 	}
@@ -39,7 +43,7 @@ const Index = (props: IPropsModal) => {
 		<Modal
 			wrapClassName={styles._local}
 			open={modal_open}
-			title={focusing_item.id ? l('dirtree.options.rename') + focusing_item.name : l('dirtree.add') + title}
+			title={title}
 			centered
 			width={270}
 			onOk={onOk}

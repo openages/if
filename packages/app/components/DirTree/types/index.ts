@@ -33,21 +33,22 @@ export type IPropsDirItem = {
 }
 
 export interface IPropsActions {
-	setModalOpen: (v: Model['services']['modal_open'], type?: Model['modal_type']) => void
-      setFoldAll: (v: Model[ 'fold_all' ]) => boolean
+	setModalOpen: (v: Model['modal_open'], type?: Model['modal_type']) => void
+	setFoldAll: (v: Model['fold_all']) => boolean
 }
 
 export interface IPropsModal {
-	modal_open: Model['services']['modal_open']
+	modal_open: Model['modal_open']
 	modal_type: Model['modal_type']
-	focusing_item: Model['services']['focusing_item']
-	add: Model['services']['add']
-	setModalOpen: (v: Model['services']['modal_open'], type?: Model['modal_type']) => void
+	current_option: Model['current_option']
+	focusing_item: Model['focusing_item']
+	add: Model['add']
+	setModalOpen: (v: Model['modal_open'], type?: Model['modal_type']) => void
 	resetFocusingItem: () => void
-	rename: Model['services']['rename']
+	rename: Model['rename']
 }
 
 export interface IPropsOptions {
-	focusing_item: Model['services']['focusing_item']
+	focusing_item: Model['focusing_item']
 	onOptions: Model['onOptions']
 }
