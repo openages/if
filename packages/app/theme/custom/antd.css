@@ -19,6 +19,19 @@
 	}
 }
 
+/* Popover */
+.if-popover{
+      .if-popover-arrow::after{
+            box-shadow: var(--shadow);
+      }
+      
+      .if-popover-inner{
+            padding: 0;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+      }
+}
+
 /* Modal */
 .if-modal-root {
 	.if-modal-content {

@@ -24,7 +24,7 @@ export default [
 		path: '/widgets',
 		match: '/widgets/layout'
 	}
-] as Array<{ title: App.RealModuleType; path: string; match?: string }>
+] as Array<{ title: App.ModuleType; path: string; match?: string }>
 
 export const bottom_items = [
 	{

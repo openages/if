@@ -50,7 +50,7 @@ const Index = (props: IPropsSidebar) => {
 					<div className='sidebar_top_wrap flex flex_column' ref={ref_items_wrap}>
 						{nav_items.map((item) => (
 							<SidebarItem
-								{...{ show_bar_title, icon_weight, pathname, item }}
+								{...{ theme, show_bar_title, icon_weight, pathname, item }}
 								key={item.title}
 							></SidebarItem>
 						))}

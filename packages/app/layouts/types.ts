@@ -11,6 +11,7 @@ export interface IPropsSidebar {
 }
 
 export interface IPropsSidebarItem {
+	theme: GlobalModel['setting']['theme']
       show_bar_title: GlobalModel[ 'setting' ][ 'show_bar_title' ]
 	icon_weight: IconProps['weight']
 	pathname: string
