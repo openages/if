@@ -1,6 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { When } from 'react-if'
 import { match, P } from 'ts-pattern'
 
@@ -17,10 +17,18 @@ const Index = (props: IPropsDirItem) => {
 	const [open, setOpen] = useState(false)
 
 	const onItem = useMemoizedFn(() => {
-		if (type === 'dir') return setOpen(!open)
+		if (type === 'dir') {
+			setOpen(!open)
+
+			if (!open) setFoldAll(false)
+		}
 
 		onClick(id)
 	})
+
+	useEffect(() => {
+		if (fold_all) setOpen(false)
+	}, [fold_all])
 
 	const LeftIcon = useDeepMemo(() => {
 		return match({ ...item, module })
