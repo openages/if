@@ -41,7 +41,9 @@ export interface IPropsModal {
 	modal_open: Model['modal_open']
 	modal_type: Model['modal_type']
 	current_option: Model['current_option']
-	focusing_item: Model['focusing_item']
+      focusing_item: Model[ 'focusing_item' ]
+      loading_add:boolean,
+      loading_rename:boolean,
 	add: Model['add']
 	setModalOpen: (v: Model['modal_open'], type?: Model['modal_type']) => void
 	resetFocusingItem: () => void

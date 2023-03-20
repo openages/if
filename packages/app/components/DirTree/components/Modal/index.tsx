@@ -10,19 +10,27 @@ import styles from './index.css'
 import type { IPropsModal } from '../../types'
 
 const Index = (props: IPropsModal) => {
-	const { modal_open, modal_type, current_option, focusing_item, add, setModalOpen, resetFocusingItem, rename } =
-		props
+	const {
+		modal_open,
+		modal_type,
+		current_option,
+		focusing_item,
+		loading_add,
+		loading_rename,
+		add,
+		setModalOpen,
+		resetFocusingItem,
+		rename
+	} = props
 	const [value, { onChange }] = useEventTarget<string>()
 	const limits = useLimits()
 	const l = useLocale()
 
 	const title = useMemo(() => {
-		if (!current_option) return l('dirtree.add') + l(`dirtree.${modal_type}`)
-
-		if (!focusing_item.id) return ''
+		if (!current_option || !focusing_item.id) return l('dirtree.add') + l(`dirtree.${modal_type}`)
 
 		return match(current_option)
-			.with('add', () => focusing_item.name + '|' + l('dirtree.add') + l('dirtree.file'))
+			.with('add', () => focusing_item.name + ' / ' + l('dirtree.add') + l('dirtree.file'))
 			.with('rename', () => l('dirtree.options.rename') + l(`dirtree.${focusing_item.type}`))
 			.exhaustive()
 	}, [modal_type, current_option, focusing_item])
@@ -46,6 +54,7 @@ const Index = (props: IPropsModal) => {
 			title={title}
 			centered
 			width={270}
+			confirmLoading={loading_add || loading_rename}
 			onOk={onOk}
 			onCancel={() => {
 				setModalOpen(false)
@@ -54,7 +63,7 @@ const Index = (props: IPropsModal) => {
 		>
 			<Input
 				className='input_title w_100 border_box'
-				placeholder={l('dirtree.input_placeholder', { values: { target: title } })}
+				placeholder={l('dirtree.input_placeholder')}
 				showCount
 				value={value}
 				maxLength={limits.todo_list_title_max_length}

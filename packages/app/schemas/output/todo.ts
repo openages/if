@@ -143,13 +143,32 @@ export default {
                                     "text"
                               ]
                         }
+                  },
+                  "settings": {
+                        "type": "object",
+                        "properties": {
+                              "auto_archiving": {
+                                    "type": "string",
+                                    "enum": [
+                                          "3m",
+                                          "3h",
+                                          "1d",
+                                          "3d",
+                                          "7d"
+                                    ]
+                              }
+                        },
+                        "required": [
+                              "auto_archiving"
+                        ]
                   }
             },
             "required": [
                   "id",
                   "name",
                   "angles",
-                  "tags"
+                  "tags",
+                  "settings"
             ]
       }
 } as const

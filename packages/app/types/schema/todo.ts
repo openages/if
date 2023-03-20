@@ -31,5 +31,8 @@ export namespace Todo {
 			color: string
 			text: string
 		}>
+		settings: {
+			auto_archiving: '3m' | '3h' | '1d' | '3d' | '7d'
+		}
 	}
 }

@@ -2,10 +2,12 @@ import { makeAutoObservable } from 'mobx'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
+import { Utils } from '@/models'
+import { loading } from '@/utils/decorators'
+
 import Services from './services'
 
 import type { App, DirTree } from '@/types'
-
 @injectable()
 export default class Index {
 	module = '' as App.RealModuleType
@@ -16,7 +18,7 @@ export default class Index {
 	fold_all = false
 	current_option = '' as 'rename' | 'add' | ''
 
-	constructor(public services: Services) {
+	constructor(public utils: Utils, public services: Services) {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
@@ -26,12 +28,14 @@ export default class Index {
 		await this.services.init(module)
 	}
 
+	@loading
 	async add(type: DirTree.Type, name: string, with_context_menu?: boolean) {
 		await this.services.add(this.focusing_item, type, name, with_context_menu)
 
 		this.modal_open = false
 	}
 
+	@loading
 	async rename(v: string) {
 		await this.services.rename(this.focusing_item, v)
 

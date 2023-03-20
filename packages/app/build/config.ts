@@ -20,8 +20,8 @@ export const conventionRoutes = {
 		/model\//,
 		/types\//,
 		/hooks\//,
-            /locales\//,
-            /services\//,
+		/locales\//,
+		/services\//,
 		/_(.*)$/
 	]
 }
@@ -63,7 +63,13 @@ export const srcTranspilerOptions = {
 	swc: {
 		jsc: Object.assign(
 			{
-				parser: { syntax: 'typescript', tsx: true, decorators: true, topLevelAwait: true },
+				parser: {
+					syntax: 'typescript',
+					tsx: true,
+					decorators: true,
+					topLevelAwait: true,
+					dynamicImport: true
+				},
 				transform: { legacyDecorator: true, decoratorMetadata: true }
 			} as JscConfig,
 			sp_jsc_config

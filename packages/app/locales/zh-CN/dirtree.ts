@@ -4,7 +4,7 @@ export default {
 	file: '文件',
 	dir: '组',
 	fold_all: '折叠全部',
-	input_placeholder: '请输入{target}名称',
+	input_placeholder: '请输入名称',
 	options: {
 		rename: '重命名',
 		moveto: '移动到',

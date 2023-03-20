@@ -67,6 +67,8 @@ const Index = (props: IProps) => {
 		modal_type: x.modal_type,
 		current_option: x.current_option,
 		focusing_item: toJS(x.focusing_item),
+		loading_add: toJS(x.utils.loading['add']),
+		loading_rename: toJS(x.utils.loading['rename']),
 		add: useMemoizedFn(x.add),
 		setModalOpen,
 		resetFocusingItem: () => {
@@ -79,7 +81,7 @@ const Index = (props: IProps) => {
 	const props_options: IPropsOptions = {
 		focusing_item: toJS(x.focusing_item),
 		onOptions: useMemoizedFn(x.onOptions)
-      }
+	}
 
 	return (
 		<div
