@@ -1,4 +1,4 @@
-import { useEventTarget } from 'ahooks'
+import { useEventTarget, useKeyPress } from 'ahooks'
 import { Input, Modal } from 'antd'
 import { useEffect, useMemo } from 'react'
 import { match } from 'ts-pattern'
@@ -26,6 +26,12 @@ const Index = (props: IPropsModal) => {
 	const limits = useLimits()
 	const l = useLocale()
 
+	useEffect(() => {
+		if (!modal_open) onChange({ target: { value: '' } })
+	}, [modal_open])
+
+	useKeyPress('enter', () => onOk())
+
 	const title = useMemo(() => {
 		if (!current_option || !focusing_item.id) return l('dirtree.add') + l(`dirtree.${modal_type}`)
 
@@ -34,10 +40,6 @@ const Index = (props: IPropsModal) => {
 			.with('rename', () => l('dirtree.options.rename') + l(`dirtree.${focusing_item.type}`))
 			.exhaustive()
 	}, [modal_type, current_option, focusing_item])
-
-	useEffect(() => {
-		if (!modal_open) onChange({ target: { value: '' } })
-	}, [modal_open])
 
 	const onOk = () => {
 		if (!value || value.length > limits.todo_list_title_max_length) return

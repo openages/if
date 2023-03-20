@@ -57,10 +57,8 @@ export default class Index {
 			return doc
 		})
 
-		if (focusing_item.type !== 'file') return
-
 		return match(this.module)
-			.with('todo', () => deleteTargetTodo(focusing_item.id))
+			.with('todo', () => deleteTargetTodo(focusing_item))
 			.otherwise(() => {})
 	}
 
