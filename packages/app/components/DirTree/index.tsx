@@ -79,7 +79,7 @@ const Index = (props: IProps) => {
 	const props_options: IPropsOptions = {
 		focusing_item: toJS(x.focusing_item),
 		onOptions: useMemoizedFn(x.onOptions)
-	}
+      }
 
 	return (
 		<div

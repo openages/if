@@ -22,11 +22,8 @@ export default class Index {
 
 	async init(module: App.RealModuleType) {
 		this.module = module
-		this.services.module = module
 
-		await this.services.query()
-
-		this.services.on()
+		await this.services.init(module)
 	}
 
 	async add(type: DirTree.Type, name: string, with_context_menu?: boolean) {

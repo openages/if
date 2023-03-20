@@ -21,19 +21,19 @@ export default class Index {
 				getComputedStyleValue(document.documentElement, '--dirtree_width'),
 				this.dirtree_width === 0
 			)
-		} else {
-			this.setDirTreeWidth(this.dirtree_width, this.dirtree_width === 0)
+
+			return
 		}
+
+		this.setDirTreeWidth(this.dirtree_width, this.dirtree_width === 0)
 	}
 
 	toggleDirTreeVisible() {
-		if (this.dirtree_width === 0) {
-			this.setDirTreeWidth(this.dirtree_prev || 222)
-		} else {
-			this.dirtree_prev = this.dirtree_width
+            if (this.dirtree_width === 0) return this.setDirTreeWidth(this.dirtree_prev || 222)
+            
+		this.dirtree_prev = this.dirtree_width
 
-			this.setDirTreeWidth(0, true)
-		}
+		this.setDirTreeWidth(0, true)
 	}
 
 	setDirTreeWidth(v: number, hide?: boolean) {

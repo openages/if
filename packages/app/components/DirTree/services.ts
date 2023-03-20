@@ -4,7 +4,7 @@ import { injectable } from 'tsyringe'
 
 import { id } from '@/utils'
 
-import { addFileToDir, addTargetTodo, deleteTargetTodo, remove, rename } from './utils'
+import { addFileToDir, addTargetTodo, deleteTargetTodo, getTodoRefs, remove, rename } from './utils'
 
 import type { RxDocument } from 'rxdb'
 import type { App, DirTree, Module } from '@/types'
@@ -22,8 +22,15 @@ export default class Index {
 		this.module = module
 
 		await this.query()
+		await this.getModuleRefs()
 
 		this.on()
+	}
+
+	async getModuleRefs() {
+		return match(this.module)
+			.with('todo', () => getTodoRefs(this.doc.dirtree))
+			.otherwise(() => {})
 	}
 
 	async query() {

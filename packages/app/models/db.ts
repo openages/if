@@ -30,7 +30,7 @@ export default class Index {
 				storage: getRxStorageDexie()
 			})
 		})
-	
+
 		await db.addCollections({
 			module: { schema: schema_module, autoMigrate: true },
 			todo: { schema: schema_todo, autoMigrate: true }
@@ -39,7 +39,7 @@ export default class Index {
 		window.$db = db
 		this.instance = db
 
-		this.addModuleInitData()
+		await this.addModuleInitData()
 	}
 
 	async addModuleInitData() {
@@ -50,8 +50,10 @@ export default class Index {
 			dirtree: []
 		}))
 
-		window.$db.collections.module.bulkInsert(preset_data)
+		await window.$db.collections.module.bulkInsert(preset_data)
 
 		this.ready = true
+
+		return
 	}
 }
