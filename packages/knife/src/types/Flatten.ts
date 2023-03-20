@@ -1,8 +1,10 @@
 // Returns R if T is a function, otherwise returns Fallback
 type IsFunction<T, R, Fallback = T> = T extends (...args: any[]) => any ? R : Fallback
 
+type IsArray<T, R, Fallback = T> = T extends any[] ? R : Fallback
+
 // Returns R if T is an object, otherwise returns Fallback
-type IsObject<T, R, Fallback = T> = IsFunction<T, Fallback, T extends object ? R : Fallback>
+type IsObject<T, R, Fallback = T> = IsArray<T, Fallback, T extends object ? R : Fallback>
 
 // "a.b.c" => "b.c"
 type Tail<S> = S extends `${string}.${infer T}` ? Tail<T> : S
