@@ -39,10 +39,10 @@ export default class Index {
 			.exec())! as RxDocument<Module.Item>
 	}
 
-	async add(focusing_item: DirTree.Item, type: DirTree.Type, name: string) {
+	async add(focusing_item: DirTree.Item, type: DirTree.Type, name: string, icon: string) {
 		return await match({ type })
-			.with({ type: 'dir' }, () => this.addDir(name, focusing_item))
-			.with({ type: 'file' }, () => this.addFile(name, focusing_item))
+			.with({ type: 'file' }, () => this.addFile(name, icon, focusing_item))
+			.with({ type: 'dir' }, () => this.addDir(name, icon, focusing_item))
 			.exhaustive()
 	}
 
@@ -58,9 +58,9 @@ export default class Index {
 			.otherwise(() => {})
 	}
 
-	async rename(focusing_item: DirTree.Item, v: string) {
+	async rename(focusing_item: DirTree.Item, v: string, icon: string) {
 		return await this.doc.incrementalModify((doc) => {
-			rename(doc.dirtree, focusing_item.id, v)
+			rename(doc.dirtree, focusing_item.id, v, icon)
 
 			return doc
 		})
@@ -80,8 +80,8 @@ export default class Index {
 			.otherwise(() => {})
 	}
 
-	private async addDir(name: string, focusing_item?: DirTree.Item) {
-		const dir: DirTree.Dir = { id: id(), type: 'dir', name, children: [] }
+	private async addDir(name: string, icon: string, focusing_item?: DirTree.Item) {
+		const dir: DirTree.Dir = { id: id(), type: 'dir', name, icon, children: [] }
 
 		if (focusing_item?.id) {
 			return await this.doc.incrementalModify((doc) => {
@@ -98,12 +98,12 @@ export default class Index {
 		})
 	}
 
-	private async addFile(name: string, focusing_item?: DirTree.Item) {
+	private async addFile(name: string, icon: string, focusing_item?: DirTree.Item) {
 		const file_id = id()
 
 		await this.addTarget(name, file_id)
 
-		const file: DirTree.File = { id: file_id, type: 'file', name }
+		const file: DirTree.File = { id: file_id, type: 'file', name, icon }
 
 		if (focusing_item?.id) {
 			return await this.doc.incrementalModify((doc) => {

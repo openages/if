@@ -1,12 +1,12 @@
 import { useMemoizedFn, useUpdateEffect } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { When } from 'react-if'
-import { match, P } from 'ts-pattern'
+import { Else, If, Then, When } from 'react-if'
 
 import { useDeepMemo } from '@matrixages/knife/react'
-import { CaretRight, Cube, DiceFour, ListBullets } from '@phosphor-icons/react'
+import { CaretRight } from '@phosphor-icons/react'
 
+import LeftIcon from '../LeftIcon'
 import styles from './index.css'
 
 import type { IPropsDirItem } from '../../types'
@@ -25,16 +25,6 @@ const Index = (props: IPropsDirItem & { depth?: number }) => {
 	}, [fold_all])
 
 	useUpdateEffect(() => setOpen(true), [children])
-
-	const LeftIcon = useDeepMemo(() => {
-		return match({ ...item, module })
-			.with({ type: 'dir' }, () => <DiceFour size={16} weight='bold' />)
-			.with({ type: 'file', module: 'todo', icon: P.optional(P.nullish) }, () => (
-				<ListBullets size={16} weight='bold' />
-			))
-			.with({ type: 'file', icon: P.optional(P.nullish) }, () => <Cube size={16} weight='bold' />)
-			.otherwise(({ icon }) => icon)
-	}, [item])
 
 	const onItem = useMemoizedFn(() => {
 		if (type === 'dir') {
@@ -55,12 +45,26 @@ const Index = (props: IPropsDirItem & { depth?: number }) => {
 				)}
 				onClick={onItem}
 				onContextMenu={(e) => showDirTreeOptions(e, item)}
-				style={{ paddingLeft: 12 * depth }}
+				style={{ paddingLeft: 18 * depth }}
 			>
-				<div className='left_icon_wrap flex justify_center align_center'>{LeftIcon}</div>
+				<div className='left_icon_wrap flex justify_center align_center'>
+					<If condition={item.icon}>
+						<Then>
+							<em-emoji shortcodes={item.icon} size='18px'></em-emoji>
+						</Then>
+						<Else>
+							<LeftIcon module={module} item={item}></LeftIcon>
+						</Else>
+					</If>
+				</div>
 				<span className={$cx('title_wrap')}>{name}</span>
-				<span className='right_icon_wrap flex align_center justify_end'>
-					<When condition={type === 'dir' && item.children.length}>
+				<span
+					className={$cx(
+						'right_icon_wrap flex align_center justify_end',
+						type === 'dir' && item.children.length === 0 && 'no_children'
+					)}
+				>
+					<When condition={type === 'dir'}>
 						<CaretRight
 							className={$cx('icon_fold transition_normal', open && 'opened')}
 							size={14}

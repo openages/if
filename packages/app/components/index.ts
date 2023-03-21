@@ -5,5 +5,6 @@ export { default as DirTree } from './DirTree'
 export { default as DataEmpty } from './DataEmpty'
 export { default as SimpleEmpty } from './SimpleEmpty'
 export { default as ContextMenuItem } from './ContextMenuItem'
+export { default as EmojiPicker } from './EmojiPicker'
 
 export type { IProps as IPropsDirTree } from './DirTree/types'

@@ -1,16 +1,22 @@
-import { useEventTarget, useKeyPress } from 'ahooks'
-import { Input, Modal } from 'antd'
-import { useEffect, useMemo } from 'react'
+import { useEventTarget, useKeyPress, useMemoizedFn } from 'ahooks'
+import { Input, Modal, Popover } from 'antd'
+import { useEffect, useMemo, useState } from 'react'
+import { Else, If, Then } from 'react-if'
 import { match } from 'ts-pattern'
 
+import { EmojiPicker } from '@/components'
 import { useLimits, useLocale } from '@/hooks'
+import { useDeepMemo } from '@matrixages/knife/react'
 
+import LeftIcon from '../LeftIcon'
 import styles from './index.css'
 
 import type { IPropsModal } from '../../types'
+import type { DirTree } from '@/types'
 
 const Index = (props: IPropsModal) => {
 	const {
+		module,
 		modal_open,
 		modal_type,
 		current_option,
@@ -22,17 +28,31 @@ const Index = (props: IPropsModal) => {
 		resetFocusingItem,
 		rename
 	} = props
+	const [icon, setIcon] = useState('')
 	const [value, { onChange }] = useEventTarget<string>()
 	const limits = useLimits()
 	const l = useLocale()
 
 	useEffect(() => {
-		if (!modal_open) onChange({ target: { value: '' } })
+		if (modal_open) return
+
+		setIcon('')
+		onChange({ target: { value: '' } })
 	}, [modal_open])
+
+	useEffect(() => {
+		if (focusing_item.icon && current_option === 'rename') {
+			setIcon(focusing_item.icon)
+		}
+
+		if (!value && focusing_item.id && current_option === 'rename') {
+			onChange({ target: { value: focusing_item.name } })
+		}
+	}, [focusing_item, current_option, value])
 
 	useKeyPress('enter', () => onOk())
 
-	const title = useMemo(() => {
+	const title = useDeepMemo(() => {
 		if (!current_option || !focusing_item.id) return l('dirtree.add') + l(`dirtree.${modal_type}`)
 
 		return match(current_option)
@@ -42,14 +62,24 @@ const Index = (props: IPropsModal) => {
 			.exhaustive()
 	}, [modal_type, current_option, focusing_item])
 
+	const left_icon_item = useDeepMemo(() => {
+		if (current_option === 'add_file') return { type: 'file' } as DirTree.Item
+		if (current_option === 'add_dir') return { type: 'dir' } as DirTree.Item
+		if (focusing_item.id) return focusing_item
+
+		return { type: modal_type } as DirTree.Item
+	}, [modal_type, current_option, focusing_item])
+
 	const onOk = () => {
 		if (!value || value.length > limits.todo_list_title_max_length) return
-		if (current_option === 'rename') return rename(value)
-		if (current_option === 'add_file') return add('file', value)
-		if (current_option === 'add_dir') return add('dir', value)
+		if (current_option === 'rename') return rename(value, icon)
+		if (current_option === 'add_file') return add('file', value, icon)
+		if (current_option === 'add_dir') return add('dir', value, icon)
 
-		add(modal_type, value)
+		add(modal_type, value, icon)
 	}
+
+	const onSelectIcon = useMemoizedFn(({ shortcodes }) => setIcon(shortcodes))
 
 	return (
 		<Modal
@@ -65,14 +95,33 @@ const Index = (props: IPropsModal) => {
 				resetFocusingItem()
 			}}
 		>
-			<Input
-				className='input_title w_100 border_box'
-				placeholder={l('dirtree.input_placeholder')}
-				showCount
-				value={value}
-				maxLength={limits.todo_list_title_max_length}
-				onChange={onChange}
-			></Input>
+			<div className='w_100 flex align_center justify_between'>
+				<Popover
+					rootClassName={styles.icon_picker}
+					placement='left'
+					autoAdjustOverflow={false}
+					trigger='click'
+					content={<EmojiPicker onEmojiSelect={onSelectIcon} />}
+				>
+					<div className='icon_wrap flex justify_center align_center clickable'>
+						<If condition={icon}>
+							<Then>
+								<em-emoji shortcodes={icon} size='24px'></em-emoji>
+							</Then>
+							<Else>
+								<LeftIcon module={module} item={left_icon_item}></LeftIcon>
+							</Else>
+						</If>
+					</div>
+				</Popover>
+				<Input
+					placeholder={l('dirtree.input_placeholder')}
+					showCount
+					value={value}
+					maxLength={limits.todo_list_title_max_length}
+					onChange={onChange}
+				></Input>
+			</div>
 		</Modal>
 	)
 }

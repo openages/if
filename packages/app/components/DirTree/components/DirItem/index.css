@@ -1,7 +1,8 @@
 ._local {
 	:global {
 		.item_wrap {
-			padding: 6px 12px;
+                  height: 36px;
+                  padding-right: 18px;
 
 			&:hover,
 			&.active {
@@ -11,6 +12,7 @@
 			.left_icon_wrap {
 				width: 18px;
 				margin-right: 6px;
+				user-select: none;
 			}
 
 			.title_wrap {
@@ -30,6 +32,12 @@
 				text-align: right;
 				font-size: 12px;
 				user-select: none;
+
+                        &.no_children{
+                              .icon_fold{
+                                    color: var(--color_border);
+                              }
+                        }
 
 				.icon_fold {
 					margin-right: -2px;

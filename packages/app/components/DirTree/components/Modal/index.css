@@ -1,9 +1,36 @@
 ._local {
+      --icon_size:38px;
+
 	:global {
-		.input_title {
-			margin: 6px 0;
-                  border-bottom-width: 2px;
-                  border-bottom-style: solid;
-		}
+            .if-modal-close{
+                  background-color: var(--color_bg);
+            }
+
+            .if-modal-body{
+                  padding: 6px 0;
+            }
+
+            .icon_wrap{
+                  width: var(--icon_size);
+                  height: var(--icon_size);
+                  border: 1px dashed var(--color_border);
+                  border-radius: var(--radius);
+            }
+
+            .if-input-affix-wrapper {
+                  width: calc(100% - var(--icon_size) - 12px);
+			margin: 3px 0;
+            }
 	}
+}
+
+.icon_picker{
+      :global{
+            .if-popover-content{
+                  .if-popover-inner{
+                        background-color: transparent;
+                        box-shadow: none;
+                  }
+            }
+      }
 }

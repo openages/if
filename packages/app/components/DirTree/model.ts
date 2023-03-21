@@ -30,15 +30,15 @@ export default class Index {
 	}
 
 	@loading
-	async add(type: DirTree.Type, name: string) {
-		await this.services.add(this.focusing_item, type, name)
+	async add(type: DirTree.Type, name: string, icon: string) {
+		await this.services.add(this.focusing_item, type, name, icon)
 
 		this.modal_open = false
 	}
 
 	@loading
-	async rename(v: string) {
-		await this.services.rename(this.focusing_item, v)
+	async rename(v: string, icon: string) {
+		await this.services.rename(this.focusing_item, v, icon)
 
 		this.modal_open = false
 		this.focusing_item = {} as DirTree.Item
