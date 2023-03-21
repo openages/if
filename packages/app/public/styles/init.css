@@ -26,8 +26,8 @@ body {
 }
 
 ::-webkit-input-placeholder,
-.xgen-select-selection-placeholder {
-	color: var(--color_placeholder) !important;
+.if-select-selection-placeholder {
+	color: var(--color_text_light) !important;
 }
 
 input:-internal-autofill-previewed,

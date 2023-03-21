@@ -2,11 +2,11 @@
       height: 40px;
       padding: 0 18px;
       border-bottom: 1px solid var(--color_border_light);
+      color: var(--color_text_light);
 
       :global{
             .icon_search{
                   left: 18px;
-                  color: var(--color_text_grey);
             }
 
             .input_search{
@@ -15,6 +15,7 @@
                   outline: none;
                   padding-left: 24px;
                   line-height: 1;
+                  color: red;
 
                   &:disabled{
                         background-color: transparent;

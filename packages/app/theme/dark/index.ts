@@ -1,9 +1,9 @@
 export default {
       color_text: '#a2a5b9',
 	color_text_sub: '#999',
-	color_text_grey: '#777',
+      color_text_grey: '#777',
+	color_text_light: '#444',
 	color_text_contrast: 'white',
-	color_placeholder: '#727272',
 	color_bg: '#232326',
 	color_bg_1: '#2f2f34',
 	color_bg_2: '#3b3b41',
