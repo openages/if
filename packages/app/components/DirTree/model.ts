@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx'
+import { contextMenu } from 'react-contexify'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
@@ -16,7 +17,7 @@ export default class Index {
 	current_item = ''
 	modal_type = 'file' as DirTree.Type
 	fold_all = false
-	current_option = '' as 'rename' | 'add' | ''
+	current_option = '' as 'rename' | 'add_file' | 'add_dir' | ''
 
 	constructor(public utils: Utils, public services: Services) {
 		makeAutoObservable(this, {}, { autoBind: true })
@@ -29,8 +30,8 @@ export default class Index {
 	}
 
 	@loading
-	async add(type: DirTree.Type, name: string, with_context_menu?: boolean) {
-		await this.services.add(this.focusing_item, type, name, with_context_menu)
+	async add(type: DirTree.Type, name: string) {
+		await this.services.add(this.focusing_item, type, name)
 
 		this.modal_open = false
 	}
@@ -44,17 +45,19 @@ export default class Index {
 	}
 
 	moveTo(target_id: string) {
+		contextMenu.hideAll()
+
 		this.services.moveTo(this.focusing_item, target_id)
 	}
 
 	onOptions(type: 'add_file' | 'add_dir' | 'rename' | 'delete') {
 		match(type)
 			.with('add_file', () => {
-				this.current_option = 'add'
+				this.current_option = 'add_file'
 				this.modal_open = true
 			})
 			.with('add_dir', () => {
-				this.current_option = 'add'
+				this.current_option = 'add_dir'
 				this.modal_open = true
 			})
 			.with('rename', () => {

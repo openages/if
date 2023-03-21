@@ -4,7 +4,7 @@ import { injectable } from 'tsyringe'
 
 import { id } from '@/utils'
 
-import { addFileToDir, addTargetTodo, deleteTargetTodo, getTodoRefs, moveTo, remove, rename } from './utils'
+import { addTargetTodo, addToDir, deleteTargetTodo, getTodoRefs, moveTo, remove, rename } from './utils'
 
 import type { RxDocument } from 'rxdb'
 import type { App, DirTree, Module } from '@/types'
@@ -39,15 +39,11 @@ export default class Index {
 			.exec())! as RxDocument<Module.Item>
 	}
 
-	async add(focusing_item: DirTree.Item, type: DirTree.Type, name: string, with_context_menu?: boolean) {
-		if (with_context_menu) {
-			return await this.addFile(focusing_item, name, with_context_menu)
-		} else {
-			return await match({ type })
-				.with({ type: 'dir' }, () => this.addDir(name))
-				.with({ type: 'file' }, () => this.addFile(focusing_item, name))
-				.exhaustive()
-		}
+	async add(focusing_item: DirTree.Item, type: DirTree.Type, name: string) {
+		return await match({ type })
+			.with({ type: 'dir' }, () => this.addDir(name, focusing_item))
+			.with({ type: 'file' }, () => this.addFile(name, focusing_item))
+			.exhaustive()
 	}
 
 	async delete(focusing_item: DirTree.Item) {
@@ -84,37 +80,42 @@ export default class Index {
 			.otherwise(() => {})
 	}
 
-	private async addDir(name: string) {
+	private async addDir(name: string, focusing_item?: DirTree.Item) {
+		const dir: DirTree.Dir = { id: id(), type: 'dir', name, children: [] }
+
+		if (focusing_item?.id) {
+			return await this.doc.incrementalModify((doc) => {
+				addToDir(doc.dirtree, focusing_item.id, dir)
+
+				return doc
+			})
+		}
+
 		return await this.doc.incrementalUpdate({
 			$push: {
-				dirtree: {
-					id: id(),
-					type: 'dir',
-					name,
-					children: []
-				}
+				dirtree: dir
 			}
 		})
 	}
 
-	private async addFile(focusing_item: DirTree.Item, name: string, with_context_menu?: boolean) {
+	private async addFile(name: string, focusing_item?: DirTree.Item) {
 		const file_id = id()
 
 		await this.addTarget(name, file_id)
 
 		const file: DirTree.File = { id: file_id, type: 'file', name }
 
-		if (with_context_menu) {
+		if (focusing_item?.id) {
 			return await this.doc.incrementalModify((doc) => {
-				addFileToDir(doc.dirtree, focusing_item.id, file)
+				addToDir(doc.dirtree, focusing_item.id, file)
 
 				return doc
 			})
-		} else {
-			return await this.doc.incrementalUpdate({
-				$push: { dirtree: file }
-			})
 		}
+
+		return await this.doc.incrementalUpdate({
+			$push: { dirtree: file }
+		})
 	}
 
 	on() {

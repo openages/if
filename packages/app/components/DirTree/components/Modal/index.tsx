@@ -36,7 +36,8 @@ const Index = (props: IPropsModal) => {
 		if (!current_option || !focusing_item.id) return l('dirtree.add') + l(`dirtree.${modal_type}`)
 
 		return match(current_option)
-			.with('add', () => focusing_item.name + ' / ' + l('dirtree.add') + l('dirtree.file'))
+			.with('add_file', () => focusing_item.name + ' / ' + l('dirtree.add') + l('dirtree.file'))
+			.with('add_dir', () => focusing_item.name + ' / ' + l('dirtree.add') + l('dirtree.dir'))
 			.with('rename', () => l('dirtree.options.rename') + l(`dirtree.${focusing_item.type}`))
 			.exhaustive()
 	}, [modal_type, current_option, focusing_item])
@@ -44,7 +45,8 @@ const Index = (props: IPropsModal) => {
 	const onOk = () => {
 		if (!value || value.length > limits.todo_list_title_max_length) return
 		if (current_option === 'rename') return rename(value)
-		if (current_option === 'add') return add(modal_type, value, true)
+		if (current_option === 'add_file') return add('file', value)
+		if (current_option === 'add_dir') return add('dir', value)
 
 		add(modal_type, value)
 	}

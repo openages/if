@@ -11,11 +11,10 @@
 			.left_icon_wrap {
 				width: 18px;
 				margin-right: 6px;
-				color: var(--color_text_sub);
 			}
 
 			.title_wrap {
-				width: calc(100% - 24px - 36px);
+				width: calc(100% - 24px - 18px);
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
@@ -23,7 +22,7 @@
 			}
 
 			.right_icon_wrap {
-				width: 36px;
+				width: 18px;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
