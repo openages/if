@@ -1,4 +1,6 @@
-em-emoji-picker{
-      width: 300px;
-      height: 360px;
+em-emoji-picker {
+	width: 300px;
+	height: 360px;
+
+	--rgb-accent: 128, 128, 128;
 }
