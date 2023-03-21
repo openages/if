@@ -43,14 +43,22 @@ export default class Index {
 		this.focusing_item = {} as DirTree.Item
 	}
 
-	onOptions(type: 'rename' | 'delete' | 'add') {
+	moveTo(target_id: string) {
+		this.services.moveTo(this.focusing_item, target_id)
+	}
+
+	onOptions(type: 'add_file' | 'add_dir' | 'rename' | 'delete') {
 		match(type)
-			.with('rename', () => {
-				this.current_option = 'rename'
+			.with('add_file', () => {
+				this.current_option = 'add'
 				this.modal_open = true
 			})
-			.with('add', () => {
+			.with('add_dir', () => {
 				this.current_option = 'add'
+				this.modal_open = true
+			})
+			.with('rename', () => {
+				this.current_option = 'rename'
 				this.modal_open = true
 			})
 			.with('delete', () => this.services.delete(this.focusing_item))

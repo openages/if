@@ -1,7 +1,7 @@
 ._local {
 	:global {
 		.item_wrap {
-			padding: 9px 18px;
+			padding: 6px 12px;
 
 			&:hover,
 			&.active {
@@ -39,12 +39,6 @@
 						transform: rotate(90deg);
 					}
 				}
-			}
-		}
-
-		.children_wrap {
-			.item_wrap {
-				padding-left: 30px;
 			}
 		}
 	}

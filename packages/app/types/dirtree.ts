@@ -9,12 +9,19 @@ export namespace DirTree {
 
 	export type Dir = Common & {
 		type: 'dir'
-		children: Array<File>
+		children: Array<Item>
 	}
 
 	export type File = Common & {
 		type: 'file'
 	}
+
+	export type DirsItem = Common & {
+		type: 'dir'
+		children: Array<Dir>
+	}
+
+	export type Dirs = Array<DirsItem>
 
 	export type Item = Dir | File
 	export type Items = Array<Item>

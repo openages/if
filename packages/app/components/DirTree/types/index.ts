@@ -5,6 +5,7 @@ import type { DirTree } from '@/types'
 import type Model from '../model'
 import type { App } from '@/types'
 import type { MouseEvent } from 'react'
+import type { ItemProps } from 'react-contexify'
 
 export interface IProps {
 	module: App.RealModuleType
@@ -41,9 +42,9 @@ export interface IPropsModal {
 	modal_open: Model['modal_open']
 	modal_type: Model['modal_type']
 	current_option: Model['current_option']
-      focusing_item: Model[ 'focusing_item' ]
-      loading_add:boolean,
-      loading_rename:boolean,
+	focusing_item: Model['focusing_item']
+	loading_add: boolean
+	loading_rename: boolean
 	add: Model['add']
 	setModalOpen: (v: Model['modal_open'], type?: Model['modal_type']) => void
 	resetFocusingItem: () => void
@@ -51,6 +52,13 @@ export interface IPropsModal {
 }
 
 export interface IPropsOptions {
+	dirs: DirTree.Dirs
 	focusing_item: Model['focusing_item']
 	onOptions: Model['onOptions']
+	moveTo: Model['moveTo']
+}
+
+export interface IPropsDirs {
+	item: DirTree.DirsItem
+	moveTo: Model['moveTo']
 }

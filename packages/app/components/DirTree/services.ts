@@ -4,7 +4,7 @@ import { injectable } from 'tsyringe'
 
 import { id } from '@/utils'
 
-import { addFileToDir, addTargetTodo, deleteTargetTodo, getTodoRefs, remove, rename } from './utils'
+import { addFileToDir, addTargetTodo, deleteTargetTodo, getTodoRefs, moveTo, remove, rename } from './utils'
 
 import type { RxDocument } from 'rxdb'
 import type { App, DirTree, Module } from '@/types'
@@ -65,6 +65,14 @@ export default class Index {
 	async rename(focusing_item: DirTree.Item, v: string) {
 		return await this.doc.incrementalModify((doc) => {
 			rename(doc.dirtree, focusing_item.id, v)
+
+			return doc
+		})
+	}
+
+	async moveTo(current: DirTree.Item, target_id: string) {
+		return await this.doc.incrementalModify((doc) => {
+			moveTo(current, target_id, doc.dirtree)
 
 			return doc
 		})

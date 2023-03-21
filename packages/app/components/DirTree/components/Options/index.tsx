@@ -1,31 +1,44 @@
 import { useMemoizedFn } from 'ahooks'
-import { Item, Menu, Submenu } from 'react-contexify'
+import { Menu, Submenu } from 'react-contexify'
 import { When } from 'react-if'
 
 import { ContextMenuItem } from '@/components'
 import { useLocale } from '@/hooks'
-import { ArrowSquareRight, ListPlus, Pencil, Trash } from '@phosphor-icons/react'
+import { ArrowSquareRight, CirclesThreePlus, ListPlus, Pencil, Trash } from '@phosphor-icons/react'
+
+import Dirs from '../Dirs'
 
 import type { IPropsOptions } from '../../types'
 
 const Index = (props: IPropsOptions) => {
-	const { focusing_item, onOptions } = props
+	const { dirs, focusing_item, onOptions, moveTo } = props
 	const l = useLocale()
 
+	const onAddFile = useMemoizedFn(() => onOptions('add_file'))
+	const onAddDir = useMemoizedFn(() => onOptions('add_dir'))
 	const onDelete = useMemoizedFn(() => onOptions('delete'))
+	const onRename = useMemoizedFn(() => onOptions('rename'))
 
 	return (
 		<Menu id='dirtree_options' animation='scale'>
-			<Item onClick={() => onOptions('rename')}>
-				<ContextMenuItem Icon={Pencil} text={l('dirtree.options.rename')}></ContextMenuItem>
-			</Item>
+			<ContextMenuItem
+				itemProps={{ onClick: onRename }}
+				Icon={Pencil}
+				text={l('dirtree.options.rename')}
+			></ContextMenuItem>
 			<When condition={focusing_item.type === 'dir'}>
-				<Item onClick={() => onOptions('add')}>
-					<ContextMenuItem
-						Icon={ListPlus}
-						text={l('dirtree.add') + l('dirtree.file')}
-					></ContextMenuItem>
-				</Item>
+				<ContextMenuItem
+					itemProps={{ onClick: onAddFile }}
+					Icon={ListPlus}
+					text={l('dirtree.add') + l('dirtree.file')}
+				></ContextMenuItem>
+				<ContextMenuItem
+					itemProps={{ onClick: onAddDir }}
+					Icon={CirclesThreePlus}
+					text={l('dirtree.add') + l('dirtree.dir')}
+				></ContextMenuItem>
+			</When>
+			<When condition={dirs.length}>
 				<Submenu
 					label={
 						<ContextMenuItem
@@ -34,20 +47,19 @@ const Index = (props: IPropsOptions) => {
 						></ContextMenuItem>
 					}
 				>
-					<Item>today</Item>
-					<Item>plan</Item>
-					<Item>ghost plan</Item>
+					{dirs.map((item) => (
+						<Dirs item={item} moveTo={moveTo} key={item.id}></Dirs>
+					))}
 				</Submenu>
 			</When>
-			<Item closeOnClick={false}>
-				<ContextMenuItem
-					className='red'
-					Icon={Trash}
-					text={l('dirtree.options.delete')}
-					danger={focusing_item.type === 'dir' ? 3 : 1.5}
-					trigger={onDelete}
-				></ContextMenuItem>
-			</Item>
+			<ContextMenuItem
+				itemProps={{ closeOnClick: false }}
+				className='red'
+				Icon={Trash}
+				text={l('dirtree.options.delete')}
+				danger={focusing_item.type === 'dir' ? 3 : 1.5}
+				trigger={onDelete}
+			></ContextMenuItem>
 		</Menu>
 	)
 }

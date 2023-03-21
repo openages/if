@@ -12,6 +12,7 @@ import { useDeepMemo } from '@matrixages/knife/react'
 import { Actions, DirItems, DragLine, Modal, Options, Search } from './components'
 import styles from './index.css'
 import Model from './model'
+import { getDirs } from './utils'
 
 import type { IProps, IPropsActions, IPropsModal, IPropsDirItems, IPropsOptions } from './types'
 import type { DirTree } from '@/types'
@@ -21,11 +22,13 @@ const Index = (props: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const global = useGlobal()
 	const { show } = useContextMenu({ id: 'dirtree_options' })
-	const dirtree = useDeepMemo(() => x.services.doc?.toMutableJSON?.().dirtree || [], [x.services.doc.dirtree])
 
 	useLayoutEffect(() => {
 		x.init(module)
-	}, [module])
+      }, [ module ])
+      
+	const dirtree = useDeepMemo(() => x.services.doc?.toMutableJSON?.().dirtree || [], [x.services.doc.dirtree])
+	const dirs = useDeepMemo(() => getDirs(dirtree, x.focusing_item.id), [dirtree, x.focusing_item])
 
 	const onItemClick = useMemoizedFn((v: string) => {
 		x.current_item = v
@@ -79,8 +82,10 @@ const Index = (props: IProps) => {
 	}
 
 	const props_options: IPropsOptions = {
+		dirs,
 		focusing_item: toJS(x.focusing_item),
-		onOptions: useMemoizedFn(x.onOptions)
+		onOptions: useMemoizedFn(x.onOptions),
+		moveTo: useMemoizedFn(x.moveTo)
 	}
 
 	return (
