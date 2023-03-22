@@ -36,9 +36,7 @@ export default class Index {
 		this.modal_open = false
 	}
 
-	async update(v: DirTree.Items) {
-		console.log('dirtree: ', v)
-
+	update(v: DirTree.Items) {
 		this.services.dirtree = v
 	}
 

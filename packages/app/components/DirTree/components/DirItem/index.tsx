@@ -51,7 +51,7 @@ const Index = (props: IPropsDirItem & { depth?: number }) => {
 
 	const updateList = useMemoizedFn((current) => {
 		update((dirtree) => {
-                  updateChildren(dirtree, item.id, current)
+			updateChildren(dirtree, item.id, current)
 
 			return dirtree
 		})
@@ -105,6 +105,7 @@ const Index = (props: IPropsDirItem & { depth?: number }) => {
 					>
 						<ReactSortable
 							{...sortable_options}
+							group={item.id}
 							list={item.children}
 							key={item.id}
 							setList={updateList}
