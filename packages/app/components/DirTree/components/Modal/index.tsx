@@ -99,8 +99,8 @@ const Index = (props: IPropsModal) => {
 				<Popover
 					rootClassName={styles.icon_picker}
 					placement='left'
-					autoAdjustOverflow={false}
 					trigger='click'
+					align={{ offset: [-30, 0] }}
 					content={<EmojiPicker onEmojiSelect={onSelectIcon} />}
 				>
 					<div className='icon_wrap flex justify_center align_center clickable'>
