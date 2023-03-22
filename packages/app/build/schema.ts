@@ -7,7 +7,7 @@ import handleSchema from '../utils/rxdb/handleSchema'
 import type { Config } from 'ts-json-schema-generator'
 
 const root = process.cwd()
-const paths = globby.globbySync(`${root}/types/schema/*.ts`)
+const paths = globby.globbySync([`${root}/types/schema/*.ts`,`!${root}/types/schema/module.ts`])
 
 const getConfig = (path: string) => {
 	return {
@@ -29,7 +29,7 @@ paths.map((item) => {
 	const schema = handleSchema(buffer.definitions, buffer.definitions)
 
 	fs.writeFileSync(
-		`${root}/schemas/output/${item.split('/').pop()!.replace('.ts', '.ts')}`,
+		`${root}/schemas/output/${item.split('/').pop()}`,
 		`export default ${JSON.stringify(schema, null, 6)} as const`
 	)
 })

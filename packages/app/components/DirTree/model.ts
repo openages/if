@@ -36,6 +36,12 @@ export default class Index {
 		this.modal_open = false
 	}
 
+	async update(v: DirTree.Items) {
+		console.log('dirtree: ', v)
+
+		this.services.dirtree = v
+	}
+
 	@loading
 	async rename(v: string, icon: string) {
 		await this.services.rename(this.focusing_item, v, icon)

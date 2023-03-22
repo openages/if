@@ -1,8 +1,10 @@
-import { makeAutoObservable } from 'mobx'
+import { debounce } from 'lodash-es'
+import { makeAutoObservable, reaction, toJS } from 'mobx'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
 import { id } from '@/utils'
+import { deepEqual } from '@matrixages/knife/react'
 
 import { addTargetTodo, addToDir, deleteTargetTodo, getTodoRefs, moveTo, remove, rename } from './utils'
 
@@ -13,6 +15,7 @@ import type { App, DirTree, Module } from '@/types'
 export default class Index {
 	module = '' as App.RealModuleType
 	doc = {} as RxDocument<Module.Item>
+	dirtree = [] as DirTree.Items
 
 	constructor() {
 		makeAutoObservable(this, {}, { autoBind: true })
@@ -25,6 +28,18 @@ export default class Index {
 		await this.getModuleRefs()
 
 		this.on()
+		this.reactions()
+	}
+
+	reactions() {
+		reaction(
+			() => this.dirtree,
+			debounce((v) => {
+				if (deepEqual(toJS(v), toJS(this.doc.dirtree))) return
+
+				this.update(v)
+			}, 300)
+		)
 	}
 
 	async getModuleRefs() {
@@ -37,6 +52,8 @@ export default class Index {
 		this.doc = (await $db.module
 			.findOne({ selector: { module: this.module } })
 			.exec())! as RxDocument<Module.Item>
+
+		this.dirtree = this.doc.dirtree
 	}
 
 	async add(focusing_item: DirTree.Item, type: DirTree.Type, name: string, icon: string) {
@@ -56,6 +73,14 @@ export default class Index {
 		return match(this.module)
 			.with('todo', () => deleteTargetTodo(focusing_item))
 			.otherwise(() => {})
+	}
+
+	async update(v: DirTree.Items) {
+		return await this.doc.incrementalModify((doc) => {
+			doc.dirtree = v
+
+			return doc
+		})
 	}
 
 	async rename(focusing_item: DirTree.Item, v: string, icon: string) {
@@ -119,6 +144,9 @@ export default class Index {
 	}
 
 	on() {
-		this.doc.$.subscribe((v) => (this.doc = v))
+		this.doc.$.subscribe((v) => {
+			this.doc = v
+			this.dirtree = v.dirtree
+		})
 	}
 }

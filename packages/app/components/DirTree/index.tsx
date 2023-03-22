@@ -27,8 +27,10 @@ const Index = (props: IProps) => {
 		x.init(module)
 	}, [module])
 
-	const dirtree = useDeepMemo(() => x.services.doc?.toMutableJSON?.().dirtree || [], [x.services.doc.dirtree])
-	const dirs = useDeepMemo(() => getDirs(dirtree, x.focusing_item.id), [dirtree, x.focusing_item])
+	const dirs = useDeepMemo(
+		() => getDirs(x.services.dirtree, x.focusing_item.id),
+		[x.services.dirtree, x.focusing_item]
+	)
 
 	const onItemClick = useMemoizedFn((v: string) => {
 		x.current_item = v
@@ -53,9 +55,16 @@ const Index = (props: IProps) => {
 
 	const props_dir_items: IPropsDirItems = {
 		module: x.module,
-		data: dirtree,
+		data: toJS(x.services.dirtree),
 		current_item: x.current_item,
 		fold_all: x.fold_all,
+		update: useMemoizedFn((v: DirTree.Items | ((dirtree: DirTree.Items) => DirTree.Items)) => {
+			if (Array.isArray(v)) {
+				x.update(v)
+			} else {
+				x.update(v(toJS(x.services.dirtree)))
+			}
+		}),
 		onClick: onItemClick,
 		setFoldAll,
 		showDirTreeOptions

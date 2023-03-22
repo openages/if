@@ -15,7 +15,6 @@
                   outline: none;
                   padding-left: 24px;
                   line-height: 1;
-                  color: red;
 
                   &:disabled{
                         background-color: transparent;

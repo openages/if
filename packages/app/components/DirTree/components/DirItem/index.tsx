@@ -2,17 +2,30 @@ import { useMemoizedFn, useUpdateEffect } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Else, If, Then, When } from 'react-if'
+import { ReactSortable } from 'react-sortablejs'
 
 import { useDeepMemo } from '@matrixages/knife/react'
 import { CaretRight } from '@phosphor-icons/react'
 
+import { updateChildren } from '../../utils'
 import LeftIcon from '../LeftIcon'
 import styles from './index.css'
 
 import type { IPropsDirItem } from '../../types'
 
 const Index = (props: IPropsDirItem & { depth?: number }) => {
-	const { module, item, current_item, fold_all, depth = 1, onClick, setFoldAll, showDirTreeOptions } = props
+	const {
+		module,
+		item,
+		current_item,
+		fold_all,
+		sortable_options,
+		depth = 1,
+		update,
+		onClick,
+		setFoldAll,
+		showDirTreeOptions
+	} = props
 	const { id, name, type } = item
 	const [open, setOpen] = useState(false)
 
@@ -34,6 +47,14 @@ const Index = (props: IPropsDirItem & { depth?: number }) => {
 		}
 
 		onClick(id)
+	})
+
+	const updateList = useMemoizedFn((current) => {
+		update((dirtree) => {
+                  updateChildren(dirtree, item.id, current)
+
+			return dirtree
+		})
 	})
 
 	return (
@@ -82,21 +103,30 @@ const Index = (props: IPropsDirItem & { depth?: number }) => {
 						exit={{ opacity: 0, height: 0 }}
 						transition={{ duration: 0.18 }}
 					>
-						{item.children?.map((it) => (
-							<Index
-								{...{
-									module,
-									current_item,
-									fold_all,
-									onClick,
-									setFoldAll,
-									showDirTreeOptions
-								}}
-								item={it}
-								depth={depth + 1}
-								key={it.id}
-							></Index>
-						))}
+						<ReactSortable
+							{...sortable_options}
+							list={item.children}
+							key={item.id}
+							setList={updateList}
+						>
+							{item.children.map((it) => (
+								<Index
+									{...{
+										module,
+										current_item,
+										fold_all,
+										sortable_options,
+										update,
+										onClick,
+										setFoldAll,
+										showDirTreeOptions
+									}}
+									item={it}
+									depth={depth + 1}
+									key={it.id}
+								></Index>
+							))}
+						</ReactSortable>
 					</motion.div>
 				)}
 			</AnimatePresence>

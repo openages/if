@@ -41,7 +41,7 @@ const Index = () => {
 	}
 
 	return (
-		<div className={$cx(styles._local)}>
+		<div className={$cx(styles._local, 'w_100 h_100vh flex justify_center align_center')}>
 			<DirTree {...props_dir_tree}></DirTree>
 			<If condition={x.todo_list?.name}>
 				<Then>
