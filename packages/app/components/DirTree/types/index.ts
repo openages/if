@@ -4,7 +4,6 @@ import type { DirTree } from '@/types'
 
 import type Model from '../model'
 import type { MouseEvent } from 'react'
-import type { ReactSortableProps } from 'react-sortablejs'
 
 export interface IProps {
 	module: Model['module']
@@ -17,7 +16,6 @@ export interface IPropsDirItems {
 	data: Model['services']['doc']['dirtree']
 	current_item: string
 	fold_all: Model['fold_all']
-	update: (v: DirTree.Items | ((dirtree: DirTree.Items) => DirTree.Items)) => void
 	onClick: (v: string) => void
 	setFoldAll: (v: Model['fold_all']) => boolean
 	showDirTreeOptions: (e: MouseEvent<HTMLDivElement>, v: DirTree.Item) => void
@@ -28,8 +26,6 @@ export type IPropsDirItem = {
 	item: DirTree.Item
 	current_item: string
 	fold_all: Model['fold_all']
-	sortable_options: Omit<ReactSortableProps<DirTree.Item>, 'list' | 'setList'>
-	update: IPropsDirItems['update']
 	onClick: (v: string) => void
 	setFoldAll: (v: Model['fold_all']) => boolean
 	showDirTreeOptions: IPropsDirItems['showDirTreeOptions']

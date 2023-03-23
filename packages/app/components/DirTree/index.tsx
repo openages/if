@@ -25,6 +25,8 @@ const Index = (props: IProps) => {
 
 	useLayoutEffect(() => {
 		x.init(module)
+
+		return () => x.off()
 	}, [module])
 
 	const dirs = useDeepMemo(
@@ -58,13 +60,6 @@ const Index = (props: IProps) => {
 		data: toJS(x.services.dirtree),
 		current_item: x.current_item,
 		fold_all: x.fold_all,
-		update: useMemoizedFn((v: DirTree.Items | ((dirtree: DirTree.Items) => DirTree.Items)) => {
-			if (Array.isArray(v)) {
-				x.update(v)
-			} else {
-				x.update(v(toJS(x.services.dirtree)))
-			}
-		}),
 		onClick: onItemClick,
 		setFoldAll,
 		showDirTreeOptions

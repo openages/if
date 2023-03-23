@@ -1,46 +1,48 @@
+import { useMemoizedFn } from 'ahooks'
 import { Else, If, Then } from 'react-if'
-import { ReactSortable } from 'react-sortablejs'
 
 import { SimpleEmpty } from '@/components'
+import { DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
+import { SortableContext } from '@dnd-kit/sortable'
 
 import DirItem from '../DirItem'
 
 import type { IPropsDirItems } from '../../types'
-import type { ReactSortableProps } from 'react-sortablejs'
-import type { DirTree } from '@/types'
-
-const sortable_options: Omit<ReactSortableProps<DirTree.Item>, 'list' | 'setList'> = {
-	animation: 150,
-	fallbackOnBody: true,
-	swapThreshold: 0.72,
-	group: 'dirtree'
-}
+import type { DragEndEvent } from '@dnd-kit/core'
 
 const Index = (props: IPropsDirItems) => {
-	const { module, data, current_item, fold_all, update, onClick, setFoldAll, showDirTreeOptions } = props
+	const { module, data, current_item, fold_all, onClick, setFoldAll, showDirTreeOptions } = props
+
+	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }))
+
+	const onDragEnd = useMemoizedFn((args: DragEndEvent) => {
+		const { active, over } = args
+
+		$app.Event.emit(`${module}/dirtree/move`, { active_id: active.id, over_id: over?.id })
+	})
 
 	return (
 		<div className={$cx('dir_tree_wrap w_100 border_box flex flex_column', !data.length && 'empty')}>
 			<If condition={data.length > 0}>
 				<Then>
-					<ReactSortable {...sortable_options} list={data} setList={update}>
-						{data.map((item) => (
-							<DirItem
-								{...{
-									module,
-									item,
-									current_item,
-									fold_all,
-									sortable_options,
-									update,
-									onClick,
-									setFoldAll,
-									showDirTreeOptions
-								}}
-								key={item.id}
-							></DirItem>
-						))}
-					</ReactSortable>
+					<DndContext sensors={sensors} onDragEnd={onDragEnd}>
+						<SortableContext items={data}>
+							{data.map((item) => (
+								<DirItem
+									{...{
+										module,
+										item,
+										current_item,
+										fold_all,
+										onClick,
+										setFoldAll,
+										showDirTreeOptions
+									}}
+									key={item.id}
+								></DirItem>
+							))}
+						</SortableContext>
+					</DndContext>
 				</Then>
 				<Else>
 					<SimpleEmpty></SimpleEmpty>

@@ -1,10 +1,11 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 import { contextMenu } from 'react-contexify'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
 import { loading } from '@/utils/decorators'
+import { arrayMove } from '@dnd-kit/sortable'
 
 import Services from './services'
 
@@ -26,6 +27,8 @@ export default class Index {
 	async init(module: App.RealModuleType) {
 		this.module = module
 
+		this.on()
+
 		await this.services.init(module)
 	}
 
@@ -36,10 +39,6 @@ export default class Index {
 		this.modal_open = false
 	}
 
-	update(v: DirTree.Items) {
-		this.services.dirtree = v
-	}
-
 	@loading
 	async rename(v: string, icon: string) {
 		await this.services.rename(this.focusing_item, v, icon)
@@ -48,10 +47,23 @@ export default class Index {
 		this.focusing_item = {} as DirTree.Item
 	}
 
+	update(v: DirTree.Items) {
+		this.services.dirtree = v
+	}
+
 	moveTo(target_id: string) {
 		contextMenu.hideAll()
 
 		this.services.moveTo(this.focusing_item, target_id)
+	}
+
+	move(args: { active_id: string; over_id: string }) {
+		const { active_id, over_id } = args
+
+		const active_index = this.services.dirtree.findIndex((item) => item.id === active_id)
+		const over_index = this.services.dirtree.findIndex((item) => item.id === over_id)
+
+		this.services.dirtree = arrayMove(this.services.dirtree, active_index, over_index)
 	}
 
 	onOptions(type: 'add_file' | 'add_dir' | 'rename' | 'delete') {
@@ -70,5 +82,13 @@ export default class Index {
 			})
 			.with('delete', () => this.services.delete(this.focusing_item))
 			.exhaustive()
+	}
+
+	on() {
+		$app.Event.on(`${this.module}/dirtree/move`, this.move)
+	}
+
+	off() {
+		$app.Event.off(`${this.module}/dirtree/move`, this.move)
 	}
 }
