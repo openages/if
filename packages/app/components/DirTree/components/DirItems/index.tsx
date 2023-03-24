@@ -1,8 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
+import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Else, If, Then } from 'react-if'
 
 import { SimpleEmpty } from '@/components'
-import { DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
+import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext } from '@dnd-kit/sortable'
 
 import DirItem from '../DirItem'
@@ -12,7 +14,7 @@ import type { DragEndEvent } from '@dnd-kit/core'
 
 const Index = (props: IPropsDirItems) => {
 	const { module, data, current_item, fold_all, onClick, setFoldAll, showDirTreeOptions } = props
-
+	const [active_id, setActiveId] = useState('')
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }))
 
 	const onDragEnd = useMemoizedFn((args: DragEndEvent) => {

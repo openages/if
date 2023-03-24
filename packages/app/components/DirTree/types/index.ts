@@ -3,8 +3,7 @@ import type { CSSProperties } from 'react'
 import type { DirTree } from '@/types'
 
 import type Model from '../model'
-import type { MouseEvent } from 'react'
-import type { SensorDescriptor, SensorOptions } from '@dnd-kit/core'
+import type { MouseEvent, ReactNode } from 'react'
 
 export interface IProps {
 	module: Model['module']
@@ -22,16 +21,27 @@ export interface IPropsDirItems {
 	showDirTreeOptions: (e: MouseEvent<HTMLDivElement>, v: DirTree.Item) => void
 }
 
-export type IPropsDirItem = {
+export interface IPropsDirItem {
 	module: Model['module']
 	item: DirTree.Item
 	current_item: string
 	fold_all: Model['fold_all']
-	sensors: Array<SensorDescriptor<SensorOptions>>
 	depth?: number
 	onClick: (v: string) => void
 	setFoldAll: (v: Model['fold_all']) => boolean
 	showDirTreeOptions: IPropsDirItems['showDirTreeOptions']
+}
+
+export interface IPropsDirItem_File extends Omit<IPropsDirItem, 'fold_all' | 'setFoldAll'> {}
+
+export interface IPropsDirItem_Item extends Omit<IPropsDirItem, 'fold_all' | 'onClick' | 'setFoldAll'> {
+	open?: boolean
+	onItem: (...args: any) => void
+}
+
+export interface IPropsDirItem_SortableWrap {
+	id: string
+	children: ReactNode
 }
 
 export interface IPropsActions {
