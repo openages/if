@@ -50,12 +50,6 @@ export default {
                                                       },
                                                       "icon": {
                                                             "type": "string"
-                                                      },
-                                                      "chosen": {
-                                                            "type": "boolean"
-                                                      },
-                                                      "selected": {
-                                                            "type": "boolean"
                                                       }
                                                 },
                                                 "required": [
@@ -73,12 +67,6 @@ export default {
                                     },
                                     "icon": {
                                           "type": "string"
-                                    },
-                                    "chosen": {
-                                          "type": "boolean"
-                                    },
-                                    "selected": {
-                                          "type": "boolean"
                                     }
                               },
                               "required": [
@@ -140,12 +128,6 @@ export default {
                                     },
                                     "icon": {
                                           "type": "string"
-                                    },
-                                    "chosen": {
-                                          "type": "boolean"
-                                    },
-                                    "selected": {
-                                          "type": "boolean"
                                     }
                               },
                               "required": [
@@ -163,12 +145,6 @@ export default {
                   },
                   "icon": {
                         "type": "string"
-                  },
-                  "chosen": {
-                        "type": "boolean"
-                  },
-                  "selected": {
-                        "type": "boolean"
                   }
             },
             "required": [
@@ -201,12 +177,6 @@ export default {
                                     },
                                     "icon": {
                                           "type": "string"
-                                    },
-                                    "chosen": {
-                                          "type": "boolean"
-                                    },
-                                    "selected": {
-                                          "type": "boolean"
                                     }
                               },
                               "required": [
@@ -224,12 +194,6 @@ export default {
                   },
                   "icon": {
                         "type": "string"
-                  },
-                  "chosen": {
-                        "type": "boolean"
-                  },
-                  "selected": {
-                        "type": "boolean"
                   }
             },
             "required": [
@@ -254,12 +218,6 @@ export default {
                   },
                   "icon": {
                         "type": "string"
-                  },
-                  "chosen": {
-                        "type": "boolean"
-                  },
-                  "selected": {
-                        "type": "boolean"
                   }
             },
             "required": [

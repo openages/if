@@ -34,7 +34,13 @@ const Index = (props: IPropsDirs) => {
 		)
 	}
 
-	return <ContextMenuItem itemProps={{ onClick: move }} Icon={DiceFour} text={item.name}></ContextMenuItem>
+	return (
+		<ContextMenuItem
+			itemProps={{ onClick: move }}
+			Icon={DiceFour}
+			text={item.name}
+		></ContextMenuItem>
+	)
 }
 
 export default $app.memo(Index)

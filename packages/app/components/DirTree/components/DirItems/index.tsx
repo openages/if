@@ -34,6 +34,7 @@ const Index = (props: IPropsDirItems) => {
 										item,
 										current_item,
 										fold_all,
+										sensors,
 										onClick,
 										setFoldAll,
 										showDirTreeOptions

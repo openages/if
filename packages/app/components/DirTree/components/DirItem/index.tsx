@@ -3,7 +3,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Else, If, Then, When } from 'react-if'
 
-import { useSortable } from '@dnd-kit/sortable'
+import { DndContext } from '@dnd-kit/core'
+import { SortableContext, useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { useDeepMemo } from '@matrixages/knife/react'
 import { CaretRight } from '@phosphor-icons/react'
@@ -13,11 +14,21 @@ import styles from './index.css'
 
 import type { IPropsDirItem } from '../../types'
 
-const Index = (props: IPropsDirItem & { depth?: number }) => {
-	const { module, item, current_item, fold_all, depth = 1, onClick, setFoldAll, showDirTreeOptions } = props
+const Index = (props: IPropsDirItem) => {
+	const {
+		module,
+		item,
+		current_item,
+		fold_all,
+		sensors,
+		depth = 1,
+		onClick,
+		setFoldAll,
+		showDirTreeOptions
+	} = props
 	const { id, name, type } = item
 	const [open, setOpen] = useState(false)
-	const { setNodeRef, listeners, transform, transition } = useSortable({ id })
+	const { setNodeRef, listeners, transform, transition, isDragging } = useSortable({ id })
 
 	const children = useDeepMemo(() => {
 		if (item.type === 'dir') return item.children
@@ -41,10 +52,17 @@ const Index = (props: IPropsDirItem & { depth?: number }) => {
 
 	return (
 		<div
-			className={$cx('w_100 border_box flex flex_column', styles._local)}
+			className={$cx(
+				'w_100 border_box flex flex_column relative',
+				styles._local,
+				isDragging && styles.isDragging
+			)}
 			{...listeners}
 			ref={setNodeRef}
-			style={{ transform: CSS.Translate.toString(transform), transition }}
+			style={{
+				transform: CSS.Translate.toString(transform),
+				transition
+			}}
 		>
 			<div
 				className={$cx(
@@ -90,21 +108,26 @@ const Index = (props: IPropsDirItem & { depth?: number }) => {
 						exit={{ opacity: 0, height: 0 }}
 						transition={{ duration: 0.18 }}
 					>
-						{item.children.map((it) => (
-							<Index
-								{...{
-									module,
-									current_item,
-									fold_all,
-									onClick,
-									setFoldAll,
-									showDirTreeOptions
-								}}
-								item={it}
-								depth={depth + 1}
-								key={it.id}
-							></Index>
-						))}
+						<DndContext sensors={sensors}>
+							<SortableContext items={item.children}>
+								{item.children.map((it) => (
+									<Index
+										{...{
+											module,
+											current_item,
+											fold_all,
+											sensors,
+											onClick,
+											setFoldAll,
+											showDirTreeOptions
+										}}
+										item={it}
+										depth={depth + 1}
+										key={it.id}
+									></Index>
+								))}
+							</SortableContext>
+						</DndContext>
 					</motion.div>
 				)}
 			</AnimatePresence>

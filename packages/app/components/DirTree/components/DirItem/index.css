@@ -1,12 +1,25 @@
 ._local {
+	z-index: 1;
+
+	&.isDragging {
+		z-index: 2;
+            background-color: var(--color_bg_2);
+
+            :global{
+                  .item_wrap{
+                        background-color: transparent !important;
+                  }
+            }
+	}
+
 	:global {
 		.item_wrap {
-                  height: 36px;
-                  padding-right: 18px;
+			height: 36px;
+			padding-right: 18px;
 
 			&:hover,
 			&.active {
-				background-color: var(--color_bg_1);
+                        background-color: var(--color_bg_1);
 			}
 
 			.left_icon_wrap {
@@ -33,11 +46,11 @@
 				font-size: 12px;
 				user-select: none;
 
-                        &.no_children{
-                              .icon_fold{
-                                    color: var(--color_border);
-                              }
-                        }
+				&.no_children {
+					.icon_fold {
+						color: var(--color_border);
+					}
+				}
 
 				.icon_fold {
 					margin-right: -2px;

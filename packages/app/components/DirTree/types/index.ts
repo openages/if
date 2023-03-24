@@ -4,6 +4,7 @@ import type { DirTree } from '@/types'
 
 import type Model from '../model'
 import type { MouseEvent } from 'react'
+import type { SensorDescriptor, SensorOptions } from '@dnd-kit/core'
 
 export interface IProps {
 	module: Model['module']
@@ -26,6 +27,8 @@ export type IPropsDirItem = {
 	item: DirTree.Item
 	current_item: string
 	fold_all: Model['fold_all']
+	sensors: Array<SensorDescriptor<SensorOptions>>
+	depth?: number
 	onClick: (v: string) => void
 	setFoldAll: (v: Model['fold_all']) => boolean
 	showDirTreeOptions: IPropsDirItems['showDirTreeOptions']

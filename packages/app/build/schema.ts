@@ -7,7 +7,7 @@ import handleSchema from '../utils/rxdb/handleSchema'
 import type { Config } from 'ts-json-schema-generator'
 
 const root = process.cwd()
-const paths = globby.globbySync([`${root}/types/schema/*.ts`,`!${root}/types/schema/module.ts`])
+const paths = globby.globbySync([`${root}/types/schema/*.ts`])
 
 const getConfig = (path: string) => {
 	return {
