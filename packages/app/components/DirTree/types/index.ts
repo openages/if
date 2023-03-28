@@ -26,7 +26,8 @@ export interface IPropsDirItem {
 	item: DirTree.Item
 	current_item: string
 	fold_all: Model['fold_all']
-	depth?: number
+	parent_index?: Array<number>
+	open?: boolean
 	onClick: (v: string) => void
 	setFoldAll: (v: Model['fold_all']) => boolean
 	showDirTreeOptions: IPropsDirItems['showDirTreeOptions']
@@ -34,14 +35,22 @@ export interface IPropsDirItem {
 
 export interface IPropsDirItem_File extends Omit<IPropsDirItem, 'fold_all' | 'setFoldAll'> {}
 
+export interface IPropsDirItem_Dir extends IPropsDirItem {
+	open: boolean
+	setOpen: (v: boolean) => void
+}
+
 export interface IPropsDirItem_Item extends Omit<IPropsDirItem, 'fold_all' | 'onClick' | 'setFoldAll'> {
 	open?: boolean
 	onItem: (...args: any) => void
 }
 
 export interface IPropsDirItem_SortableWrap {
-	id: string
 	children: ReactNode
+	id: string
+	item: DirTree.Item
+	parent_index: Array<number>
+	open?: boolean
 }
 
 export interface IPropsActions {
@@ -64,15 +73,8 @@ export interface IPropsModal {
 }
 
 export interface IPropsOptions {
-	dirs: DirTree.Dirs
 	focusing_item: Model['focusing_item']
 	onOptions: Model['onOptions']
-	moveTo: Model['moveTo']
-}
-
-export interface IPropsDirs {
-	item: DirTree.DirsItem
-	moveTo: Model['moveTo']
 }
 
 export interface IPropsLeftIcon {

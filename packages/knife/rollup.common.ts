@@ -7,7 +7,7 @@ export const plugins = [nodeResolve()]
 const getConfig = (name: string) => {
 	return defineConfig({
 		output: {
-			dir: `dist/${name}`,
+			dir: name,
 			format: 'esm'
 		}
 	})

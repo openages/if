@@ -1,21 +1,28 @@
-import { useMemoizedFn, useUpdateEffect } from 'ahooks'
+import { useUpdateEffect } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect } from 'react'
 
-import { useDroppable } from '@dnd-kit/core'
-import { SortableContext } from '@dnd-kit/sortable'
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { useDeepMemo } from '@matrixages/knife/react'
 
 import DirItem from '../index'
 import Item from './Item'
 
-import type { IPropsDirItem, IPropsDirItem_Item } from '../../../types'
+import type { IPropsDirItem_Dir, IPropsDirItem_Item } from '../../../types'
 
-const Index = (props: IPropsDirItem) => {
-	const { module, item, current_item, fold_all, depth = 1, setFoldAll, showDirTreeOptions } = props
-	const { id, type } = item
-	const [open, setOpen] = useState(false)
-	const { setNodeRef } = useDroppable({ id })
+const Index = (props: IPropsDirItem_Dir) => {
+	const {
+		module,
+		item,
+		current_item,
+		fold_all,
+		parent_index = [],
+		open,
+		setOpen,
+		onClick,
+		showDirTreeOptions
+	} = props
+	const { type } = item
 
 	const children = useDeepMemo(() => {
 		if (item.type === 'dir') return item.children
@@ -27,19 +34,14 @@ const Index = (props: IPropsDirItem) => {
 
 	useUpdateEffect(() => setOpen(true), [children])
 
-	const onItem = useMemoizedFn(() => {
-		setOpen(!open)
-
-		if (!open) setFoldAll(false)
-	})
-
 	const props_item: IPropsDirItem_Item = {
 		module,
 		item,
 		current_item,
-		depth,
+		parent_index,
+		open,
 		showDirTreeOptions,
-		onItem
+		onItem: onClick
 	}
 
 	return (
@@ -53,11 +55,15 @@ const Index = (props: IPropsDirItem) => {
 						animate={{ opacity: 1, height: 'auto' }}
 						exit={{ opacity: 0, height: 0 }}
 						transition={{ duration: 0.18 }}
-						ref={setNodeRef}
 					>
-						<SortableContext items={item.children}>
-							{item.children.map((it) => (
-								<DirItem {...props} item={it} depth={depth + 1} key={it.id}></DirItem>
+						<SortableContext items={item.children} strategy={verticalListSortingStrategy}>
+							{item.children.map((it, index) => (
+								<DirItem
+									{...props}
+									item={it}
+									parent_index={[...parent_index, index]}
+									key={it.id}
+								></DirItem>
 							))}
 						</SortableContext>
 					</motion.div>

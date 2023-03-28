@@ -41,8 +41,8 @@ importers:
         specifier: workspace:*
         version: link:../knife
       '@phosphor-icons/react':
-        specifier: ^2.0.5
-        version: 2.0.5(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^2.0.6
+        version: 2.0.6(react-dom@18.2.0)(react@18.2.0)
       '@umijs/max':
         specifier: 4.0.63
         version: 4.0.63(@babel/core@7.21.3)(@types/node@18.15.1)(@types/react-dom@18.0.11)(@types/react@18.0.28)(dva@2.5.0-beta.2)(postcss@8.4.21)(prettier@2.8.4)(prop-types@15.8.1)(rc-field-form@1.29.1)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.9)(type-fest@3.6.1)(typescript@5.0.2)(webpack@5.76.2)
@@ -3608,8 +3608,8 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
 
-  /@phosphor-icons/react@2.0.5(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Ghohi+Dk+Y0RoI1vra3jH2QC3sO6C16a/Km0gfy05ONIsC62Vwn1SK2Qaim77VPyn1FS7qjMxocdi9kx6btvXg==}
+  /@phosphor-icons/react@2.0.6(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-vT5Tv+isibcRO1ATPW+cZs2w46n512SfShRX9kqZbETht8ME11CT387APBbcW9EAeBFEGM6buoYxP+0/IJJRKg==}
     engines: {node: '>=10'}
     peerDependencies:
       react: '>= 16.8'

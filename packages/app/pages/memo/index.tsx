@@ -1,9 +1,10 @@
+import { cloneDeep } from 'lodash-es'
 import { Fragment, useState } from 'react'
 
-import { isRelated, move } from '@/utils/dnd'
+import { isRelated, move } from '@/utils/tree'
 import { DndContext, DragOverlay } from '@dnd-kit/core'
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import { local } from '@matrixages/knife/storage'
+import { CSS } from '@dnd-kit/utilities'
 
 import _data from './_data'
 import styles from './index.css'
@@ -22,7 +23,7 @@ const SortableItem = ({ children, id, item, parent_index, parent }: any) => {
 			)}
 			{...listeners}
 			ref={setNodeRef}
-			style={{ transition }}
+			style={{ transform: CSS.Translate.toString(transform), transition }}
 		>
 			{children}
 		</div>
@@ -84,12 +85,7 @@ const Items = ({ data, parent_index = [], parent = [] }: any) => {
 const Index = () => {
 	const [data, setData] = useState(_data)
 	const [active, setActive] = useState<any>('')
-
-	const set = (data: any) => {
-		setData(data)
-
-		local.test_data = data
-	}
+	const items = cloneDeep(data)
 
 	return (
 		<div className={$cx('w_100 h_100vh flex flex_column justify_center align_center', styles._local)}>
@@ -98,35 +94,30 @@ const Index = () => {
 					onDragStart={({ active }) => {
 						setActive(active.id)
 					}}
-					onDragOver={({ active, over }) => {
-						// console.log(active, over)
-					}}
 					onDragEnd={({ active, over }) => {
 						setActive('')
 
-						set(move(data, active, over))
+						const target = move(data, active, over)
+
+						console.log(123)
+
+						if (!target) return
+
+						setData(target)
 					}}
 				>
-					<SortableContext items={data} strategy={verticalListSortingStrategy}>
+					<SortableContext items={items} strategy={verticalListSortingStrategy}>
 						<div className='items flex flex_column'>
-							<Items data={data}></Items>
+							<Items data={items}></Items>
 						</div>
-					</SortableContext>
-					{/* {active && (
 						<DragOverlay>
-							<SortableItem id={active}>
-								<div className='item'>{active}</div>
-							</SortableItem>
+							{active && (
+								<SortableItem id={active}>
+									<div className='item'>{active}</div>
+								</SortableItem>
+							)}
 						</DragOverlay>
-					)} */}
-
-					<DragOverlay>
-						{active && (
-							<SortableItem id={active}>
-								<div className='item'>{active}</div>
-							</SortableItem>
-						)}
-					</DragOverlay>
+					</SortableContext>
 				</DndContext>
 			</div>
 		</div>

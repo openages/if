@@ -7,12 +7,10 @@ import { When } from 'react-if'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
-import { useDeepMemo } from '@matrixages/knife/react'
 
 import { Actions, DirItems, DragLine, Modal, Options, Search } from './components'
 import styles from './index.css'
 import Model from './model'
-import { getDirs } from './utils'
 
 import type { IProps, IPropsActions, IPropsModal, IPropsDirItems, IPropsOptions } from './types'
 import type { DirTree } from '@/types'
@@ -29,10 +27,6 @@ const Index = (props: IProps) => {
 		return () => x.off()
 	}, [module])
 
-	const dirs = useDeepMemo(
-		() => getDirs(x.services.dirtree, x.focusing_item.id),
-		[x.services.dirtree, x.focusing_item]
-	)
 
 	const onItemClick = useMemoizedFn((v: string) => {
 		x.current_item = v
@@ -88,10 +82,8 @@ const Index = (props: IProps) => {
 	}
 
 	const props_options: IPropsOptions = {
-		dirs,
 		focusing_item: toJS(x.focusing_item),
-		onOptions: useMemoizedFn(x.onOptions),
-		moveTo: useMemoizedFn(x.moveTo)
+		onOptions: useMemoizedFn(x.onOptions)
 	}
 
 	return (

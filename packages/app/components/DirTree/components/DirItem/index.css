@@ -1,21 +1,26 @@
 ._local {
-	z-index: 1;
-
 	&.isDragging {
-		z-index: 2;
-            background-color: var(--color_bg_2);
-
-            :global{
-                  .item_wrap{
-                        background-color: transparent !important;
-                  }
-            }
+            opacity: 0;
 	}
+
+      &.isOver{
+            &::after{
+                  content: '';
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  z-index: 10;
+                  background-color: var(--color_main);
+                  width: 100%;
+                  height: 2px;
+            }
+      }
 
 	:global {
 		.item_wrap {
 			height: 36px;
 			padding-right: 18px;
+                  background-color: var(--color_bg);
 
 			&:hover,
 			&.active {

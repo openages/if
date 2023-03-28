@@ -1,6 +1,7 @@
 {
 	"extends": "./.umi/tsconfig.json",
 	"compilerOptions": {
-		"experimentalDecorators": true
+		"experimentalDecorators": true,
+            "moduleResolution": "node"
 	}
 }

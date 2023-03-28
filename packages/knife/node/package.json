@@ -1,6 +1,0 @@
-{
-      "name": "knife-node",
-      "main": "../dist/node/index.js",
-      "module": "../dist/node/index.js",
-      "types": "../dist/node/index.d.ts"
-}

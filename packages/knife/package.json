@@ -28,7 +28,6 @@
             }
       },
       "files": [
-            "./dist",
             "./node",
             "./react",
             "./storage",
@@ -37,8 +36,10 @@
             "./README.md"
       ],
       "scripts": {
+            "clear": "tsx ./build/clear.ts",
+            "move": "tsx ./build/after.ts",
             "dev": "rollup --c rollup.dev.ts --configPlugin swc3 -w",
-            "build": "tsx ./build/clear && rollup --c rollup.build.ts --configPlugin swc3 && tsc",
+            "build": "pnpm run clear && rollup --c rollup.build.ts --configPlugin swc3 && tsc && pnpm run move",
             "exec": "rollup --c rollup.build.ts --configPlugin swc3 && node dist"
       },
       "keywords": [

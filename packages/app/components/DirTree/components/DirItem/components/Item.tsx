@@ -5,17 +5,17 @@ import { CaretRight } from '@phosphor-icons/react'
 
 import LeftIcon from '../../LeftIcon'
 
-import type {IPropsDirItem_Item} from '../../../types'
+import type { IPropsDirItem_Item } from '../../../types'
 
 const Index = (props: IPropsDirItem_Item) => {
-	const { module, item, current_item, depth = 1, open, showDirTreeOptions, onItem } = props
-      const { id, name, type } = item
-      
-      const onClick = useMemoizedFn(() => {
-            if (type === 'dir') return onItem()
-            
-            onItem(id)
-      })
+	const { module, item, current_item, parent_index = [], open, showDirTreeOptions, onItem } = props
+	const { id, name, type } = item
+
+	const onClick = useMemoizedFn(() => {
+		if (type === 'dir') return onItem()
+
+		onItem(id)
+	})
 
 	return (
 		<div
@@ -25,7 +25,7 @@ const Index = (props: IPropsDirItem_Item) => {
 			)}
 			onClick={onClick}
 			onContextMenu={(e) => showDirTreeOptions(e, item)}
-			style={{ paddingLeft: 18 * depth }}
+			style={{ paddingLeft: 18 * parent_index.length }}
 		>
 			<div className='left_icon_wrap flex justify_center align_center'>
 				<If condition={item.icon}>

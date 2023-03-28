@@ -1,15 +1,16 @@
-import { makeAutoObservable, toJS } from 'mobx'
-import { contextMenu } from 'react-contexify'
+import { makeAutoObservable, reaction, toJS } from 'mobx'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
 import { loading } from '@/utils/decorators'
-import { arrayMove } from '@dnd-kit/sortable'
+import { move } from '@/utils/tree'
 
 import Services from './services'
 
 import type { App, DirTree } from '@/types'
+import type { Active, Over } from '@dnd-kit/core'
+
 @injectable()
 export default class Index {
 	module = '' as App.RealModuleType
@@ -28,42 +29,41 @@ export default class Index {
 		this.module = module
 
 		this.on()
+		this.reactions()
 
 		await this.services.init(module)
 	}
 
+	reactions() {
+		reaction(
+			() => this.focusing_item,
+			(v) => (this.services.focusing_item = v)
+		)
+	}
+
 	@loading
 	async add(type: DirTree.Type, name: string, icon: string) {
-		await this.services.add(this.focusing_item, type, name, icon)
+		await this.services.add(type, name, icon)
 
 		this.modal_open = false
 	}
 
 	@loading
 	async rename(v: string, icon: string) {
-		await this.services.rename(this.focusing_item, v, icon)
+		await this.services.rename(v, icon)
 
 		this.modal_open = false
 		this.focusing_item = {} as DirTree.Item
 	}
 
-	update(v: DirTree.Items) {
-		this.services.dirtree = v
-	}
+	move(args: { active: Active; over: Over }) {
+		const { active, over } = args
 
-	moveTo(target_id: string) {
-		contextMenu.hideAll()
+		const target = move(toJS(this.services.dirtree), active, over)
 
-		this.services.moveTo(this.focusing_item, target_id)
-	}
+		if (!target) return
 
-	move(args: { active_id: string; over_id: string }) {
-		const { active_id, over_id } = args
-
-		const active_index = this.services.dirtree.findIndex((item) => item.id === active_id)
-		const over_index = this.services.dirtree.findIndex((item) => item.id === over_id)
-
-		this.services.dirtree = arrayMove(this.services.dirtree, active_index, over_index)
+		this.services.dirtree = target
 	}
 
 	onOptions(type: 'add_file' | 'add_dir' | 'rename' | 'delete') {
@@ -80,7 +80,7 @@ export default class Index {
 				this.current_option = 'rename'
 				this.modal_open = true
 			})
-			.with('delete', () => this.services.delete(this.focusing_item))
+			.with('delete', () => this.services.delete())
 			.exhaustive()
 	}
 

@@ -1,6 +1,0 @@
-{
-      "name": "knife-types",
-      "main": "../dist/types/index.js",
-      "module": "../dist/types/index.js",
-      "types": "../dist/types/index.d.ts"
-}

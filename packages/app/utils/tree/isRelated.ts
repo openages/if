@@ -1,3 +1,5 @@
+import { deepEqual } from '@matrixages/knife/react'
+
 import type { UniqueIdentifier, Active, Over } from '@dnd-kit/core'
 
 type ItemWithChildren = {
@@ -10,6 +12,8 @@ export default (active: Active | null, over: Over | null) => {
 
 	const active_item = active.data.current!.item as ItemWithChildren
 	const over_item = over.data.current!.item as ItemWithChildren
+
+	if (deepEqual(active_item, over_item)) return true
 
 	if (over_item.children) {
 		return over_item.children.findIndex((item) => item.id === active.id) !== -1

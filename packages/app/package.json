@@ -23,7 +23,7 @@
             "@emoji-mart/data": "^1.1.2",
             "@emoji-mart/react": "^1.1.1",
             "@matrixages/knife": "workspace:*",
-            "@phosphor-icons/react": "^2.0.5",
+            "@phosphor-icons/react": "^2.0.6",
             "@umijs/max": "4.0.63",
             "ahooks": "^3.7.5",
             "antd": "^5.3.1",

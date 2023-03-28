@@ -6,12 +6,10 @@ import { ContextMenuItem } from '@/components'
 import { useLocale } from '@/hooks'
 import { ArrowSquareRight, CirclesThreePlus, ListPlus, Pencil, Trash } from '@phosphor-icons/react'
 
-import Dirs from '../Dirs'
-
 import type { IPropsOptions } from '../../types'
 
 const Index = (props: IPropsOptions) => {
-	const { dirs, focusing_item, onOptions, moveTo } = props
+	const { focusing_item, onOptions } = props
 	const l = useLocale()
 
 	const onAddFile = useMemoizedFn(() => onOptions('add_file'))
@@ -37,20 +35,6 @@ const Index = (props: IPropsOptions) => {
 					Icon={CirclesThreePlus}
 					text={l('dirtree.add') + l('dirtree.dir')}
 				></ContextMenuItem>
-			</When>
-			<When condition={dirs.length}>
-				<Submenu
-					label={
-						<ContextMenuItem
-							Icon={ArrowSquareRight}
-							text={l('dirtree.options.moveto')}
-						></ContextMenuItem>
-					}
-				>
-					{dirs.map((item) => (
-						<Dirs item={item} moveTo={moveTo} key={item.id}></Dirs>
-					))}
-				</Submenu>
 			</When>
 			<ContextMenuItem
 				itemProps={{ closeOnClick: false }}

@@ -4,9 +4,10 @@ import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
 import { id } from '@/utils'
+import { remove } from '@/utils/tree'
 import { deepEqual } from '@matrixages/knife/react'
 
-import { addTargetTodo, addToDir, deleteTargetTodo, getTodoRefs, moveTo, remove, rename } from './utils'
+import { addTargetTodo, addToDir, deleteTargetTodo, getTodoRefs, rename } from './utils'
 
 import type { RxDocument } from 'rxdb'
 import type { App, DirTree, Module } from '@/types'
@@ -16,6 +17,7 @@ export default class Index {
 	module = '' as App.RealModuleType
 	doc = {} as RxDocument<Module.Item>
 	dirtree = [] as DirTree.Items
+	focusing_item = {} as DirTree.Item
 
 	constructor() {
 		makeAutoObservable(this, {}, { autoBind: true })
@@ -56,22 +58,22 @@ export default class Index {
 		this.dirtree = this.doc.dirtree
 	}
 
-	async add(focusing_item: DirTree.Item, type: DirTree.Type, name: string, icon: string) {
+	async add(type: DirTree.Type, name: string, icon: string) {
 		return await match({ type })
-			.with({ type: 'file' }, () => this.addFile(name, icon, focusing_item))
-			.with({ type: 'dir' }, () => this.addDir(name, icon, focusing_item))
+			.with({ type: 'file' }, () => this.addFile(name, icon))
+			.with({ type: 'dir' }, () => this.addDir(name, icon))
 			.exhaustive()
 	}
 
-	async delete(focusing_item: DirTree.Item) {
+	async delete() {
 		await this.doc.incrementalModify((doc) => {
-			remove(doc.dirtree, focusing_item.id)
+                  remove(doc.dirtree, this.focusing_item.id)
 
 			return doc
 		})
 
 		return match(this.module)
-			.with('todo', () => deleteTargetTodo(focusing_item))
+			.with('todo', () => deleteTargetTodo(this.focusing_item))
 			.otherwise(() => {})
 	}
 
@@ -83,17 +85,9 @@ export default class Index {
 		})
 	}
 
-	async rename(focusing_item: DirTree.Item, v: string, icon: string) {
+	async rename(v: string, icon: string) {
 		return await this.doc.incrementalModify((doc) => {
-			rename(doc.dirtree, focusing_item.id, v, icon)
-
-			return doc
-		})
-	}
-
-	async moveTo(current: DirTree.Item, target_id: string) {
-		return await this.doc.incrementalModify((doc) => {
-			moveTo(current, target_id, doc.dirtree)
+			rename(doc.dirtree, this.focusing_item.id, v, icon)
 
 			return doc
 		})
@@ -105,12 +99,12 @@ export default class Index {
 			.otherwise(() => {})
 	}
 
-	private async addDir(name: string, icon: string, focusing_item?: DirTree.Item) {
+	private async addDir(name: string, icon: string) {
 		const dir: DirTree.Dir = { id: id(), type: 'dir', name, icon, children: [] }
 
-		if (focusing_item?.id) {
+		if (this.focusing_item?.id) {
 			return await this.doc.incrementalModify((doc) => {
-				addToDir(doc.dirtree, focusing_item.id, dir)
+				addToDir(doc.dirtree, this.focusing_item.id, dir)
 
 				return doc
 			})
@@ -123,16 +117,16 @@ export default class Index {
 		})
 	}
 
-	private async addFile(name: string, icon: string, focusing_item?: DirTree.Item) {
+	private async addFile(name: string, icon: string) {
 		const file_id = id()
 
 		await this.addTarget(name, file_id)
 
 		const file: DirTree.File = { id: file_id, type: 'file', name, icon }
 
-		if (focusing_item?.id) {
+		if (this.focusing_item?.id) {
 			return await this.doc.incrementalModify((doc) => {
-				addToDir(doc.dirtree, focusing_item.id, file)
+				addToDir(doc.dirtree, this.focusing_item.id, file)
 
 				return doc
 			})

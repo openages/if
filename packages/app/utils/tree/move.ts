@@ -10,7 +10,6 @@ import type { SortableData } from '@dnd-kit/sortable'
 type Data = SortableData & {
 	parent_index: Array<number>
 	item: ItemWithChildren
-	parent: Array<ItemWithChildren>
 }
 
 type Item = {
@@ -23,11 +22,14 @@ type ItemWithChildren = {
 }
 
 export default <T>(items: Array<T & Item>, active: Active, over: Over | null) => {
-	if (!over?.id) return items
-	if (isRelated(active, over)) return items
+	if (!over?.id) return false
+	if (isRelated(active, over)) return false
 
 	const active_data = active.data.current as Data
 	const over_data = over.data.current as Data
+
+	over_data.parent_index.pop()
+      active_data.parent_index.pop()
 
 	if (active_data.sortable.containerId === over_data.sortable.containerId) {
 		if (active_data.parent_index.length > 0) {
@@ -70,16 +72,14 @@ export default <T>(items: Array<T & Item>, active: Active, over: Over | null) =>
 			} else {
 				return remove(items, (item) => item.id === active.id)[0]
 			}
-		}
-
-            const over_index = over_data.parent.findIndex((item) => item.id === over.id)
-
+            }
+            
 		if (over_data.parent_index.length) {
 			over_data.parent_index.reduce((total: Array<ItemWithChildren>, index, idx) => {
 				const children = total[index].children
 
 				if (idx === over_data.parent_index.length - 1) {
-					children.splice(over_index, 0, getActiveItem())
+					children.splice(over_data.sortable.index + 1, 0, getActiveItem())
 
 					return total
 				} else {
@@ -87,7 +87,7 @@ export default <T>(items: Array<T & Item>, active: Active, over: Over | null) =>
 				}
 			}, items as Array<any>)
 		} else {
-			items.splice(over_index, 0, getActiveItem())
+			items.splice(over_data.sortable.index + 1, 0, getActiveItem())
 		}
 	}
 

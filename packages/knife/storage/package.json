@@ -1,6 +1,0 @@
-{
-      "name": "knife-storage",
-      "main": "../dist/storage/index.js",
-      "module": "../dist/storage/index.js",
-      "types": "../dist/storage/index.d.ts"
-}

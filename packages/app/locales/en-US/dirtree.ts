@@ -7,7 +7,6 @@ export default {
       input_placeholder: 'Please input name',
       options: {
 		rename: 'Rename',
-		moveto: 'Move To',
 		delete: 'Delete'
 	}
 }

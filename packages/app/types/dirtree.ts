@@ -20,14 +20,6 @@ export namespace DirTree {
 		type: 'file'
 	}
 
-	export type DirsItem = Common & {
-		type: 'dir'
-		children: Dirs
-		disabled?: boolean
-	}
-
-	export type Dirs = Array<DirsItem>
-
 	export type Item = Dir | File
 	export type Items = Array<Item>
 }
