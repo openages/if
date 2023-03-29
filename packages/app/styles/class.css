@@ -10,6 +10,7 @@
 .limited_content_wrap {
 	box-sizing: border-box;
 	max-width: var(--limited_width);
+      width: 100%;
 	margin: 0 auto;
 	padding: 0 var(--limited_padding);
 }
@@ -17,6 +18,7 @@
 .limited_unchanged_content_wrap {
 	box-sizing: border-box;
 	max-width: var(--limited_width_unchanged);
+      width: 100%;
 	margin: 0 auto;
 	padding: 0 var(--limited_padding);
 }

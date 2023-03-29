@@ -7,7 +7,7 @@ import styles from './index.css'
 import type { IPropsTabs } from '../../types'
 
 const Index = (props: IPropsTabs) => {
-	const { angles, current_angle, setCurrentAngle } = props
+	const { angles, angle, setCurrentAngle } = props
 
 	return (
 		<div className={$cx('w_100 sticky top_0 z_index_10', styles._local)}>
@@ -17,7 +17,7 @@ const Index = (props: IPropsTabs) => {
 						<div
 							className={$cx(
 								'tab_item_wrap border_box flex justify_center align_center cursor_point transition_normal',
-								current_angle === item && 'active'
+								angle === item && 'active'
 							)}
 							onMouseDown={() => setCurrentAngle(item)}
 							key={item}

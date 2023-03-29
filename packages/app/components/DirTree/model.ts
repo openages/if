@@ -3,6 +3,7 @@ import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
+import { setStorageWhenChange } from '@/utils'
 import { loading } from '@/utils/decorators'
 import { move } from '@/utils/tree'
 
@@ -23,6 +24,8 @@ export default class Index {
 
 	constructor(public utils: Utils, public services: Services) {
 		makeAutoObservable(this, {}, { autoBind: true })
+
+		setStorageWhenChange([{ active_todo_id: 'current_item' }], this)
 	}
 
 	async init(module: App.RealModuleType) {

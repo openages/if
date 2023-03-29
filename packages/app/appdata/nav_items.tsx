@@ -21,7 +21,7 @@ export default [
 	},
 	{
 		title: 'widgets',
-		path: '/widgets',
+		path: '/widgets/layout/kanban',
 		match: '/widgets/layout'
 	}
 ] as Array<{ title: App.ModuleType; path: string; match?: string }>

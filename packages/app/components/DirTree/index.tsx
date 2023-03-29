@@ -1,8 +1,9 @@
 import { useMemoizedFn } from 'ahooks'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { useContextMenu } from 'react-contexify'
+import { createPortal } from 'react-dom'
 import { When } from 'react-if'
 import { container } from 'tsyringe'
 
@@ -16,7 +17,7 @@ import type { IProps, IPropsActions, IPropsModal, IPropsDirItems, IPropsOptions 
 import type { DirTree } from '@/types'
 
 const Index = (props: IProps) => {
-	const { module, height = '100vh', onClick } = props
+	const { module, height = '100vh' } = props
 	const [x] = useState(() => container.resolve(Model))
 	const global = useGlobal()
 	const { show } = useContextMenu({ id: 'dirtree_options' })
@@ -27,13 +28,11 @@ const Index = (props: IProps) => {
 		return () => x.off()
 	}, [module])
 
+	useEffect(() => {
+		if (x.current_item) props.onClick(x.current_item)
+	}, [x.current_item])
 
-	const onItemClick = useMemoizedFn((v: string) => {
-		x.current_item = v
-
-		onClick(v)
-	})
-
+	const onClick = useMemoizedFn((v: string) => (x.current_item = v))
 	const setFoldAll = useMemoizedFn((v: Model['fold_all']) => (x.fold_all = v))
 
 	const setModalOpen = useMemoizedFn((v: Model['modal_open'], type?: Model['modal_type']) => {
@@ -54,7 +53,7 @@ const Index = (props: IProps) => {
 		data: toJS(x.services.dirtree),
 		current_item: x.current_item,
 		fold_all: x.fold_all,
-		onClick: onItemClick,
+		onClick,
 		setFoldAll,
 		showDirTreeOptions
 	}
@@ -104,7 +103,7 @@ const Index = (props: IProps) => {
 				<Actions {...props_actions}></Actions>
 				<Modal {...props_modal}></Modal>
 			</When>
-			<Options {...props_options}></Options>
+			{createPortal(<Options {...props_options}></Options>, document.body)}
 		</div>
 	)
 }

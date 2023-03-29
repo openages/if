@@ -1,5 +1,8 @@
 export namespace Todo {
-	type Common = {}
+	type Common = {
+		/** @maxLength 30 */
+		id: string
+	}
 
 	type Group = Common & {
 		type: 'group'
@@ -12,6 +15,7 @@ export namespace Todo {
 		text: string
 		status: 'checked' | 'unchecked' | 'closed'
 		achive_time: number
+		/** @maxLength 12 */
 		angle: string
 		tags: Array<{
 			color: string
@@ -25,8 +29,10 @@ export namespace Todo {
 		/** @maxLength 30 */
 		id: string
 		name: string
+		icon: string
 		desc?: string
 		angles: Array<string>
+		angle: string
 		tags: Array<{
 			color: string
 			text: string

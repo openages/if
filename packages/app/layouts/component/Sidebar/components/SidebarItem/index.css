@@ -1,5 +1,6 @@
 .widgets {
-	width: 120px;
+	width: 150px;
+      padding: 8px;
       overflow: hidden;
 
 	&.dark {
@@ -17,15 +18,14 @@
 	}
 
 	&.show_bar_title {
-		width: 180px;
+		width: 210px;
 	}
 
 	:global {
 		.nav_item_wrap {
-			width: calc(100% / 3);
-			padding: 9px 0;
-			border-bottom: 1px solid var(--color_border_light);
-			border-right: 1px solid var(--color_border_light);
+			width: calc(100% / 4);
+			padding: 8px 0;
+                  border-radius: var(--radius);
 
 			&:hover {
 				background-color: var(--color_bg_2);

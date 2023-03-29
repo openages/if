@@ -2,122 +2,121 @@ export default {
       "TodoArchive.Item": {
             "type": "object",
             "properties": {
+                  "type": {
+                        "type": "string",
+                        "enum": [
+                              "group",
+                              "todo"
+                        ]
+                  },
+                  "title": {
+                        "type": "string"
+                  },
+                  "children": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "properties": {
+                                    "type": {
+                                          "type": "string",
+                                          "const": "todo"
+                                    },
+                                    "text": {
+                                          "type": "string"
+                                    },
+                                    "status": {
+                                          "type": "string",
+                                          "enum": [
+                                                "checked",
+                                                "unchecked",
+                                                "closed"
+                                          ]
+                                    },
+                                    "achive_time": {
+                                          "type": "number"
+                                    },
+                                    "angle": {
+                                          "type": "string",
+                                          "maxLength": 12
+                                    },
+                                    "tags": {
+                                          "type": "array",
+                                          "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                      "color": {
+                                                            "type": "string"
+                                                      },
+                                                      "text": {
+                                                            "type": "string"
+                                                      }
+                                                },
+                                                "required": [
+                                                      "color",
+                                                      "text"
+                                                ]
+                                          }
+                                    },
+                                    "id": {
+                                          "type": "string",
+                                          "maxLength": 30
+                                    }
+                              },
+                              "required": [
+                                    "achive_time",
+                                    "angle",
+                                    "id",
+                                    "status",
+                                    "tags",
+                                    "text",
+                                    "type"
+                              ]
+                        }
+                  },
                   "id": {
                         "type": "string",
                         "maxLength": 30
                   },
-                  "todo": {
-                        "type": "object",
-                        "properties": {
-                              "type": {
-                                    "type": "string",
-                                    "enum": [
-                                          "group",
-                                          "todo"
-                                    ]
-                              },
-                              "title": {
-                                    "type": "string"
-                              },
-                              "children": {
-                                    "type": "array",
-                                    "items": {
-                                          "type": "object",
-                                          "properties": {
-                                                "type": {
-                                                      "type": "string",
-                                                      "const": "todo"
-                                                },
-                                                "text": {
-                                                      "type": "string"
-                                                },
-                                                "status": {
-                                                      "type": "string",
-                                                      "enum": [
-                                                            "checked",
-                                                            "unchecked",
-                                                            "closed"
-                                                      ]
-                                                },
-                                                "achive_time": {
-                                                      "type": "number"
-                                                },
-                                                "angle": {
-                                                      "type": "string"
-                                                },
-                                                "tags": {
-                                                      "type": "array",
-                                                      "items": {
-                                                            "type": "object",
-                                                            "properties": {
-                                                                  "color": {
-                                                                        "type": "string"
-                                                                  },
-                                                                  "text": {
-                                                                        "type": "string"
-                                                                  }
-                                                            },
-                                                            "required": [
-                                                                  "color",
-                                                                  "text"
-                                                            ]
-                                                      }
-                                                }
-                                          },
-                                          "required": [
-                                                "achive_time",
-                                                "angle",
-                                                "status",
-                                                "tags",
-                                                "text",
-                                                "type"
-                                          ]
-                                    }
-                              },
-                              "text": {
-                                    "type": "string"
-                              },
-                              "status": {
-                                    "type": "string",
-                                    "enum": [
-                                          "checked",
-                                          "unchecked",
-                                          "closed"
-                                    ]
-                              },
-                              "achive_time": {
-                                    "type": "number"
-                              },
-                              "angle": {
-                                    "type": "string"
-                              },
-                              "tags": {
-                                    "type": "array",
-                                    "items": {
-                                          "type": "object",
-                                          "properties": {
-                                                "color": {
-                                                      "type": "string"
-                                                },
-                                                "text": {
-                                                      "type": "string"
-                                                }
-                                          },
-                                          "required": [
-                                                "color",
-                                                "text"
-                                          ]
-                                    }
-                              }
-                        },
-                        "required": [
-                              "type"
+                  "text": {
+                        "type": "string"
+                  },
+                  "status": {
+                        "type": "string",
+                        "enum": [
+                              "checked",
+                              "unchecked",
+                              "closed"
                         ]
+                  },
+                  "achive_time": {
+                        "type": "number"
+                  },
+                  "angle": {
+                        "type": "string",
+                        "maxLength": 12
+                  },
+                  "tags": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "properties": {
+                                    "color": {
+                                          "type": "string"
+                                    },
+                                    "text": {
+                                          "type": "string"
+                                    }
+                              },
+                              "required": [
+                                    "color",
+                                    "text"
+                              ]
+                        }
                   }
             },
             "required": [
                   "id",
-                  "todo"
+                  "type"
             ]
       },
       "Todo.TodoItem": {
@@ -157,7 +156,8 @@ export default {
                                           "type": "number"
                                     },
                                     "angle": {
-                                          "type": "string"
+                                          "type": "string",
+                                          "maxLength": 12
                                     },
                                     "tags": {
                                           "type": "array",
@@ -176,17 +176,26 @@ export default {
                                                       "text"
                                                 ]
                                           }
+                                    },
+                                    "id": {
+                                          "type": "string",
+                                          "maxLength": 30
                                     }
                               },
                               "required": [
                                     "achive_time",
                                     "angle",
+                                    "id",
                                     "status",
                                     "tags",
                                     "text",
                                     "type"
                               ]
                         }
+                  },
+                  "id": {
+                        "type": "string",
+                        "maxLength": 30
                   },
                   "text": {
                         "type": "string"
@@ -203,7 +212,8 @@ export default {
                         "type": "number"
                   },
                   "angle": {
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 12
                   },
                   "tags": {
                         "type": "array",
@@ -225,6 +235,7 @@ export default {
                   }
             },
             "required": [
+                  "id",
                   "type"
             ]
       }

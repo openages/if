@@ -10,10 +10,11 @@ export const addTodoRefCollections = async (id: string) => {
 	})
 }
 
-export default async (name: string, file_id: string) => {
+export default async (name: string, icon: string, file_id: string) => {
 	await $db.collections.todo.insert({
 		id: file_id,
 		name,
+		icon,
 		...getPresetData('todo')
 	})
 

@@ -1,6 +1,6 @@
 import { useEventTarget, useKeyPress, useMemoizedFn } from 'ahooks'
 import { Input, Modal, Popover } from 'antd'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Else, If, Then } from 'react-if'
 import { match } from 'ts-pattern'
 
@@ -45,10 +45,10 @@ const Index = (props: IPropsModal) => {
 			setIcon(focusing_item.icon)
 		}
 
-		if (!value && focusing_item.id && current_option === 'rename') {
+		if (focusing_item.id && current_option === 'rename') {
 			onChange({ target: { value: focusing_item.name } })
 		}
-	}, [focusing_item, current_option, value])
+	}, [focusing_item, current_option])
 
 	useKeyPress('enter', () => onOk())
 
@@ -70,14 +70,14 @@ const Index = (props: IPropsModal) => {
 		return { type: modal_type } as DirTree.Item
 	}, [modal_type, current_option, focusing_item])
 
-	const onOk = () => {
+	const onOk = useMemoizedFn(() => {
 		if (!value || value.length > limits.todo_list_title_max_length) return
 		if (current_option === 'rename') return rename(value, icon)
 		if (current_option === 'add_file') return add('file', value, icon)
 		if (current_option === 'add_dir') return add('dir', value, icon)
 
 		add(modal_type, value, icon)
-	}
+	})
 
 	const onSelectIcon = useMemoizedFn(({ shortcodes }) => setIcon(shortcodes))
 

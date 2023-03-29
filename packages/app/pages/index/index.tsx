@@ -2,7 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import { Affix } from 'antd'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { Else, If, Then } from 'react-if'
 import { container } from 'tsyringe'
 
@@ -18,7 +18,13 @@ import type { IPropsHeader, IPropsTabs, IPropsTodos } from './types'
 const Index = () => {
 	const [x] = useState(() => container.resolve(Model))
 
-	const onClick = useMemoizedFn((v) => {})
+	useLayoutEffect(() => {
+		x.on()
+
+		return () => x.off()
+	}, [])
+
+	const onClick = useMemoizedFn((v) => (x.services.id = v))
 
 	const props_dir_tree: IPropsDirTree = {
 		module: 'todo',
@@ -26,24 +32,24 @@ const Index = () => {
 	}
 
 	const props_header: IPropsHeader = {
-		name: x.todo_list.name,
-		desc: x.todo_list.desc
+		name: x.services.info.name,
+		desc: x.services.info.desc
 	}
 
 	const props_tabs: IPropsTabs = {
-		angles: toJS(x.angles),
-		current_angle: x.current_angle,
-		setCurrentAngle: useMemoizedFn((v: string) => (x.current_angle = v))
+		angles: toJS(x.services.info.angles),
+		angle: x.services.angle,
+		setCurrentAngle: useMemoizedFn((v: string) => (x.services.angle = v))
 	}
 
 	const props_todos: IPropsTodos = {
-		todo_items: toJS(x.todo_items)
+		items: toJS(x.services.items)
 	}
 
 	return (
-		<div className={$cx(styles._local, 'w_100 h_100vh flex justify_center align_center')}>
+		<div className={$cx(styles._local, 'w_100 h_100vh flex flex_column')}>
 			<DirTree {...props_dir_tree}></DirTree>
-			<If condition={x.todo_list?.name}>
+			<If condition={x.services.info?.name}>
 				<Then>
 					<Header {...props_header}></Header>
 					<Tabs {...props_tabs}></Tabs>

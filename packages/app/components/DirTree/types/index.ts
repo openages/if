@@ -37,6 +37,7 @@ export interface IPropsDirItem_File extends Omit<IPropsDirItem, 'fold_all' | 'se
 
 export interface IPropsDirItem_Dir extends IPropsDirItem {
 	open: boolean
+	onItem: () => void
 	setOpen: (v: boolean) => void
 }
 

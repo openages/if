@@ -1,10 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
-import { Menu, Submenu } from 'react-contexify'
+import { Menu } from 'react-contexify'
 import { When } from 'react-if'
 
 import { ContextMenuItem } from '@/components'
 import { useLocale } from '@/hooks'
-import { ArrowSquareRight, CirclesThreePlus, ListPlus, Pencil, Trash } from '@phosphor-icons/react'
+import { CirclesThreePlus, ListPlus, Pencil, Trash } from '@phosphor-icons/react'
 
 import type { IPropsOptions } from '../../types'
 

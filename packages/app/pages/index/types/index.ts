@@ -1,16 +1,20 @@
-import type { Todo } from '@/types'
+import type { Todo, RxDB, TodoArchive } from '@/types'
 import type Model from '../model'
+import type Services from '../services'
 
-export interface IPropsHeader extends Pick<Todo.TodoList, 'name' | 'desc'> {}
+export type QueryItems = RxDB.ItemsQuery<Todo.TodoItem>
+export type QueryArchives = RxDB.ItemsQuery<TodoArchive.Item>
+
+export interface IPropsHeader extends Pick<Todo.Data, 'name' | 'desc'> {}
 
 export interface IPropsTabs {
-	angles: Model['angles']
-	current_angle: Model['current_angle']
-	setCurrentAngle: (v: Model['current_angle']) => void
+	angles: Services['info']['angles']
+	angle: Services['angle']
+	setCurrentAngle: (v: Services['angle']) => void
 }
 
 export interface IPropsTodos {
-	todo_items: Model['todo_items']
+	items: Services['items']
 }
 
 export type IPropsTodoItem = Todo.TodoItem & {}

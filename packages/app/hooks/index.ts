@@ -1,3 +1,4 @@
+export { default as useMounted } from './useMounted'
 export { default as useAntdApp } from './useAntdApp'
 export { default as useLocale } from './useLocale'
 export { default as useGetLocale } from './useGetLocale'

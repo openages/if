@@ -19,7 +19,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 		parent_index = [],
 		open,
 		setOpen,
-		onClick,
+            onItem,
 		showDirTreeOptions
 	} = props
 	const { type } = item
@@ -41,7 +41,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 		parent_index,
 		open,
 		showDirTreeOptions,
-		onItem: onClick
+		onItem
 	}
 
 	return (

@@ -7,7 +7,7 @@ import { id } from '@/utils'
 import { remove } from '@/utils/tree'
 import { deepEqual } from '@matrixages/knife/react'
 
-import { addTargetTodo, addToDir, deleteTargetTodo, getTodoRefs, rename } from './utils'
+import { addTargetTodo, addToDir, deleteTargetTodo, getTodoRefs, rename, updateTarget } from './utils'
 
 import type { RxDocument } from 'rxdb'
 import type { App, DirTree, Module } from '@/types'
@@ -31,6 +31,8 @@ export default class Index {
 
 		this.on()
 		this.reactions()
+
+		$app.Event.emit(`${this.module}/ready`)
 	}
 
 	reactions() {
@@ -67,7 +69,7 @@ export default class Index {
 
 	async delete() {
 		await this.doc.incrementalModify((doc) => {
-                  remove(doc.dirtree, this.focusing_item.id)
+			remove(doc.dirtree, this.focusing_item.id)
 
 			return doc
 		})
@@ -85,18 +87,16 @@ export default class Index {
 		})
 	}
 
-	async rename(v: string, icon: string) {
-		return await this.doc.incrementalModify((doc) => {
-			rename(doc.dirtree, this.focusing_item.id, v, icon)
+	async rename(name: string, icon: string) {
+		await match(this.module)
+			.with('todo', () => updateTarget(name, icon, this.focusing_item.id))
+			.otherwise(() => {})
+
+		await this.doc.incrementalModify((doc) => {
+			rename(doc.dirtree, this.focusing_item.id, name, icon)
 
 			return doc
 		})
-	}
-
-	private async addTarget(name: string, file_id: string) {
-		return match(this.module)
-			.with('todo', () => addTargetTodo(name, file_id))
-			.otherwise(() => {})
 	}
 
 	private async addDir(name: string, icon: string) {
@@ -120,7 +120,9 @@ export default class Index {
 	private async addFile(name: string, icon: string) {
 		const file_id = id()
 
-		await this.addTarget(name, file_id)
+		await match(this.module)
+			.with('todo', () => addTargetTodo(name, icon, file_id))
+			.otherwise(() => {})
 
 		const file: DirTree.File = { id: file_id, type: 'file', name, icon }
 

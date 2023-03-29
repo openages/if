@@ -22,7 +22,7 @@ const Index = (props: IPropsDirItem) => {
 		<SortableWrap id={item.id} item={item} parent_index={parent_index} open={open}>
 			{match(props.item.type)
 				.with('file', () => <File {...props}></File>)
-				.with('dir', () => <Dir {...props} open={open!} onClick={_onItem} setOpen={_setOpen}></Dir>)
+				.with('dir', () => <Dir {...props} open={open!} onItem={_onItem} setOpen={_setOpen}></Dir>)
 				.exhaustive()}
 		</SortableWrap>
 	)

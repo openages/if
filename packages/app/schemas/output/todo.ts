@@ -36,7 +36,8 @@ export default {
                                           "type": "number"
                                     },
                                     "angle": {
-                                          "type": "string"
+                                          "type": "string",
+                                          "maxLength": 12
                                     },
                                     "tags": {
                                           "type": "array",
@@ -55,17 +56,26 @@ export default {
                                                       "text"
                                                 ]
                                           }
+                                    },
+                                    "id": {
+                                          "type": "string",
+                                          "maxLength": 30
                                     }
                               },
                               "required": [
                                     "achive_time",
                                     "angle",
+                                    "id",
                                     "status",
                                     "tags",
                                     "text",
                                     "type"
                               ]
                         }
+                  },
+                  "id": {
+                        "type": "string",
+                        "maxLength": 30
                   },
                   "text": {
                         "type": "string"
@@ -82,7 +92,8 @@ export default {
                         "type": "number"
                   },
                   "angle": {
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 12
                   },
                   "tags": {
                         "type": "array",
@@ -104,6 +115,7 @@ export default {
                   }
             },
             "required": [
+                  "id",
                   "type"
             ]
       },
@@ -117,6 +129,9 @@ export default {
                   "name": {
                         "type": "string"
                   },
+                  "icon": {
+                        "type": "string"
+                  },
                   "desc": {
                         "type": "string"
                   },
@@ -125,6 +140,9 @@ export default {
                         "items": {
                               "type": "string"
                         }
+                  },
+                  "angle": {
+                        "type": "string"
                   },
                   "tags": {
                         "type": "array",
@@ -166,7 +184,9 @@ export default {
             "required": [
                   "id",
                   "name",
+                  "icon",
                   "angles",
+                  "angle",
                   "tags",
                   "settings"
             ]

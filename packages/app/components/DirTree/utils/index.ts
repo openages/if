@@ -5,3 +5,4 @@ export { default as getTodoRefs } from './getTodoRefs'
 
 export * from './addTarget'
 export * from './deleteTarget'
+export * from './updateTarget'
