@@ -11,7 +11,7 @@
 				.tab_item_wrap {
 					width: calc(100% - 18px);
 					margin-right: 15px;
-					padding: 12px 0;
+					padding: 12px 3px;
 					padding-bottom: 11px;
 					border-bottom: 2px solid transparent;
 
