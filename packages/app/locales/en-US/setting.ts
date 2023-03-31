@@ -17,6 +17,13 @@ export default {
 				hide: 'hide',
 				show: 'show'
 			}
+		},
+		page_width: {
+			title: 'Page Width',
+			options: {
+				unlimited: '100%',
+				limited: 'limited'
+			}
 		}
 	},
 	NavItems: {

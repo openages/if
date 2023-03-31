@@ -24,7 +24,7 @@
 
 			&:hover,
 			&.active {
-                        background-color: var(--color_bg_1);
+                        background:linear-gradient(to right,var(--color_bg_1),transparent) ;
 			}
 
 			.left_icon_wrap {

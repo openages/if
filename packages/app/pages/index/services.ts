@@ -1,4 +1,4 @@
-import { makeAutoObservable, reaction } from 'mobx'
+import { makeAutoObservable, reaction, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import type { Todo, TodoArchive, RxDB } from '@/types'
@@ -45,7 +45,7 @@ export default class Index {
 		this.info.$.subscribe((v) => (this.info = v))
 	}
 
-	async queryItems() {
+      async queryItems() {
 		this.items_query = $db.collections[`${this.id}_todo_items`].find({
 			selector: { angle: this.angle }
 		}) as RxDB.ItemsQuery<Todo.TodoItem>

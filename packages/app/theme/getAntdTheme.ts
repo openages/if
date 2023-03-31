@@ -28,6 +28,11 @@ export default (theme: Theme, color_main: string) => {
 			colorPrimaryHover: vars.color_text_grey,
 			colorPrimaryTextHover: vars.color_text_grey,
 			switchHeight: 34
+		},
+		components: {
+			Switch: {
+				colorPrimaryHover: color_main
+			}
 		}
 	} as ThemeConfig
 }

@@ -1,4 +1,4 @@
-import { Radio, Select } from 'antd'
+import { Radio, Select, Switch } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { Fragment } from 'react'
 
@@ -30,7 +30,7 @@ const Index = () => {
 				<div className='setting_item w_100 border_box flex justify_between align_center'>
 					<span className='title_wrap'>{l('setting.Normal.theme.title')}</span>
 					<Select
-                                    className='select'
+						className='select'
 						defaultValue={global.setting.theme}
 						options={themes.map((item) => ({
 							label: l(`setting.Normal.theme.options.${item}`),
@@ -41,13 +41,26 @@ const Index = () => {
 				</div>
 				<div className='setting_item w_100 border_box flex justify_between align_center'>
 					<span className='title_wrap'>{l('setting.Normal.show_bar_title.title')}</span>
-					<RadioGroup
+                              <RadioGroup
+                                    className='radio_wrap flex align_center justify_center'
 						defaultValue={global.setting.show_bar_title}
 						options={[
 							{ label: l('setting.Normal.show_bar_title.options.hide'), value: false },
 							{ label: l('setting.Normal.show_bar_title.options.show'), value: true }
 						]}
 						onChange={({ target: { value } }) => (global.setting.show_bar_title = value)}
+					></RadioGroup>
+				</div>
+				<div className='setting_item w_100 border_box flex justify_between align_center'>
+					<span className='title_wrap'>{l('setting.Normal.page_width.title')}</span>
+                              <RadioGroup
+                                    className='radio_wrap flex align_center justify_center'
+						defaultValue={global.setting.page_width}
+						options={[
+							{ label: l('setting.Normal.page_width.options.unlimited'), value: '100%' },
+							{ label: l('setting.Normal.page_width.options.limited'), value: '780px' }
+						]}
+						onChange={({ target: { value } }) => global.setting.setPageWidth(value)}
 					></RadioGroup>
 				</div>
 			</div>

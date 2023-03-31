@@ -7,5 +7,5 @@ export const locale_options = [
 		label: '简体中文',
 		value: 'zh-CN'
 	}
-] as const
+] 
 

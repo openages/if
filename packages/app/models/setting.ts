@@ -10,29 +10,37 @@ export default class Index {
 	theme: Theme = 'light'
 	color_main = '#ff0000'
 	show_bar_title = false
+	page_width = '780px'
 
 	constructor() {
 		makeAutoObservable(this, {}, { autoBind: true })
-		setStorageWhenChange(['theme', 'color_main', 'show_bar_title'], this)
+		setStorageWhenChange(['theme', 'color_main', 'show_bar_title', 'page_width'], this)
 
 		this.setTheme(this.theme || 'light', true)
 		this.setColorMain(this.color_main || '#ff0000')
+		this.setPageWidth(this.page_width || '780px')
 	}
 
-	setTheme(theme: Theme, initial?: boolean) {
+	setTheme(v: Theme, initial?: boolean) {
 		if (!initial) setGlobalAnimation()
 
-		this.theme = theme
+		this.theme = v
 
-		document.documentElement.setAttribute('data-theme', theme)
-		document.documentElement.style.colorScheme = theme
+		document.documentElement.setAttribute('data-theme', v)
+		document.documentElement.style.colorScheme = v
 	}
 
-	setColorMain(color: string) {
-            this.color_main = color
+	setColorMain(v: string) {
+		this.color_main = v
 
-            document.documentElement.style.setProperty('--color_main', color)
-            
-            setFavicon(color)
+		document.documentElement.style.setProperty('--color_main', v)
+
+		setFavicon(v)
+	}
+
+	setPageWidth(v: string) {
+		this.page_width = v
+
+		document.documentElement.style.setProperty('--limited_width', v)
 	}
 }

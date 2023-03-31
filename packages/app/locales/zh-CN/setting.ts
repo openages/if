@@ -17,6 +17,13 @@ export default {
 				hide: '隐藏',
 				show: '显示'
 			}
+		},
+		page_width: {
+			title: '页面宽度',
+			options: {
+				unlimited: '100%',
+				limited: '固定'
+			}
 		}
 	},
 	NavItems: {

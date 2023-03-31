@@ -25,7 +25,7 @@ const Index = (props: IPropsHeader) => {
 					</div>
 				</Tooltip>
 				<Tooltip title='参考资料' placement='bottom'>
-					<div className='icon_wrap no_border border_box flex justify_center align_center cursor_point clickable'>
+					<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable'>
 						<Files size={16}></Files>
 					</div>
 				</Tooltip>

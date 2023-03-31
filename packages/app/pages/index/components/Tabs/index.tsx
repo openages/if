@@ -28,7 +28,7 @@ const Index = (props: IPropsTabs) => {
 				</div>
 				<Tooltip title='归档' placement='right'>
 					<div className='right_icon_wrap border_box flex justify_center align_center cursor_point clickable absolute'>
-						<Archive size={18}></Archive>
+						<Archive size={16}></Archive>
 					</div>
 				</Tooltip>
 			</div>

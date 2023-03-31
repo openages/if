@@ -24,12 +24,12 @@ export default class Index {
 
 	constructor(public utils: Utils, public services: Services) {
 		makeAutoObservable(this, {}, { autoBind: true })
-
-		setStorageWhenChange([{ active_todo_id: 'current_item' }], this)
 	}
 
 	async init(module: App.RealModuleType) {
 		this.module = module
+
+		setStorageWhenChange([{ [`${this.module}_active_id`]: 'current_item' }], this)
 
 		this.on()
 		this.reactions()
