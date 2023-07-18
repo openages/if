@@ -1,3 +1,7 @@
-[submodule "packages/knife"]
-	path = packages/knife
-	url = git@github.com:MatrixAges/knife.git
+[submodule "packages/craftkit"]
+	path = packages/craftkit
+	url = git@whatreal:openages/craftkit.git
+      
+[submodule "packages/mindkit"]
+	path = packages/mindkit
+	url = git@whatreal:openages/mindkit.git
