@@ -13,15 +13,11 @@ package-lock.json
 .svn
 .swc
 
-# umi
-.umi
-.umi-production
-
-# 一些临时文件
+# temp
 **/.tmp
 **/.umi
 
-# Electron 构建文件
+# Electron 
 release
 src/main/bundle.js
 src/main/bundle.js.map

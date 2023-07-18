@@ -1,1 +1,0 @@
-if (window.$shell?.stopLoading) setTimeout(() => window.$shell?.stopLoading(), 600)

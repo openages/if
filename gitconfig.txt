@@ -1,2 +1,0 @@
-# check git local qqq+x13439882350j
-git config --list --local  

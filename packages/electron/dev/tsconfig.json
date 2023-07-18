@@ -1,7 +1,0 @@
-{
-	"compilerOptions": {
-		"lib": ["esnext"],
-		"module": "commonjs",
-		"esModuleInterop": true
-	}
-}

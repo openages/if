@@ -1,7 +1,23 @@
 {
-	"extends": "./.umi/tsconfig.json",
 	"compilerOptions": {
+		"target": "ES2022",
+		"module": "ESNext",
+		"skipLibCheck": true,
+		"lib": ["ESNEXT", "DOM"],
+		"moduleResolution": "Node",
+		"strict": false,
+		"jsxImportSource": "react",
+		"jsx": "react-jsx",
+		"baseUrl": ".",
+		"esModuleInterop": true,
+		"paths": { "@/*": ["./*"] },
+		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-            "moduleResolution": "node"
+		"ignoreDeprecations": "5.0"
+	},
+	"ts-node": {
+		"compilerOptions": {
+			"module": "commonjs"
+		}
 	}
 }
