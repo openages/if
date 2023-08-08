@@ -1,0 +1,55 @@
+._local {
+	border-bottom: 1px solid var(--color_border_light);
+	background-color: var(--color_bg);
+
+	:global {
+		.tabs_wrap {
+			.tab_items_wrap {
+				overflow-x: scroll;
+				margin-bottom: -1px;
+
+				.tab_item_wrap {
+					width: calc(100% - 18px);
+					margin-right: 12px;
+					padding: 12px 3px;
+					border-bottom: 1px solid transparent;
+
+					&:hover {
+						.tab_name {
+							opacity: 1;
+						}
+					}
+
+					&.active {
+						border-color: var(--color_text);
+
+						.tab_name {
+							opacity: 1;
+						}
+					}
+
+					.tab_name {
+						user-select: none;
+						line-height: 1;
+						opacity: 0.6;
+                                    white-space: nowrap;
+					}
+				}
+			}
+
+			.right_icon_wrap {
+				right: var(--limited_padding);
+				bottom: -15px;
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				background-color: var(--color_bg);
+                        border: 1px solid var(--color_border_light);
+
+				&:hover {
+					background-color: var(--color_bg_2);
+				}
+			}
+		}
+	}
+}

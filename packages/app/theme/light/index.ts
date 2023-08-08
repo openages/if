@@ -1,0 +1,16 @@
+export default {
+      color_text: '#000',
+	color_text_sub: '#363636',
+	color_text_grey: '#888',
+	color_text_light: '#aaa',
+	color_text_contrast: 'black',
+	color_bg: '#ffffff',
+	color_bg_1: '#f9f9f9',
+	color_bg_2: '#f0f0f0',
+	color_border: '#e6e6e6',
+	color_border_light: 'rgba(0, 0, 0, 0.06)',
+	color_border_soft: 'rgba(0, 0, 0, 0.03)',
+	shadow: '0 0 30px #eee',
+	shadow_right: '15px 0 30px #eee',
+	shadow_top: '0 0 30px #eee',
+}

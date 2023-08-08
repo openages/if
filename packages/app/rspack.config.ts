@@ -3,15 +3,22 @@ import { resolve } from 'path'
 import { defineConfig } from '@rspack/cli'
 
 module.exports = defineConfig({
-	cache: false,
-	entry: { main: './runtime/index.tsx' },
-	output: { filename: 'main.js', path: resolve(`${process.cwd()}/dist`) },
-	watchOptions: { ignored: /node_modules/ },
-	resolve: { tsConfigPath: resolve(__dirname, 'tsconfig.json') },
+	entry: {
+		main: './runtime/index.tsx'
+	},
+	output: {
+		filename: 'main.js',
+		path: resolve(`${process.cwd()}/dist`)
+	},
+	watchOptions: {
+		ignored: /node_modules/
+	},
+	resolve: {
+		tsConfigPath: resolve(__dirname, 'tsconfig.json')
+	},
 	builtins: {
 		html: [
 			{
-				publicPathz: './public',
 				template: './public/index.html',
 				title: 'IF - GTD for prefessionals.',
 				favicon: './public/favicon.ico'
@@ -20,5 +27,5 @@ module.exports = defineConfig({
 		decorator: {},
 		progress: false
 	},
-	experiments: { incrementalRebuild: false }
+	experiments: { incrementalRebuild: true, outputModule: true }
 })

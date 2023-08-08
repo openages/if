@@ -1,0 +1,28 @@
+._local {
+	:global {
+		.items_wrap {
+			.item {
+				padding: 6px 12px;
+				margin: 4px 0;
+				background-color: var(--color_bg_1);
+			}
+
+			.children_wrap {
+				.sortable_wrap {
+					.item {
+						width: 300px;
+						background-color: var(--color_bg);
+					}
+				}
+			}
+
+                  .sortable_wrap {
+                        &.isOver {
+                              .item {
+                                    background-color: red !important;
+                              }
+                        }
+                  }
+		}
+	}
+}

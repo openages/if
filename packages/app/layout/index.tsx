@@ -1,30 +1,73 @@
-import { Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import { App, ConfigProvider } from 'antd'
+import { observer } from 'mobx-react-lite'
+import { useLayoutEffect, useState } from 'react'
+import { IconContext } from 'react-icons'
+import { container } from 'tsyringe'
 
-import { OffScreenOutlet } from '@/components'
-import { usePageScrollRestoration } from '@/hooks'
+import { OffscreenOutlet, Loading } from '@/components'
+import { GlobalContext, GlobalModel } from '@/context/app'
+import { usePageScrollRestoration, useTheme, useAntdLocale } from '@/hooks'
+
+import { Sidebar } from './component'
+import { useLayout } from './hooks'
+import styles from './index.css'
+
+import type { AppProps } from 'antd'
+import type { ConfigProviderProps } from 'antd/es/config-provider'
+import type { IPropsSidebar } from './types'
 
 const Index = () => {
-      usePageScrollRestoration()
+	const [global] = useState(() => container.resolve(GlobalModel))
+	const theme = useTheme(global.setting.theme, global.setting.color_main)
+	const locale = useAntdLocale(global.locale.lang)
+	const { no_dirtree } = useLayout()
+
+	usePageScrollRestoration()
+
+	useLayoutEffect(() => {
+		global.db.init()
+
+		return () => {
+			global.db.instance?.destroy?.()
+		}
+	}, [])
+
+	const props_sidebar: IPropsSidebar = {
+		theme: global.setting.theme,
+		show_bar_title: global.setting.show_bar_title,
+		avatar: global.user.avatar
+	}
+
+	const props_config_provider: ConfigProviderProps = {
+		prefixCls: 'if',
+		iconPrefixCls: 'if-icon',
+		theme,
+		locale,
+		getPopupContainer: (n) => n?.parentElement!
+	}
+
+	const props_app: AppProps = {
+		prefixCls: 'if'
+	}
+
+	if (!global.db.ready) return <Loading></Loading>
 
 	return (
-		<Fragment>
-			<div
-				style={{
-					display: 'flex',
-					flexDirection: 'column',
-					position: 'fixed',
-					zIndex: 100,
-					background: 'white'
-				}}
-			>
-				<Link to='/a'>A</Link>
-				<Link to='/b'>B</Link>
-				<Link to='/c'>C</Link>
-			</div>
-			<OffScreenOutlet />
-		</Fragment>
+		<GlobalContext.Provider value={global}>
+			<ConfigProvider {...props_config_provider}>
+				<App {...props_app}>
+					<IconContext.Provider value={{ className: 'ricon', style: { verticalAlign: 'middle' } }}>
+						<div className='w_100 border_box flex'>
+							<Sidebar {...props_sidebar} />
+							<div className={$cx(styles.container, no_dirtree && styles.no_dirtree)}>
+								<OffscreenOutlet />
+							</div>
+						</div>
+					</IconContext.Provider>
+				</App>
+			</ConfigProvider>
+		</GlobalContext.Provider>
 	)
 }
 
-export default Index
+export default new $app.handle(Index).by(observer).by($app.memo).get()
