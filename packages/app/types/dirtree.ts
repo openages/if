@@ -5,16 +5,16 @@ export namespace DirTree {
 		icon?: string
 	}
 
-	export type Type = 'dir' | 'file'
+      export type Type = 'dir' | 'file'
+      
+      // 注意：如果重新构建module的Schema，需将Dir.Children:Array<Item> => Dir.Children:Array<File>
+	// 避免无限递归报错
 
 	export type Dir = Common & {
 		type: 'dir'
 		// children: Array<File>
 		children: Array<Item>
 	}
-
-	// 注意：如果重新构建module的Schema，需将Dir.Children:Array<Item> => Dir.Children:Array<File>
-	// 避免无限递归报错
 
 	export type File = Common & {
 		type: 'file'

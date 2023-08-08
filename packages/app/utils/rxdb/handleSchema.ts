@@ -36,7 +36,7 @@ const Index = (definitions: any, source: any): any => {
 				let target = anyOf
 
 				if (anyOf[0]['$ref']) {
-					target = anyOf.map((item: any) => {
+                              target = anyOf.map((item: any) => {
 						const $ref = item['$ref'].replace('#/definitions/', '')
 
 						return Index(source[$ref], source)

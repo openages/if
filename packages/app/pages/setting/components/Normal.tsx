@@ -4,31 +4,27 @@ import { Fragment } from 'react'
 
 import { locale_options, themes } from '@/appdata'
 import { useGlobal } from '@/context/app'
-import { useLocale } from '@/hooks'
-import { getLocale, setLocale } from '@umijs/max'
 
 const { Group: RadioGroup } = Radio
 
 const Index = () => {
 	const global = useGlobal()
-	const locale = getLocale()
-	const l = useLocale()
 
 	return (
 		<Fragment>
-			<span className='setting_title'>{l('setting.Normal.title')}</span>
+			<span className='setting_title'>{t('translation:setting.Normal.title')}</span>
 			<div className='setting_items w_100 border_box flex flex_column'>
 				<div className='setting_item w_100 border_box flex justify_between align_center'>
-					<span className='title_wrap'>{l('setting.Normal.language.title')}</span>
+					<span className='title_wrap'>{t('translation:setting.Normal.language.title')}</span>
 					<Select
 						className='select'
-						defaultValue={locale}
+						defaultValue={global.locale.lang}
 						options={locale_options}
 						onSelect={(v) => setLocale(v, false)}
 					></Select>
 				</div>
 				<div className='setting_item w_100 border_box flex justify_between align_center'>
-					<span className='title_wrap'>{l('setting.Normal.theme.title')}</span>
+					<span className='title_wrap'>{t('translation:setting.Normal.theme.title')}</span>
 					<Select
 						className='select'
 						defaultValue={global.setting.theme}
@@ -40,25 +36,25 @@ const Index = () => {
 					></Select>
 				</div>
 				<div className='setting_item w_100 border_box flex justify_between align_center'>
-					<span className='title_wrap'>{l('setting.Normal.show_bar_title.title')}</span>
+					<span className='title_wrap'>{t('translation:setting.Normal.show_bar_title.title')}</span>
                               <RadioGroup
                                     className='radio_wrap flex align_center justify_center'
 						defaultValue={global.setting.show_bar_title}
 						options={[
-							{ label: l('setting.Normal.show_bar_title.options.hide'), value: false },
-							{ label: l('setting.Normal.show_bar_title.options.show'), value: true }
+							{ label: t('translation:setting.Normal.show_bar_title.options.hide'), value: false },
+							{ label: t('translation:setting.Normal.show_bar_title.options.show'), value: true }
 						]}
 						onChange={({ target: { value } }) => (global.setting.show_bar_title = value)}
 					></RadioGroup>
 				</div>
 				<div className='setting_item w_100 border_box flex justify_between align_center'>
-					<span className='title_wrap'>{l('setting.Normal.page_width.title')}</span>
+					<span className='title_wrap'>{t('translation:setting.Normal.page_width.title')}</span>
                               <RadioGroup
                                     className='radio_wrap flex align_center justify_center'
 						defaultValue={global.setting.page_width}
 						options={[
-							{ label: l('setting.Normal.page_width.options.unlimited'), value: '100%' },
-							{ label: l('setting.Normal.page_width.options.limited'), value: '780px' }
+							{ label: t('translation:setting.Normal.page_width.options.unlimited'), value: '100%' },
+							{ label: t('translation:setting.Normal.page_width.options.limited'), value: '780px' }
 						]}
 						onChange={({ target: { value } }) => global.setting.setPageWidth(value)}
 					></RadioGroup>

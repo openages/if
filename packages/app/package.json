@@ -39,6 +39,7 @@
             "nice-try": "^3.0.1",
             "react": "0.0.0-experimental-ea17cc18f-20230807",
             "react-color-palette": "^6.2.0",
+            "react-contexify": "^6.0.0",
             "react-dom": "0.0.0-experimental-ea17cc18f-20230807",
             "react-i18next": "^13.0.3",
             "react-icons": "^4.10.1",

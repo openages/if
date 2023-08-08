@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx'
 import { initReactI18next } from 'react-i18next'
 import { injectable } from 'tsyringe'
 
-import { en_US, zh_CN } from '@/locales'
+import { en, zh } from '@/locales'
 import { getLang, setStorageWhenChange } from '@/utils'
 import { local } from '@openages/craftkit'
 
@@ -28,8 +28,8 @@ export default class Index {
 			lng: this.lang,
 			fallbackLng: 'en',
 			resources: {
-				en: en_US,
-				zh: zh_CN
+				en,
+				zh
 			}
 		})
 	}

@@ -7,16 +7,12 @@ import type { RouteObject } from 'react-router-dom'
 
 const routes: Array<RouteObject> = [
 	{
-		path: 'a',
-		element: <LazyElement type='pages' path='A' />
+		path: '/',
+		element: <LazyElement type='pages' path='index' />
 	},
 	{
-		path: 'b',
-		element: <LazyElement type='pages' path='B' />
-	},
-	{
-		path: 'c',
-		element: <LazyElement type='pages' path='C' />
+		path: '/setting',
+		element: <LazyElement type='pages' path='setting' />
 	}
 ]
 

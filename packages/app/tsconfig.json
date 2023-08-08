@@ -10,6 +10,7 @@
 		"jsx": "react-jsx",
 		"baseUrl": ".",
 		"esModuleInterop": true,
+            "resolveJsonModule": true,
 		"paths": { "@/*": ["./*"] },
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,

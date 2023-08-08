@@ -1,5 +1,5 @@
 import { Logo } from '@/components'
-import { local } from '@matrixages/knife/storage'
+import { local } from '@openages/craftkit'
 
 import styles from './loading.css'
 

@@ -1,10 +1,10 @@
 import { Popover, Tooltip } from 'antd'
+import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
+import { NavLink } from 'react-router-dom'
 
 import { widgets } from '@/appdata'
 import { ModuleIcon } from '@/components'
-import { useLocale } from '@/hooks'
-import { NavLink } from '@umijs/max'
 
 import styles from './index.css'
 
@@ -12,7 +12,7 @@ import type { IPropsSidebarItem } from '../../../../types'
 
 const Index = (props: IPropsSidebarItem) => {
 	const { theme, show_bar_title, icon_weight, pathname, item } = props
-	const l = useLocale()
+	const { t } = useTranslation()
 
 	const LinkItem = (
 		<NavLink

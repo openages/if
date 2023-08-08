@@ -1,0 +1,59 @@
+._local {
+	opacity: 0;
+	width: 4px;
+	background-color: var(--color_border);
+	cursor: col-resize;
+	overflow-x: visible;
+
+	&:hover {
+		opacity: 1;
+	}
+
+	&.draging {
+		opacity: 1;
+	}
+
+	&.hide {
+		opacity: 1;
+		width: 0;
+		justify-content: flex-start;
+
+		:global {
+			.btn_hide_wrap {
+				border-radius: 0;
+				border-top-right-radius: var(--radius);
+				border-bottom-right-radius: var(--radius);
+				border: none;
+				box-shadow: var(--shadow_right);
+
+				&:hover {
+					background-color: var(--color_bg);
+
+					.icon {
+						opacity: 1;
+					}
+				}
+
+				.icon {
+					opacity: 0.6;
+				}
+			}
+		}
+	}
+
+	:global {
+		.btn_hide_wrap {
+			width: 18px;
+			height: 32px;
+			border-radius: 18px;
+			background-color: var(--color_bg);
+			border: 2px solid var(--color_border);
+			cursor: pointer;
+			color: var(--color_text_grey);
+
+			&:hover {
+				background-color: var(--color_bg_1);
+			}
+		}
+	}
+}

@@ -1,20 +1,20 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { Fragment } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { color_mains } from '@/appdata'
 import { useGlobal } from '@/context/app'
-import { useLocale } from '@/hooks'
 
 const Index = () => {
 	const global = useGlobal()
-	const l = useLocale()
+	const { t } = useTranslation()
 
 	const onItem = useMemoizedFn((color: string) => global.setting.setColorMain(color))
 
 	return (
 		<Fragment>
-			<span className='setting_title'>{l('setting.ColorSelector.title')}</span>
+			<span className='setting_title'>{t('translation:setting.ColorSelector.title')}</span>
 			<div className='setting_items w_100 border_box flex flex_column'>
 				<div className='setting_item w_100 border_box flex align_center justify_between'>
 					{color_mains.map((item) => (

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
+import { useLocation } from 'react-router-dom'
 
 import { dirtree_excludes } from '@/appdata'
-import { useLocation } from '@umijs/max'
 
 export default () => {
 	const { pathname } = useLocation()

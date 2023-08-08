@@ -2,7 +2,7 @@ import { useSize } from 'ahooks'
 import { useRef } from 'react'
 
 import { is_mac_electron } from '@/utils'
-import { useDeepMemo } from '@matrixages/knife/react'
+import { useDeepMemo } from '@openages/craftkit'
 
 export default () => {
 	const ref_sidebar = useRef<HTMLDivElement>(null)

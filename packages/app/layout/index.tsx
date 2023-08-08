@@ -9,7 +9,7 @@ import { GlobalContext, GlobalModel } from '@/context/app'
 import { usePageScrollRestoration, useTheme, useAntdLocale } from '@/hooks'
 
 import { Sidebar } from './component'
-import { useLayout } from './hooks'
+import { useLayout, useGlobalTranslate } from './hooks'
 import styles from './index.css'
 
 import type { AppProps } from 'antd'
@@ -22,6 +22,7 @@ const Index = () => {
 	const locale = useAntdLocale(global.locale.lang)
 	const { no_dirtree } = useLayout()
 
+	useGlobalTranslate()
 	usePageScrollRestoration()
 
 	useLayoutEffect(() => {

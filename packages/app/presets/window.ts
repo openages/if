@@ -16,7 +16,6 @@ window.$app = {
 }
 
 window.$cx = cx
-window.$l = {} as any
 window.$locale = 'en-US' as any
 window.$message = {} as MessageInstance
 window.$notification = {} as NotificationInstance

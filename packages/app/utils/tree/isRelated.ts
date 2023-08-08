@@ -1,4 +1,4 @@
-import { deepEqual } from '@matrixages/knife/react'
+import { deepEqual } from '@openages/craftkit'
 
 import type { UniqueIdentifier, Active, Over } from '@dnd-kit/core'
 
