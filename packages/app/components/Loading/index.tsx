@@ -1,7 +1,7 @@
 import { Logo } from '@/components'
 import { local } from '@openages/craftkit'
 
-import styles from './loading.css'
+import styles from './index.css'
 
 const Index = () => {
 	return (

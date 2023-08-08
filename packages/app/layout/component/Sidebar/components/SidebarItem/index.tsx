@@ -25,7 +25,7 @@ const Index = (props: IPropsSidebarItem) => {
 		>
 			<ModuleIcon className='icon_bar' type={item.title} size={27} weight={icon_weight}></ModuleIcon>
 			<When condition={show_bar_title}>
-				<span className='sidebar_item_title'>{l(`nav_title.${item.title}`)}</span>
+				<span className='sidebar_item_title'>{t(`translation:nav_title.${item.title}`)}</span>
 			</When>
 		</NavLink>
 	)
@@ -53,7 +53,7 @@ const Index = (props: IPropsSidebarItem) => {
 							weight={icon_weight}
 						></ModuleIcon>
 						<When condition={show_bar_title}>
-							<span className='title mt_2'>{l(`nav_title.${item.title}`)}</span>
+							<span className='title mt_2'>{t(`translation:nav_title.${item.title}`)}</span>
 						</When>
 					</div>
 				</NavLink>
@@ -77,7 +77,7 @@ const Index = (props: IPropsSidebarItem) => {
 
 	return (
 		<Tooltip
-			title={l(`nav_title.${item.title}`)}
+			title={t(`translation:nav_title.${item.title}`)}
 			placement='right'
 			destroyTooltipOnHide
 			getTooltipContainer={() => document.body}

@@ -1,10 +1,12 @@
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { limits } from '@/appdata'
-import { useGetLocale } from '@/hooks'
 
 export default () => {
-	const locale = useGetLocale()
+	const {
+		i18n: { language }
+	} = useTranslation()
 
-	return useMemo(() => limits[locale], [locale])
+	return useMemo(() => limits[language], [language])
 }

@@ -1,9 +1,8 @@
 import { useUpdateEffect } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Fragment, useEffect } from 'react'
+import { Fragment, useEffect, useMemo } from 'react'
 
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import { useDeepMemo } from '@openages/craftkit'
 
 import DirItem from '../index'
 import Item from './Item'
@@ -19,12 +18,12 @@ const Index = (props: IPropsDirItem_Dir) => {
 		parent_index = [],
 		open,
 		setOpen,
-            onItem,
+		onItem,
 		showDirTreeOptions
 	} = props
 	const { type } = item
 
-	const children = useDeepMemo(() => {
+	const children = useMemo(() => {
 		if (item.type === 'dir') return item.children
 	}, [item])
 

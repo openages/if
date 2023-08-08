@@ -18,14 +18,14 @@ import type { IPropsSidebar } from '../../types'
 
 const Index = (props: IPropsSidebar) => {
 	const { theme, show_bar_title, avatar } = props
-	const t = useTranslation()
+	const { t } = useTranslation()
 	const { pathname } = useLocation()
 	const { ref_sidebar, ref_items_wrap, overflow } = useNavOverflow()
 
 	useAntdApp()
 
-	const icon_weight = useMemo(() => (theme === 'light' ? 'duotone' : 'regular'), [theme])
-
+      const icon_weight = useMemo(() => (theme === 'light' ? 'duotone' : 'regular'), [ theme ])
+      
 	return (
 		<div
 			className={$cx(
@@ -63,7 +63,7 @@ const Index = (props: IPropsSidebar) => {
 				<div className='sidebar_bottom_wrap flex flex_column'>
 					{bottom_items.map((item) => (
 						<Tooltip
-							title={t(`nav_title.${item.title}`)}
+							title={t(`translation:nav_title.${item.title}`)}
 							placement='right'
 							destroyTooltipOnHide
 							getTooltipContainer={() => document.body}

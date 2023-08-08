@@ -1,9 +1,12 @@
 import type { Todo } from '@/types'
 
 export const getTodoDefaultData = () => {
+      // @ts-ignore
+      const angles = $t('translation:todo.default_angles', { returnObjects: true })
+      
 	return {
-		angles: $l['todo.default_angles'],
-		angle: $l['todo.default_angles'][0],
+		angles ,
+		angle: angles[0],
 		tags: [],
 		settings: {
 			auto_archiving: '3m'

@@ -1,5 +1,4 @@
 import { useMemoizedFn } from 'ahooks'
-import { Affix } from 'antd'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
@@ -54,9 +53,7 @@ const Index = () => {
 					<Header {...props_header}></Header>
 					<Tabs {...props_tabs}></Tabs>
 					<Todos {...props_todos}></Todos>
-					<Affix offsetBottom={0}>
-						<Input></Input>
-					</Affix>
+                              <Input></Input>
 				</Then>
 				<Else>
 					<DataEmpty></DataEmpty>

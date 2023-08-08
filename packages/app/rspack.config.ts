@@ -20,12 +20,47 @@ module.exports = defineConfig({
 		html: [
 			{
 				template: './public/index.html',
-				title: 'IF - GTD for prefessionals.',
-				favicon: './public/favicon.ico'
+				title: 'IF - GTD for prefessionals.'
 			}
 		],
 		decorator: {},
 		progress: false
 	},
-	experiments: { incrementalRebuild: true, outputModule: true }
+	experiments: {
+		incrementalRebuild: true,
+		outputModule: true
+	},
+	module: {
+		rules: [
+			{
+                        test: /\.global\.css$/,
+                        use: [
+					{
+						loader: 'postcss-loader',
+						options: {
+							postcssOptions: {
+								plugins: ['postcss-nested']
+							}
+						}
+					}
+				],
+				type: 'css'
+			},
+			{
+				test: /\.css$/,
+				exclude: /\.global\.css$/,
+				use: [
+					{
+						loader: 'postcss-loader',
+						options: {
+							postcssOptions: {
+								plugins: ['postcss-nested']
+							}
+						}
+					}
+				],
+				type: 'css/module'
+			}
+		]
+	}
 })

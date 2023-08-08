@@ -1,13 +1,12 @@
 import { useEventTarget, useKeyPress, useMemoizedFn } from 'ahooks'
 import { Input, Modal, Popover } from 'antd'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Else, If, Then } from 'react-if'
 import { match } from 'ts-pattern'
 
 import { EmojiPicker } from '@/components'
 import { useLimits } from '@/hooks'
-import { useDeepMemo } from '@openages/craftkit'
 
 import LeftIcon from '../LeftIcon'
 import styles from './index.css'
@@ -53,17 +52,27 @@ const Index = (props: IPropsModal) => {
 
 	useKeyPress('enter', () => onOk())
 
-	const title = useDeepMemo(() => {
-		if (!current_option || !focusing_item.id) return t('translation:dirtree.add') + l(`dirtree.${modal_type}`)
+	const title = useMemo(() => {
+		if (!current_option || !focusing_item.id)
+			return t('translation:dirtree.add') + t(`translation:dirtree.${modal_type}`)
 
 		return match(current_option)
-			.with('add_file', () => focusing_item.name + ' / ' + t('translation:dirtree.add') + t('translation:dirtree.file'))
-			.with('add_dir', () => focusing_item.name + ' / ' + t('translation:dirtree.add') + t('translation:dirtree.dir'))
-			.with('rename', () => t('translation:dirtree.options.rename') + l(`dirtree.${focusing_item.type}`))
+			.with(
+				'add_file',
+				() => focusing_item.name + ' / ' + t('translation:dirtree.add') + t('translation:dirtree.file')
+			)
+			.with(
+				'add_dir',
+				() => focusing_item.name + ' / ' + t('translation:dirtree.add') + t('translation:dirtree.dir')
+			)
+			.with(
+				'rename',
+				() => t('translation:dirtree.options.rename') + t(`translation:dirtree.${focusing_item.type}`)
+			)
 			.exhaustive()
 	}, [modal_type, current_option, focusing_item])
 
-	const left_icon_item = useDeepMemo(() => {
+	const left_icon_item = useMemo(() => {
 		if (current_option === 'add_file') return { type: 'file' } as DirTree.Item
 		if (current_option === 'add_dir') return { type: 'dir' } as DirTree.Item
 		if (focusing_item.id) return focusing_item
@@ -88,7 +97,7 @@ const Index = (props: IPropsModal) => {
 			open={modal_open}
 			title={title}
 			centered
-			width={270}
+			width={360}
 			confirmLoading={loading_add || loading_rename}
 			onOk={onOk}
 			onCancel={() => {

@@ -1,3 +1,5 @@
+import '@/global_css'
+
 import { App, ConfigProvider } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'

@@ -33,4 +33,10 @@ export default class Index {
 			}
 		})
 	}
+
+	setLang(lang: Lang) {
+		this.lang = lang
+
+		local.lang = lang
+	}
 }

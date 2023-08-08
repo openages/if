@@ -16,7 +16,7 @@ window.$app = {
 }
 
 window.$cx = cx
-window.$locale = 'en-US' as any
+window.$t = (() => {}) as any
 window.$message = {} as MessageInstance
 window.$notification = {} as NotificationInstance
 window.$modal = {} as Omit<ModalStaticFunctions, 'warn'>

@@ -13,7 +13,7 @@ const { useToken } = theme
 interface IProps {
 	itemProps?: Omit<ItemProps, 'children'>
 	Icon: Icon
-	text: string
+	text: string | number
 	danger?: number
 	className?: HTMLDivElement['className']
 	trigger?: (...args: any) => void

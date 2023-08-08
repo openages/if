@@ -10,7 +10,7 @@ const Index = () => {
 	const limits = useLimits()
 
 	return (
-		<div className={$cx('w_100', styles._local)}>
+		<div className={$cx('w_100 fixed bottom_0 z_index_1000', styles._local)}>
 			<div className='limited_content_wrap'>
 				<TextArea
 					className='input_add_todo w_100 border_box'

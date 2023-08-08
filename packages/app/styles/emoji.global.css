@@ -1,0 +1,13 @@
+em-emoji-picker {
+	width: 300px;
+	height: 360px;
+	box-shadow: none;
+
+	--rgb-accent: 128, 128, 128;
+}
+
+[data-theme='dark'] {
+	em-emoji-picker {
+		--rgb-background: 35, 35, 38;
+	}
+}

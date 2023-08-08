@@ -2,9 +2,9 @@ import { useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export default () => {
-      const { t } = useTranslation()
+	const { t, i18n } = useTranslation()
 
 	useLayoutEffect(() => {
-		$t = t 
-	}, [t])
+		$t = t
+	}, [t, i18n.language])
 }

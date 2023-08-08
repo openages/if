@@ -1,0 +1,58 @@
+:root {
+	--contexify-menu-bgColor: var(--color_bg);
+	--contexify-separator-color: var(--color_border_light);
+	--contexify-item-color: var(--color_text);
+	--contexify-activeItem-color: var(--color_text);
+	--contexify-activeItem-bgColor: var(--color_bg_2);
+	--contexify-rightSlot-color: var(--color_text_grey);
+	--contexify-activeRightSlot-color: var(--color_text);
+	--contexify-arrow-color: var(--color_text_grey);
+	--contexify-activeArrow-color: var(--color_text);
+
+      --contexify-zIndex: 666;
+	--contexify-menu-minWidth: 220px;
+	--contexify-menu-padding: 6px;
+	--contexify-menu-radius: 6px;
+	--contexify-menu-shadow: 1px 2px 2px rgba(0, 0, 0, 0.1), 2px 4px 4px rgba(0, 0, 0, 0.1),
+		3px 6px 6px rgba(0, 0, 0, 0.1);
+	--contexify-menu-negatePadding: var(--contexify-menu-padding);
+	--contexify-separator-margin: 5px;
+	--contexify-itemContent-padding: 6px;
+	--contexify-activeItem-radius: 4px;
+}
+
+[data-theme='dark'] {
+	--contexify-menu-bgColor: var(--color_bg_1);
+}
+
+.contexify {
+	min-width: 120px;
+	padding: 3px;
+	box-shadow: var(--shadow);
+	font-size: 13px;
+	box-sizing: border-box;
+
+	&_separator {
+		margin: 3px 0;
+	}
+
+	.contexify_item {
+		border-radius: 0;
+
+		&Content {
+			padding: 0;
+			box-sizing: border-box;
+			display: flex;
+		}
+	}
+}
+
+@keyframes contexify_feedback {
+	from {
+		opacity: 0.4;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
