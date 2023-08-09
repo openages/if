@@ -16,7 +16,7 @@ export default (theme: Theme, color_main: string) => {
 	return {
 		token: {
 			...common_antd.token,
-			colorPrimary: color_main,
+			colorPrimary: `rgb(${color_main})`,
 			colorTextBase: vars.color_text,
 			colorBgBase: vars.color_bg,
 			colorBgContainer: vars.color_bg,

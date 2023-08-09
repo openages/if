@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import Color from 'color'
 import { observer } from 'mobx-react-lite'
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,7 +11,7 @@ const Index = () => {
 	const global = useGlobal()
 	const { t } = useTranslation()
 
-	const onItem = useMemoizedFn((color: string) => global.setting.setColorMain(color))
+	const onItem = useMemoizedFn((color: string) => global.setting.setColorMain(Color(color).rgb().array().join(',')))
 
 	return (
 		<Fragment>
@@ -21,7 +22,7 @@ const Index = () => {
 						<div
 							className={$cx(
 								'color_item_wrap flex justify_center align_center cursor_point',
-								item === global.setting.color_main && 'active'
+								item === Color.rgb(`rgb(${global.setting.color_main_rgb})`).hex() && 'active'
 							)}
 							onClick={() => onItem(item)}
 							key={item}

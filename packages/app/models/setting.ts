@@ -8,16 +8,16 @@ import type { Theme } from '@/appdata'
 @injectable()
 export default class Index {
 	theme: Theme = 'light'
-	color_main = '#ff0000'
+	color_main_rgb = '255,0,0'
 	show_bar_title = false
 	page_width = '780px'
 
 	constructor() {
 		makeAutoObservable(this, {}, { autoBind: true })
-		setStorageWhenChange(['theme', 'color_main', 'show_bar_title', 'page_width'], this)
+		setStorageWhenChange(['theme', 'color_main_rgb', 'show_bar_title', 'page_width'], this)
 
 		this.setTheme(this.theme || 'light', true)
-		this.setColorMain(this.color_main || '#ff0000')
+		this.setColorMain(this.color_main_rgb || '255,0,0')
 		this.setPageWidth(this.page_width || '780px')
 	}
 
@@ -31,11 +31,11 @@ export default class Index {
 	}
 
 	setColorMain(v: string) {
-		this.color_main = v
+		this.color_main_rgb = v
 
-		document.documentElement.style.setProperty('--color_main', v)
+		document.documentElement.style.setProperty('--color_main_rgb', v)
 
-		setFavicon(v)
+		setFavicon(`rgb(${v})`)
 	}
 
 	setPageWidth(v: string) {

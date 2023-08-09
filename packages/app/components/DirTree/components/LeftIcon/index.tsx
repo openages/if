@@ -1,4 +1,4 @@
-import { match, P } from 'ts-pattern'
+import { match } from 'ts-pattern'
 
 import { Cube, DiceFour, ListBullets } from '@phosphor-icons/react'
 
@@ -8,9 +8,9 @@ const Index = (props: IPropsLeftIcon) => {
 	const { module, item } = props
 
 	return match({ ...item, module })
-		.with({ type: 'file', module: 'todo' }, () => <ListBullets size={18} weight='bold' />)
-		.with({ type: 'file' }, () => <Cube size={18} weight='bold' />)
-		.with({ type: 'dir' }, () => <DiceFour size={18} weight='bold' />)
+		.with({ type: 'file', module: 'todo' }, () => <ListBullets size={18}  />)
+		.with({ type: 'file' }, () => <Cube size={18} />)
+		.with({ type: 'dir' }, () => <DiceFour size={18}/>)
 		.otherwise(({ icon }) => <span>{icon}</span>)
 }
 

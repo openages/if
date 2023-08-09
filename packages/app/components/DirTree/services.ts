@@ -88,9 +88,11 @@ export default class Index {
 	}
 
 	async rename(name: string, icon: string) {
-		await match(this.module)
-			.with('todo', () => updateTarget(name, icon, this.focusing_item.id))
-			.otherwise(() => {})
+		if (this.focusing_item.type === 'file') {
+			await match(this.module)
+				.with('todo', () => updateTarget(name, icon, this.focusing_item.id))
+				.otherwise(() => {})
+		}
 
 		await this.doc.incrementalModify((doc) => {
 			rename(doc.dirtree, this.focusing_item.id, name, icon)

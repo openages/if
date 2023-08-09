@@ -20,7 +20,7 @@ import type { IPropsSidebar } from './types'
 
 const Index = () => {
 	const [global] = useState(() => container.resolve(GlobalModel))
-	const theme = useTheme(global.setting.theme, global.setting.color_main)
+	const theme = useTheme(global.setting.theme, global.setting.color_main_rgb)
 	const locale = useAntdLocale(global.locale.lang)
 	const { no_dirtree } = useLayout()
 

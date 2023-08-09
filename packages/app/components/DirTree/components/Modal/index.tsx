@@ -97,7 +97,7 @@ const Index = (props: IPropsModal) => {
 			open={modal_open}
 			title={title}
 			centered
-			width={360}
+			width={300}
 			confirmLoading={loading_add || loading_rename}
 			onOk={onOk}
 			onCancel={() => {

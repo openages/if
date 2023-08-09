@@ -1,6 +1,5 @@
 ._local {
 	padding: 18px 0;
-	background-color: var(--color_bg);
 	width: calc(100% - var(--sidebar_width) - var(--dirtree_width));
 	left: calc(var(--sidebar_width) + var(--dirtree_width));
       
@@ -9,6 +8,7 @@
 			padding: 7px 12px;
 			border-bottom-width: 2px;
 			border-bottom-style: solid;
+                  background-color: var(--color_bg);
 
 			&:focus {
 				border-color: var(--color_text);
