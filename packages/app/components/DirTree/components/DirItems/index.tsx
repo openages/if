@@ -26,10 +26,9 @@ const Index = (props: IPropsDirItems) => {
 	const onDragEnd = useMemoizedFn((args: DragEndEvent) => {
 		const { active, over } = args
 
-		console.log(active, over)
 		setActiveItem(null)
 
-		// $app.Event.emit(`${module}/dirtree/move`, { active, over })
+		$app.Event.emit(`${module}/dirtree/move`, { active, over })
 	})
 
 	return (

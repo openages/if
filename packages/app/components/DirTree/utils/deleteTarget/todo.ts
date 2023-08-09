@@ -6,10 +6,13 @@ const deleteTodoFile = async (id: string) => {
 	await $db.collections[`${id}_todo_archive`].remove()
 }
 
-const Index = async (focusing_item: DirTree.Item) => {
+const Index = async (focusing_item: DirTree.Item, current_item: string, module: string) => {
+	if (focusing_item.id === current_item) $app.Event.emit(`${module}/dirtree/removeCurrentItem`)
 	if (focusing_item.type === 'file') return await deleteTodoFile(focusing_item.id)
 
-	await Promise.all(focusing_item.children.map(async (item) => await Index(item)))
+	if (focusing_item?.children) {
+		await Promise.all(focusing_item.children.map(async (item) => await Index(item, current_item, module)))
+	}
 }
 
 export default Index

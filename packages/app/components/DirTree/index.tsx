@@ -29,7 +29,7 @@ const Index = (props: IProps) => {
 	}, [module])
 
 	useEffect(() => {
-		if (x.current_item) props.onClick(x.current_item)
+		props.onClick(x.current_item)
 	}, [x.current_item])
 
 	const onClick = useMemoizedFn((v: string) => (x.current_item = v))

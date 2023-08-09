@@ -48,12 +48,12 @@ const Index = () => {
 	return (
 		<div className={$cx(styles._local, 'w_100 h_100vh flex flex_column')}>
 			<DirTree {...props_dir_tree}></DirTree>
-			<If condition={x.services.info?.name}>
+			<If condition={x.services.id && x.services.info?.name}>
 				<Then>
 					<Header {...props_header}></Header>
 					<Tabs {...props_tabs}></Tabs>
 					<Todos {...props_todos}></Todos>
-                              <Input></Input>
+					<Input></Input>
 				</Then>
 				<Else>
 					<DataEmpty></DataEmpty>

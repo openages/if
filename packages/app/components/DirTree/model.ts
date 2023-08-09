@@ -5,9 +5,9 @@ import { injectable } from 'tsyringe'
 import { Utils } from '@/models'
 import { setStorageWhenChange } from '@/utils'
 import { loading } from '@/utils/decorators'
-import { move } from '@/utils/tree'
 
 import Services from './services'
+import { move } from './utils'
 
 import type { App, DirTree } from '@/types'
 import type { Active, Over } from '@dnd-kit/core'
@@ -67,6 +67,8 @@ export default class Index {
 
 		const target = move(toJS(this.services.dirtree), active, over)
 
+		console.log(target[0].children)
+
 		if (!target) return
 
 		this.services.dirtree = target
@@ -87,18 +89,28 @@ export default class Index {
 				this.modal_open = true
 			})
 			.with('delete', async () => {
-				await this.services.delete()
+				await this.services.delete(this.current_item)
+
+				if (this.current_item === this.focusing_item.id) {
+					this.current_item = ''
+				}
 
 				this.focusing_item = {} as DirTree.Item
 			})
 			.exhaustive()
 	}
 
+	removeCurrentItem() {
+		this.current_item = ''
+	}
+
 	on() {
 		$app.Event.on(`${this.module}/dirtree/move`, this.move)
+		$app.Event.on(`${this.module}/dirtree/removeCurrentItem`, this.removeCurrentItem)
 	}
 
 	off() {
 		$app.Event.off(`${this.module}/dirtree/move`, this.move)
+		$app.Event.off(`${this.module}/dirtree/removeCurrentItem`, this.removeCurrentItem)
 	}
 }

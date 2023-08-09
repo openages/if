@@ -67,7 +67,7 @@ export default class Index {
 			.exhaustive()
 	}
 
-	async delete() {
+	async delete(current_item: string) {
 		await this.doc.incrementalModify((doc) => {
 			remove(doc.dirtree, this.focusing_item.id)
 
@@ -75,7 +75,7 @@ export default class Index {
 		})
 
 		await match(this.module)
-			.with('todo', () => deleteTargetTodo(this.focusing_item))
+			.with('todo', () => deleteTargetTodo(this.focusing_item, current_item, this.module))
 			.otherwise(() => {})
 	}
 

@@ -6,9 +6,9 @@ const Index = async (dirtree: Array<DirTree.Item>) => {
 	return Promise.all(
 		dirtree.map(async (item) => {
 			if (item.type === 'dir') {
-				Index(item.children)
+				return await Index(item.children)
 			} else {
-				await addTodoRefCollections(item.id)
+				return await addTodoRefCollections(item.id)
 			}
 		})
 	)
