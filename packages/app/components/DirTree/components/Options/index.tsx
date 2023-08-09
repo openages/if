@@ -24,15 +24,13 @@ const Index = (props: IPropsOptions) => {
 		onOptions('add_dir')
 	})
 
-	const onDelete = useMemoizedFn(() => {
-		setClickOption(true)
-		onOptions('delete')
-	})
-
 	const onRename = useMemoizedFn(() => {
 		setClickOption(true)
 		onOptions('rename')
 	})
+
+	const onDeleteTrigger = useMemoizedFn(() => onOptions('delete'))
+	const onDeletePressTrigger = useMemoizedFn(() => setClickOption(true))
 
 	const onVisibilityChange = useMemoizedFn((v: boolean) => {
 		if (!v && !click_option) {
@@ -67,7 +65,8 @@ const Index = (props: IPropsOptions) => {
 				Icon={Trash}
 				text={t('translation:dirtree.options.delete')}
 				danger={focusing_item.type === 'dir' ? 3 : 1.5}
-				trigger={onDelete}
+				trigger={onDeleteTrigger}
+				pressTrigger={onDeletePressTrigger}
 			></ContextMenuItem>
 		</Menu>
 	)

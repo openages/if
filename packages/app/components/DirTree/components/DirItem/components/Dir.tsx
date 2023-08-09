@@ -37,6 +37,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 		focusing_item,
 		parent_index,
 		dragging,
+		open,
 		showDirTreeOptions,
 		onClick: useMemoizedFn(() => setOpen(!open))
 	}

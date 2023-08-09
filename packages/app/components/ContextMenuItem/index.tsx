@@ -17,22 +17,30 @@ interface IProps {
 	danger?: number
 	className?: HTMLDivElement['className']
 	trigger?: (...args: any) => void
+	pressTrigger?: (...args: any) => void
 }
 
 const PressItem = $app.memo((props: IProps) => {
-	const { itemProps, Icon, text, danger, className, trigger } = props
+	const { itemProps, Icon, text, danger, className, trigger, pressTrigger } = props
 	const { token } = useToken()
 	const [press_start, setPressStart] = useState(0)
 	const [press_time, setPressTime] = useState(0)
 	const ref = useRef<HTMLDivElement>(null)
 
-	useLongPress(() => setPressStart(Date.now()), ref, {
-		delay: 0,
-		onLongPressEnd: () => {
-			setPressStart(0)
-			setPressTime(0)
+	useLongPress(
+            () => {
+                  pressTrigger()
+			setPressStart(Date.now())
+		},
+		ref,
+		{
+			delay: 0,
+			onLongPressEnd: () => {
+				setPressStart(0)
+				setPressTime(0)
+			}
 		}
-	})
+	)
 
 	useEffect(() => {
 		if (!press_start) return

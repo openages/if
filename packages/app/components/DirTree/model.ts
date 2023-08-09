@@ -21,7 +21,10 @@ export default class Index {
 	modal_type = 'file' as DirTree.Type
 	current_option = '' as 'rename' | 'add_file' | 'add_dir' | ''
 
-	constructor(public utils: Utils, public services: Services) {
+	constructor(
+		public utils: Utils,
+		public services: Services
+	) {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
@@ -48,6 +51,7 @@ export default class Index {
 		await this.services.add(type, name, icon)
 
 		this.modal_open = false
+		this.focusing_item = {} as DirTree.Item
 	}
 
 	@loading
@@ -82,7 +86,11 @@ export default class Index {
 				this.current_option = 'rename'
 				this.modal_open = true
 			})
-			.with('delete', () => this.services.delete())
+			.with('delete', async () => {
+				await this.services.delete()
+
+				this.focusing_item = {} as DirTree.Item
+			})
 			.exhaustive()
 	}
 

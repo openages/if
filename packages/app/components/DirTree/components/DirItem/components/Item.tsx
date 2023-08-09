@@ -24,7 +24,7 @@ const Index = (props: IPropsDirItem_Item) => {
 	} = props
 	const { id, name, type } = item
 
-	const onItem = useMemoizedFn(() => onClick(id))
+      const onItem = useMemoizedFn(() => onClick(id))
 
 	return (
 		<Wave>
@@ -64,9 +64,11 @@ const Index = (props: IPropsDirItem_Item) => {
 							type === 'dir' && item.children.length === 0 && 'no_children'
 						)}
 					>
-						<span className='children_count text_center'>
-							{(item as DirTree.Dir).children?.length}
-						</span>
+						<When condition={(item as DirTree.Dir).children?.length}>
+							<span className='children_count text_center'>
+								{(item as DirTree.Dir).children?.length}
+							</span>
+						</When>
 						<CaretRight
 							className={$cx('icon_fold transition_normal', open && 'opened')}
 							size={14}
