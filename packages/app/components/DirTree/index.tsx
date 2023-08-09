@@ -57,6 +57,7 @@ const Index = (props: IProps) => {
 		data: toJS(x.services.dirtree),
 		current_item: x.current_item,
 		focusing_item: toJS(x.focusing_item),
+		open_folder: toJS(x.open_folder),
 		onClick,
 		showDirTreeOptions
 	}

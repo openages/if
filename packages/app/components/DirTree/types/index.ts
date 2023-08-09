@@ -16,6 +16,7 @@ export interface IPropsDirItems {
 	data: Model['services']['doc']['dirtree']
       current_item: string
 	focusing_item: Model['focusing_item']
+	open_folder: Model['open_folder']
 	onClick: (v: string) => void
 	showDirTreeOptions: (e: MouseEvent<HTMLElement>, v: DirTree.Item) => void
 }
@@ -24,7 +25,8 @@ export interface IPropsDirItem {
 	module: Model['module']
 	item: DirTree.Item
       current_item: string
-	focusing_item: Model['focusing_item']
+      focusing_item: Model[ 'focusing_item' ]
+	open_folder: Model['open_folder']
 	parent_index?: Array<number>
 	dragging?: boolean
 	onClick: (v: string) => void

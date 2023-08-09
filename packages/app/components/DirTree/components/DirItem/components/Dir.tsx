@@ -1,4 +1,4 @@
-import { useMemoizedFn, useUpdateEffect } from 'ahooks'
+import { useMemoizedFn, useUpdateEffect, useDeepCompareEffect } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 
@@ -12,13 +12,26 @@ import Item from './Item'
 import type { IPropsDirItem_Dir, IPropsDirItem_Item } from '../../../types'
 
 const Index = (props: IPropsDirItem_Dir) => {
-	const { module, item, current_item, focusing_item, parent_index = [], dragging, showDirTreeOptions } = props
+	const {
+		module,
+		item,
+		current_item,
+		focusing_item,
+		open_folder,
+		parent_index = [],
+		dragging,
+		showDirTreeOptions
+	} = props
 	const { type } = item
 	const [open, setOpen] = useState(false)
 	const { attributes, listeners, transform, isDragging, setNodeRef } = useDraggable({
 		id: item.id,
 		data: { item, parent_index }
 	})
+
+	useDeepCompareEffect(() => {
+		if (open_folder.includes(item.id)) setOpen(true)
+	}, [open_folder])
 
 	const children = useDeepMemo(() => {
 		if (item.type === 'dir') return item.children
@@ -30,11 +43,20 @@ const Index = (props: IPropsDirItem_Dir) => {
 		if (isDragging) setOpen(false)
 	}, [isDragging])
 
+	useEffect(() => {
+		if (open) {
+			$app.Event.emit(`${module}/dirtree/addOpenFolder`, item.id)
+		} else {
+			$app.Event.emit(`${module}/dirtree/removeOpenFolder`, item.id)
+		}
+	}, [open])
+
 	const props_item: IPropsDirItem_Item = {
 		module,
 		item,
 		current_item,
 		focusing_item,
+		open_folder,
 		parent_index,
 		dragging,
 		open,

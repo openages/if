@@ -24,7 +24,7 @@ const Index = (props: IPropsDirItem_Item) => {
 	} = props
 	const { id, name, type } = item
 
-      const onItem = useMemoizedFn(() => onClick(id))
+	const onItem = useMemoizedFn(() => onClick(id))
 
 	return (
 		<Wave>

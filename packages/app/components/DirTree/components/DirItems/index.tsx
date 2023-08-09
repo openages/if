@@ -13,7 +13,7 @@ import type { IPropsDirItems } from '../../types'
 import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core'
 
 const Index = (props: IPropsDirItems) => {
-	const { module, data, current_item, focusing_item, onClick, showDirTreeOptions } = props
+	const { module, data, current_item, focusing_item, open_folder, onClick, showDirTreeOptions } = props
 	const [active_item, setActiveItem] = useState<{ item: DirTree.Item; open: boolean } | null>(null)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }))
 
@@ -43,6 +43,7 @@ const Index = (props: IPropsDirItems) => {
 									item,
 									current_item,
 									focusing_item,
+									open_folder,
 									sensors,
 									onClick,
 									showDirTreeOptions
@@ -59,6 +60,7 @@ const Index = (props: IPropsDirItems) => {
 											module,
 											current_item,
 											focusing_item,
+											open_folder,
 											sensors,
 											onClick,
 											showDirTreeOptions

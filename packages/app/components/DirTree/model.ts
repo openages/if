@@ -1,3 +1,4 @@
+import { remove } from 'lodash-es'
 import { makeAutoObservable, reaction, toJS } from 'mobx'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
@@ -20,6 +21,7 @@ export default class Index {
 	current_item = ''
 	modal_type = 'file' as DirTree.Type
 	current_option = '' as 'rename' | 'add_file' | 'add_dir' | ''
+	open_folder = [] as Array<string>
 
 	constructor(
 		public utils: Utils,
@@ -31,7 +33,10 @@ export default class Index {
 	async init(module: App.RealModuleType) {
 		this.module = module
 
-		setStorageWhenChange([{ [`${this.module}_active_id`]: 'current_item' }], this)
+		setStorageWhenChange(
+			[{ [`${this.module}_active_id`]: 'current_item' }, { [`${this.module}_open_folder`]: 'open_folder' }],
+			this
+		)
 
 		this.on()
 		this.reactions()
@@ -104,13 +109,25 @@ export default class Index {
 		this.current_item = ''
 	}
 
+	addOpenFolder(id: string) {
+		this.open_folder.push(id)
+	}
+
+	removeOpenFolder(id: string) {
+		remove(this.open_folder, (item) => item === id)
+	}
+
 	on() {
 		$app.Event.on(`${this.module}/dirtree/move`, this.move)
 		$app.Event.on(`${this.module}/dirtree/removeCurrentItem`, this.removeCurrentItem)
+		$app.Event.on(`${this.module}/dirtree/addOpenFolder`, this.addOpenFolder)
+		$app.Event.on(`${this.module}/dirtree/removeOpenFolder`, this.removeOpenFolder)
 	}
 
 	off() {
 		$app.Event.off(`${this.module}/dirtree/move`, this.move)
 		$app.Event.off(`${this.module}/dirtree/removeCurrentItem`, this.removeCurrentItem)
+		$app.Event.off(`${this.module}/dirtree/addOpenFolder`, this.addOpenFolder)
+		$app.Event.off(`${this.module}/dirtree/removeOpenFolder`, this.removeOpenFolder)
 	}
 }
