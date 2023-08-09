@@ -12,6 +12,79 @@ import { addTargetTodo, addToDir, deleteTargetTodo, getTodoRefs, rename, updateT
 import type { RxDocument } from 'rxdb'
 import type { App, DirTree, Module } from '@/types'
 
+// const test_dirtree_data= [
+//       {
+//           "id": "guhokyfzvzdredjzh0a6llwhzcylu3",
+//           "type": "file",
+//           "name": "Grocery shopping",
+//           "icon": ":handbag:"
+//       },
+//       {
+//           "id": "qdthxxhzlqlommsd_ug-ihdcgxzzpo",
+//           "type": "file",
+//           "name": "Clean up",
+//           "icon": ":broom:"
+//       },
+//       {
+//           "id": "wqgdkiskrhssdzyg-zekhzzs4u-ee2",
+//           "type": "file",
+//           "name": "Meeting",
+//           "icon": ":male-technologist:"
+//       },
+//       {
+//           "id": "gqlpzfblcqdqnmgz6q4negh0i09uku",
+//           "type": "dir",
+//           "name": "Personal",
+//           "icon": ":house:",
+//           "children": [
+//               {
+//                   "id": "klwpkatlfkyqbvm1a-95w-0hz-qg33",
+//                   "type": "file",
+//                   "name": "Cooking",
+//                   "icon": ":rice:"
+//               },
+//               {
+//                   "id": "exzuihouflzswexcgq44l07w9vp619",
+//                   "type": "file",
+//                   "name": "Exercise",
+//                   "icon": ":basketball:"
+//               },
+//               {
+//                   "id": "mbphdjrkrsmqdnv-y24mzdtcfuy_5z",
+//                   "type": "dir",
+//                   "name": "Game",
+//                   "icon": ":game_die:",
+//                   "children": [
+//                       {
+//                           "id": "fecyymiresgrqlt71_w4xo8skrnpzp",
+//                           "type": "file",
+//                           "name": "打牌",
+//                           "icon": ":clubs:"
+//                       },
+//                       {
+//                           "id": "kjdbidxjdmbjftnw97s3bow6wftnpk",
+//                           "type": "file",
+//                           "name": "海狸浮生记",
+//                           "icon": ":art:"
+//                       },
+//                       {
+//                           "id": "jwisuqysuwykasvz0uruogzrqy_qpd",
+//                           "type": "file",
+//                           "name": "英雄联盟",
+//                           "icon": ":dart:"
+//                       }
+//                   ]
+//               }
+//           ]
+//       },
+//       {
+//           "id": "yrhooyezodqybgw230h0l2-nbtmcoi",
+//           "type": "file",
+//           "name": "Relaxation",
+//           "icon": ":beer:"
+//       }
+//   ]
+
 @injectable()
 export default class Index {
 	module = '' as App.RealModuleType

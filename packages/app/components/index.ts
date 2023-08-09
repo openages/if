@@ -9,5 +9,6 @@ export { default as DataEmpty } from './DataEmpty'
 export { default as SimpleEmpty } from './SimpleEmpty'
 export { default as ContextMenuItem } from './ContextMenuItem'
 export { default as EmojiPicker } from './EmojiPicker'
+export { default as Wave } from './Wave'
 
 export type { IProps as IPropsDirTree } from './DirTree/types'

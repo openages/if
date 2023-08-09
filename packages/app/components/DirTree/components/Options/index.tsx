@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import { useState } from 'react'
 import { Menu } from 'react-contexify'
 import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
@@ -9,16 +10,40 @@ import { CirclesThreePlus, ListPlus, Pencil, Trash } from '@phosphor-icons/react
 import type { IPropsOptions } from '../../types'
 
 const Index = (props: IPropsOptions) => {
-	const { focusing_item, onOptions } = props
+	const { focusing_item, onOptions, resetFocusingItem } = props
 	const { t } = useTranslation()
+	const [click_option, setClickOption] = useState(false)
 
-	const onAddFile = useMemoizedFn(() => onOptions('add_file'))
-	const onAddDir = useMemoizedFn(() => onOptions('add_dir'))
-	const onDelete = useMemoizedFn(() => onOptions('delete'))
-	const onRename = useMemoizedFn(() => onOptions('rename'))
+	const onAddFile = useMemoizedFn(() => {
+		setClickOption(true)
+		onOptions('add_file')
+	})
+
+	const onAddDir = useMemoizedFn(() => {
+		setClickOption(true)
+		onOptions('add_dir')
+	})
+
+	const onDelete = useMemoizedFn(() => {
+		setClickOption(true)
+		onOptions('delete')
+	})
+
+	const onRename = useMemoizedFn(() => {
+		setClickOption(true)
+		onOptions('rename')
+	})
+
+	const onVisibilityChange = useMemoizedFn((v: boolean) => {
+		if (!v && !click_option) {
+			resetFocusingItem()
+		} else {
+			setClickOption(false)
+		}
+	})
 
 	return (
-		<Menu id='dirtree_options' animation='scale'>
+		<Menu id='dirtree_options' animation='scale' onVisibilityChange={onVisibilityChange}>
 			<ContextMenuItem
 				itemProps={{ onClick: onRename }}
 				Icon={Pencil}

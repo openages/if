@@ -1,4 +1,4 @@
-import { useEventTarget, useKeyPress, useMemoizedFn } from 'ahooks'
+import { useEventTarget, useKeyPress, useMemoizedFn, useDeepCompareEffect } from 'ahooks'
 import { Input, Modal, Popover } from 'antd'
 import { useEffect, useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -40,7 +40,7 @@ const Index = (props: IPropsModal) => {
 		onChange({ target: { value: '' } })
 	}, [modal_open])
 
-	useEffect(() => {
+	useDeepCompareEffect(() => {
 		if (focusing_item.icon && current_option === 'rename') {
 			setIcon(focusing_item.icon)
 		}

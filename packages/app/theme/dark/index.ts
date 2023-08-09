@@ -1,7 +1,8 @@
 export default {
-      color_text: '#a2a5b9',
+	color_text: '#a2a5b9',
+	color_text_rgb: '162,165,185',
 	color_text_sub: '#999',
-      color_text_grey: '#777',
+	color_text_grey: '#777',
 	color_text_light: '#444',
 	color_text_contrast: 'white',
 	color_bg: '#232326',
@@ -11,6 +12,7 @@ export default {
 	color_border_light: 'rgba(255, 255, 255, 0.036)',
 	color_border_soft: 'rgba(255, 255, 255, 0.018)',
 	shadow: '0 0 1px #555',
-      shadow_right: '1px 0 1px #555',
+	shadow_right: '1px 0 1px #555',
 	shadow_top: '0 0 1px #555',
+	wave: 'rgba(var(--color_text_rgb), 0.3)'
 }

@@ -19,7 +19,6 @@ export default class Index {
 	focusing_item = {} as DirTree.Item
 	current_item = ''
 	modal_type = 'file' as DirTree.Type
-	fold_all = false
 	current_option = '' as 'rename' | 'add_file' | 'add_dir' | ''
 
 	constructor(public utils: Utils, public services: Services) {

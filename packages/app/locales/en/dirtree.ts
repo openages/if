@@ -3,7 +3,6 @@ export default {
 	add: 'New ',
 	file: 'File',
 	dir: 'Folder',
-	fold_all: 'Fold All',
       input_placeholder: 'Please input name',
       options: {
 		rename: 'Rename',

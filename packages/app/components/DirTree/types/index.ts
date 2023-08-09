@@ -14,49 +14,37 @@ export interface IProps {
 export interface IPropsDirItems {
 	module: Model['module']
 	data: Model['services']['doc']['dirtree']
-	current_item: string
-	fold_all: Model['fold_all']
+      current_item: string
+	focusing_item: Model['focusing_item']
 	onClick: (v: string) => void
-	setFoldAll: (v: Model['fold_all']) => boolean
-	showDirTreeOptions: (e: MouseEvent<HTMLDivElement>, v: DirTree.Item) => void
+	showDirTreeOptions: (e: MouseEvent<HTMLElement>, v: DirTree.Item) => void
 }
 
 export interface IPropsDirItem {
 	module: Model['module']
 	item: DirTree.Item
-	current_item: string
-	fold_all: Model['fold_all']
+      current_item: string
+	focusing_item: Model['focusing_item']
 	parent_index?: Array<number>
-	open?: boolean
+	dragging?: boolean
 	onClick: (v: string) => void
-	setFoldAll: (v: Model['fold_all']) => boolean
 	showDirTreeOptions: IPropsDirItems['showDirTreeOptions']
 }
 
-export interface IPropsDirItem_File extends Omit<IPropsDirItem, 'fold_all' | 'setFoldAll'> {}
+export interface IPropsDirItem_File extends IPropsDirItem {}
 
-export interface IPropsDirItem_Dir extends IPropsDirItem {
-	open: boolean
-	onItem: () => void
-	setOpen: (v: boolean) => void
-}
+export interface IPropsDirItem_Dir extends IPropsDirItem {}
 
-export interface IPropsDirItem_Item extends Omit<IPropsDirItem, 'fold_all' | 'onClick' | 'setFoldAll'> {
+export interface IPropsDirItem_Item extends IPropsDirItem {
 	open?: boolean
-	onItem: (...args: any) => void
 }
 
-export interface IPropsDirItem_SortableWrap {
+export interface IPropsDirItem_SortableWrap extends Pick<IPropsDirItem, 'item' | 'parent_index'> {
 	children: ReactNode
-	id: string
-	item: DirTree.Item
-	parent_index: Array<number>
-	open?: boolean
 }
 
 export interface IPropsActions {
 	setModalOpen: (v: Model['modal_open'], type?: Model['modal_type']) => void
-	setFoldAll: (v: Model['fold_all']) => boolean
 }
 
 export interface IPropsModal {
@@ -75,7 +63,8 @@ export interface IPropsModal {
 
 export interface IPropsOptions {
 	focusing_item: Model['focusing_item']
-	onOptions: Model['onOptions']
+      onOptions: Model[ 'onOptions' ]
+	resetFocusingItem: () => void
 }
 
 export interface IPropsLeftIcon {

@@ -1,5 +1,6 @@
 [data-theme='dark'] {
 --color_text:#a2a5b9;
+--color_text_rgb:162,165,185;
 --color_text_sub:#999;
 --color_text_grey:#777;
 --color_text_light:#444;
@@ -13,4 +14,5 @@
 --shadow:0 0 1px #555;
 --shadow_right:1px 0 1px #555;
 --shadow_top:0 0 1px #555;
+--wave:rgba(var(--color_text_rgb), 0.3);
 }

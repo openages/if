@@ -1,29 +1,17 @@
-import { isRelated } from '@/utils/tree'
-import { useSortable } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
+import { useDroppable } from '@dnd-kit/core'
 
 import styles from '../index.css'
 
 import type { IPropsDirItem_SortableWrap } from '../../../types'
 
 const Index = (props: IPropsDirItem_SortableWrap) => {
-	const { children, id, item, parent_index, open } = props
-	const { setNodeRef, listeners, transform, transition, isDragging, isOver, items, over, active } = useSortable({
-		id,
-		data: { item, parent_index, open }
-	})
+	const { children, item, parent_index } = props
+	const { isOver, setNodeRef } = useDroppable({ id: item.id, data: { item, parent_index } })
 
 	return (
 		<div
-			className={$cx(
-				'w_100 border_box flex flex_column relative',
-				styles._local,
-				isDragging && styles.isDragging,
-				isOver && !isRelated(active, over) && !items.includes(active!.id) && styles.isOver
-			)}
-			{...listeners}
+			className={$cx('w_100 border_box flex flex_column relative', styles._local, isOver && styles.isOver)}
 			ref={setNodeRef}
-			style={{ transform: CSS.Translate.toString(transform), transition }}
 		>
 			{children}
 		</div>

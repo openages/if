@@ -1,11 +1,11 @@
 import { useMemoizedFn } from 'ahooks'
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Else, If, Then } from 'react-if'
 
 import { SimpleEmpty } from '@/components'
 import { DirTree } from '@/types'
 import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 
 import DirItem from '../DirItem'
 
@@ -13,7 +13,7 @@ import type { IPropsDirItems } from '../../types'
 import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core'
 
 const Index = (props: IPropsDirItems) => {
-	const { module, data, current_item, fold_all, onClick, setFoldAll, showDirTreeOptions } = props
+	const { module, data, current_item, focusing_item, onClick, showDirTreeOptions } = props
 	const [active_item, setActiveItem] = useState<{ item: DirTree.Item; open: boolean } | null>(null)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }))
 
@@ -26,9 +26,10 @@ const Index = (props: IPropsDirItems) => {
 	const onDragEnd = useMemoizedFn((args: DragEndEvent) => {
 		const { active, over } = args
 
+		console.log(active, over)
 		setActiveItem(null)
 
-		$app.Event.emit(`${module}/dirtree/move`, { active, over })
+		// $app.Event.emit(`${module}/dirtree/move`, { active, over })
 	})
 
 	return (
@@ -36,41 +37,39 @@ const Index = (props: IPropsDirItems) => {
 			<If condition={data.length > 0}>
 				<Then>
 					<DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
-						<SortableContext items={data} strategy={verticalListSortingStrategy}>
-							{data.map((item, index) => (
-								<DirItem
-									{...{
-										module,
-										item,
-										current_item,
-										fold_all,
-										sensors,
-										onClick,
-										setFoldAll,
-										showDirTreeOptions
-									}}
-									parent_index={[index]}
-									key={item.id}
-								></DirItem>
-							))}
-							{active_item && (
+						{data.map((item, index) => (
+							<DirItem
+								{...{
+									module,
+									item,
+									current_item,
+									focusing_item,
+									sensors,
+									onClick,
+									showDirTreeOptions
+								}}
+								parent_index={[index]}
+								key={item.id}
+							></DirItem>
+						))}
+						{active_item &&
+							createPortal(
 								<DragOverlay>
 									<DirItem
 										{...{
 											module,
 											current_item,
-											fold_all,
+											focusing_item,
 											sensors,
 											onClick,
-											setFoldAll,
 											showDirTreeOptions
 										}}
+										dragging={true}
 										item={active_item.item}
-										open={active_item.open}
 									></DirItem>
-								</DragOverlay>
+								</DragOverlay>,
+								document.body
 							)}
-						</SortableContext>
 					</DndContext>
 				</Then>
 				<Else>

@@ -33,7 +33,6 @@ const Index = (props: IProps) => {
 	}, [x.current_item])
 
 	const onClick = useMemoizedFn((v: string) => (x.current_item = v))
-	const setFoldAll = useMemoizedFn((v: Model['fold_all']) => (x.fold_all = v))
 
 	const setModalOpen = useMemoizedFn((v: Model['modal_open'], type?: Model['modal_type']) => {
 		x.focusing_item = {} as DirTree.Item
@@ -48,19 +47,22 @@ const Index = (props: IProps) => {
 		show({ event: e })
 	})
 
+	const resetFocusingItem = useMemoizedFn(() => {
+		x.current_option = ''
+		x.focusing_item = {} as DirTree.Item
+	})
+
 	const props_dir_items: IPropsDirItems = {
 		module: x.module,
 		data: toJS(x.services.dirtree),
 		current_item: x.current_item,
-		fold_all: x.fold_all,
+		focusing_item: toJS(x.focusing_item),
 		onClick,
-		setFoldAll,
 		showDirTreeOptions
 	}
 
 	const props_actions: IPropsActions = {
-		setModalOpen,
-		setFoldAll
+		setModalOpen
 	}
 
 	const props_modal: IPropsModal = {
@@ -73,16 +75,14 @@ const Index = (props: IProps) => {
 		loading_rename: toJS(x.utils.loading['rename']),
 		add: useMemoizedFn(x.add),
 		setModalOpen,
-		resetFocusingItem: () => {
-			x.current_option = ''
-			x.focusing_item = {} as DirTree.Item
-		},
+		resetFocusingItem,
 		rename: useMemoizedFn(x.rename)
 	}
 
 	const props_options: IPropsOptions = {
 		focusing_item: toJS(x.focusing_item),
-		onOptions: useMemoizedFn(x.onOptions)
+		onOptions: useMemoizedFn(x.onOptions),
+		resetFocusingItem
 	}
 
 	return (

@@ -10,7 +10,7 @@
 			bottom: 0;
 			left: 0;
 			z-index: 10;
-			background-color: var(--color_main);
+			background-color: var(--color_danger);
 			width: 100%;
 			height: 2px;
 		}
@@ -19,12 +19,32 @@
 	:global {
 		.item_wrap {
 			height: 36px;
+			padding: 0;
 			padding-right: 18px;
-			background-color: var(--color_bg);
+			line-height: 1;
+			border: none;
+			outline: none;
+			box-shadow: none;
+			border-radius: 0;
 
-			&:hover,
+			&:hover {
+				background-color: var(--color_bg_2) !important;
+			}
+
 			&.active {
-				background: var(--color_bg_1);
+				background-color: var(--color_bg_1);
+			}
+
+			&.focusing {
+				background-color: var(--color_bg_2);
+			}
+
+			&.dragging {
+				padding: 0 18px !important;
+				outline: 2px solid var(--color_danger);
+				border-radius: var(--radius);
+				background-color: transparent !important;
+				backdrop-filter: var(--blur);
 			}
 
 			.left_icon_wrap {
@@ -34,15 +54,21 @@
 			}
 
 			.title_wrap {
-				width: calc(100% - 24px - 18px);
+				width: calc(100% - 24px - 48px);
+				vertical-align: middle;
+				text-align: left;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
 				user-select: none;
+
+				&.is_file {
+					width: calc(100% - 24px);
+				}
 			}
 
 			.right_icon_wrap {
-				width: 18px;
+				width: 48px;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
@@ -55,6 +81,14 @@
 					.icon_fold {
 						color: var(--color_border);
 					}
+				}
+
+				.children_count {
+					padding: 2px 4px;
+					margin-right: 4px;
+					background-color: var(--color_bg_1);
+					border-radius: 30px;
+					font-size: 10px;
 				}
 
 				.icon_fold {

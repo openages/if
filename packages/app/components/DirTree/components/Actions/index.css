@@ -4,7 +4,7 @@
 
 	:global {
 		.add_list_wrap {
-			width: calc(100% - 72px);
+			width: calc(100% - 36px);
 			padding-left: 12px;
                   user-select: none;
 
