@@ -26,7 +26,7 @@ export interface IPropsDirItem {
 	item: DirTree.Item
       current_item: string
       focusing_item: Model[ 'focusing_item' ]
-	open_folder: Model['open_folder']
+	open_folder?: Model['open_folder']
 	parent_index?: Array<number>
 	dragging?: boolean
 	onClick: (v: string) => void

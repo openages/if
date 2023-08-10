@@ -4,7 +4,7 @@ export type Lang = (typeof locales)[ number ]
 
 export const locale_options = [
 	{
-		label: 'en-US',
+		label: 'English',
 		value: 'en'
 	},
 	{

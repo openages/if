@@ -72,8 +72,6 @@ export default class Index {
 
 		const target = move(toJS(this.services.dirtree), active, over)
 
-		console.log(target[0].children)
-
 		if (!target) return
 
 		this.services.dirtree = target
@@ -110,7 +108,9 @@ export default class Index {
 	}
 
 	addOpenFolder(id: string) {
-		this.open_folder.push(id)
+		if (!this.open_folder.includes(id)) {
+			this.open_folder.push(id)
+		}
 	}
 
 	removeOpenFolder(id: string) {

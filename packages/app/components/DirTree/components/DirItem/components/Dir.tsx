@@ -30,38 +30,49 @@ const Index = (props: IPropsDirItem_Dir) => {
 	})
 
 	useDeepCompareEffect(() => {
-		if (open_folder.includes(item.id)) setOpen(true)
-	}, [open_folder])
+		setOpen(open_folder.includes(item.id))
+	}, [open_folder, item.id])
 
 	const children = useDeepMemo(() => {
 		if (item.type === 'dir') return item.children
 	}, [item])
 
-	useUpdateEffect(() => setOpen(true), [children])
+	useUpdateEffect(() => {
+		setOpen(true)
 
-	useEffect(() => {
-		if (isDragging) setOpen(false)
-	}, [isDragging])
-
-	useEffect(() => {
-		if (open) {
+		if (children?.length) {
 			$app.Event.emit(`${module}/dirtree/addOpenFolder`, item.id)
 		} else {
 			$app.Event.emit(`${module}/dirtree/removeOpenFolder`, item.id)
 		}
-	}, [open])
+	}, [children, module, item.id])
+
+	useEffect(() => {
+		if (isDragging) {
+			$app.Event.emit(`${module}/dirtree/removeOpenFolder`, item.id)
+		}
+	}, [isDragging, module, item.id])
 
 	const props_item: IPropsDirItem_Item = {
 		module,
 		item,
 		current_item,
 		focusing_item,
-		open_folder,
 		parent_index,
 		dragging,
 		open,
 		showDirTreeOptions,
-		onClick: useMemoizedFn(() => setOpen(!open))
+		onClick: useMemoizedFn(() => {
+			if (children?.length) {
+				if (!open) {
+					$app.Event.emit(`${module}/dirtree/addOpenFolder`, item.id)
+				} else {
+					$app.Event.emit(`${module}/dirtree/removeOpenFolder`, item.id)
+				}
+			}
+
+			setOpen(!open)
+		})
 	}
 
 	return (
