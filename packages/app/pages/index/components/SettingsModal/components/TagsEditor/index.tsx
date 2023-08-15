@@ -11,7 +11,7 @@ import Item from './Item'
 import type { IPropsCustomFormItem } from '@/types'
 import type { DragEndEvent } from '@dnd-kit/core'
 
-const Index = (props: IPropsCustomFormItem<Array<{ id: string; text: string }>>) => {
+const Index = (props: IPropsCustomFormItem<Array<{ id: string; color: string; text: string }>>) => {
 	const { value, onChange } = props
 
 	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
@@ -23,7 +23,7 @@ const Index = (props: IPropsCustomFormItem<Array<{ id: string; text: string }>>)
 	const onAdd = useMemoizedFn((index) => {
 		const items = cloneDeep(value)
 
-		items.splice(index + 1, 0, { id: nanoid(), text: '' })
+		items.splice(index + 1, 0, { id: nanoid(), color: '', text: '' })
 
 		onChange(items)
 	})
@@ -36,10 +36,10 @@ const Index = (props: IPropsCustomFormItem<Array<{ id: string; text: string }>>)
 		onChange(items)
 	})
 
-	const onUpdate = useMemoizedFn((index, v) => {
+	const onUpdate = useMemoizedFn((key, index, v) => {
 		const items = cloneDeep(value)
 
-		items[index].text = v
+		items[index][key] = v
 
 		onChange(items)
 	})
@@ -52,6 +52,8 @@ const Index = (props: IPropsCustomFormItem<Array<{ id: string; text: string }>>)
 						<Item
 							item={item}
 							index={index}
+							limitMin={value.length === 1}
+							limitMax={value.length >= 12}
 							key={item.id}
 							{...{ onAdd, onRemove, onUpdate }}
 						></Item>

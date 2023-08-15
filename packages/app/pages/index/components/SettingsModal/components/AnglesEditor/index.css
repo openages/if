@@ -3,7 +3,7 @@
 		.angle_item_wrap {
 			margin-top: 6px;
 
-			&:first-child{
+			&:first-child {
 				margin-top: 0;
 			}
 
@@ -16,10 +16,16 @@
 				width: 36px;
 				height: 36px;
 				border-radius: var(--radius);
-                        border: 1px dashed var(--color_border);
+				border: 1px dashed var(--color_border);
 
 				&:hover {
 					background-color: var(--color_bg_1);
+				}
+
+				&.disabled {
+					svg {
+						opacity: 0.3;
+					}
 				}
 			}
 		}

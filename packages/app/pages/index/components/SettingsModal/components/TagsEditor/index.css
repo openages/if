@@ -1,14 +1,35 @@
 ._local {
 	:global {
-		.angle_item_wrap {
+		.list_item_wrap {
 			margin-top: 6px;
 
-			&:first-child{
+			&:first-child {
 				margin-top: 0;
 			}
 
+			.color_picker {
+				width: 36px;
+				height: 36px;
+				padding: 8px;
+				border: 1px dashed var(--color_border);
+
+				.ant-color-picker-color-block {
+					height: 20px;
+					border-radius: 50%;
+				}
+			}
+
+			.ant-color-picker-slider-container {
+				padding: 0 12px;
+                        margin-bottom: 0 !important;
+			}
+
+			.ant-color-picker-input-container {
+				padding: 12px;
+			}
+
 			.input {
-				width: calc(100% - 42px * 3);
+				width: calc(100% - 42px * 4);
 				height: 36px;
 			}
 
@@ -16,10 +37,16 @@
 				width: 36px;
 				height: 36px;
 				border-radius: var(--radius);
-                        border: 1px dashed var(--color_border);
+				border: 1px dashed var(--color_border);
 
 				&:hover {
 					background-color: var(--color_bg_1);
+				}
+
+                        &.disabled {
+					svg {
+						opacity: 0.3;
+					}
 				}
 			}
 		}

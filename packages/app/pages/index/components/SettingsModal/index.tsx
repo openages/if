@@ -38,8 +38,8 @@ const Index = (props: IPropsSettingsModal) => {
 						? info?.angles?.map((item) => ({ id: nanoid(), text: item }))
 						: [{ id: nanoid(), text: '' }],
 					tags: info?.tags?.length
-						? info?.tags?.map((item) => ({ id: nanoid(), text: item }))
-						: [{ id: nanoid(), text: '' }]
+						? info?.tags?.map((item) => ({ id: nanoid(), color: item.color, text: item.text }))
+						: [{ id: nanoid(), color: '', text: '' }]
 				}}
 			>
 				<Item name='name'>

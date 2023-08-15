@@ -1,5 +1,9 @@
 ._local {
 	:global {
+            .if-modal-content{
+                  margin: 60px 0;
+            }
+            
 		.if-form-item {
 			margin-bottom: 12px;
 
@@ -8,7 +12,7 @@
                   }
 
                   &-label{
-                        padding-bottom: 4px;
+                        padding-bottom: 6px;
                   }
 		}
 

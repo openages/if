@@ -1,19 +1,21 @@
-import { Input } from 'antd'
+import { Input, ColorPicker } from 'antd'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Plus, Trash, DotsSixVertical } from '@phosphor-icons/react'
 
 interface IProps {
-	item: { id: string; text: string }
+	item: { id: string; color: string; text: string }
 	index: number
+	limitMin: boolean
+	limitMax: boolean
 	onAdd: (index: number) => void
 	onRemove: (index: number) => void
-	onUpdate: (index: number, v: string) => void
+	onUpdate: (key: string, index: number, v: string) => void
 }
 
 const Index = (props: IProps) => {
-	const { item, index, onAdd, onRemove, onUpdate } = props
+	const { item, index, limitMin, limitMax, onAdd, onRemove, onUpdate } = props
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
 		id: item.id,
 		data: { index }
@@ -21,24 +23,37 @@ const Index = (props: IProps) => {
 
 	return (
 		<div
-			className='angle_item_wrap flex'
+			className='list_item_wrap flex'
 			ref={setNodeRef}
 			style={{ transform: CSS.Transform.toString(transform), transition }}
 		>
+			<ColorPicker
+				className='color_picker mr_6'
+				disabledAlpha
+				placement='topLeft'
+				value={item.color}
+				onChange={(_, v) => onUpdate('color', index, v)}
+			></ColorPicker>
 			<Input
 				className='input'
-				placeholder='请输入分类名称'
+				placeholder='请输入标签名称'
 				value={item.text}
-				onChange={({ target: { value } }) => onUpdate(index, value)}
+				onChange={({ target: { value } }) => onUpdate('text', index, value)}
 			></Input>
 			<div
-				className='btn btn_add border_box flex justify_center align_center clickable ml_6'
+				className={$cx(
+					'btn btn_add border_box flex justify_center align_center clickable ml_6',
+					limitMax && 'disabled'
+				)}
 				onClick={() => onAdd(index)}
 			>
 				<Plus size={18}></Plus>
 			</div>
 			<div
-				className='btn btn_remove border_box flex justify_center align_center clickable ml_6'
+				className={$cx(
+					'btn btn_remove border_box flex justify_center align_center clickable ml_6',
+					limitMin && 'disabled'
+				)}
 				onClick={() => onRemove(index)}
 			>
 				<Trash size={18}></Trash>
