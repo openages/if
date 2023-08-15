@@ -8,13 +8,19 @@ import type { MouseEvent, ReactNode } from 'react'
 export interface IProps {
 	module: Model['module']
 	height?: CSSProperties['height']
-	onClick: (v: string) => void
+	actions: {
+		onClick: (v: string) => void
+		add: (name: string, icon: string, file_id: string) => Promise<void>
+		remove: (focusing_item: DirTree.Item, current_item: string, module: string) => Promise<void>
+		update: (name: string, icon: string, file_id: string) => Promise<void>
+		getRefs?: (dirtree: DirTree.Items) => Promise<void>
+	}
 }
 
 export interface IPropsDirItems {
 	module: Model['module']
 	data: Model['services']['doc']['dirtree']
-      current_item: string
+	current_item: string
 	focusing_item: Model['focusing_item']
 	open_folder: Model['open_folder']
 	onClick: (v: string) => void
@@ -24,8 +30,8 @@ export interface IPropsDirItems {
 export interface IPropsDirItem {
 	module: Model['module']
 	item: DirTree.Item
-      current_item: string
-      focusing_item: Model[ 'focusing_item' ]
+	current_item: string
+	focusing_item: Model['focusing_item']
 	open_folder?: Model['open_folder']
 	parent_index?: Array<number>
 	dragging?: boolean
@@ -65,7 +71,7 @@ export interface IPropsModal {
 
 export interface IPropsOptions {
 	focusing_item: Model['focusing_item']
-      onOptions: Model[ 'onOptions' ]
+	onOptions: Model['onOptions']
 	resetFocusingItem: () => void
 }
 

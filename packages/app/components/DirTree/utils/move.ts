@@ -46,7 +46,6 @@ export default (items: DirTree.Items, active: Active, over: Over | null) => {
 				const children = (total[index] as DirTree.Dir).children
 
 				if (idx === over_parent_index.length - 1) {
-					console.log(children, over_index, children[over_index])
 					;(children[over_index] as DirTree.Dir).children.push(active_item)
 
 					return total

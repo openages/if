@@ -7,14 +7,16 @@ import { id } from '@/utils'
 import { remove } from '@/utils/tree'
 import { deepEqual } from '@openages/craftkit'
 
-import { addTargetTodo, addToDir, deleteTargetTodo, getTodoRefs, rename, updateTarget } from './utils'
+import { addToDir, rename } from './utils'
 
 import type { RxDocument } from 'rxdb'
 import type { App, DirTree, Module } from '@/types'
+import type { IProps } from './types'
 
 @injectable()
 export default class Index {
 	module = '' as App.RealModuleType
+	actions = {} as IProps['actions']
 	doc = {} as RxDocument<Module.Item>
 	dirtree = [] as DirTree.Items
 	focusing_item = {} as DirTree.Item
@@ -27,7 +29,7 @@ export default class Index {
 		this.module = module
 
 		await this.query()
-		await this.getModuleRefs()
+		await this.actions?.getRefs?.(this.doc.dirtree)
 
 		this.on()
 		this.reactions()
@@ -44,12 +46,6 @@ export default class Index {
 				this.update(v)
 			}, 300)
 		)
-	}
-
-	async getModuleRefs() {
-		return match(this.module)
-			.with('todo', () => getTodoRefs(this.doc.dirtree))
-			.otherwise(() => {})
 	}
 
 	async query() {
@@ -74,9 +70,7 @@ export default class Index {
 			return doc
 		})
 
-		await match(this.module)
-			.with('todo', () => deleteTargetTodo(this.focusing_item, current_item, this.module))
-			.otherwise(() => {})
+		await this.actions.remove(this.focusing_item, current_item, this.module)
 	}
 
 	async update(v: DirTree.Items) {
@@ -89,9 +83,7 @@ export default class Index {
 
 	async rename(name: string, icon: string) {
 		if (this.focusing_item.type === 'file') {
-			await match(this.module)
-				.with('todo', () => updateTarget(name, icon, this.focusing_item.id))
-				.otherwise(() => {})
+			await this.actions.update(name, icon, this.focusing_item.id)
 		}
 
 		await this.doc.incrementalModify((doc) => {
@@ -122,9 +114,7 @@ export default class Index {
 	private async addFile(name: string, icon: string) {
 		const file_id = id()
 
-		await match(this.module)
-			.with('todo', () => addTargetTodo(name, icon, file_id))
-			.otherwise(() => {})
+		await this.actions.add(name, icon, file_id)
 
 		const file: DirTree.File = { id: file_id, type: 'file', name, icon }
 

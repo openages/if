@@ -1,4 +1,3 @@
-export {default as useDeepMemo} from './useDeepMemo'
 export {default as useElementScrollRestoration} from './useElementScrollRestoration'
 export {default as usePageScrollRestoration} from './usePageScrollRestoration'
 export {default as useTheme} from './useTheme'

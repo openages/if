@@ -14,7 +14,10 @@ module.exports = defineConfig({
 		ignored: /node_modules/
 	},
 	resolve: {
-		tsConfigPath: resolve(__dirname, 'tsconfig.json')
+            tsConfigPath: resolve(__dirname, 'tsconfig.json'),
+		alias: {
+			react: resolve(__dirname, 'node_modules/react')
+		}
 	},
 	builtins: {
 		html: [
@@ -33,8 +36,8 @@ module.exports = defineConfig({
 	module: {
 		rules: [
 			{
-                        test: /\.global\.css$/,
-                        use: [
+				test: /\.global\.css$/,
+				use: [
 					{
 						loader: 'postcss-loader',
 						options: {

@@ -1,6 +1,6 @@
 import { useEventTarget, useKeyPress, useMemoizedFn, useDeepCompareEffect } from 'ahooks'
 import { Input, Modal, Popover } from 'antd'
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Else, If, Then } from 'react-if'
 import { match } from 'ts-pattern'
@@ -13,6 +13,7 @@ import styles from './index.css'
 
 import type { IPropsModal } from '../../types'
 import type { DirTree } from '@/types'
+import type { InputRef } from 'antd'
 
 const Index = (props: IPropsModal) => {
 	const {
@@ -29,12 +30,13 @@ const Index = (props: IPropsModal) => {
 		rename
 	} = props
 	const [icon, setIcon] = useState('')
+	const input = useRef<InputRef>(null)
 	const [value, { onChange }] = useEventTarget<string>()
 	const limits = useLimits()
 	const { t } = useTranslation()
 
 	useEffect(() => {
-		if (modal_open) return
+		if (modal_open) return input.current?.focus?.()
 
 		setIcon('')
 		onChange({ target: { value: '' } })
@@ -96,9 +98,10 @@ const Index = (props: IPropsModal) => {
 			wrapClassName={styles._local}
 			open={modal_open}
 			title={title}
-			centered
 			width={300}
 			confirmLoading={loading_add || loading_rename}
+			centered
+			destroyOnClose
 			onOk={onOk}
 			onCancel={() => {
 				setModalOpen(false)
@@ -127,6 +130,8 @@ const Index = (props: IPropsModal) => {
 				<Input
 					placeholder={t('translation:dirtree.input_placeholder')}
 					showCount
+					autoFocus
+					ref={input}
 					value={value}
 					maxLength={limits.todo_list_title_max_length}
 					onChange={onChange}

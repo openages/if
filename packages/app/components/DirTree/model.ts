@@ -12,6 +12,7 @@ import { move } from './utils'
 
 import type { App, DirTree } from '@/types'
 import type { Active, Over } from '@dnd-kit/core'
+import type { IProps } from './types'
 
 @injectable()
 export default class Index {
@@ -30,8 +31,9 @@ export default class Index {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
-	async init(module: App.RealModuleType) {
+	async init(module: App.RealModuleType, actions: IProps['actions']) {
 		this.module = module
+		this.services.actions = actions
 
 		setStorageWhenChange(
 			[{ [`${this.module}_active_id`]: 'current_item' }, { [`${this.module}_open_folder`]: 'open_folder' }],
@@ -41,6 +43,8 @@ export default class Index {
 		this.on()
 		this.reactions()
 
+		this.services.actions.onClick(this.current_item)
+
 		await this.services.init(module)
 	}
 
@@ -48,6 +52,11 @@ export default class Index {
 		reaction(
 			() => this.focusing_item,
 			(v) => (this.services.focusing_item = v)
+		)
+
+		reaction(
+			() => this.current_item,
+			(v) => this.services.actions.onClick(v)
 		)
 	}
 

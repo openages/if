@@ -55,7 +55,7 @@ const Index = (props: IPropsDirItem_Item) => {
 						type === 'file' && 'is_file'
 					)}
 				>
-                              { name } ({parent_index.join('-')})
+					{name}
 				</div>
 				<When condition={type === 'dir'}>
 					<div

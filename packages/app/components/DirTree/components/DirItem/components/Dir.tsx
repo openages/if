@@ -2,9 +2,9 @@ import { useMemoizedFn, useUpdateEffect, useDeepCompareEffect } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 
-import { useDeepMemo } from '@/hooks'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
+import { useDeepMemo } from '@openages/craftkit'
 
 import DirItem from '../index'
 import Item from './Item'

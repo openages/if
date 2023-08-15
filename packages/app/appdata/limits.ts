@@ -5,6 +5,6 @@ export default {
 	},
 	'zh': {
 		todo_text_max_length: 72,
-		todo_list_title_max_length: 24
+		todo_list_title_max_length: 12
 	}
 }

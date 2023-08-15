@@ -6,7 +6,8 @@
 		.setting_title {
 			font-size: 16px;
 			font-weight: 500;
-			margin-bottom: 15px;
+                  line-height: 1;
+			margin-bottom: 12px;
 		}
 
 		.setting_items {

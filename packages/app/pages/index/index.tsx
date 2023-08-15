@@ -5,6 +5,7 @@ import { useLayoutEffect, useState } from 'react'
 import { Else, If, Then } from 'react-if'
 import { container } from 'tsyringe'
 
+import { getRefs, add, remove, update } from '@/actions/todo'
 import { DataEmpty, DirTree } from '@/components'
 
 import { Header, Input, Tabs, Todos } from './components'
@@ -23,11 +24,15 @@ const Index = () => {
 		return () => x.off()
 	}, [])
 
-	const onClick = useMemoizedFn((v) => (x.services.id = v))
-
 	const props_dir_tree: IPropsDirTree = {
 		module: 'todo',
-		onClick
+		actions: {
+			onClick: useMemoizedFn((v) => (x.services.id = v)),
+			getRefs,
+			add,
+			remove,
+			update
+		}
 	}
 
 	const props_header: IPropsHeader = {

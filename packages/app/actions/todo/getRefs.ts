@@ -1,4 +1,4 @@
-import { addTodoRefCollections } from './addTarget'
+import addRefs from './addRefs'
 
 import type { DirTree } from '@/types'
 
@@ -8,7 +8,7 @@ const Index = async (dirtree: Array<DirTree.Item>) => {
 			if (item.type === 'dir') {
 				return await Index(item.children)
 			} else {
-				return await addTodoRefCollections(item.id)
+				return await addRefs(item.id)
 			}
 		})
 	)

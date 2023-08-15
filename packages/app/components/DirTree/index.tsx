@@ -1,7 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { useContextMenu } from 'react-contexify'
 import { createPortal } from 'react-dom'
 import { When } from 'react-if'
@@ -17,20 +17,16 @@ import type { IProps, IPropsActions, IPropsModal, IPropsDirItems, IPropsOptions 
 import type { DirTree } from '@/types'
 
 const Index = (props: IProps) => {
-	const { module, height = '100vh' } = props
+	const { module, height = '100vh', actions } = props
 	const [x] = useState(() => container.resolve(Model))
 	const global = useGlobal()
 	const { show } = useContextMenu({ id: 'dirtree_options' })
 
 	useLayoutEffect(() => {
-		x.init(module)
+		x.init(module, actions)
 
 		return () => x.off()
 	}, [module])
-
-	useEffect(() => {
-		props.onClick(x.current_item)
-	}, [x.current_item])
 
 	const onClick = useMemoizedFn((v: string) => (x.current_item = v))
 
