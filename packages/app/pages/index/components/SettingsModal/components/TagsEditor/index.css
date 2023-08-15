@@ -1,0 +1,27 @@
+._local {
+	:global {
+		.angle_item_wrap {
+			margin-top: 6px;
+
+			&:first-child{
+				margin-top: 0;
+			}
+
+			.input {
+				width: calc(100% - 42px * 3);
+				height: 36px;
+			}
+
+			.btn {
+				width: 36px;
+				height: 36px;
+				border-radius: var(--radius);
+                        border: 1px dashed var(--color_border);
+
+				&:hover {
+					background-color: var(--color_bg_1);
+				}
+			}
+		}
+	}
+}

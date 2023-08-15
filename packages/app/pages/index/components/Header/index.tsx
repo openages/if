@@ -1,14 +1,16 @@
 import { Tooltip } from 'antd'
+import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
 
-import { Files, PencilSimple } from '@phosphor-icons/react'
+import { PencilSimple, Files, ArchiveBox } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
 import type { IPropsHeader } from '../../types'
 
 const Index = (props: IPropsHeader) => {
-	const { name, desc } = props
+	const { name, desc, showSettingsModal } = props
+	const { t } = useTranslation()
 
 	return (
 		<div className={$cx('limited_content_wrap border_box flex justify_between align_center', styles._local)}>
@@ -19,14 +21,22 @@ const Index = (props: IPropsHeader) => {
 				</When>
 			</div>
 			<div className='actions_wrap flex align_center'>
-				<Tooltip title='编辑' placement='bottom'>
-					<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable'>
-						<PencilSimple className='icon_edit' size={16}></PencilSimple>
+				<Tooltip title={t('translation:todo.Header.edit')} placement='bottom'>
+					<div
+						className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'
+						onClick={showSettingsModal}
+					>
+						<PencilSimple size={18}></PencilSimple>
 					</div>
 				</Tooltip>
-				<Tooltip title='参考资料' placement='bottom'>
+				<Tooltip title={t('translation:todo.Header.reference')} placement='bottom'>
+					<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'>
+						<Files size={18}></Files>
+					</div>
+				</Tooltip>
+				<Tooltip title={t('translation:todo.Header.archive')} placement='bottom'>
 					<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable'>
-						<Files size={16}></Files>
+						<ArchiveBox size={18}></ArchiveBox>
 					</div>
 				</Tooltip>
 			</div>

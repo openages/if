@@ -1,11 +1,11 @@
 ._local {
 	padding-top: 36px;
-	padding-bottom: 20px;
+	padding-bottom: 30px;
 
 	:global {
 		.left_wrap {
-                  width: calc(100% - 120px);
-                  
+			width: calc(100% - 180px);
+
 			.name {
 				font-size: 24px;
 				font-weight: 500;
@@ -21,22 +21,19 @@
 			}
 		}
 
-            .actions_wrap {
-                  .icon_wrap {
-                        width: 30px;
-                        height: 30px;
-                        border-radius: 50%;
-                        margin-left: 6px;
-                        border: 1px dashed var(--color_border_light);
-
-                        &:first-child{
-                              margin-left: 0;
-                        }
-
-                        &:hover {
-                              background-color: var(--color_bg_2);
-                        }
-                  }
-            }
+		.actions_wrap {
+			.icon_wrap {
+				width: 30px;
+				height: 30px;
+				border-radius: var(--radius);
+				border: none;
+				outline: none;
+				box-shadow: none;
+                        
+				&:hover {
+					background-color: var(--color_bg_2);
+				}
+			}
+		}
 	}
 }

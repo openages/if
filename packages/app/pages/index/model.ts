@@ -7,7 +7,12 @@ import Services from './services'
 
 @injectable()
 export default class Index {
-	constructor(public utils: Utils, public services: Services) {
+	visible_settings_modal = false
+
+	constructor(
+		public utils: Utils,
+		public services: Services
+	) {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 

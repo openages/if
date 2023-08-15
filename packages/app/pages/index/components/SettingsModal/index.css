@@ -1,0 +1,45 @@
+._local {
+	:global {
+		.if-form-item {
+			margin-bottom: 12px;
+
+                  &:last-child{
+                        margin-bottom: 18px;
+                  }
+
+                  &-label{
+                        padding-bottom: 4px;
+                  }
+		}
+
+            .name_input{
+                  .if-input-show-count-suffix{
+                        font-size: 12px;
+                  }
+            }
+
+            .desc_textarea{
+                  textarea{
+                        resize: none;
+                  }
+
+                  .if-input-data-count{
+                        top: -24px;
+                        bottom: unset;
+                        font-size: 12px;
+                  }
+            }
+
+            .angles_select{
+                  .if-select-selection-item{
+                        height: 24px;
+                        line-height: 24px;
+                        font-size: 12px;
+                  }
+
+                  .if-select-dropdown{
+                        display: none;
+                  }
+            }
+	}
+}

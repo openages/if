@@ -17,8 +17,8 @@ const Index: WaveConfig['showEffect'] = (node, { event }) => {
 			holder.parentElement?.removeChild(holder)
 		}
 
-		dot.style.width = `${rect.width}px`
-		dot.style.height = `${rect.width}px`
+		dot.style.width = `${rect.width * 2}px`
+		dot.style.height = `${rect.width * 2}px`
 		dot.style.opacity = '0'
 	})
 }

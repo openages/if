@@ -8,12 +8,12 @@ import { container } from 'tsyringe'
 import { getRefs, add, remove, update } from '@/actions/todo'
 import { DataEmpty, DirTree } from '@/components'
 
-import { Header, Input, Tabs, Todos } from './components'
+import { Header, Input, Tabs, Todos, SettingsModal } from './components'
 import styles from './index.css'
 import Model from './model'
 
 import type { IPropsDirTree } from '@/components'
-import type { IPropsHeader, IPropsTabs, IPropsTodos } from './types'
+import type { IPropsHeader, IPropsTabs, IPropsTodos, IPropsSettingsModal } from './types'
 
 const Index = () => {
 	const [x] = useState(() => container.resolve(Model))
@@ -37,7 +37,8 @@ const Index = () => {
 
 	const props_header: IPropsHeader = {
 		name: x.services.info.name,
-		desc: x.services.info.desc
+		desc: x.services.info.desc,
+		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true))
 	}
 
 	const props_tabs: IPropsTabs = {
@@ -50,6 +51,12 @@ const Index = () => {
 		items: toJS(x.services.items)
 	}
 
+	const props_settings_modal: IPropsSettingsModal = {
+		visible_settings_modal: x.visible_settings_modal,
+		info: toJS(x.services.info),
+		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false))
+	}
+
 	return (
 		<div className={$cx(styles._local, 'w_100 h_100vh flex flex_column')}>
 			<DirTree {...props_dir_tree}></DirTree>
@@ -59,6 +66,7 @@ const Index = () => {
 					<Tabs {...props_tabs}></Tabs>
 					<Todos {...props_todos}></Todos>
 					<Input></Input>
+					<SettingsModal {...props_settings_modal}></SettingsModal>
 				</Then>
 				<Else>
 					<DataEmpty></DataEmpty>
