@@ -13,6 +13,10 @@
 				padding: 8px;
 				border: 1px dashed var(--color_border);
 
+                        &:hover {
+                              border-color: var(--color_text_grey);
+				}
+
 				.ant-color-picker-color-block {
 					height: 20px;
 					border-radius: 50%;
@@ -29,19 +33,27 @@
 			}
 
 			.input {
-				width: calc(100% - 42px * 4 - 78px);
+				width: calc(100% - 42px * 4 - 96px);
 				height: 36px;
 			}
 
 			.preview_wrap {
-				width: 72px;
+				width: 90px;
 				height: 36px;
 				padding: 6px;
 				border: 1px dashed var(--color_border);
 				border-radius: var(--radius);
 
+                        &:hover{
+                              border-color: var(--color_text_grey);
+
+                              .tag {
+                                    background-color: var(--tag_hover_color) !important;
+                              }
+                        }
+
 				.tag {
-					border-radius: var(--radius);
+					border-radius: var(--radius_small);
 					font-size: 12px;
 					font-weight: bold;
                               overflow: hidden;
@@ -55,7 +67,7 @@
 				border: 1px dashed var(--color_border);
 
 				&:hover {
-					background-color: var(--color_bg_1);
+                              border-color: var(--color_text_grey);
 				}
 
 				&.disabled {

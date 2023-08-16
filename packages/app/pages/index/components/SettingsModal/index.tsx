@@ -1,29 +1,26 @@
-import { Modal, Form, Input, theme, Select } from 'antd'
-import { nanoid } from 'nanoid'
+import { Form, Input, Select } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { SettingsModal } from '@/components'
 import { useLimits } from '@/hooks'
 
-import { IconEditor, AnglesEditor, TagsEditor } from './components'
+import { AnglesEditor, TagsEditor } from './components'
 import styles from './index.css'
 
 import type { IPropsSettingsModal } from '../../types'
 
-const { Item, useForm } = Form
+const { Item } = Form
 const { TextArea } = Input
-const { useToken } = theme
 
 const Index = (props: IPropsSettingsModal) => {
-	const { visible_settings_modal, info, closeSettingsModal } = props
-	const [form] = useForm()
+	const { visible_settings_modal, info, closeSettingsModal, onInfoChange } = props
 	const limits = useLimits()
-	const { token } = useToken()
 	const { t, i18n } = useTranslation()
 
 	const auto_archiving_options = useMemo(() => {
 		// @ts-ignore
-		const locale_options = t('translation:todo.Header.settings.auto_archiving', {
+		const locale_options = t('translation:todo.SettingsModal.auto_archiving.options', {
 			returnObjects: true
 		}) as Record<string, string>
 
@@ -33,69 +30,40 @@ const Index = (props: IPropsSettingsModal) => {
 		}))
 	}, [i18n.language])
 
+	const props_settings_modal = {
+		className: styles._local,
+		visible: visible_settings_modal,
+		info,
+		onClose: closeSettingsModal,
+		onValuesChange: onInfoChange
+	}
+
 	return (
-		<Modal
-			rootClassName={styles._local}
-			open={visible_settings_modal}
-			title={`编辑${info.name}`}
-			width={360}
-			centered
-			destroyOnClose
-			maskClosable={false}
-			onCancel={closeSettingsModal}
-		>
-			<Form
-				className='form_wrap'
-				form={form}
-				layout='vertical'
-				preserve={false}
-				initialValues={{
-					...info,
-					angles: info?.angles?.length
-						? info?.angles?.map((item) => ({ id: nanoid(), text: item }))
-						: [{ id: nanoid(), text: '' }],
-					tags: info?.tags?.length
-						? info?.tags?.map((item) => ({
-								id: nanoid(),
-								color: item.color,
-								text: item.text
-						  }))
-						: [{ id: nanoid(), color: '' || token.colorPrimary, text: '' }]
-				}}
-			>
-				<div className='flex justify_between'>
-					<Item name='icon'>
-						<IconEditor></IconEditor>
-					</Item>
-					<Item className='name_item_wrap' name='name'>
-						<Input
-							className='name_input'
-							placeholder='请输入名称'
-							showCount
-							maxLength={limits.todo_list_title_max_length}
-						></Input>
-					</Item>
-				</div>
-				<Item name='desc' label='简介'>
+		<SettingsModal {...props_settings_modal}>
+			<div className='w_100 flex flex_column'>
+				<Item name='desc' label={t('translation:todo.SettingsModal.desc.label')}>
 					<TextArea
 						className='desc_textarea'
-						placeholder='请输入简介'
+						placeholder={t('translation:todo.SettingsModal.desc.placeholder')}
 						rows={3}
 						showCount
 						maxLength={limits.todo_list_desc_max_length}
 					></TextArea>
 				</Item>
-				<Item name='angles' label='分类'>
+				<Item name='angles' label={t('translation:todo.SettingsModal.angles.label')}>
 					<AnglesEditor></AnglesEditor>
 				</Item>
-				<Item name='tags' label='标签'>
+				<Item name='tags' label={t('translation:todo.SettingsModal.tags.label')}>
 					<TagsEditor></TagsEditor>
 				</Item>
-				<Item name={['settings', 'auto_archiving']} label='自动归档'>
+				<Item
+					name={['settings', 'auto_archiving']}
+					label={t('translation:todo.SettingsModal.auto_archiving.label')}
+				>
 					<Select options={auto_archiving_options}></Select>
 				</Item>
-			</Form>
-		</Modal>
+			</div>
+		</SettingsModal>
 	)
 }
 

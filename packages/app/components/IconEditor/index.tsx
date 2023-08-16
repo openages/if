@@ -6,9 +6,14 @@ import { EmojiPicker, LeftIcon } from '@/components'
 import styles from './index.css'
 
 import type { IPropsCustomFormItem } from '@/types'
+import type { DirTree } from '@/types'
 
-const Index = (props: IPropsCustomFormItem<string>) => {
-	const { value, onChange } = props
+interface IProps extends IPropsCustomFormItem<string> {
+	left_icon_item?: DirTree.Item
+}
+
+const Index = (props: IProps) => {
+	const { value, left_icon_item, onChange } = props
 
 	return (
 		<Popover
@@ -24,7 +29,10 @@ const Index = (props: IPropsCustomFormItem<string>) => {
 						<em-emoji shortcodes={value} size='24px'></em-emoji>
 					</Then>
 					<Else>
-						<LeftIcon module='todo' item={{ type: 'file', icon: value } as any}></LeftIcon>
+						<LeftIcon
+							module='todo'
+							item={left_icon_item ?? ({ type: 'file', icon: value } as any)}
+						></LeftIcon>
 					</Else>
 				</If>
 			</div>

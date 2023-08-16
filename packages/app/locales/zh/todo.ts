@@ -3,9 +3,28 @@ export default {
 	Header: {
 		edit: '编辑',
 		reference: '参考资料',
-            archive: '归档',
-            settings: {
-			auto_archiving: {
+		archive: '归档'
+	},
+	SettingsModal: {
+		desc: {
+			label: '简介',
+			placeholder: '请输入简介'
+		},
+		angles: {
+			label: '分类',
+			placeholder: '请输入分类名称',
+			remove_confirm: {
+				title: '注意',
+				content: '您正在进行分类删除操作，这将删除该分类下的所有待办项，请确认是否执行删除。'
+			}
+		},
+		tags: {
+			label: '标签',
+			placeholder: '标签名'
+		},
+		auto_archiving: {
+			label: '自动归档',
+			options: {
 				'0m': '立刻',
 				'3m': '3分钟',
 				'3h': '3小时',

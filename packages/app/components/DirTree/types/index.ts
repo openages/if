@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 
-import type { DirTree } from '@/types'
+import type { DirTree, Todo } from '@/types'
 
 import type Model from '../model'
 import type { MouseEvent, ReactNode } from 'react'
@@ -12,7 +12,7 @@ export interface IProps {
 		onClick: (v: string) => void
 		add: (name: string, icon: string, file_id: string) => Promise<void>
 		remove: (focusing_item: DirTree.Item, current_item: string, module: string) => Promise<void>
-		update: (name: string, icon: string, file_id: string) => Promise<void>
+		update: (file_id: string, data: Partial<Omit<Todo.Data, 'id'>>) => Promise<void>
 		getRefs?: (dirtree: DirTree.Items) => Promise<void>
 	}
 }

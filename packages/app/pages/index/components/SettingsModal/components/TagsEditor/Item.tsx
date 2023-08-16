@@ -1,5 +1,6 @@
 import { Input, ColorPicker } from 'antd'
 import Color from 'color'
+import { useTranslation } from 'react-i18next'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -21,6 +22,7 @@ const Index = (props: IProps) => {
 		id: item.id,
 		data: { index }
 	})
+	const { t } = useTranslation()
 
 	return (
 		<div
@@ -29,7 +31,7 @@ const Index = (props: IProps) => {
 			style={{ transform: CSS.Transform.toString(transform), transition }}
 		>
 			<ColorPicker
-				className='color_picker mr_6'
+				className='color_picker clickable mr_6'
 				disabledAlpha
 				placement='topLeft'
 				value={item.color}
@@ -37,20 +39,22 @@ const Index = (props: IProps) => {
 			></ColorPicker>
 			<Input
 				className='input'
-				placeholder='标签名称'
+				placeholder={t('translation:todo.SettingsModal.tags.placeholder')}
 				maxLength={15}
 				value={item.text}
 				onChange={({ target: { value } }) => onUpdate('text', index, value)}
 			></Input>
-			<div className='preview_wrap border_box flex justify_center align_center ml_6'>
+			<div className='preview_wrap border_box flex justify_center align_center ml_6 transition_normal cursor_point'>
 				<span
-					className='tag w_100 h_100 flex justify_center align_center'
+					className='tag w_100 h_100 flex justify_center align_center transition_normal'
 					style={{
+						// @ts-ignore
+						'--tag_hover_color': item.color ? Color(item.color).alpha(0.42).toString() : '',
 						backgroundColor: item.color ? Color(item.color).alpha(0.3).toString() : '',
 						color: item.color
 					}}
 				>
-					{item.text || '标签'}
+					{item.text || t('translation:todo.SettingsModal.tags.placeholder')}
 				</span>
 			</div>
 			<div

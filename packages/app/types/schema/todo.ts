@@ -15,9 +15,11 @@ export namespace Todo {
 		text: string
 		status: 'checked' | 'unchecked' | 'closed'
 		achive_time: number
-		/** @maxLength 15 */
-		angle: string
+		/** @maxLength 30 */
+		angle_id: string
 		tags: Array<{
+			/** @maxLength 30 */
+			id: string
 			color: string
 			/** @maxLength 15 */
 			text: string
@@ -32,9 +34,12 @@ export namespace Todo {
 		name: string
 		icon: string
 		desc?: string
-		angles: Array<string>
-		angle: string
+		angles: Array<{
+			id: string
+			text: string
+		}>
 		tags: Array<{
+			id: string
 			color: string
 			text: string
 		}>

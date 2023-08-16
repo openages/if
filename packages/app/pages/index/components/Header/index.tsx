@@ -9,13 +9,18 @@ import styles from './index.css'
 import type { IPropsHeader } from '../../types'
 
 const Index = (props: IPropsHeader) => {
-	const { name, desc, showSettingsModal } = props
+	const { name, icon, desc, showSettingsModal } = props
 	const { t } = useTranslation()
 
 	return (
 		<div className={$cx('limited_content_wrap border_box flex justify_between align_center', styles._local)}>
 			<div className='left_wrap flex flex_column'>
-				<div className='name flex justify_between align_center'>{name}</div>
+				<div className='flex align_center'>
+					<When condition={icon}>
+						<em-emoji className='mr_8 icon_emoji' shortcodes={icon} size='21px'></em-emoji>
+					</When>
+					<div className='name flex justify_between align_center'>{name}</div>
+				</div>
 				<When condition={desc}>
 					<span className='desc'>{desc}</span>
 				</When>

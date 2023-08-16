@@ -9,7 +9,7 @@ const archives_page_size = 12
 @injectable()
 export default class Index {
 	id = ''
-	angle = ''
+	angle_index = 0
 	info = {} as Todo.Data
 	info_query = {} as RxQuery<Todo.Data>
 	items = [] as RxDB.ItemsDoc<Todo.TodoItem>
@@ -38,17 +38,18 @@ export default class Index {
 		)
 
 		reaction(
-			() => this.angle,
-			() => {
-				if (!this.angle) return
+			() => this.info,
+			() => this.queryItems
+		)
 
-				this.queryItems()
-			}
+		reaction(
+			() => this.angle_index,
+			() => this.queryItems
 		)
 	}
 
 	resetData() {
-		this.angle = ''
+		this.angle_index = 0
 		this.info = {} as RxDocument<Todo.Data>
 		this.items = [] as RxDB.ItemsDoc<Todo.TodoItem>
 		this.items_query = {} as RxDB.ItemsQuery<Todo.TodoItem>
@@ -64,7 +65,6 @@ export default class Index {
 		if (!res) return (this.id = '')
 
 		this.info = res.toMutableJSON()
-		this.angle = this.info.angle
 
 		this.info_query.$.subscribe((v: RxDocument<Todo.Data>) => {
 			if (v?.toMutableJSON) {
@@ -77,7 +77,7 @@ export default class Index {
 
 	async queryItems() {
 		this.items_query = $db.collections[`${this.id}_todo_items`].find({
-			selector: { angle: this.angle }
+			selector: { angle_id: this.info.angles[this.angle_index].id }
 		}) as RxDB.ItemsQuery<Todo.TodoItem>
 
 		this.items = (await this.items_query.exec())! as RxDB.ItemsDoc<Todo.TodoItem>

@@ -5,7 +5,7 @@ import { Else, If, Then, When } from 'react-if'
 import { Wave } from '@/components'
 import { CaretRight } from '@phosphor-icons/react'
 
-import LeftIcon from '../../LeftIcon'
+import LeftIcon from '../../../../LeftIcon'
 
 import type { IPropsDirItem_Item } from '../../../types'
 import type { DirTree } from '@/types'

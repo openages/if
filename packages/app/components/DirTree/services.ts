@@ -81,13 +81,13 @@ export default class Index {
 		})
 	}
 
-	async rename(name: string, icon: string) {
+	async rename({ id, name, icon }: { id?: string; name: string; icon: string }) {
 		if (this.focusing_item.type === 'file') {
-			await this.actions.update(name, icon, this.focusing_item.id)
+			await this.actions.update(id ?? this.focusing_item.id, { name, icon })
 		}
 
 		await this.doc.incrementalModify((doc) => {
-			rename(doc.dirtree, this.focusing_item.id, name, icon)
+			rename(doc.dirtree, id ?? this.focusing_item.id, name, icon)
 
 			return doc
 		})

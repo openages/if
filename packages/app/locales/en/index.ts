@@ -1,3 +1,4 @@
+import components from './components'
 import dirtree from './dirtree'
 import nav_title from './nav_title'
 import setting from './setting'
@@ -8,6 +9,7 @@ export default {
 		setting,
 		nav_title,
 		dirtree,
+		components,
 		todo
 	}
 } as const

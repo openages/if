@@ -19,7 +19,7 @@
 				border: 1px dashed var(--color_border);
 
 				&:hover {
-					background-color: var(--color_bg_1);
+                              border-color: var(--color_text_grey);
 				}
 
 				&.disabled {

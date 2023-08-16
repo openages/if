@@ -1,7 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { cloneDeep } from 'lodash-es'
-import { nanoid } from 'nanoid'
 
+import { id } from '@/utils'
 import { DndContext } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
 
@@ -12,7 +12,7 @@ import type { IPropsCustomFormItem } from '@/types'
 import type { DragEndEvent } from '@dnd-kit/core'
 
 const Index = (props: IPropsCustomFormItem<Array<{ id: string; text: string }>>) => {
-	const { value, onChange } = props
+	const { value = [], onChange } = props
 
 	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
 		if (active.id === over.id) return
@@ -23,7 +23,7 @@ const Index = (props: IPropsCustomFormItem<Array<{ id: string; text: string }>>)
 	const onAdd = useMemoizedFn((index) => {
 		const items = cloneDeep(value)
 
-		items.splice(index + 1, 0, { id: nanoid(), text: '' })
+		items.splice(index + 1, 0, { id: id(), text: '' })
 
 		onChange(items)
 	})

@@ -72,6 +72,29 @@
 		width: 300px !important;
 
 		.if-modal-body {
+                  .if-modal-confirm-body{
+                        display: flex;
+                        flex-direction: column;
+
+                        .if-icon{
+                              margin: 0;
+                        }
+
+                        .if-modal-confirm-title{
+                              margin-top: 8px;
+                              margin-bottom: 16px;
+                              font-size: 21px;
+                              line-height: 1;
+                        }
+
+                        .if-modal-confirm-content{
+                              width: 100%;
+                              max-width: unset;
+                              margin: 0;
+                              text-align: center;
+                        }
+                  }
+
 			.if-modal-confirm-btns {
 				text-align: center;
 				display: flex;

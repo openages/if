@@ -35,15 +35,19 @@ export default {
                                     "achive_time": {
                                           "type": "number"
                                     },
-                                    "angle": {
+                                    "angle_id": {
                                           "type": "string",
-                                          "maxLength": 15
+                                          "maxLength": 30
                                     },
                                     "tags": {
                                           "type": "array",
                                           "items": {
                                                 "type": "object",
                                                 "properties": {
+                                                      "id": {
+                                                            "type": "string",
+                                                            "maxLength": 30
+                                                      },
                                                       "color": {
                                                             "type": "string"
                                                       },
@@ -53,6 +57,7 @@ export default {
                                                       }
                                                 },
                                                 "required": [
+                                                      "id",
                                                       "color",
                                                       "text"
                                                 ]
@@ -65,7 +70,7 @@ export default {
                               },
                               "required": [
                                     "achive_time",
-                                    "angle",
+                                    "angle_id",
                                     "id",
                                     "status",
                                     "tags",
@@ -92,15 +97,19 @@ export default {
                   "achive_time": {
                         "type": "number"
                   },
-                  "angle": {
+                  "angle_id": {
                         "type": "string",
-                        "maxLength": 15
+                        "maxLength": 30
                   },
                   "tags": {
                         "type": "array",
                         "items": {
                               "type": "object",
                               "properties": {
+                                    "id": {
+                                          "type": "string",
+                                          "maxLength": 30
+                                    },
                                     "color": {
                                           "type": "string"
                                     },
@@ -110,6 +119,7 @@ export default {
                                     }
                               },
                               "required": [
+                                    "id",
                                     "color",
                                     "text"
                               ]
@@ -157,15 +167,19 @@ export default {
                                     "achive_time": {
                                           "type": "number"
                                     },
-                                    "angle": {
+                                    "angle_id": {
                                           "type": "string",
-                                          "maxLength": 15
+                                          "maxLength": 30
                                     },
                                     "tags": {
                                           "type": "array",
                                           "items": {
                                                 "type": "object",
                                                 "properties": {
+                                                      "id": {
+                                                            "type": "string",
+                                                            "maxLength": 30
+                                                      },
                                                       "color": {
                                                             "type": "string"
                                                       },
@@ -175,6 +189,7 @@ export default {
                                                       }
                                                 },
                                                 "required": [
+                                                      "id",
                                                       "color",
                                                       "text"
                                                 ]
@@ -187,7 +202,7 @@ export default {
                               },
                               "required": [
                                     "achive_time",
-                                    "angle",
+                                    "angle_id",
                                     "id",
                                     "status",
                                     "tags",
@@ -214,15 +229,19 @@ export default {
                   "achive_time": {
                         "type": "number"
                   },
-                  "angle": {
+                  "angle_id": {
                         "type": "string",
-                        "maxLength": 15
+                        "maxLength": 30
                   },
                   "tags": {
                         "type": "array",
                         "items": {
                               "type": "object",
                               "properties": {
+                                    "id": {
+                                          "type": "string",
+                                          "maxLength": 30
+                                    },
                                     "color": {
                                           "type": "string"
                                     },
@@ -232,6 +251,7 @@ export default {
                                     }
                               },
                               "required": [
+                                    "id",
                                     "color",
                                     "text"
                               ]

@@ -2,7 +2,7 @@ import { match } from 'ts-pattern'
 
 import { Cube, DiceFour, ListBullets } from '@phosphor-icons/react'
 
-import type { IPropsLeftIcon } from '../../types'
+import type { IPropsLeftIcon } from '../DirTree/types'
 
 const Index = (props: IPropsLeftIcon) => {
 	const { module, item } = props

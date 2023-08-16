@@ -1,4 +1,5 @@
 import { Input } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -20,6 +21,7 @@ const Index = (props: IProps) => {
 		id: item.id,
 		data: { index }
 	})
+	const { t } = useTranslation()
 
 	return (
 		<div
@@ -29,7 +31,7 @@ const Index = (props: IProps) => {
 		>
 			<Input
 				className='input'
-				placeholder='请输入分类名称'
+				placeholder={t('translation:todo.SettingsModal.angles.placeholder')}
 				maxLength={15}
 				value={item.text}
 				onChange={({ target: { value } }) => onUpdate(index, value)}
@@ -48,7 +50,16 @@ const Index = (props: IProps) => {
 					'btn btn_remove border_box flex justify_center align_center clickable ml_6',
 					limitMin && 'disabled'
 				)}
-				onClick={() => onRemove(index)}
+				onClick={() => {
+					$modal.confirm({
+						title: t('translation:todo.SettingsModal.angles.remove_confirm.title'),
+						content: t('translation:todo.SettingsModal.angles.remove_confirm.content'),
+						centered: true,
+						onOk() {
+							onRemove(index)
+						}
+					})
+				}}
 			>
 				<Trash size={18}></Trash>
 			</div>

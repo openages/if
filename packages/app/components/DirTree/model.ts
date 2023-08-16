@@ -69,8 +69,8 @@ export default class Index {
 	}
 
 	@loading
-	async rename(v: string, icon: string) {
-		await this.services.rename(v, icon)
+	async rename(args: { id?: string; name: string; icon: string }) {
+		await this.services.rename(args)
 
 		this.modal_open = false
 		this.focusing_item = {} as DirTree.Item
@@ -131,6 +131,7 @@ export default class Index {
 		$app.Event.on(`${this.module}/dirtree/removeCurrentItem`, this.removeCurrentItem)
 		$app.Event.on(`${this.module}/dirtree/addOpenFolder`, this.addOpenFolder)
 		$app.Event.on(`${this.module}/dirtree/removeOpenFolder`, this.removeOpenFolder)
+		$app.Event.on(`${this.module}/dirtree/rename`, this.rename)
 	}
 
 	off() {
@@ -138,5 +139,6 @@ export default class Index {
 		$app.Event.off(`${this.module}/dirtree/removeCurrentItem`, this.removeCurrentItem)
 		$app.Event.off(`${this.module}/dirtree/addOpenFolder`, this.addOpenFolder)
 		$app.Event.off(`${this.module}/dirtree/removeOpenFolder`, this.removeOpenFolder)
+		$app.Event.off(`${this.module}/dirtree/rename`, this.rename)
 	}
 }

@@ -37,14 +37,15 @@ const Index = () => {
 
 	const props_header: IPropsHeader = {
 		name: x.services.info.name,
+		icon: x.services.info.icon,
 		desc: x.services.info.desc,
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true))
 	}
 
 	const props_tabs: IPropsTabs = {
 		angles: toJS(x.services.info.angles),
-		angle: x.services.angle,
-		setCurrentAngle: useMemoizedFn((v: string) => (x.services.angle = v))
+		angle_index: x.services.angle_index,
+		setCurrentAngle: useMemoizedFn((v: number) => (x.services.angle_index = v))
 	}
 
 	const props_todos: IPropsTodos = {
@@ -54,7 +55,8 @@ const Index = () => {
 	const props_settings_modal: IPropsSettingsModal = {
 		visible_settings_modal: x.visible_settings_modal,
 		info: toJS(x.services.info),
-		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false))
+		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false)),
+		onInfoChange: useMemoizedFn(x.onInfoChange)
 	}
 
 	return (

@@ -3,22 +3,22 @@ import styles from './index.css'
 import type { IPropsTabs } from '../../types'
 
 const Index = (props: IPropsTabs) => {
-	const { angles, angle, setCurrentAngle } = props
+	const { angles, angle_index, setCurrentAngle } = props
 
 	return (
 		<div className={$cx('w_100 sticky top_0 z_index_10', styles._local)}>
 			<div className='tabs_wrap limited_content_wrap flex align_center relative'>
 				<div className='tab_items_wrap w_100 flex'>
-					{angles.map((item) => (
+					{angles.map((item, index) => (
 						<div
 							className={$cx(
 								'tab_item_wrap border_box flex justify_center align_center cursor_point transition_normal',
-								angle === item && 'active'
+								angle_index === index && 'active'
 							)}
-							onMouseDown={() => setCurrentAngle(item)}
-							key={item}
+							onMouseDown={() => setCurrentAngle(index)}
+							key={item.id}
 						>
-							<span className='tab_name transition_normal'>{item}</span>
+							<span className='tab_name transition_normal'>{item.text}</span>
 						</div>
 					))}
 				</div>

@@ -6,6 +6,16 @@ em-emoji-picker {
 	--rgb-accent: 128, 128, 128;
 }
 
+em-emoji{
+      margin-bottom: -2px;
+
+      .emoji-mart-emoji{
+            display: flex;
+            align-items: center;
+            line-height: 1;
+      }
+}
+
 [data-theme='dark'] {
 	em-emoji-picker {
 		--rgb-background: 35, 35, 38;

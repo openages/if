@@ -1,8 +1,8 @@
 export default {
 	color_text: '#a2a5b9',
 	color_text_rgb: '162,165,185',
-	color_text_sub: '#999',
-	color_text_grey: '#777',
+	color_text_sub: 'rgba(162,165,185,0.72)',
+	color_text_grey: 'rgba(162,165,185,0.48)',
 	color_text_light: '#444',
 	color_text_contrast: 'white',
 	color_bg: '#232326',

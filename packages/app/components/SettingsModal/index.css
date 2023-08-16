@@ -1,0 +1,29 @@
+._local {
+	:global {
+            .if-modal-content{
+                  margin: 60px 0;
+            }
+            
+		.if-form-item {
+			margin-bottom: 12px;
+
+                  &:last-child{
+                        margin-bottom: 0px;
+                  }
+
+                  &-label{
+                        padding-bottom: 6px;
+                  }
+		}
+
+            .name_item_wrap{
+                  width: calc(100% - 38px - 6px);
+            }
+
+            .name_input{
+                  .if-input-show-count-suffix{
+                        font-size: 12px;
+                  }
+            }
+	}
+}
