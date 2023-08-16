@@ -16,10 +16,7 @@ module.exports = defineConfig({
 		ignored: /node_modules/
 	},
 	resolve: {
-		tsConfigPath: resolve(__dirname, 'tsconfig.json'),
-		alias: {
-			react: resolve(__dirname, 'node_modules/react')
-		}
+		tsConfigPath: resolve(__dirname, 'tsconfig.json')
 	},
 	optimization: {
 		splitChunks: {
