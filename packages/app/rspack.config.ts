@@ -11,7 +11,7 @@ module.exports = defineConfig({
 	output: {
 		clean: is_prod
 	},
-	devtool: false,
+	devtool: is_prod ? false : 'source-map',
 	watchOptions: {
 		ignored: /node_modules/
 	},

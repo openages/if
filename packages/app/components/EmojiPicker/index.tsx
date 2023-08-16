@@ -8,7 +8,7 @@ import i18n_zh from '@emoji-mart/data/i18n/zh.json'
 import Picker from '@emoji-mart/react'
 
 interface IProps {
-	onEmojiSelect: (v: string) => void
+	onEmojiSelect: ({ shortcodes }: { shortcodes: string }) => void
 }
 
 const Index = (props: IProps) => {

@@ -1,0 +1,18 @@
+._local {
+      --icon_size:38px;
+      width: var(--icon_size);
+      height: var(--icon_size);
+      border: 1px dashed var(--color_border);
+      border-radius: var(--radius);
+}
+
+.icon_picker{
+      :global{
+            .if-popover-content{
+                  .if-popover-inner{
+                        background-color: transparent;
+                        box-shadow: none;
+                  }
+            }
+      }
+}

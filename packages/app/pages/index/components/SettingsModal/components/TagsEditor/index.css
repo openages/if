@@ -29,12 +29,12 @@
 			}
 
 			.input {
-				width: calc(100% - 42px * 4 - 66px);
+				width: calc(100% - 42px * 4 - 78px);
 				height: 36px;
 			}
 
 			.preview_wrap {
-				width: 60px;
+				width: 72px;
 				height: 36px;
 				padding: 6px;
 				border: 1px dashed var(--color_border);

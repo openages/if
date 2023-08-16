@@ -116,7 +116,7 @@ const Index = (props: IPropsModal) => {
 					align={{ offset: [-30, 0] }}
 					content={<EmojiPicker onEmojiSelect={onSelectIcon} />}
 				>
-					<div className='icon_wrap flex justify_center align_center clickable'>
+					<div className='icon_wrap border_box flex justify_center align_center clickable'>
 						<If condition={icon}>
 							<Then>
 								<em-emoji shortcodes={icon} size='24px'></em-emoji>
