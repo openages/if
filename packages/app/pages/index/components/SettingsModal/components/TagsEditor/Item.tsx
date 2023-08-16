@@ -1,4 +1,5 @@
 import { Input, ColorPicker } from 'antd'
+import Color from 'color'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -36,10 +37,22 @@ const Index = (props: IProps) => {
 			></ColorPicker>
 			<Input
 				className='input'
-				placeholder='请输入标签名称'
+				placeholder='标签名称'
+				maxLength={15}
 				value={item.text}
 				onChange={({ target: { value } }) => onUpdate('text', index, value)}
 			></Input>
+			<div className='preview_wrap border_box flex justify_center align_center ml_6'>
+				<span
+					className='tag w_100 h_100 flex justify_center align_center'
+					style={{
+						backgroundColor: item.color ? Color(item.color).alpha(0.3).toString() : '',
+						color: item.color
+					}}
+				>
+					{item.text || '标签'}
+				</span>
+			</div>
 			<div
 				className={$cx(
 					'btn btn_add border_box flex justify_center align_center clickable ml_6',

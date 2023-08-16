@@ -37,7 +37,7 @@ export default {
                                     },
                                     "angle": {
                                           "type": "string",
-                                          "maxLength": 12
+                                          "maxLength": 15
                                     },
                                     "tags": {
                                           "type": "array",
@@ -48,7 +48,8 @@ export default {
                                                             "type": "string"
                                                       },
                                                       "text": {
-                                                            "type": "string"
+                                                            "type": "string",
+                                                            "maxLength": 15
                                                       }
                                                 },
                                                 "required": [
@@ -93,7 +94,7 @@ export default {
                   },
                   "angle": {
                         "type": "string",
-                        "maxLength": 12
+                        "maxLength": 15
                   },
                   "tags": {
                         "type": "array",
@@ -104,7 +105,8 @@ export default {
                                           "type": "string"
                                     },
                                     "text": {
-                                          "type": "string"
+                                          "type": "string",
+                                          "maxLength": 15
                                     }
                               },
                               "required": [
@@ -157,7 +159,7 @@ export default {
                                     },
                                     "angle": {
                                           "type": "string",
-                                          "maxLength": 12
+                                          "maxLength": 15
                                     },
                                     "tags": {
                                           "type": "array",
@@ -168,7 +170,8 @@ export default {
                                                             "type": "string"
                                                       },
                                                       "text": {
-                                                            "type": "string"
+                                                            "type": "string",
+                                                            "maxLength": 15
                                                       }
                                                 },
                                                 "required": [
@@ -213,7 +216,7 @@ export default {
                   },
                   "angle": {
                         "type": "string",
-                        "maxLength": 12
+                        "maxLength": 15
                   },
                   "tags": {
                         "type": "array",
@@ -224,7 +227,8 @@ export default {
                                           "type": "string"
                                     },
                                     "text": {
-                                          "type": "string"
+                                          "type": "string",
+                                          "maxLength": 15
                                     }
                               },
                               "required": [

@@ -1,4 +1,4 @@
-import { Modal, Form, Input } from 'antd'
+import { Modal, Form, Input, theme } from 'antd'
 import { nanoid } from 'nanoid'
 
 import { useLimits } from '@/hooks'
@@ -10,11 +10,13 @@ import type { IPropsSettingsModal } from '../../types'
 
 const { Item, useForm } = Form
 const { TextArea } = Input
+const { useToken } = theme
 
 const Index = (props: IPropsSettingsModal) => {
 	const { visible_settings_modal, info, closeSettingsModal } = props
 	const [form] = useForm()
 	const limits = useLimits()
+	const { token } = useToken()
 
 	return (
 		<Modal
@@ -38,8 +40,12 @@ const Index = (props: IPropsSettingsModal) => {
 						? info?.angles?.map((item) => ({ id: nanoid(), text: item }))
 						: [{ id: nanoid(), text: '' }],
 					tags: info?.tags?.length
-						? info?.tags?.map((item) => ({ id: nanoid(), color: item.color, text: item.text }))
-						: [{ id: nanoid(), color: '', text: '' }]
+						? info?.tags?.map((item) => ({
+								id: nanoid(),
+								color: item.color,
+								text: item.text
+						  }))
+						: [{ id: nanoid(), color: '' || token.colorPrimary, text: '' }]
 				}}
 			>
 				<Item name='name'>

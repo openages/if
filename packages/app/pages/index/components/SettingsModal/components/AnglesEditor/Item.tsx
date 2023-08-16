@@ -30,6 +30,7 @@ const Index = (props: IProps) => {
 			<Input
 				className='input'
 				placeholder='请输入分类名称'
+				maxLength={15}
 				value={item.text}
 				onChange={({ target: { value } }) => onUpdate(index, value)}
 			></Input>

@@ -37,7 +37,7 @@ export default {
                                     },
                                     "angle": {
                                           "type": "string",
-                                          "maxLength": 12
+                                          "maxLength": 15
                                     },
                                     "tags": {
                                           "type": "array",
@@ -48,7 +48,8 @@ export default {
                                                             "type": "string"
                                                       },
                                                       "text": {
-                                                            "type": "string"
+                                                            "type": "string",
+                                                            "maxLength": 15
                                                       }
                                                 },
                                                 "required": [
@@ -93,7 +94,7 @@ export default {
                   },
                   "angle": {
                         "type": "string",
-                        "maxLength": 12
+                        "maxLength": 15
                   },
                   "tags": {
                         "type": "array",
@@ -104,7 +105,8 @@ export default {
                                           "type": "string"
                                     },
                                     "text": {
-                                          "type": "string"
+                                          "type": "string",
+                                          "maxLength": 15
                                     }
                               },
                               "required": [
@@ -168,6 +170,7 @@ export default {
                               "auto_archiving": {
                                     "type": "string",
                                     "enum": [
+                                          "0m",
                                           "3m",
                                           "3h",
                                           "1d",

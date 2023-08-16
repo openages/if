@@ -15,10 +15,11 @@ export namespace Todo {
 		text: string
 		status: 'checked' | 'unchecked' | 'closed'
 		achive_time: number
-		/** @maxLength 12 */
+		/** @maxLength 15 */
 		angle: string
 		tags: Array<{
 			color: string
+			/** @maxLength 15 */
 			text: string
 		}>
 	}
@@ -38,7 +39,7 @@ export namespace Todo {
 			text: string
 		}>
 		settings: {
-			auto_archiving: '3m' | '3h' | '1d' | '3d' | '7d'
+			auto_archiving: '0m' | '3m' | '3h' | '1d' | '3d' | '7d'
 		}
 	}
 }
