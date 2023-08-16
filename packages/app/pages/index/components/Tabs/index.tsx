@@ -12,7 +12,7 @@ const Index = (props: IPropsTabs) => {
 					{angles.map((item, index) => (
 						<div
 							className={$cx(
-								'tab_item_wrap border_box flex justify_center align_center cursor_point transition_normal',
+								'tab_item_wrap border_box flex justify_center align_center cursor_point clickable',
 								angle_index === index && 'active'
 							)}
 							onMouseDown={() => setCurrentAngle(index)}

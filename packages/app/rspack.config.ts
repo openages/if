@@ -68,6 +68,10 @@ module.exports = defineConfig({
 					}
 				],
 				type: 'css/module'
+			},
+			{
+				test: /\.svg$/,
+				type: 'asset/source'
 			}
 		]
 	}

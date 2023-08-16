@@ -1,23 +1,38 @@
 em-emoji-picker {
-	width: 300px;
-	height: 360px;
+	width: 330px;
+	height: 390px;
 	box-shadow: none;
 
-	--rgb-accent: 128, 128, 128;
+	--rgb-accent: 0, 0, 0;
 }
 
-em-emoji{
-      margin-bottom: -2px;
+.emoji-mart-emoji {
+	line-height: 2;
+}
 
-      .emoji-mart-emoji{
-            display: flex;
-            align-items: center;
-            line-height: 1;
-      }
+em-emoji {
+	.emoji-mart-emoji {
+		display: flex;
+		align-items: center;
+		line-height: 1;
+
+		span {
+			margin-bottom: -5px;
+		}
+	}
 }
 
 [data-theme='dark'] {
 	em-emoji-picker {
+		--rgb-accent: 255, 255, 255;
 		--rgb-background: 35, 35, 38;
+	}
+
+	em-emoji {
+		.emoji-mart-emoji {
+			img {
+				filter: invert(60%) sepia(60%) saturate(100%) hue-rotate(200deg);
+			}
+		}
 	}
 }

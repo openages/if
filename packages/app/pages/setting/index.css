@@ -6,7 +6,7 @@
 		.setting_title {
 			font-size: 16px;
 			font-weight: 500;
-                  line-height: 1;
+			line-height: 1;
 			margin-bottom: 12px;
 		}
 
@@ -17,9 +17,9 @@
 			margin-bottom: 36px;
 
 			.setting_item {
-				padding: 16px;
+				padding: 0 15px;
 				margin-bottom: 6px;
-				min-height: 50px;
+				min-height: 66px;
 				background-color: var(--color_bg_1);
 				border-radius: var(--radius);
 

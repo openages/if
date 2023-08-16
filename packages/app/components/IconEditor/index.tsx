@@ -20,6 +20,7 @@ const Index = (props: IProps) => {
 			rootClassName={styles.icon_picker}
 			placement='left'
 			trigger='click'
+			destroyTooltipOnHide
 			align={{ offset: [-30, 0] }}
 			content={<EmojiPicker onEmojiSelect={({ shortcodes }) => onChange(shortcodes)} />}
 		>

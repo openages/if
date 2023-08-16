@@ -15,6 +15,7 @@ type Item = {
 
 export default (items: DirTree.Items, active: Active, over: Over | null) => {
 	if (!over?.id) return false
+	if (active.id === over.id) return false
 
 	const { parent_index: active_parent_index, item: active_item } = active.data.current as Data
 	const { parent_index: over_parent_index, item: over_item } = over.data.current as Data

@@ -1,11 +1,14 @@
+import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 
 import { useGlobal } from '@/context/app'
 import data from '@emoji-mart/data'
-import i18n_en from '@emoji-mart/data/i18n/en.json'
-import i18n_zh from '@emoji-mart/data/i18n/zh.json'
+import en from '@emoji-mart/data/i18n/en.json'
+import zh from '@emoji-mart/data/i18n/zh.json'
 import Picker from '@emoji-mart/react'
+
+import { feather_icons, ionicons } from './customs'
 
 interface IProps {
 	onEmojiSelect: ({ shortcodes }: { shortcodes: string }) => void
@@ -17,21 +20,99 @@ const Index = (props: IProps) => {
 
 	const i18n = useMemo(() => {
 		const map = {
-			'en-US': i18n_en,
-			'zh-CN': i18n_zh
+			en,
+			zh
 		}
 
 		return map[global.locale.lang]
 	}, [global.locale.lang])
+
+	const makeImgColor = useMemoizedFn(() => {
+		const picker = document.querySelector('em-emoji-picker')
+		const root = picker.shadowRoot
+		const imgs = root.querySelectorAll('.emoji-mart-emoji img')
+
+		imgs.forEach((item: HTMLImageElement) => {
+			item.style.filter = 'invert(80%)'
+		})
+	})
+
+	const delaymakeImgColor = useMemoizedFn(() => setTimeout(makeImgColor, 30))
+
+	useEffect(() => {
+		if (global.setting.theme === 'light') return
+
+		const picker = document.querySelector('em-emoji-picker')
+		const root = picker.shadowRoot
+
+		let scroll_container = null as HTMLDivElement | null
+		let nav_buttons: NodeListOf<HTMLButtonElement>
+
+		const timer = setTimeout(() => {
+			makeImgColor()
+
+			scroll_container = root.querySelector('.scroll') as HTMLDivElement
+			nav_buttons = root.querySelectorAll('#nav button') as NodeListOf<HTMLButtonElement>
+
+			nav_buttons.forEach((item) => {
+				item.addEventListener('click', delaymakeImgColor)
+			})
+
+			scroll_container?.addEventListener('scroll', makeImgColor)
+		}, 30)
+
+		return () => {
+			clearInterval(timer)
+
+			scroll_container?.removeEventListener('scroll', makeImgColor)
+
+			nav_buttons?.forEach((item) => {
+				item.removeEventListener('click', delaymakeImgColor)
+			})
+		}
+	}, [global.setting.theme])
+
+	const categoryIcons = useMemo(
+		() =>
+			['frequent', 'people', 'nature', 'foods', 'activity', 'places', 'objects', 'symbols', 'flags'].reduce(
+				(total, item) => {
+					total[item] = { svg: require(`@/public/icons/category_${item}.svg`) }
+
+					return total
+				},
+				{} as Record<string, any>
+			),
+		[]
+	)
 
 	return (
 		<Picker
 			data={data}
 			i18n={i18n}
 			theme={global.setting.theme}
+			categoryIcons={categoryIcons}
+			custom={[
+				{
+					id: 'feather_icons',
+					name: 'Feather Icons',
+					emojis: feather_icons.icon_array
+				},
+				{
+					id: 'ionicons',
+					name: 'Ionicons',
+					emojis: ionicons.icon_array
+				}
+			]}
 			previewPosition='none'
+			noCountryFlags={true}
+			emojiButtonSize={42}
+			emojiSize={24}
+			emojiButtonRadius='6px'
 			dynamicWidth
-			onEmojiSelect={onEmojiSelect}
+			onEmojiSelect={(target: { shortcodes: string }) => {
+				onEmojiSelect(target)
+				delaymakeImgColor()
+			}}
 		/>
 	)
 }

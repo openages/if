@@ -5,7 +5,7 @@ import { Cube, DiceFour, ListBullets } from '@phosphor-icons/react'
 import type { IPropsLeftIcon } from '../DirTree/types'
 
 const Index = (props: IPropsLeftIcon) => {
-	const { module, item } = props
+      const { module, item } = props
 
 	return match({ ...item, module })
 		.with({ type: 'file', module: 'todo' }, () => <ListBullets size={18} />)
