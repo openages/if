@@ -8,6 +8,16 @@
 	&:hover {
 		border-color: var(--color_text_grey);
 	}
+
+      :global{
+            em-emoji {
+                  .emoji-mart-emoji {
+                        span {
+                              margin-bottom: -5px;
+                        }
+                  }
+            }
+      }
 }
 
 .icon_picker {

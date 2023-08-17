@@ -28,7 +28,7 @@ const Index = (props: IProps) => {
 		return () => x.off()
 	}, [module])
 
-	const onClick = useMemoizedFn((v: string) => (x.current_item = v))
+	const onClick = useMemoizedFn((v: DirTree.File) => (x.current_item = v))
 
 	const setModalOpen = useMemoizedFn((v: Model['modal_open'], type?: Model['modal_type']) => {
 		x.focusing_item = {} as DirTree.Item
@@ -51,7 +51,7 @@ const Index = (props: IProps) => {
 	const props_dir_items: IPropsDirItems = {
 		module: x.module,
 		data: toJS(x.services.dirtree),
-		current_item: x.current_item,
+		current_item: toJS(x.current_item),
 		focusing_item: toJS(x.focusing_item),
 		open_folder: toJS(x.open_folder),
 		onClick,

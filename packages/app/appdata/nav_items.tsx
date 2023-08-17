@@ -2,7 +2,7 @@ import { GearSix, Users } from '@phosphor-icons/react'
 
 import type { App } from '@/types'
 
-export default [
+const default_items = [
 	{
 		title: 'todo',
 		path: '/'
@@ -26,6 +26,8 @@ export default [
 	}
 ] as Array<{ title: App.ModuleType; path: string; match?: string }>
 
+export default default_items
+
 export const bottom_items = [
 	{
 		title: 'collaboration',
@@ -39,7 +41,7 @@ export const bottom_items = [
 	}
 ] as const
 
-export const widgets = [
+export const modules = [
 	{
 		title: 'kanban',
 		path: '/widgets/layout/kanban'
@@ -79,3 +81,5 @@ export const widgets = [
 		path: '/widgets/layout/habbit'
 	}
 ] as Array<{ title: App.RealModuleType; path: string; line?: boolean }>
+
+export const all_nav_items = [...default_items, ...bottom_items, ...modules]

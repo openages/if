@@ -207,6 +207,9 @@ importers:
 
   packages/craftkit:
     dependencies:
+      ahooks:
+        specifier: ^3.7.8
+        version: 3.7.8(react@0.0.0-experimental-0fb5b61ac-20230814)
       fast-equals:
         specifier: ^5.0.1
         version: 5.0.1

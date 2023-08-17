@@ -1,23 +1,24 @@
 import '@/global_css'
 
+import { useMemoizedFn } from 'ahooks'
 import { App, ConfigProvider } from 'antd'
+import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
 import { IconContext } from 'react-icons'
 import { container } from 'tsyringe'
 
-import { OffscreenOutlet, Loading } from '@/components'
+import { OffscreenPagesOutlet, Loading } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
-import { usePageScrollRestoration, useTheme, useAntdLocale } from '@/hooks'
+import { useTheme, useAntdLocale } from '@/hooks'
 
-import { Sidebar } from './component'
+import { Sidebar, Tabs } from './component'
 import { useLayout, useGlobalTranslate } from './hooks'
 import styles from './index.css'
 
 import type { AppProps } from 'antd'
 import type { ConfigProviderProps } from 'antd/es/config-provider'
-import type { IPropsSidebar } from './types'
-
+import type { IPropsSidebar, IPropsTabs } from './types'
 const Index = () => {
 	const [global] = useState(() => container.resolve(GlobalModel))
 	const theme = useTheme(global.setting.theme, global.setting.color_main_rgb)
@@ -25,14 +26,11 @@ const Index = () => {
 	const { no_dirtree } = useLayout()
 
 	useGlobalTranslate()
-	usePageScrollRestoration()
 
 	useLayoutEffect(() => {
-		global.db.init()
+		global.init()
 
-		return () => {
-			global.db.instance?.destroy?.()
-		}
+		return () => global.off()
 	}, [])
 
 	const props_sidebar: IPropsSidebar = {
@@ -53,6 +51,14 @@ const Index = () => {
 		prefixCls: 'if'
 	}
 
+	const props_tabs: IPropsTabs = {
+		stacks: toJS(global.tabs.stacks),
+		remove: useMemoizedFn(global.tabs.remove),
+		active: useMemoizedFn(global.tabs.active),
+		update: useMemoizedFn(global.tabs.update),
+		move: useMemoizedFn(global.tabs.move)
+	}
+
 	if (!global.db.ready) return <Loading></Loading>
 
 	return (
@@ -63,7 +69,8 @@ const Index = () => {
 						<div className='w_100 border_box flex'>
 							<Sidebar {...props_sidebar} />
 							<div className={$cx(styles.container, no_dirtree && styles.no_dirtree)}>
-								<OffscreenOutlet />
+								<OffscreenPagesOutlet />
+								<Tabs {...props_tabs}></Tabs>
 							</div>
 						</div>
 					</IconContext.Provider>

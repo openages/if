@@ -1,6 +1,7 @@
 ._local {
-      min-height: calc(100vh - 40px - 75px);
-      padding: 0 calc(var(--limited_padding) - 11px);
+	min-height: calc(100vh - 38px - 90px - 36px);
+	background: linear-gradient(to bottom, red, blue);
+	padding: 0 calc(var(--limited_padding) - 11px);
 	padding-top: 36px;
 	padding-bottom: 60px;
 }

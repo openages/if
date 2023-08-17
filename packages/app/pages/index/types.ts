@@ -5,6 +5,10 @@ import type Model from './model'
 export type QueryItems = RxDB.ItemsQuery<Todo.TodoItem>
 export type QueryArchives = RxDB.ItemsQuery<TodoArchive.Item>
 
+export interface IProps {
+	id: string
+}
+
 export interface IPropsHeader extends Pick<Todo.Data, 'name' | 'icon' | 'desc'> {
 	showSettingsModal: () => void
 }

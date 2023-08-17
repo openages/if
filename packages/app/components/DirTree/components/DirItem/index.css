@@ -53,14 +53,6 @@
 				width: 18px;
 				margin-right: 6px;
 				user-select: none;
-
-                        em-emoji {
-                              .emoji-mart-emoji {
-                                    span {
-                                          margin-bottom: -4px;
-                                    }
-                              }
-                        }
 			}
 
 			.title_wrap {

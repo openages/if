@@ -6,7 +6,7 @@ const Index = (props: IPropsTabs) => {
 	const { angles, angle_index, setCurrentAngle } = props
 
 	return (
-		<div className={$cx('w_100 sticky top_0 z_index_10', styles._local)}>
+		<div className={$cx('w_100 border_box sticky', styles._local)}>
 			<div className='tabs_wrap limited_content_wrap flex align_center relative'>
 				<div className='tab_items_wrap w_100 flex'>
 					{angles.map((item, index) => (

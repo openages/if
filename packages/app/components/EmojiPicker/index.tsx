@@ -28,6 +28,8 @@ const Index = (props: IProps) => {
 	}, [global.locale.lang])
 
 	const makeImgColor = useMemoizedFn(() => {
+		if (global.setting.theme === 'light') return
+
 		const picker = document.querySelector('em-emoji-picker')
 		const root = picker.shadowRoot
 		const imgs = root.querySelectorAll('.emoji-mart-emoji img')

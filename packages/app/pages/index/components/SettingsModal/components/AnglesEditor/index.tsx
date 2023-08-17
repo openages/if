@@ -14,7 +14,8 @@ import type { DragEndEvent } from '@dnd-kit/core'
 const Index = (props: IPropsCustomFormItem<Array<{ id: string; text: string }>>) => {
 	const { value = [], onChange } = props
 
-	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
+      const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
+		if (!over?.id) return false
 		if (active.id === over.id) return
 
 		onChange(arrayMove(value, active.data.current.index as number, over.data.current.index as number))

@@ -9,7 +9,7 @@
             }
 
             .if-input-affix-wrapper {
-                  width: calc(100% - var(--icon_size) - 12px);
+                  width: calc(100% - 38px - 12px);
             }
 	}
 }

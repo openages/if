@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom'
 import { Else, If, Then } from 'react-if'
 
 import { SimpleEmpty } from '@/components'
+import { useElementScrollRestoration } from '@/hooks'
 import { DirTree } from '@/types'
 import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 
@@ -16,6 +17,7 @@ const Index = (props: IPropsDirItems) => {
 	const { module, data, current_item, focusing_item, open_folder, onClick, showDirTreeOptions } = props
 	const [active_item, setActiveItem] = useState<{ item: DirTree.Item; open: boolean } | null>(null)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }))
+	const scroll_restore = useElementScrollRestoration('todo.dirtree')
 
 	const onDragStart = useMemoizedFn((args: DragStartEvent) => {
 		const { active } = args
@@ -32,7 +34,10 @@ const Index = (props: IPropsDirItems) => {
 	})
 
 	return (
-		<div className={$cx('dir_tree_wrap w_100 border_box flex flex_column', !data.length && 'empty')}>
+		<div
+			className={$cx('dir_tree_wrap w_100 border_box flex flex_column', !data.length && 'empty')}
+			{...scroll_restore}
+		>
 			<If condition={data.length > 0}>
 				<Then>
 					<DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>

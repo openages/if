@@ -20,6 +20,7 @@ const Index = (props: IPropsCustomFormItem<Array<{ id: string; color: string; te
 	const { token } = useToken()
 
 	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
+		if (!over?.id) return false
 		if (active.id === over.id) return
 
 		onChange(arrayMove(value, active.data.current.index as number, over.data.current.index as number))

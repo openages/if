@@ -24,14 +24,14 @@ const Index = (props: IPropsDirItem_Item) => {
 	} = props
 	const { id, name, type } = item
 
-	const onItem = useMemoizedFn(() => onClick(id))
+	const onItem = useMemoizedFn(() => onClick(item as DirTree.File))
 
 	return (
 		<Wave>
 			<Button
 				className={$cx(
 					'item_wrap w_100 border_box flex align_center relative cursor_point',
-					type === 'file' && current_item === id && 'active',
+					type === 'file' && current_item.id === id && 'active',
 					focusing_item.id === id && 'focusing',
 					dragging && 'dragging'
 				)}

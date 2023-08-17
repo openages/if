@@ -9,9 +9,8 @@ export interface IProps {
 	module: Model['module']
 	height?: CSSProperties['height']
 	actions: {
-		onClick: (v: string) => void
 		add: (name: string, icon: string, file_id: string) => Promise<void>
-		remove: (focusing_item: DirTree.Item, current_item: string, module: string) => Promise<void>
+		remove: (focusing_item: DirTree.Item, current_item_id: string, module: string) => Promise<void>
 		update: (file_id: string, data: Partial<Omit<Todo.Data, 'id'>>) => Promise<void>
 		getRefs?: (dirtree: DirTree.Items) => Promise<void>
 	}
@@ -20,22 +19,22 @@ export interface IProps {
 export interface IPropsDirItems {
 	module: Model['module']
 	data: Model['services']['doc']['dirtree']
-	current_item: string
+	current_item: DirTree.File
 	focusing_item: Model['focusing_item']
 	open_folder: Model['open_folder']
-	onClick: (v: string) => void
+	onClick: (v: DirTree.File) => void
 	showDirTreeOptions: (e: MouseEvent<HTMLElement>, v: DirTree.Item) => void
 }
 
 export interface IPropsDirItem {
 	module: Model['module']
 	item: DirTree.Item
-	current_item: string
+	current_item: DirTree.File
 	focusing_item: Model['focusing_item']
 	open_folder?: Model['open_folder']
 	parent_index?: Array<number>
 	dragging?: boolean
-	onClick: (v: string) => void
+	onClick: IPropsDirItems['onClick']
 	showDirTreeOptions: IPropsDirItems['showDirTreeOptions']
 }
 

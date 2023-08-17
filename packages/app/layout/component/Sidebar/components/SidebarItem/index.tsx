@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
 import { NavLink } from 'react-router-dom'
 
-import { widgets } from '@/appdata'
+import { modules } from '@/appdata'
 import { ModuleIcon } from '@/components'
 
 import styles from './index.css'
@@ -39,7 +39,7 @@ const Index = (props: IPropsSidebarItem) => {
 				show_bar_title && styles.show_bar_title
 			)}
 		>
-			{widgets.map((item) => (
+			{modules.map((item) => (
 				<NavLink
 					className='nav_item_wrap border_box transition_normal cursor_point'
 					to={item.path}

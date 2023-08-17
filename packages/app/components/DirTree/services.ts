@@ -63,14 +63,14 @@ export default class Index {
 			.exhaustive()
 	}
 
-	async delete(current_item: string) {
+	async delete(current_item_id: string) {
 		await this.doc.incrementalModify((doc) => {
 			remove(doc.dirtree, this.focusing_item.id)
 
 			return doc
 		})
 
-		await this.actions.remove(this.focusing_item, current_item, this.module)
+		await this.actions.remove(this.focusing_item, current_item_id, this.module)
 	}
 
 	async update(v: DirTree.Items) {
@@ -82,15 +82,19 @@ export default class Index {
 	}
 
 	async rename({ id, name, icon }: { id?: string; name: string; icon: string }) {
+		const target_id = id ?? this.focusing_item.id
+
 		if (this.focusing_item.type === 'file') {
-			await this.actions.update(id ?? this.focusing_item.id, { name, icon })
+			await this.actions.update(target_id, { name, icon })
 		}
 
 		await this.doc.incrementalModify((doc) => {
-			rename(doc.dirtree, id ?? this.focusing_item.id, name, icon)
+			rename(doc.dirtree, target_id, name, icon)
 
 			return doc
-		})
+            })
+            
+		await $app.Event.emit('global.tabs.updateFile', { id: target_id, name, icon })
 	}
 
 	private async addDir(name: string, icon: string) {

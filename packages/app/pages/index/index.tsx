@@ -5,35 +5,27 @@ import { useLayoutEffect, useState } from 'react'
 import { Else, If, Then } from 'react-if'
 import { container } from 'tsyringe'
 
-import { getRefs, add, remove, update } from '@/actions/todo'
-import { DataEmpty, DirTree } from '@/components'
+import { DataEmpty } from '@/components'
+import { usePageScrollRestoration } from '@/hooks'
 
 import { Header, Input, Tabs, Todos, SettingsModal } from './components'
 import styles from './index.css'
 import Model from './model'
 
-import type { IPropsDirTree } from '@/components'
-import type { IPropsHeader, IPropsTabs, IPropsTodos, IPropsSettingsModal } from './types'
+import type { IProps, IPropsHeader, IPropsTabs, IPropsTodos, IPropsSettingsModal } from './types'
 
-const Index = () => {
+const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 
+	usePageScrollRestoration(id, toJS(x.global.tabs.stacks))
+
 	useLayoutEffect(() => {
-		x.on()
+		x.services.id = id
+
+		x.init()
 
 		return () => x.off()
-	}, [])
-
-	const props_dir_tree: IPropsDirTree = {
-		module: 'todo',
-		actions: {
-			onClick: useMemoizedFn((v) => (x.services.id = v)),
-			getRefs,
-			add,
-			remove,
-			update
-		}
-	}
+	}, [id])
 
 	const props_header: IPropsHeader = {
 		name: x.services.info.name,
@@ -60,8 +52,7 @@ const Index = () => {
 	}
 
 	return (
-		<div className={$cx(styles._local, 'w_100 h_100vh flex flex_column')}>
-			<DirTree {...props_dir_tree}></DirTree>
+		<div className={$cx('w_100 flex flex_column', styles._local)}>
 			<If condition={x.services.id && x.services.info?.name}>
 				<Then>
 					<Header {...props_header}></Header>

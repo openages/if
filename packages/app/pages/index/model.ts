@@ -3,6 +3,7 @@ import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { update } from '@/actions/todo'
+import { GlobalModel } from '@/context/app'
 
 import Services from './services'
 
@@ -12,12 +13,17 @@ import type { Todo } from '@/types'
 export default class Index {
 	visible_settings_modal = false
 
-	constructor(public services: Services) {
+	constructor(
+		public global: GlobalModel,
+		public services: Services
+	) {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
 	init() {
 		this.services.init()
+
+		this.on()
 	}
 
 	async onInfoChange(
