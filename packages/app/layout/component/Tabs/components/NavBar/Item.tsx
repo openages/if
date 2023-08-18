@@ -54,11 +54,8 @@ const Index = (props: IPropsTabsNavBarItem) => {
 					</div>
 					<div
 						className='btn_remove flex justify_center align_center clickable ml_2'
-						onClick={(e) => {
-							e.stopPropagation()
-
-							remove(index)
-						}}
+						onMouseDown={(e) => e.stopPropagation()}
+						onClick={() => remove(index)}
 					>
 						<X size={12} weight='bold'></X>
 					</div>

@@ -24,11 +24,13 @@ export default class GlobalModel {
 	on() {
 		$app.Event.on('global.tabs.add', this.tabs.add)
 		$app.Event.on('global.tabs.updateFile', this.tabs.updateFile)
+		$app.Event.on('global.tabs.removeFile', this.tabs.removeFile)
 	}
 
       off() {
 		$app.Event.off('global.tabs.add', this.tabs.add)
 		$app.Event.off('global.tabs.updateFile', this.tabs.updateFile)
+		$app.Event.off('global.tabs.removeFile', this.tabs.removeFile)
             
 		this.db.instance?.destroy?.()
 	}

@@ -20,7 +20,7 @@ export default <T extends HTMLDivElement>(id: string): IScrollRestorationProps<T
 
 			ref.current.scrollTo(position?.scroll_left || 0, position?.scroll_top || 0)
 		}
-	}, [pathname, search, key])
+	}, [key, scroll_key])
 
 	return {
 		ref,
@@ -31,6 +31,6 @@ export default <T extends HTMLDivElement>(id: string): IScrollRestorationProps<T
 					scroll_left: ref.current.scrollLeft
 				})
 			}
-		}, 1200)
+		}, 900)
 	}
 }

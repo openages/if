@@ -70,6 +70,10 @@ export default class Index {
 		}
 	}
 
+	removeFile(id: string) {
+		this.stacks = this.stacks.filter((item) => item.id !== id)
+	}
+
 	move({ active, over }: DragEndEvent) {
 		if (!over?.id) return false
 		if (active.id === over.id) return

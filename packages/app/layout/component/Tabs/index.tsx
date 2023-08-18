@@ -30,9 +30,11 @@ const Index = (props: IPropsTabs) => {
 	}
 
 	return (
-		<div className={$cx('w_100 border_box flex flex_column', styles._local)}>
+		<div className='w_100 border_box flex flex_column'>
 			<NavBar {...props_nav_bar}></NavBar>
-			<Content {...props_content}></Content>
+			<div className={$cx('w_100', styles.content_wrap)}>
+				<Content {...props_content}></Content>
+			</div>
 		</div>
 	)
 }

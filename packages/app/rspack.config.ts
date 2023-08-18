@@ -30,7 +30,7 @@ module.exports = defineConfig({
 				template: './public/index.html',
 				title: 'IF - GTD for prefessionals.'
 			}
-		],
+            ],
 		decorator: {},
 		progress: false
 	},

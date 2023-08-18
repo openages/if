@@ -81,8 +81,8 @@
                         }
 
                         .if-modal-confirm-title{
-                              margin-top: 8px;
-                              margin-bottom: 16px;
+                              margin-top: 12px;
+                              margin-bottom: 12px;
                               font-size: 21px;
                               line-height: 1;
                         }
@@ -98,6 +98,7 @@
 			.if-modal-confirm-btns {
 				text-align: center;
 				display: flex;
+                        margin-top: 18px;
 
 				.if-btn {
 					flex: 1;
