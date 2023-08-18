@@ -1,13 +1,16 @@
 import '@/global_css'
 
 import { useMemoizedFn } from 'ahooks'
-import { App, ConfigProvider } from 'antd'
+import { ConfigProvider, App } from 'antd'
+import { minimatch } from 'minimatch'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState, useMemo, unstable_Offscreen as Offscreen, Fragment } from 'react'
 import { IconContext } from 'react-icons'
+import { useLocation } from 'react-router-dom'
 import { container } from 'tsyringe'
 
+import { exclude_paths } from '@/appdata'
 import { OffscreenPagesOutlet, Loading } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import { useTheme, useAntdLocale } from '@/hooks'
@@ -19,7 +22,9 @@ import styles from './index.css'
 import type { AppProps } from 'antd'
 import type { ConfigProviderProps } from 'antd/es/config-provider'
 import type { IPropsSidebar, IPropsTabs } from './types'
+
 const Index = () => {
+	const { pathname } = useLocation()
 	const [global] = useState(() => container.resolve(GlobalModel))
 	const theme = useTheme(global.setting.theme, global.setting.color_main_rgb)
 	const locale = useAntdLocale(global.locale.lang)
@@ -32,6 +37,8 @@ const Index = () => {
 
 		return () => global.off()
 	}, [])
+
+	const is_exclude_router = useMemo(() => exclude_paths.some((item) => minimatch(pathname, item)), [pathname])
 
 	const props_sidebar: IPropsSidebar = {
 		theme: global.setting.theme,
@@ -70,7 +77,12 @@ const Index = () => {
 							<Sidebar {...props_sidebar} />
 							<div className={$cx(styles.container, no_dirtree && styles.no_dirtree)}>
 								<OffscreenPagesOutlet />
-								<Tabs {...props_tabs}></Tabs>
+								<Offscreen
+									key='global_tabs'
+									mode={!is_exclude_router ? 'visible' : 'hidden'}
+								>
+									<Tabs {...props_tabs}></Tabs>
+								</Offscreen>
 							</div>
 						</div>
 					</IconContext.Provider>

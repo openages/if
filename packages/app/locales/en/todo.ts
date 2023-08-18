@@ -8,11 +8,11 @@ export default {
 	SettingsModal: {
 		desc: {
 			label: 'Description',
-			placeholder: 'Please input description'
+			placeholder: 'A brief description about the todo.'
 		},
 		angles: {
 			label: 'Angles',
-			placeholder: 'Please input angles',
+			placeholder: 'Categories within the todo list.',
 			remove_confirm: {
 				title: 'Notice',
 				content: 'You are performing a categorical deletion operation. This will remove all the tasks under this category. Please confirm if you want to proceed with the deletion.'
@@ -20,7 +20,7 @@ export default {
 		},
 		tags: {
 			label: 'Tags',
-			placeholder: 'Tag name'
+			placeholder: 'Tag name.'
 		},
 		auto_archiving: {
 			label: 'Auto archiving',

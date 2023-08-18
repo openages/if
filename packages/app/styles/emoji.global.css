@@ -19,6 +19,10 @@ em-emoji {
 		span {
 			margin-bottom: -3px;
 		}
+
+            img{
+			margin-bottom: -1px;
+            }
 	}
 }
 

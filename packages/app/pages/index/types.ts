@@ -22,8 +22,14 @@ export interface IPropsSettingsModal {
 
 export interface IPropsTabs {
 	angles: Services['info']['angles']
-	angle_index: Services['angle_index']
-	setCurrentAngle: (v: Services['angle_index']) => void
+	current_angle_id: Services['current_angle_id']
+	setCurrentAngleId: (id: Services['current_angle_id']) => void
+}
+
+export interface IPropsTabsItem {
+	item: Services['info']['angles'][number]
+	is_active: boolean
+	setCurrentAngleId: IPropsTabs['setCurrentAngleId']
 }
 
 export interface IPropsTodos {

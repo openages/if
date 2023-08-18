@@ -77,4 +77,5 @@ export interface IPropsOptions {
 export interface IPropsLeftIcon {
 	module: Model['module']
 	item: DirTree.Item
+	size?: number
 }

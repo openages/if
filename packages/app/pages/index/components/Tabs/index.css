@@ -8,16 +8,28 @@
 	:global {
 		.tabs_wrap {
 			.tab_items_wrap {
-				overflow-x: scroll;
 				margin-bottom: -1px;
+				line-height: 1;
+
+                        .react-horizontal-scrolling-menu--item {
+                              &:last-child{
+                                    .tab_item_wrap{
+                                          margin-right: 0;
+                                    }
+                              }
+                        }
 
 				.tab_item_wrap {
 					margin-right: 18px;
-                              padding-top: 12px;
+					padding-top: 8px;
 					padding-bottom: 10px;
 					border-bottom: 2px solid transparent;
+					user-select: none;
+                              text-align: center;
 
 					&:hover {
+						border-color: var(--color_text);
+
 						.tab_name {
 							opacity: 1;
 						}

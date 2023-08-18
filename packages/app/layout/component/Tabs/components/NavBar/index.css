@@ -2,7 +2,7 @@
 	height: 36px;
 	z-index: 1000;
 	background-color: rgba(var(--color_bg_rgb), 0.6);
-      backdrop-filter: var(--blur);
+	backdrop-filter: var(--blur);
 
 	:global {
 		.bottom_line {

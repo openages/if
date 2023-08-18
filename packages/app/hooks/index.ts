@@ -8,5 +8,6 @@ export { default as useDragWidth } from './useDragWidth'
 export { default as useLimits } from './useLimits'
 export { default as useDarkIconWeight } from './useDarkIconWeight'
 export { default as useCurrentModule } from './useCurrentModule'
+export { default as useScrollToItem } from './useScrollToItem'
 
 export * from './useAntdApp'

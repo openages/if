@@ -45,6 +45,7 @@ export default class Index {
 		await update(this.services.id, omit(this.services.info, 'id'))
 	}
 
+
 	on() {
 		$app.Event.on('todo/ready', this.init)
 	}
@@ -52,6 +53,7 @@ export default class Index {
 	off() {
 		$app.Event.off('todo/ready', this.init)
 
-		this.services.off()
+		this.services.info_query?.$?.unsubscribe?.()
+		this.services.items_query?.$?.unsubscribe?.()
 	}
 }

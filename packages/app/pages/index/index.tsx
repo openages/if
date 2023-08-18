@@ -2,7 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
-import { Else, If, Then } from 'react-if'
+import { Else, If, Then, When } from 'react-if'
 import { container } from 'tsyringe'
 
 import { DataEmpty } from '@/components'
@@ -36,8 +36,8 @@ const Index = ({ id }: IProps) => {
 
 	const props_tabs: IPropsTabs = {
 		angles: toJS(x.services.info.angles),
-		angle_index: x.services.angle_index,
-		setCurrentAngle: useMemoizedFn((v: number) => (x.services.angle_index = v))
+		current_angle_id: x.services.current_angle_id,
+		setCurrentAngleId: useMemoizedFn((v) => (x.services.current_angle_id = v))
 	}
 
 	const props_todos: IPropsTodos = {
@@ -62,7 +62,13 @@ const Index = ({ id }: IProps) => {
 					<SettingsModal {...props_settings_modal}></SettingsModal>
 				</Then>
 				<Else>
-					<DataEmpty></DataEmpty>
+					<When
+						condition={
+							!(x.services.utils.loading['query'] || x.services.utils.loading['queryItems'])
+						}
+					>
+						<DataEmpty></DataEmpty>
+					</When>
 				</Else>
 			</If>
 		</div>

@@ -2,6 +2,7 @@ import { Button } from 'antd'
 import { Else, If, Then } from 'react-if'
 
 import { Wave, LeftIcon, ModuleIcon } from '@/components'
+import { useScrollToItem } from '@/hooks'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { useDoubleClick } from '@openages/craftkit'
@@ -14,15 +15,17 @@ const Index = (props: IPropsTabsNavBarItem) => {
 	const { attributes, listeners, transform, transition, setNodeRef } = useSortable({
 		id: item.id,
 		data: { index }
-	})
+      })
+      
+	useScrollToItem(item.id, item.is_active)
 
 	const fixedItem = useDoubleClick((index) => update({ index, v: { is_fixed: true } }))
 
 	return (
 		<div
-			className='drag_wrap h_100'
+			className='drag_wrap inline_block h_100'
 			ref={setNodeRef}
-			style={{ transform: CSS.Transform.toString(transform), transition }}
+			style={{ transform: CSS.Translate.toString(transform), transition }}
 			{...attributes}
 			{...listeners}
 		>
@@ -44,7 +47,7 @@ const Index = (props: IPropsTabsNavBarItem) => {
 								<em-emoji shortcodes={item.file.icon} size='12px'></em-emoji>
 							</Then>
 							<Else>
-								<LeftIcon module={item.module} item={item.file}></LeftIcon>
+								<LeftIcon module={item.module} item={item.file} size={12}></LeftIcon>
 							</Else>
 						</If>
 					</div>

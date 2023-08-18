@@ -8,11 +8,11 @@ export default {
 	SettingsModal: {
 		desc: {
 			label: '简介',
-			placeholder: '请输入简介'
+			placeholder: '关于todo的简单描述'
 		},
 		angles: {
 			label: '分类',
-			placeholder: '请输入分类名称',
+			placeholder: 'todo list内部的分类',
 			remove_confirm: {
 				title: '注意',
 				content: '您正在进行分类删除操作，这将删除该分类下的所有待办项，请确认是否执行删除。'
