@@ -1,4 +1,4 @@
-import type { Todo, RxDB, TodoArchive } from '@/types'
+import type { Todo, RxDB, TodoArchive, DirTree } from '@/types'
 import type Services from './services'
 import type Model from './model'
 
@@ -9,13 +9,13 @@ export interface IProps {
 	id: string
 }
 
-export interface IPropsHeader extends Pick<Todo.Data, 'name' | 'icon' | 'desc'> {
+export interface IPropsHeader extends Pick<Todo.Data & DirTree.File, 'name' | 'icon' | 'icon_hue' | 'desc'> {
 	showSettingsModal: () => void
 }
 
 export interface IPropsSettingsModal {
 	visible_settings_modal: Model['visible_settings_modal']
-	info: Todo.Data
+	info: Services['info'] & Services['file']
 	closeSettingsModal: () => void
 	onInfoChange: Model['onInfoChange']
 }

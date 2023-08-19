@@ -5,7 +5,7 @@ import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 import { injectable } from 'tsyringe'
 
-import { nav_items, widgets } from '@/appdata'
+import { nav_items, modules } from '@/appdata'
 import { schema_module, schema_todo } from '@/schemas'
 
 import type { RxDB, App } from '@/types'
@@ -45,7 +45,7 @@ export default class Index {
 	async addModuleInitData() {
 		if ((await $db.module.count().exec()) > 0) return (this.ready = true)
 
-		const preset_data = [...dropRight(nav_items), ...widgets].map((item) => ({
+		const preset_data = [...dropRight(nav_items), ...modules].map((item) => ({
 			module: item.title as Exclude<App.ModuleType, 'widgets'>,
 			dirtree: []
 		}))

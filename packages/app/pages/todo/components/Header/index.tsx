@@ -2,6 +2,7 @@ import { Tooltip } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
 
+import { Emoji } from '@/components'
 import { PencilSimple, Files, ArchiveBox } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -9,7 +10,7 @@ import styles from './index.css'
 import type { IPropsHeader } from '../../types'
 
 const Index = (props: IPropsHeader) => {
-	const { name, icon, desc, showSettingsModal } = props
+	const { name, icon, icon_hue, desc, showSettingsModal } = props
 	const { t } = useTranslation()
 
 	return (
@@ -17,7 +18,12 @@ const Index = (props: IPropsHeader) => {
 			<div className='left_wrap flex flex_column'>
 				<div className='flex align_center'>
 					<When condition={icon}>
-						<em-emoji className='mr_8 icon_emoji' shortcodes={icon} size='21px'></em-emoji>
+						<Emoji
+							className='mr_8 icon_emoji'
+							shortcodes={icon}
+							size={21}
+							hue={icon_hue}
+						></Emoji>
 					</When>
 					<div className='name flex justify_between align_center'>{name}</div>
 				</div>

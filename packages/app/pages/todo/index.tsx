@@ -28,14 +28,15 @@ const Index = ({ id }: IProps) => {
 	}, [id])
 
 	const props_header: IPropsHeader = {
-		name: x.services.info.name,
-		icon: x.services.info.icon,
+		name: x.services.file.name,
+		icon: x.services.file.icon,
+		icon_hue: x.services.file.icon_hue,
 		desc: x.services.info.desc,
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true))
 	}
 
 	const props_tabs: IPropsTabs = {
-		angles: toJS(x.services.info.angles),
+		angles: toJS(x.services.info.angles) || [],
 		current_angle_id: x.services.current_angle_id,
 		setCurrentAngleId: useMemoizedFn((v) => (x.services.current_angle_id = v))
 	}
@@ -46,14 +47,14 @@ const Index = ({ id }: IProps) => {
 
 	const props_settings_modal: IPropsSettingsModal = {
 		visible_settings_modal: x.visible_settings_modal,
-		info: toJS(x.services.info),
+		info: { ...toJS(x.services.info), ...toJS(x.services.file) },
 		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false)),
 		onInfoChange: useMemoizedFn(x.onInfoChange)
 	}
 
 	return (
 		<div className={$cx('w_100 flex flex_column', styles._local)}>
-			<If condition={x.services.id && x.services.info?.name}>
+			<If condition={x.services.id && x.services.file?.name}>
 				<Then>
 					<Header {...props_header}></Header>
 					<Tabs {...props_tabs}></Tabs>
@@ -64,7 +65,11 @@ const Index = ({ id }: IProps) => {
 				<Else>
 					<When
 						condition={
-							!(x.services.utils.loading['query'] || x.services.utils.loading['queryItems'])
+							!(
+								x.services.utils.loading['queryFile'] ||
+								x.services.utils.loading['query'] ||
+								x.services.utils.loading['queryItems']
+							)
 						}
 					>
 						<DataEmpty></DataEmpty>

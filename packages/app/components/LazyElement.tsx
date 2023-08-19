@@ -12,7 +12,7 @@ const Index = (props: IProps) => {
 
 	const Component = useMemo(() => {
 		return match(type)
-			.with('pages', () => lazy(() => import(`@/pages/${path === 'todo' ? 'index' : path}`)))
+			.with('pages', () => lazy(() => import(`@/pages/${path}`)))
 			.exhaustive()
 	}, [type, path])
 

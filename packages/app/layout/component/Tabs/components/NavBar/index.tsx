@@ -12,7 +12,7 @@ import type { IPropsTabsNavBar } from '../../../../types'
 
 const Index = (props: IPropsTabsNavBar) => {
 	const { stacks, remove, active, update, move } = props
-	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }))
+      const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }))
 
 	return (
 		<div className={$cx('w_100 border_box sticky top_0', styles._local)}>

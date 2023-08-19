@@ -138,12 +138,6 @@ export default {
                         "type": "string",
                         "maxLength": 30
                   },
-                  "name": {
-                        "type": "string"
-                  },
-                  "icon": {
-                        "type": "string"
-                  },
                   "desc": {
                         "type": "string"
                   },
@@ -209,8 +203,6 @@ export default {
             },
             "required": [
                   "id",
-                  "name",
-                  "icon",
                   "angles",
                   "tags",
                   "settings"

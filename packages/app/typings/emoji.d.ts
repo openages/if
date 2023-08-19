@@ -4,6 +4,7 @@ declare namespace JSX {
 			className?: string
 			shortcodes?: string
 			size?: string
+			style?: any
 		}
 	}
 }

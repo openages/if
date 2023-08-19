@@ -8,7 +8,7 @@ import type { RouteObject } from 'react-router-dom'
 const routes: Array<RouteObject> = [
 	{
 		path: '/',
-		element: <LazyElement type='pages' path='index/page' />
+		element: <LazyElement type='pages' path='todo/page' />
 	},
 	{
 		path: '/setting',

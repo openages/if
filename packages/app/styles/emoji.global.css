@@ -4,6 +4,7 @@ em-emoji-picker {
 	box-shadow: none;
 
 	--rgb-accent: 0, 0, 0;
+	--border-radius: 6px;
 }
 
 .emoji-mart-emoji {
@@ -11,6 +12,14 @@ em-emoji-picker {
 }
 
 em-emoji {
+	&.has_hue {
+		.emoji-mart-emoji {
+			img {
+				filter: invert(30%) sepia(100%) saturate(600%);
+			}
+		}
+	}
+
 	.emoji-mart-emoji {
 		display: flex;
 		align-items: center;
@@ -20,9 +29,9 @@ em-emoji {
 			margin-bottom: -3px;
 		}
 
-            img{
+		img {
 			margin-bottom: -1px;
-            }
+		}
 	}
 }
 
@@ -33,6 +42,14 @@ em-emoji {
 	}
 
 	em-emoji {
+		&.has_hue {
+			.emoji-mart-emoji {
+				img {
+					filter: invert(30%) sepia(100%) saturate(600%);
+				}
+			}
+		}
+
 		.emoji-mart-emoji {
 			img {
 				filter: invert(60%) sepia(60%) saturate(100%) hue-rotate(200deg);

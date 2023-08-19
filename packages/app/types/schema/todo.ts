@@ -30,9 +30,7 @@ export namespace Todo {
 
 	export interface Data {
 		/** @maxLength 30 */
-		id: string
-		name: string
-		icon: string
+            id: string
 		desc?: string
 		angles: Array<{
 			id: string

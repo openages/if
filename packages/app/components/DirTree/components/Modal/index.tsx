@@ -26,7 +26,7 @@ const Index = (props: IPropsModal) => {
 		resetFocusingItem,
 		rename
 	} = props
-	const [icon, setIcon] = useState('')
+	const [icon, setIcon] = useState({ icon: '', icon_hue: undefined })
 	const input = useRef<InputRef>(null)
 	const [value, { onChange }] = useEventTarget<string>()
 	const limits = useLimits()
@@ -35,13 +35,13 @@ const Index = (props: IPropsModal) => {
 	useEffect(() => {
 		if (modal_open) return input.current?.focus?.()
 
-		setIcon('')
+		setIcon({ icon: '', icon_hue: undefined })
 		onChange({ target: { value: '' } })
 	}, [modal_open])
 
 	useDeepCompareEffect(() => {
 		if (focusing_item.icon && current_option === 'rename') {
-			setIcon(focusing_item.icon)
+			setIcon({ icon: focusing_item.icon, icon_hue: focusing_item.icon_hue })
 		}
 
 		if (focusing_item.id && current_option === 'rename') {
@@ -81,11 +81,11 @@ const Index = (props: IPropsModal) => {
 
 	const onOk = useMemoizedFn(() => {
 		if (!value || value.length > limits.todo_list_title_max_length) return
-		if (current_option === 'rename') return rename({ name: value, icon })
-		if (current_option === 'add_file') return add('file', value, icon)
-		if (current_option === 'add_dir') return add('dir', value, icon)
+		if (current_option === 'rename') return rename({ name: value, ...icon })
+		if (current_option === 'add_file') return add('file', { name: value, ...icon })
+		if (current_option === 'add_dir') return add('dir', { name: value, ...icon })
 
-		add(modal_type, value, icon)
+		add(modal_type, { name: value, ...icon })
 	})
 
 	const onSelectIcon = useMemoizedFn((shortcodes) => setIcon(shortcodes))

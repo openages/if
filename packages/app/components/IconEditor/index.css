@@ -30,3 +30,21 @@
 		}
 	}
 }
+
+.hue_wrap{
+      margin-top: 12px;
+      border-radius: var(--radius);
+      background-color: var(--color_bg);
+      padding:4px 12px;
+      line-height: 1;
+
+      :global{
+            .hue_label{
+                  width: 40px;
+            }
+
+            .hue_slider{
+                  width: calc(100% - 40px);
+            }
+      }
+}

@@ -1,7 +1,7 @@
 export default {
 	en: {
 		todo_list_title_max_length: 36,
-		todo_list_desc_max_length: 180,
+		todo_list_desc_max_length: 150,
 		todo_text_max_length: 150
 	},
 	zh: {

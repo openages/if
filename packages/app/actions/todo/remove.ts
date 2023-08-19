@@ -13,7 +13,8 @@ const Index = async (focusing_item: DirTree.Item, current_item: string, module: 
 	if (focusing_item.type === 'dir') $app.Event.emit(`${module}/dirtree/removeOpenFolder`, focusing_item.id)
 
 	if (focusing_item.type === 'file') {
-		$app.Event.emit('global.tabs.removeFile', focusing_item.id)
+            $app.Event.emit('global.tabs.removeFile', focusing_item.id)
+            
 		local.removeItem(`${focusing_item.id}_todo_current_angle_id`)
 
 		return await deleteTodoFile(focusing_item.id)

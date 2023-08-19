@@ -4,12 +4,12 @@ import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
 import { id } from '@/utils'
-import { remove } from '@/utils/tree'
+import { remove, find } from '@/utils/tree'
 import { deepEqual } from '@openages/craftkit'
 
 import { addToDir, rename } from './utils'
 
-import type { RxDocument } from 'rxdb'
+import type { RxDocument, RxQuery } from 'rxdb'
 import type { App, DirTree, Module } from '@/types'
 import type { IProps } from './types'
 
@@ -17,6 +17,7 @@ import type { IProps } from './types'
 export default class Index {
 	module = '' as App.RealModuleType
 	actions = {} as IProps['actions']
+	dirtree_query = {} as RxQuery<Module.Item>
 	doc = {} as RxDocument<Module.Item>
 	dirtree = [] as DirTree.Items
 	focusing_item = {} as DirTree.Item
@@ -31,7 +32,6 @@ export default class Index {
 		await this.query()
 		await this.actions?.getRefs?.(this.doc.dirtree)
 
-		this.on()
 		this.reactions()
 
 		$app.Event.emit(`${this.module}/ready`)
@@ -49,28 +49,34 @@ export default class Index {
 	}
 
 	async query() {
-		this.doc = (await $db.module
-			.findOne({ selector: { module: this.module } })
-			.exec())! as RxDocument<Module.Item>
+		this.dirtree_query = $db.module.findOne({ selector: { module: this.module } })! as RxQuery<Module.Item>
 
-		this.dirtree = this.doc.dirtree
+		const target = (await this.dirtree_query.exec()) as RxDocument<Module.Item>
+
+		this.doc = target
+		this.dirtree = target.dirtree
+
+		target.$.subscribe((v) => {
+			this.doc = v
+			this.dirtree = v.dirtree
+		})
 	}
 
-	async add(type: DirTree.Type, name: string, icon: string) {
+	async add(type: DirTree.Type, args: Partial<DirTree.Item>) {
 		return await match({ type })
-			.with({ type: 'file' }, () => this.addFile(name, icon))
-			.with({ type: 'dir' }, () => this.addDir(name, icon))
+			.with({ type: 'file' }, () => this.addFile(args as DirTree.File))
+			.with({ type: 'dir' }, () => this.addDir(args as DirTree.Dir))
 			.exhaustive()
 	}
 
 	async delete(current_item_id: string) {
+		await this.actions.remove(this.focusing_item, current_item_id, this.module)
+
 		await this.doc.incrementalModify((doc) => {
 			remove(doc.dirtree, this.focusing_item.id)
 
 			return doc
 		})
-
-		await this.actions.remove(this.focusing_item, current_item_id, this.module)
 	}
 
 	async update(v: DirTree.Items) {
@@ -81,24 +87,22 @@ export default class Index {
 		})
 	}
 
-	async rename({ id, name, icon }: { id?: string; name: string; icon: string }) {
-		const target_id = id ?? this.focusing_item.id
-
-		if (this.focusing_item.type === 'file') {
-			await this.actions.update(target_id, { name, icon })
-		}
+	async rename(args: Partial<DirTree.Item>) {
+		const target_id = args.id ?? this.focusing_item.id
 
 		await this.doc.incrementalModify((doc) => {
-			rename(doc.dirtree, target_id, name, icon)
+			rename(doc.dirtree, { ...args, id: target_id })
 
 			return doc
-            })
-            
-		await $app.Event.emit('global.tabs.updateFile', { id: target_id, name, icon })
+		})
+
+		const current_file = find(this.dirtree, target_id)
+
+		await $app.Event.emit('global.tabs.updateFile', { ...current_file, ...args, id: target_id })
 	}
 
-	private async addDir(name: string, icon: string) {
-		const dir: DirTree.Dir = { id: id(), type: 'dir', name, icon, children: [] }
+	private async addDir(args: DirTree.Dir) {
+		const dir: DirTree.Dir = { ...args, id: id(), type: 'dir', children: [] }
 
 		if (this.focusing_item?.id) {
 			return await this.doc.incrementalModify((doc) => {
@@ -115,12 +119,12 @@ export default class Index {
 		})
 	}
 
-	private async addFile(name: string, icon: string) {
+	private async addFile(args: DirTree.File) {
 		const file_id = id()
 
-		await this.actions.add(name, icon, file_id)
+		await this.actions.add(file_id, args)
 
-		const file: DirTree.File = { id: file_id, type: 'file', name, icon }
+		const file: DirTree.File = { ...args, id: file_id, type: 'file' }
 
 		if (this.focusing_item?.id) {
 			return await this.doc.incrementalModify((doc) => {
@@ -132,13 +136,6 @@ export default class Index {
 
 		return await this.doc.incrementalUpdate({
 			$push: { dirtree: file }
-		})
-	}
-
-	on() {
-		this.doc.$.subscribe((v) => {
-			this.doc = v
-			this.dirtree = v.dirtree
 		})
 	}
 }

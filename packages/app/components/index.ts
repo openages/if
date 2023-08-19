@@ -13,6 +13,7 @@ export { default as EmojiPicker } from './EmojiPicker'
 export { default as custom_emojis } from './EmojiPicker/customs'
 export { default as Wave } from './Wave'
 export { default as IconEditor } from './IconEditor'
+export { default as Emoji } from './Emoji'
 export { default as SettingsModal } from './SettingsModal'
 
 export type { IProps as IPropsDirTree } from './DirTree/types'

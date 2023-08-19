@@ -1,7 +1,7 @@
 import { Button } from 'antd'
 import { Else, If, Then } from 'react-if'
 
-import { Wave, LeftIcon, ModuleIcon } from '@/components'
+import { Wave, LeftIcon, ModuleIcon, Emoji } from '@/components'
 import { useScrollToItem } from '@/hooks'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -15,8 +15,8 @@ const Index = (props: IPropsTabsNavBarItem) => {
 	const { attributes, listeners, transform, transition, setNodeRef } = useSortable({
 		id: item.id,
 		data: { index }
-      })
-      
+	})
+
 	useScrollToItem(item.id, item.is_active)
 
 	const fixedItem = useDoubleClick((index) => update({ index, v: { is_fixed: true } }))
@@ -36,7 +36,9 @@ const Index = (props: IPropsTabsNavBarItem) => {
 						item.is_active && 'is_active',
 						item.is_fixed && 'is_fixed'
 					)}
-					onMouseDown={() => {
+					onMouseDown={(e) => {
+						if (e.button !== 0) return
+
 						active(index)
 						fixedItem(index)
 					}}
@@ -44,7 +46,11 @@ const Index = (props: IPropsTabsNavBarItem) => {
 					<div className='icon_wrap h_100 flex align_center'>
 						<If condition={item.file.icon}>
 							<Then>
-								<em-emoji shortcodes={item.file.icon} size='12px'></em-emoji>
+								<Emoji
+									shortcodes={item.file.icon}
+									size={12}
+									hue={item.file.icon_hue}
+								></Emoji>
 							</Then>
 							<Else>
 								<LeftIcon module={item.module} item={item.file} size={12}></LeftIcon>

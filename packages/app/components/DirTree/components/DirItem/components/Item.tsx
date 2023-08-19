@@ -2,7 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import { Button } from 'antd'
 import { Else, If, Then, When } from 'react-if'
 
-import { Wave } from '@/components'
+import { Wave, Emoji } from '@/components'
 import { CaretRight } from '@phosphor-icons/react'
 
 import LeftIcon from '../../../../LeftIcon'
@@ -42,7 +42,7 @@ const Index = (props: IPropsDirItem_Item) => {
 				<div className='left_icon_wrap flex justify_center align_center'>
 					<If condition={item.icon}>
 						<Then>
-							<em-emoji shortcodes={item.icon} size='16px'></em-emoji>
+							<Emoji shortcodes={item.icon} size={16} hue={item.icon_hue}></Emoji>
 						</Then>
 						<Else>
 							<LeftIcon module={module} item={item}></LeftIcon>

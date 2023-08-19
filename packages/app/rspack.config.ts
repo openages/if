@@ -10,7 +10,7 @@ module.exports = defineConfig({
 	},
 	output: {
 		clean: is_prod
-	},
+      },
 	devtool: is_prod ? false : 'source-map',
 	watchOptions: {
 		ignored: /node_modules/
@@ -30,7 +30,7 @@ module.exports = defineConfig({
 				template: './public/index.html',
 				title: 'IF - GTD for prefessionals.'
 			}
-            ],
+		],
 		decorator: {},
 		progress: false
 	},

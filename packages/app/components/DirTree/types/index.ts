@@ -9,7 +9,7 @@ export interface IProps {
 	module: Model['module']
 	height?: CSSProperties['height']
 	actions: {
-		add: (name: string, icon: string, file_id: string) => Promise<void>
+		add: (file_id: string, data: Partial<Omit<DirTree.File, 'id'>>) => Promise<void>
 		remove: (focusing_item: DirTree.Item, current_item_id: string, module: string) => Promise<void>
 		update: (file_id: string, data: Partial<Omit<Todo.Data, 'id'>>) => Promise<void>
 		getRefs?: (dirtree: DirTree.Items) => Promise<void>

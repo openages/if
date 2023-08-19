@@ -50,6 +50,9 @@ export default {
                                                       },
                                                       "icon": {
                                                             "type": "string"
+                                                      },
+                                                      "icon_hue": {
+                                                            "type": "number"
                                                       }
                                                 },
                                                 "required": [
@@ -67,6 +70,9 @@ export default {
                                     },
                                     "icon": {
                                           "type": "string"
+                                    },
+                                    "icon_hue": {
+                                          "type": "number"
                                     }
                               },
                               "required": [
@@ -128,6 +134,9 @@ export default {
                                     },
                                     "icon": {
                                           "type": "string"
+                                    },
+                                    "icon_hue": {
+                                          "type": "number"
                                     }
                               },
                               "required": [
@@ -145,6 +154,9 @@ export default {
                   },
                   "icon": {
                         "type": "string"
+                  },
+                  "icon_hue": {
+                        "type": "number"
                   }
             },
             "required": [
@@ -177,6 +189,9 @@ export default {
                                     },
                                     "icon": {
                                           "type": "string"
+                                    },
+                                    "icon_hue": {
+                                          "type": "number"
                                     }
                               },
                               "required": [
@@ -194,6 +209,9 @@ export default {
                   },
                   "icon": {
                         "type": "string"
+                  },
+                  "icon_hue": {
+                        "type": "number"
                   }
             },
             "required": [
@@ -218,6 +236,9 @@ export default {
                   },
                   "icon": {
                         "type": "string"
+                  },
+                  "icon_hue": {
+                        "type": "number"
                   }
             },
             "required": [

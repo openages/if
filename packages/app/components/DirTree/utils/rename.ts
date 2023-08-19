@@ -1,13 +1,14 @@
 import type { DirTree } from '@/types'
 
-const Index = (dirtree: DirTree.Items, id: string, name: string, icon: string) => {
+const Index = (dirtree: DirTree.Items, args: Partial<DirTree.Item>) => {
 	dirtree.map((item) => {
-		if (item.id === id) {
-			item.name = name
-			item.icon = icon
+		if (item.id === args.id) {
+			Object.keys(args).map((key) => {
+				item[key] = args[key]
+			})
 		}
 
-		if (item.type === 'dir') Index(item.children, id, name, icon)
+		if (item.type === 'dir') Index(item.children, args)
 	})
 }
 

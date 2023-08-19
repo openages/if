@@ -27,7 +27,6 @@ export namespace App {
 		file: DirTree.File
 		is_active: boolean
 		is_fixed: boolean
-		outlet: ReactElement | null
 	}
 
 	export type Stacks = Array<Stack>

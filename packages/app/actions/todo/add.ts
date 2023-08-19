@@ -2,14 +2,15 @@ import { id } from '@/utils'
 
 import addRefs from './addRefs'
 
-export default async (name: string, icon: string, file_id: string) => {
+import type { DirTree } from '@/types'
+
+export default async (file_id: string, args: Partial<DirTree.File>) => {
 	// @ts-ignore
 	const angles = $t('translation:todo.default_angles', { returnObjects: true }) as Array<string>
 
 	await $db.collections.todo.insert({
+		...args,
 		id: file_id,
-		name,
-		icon,
 		angles: angles.map((item) => ({ id: id(), text: item })),
 		tags: [],
 		settings: {

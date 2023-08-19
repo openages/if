@@ -4,8 +4,9 @@ import { injectable } from 'tsyringe'
 import { Utils } from '@/models'
 import { setStorageWhenChange } from '@/utils'
 import { loading } from '@/utils/decorators'
+import { find } from '@/utils/tree'
 
-import type { Todo, TodoArchive, RxDB } from '@/types'
+import type { Module, DirTree, Todo, TodoArchive, RxDB } from '@/types'
 import type { RxDocument, RxQuery } from 'rxdb'
 
 const archives_page_size = 12
@@ -13,12 +14,14 @@ const archives_page_size = 12
 @injectable()
 export default class Index {
 	id = ''
-	current_angle_id = ''
-	info = {} as Todo.Data
+	file_query = {} as RxQuery<Module.Item>
+	file = {} as DirTree.File
 	info_query = {} as RxQuery<Todo.Data>
-	items = [] as RxDB.ItemsDoc<Todo.TodoItem>
+	info = {} as Todo.Data
 	items_query = {} as RxDB.ItemsQuery<Todo.TodoItem>
+	items = [] as RxDB.ItemsDoc<Todo.TodoItem>
 	archives = [] as RxDB.ItemsDoc<TodoArchive.Item>
+	current_angle_id = ''
 	archives_page = 0
 
 	constructor(public utils: Utils) {
@@ -30,7 +33,10 @@ export default class Index {
 
 		this.reactions()
 
-		if (this.id) this.query()
+		if (this.id) {
+			this.queryFile()
+			this.query()
+		}
 	}
 
 	reactions() {
@@ -39,6 +45,7 @@ export default class Index {
 			() => {
 				if (!this.id) return this.resetData()
 
+				this.queryFile()
 				this.query()
 			}
 		)
@@ -64,7 +71,7 @@ export default class Index {
 
 		reaction(
 			() => this.info.angles,
-			(v, prev) => {
+			(v) => {
 				if (!this.id) return
 				if (!this.info.id) return
 
@@ -84,6 +91,19 @@ export default class Index {
 		this.items_query = {} as RxDB.ItemsQuery<Todo.TodoItem>
 		this.archives = [] as RxDB.ItemsDoc<TodoArchive.Item>
 		this.archives_page = 0
+	}
+
+	@loading
+	async queryFile() {
+		this.file_query = $db.module.findOne({ selector: { module: 'todo' } })! as RxQuery<Module.Item>
+
+		const target = (await this.file_query.exec()) as RxDocument<Module.Item>
+
+		this.file = find(target.dirtree, this.id) as DirTree.File
+
+		target.$.subscribe(({ dirtree }) => {
+			this.file = find(dirtree, this.id) as DirTree.File
+		})
 	}
 
 	@loading

@@ -21,10 +21,9 @@ const default_items = [
 	},
 	{
 		title: 'widgets',
-		path: '/widgets/layout/kanban',
-		match: '/widgets/layout'
+		path: '/widgets/layout/kanban'
 	}
-] as Array<{ title: App.ModuleType; path: string; match?: string }>
+] as Array<{ title: App.ModuleType; path: string }>
 
 export default default_items
 
@@ -56,8 +55,7 @@ export const modules = [
 	},
 	{
 		title: 'project',
-		path: '/widgets/layout/project',
-		line: true
+		path: '/widgets/layout/project'
 	},
 	{
 		title: 'table',
@@ -80,6 +78,6 @@ export const modules = [
 		title: 'habbit',
 		path: '/widgets/layout/habbit'
 	}
-] as Array<{ title: App.RealModuleType; path: string; line?: boolean }>
+] as Array<{ title: App.RealModuleType; path: string }>
 
 export const all_nav_items = [...default_items, ...bottom_items, ...modules]

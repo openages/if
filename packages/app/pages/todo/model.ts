@@ -27,32 +27,29 @@ export default class Index {
 	}
 
 	async onInfoChange(
-		changedValues: Partial<Todo.Data>,
-		values: Omit<Todo.Data, 'angles' | 'tags'> & { angles: Array<{ id: string; text: string }> } & {
-			tags: Array<{ id: string; color: string; text: string }>
-		}
+		changedValues: Partial<Todo.Data & Services['file']> & { icon_info: { icon: string; icon_hue?: number } },
+		values: Todo.Data & Services['file']
 	) {
-		this.services.info = { ...this.services.info, ...values } as Todo.Data
-
-		if (changedValues.name || changedValues.icon) {
+		if (changedValues.name || changedValues.icon_info) {
 			await $app.Event.emit('todo/dirtree/rename', {
 				id: this.services.id,
-				name: this.services.info.name,
-				icon: this.services.info.icon
+				...(changedValues.icon_info ?? changedValues)
 			})
-		}
+		} else {
+			this.services.info = { ...this.services.info, ...omit(values, 'icon_info') } as Todo.Data
 
-		await update(this.services.id, omit(this.services.info, 'id'))
+			await update(this.services.id, omit(this.services.info, 'id'))
+		}
 	}
 
-
-	on() {
+	async on() {
 		$app.Event.on('todo/ready', this.init)
 	}
 
 	off() {
 		$app.Event.off('todo/ready', this.init)
 
+		this.services.file_query?.$?.unsubscribe?.()
 		this.services.info_query?.$?.unsubscribe?.()
 		this.services.items_query?.$?.unsubscribe?.()
 	}

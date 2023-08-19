@@ -64,15 +64,15 @@ export default class Index {
 	}
 
 	@loading
-	async add(type: DirTree.Type, name: string, icon: string) {
-		await this.services.add(type, name, icon)
+	async add(type: DirTree.Type, args: Partial<DirTree.Item>) {
+		await this.services.add(type, args)
 
 		this.modal_open = false
 		this.focusing_item = {} as DirTree.Item
 	}
 
 	@loading
-	async rename(args: { id?: string; name: string; icon: string }) {
+	async rename(args: Partial<DirTree.Item>) {
 		await this.services.rename(args)
 
 		this.modal_open = false
@@ -156,6 +156,8 @@ export default class Index {
 	}
 
 	off() {
+		this.services.dirtree_query?.$?.unsubscribe?.()
+
 		$app.Event.off(`${this.module}/dirtree/move`, this.move)
 		$app.Event.off(`${this.module}/dirtree/removeCurrentItem`, this.removeCurrentItem)
 		$app.Event.off(`${this.module}/dirtree/setCurrentItem`, this.setCurrentItem)

@@ -15,10 +15,9 @@ const Index = (props: Pick<IPropsSettingsModal, 'children' | 'info' | 'onValuesC
 	const [form] = useForm()
 	const limits = useLimits()
 	const { t } = useTranslation()
-
 	const { setFieldsValue } = form
 
-	useEffect(() => setFieldsValue(info), [info])
+	useEffect(() => setFieldsValue({ ...info, icon_info: { icon: info.icon, icon_hue: info.icon_hue } }), [info])
 
 	return (
 		<Form
@@ -29,7 +28,7 @@ const Index = (props: Pick<IPropsSettingsModal, 'children' | 'info' | 'onValuesC
 			onValuesChange={debounce(onValuesChange, 450, { leading: false })}
 		>
 			<div className='flex justify_between'>
-				<Item name='icon'>
+				<Item name='icon_info'>
 					<IconEditor></IconEditor>
 				</Item>
 				<Item className='name_item_wrap' name='name'>
