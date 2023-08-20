@@ -1,29 +1,41 @@
-import type { ReactElement } from 'react'
-import { DirTree } from './dirtree'
+import { modules } from '@/appdata'
+
+import type { DirTree } from './dirtree'
 
 export namespace App {
-	export type ModuleType =
-		| 'todo'
-		| 'memo'
-		| 'note'
-		| 'pomodoro'
-		| 'widgets'
-		| 'kanban'
-		| 'flow'
-		| 'board'
-		| 'project'
-		| 'table'
-		| 'bi'
-		| 'ppt'
-		| 'schedule'
-		| 'habbit'
+	export type ModuleType = (typeof modules)[number]['title']
+	// build:schema 时使用下列配置
+	// export type ModuleType =
+	// 	| 'todo'
+	// 	| 'memo'
+	// 	| 'note'
+	// 	| 'kanban'
+	// 	| 'flow'
+	// 	| 'whiteboard'
+	// 	| 'table'
+	// 	| 'form'
+	// 	| 'chart'
+	// 	| 'ppt'
+	// 	| 'schedule'
+	// 	| 'pomodoro'
+	// 	| 'habbit'
+	// 	| 'api'
+	// 	| 'metatable'
+	// 	| 'metaform'
+	// 	| 'metachart'
+	// 	| 'setting'
 
-	/** @maxLength 12 */
-	export type RealModuleType = Exclude<ModuleType, 'widgets'>
+	export interface Module {
+		title: App.ModuleType
+		path: string
+		is_fixed?: boolean
+	}
+
+	export type Modules = Array<Module>
 
 	export interface Stack {
 		id: DirTree.File['id']
-		module: App.RealModuleType
+		module: App.ModuleType
 		file: DirTree.File
 		is_active: boolean
 		is_fixed: boolean

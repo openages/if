@@ -1,12 +1,12 @@
-import { nav_items } from '@/appdata'
-
 import type { GlobalModel } from '@/context/app'
 import type { IconProps } from '@phosphor-icons/react'
+import type { App } from '@/types'
 
 export interface IPropsSidebar {
 	theme: GlobalModel['setting']['theme']
 	show_bar_title: GlobalModel['setting']['show_bar_title']
-	avatar: GlobalModel['user']['avatar']
+	apps: GlobalModel['app']['apps']
+	actives: GlobalModel['app']['actives']
 }
 
 export interface IPropsSidebarItem {
@@ -14,7 +14,8 @@ export interface IPropsSidebarItem {
 	show_bar_title: GlobalModel['setting']['show_bar_title']
 	icon_weight: IconProps['weight']
 	pathname: string
-	item: (typeof nav_items)[number]
+	item: App.Module
+	is_active: boolean
 }
 
 export interface IPropsTabs {

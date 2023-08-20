@@ -1,3 +1,5 @@
+import { local } from '@openages/craftkit'
+
 interface IProps {
 	className?: HTMLDivElement['className']
 	size?: number
@@ -5,7 +7,7 @@ interface IProps {
 }
 
 const Index = (props: IProps) => {
-	const { className, size = 48, color = 'var(--color_main)' } = props
+	const { className, size = 48, color = local.theme === 'dark' ? 'var(--color_text)' : 'var(--color_main)' } = props
 
 	return (
 		<div className={$cx('flex', className)} style={{ width: size, height: size, fill: color }}>

@@ -29,6 +29,8 @@ const Index = () => {
 	const theme = useTheme(global.setting.theme, global.setting.color_main_rgb)
 	const locale = useAntdLocale(global.locale.lang)
 	const { no_dirtree } = useLayout()
+	const apps = toJS(global.app.apps)
+	const actives = toJS(global.app.actives)
 
 	useGlobalTranslate()
 
@@ -40,10 +42,22 @@ const Index = () => {
 
 	const is_exclude_router = useMemo(() => exclude_paths.some((item) => minimatch(pathname, item)), [pathname])
 
+	const target_apps = useMemo(
+		() =>
+			apps.filter((item) => {
+				if (item.is_fixed) return true
+				if (actives.includes(item.title)) return true
+
+				return false
+			}),
+		[apps, actives]
+	)
+
 	const props_sidebar: IPropsSidebar = {
 		theme: global.setting.theme,
 		show_bar_title: global.setting.show_bar_title,
-		avatar: global.user.avatar
+		apps: target_apps,
+		actives
 	}
 
 	const props_config_provider: ConfigProviderProps = {

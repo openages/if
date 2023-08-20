@@ -1,23 +1,25 @@
 import { makeAutoObservable } from 'mobx'
 import { singleton } from 'tsyringe'
 
-import { LocaleModel, SettingModel, LayoutModel, UserModel, DB, Tabs } from '@/models'
+import { DB, Locale, Layout, Setting, Tabs, App } from '@/models'
 
 @singleton()
 export default class GlobalModel {
 	constructor(
-		public locale: LocaleModel,
-		public setting: SettingModel,
-		public layout: LayoutModel,
-		public user: UserModel,
 		public db: DB,
-		public tabs: Tabs
+		public locale: Locale,
+		public layout: Layout,
+		public setting: Setting,
+		public tabs: Tabs,
+		public app: App
 	) {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
-	init() {
-            this.db.init()
+	async init() {
+            await this.db.init()
+            await this.app.init()
+            
 		this.on()
 	}
 
@@ -27,11 +29,11 @@ export default class GlobalModel {
 		$app.Event.on('global.tabs.removeFile', this.tabs.removeFile)
 	}
 
-      off() {
+	off() {
 		$app.Event.off('global.tabs.add', this.tabs.add)
 		$app.Event.off('global.tabs.updateFile', this.tabs.updateFile)
 		$app.Event.off('global.tabs.removeFile', this.tabs.removeFile)
-            
+
 		this.db.instance?.destroy?.()
 	}
 }

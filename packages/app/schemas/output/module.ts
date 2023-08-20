@@ -8,18 +8,22 @@ export default {
                               "todo",
                               "memo",
                               "note",
-                              "pomodoro",
                               "kanban",
                               "flow",
-                              "board",
-                              "project",
+                              "whiteboard",
                               "table",
-                              "bi",
+                              "form",
+                              "chart",
                               "ppt",
                               "schedule",
-                              "habbit"
-                        ],
-                        "maxLength": 12
+                              "pomodoro",
+                              "habbit",
+                              "api",
+                              "metatable",
+                              "metaform",
+                              "metachart",
+                              "setting"
+                        ]
                   },
                   "dirtree": {
                         "type": "array",
@@ -88,24 +92,28 @@ export default {
                   "dirtree"
             ]
       },
-      "App.RealModuleType": {
+      "App.ModuleType": {
             "type": "string",
             "enum": [
                   "todo",
                   "memo",
                   "note",
-                  "pomodoro",
                   "kanban",
                   "flow",
-                  "board",
-                  "project",
+                  "whiteboard",
                   "table",
-                  "bi",
+                  "form",
+                  "chart",
                   "ppt",
                   "schedule",
-                  "habbit"
-            ],
-            "maxLength": 12
+                  "pomodoro",
+                  "habbit",
+                  "api",
+                  "metatable",
+                  "metaform",
+                  "metachart",
+                  "setting"
+            ]
       },
       "DirTree.Item": {
             "type": "object",

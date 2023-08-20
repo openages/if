@@ -1,14 +1,14 @@
-import { dropRight } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import { createRxDatabase } from 'rxdb'
 import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 import { injectable } from 'tsyringe'
 
-import { nav_items, modules } from '@/appdata'
-import { schema_module, schema_todo } from '@/schemas'
+import { modules } from '@/appdata'
+import { schema_module, schema_setting, schema_todo } from '@/schemas'
+import { id } from '@/utils'
 
-import type { RxDB, App } from '@/types'
+import type { RxDB } from '@/types'
 
 @injectable()
 export default class Index {
@@ -33,6 +33,7 @@ export default class Index {
 
 		await db.addCollections({
 			module: { schema: schema_module, autoMigrate: true },
+			setting: { schema: schema_setting, autoMigrate: true },
 			todo: { schema: schema_todo, autoMigrate: true }
 		})
 
@@ -45,12 +46,13 @@ export default class Index {
 	async addModuleInitData() {
 		if ((await $db.module.count().exec()) > 0) return (this.ready = true)
 
-		const preset_data = [...dropRight(nav_items), ...modules].map((item) => ({
-			module: item.title as Exclude<App.ModuleType, 'widgets'>,
+		const preset_data = modules.map((item) => ({
+			module: item.title,
 			dirtree: []
 		}))
 
 		await window.$db.collections.module.bulkInsert(preset_data)
+		await window.$db.collections.setting.insert({ id: id(), data: JSON.stringify(modules) })
 
 		this.ready = true
 

@@ -6,6 +6,7 @@ export { default as setGlobalAnimation } from './setGlobalAnimation'
 export { default as setStorageWhenChange } from './setStorageWhenChange'
 export { default as onWheel } from './onWheel'
 
+export * from './types'
 export * from './is'
 export * from './filter'
 export * from './rxdb'

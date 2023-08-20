@@ -25,8 +25,7 @@
 			&.dark {
 				.sidebar_item {
 					&:hover,
-					&.active,
-					&.avatar {
+					&.active {
 						svg {
 							path:first-child {
 								fill: inherit;
@@ -62,8 +61,7 @@
 				-webkit-app-region: none;
 
 				&:hover,
-				&.active,
-				&.avatar {
+				&.active {
 					opacity: 1;
 
 					svg {
@@ -79,16 +77,6 @@
 
 				&_title {
 					font-size: 10px;
-				}
-			}
-
-			.avatar {
-				width: 100%;
-				height: 64px;
-
-				.user_avatar {
-					width: 45px;
-					height: 45px;
 				}
 			}
 		}

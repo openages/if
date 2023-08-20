@@ -42,7 +42,7 @@ const Index = (props: IPropsTabs) => {
 				</Then>
 				<Else>
 					<div className={'w_100 h_100vh flex justify_center align_center'}>
-						<Logo size={96}></Logo>
+						<Logo size={84}></Logo>
 					</div>
 				</Else>
 			</If>

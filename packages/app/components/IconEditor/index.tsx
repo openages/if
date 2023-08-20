@@ -1,4 +1,5 @@
 import { Popover, Slider } from 'antd'
+import { useTranslation } from 'react-i18next'
 import { Else, If, Then } from 'react-if'
 
 import { EmojiPicker, LeftIcon, Emoji } from '@/components'
@@ -14,6 +15,7 @@ interface IProps extends IPropsCustomFormItem<{ icon: string; icon_hue?: number 
 
 const Index = (props: IProps) => {
 	const { value = { icon: '', icon_hue: undefined }, left_icon_item, onChange } = props
+	const { t } = useTranslation()
 
 	return (
 		<Popover
@@ -28,7 +30,7 @@ const Index = (props: IProps) => {
 						onEmojiSelect={({ shortcodes }) => onChange({ ...value, icon: shortcodes })}
 					/>
 					<div className={$cx('border_box flex align_center', styles.hue_wrap)}>
-						<span className='hue_label'>色相</span>
+						<span className='hue_label'>{t('translation:components.IconEditor.hue')}</span>
 						<Slider
 							className='hue_slider'
 							min={0}

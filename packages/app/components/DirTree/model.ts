@@ -16,7 +16,7 @@ import type { IProps } from './types'
 
 @injectable()
 export default class Index {
-	module = '' as App.RealModuleType
+	module = '' as App.ModuleType
 	modal_open = false
 	focusing_item = {} as DirTree.Item
 	current_item = {} as DirTree.File
@@ -31,7 +31,7 @@ export default class Index {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
-	async init(module: App.RealModuleType, actions: IProps['actions']) {
+	async init(module: App.ModuleType, actions: IProps['actions']) {
 		this.module = module
 		this.services.actions = actions
 

@@ -1,0 +1,20 @@
+export default {
+	todo: 'Todo',
+	memo: 'Memo',
+	note: 'Note',
+	kanban: 'Kanban',
+	flow: 'Flow',
+	whiteboard: 'Board',
+	table: 'Table',
+	form: 'Form',
+	chart: 'Chart',
+	ppt: 'PPT',
+	schedule: 'Schedule',
+	pomodoro: 'Pomo',
+	habbit: 'Habbit',
+	api: 'Api',
+	metatable: 'MetaTable',
+	metaform: 'MetaForm',
+	metachart: 'MetaChart',
+	setting: 'Setting'
+}

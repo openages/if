@@ -15,7 +15,7 @@ import type { IProps } from './types'
 
 @injectable()
 export default class Index {
-	module = '' as App.RealModuleType
+	module = '' as App.ModuleType
 	actions = {} as IProps['actions']
 	dirtree_query = {} as RxQuery<Module.Item>
 	doc = {} as RxDocument<Module.Item>
@@ -26,7 +26,7 @@ export default class Index {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
-	async init(module: App.RealModuleType) {
+	async init(module: App.ModuleType) {
 		this.module = module
 
 		await this.query()
