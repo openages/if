@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { If, Then, Else } from 'react-if'
 
 import { Logo } from '@/components'
-import { useCurrentModule } from '@/hooks'
 
 import { NavBar, Content } from './components'
 import styles from './index.css'
@@ -10,14 +9,13 @@ import styles from './index.css'
 import type { IPropsTabs, IPropsTabsNavBar, IPropsTabsContent } from '../../types'
 
 const Index = (props: IPropsTabs) => {
-	const { stacks, remove, active, update, move } = props
-	const module = useCurrentModule()
+	const { current_module, stacks, remove, active, update, move } = props
 
 	useEffect(() => {
 		const active_item = stacks.find((item) => item.is_active)
 
-		$app.Event.emit(`${module}/dirtree/setCurrentItem`, active_item ? active_item.file : {})
-	}, [module, stacks])
+		$app.Event.emit(`${current_module}/dirtree/setCurrentItem`, active_item ? active_item.file : {})
+	}, [current_module, stacks])
 
 	const props_nav_bar: IPropsTabsNavBar = {
 		stacks,

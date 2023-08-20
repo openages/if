@@ -1,5 +1,5 @@
 const Index = () => {
-	return <div>Calendar</div>
+	return <div>Note</div>
 }
 
 export default $app.memo(Index)

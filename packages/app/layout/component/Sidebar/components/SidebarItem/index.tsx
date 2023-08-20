@@ -1,5 +1,4 @@
 import { Tooltip } from 'antd'
-import { minimatch } from 'minimatch'
 import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
 import { NavLink } from 'react-router-dom'
@@ -9,7 +8,7 @@ import { ModuleIcon } from '@/components'
 import type { IPropsSidebarItem } from '../../../../types'
 
 const Index = (props: IPropsSidebarItem) => {
-	const { show_bar_title, icon_weight, pathname, item } = props
+	const { current_module, show_bar_title, icon_weight, item, is_active } = props
 	const { t } = useTranslation()
 
 	const LinkItem = (
@@ -17,7 +16,8 @@ const Index = (props: IPropsSidebarItem) => {
 			className={$cx(
 				'sidebar_item clickable flex flex_column justify_center align_center transition_normal',
 				show_bar_title && 'show_bar_title',
-				minimatch(pathname, `${item.path}`) && 'active'
+				is_active && 'active',
+				current_module === item.title && 'current'
 			)}
 			to={item.path}
 		>

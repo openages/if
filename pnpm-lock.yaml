@@ -92,6 +92,9 @@ importers:
       framer-motion:
         specifier: ^10.16.0
         version: 10.16.0(react-dom@0.0.0-experimental-0fb5b61ac-20230814)(react@0.0.0-experimental-0fb5b61ac-20230814)
+      hotkeys-js:
+        specifier: ^3.12.0
+        version: 3.12.0
       i18next:
         specifier: ^23.4.4
         version: 23.4.4
@@ -5540,6 +5543,10 @@ packages:
     engines: {node: '>= 0.4.0'}
     dependencies:
       function-bind: 1.1.1
+
+  /hotkeys-js@3.12.0:
+    resolution: {integrity: sha512-Z+N573ycUKIGwFYS3ID1RzMJiGmtWMGKMiaNLyJS8B1ei+MllF4ZYmKS2T0kMWBktOz+WZLVNikftEgnukOrXg==}
+    dev: false
 
   /hpack.js@2.1.6:
     resolution: {integrity: sha512-zJxVehUdMGIKsRaNt7apO2Gqp0BdqW5yaiGHXXmbpvxgBYVZnAql+BJb4RO5ad2MgpbZKn5G6nMnegrH1FcNYQ==}

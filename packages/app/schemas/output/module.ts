@@ -23,7 +23,8 @@ export default {
                               "metaform",
                               "metachart",
                               "setting"
-                        ]
+                        ],
+                        "maxLength": 30
                   },
                   "dirtree": {
                         "type": "array",
@@ -113,7 +114,8 @@ export default {
                   "metaform",
                   "metachart",
                   "setting"
-            ]
+            ],
+            "maxLength": 30
       },
       "DirTree.Item": {
             "type": "object",

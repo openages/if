@@ -6,7 +6,6 @@ import { injectable } from 'tsyringe'
 
 import { modules } from '@/appdata'
 import { schema_module, schema_setting, schema_todo } from '@/schemas'
-import { id } from '@/utils'
 
 import type { RxDB } from '@/types'
 
@@ -41,6 +40,8 @@ export default class Index {
 		this.instance = db
 
 		await this.addModuleInitData()
+
+		$app.Event.emit('db/ready')
 	}
 
 	async addModuleInitData() {
@@ -52,7 +53,7 @@ export default class Index {
 		}))
 
 		await window.$db.collections.module.bulkInsert(preset_data)
-		await window.$db.collections.setting.insert({ id: id(), data: JSON.stringify(modules) })
+		await window.$db.collections.setting.bulkInsert([{ key: 'apps', data: JSON.stringify(modules) }])
 
 		this.ready = true
 

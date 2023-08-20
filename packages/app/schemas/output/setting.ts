@@ -2,7 +2,7 @@ export default {
       "Setting.Data": {
             "type": "object",
             "properties": {
-                  "id": {
+                  "key": {
                         "type": "string",
                         "maxLength": 30
                   },
@@ -11,7 +11,7 @@ export default {
                   }
             },
             "required": [
-                  "id",
+                  "key",
                   "data"
             ]
       }

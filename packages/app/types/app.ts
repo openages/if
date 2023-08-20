@@ -5,6 +5,7 @@ import type { DirTree } from './dirtree'
 export namespace App {
 	export type ModuleType = (typeof modules)[number]['title']
 	// build:schema 时使用下列配置
+	// /** @maxLength 30 */
 	// export type ModuleType =
 	// 	| 'todo'
 	// 	| 'memo'

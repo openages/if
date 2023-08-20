@@ -1,18 +1,18 @@
 const typed_nav_items = [
 	{
 		title: 'todo',
-		path: '/todo',
-		fixed: true
+		path: '/',
+		is_fixed: true
 	},
 	{
 		title: 'memo',
 		path: '/memo',
-		fixed: true
+		is_fixed: true
 	},
 	{
 		title: 'note',
 		path: '/note',
-		fixed: true
+		is_fixed: true
 	},
 	{
 		title: 'kanban',
