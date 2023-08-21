@@ -24,7 +24,6 @@ export default class Index {
 		this.lang = local.lang ?? getLang(navigator.language)
 
 		i18next.use(initReactI18next).init({
-			debug: window.$is_dev,
 			lng: this.lang,
 			fallbackLng: 'en',
 			resources: {

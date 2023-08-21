@@ -16,7 +16,8 @@ const Index = (props: IPropsAppMenu) => {
 		<Modal
 			rootClassName={styles._local}
 			open={visible}
-			width={480}
+                  width={ 360 }
+                  zIndex={10000}
 			centered
 			closeIcon={null}
 			footer={null}
@@ -33,8 +34,8 @@ const Index = (props: IPropsAppMenu) => {
                                     to={ item.path }
                                     onClick={onClose}
 					>
-						<div className='menu_item flex flex_column align_center'>
-							<ModuleIcon type={item.title} size={48} weight='duotone'></ModuleIcon>
+						<div className='menu_item w_100 border_box flex flex_column align_center'>
+							<ModuleIcon type={item.title} size={30} weight='duotone'></ModuleIcon>
 							<span className='app_name'>{t(`translation:modules.${item.title}`)}</span>
 						</div>
 					</Link>

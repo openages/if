@@ -54,16 +54,17 @@
 			}
 
 			.sidebar_item {
-				width: 36px;
-				height: 36px;
-                        margin-bottom: 18px;
+				-webkit-app-region: none;
+
+				width: 42px;
+				height: 42px;
+                        margin-bottom: 9px;
 				text-decoration: none;
 				opacity: 0.36;
                         border-radius: var(--radius);
-				-webkit-app-region: none;
 
                         &:first-child{
-                              margin-top: 9px;
+                              margin-top: 3px;
                         }
 
 				&:hover,
@@ -82,9 +83,9 @@
                         }
 
 				&.show_bar_title {
-                              width: 48px;
-					height: 60px;
-                              margin-bottom: 6px;
+                              width: 42px;
+					height: 51px;
+                              margin-bottom: 8px;
 				}
 
 				&_title {
@@ -97,8 +98,8 @@
 					height: 64px;
 
 					.btn_apps {
-						width: 36px;
-						height: 36px;
+						width: 42px;
+						height: 42px;
                                     border-radius: var(--radius);
 
                                     &:hover{

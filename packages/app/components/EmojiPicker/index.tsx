@@ -8,7 +8,8 @@ import en from '@emoji-mart/data/i18n/en.json'
 import zh from '@emoji-mart/data/i18n/zh.json'
 import Picker from '@emoji-mart/react'
 
-import { feather_icons, ionicons } from './customs'
+import category_icons from './category_icons'
+import { feather_icons, ionicons, phosphor_icons } from './customs'
 
 interface IProps {
 	onEmojiSelect: ({ shortcodes }: { shortcodes: string }) => void
@@ -74,25 +75,12 @@ const Index = (props: IProps) => {
 		}
 	}, [global.setting.theme])
 
-	const categoryIcons = useMemo(
-		() =>
-			['frequent', 'people', 'nature', 'foods', 'activity', 'places', 'objects', 'symbols', 'flags'].reduce(
-				(total, item) => {
-					total[item] = { svg: require(`@/public/icons/category_${item}.svg`) }
-
-					return total
-				},
-				{} as Record<string, any>
-			),
-		[]
-	)
-
 	return (
 		<Picker
 			data={data}
 			i18n={i18n}
 			theme={global.setting.theme}
-			categoryIcons={categoryIcons}
+			categoryIcons={category_icons}
 			custom={[
 				{
 					id: 'feather_icons',
@@ -103,6 +91,11 @@ const Index = (props: IProps) => {
 					id: 'ionicons',
 					name: 'Ionicons',
 					emojis: ionicons.icon_array
+				},
+				{
+					id: 'phosphor_icons',
+					name: 'Phosphor Icons',
+					emojis: phosphor_icons.icon_array
 				}
 			]}
 			previewPosition='none'

@@ -21,25 +21,27 @@
 ._local {
 	:global {
 		.menu_items_wrap {
-			padding: 8px;
-
 			.menu_item_wrap {
-				width: calc((100% - 16px) / 4 - 12px);
-				padding: 16px 8px;
-				margin: 0 6px;
-				border-radius: var(--radius);
-				border: 2px solid transparent;
+				width: calc(100% / 4);
+				padding: 4px;
 
 				&:hover {
-					border: 2px solid var(--color_text);
+					.menu_item {
+						border: 2px solid var(--color_text);
+					}
 				}
 
 				&.active {
-					background-color: var(--color_bg_1);
+					.menu_item {
+						background-color: var(--color_bg_1);
+					}
 				}
 
 				.menu_item {
+					padding: 12px 6px;
 					line-height: 1;
+					border: 2px solid transparent;
+					border-radius: var(--radius);
 
 					svg {
 						path:first-child {
@@ -48,7 +50,8 @@
 					}
 
 					.app_name {
-						margin-top: 12px;
+						margin-top: 9px;
+                                    font-size: 12px;
 					}
 				}
 			}

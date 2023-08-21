@@ -1,6 +1,6 @@
 ._local {
 	height: 36px;
-	z-index: 1000;
+	z-index: 999;
 	background-color: rgba(var(--color_bg_rgb), 0.6);
 	backdrop-filter: var(--blur);
 

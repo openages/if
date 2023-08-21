@@ -59,9 +59,9 @@ const Index = (props: IPropsSidebar) => {
 					<div className='btn_apps_wrap flex justify_center align_center'>
 						<div
 							className='btn_apps w_100 flex justify_center align_center clickable'
-							onClick={showAppMenu}
+							onMouseDown={showAppMenu}
 						>
-							<DotsNine size={24} weight='bold'></DotsNine>
+							<DotsNine size={27}></DotsNine>
 						</div>
 					</div>
 				</div>

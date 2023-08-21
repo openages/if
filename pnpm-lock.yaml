@@ -89,6 +89,9 @@ importers:
       fast-equals:
         specifier: ^5.0.1
         version: 5.0.1
+      flexsearch:
+        specifier: ^0.7.31
+        version: 0.7.31
       framer-motion:
         specifier: ^10.16.0
         version: 10.16.0(react-dom@0.0.0-experimental-0fb5b61ac-20230814)(react@0.0.0-experimental-0fb5b61ac-20230814)
@@ -152,6 +155,9 @@ importers:
       rxdb:
         specifier: ^14.15.1
         version: 14.15.1(rxjs@7.8.1)
+      rxdb-flexsearch:
+        specifier: ^0.1.1
+        version: 0.1.1(flexsearch@0.7.31)(rxdb@14.15.1)
       smooth-scroll-into-view-if-needed:
         specifier: ^2.0.0
         version: 2.0.0
@@ -3522,6 +3528,10 @@ packages:
       '@types/qs': 6.9.7
       '@types/serve-static': 1.15.2
 
+  /@types/flexsearch@0.7.3:
+    resolution: {integrity: sha512-HXwADeHEP4exXkCIwy2n1+i0f1ilP1ETQOH5KDOugjkTFZPntWo0Gr8stZOaebkxsdx+k0X/K6obU/+it07ocg==}
+    dev: false
+
   /@types/fs-extra@11.0.1:
     resolution: {integrity: sha512-MxObHvNl4A69ofaTRU8DFqvgzzv8s9yRtaPPm5gud9HDNvpB3GPQFvNuTWAI59B9huVGV5jXYJwbCsmBsOGYWA==}
     dependencies:
@@ -3882,6 +3892,11 @@ packages:
   /@xtuc/long@4.2.2:
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
     dev: true
+
+  /D@1.0.0:
+    resolution: {integrity: sha512-nQvrCBu7K2pSSEtIM0EEF03FVjcczCXInMt3moLNFbjlWx6bZrX72uT6/1uAXDbnzGUAx9gTyDiQ+vrFi663oA==}
+    deprecated: Package no longer supported. Contact support@npmjs.com for more info.
+    dev: false
 
   /accepts@1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
@@ -5280,6 +5295,10 @@ packages:
       '@firebase/util': 1.9.3
     transitivePeerDependencies:
       - encoding
+    dev: false
+
+  /flexsearch@0.7.31:
+    resolution: {integrity: sha512-XGozTsMPYkm+6b5QL3Z9wQcJjNYxp0CYn3U1gO7dwD6PAqU1SVWZxI9CCg3z+ml3YfqdPnrBehaBrnH2AGKbNA==}
     dev: false
 
   /follow-redirects@1.15.2:
@@ -7538,6 +7557,19 @@ packages:
     dependencies:
       queue-microtask: 1.2.3
     dev: true
+
+  /rxdb-flexsearch@0.1.1(flexsearch@0.7.31)(rxdb@14.15.1):
+    resolution: {integrity: sha512-cKBPdJKQ+1zSvtgxtuORTZrn1/YQH2NE7iwaUWxPfgA2Fh+BSQWZjdSQHJw41yxrWDqmEcsHKU+V0emOwkQMHw==}
+    engines: {node: '>= 16'}
+    peerDependencies:
+      flexsearch: 0.7.21
+      rxdb: ^14.0.0
+    dependencies:
+      '@types/flexsearch': 0.7.3
+      D: 1.0.0
+      flexsearch: 0.7.31
+      rxdb: 14.15.1(rxjs@7.8.1)
+    dev: false
 
   /rxdb@14.15.1(rxjs@7.8.1):
     resolution: {integrity: sha512-37iGird5LkRuVjhmJFuwvmC1iLJsahfHbZqsswKXu80/rsOecPqOXwTi855IUMP1Wqblq2EFkWwAVkAgsMCNvA==}
