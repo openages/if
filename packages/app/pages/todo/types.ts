@@ -15,7 +15,7 @@ export interface IPropsHeader extends Pick<Todo.Data & DirTree.File, 'name' | 'i
 
 export interface IPropsSettingsModal {
 	visible_settings_modal: Model['visible_settings_modal']
-	info: Services['info'] & Services['file']
+	info: Services['info'] & Services['file']['data']
 	closeSettingsModal: () => void
 	onInfoChange: Model['onInfoChange']
 }

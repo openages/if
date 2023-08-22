@@ -27,7 +27,9 @@ export default class Index {
 	}
 
 	async onInfoChange(
-		changedValues: Partial<Todo.Data & Services['file']> & { icon_info: { icon: string; icon_hue?: number } },
+		changedValues: Partial<Todo.Data & Services['file']['data']> & {
+			icon_info: { icon: string; icon_hue?: number }
+		},
 		values: Todo.Data & Services['file']
 	) {
 		if (changedValues.name || changedValues.icon_info) {
@@ -49,8 +51,9 @@ export default class Index {
 	off() {
 		$app.Event.off('todo/ready', this.init)
 
-		this.services.file_query?.$?.unsubscribe?.()
 		this.services.info_query?.$?.unsubscribe?.()
 		this.services.items_query?.$?.unsubscribe?.()
+
+		this.services.file.off()
 	}
 }

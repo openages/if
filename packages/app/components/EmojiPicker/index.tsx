@@ -8,7 +8,7 @@ import en from '@emoji-mart/data/i18n/en.json'
 import zh from '@emoji-mart/data/i18n/zh.json'
 import Picker from '@emoji-mart/react'
 
-import category_icons from './category_icons'
+import category_icons from './category'
 import { feather_icons, ionicons, phosphor_icons } from './customs'
 
 interface IProps {

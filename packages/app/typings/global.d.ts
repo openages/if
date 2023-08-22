@@ -3,6 +3,7 @@ import type { MessageInstance } from 'antd/es/message/interface'
 import type { ModalStaticFunctions } from 'antd/es/modal/confirm'
 import type { NotificationInstance } from 'antd/es/notification/interface'
 import type { TFunction } from 'i18next'
+import type { NavigateFunction } from 'react-router-dom'
 
 type $CX = (...args: Array<string | boolean | null | undefined>) => string
 
@@ -18,6 +19,7 @@ declare global {
 
 		$t: TFunction<'translation', undefined>
 		$cx: $CX
+		$navigate: NavigateFunction
 
 		$app: $App
 		$db: RxDB.DBContent
@@ -30,6 +32,7 @@ declare global {
 
 	let $t: TFunction<'translation', undefined>
 	let $cx: $CX
+	let $navigate: NavigateFunction
 
 	let $app: $App
 	let $db: RxDB.DBContent

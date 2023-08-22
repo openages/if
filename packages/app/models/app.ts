@@ -1,4 +1,4 @@
-import { makeAutoObservable, toJS } from 'mobx'
+import { makeAutoObservable, reaction, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import type { App } from '@/types'
@@ -11,6 +11,8 @@ export default class Index {
 	app_modules = [] as App.Modules
 	actives = [] as Array<{ app: App.ModuleType; pathname: string; key: string }>
 	visible_app_menu = false
+	visible_app_switch = false
+	switch_index = 0
 
 	constructor() {
 		makeAutoObservable(this, {}, { autoBind: true })
@@ -26,7 +28,18 @@ export default class Index {
 	}
 
 	init() {
+		this.reactions()
 		this.query()
+	}
+
+	reactions() {
+		reaction(
+			() => [this.visible_app_menu, this.visible_app_switch],
+			([visible_app_menu, visible_app_switch]) => {
+				if (visible_app_menu) this.visible_app_switch = false
+				if (visible_app_switch) this.visible_app_menu = false
+			}
+		)
 	}
 
 	async query() {
@@ -49,15 +62,49 @@ export default class Index {
 		this.visible_app_menu = !this.visible_app_menu
 	}
 
+	appSwitch() {
+		if (!this.visible_app_switch) {
+			this.visible_app_switch = true
+		} else {
+			this.changeSwitchIndex()
+		}
+	}
+
+	handleAppSwitch() {
+		this.visible_app_switch = false
+
+		$navigate(this.actives[this.switch_index].pathname)
+	}
+
+	changeSwitchIndex(index?: number) {
+            if (index !== undefined) return (this.switch_index = index)
+            
+		const next_value = this.switch_index + 1
+
+		if (next_value > this.actives.length - 1) {
+			this.switch_index = 0
+		} else {
+			this.switch_index = next_value
+		}
+	}
+
 	on() {
 		$app.Event.on('db/ready', this.init)
 		$app.Event.on('global.app.toggleAppMenu', this.toggleAppMenu)
+		$app.Event.on('global.app.appSwitch', this.appSwitch)
+		$app.Event.on('global.app.handleAppSwitch', this.handleAppSwitch)
+
+		window.addEventListener('blur', this.handleAppSwitch)
 	}
 
 	off() {
 		$app.Event.off('db/ready', this.init)
 		$app.Event.off('global.app.toggleAppMenu', this.toggleAppMenu)
+		$app.Event.off('global.app.appSwitch', this.appSwitch)
+		$app.Event.off('global.app.handleAppSwitch', this.handleAppSwitch)
 
 		this.apps_query?.$?.unsubscribe?.()
+
+		window.removeEventListener('blur', this.handleAppSwitch)
 	}
 }

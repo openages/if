@@ -1,0 +1,47 @@
+[data-theme='dark'] {
+	._local {
+		:global {
+			.switch_items_wrap {
+				.switch_item_wrap {
+					color: rgba(var(--color_bg_rgb), 1);
+				}
+			}
+		}
+	}
+}
+
+._local {
+	:global {
+		.if-modal-content {
+			padding: 9px;
+			background-color: rgba(var(--color_text_rgb), 0.81);
+			backdrop-filter: var(--blur);
+		}
+
+		.switch_items_wrap {
+			.switch_item_wrap {
+				padding: 9px;
+				line-height: 1;
+				border: 2px solid transparent;
+				border-radius: var(--radius);
+				color: rgba(var(--color_bg_rgb), 0.72);
+                        user-select: none;
+
+				&.active {
+					background-color: rgba(var(--color_bg_rgb), 0.1);
+				}
+
+				svg {
+					path:first-child {
+						fill: var(--color_main);
+					}
+				}
+
+				.app_name {
+					margin-top: 6px;
+					font-size: 12px;
+				}
+			}
+		}
+	}
+}

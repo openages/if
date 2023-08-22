@@ -1,0 +1,52 @@
+{
+      "Root": {
+            "Personal": {
+                  "Photos": [
+                        "SummerVacation",
+                        "FamilyGathering",
+                        "FriendsParty"
+                  ],
+                  "Documents": [
+                        "Resume",
+                        "TravelPlan",
+                        "Budget"
+                  ],
+                  "Notes": [
+                        "MeetingNotes",
+                        "Ideas",
+                        "ShoppingList"
+                  ]
+            },
+            "Work": {
+                  "Projects": {
+                        "ProjectA": [
+                              "Proposal",
+                              "Timeline",
+                              "Presentation"
+                        ],
+                        "ProjectB": [
+                              "Requirements",
+                              "Design",
+                              "Report"
+                        ]
+                  },
+                  "Reports": [
+                        "Q1_Report",
+                        "Q2_Report",
+                        "Q3_Report"
+                  ],
+                  "Communications": {
+                        "Emails": [
+                              "ClientA",
+                              "ColleagueB",
+                              "BossC"
+                        ],
+                        "MeetingMinutes": [
+                              "Meeting_01",
+                              "Meeting_02",
+                              "Meeting_03"
+                        ]
+                  }
+            }
+      }
+}

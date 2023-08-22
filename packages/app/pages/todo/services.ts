@@ -2,11 +2,11 @@ import { makeAutoObservable, reaction } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
+import { File } from '@/services'
 import { setStorageWhenChange } from '@/utils'
 import { loading } from '@/utils/decorators'
-import { find } from '@/utils/tree'
 
-import type { Module, DirTree, Todo, TodoArchive, RxDB } from '@/types'
+import type { Todo, TodoArchive, RxDB } from '@/types'
 import type { RxDocument, RxQuery } from 'rxdb'
 
 const archives_page_size = 12
@@ -14,8 +14,6 @@ const archives_page_size = 12
 @injectable()
 export default class Index {
 	id = ''
-	file_query = {} as RxQuery<Module.Item>
-	file = {} as DirTree.File
 	info_query = {} as RxQuery<Todo.Data>
 	info = {} as Todo.Data
 	items_query = {} as RxDB.ItemsQuery<Todo.TodoItem>
@@ -24,7 +22,10 @@ export default class Index {
 	current_angle_id = ''
 	archives_page = 0
 
-	constructor(public utils: Utils) {
+	constructor(
+		public utils: Utils,
+		public file: File
+	) {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
@@ -34,7 +35,7 @@ export default class Index {
 		this.reactions()
 
 		if (this.id) {
-			this.queryFile()
+			this.file.query(this.id)
 			this.query()
 		}
 	}
@@ -42,10 +43,10 @@ export default class Index {
 	reactions() {
 		reaction(
 			() => this.id,
-			() => {
-				if (!this.id) return this.resetData()
+			(v) => {
+				if (!v) return this.resetData()
 
-				this.queryFile()
+				this.file.query(v)
 				this.query()
 			}
 		)
@@ -91,19 +92,6 @@ export default class Index {
 		this.items_query = {} as RxDB.ItemsQuery<Todo.TodoItem>
 		this.archives = [] as RxDB.ItemsDoc<TodoArchive.Item>
 		this.archives_page = 0
-	}
-
-	@loading
-	async queryFile() {
-		this.file_query = $db.module.findOne({ selector: { module: 'todo' } })! as RxQuery<Module.Item>
-
-		const target = (await this.file_query.exec()) as RxDocument<Module.Item>
-
-		this.file = find(target.dirtree, this.id) as DirTree.File
-
-		target.$.subscribe(({ dirtree }) => {
-			this.file = find(dirtree, this.id) as DirTree.File
-		})
 	}
 
 	@loading

@@ -28,9 +28,9 @@ const Index = ({ id }: IProps) => {
 	}, [id])
 
 	const props_header: IPropsHeader = {
-		name: x.services.file.name,
-		icon: x.services.file.icon,
-		icon_hue: x.services.file.icon_hue,
+		name: x.services.file.data.name,
+		icon: x.services.file.data.icon,
+		icon_hue: x.services.file.data.icon_hue,
 		desc: x.services.info.desc,
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true))
 	}
@@ -47,14 +47,14 @@ const Index = ({ id }: IProps) => {
 
 	const props_settings_modal: IPropsSettingsModal = {
 		visible_settings_modal: x.visible_settings_modal,
-		info: { ...toJS(x.services.info), ...toJS(x.services.file) },
+		info: { ...toJS(x.services.info), ...toJS(x.services.file.data) },
 		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false)),
 		onInfoChange: useMemoizedFn(x.onInfoChange)
 	}
 
 	return (
 		<div className={$cx('w_100 flex flex_column', styles._local)}>
-			<If condition={x.services.id && x.services.file?.name}>
+			<If condition={x.services.id && x.services.file.data.name}>
 				<Then>
 					<Header {...props_header}></Header>
 					<Tabs {...props_tabs}></Tabs>

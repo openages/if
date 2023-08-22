@@ -5,7 +5,7 @@ import { ConfigProvider, App } from 'antd'
 import { minimatch } from 'minimatch'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState, useMemo, unstable_Offscreen as Offscreen } from 'react'
+import { useLayoutEffect, useState, useMemo, unstable_Offscreen as Offscreen, useEffect } from 'react'
 import { IconContext } from 'react-icons'
 import { useLocation } from 'react-router-dom'
 import { container } from 'tsyringe'
@@ -15,13 +15,13 @@ import { OffscreenOutlet, Loading } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import { useTheme, useAntdLocale, useCurrentModule } from '@/hooks'
 
-import { Sidebar, Tabs, AppMenu } from './component'
-import { useLayout, useGlobalTranslate } from './hooks'
+import { Sidebar, Tabs, AppMenu, AppSwitch } from './component'
+import { useLayout, useGlobalNavigate, useGlobalTranslate } from './hooks'
 import styles from './index.css'
 
 import type { AppProps } from 'antd'
 import type { ConfigProviderProps } from 'antd/es/config-provider'
-import type { IPropsSidebar, IPropsTabs, IPropsAppMenu } from './types'
+import type { IPropsSidebar, IPropsTabs, IPropsAppMenu, IPropsAppSwitch } from './types'
 import type { IPropsOffscreenOutlet } from '@/components/OffscreenOutlet'
 
 const Index = () => {
@@ -34,6 +34,7 @@ const Index = () => {
 	const apps = toJS(global.app.apps)
 	const actives = toJS(global.app.actives)
 
+	useGlobalNavigate()
 	useGlobalTranslate()
 
 	useLayoutEffect(() => {
@@ -41,6 +42,10 @@ const Index = () => {
 
 		return () => global.off()
 	}, [])
+
+	useEffect(() => {
+		global.app.switch_index = global.app.actives.findIndex((item) => item.app === current_module)
+	}, [current_module, global.app.actives])
 
 	const is_exclude_router = useMemo(() => exclude_paths.some((item) => minimatch(pathname, item)), [pathname])
 
@@ -86,6 +91,15 @@ const Index = () => {
 		onClose: useMemoizedFn(() => (global.app.visible_app_menu = false))
 	}
 
+	const props_app_switch: IPropsAppSwitch = {
+		visible: global.app.visible_app_switch,
+		switch_index: global.app.switch_index,
+		actives,
+		onClose: useMemoizedFn(() => (global.app.visible_app_switch = false)),
+		changeSwitchIndex: useMemoizedFn(global.app.changeSwitchIndex),
+		handleAppSwitch: useMemoizedFn(global.app.handleAppSwitch)
+	}
+
 	if (!global.db.ready) return <Loading></Loading>
 
 	return (
@@ -106,6 +120,7 @@ const Index = () => {
 							</div>
 						</div>
 						<AppMenu {...props_app_menu}></AppMenu>
+						<AppSwitch {...props_app_switch}></AppSwitch>
 					</IconContext.Provider>
 				</App>
 			</ConfigProvider>

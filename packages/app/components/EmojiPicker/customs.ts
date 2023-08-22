@@ -53,10 +53,10 @@ export const ionicons = ionicons_data.reduce(
 
 export const phosphor_icons = phosphor_icons_data.reduce(
 	(total, item) => {
-		const styles = ['thin', 'light', 'regular', 'bold', 'fill', 'doutone']
+		const styles = ['thin', 'light', '', 'bold', 'fill', 'duotone']
 
 		const targets = styles.map((style) => {
-			const key = `${item.name}-${style}`
+			const key = `${item.name}${style ? '-' + style : ''}`
 			const target = {
 				id: key,
 				name: key,

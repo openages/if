@@ -15,8 +15,9 @@ window.$app = {
 	Event: new EventEmitter()
 }
 
-window.$cx = cx
 window.$t = (() => {}) as any
+window.$cx = cx
+window.$navigate = (() => {}) as any
 window.$message = {} as MessageInstance
 window.$notification = {} as NotificationInstance
 window.$modal = {} as Omit<ModalStaticFunctions, 'warn'>
