@@ -72,6 +72,7 @@ const Index = () => {
 
 	const props_offscreen_pages_outlet: IPropsOffscreenOutlet = {
 		current_module,
+		apps: toJS(global.app.app_modules),
 		setActives: useMemoizedFn(global.app.setActives)
 	}
 

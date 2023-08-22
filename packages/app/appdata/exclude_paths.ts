@@ -1,1 +1,1 @@
-export default ['/setting*']
+export default ['/setting', '/setting/*']

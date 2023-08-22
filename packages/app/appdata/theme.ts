@@ -3,7 +3,7 @@ export const themes = ['light', 'dark'] as const
 export type Theme = (typeof themes)[number]
 
 export const color_mains = [
-	'#ff0000',
+	'#FF0000',
 	'#E91E63',
 	'#9C27B0',
 	'#673AB7',

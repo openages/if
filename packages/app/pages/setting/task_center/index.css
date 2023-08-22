@@ -1,0 +1,20 @@
+._local {
+	padding-top: 36px;
+
+	:global {
+		.if-table-cell {
+			background-color: transparent !important;
+
+			&::before {
+				display: none;
+			}
+		}
+
+		.btn_wrap {
+			width: 24px;
+			height: 24px;
+			border: 1px solid var(--color_border_light);
+			border-radius: var(--radius);
+		}
+	}
+}

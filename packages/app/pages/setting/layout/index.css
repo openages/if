@@ -1,0 +1,30 @@
+.nav_menu {
+	:global {
+		.menu_items {
+                  padding-top: 36px;
+                  
+			.menu_item_wrap {
+                        width: calc((100% - 24px) / 3);
+                        height: auto;
+                        padding: 0;
+                        border: none;
+
+                        .menu_item{
+                              padding: 12px 0;
+                              background-color: var(--color_bg_1);
+                              border-radius: var(--radius);
+                              line-height: 1;
+                              border: 1px dashed var(--color_border);
+
+                              &.active{
+                                    border-color: var(--color_text_grey);
+                              }
+                        }
+
+                        &:hover{
+                              background-color: var(--color_bg_2);
+                        }
+			}
+		}
+	}
+}

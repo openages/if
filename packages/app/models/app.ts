@@ -62,7 +62,9 @@ export default class Index {
 		this.visible_app_menu = !this.visible_app_menu
 	}
 
-	appSwitch() {
+      appSwitch() {
+            if (!this.actives.length) return
+            
 		if (!this.visible_app_switch) {
 			this.visible_app_switch = true
 		} else {
@@ -71,14 +73,16 @@ export default class Index {
 	}
 
 	handleAppSwitch() {
+		if (!this.visible_app_switch) return
+
 		this.visible_app_switch = false
 
 		$navigate(this.actives[this.switch_index].pathname)
 	}
 
 	changeSwitchIndex(index?: number) {
-            if (index !== undefined) return (this.switch_index = index)
-            
+		if (index !== undefined) return (this.switch_index = index)
+
 		const next_value = this.switch_index + 1
 
 		if (next_value > this.actives.length - 1) {

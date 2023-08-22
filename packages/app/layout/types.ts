@@ -48,7 +48,7 @@ export interface IPropsAppMenu {
 export interface IPropsAppSwitch {
 	visible: GlobalModel['app']['visible_app_switch']
 	actives: GlobalModel['app']['actives']
-      switch_index: GlobalModel[ 'app' ][ 'switch_index' ]
+	switch_index: GlobalModel['app']['switch_index']
 	changeSwitchIndex: GlobalModel['app']['changeSwitchIndex']
 	handleAppSwitch: GlobalModel['app']['handleAppSwitch']
 	onClose: () => void

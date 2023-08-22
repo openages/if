@@ -1,3 +1,4 @@
+import { minimatch } from 'minimatch'
 import { useMemo } from 'react'
 import { matchPath, useLocation } from 'react-router-dom'
 
@@ -12,7 +13,7 @@ export default () => {
 		let target_index = null as number | null
 
 		modules.map((item, index) => {
-			if (matchPath(item.path, pathname)) {
+			if (matchPath(item.path, pathname) || minimatch(pathname, `${item.path}/*`)) {
 				target_index = index
 			}
 		})
