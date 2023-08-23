@@ -8,6 +8,7 @@ import type { DocSetting } from '@/schemas'
 @injectable()
 export default class Index {
 	apps_query = {} as RxQuery<DocSetting>
+	apps_doc = {} as RxDocument<DocSetting>
 	app_modules = [] as App.Modules
 	actives = [] as Array<{ app: App.ModuleType; pathname: string; key: string }>
 	visible_app_menu = false
@@ -45,13 +46,19 @@ export default class Index {
 	async query() {
 		this.apps_query = $db.setting.findOne({ selector: { key: 'apps' } })! as RxQuery<DocSetting>
 
-		const target = (await this.apps_query.exec()) as RxDocument<DocSetting>
+		this.apps_doc = (await this.apps_query.exec()) as RxDocument<DocSetting>
 
-		this.app_modules = JSON.parse(target.data)
+		this.app_modules = JSON.parse(this.apps_doc.data)
 
-		target.$.subscribe(({ data }) => {
+		this.apps_doc.$.subscribe(({ data }) => {
 			this.app_modules = JSON.parse(data)
 		})
+	}
+
+	async update(v: App.Modules) {
+		this.app_modules = v
+
+		this.apps_doc.incrementalPatch({ data: JSON.stringify(v) })
 	}
 
 	setActives(v: Index['actives']) {
@@ -62,9 +69,9 @@ export default class Index {
 		this.visible_app_menu = !this.visible_app_menu
 	}
 
-      appSwitch() {
-            if (!this.actives.length) return
-            
+	appSwitch() {
+		if (!this.actives.length) return
+
 		if (!this.visible_app_switch) {
 			this.visible_app_switch = true
 		} else {

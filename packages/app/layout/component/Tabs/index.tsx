@@ -11,7 +11,7 @@ import type { IPropsTabs, IPropsTabsNavBar, IPropsTabsContent } from '../../type
 const Index = (props: IPropsTabs) => {
 	const { current_module, stacks, remove, active, update, move } = props
 
-	useEffect(() => {
+      useEffect(() => {
 		const active_item = stacks.find((item) => item.is_active)
 
 		$app.Event.emit(`${current_module}/dirtree/setCurrentItem`, active_item ? active_item.file : {})
@@ -23,7 +23,7 @@ const Index = (props: IPropsTabs) => {
 		active,
 		update,
 		move
-	}
+      }
 
 	const props_content: IPropsTabsContent = {
 		stacks

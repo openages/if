@@ -27,6 +27,12 @@ export default class Index {
 			} else {
 				this.stacks.splice(this.stacks.length - 1, 1, v)
 			}
+
+			this.stacks.map((item) => {
+				item.is_active = false
+			})
+
+			this.stacks[this.stacks.length - 1].is_active = true
 		} else {
 			this.stacks.map((item) => {
 				item.is_active = false

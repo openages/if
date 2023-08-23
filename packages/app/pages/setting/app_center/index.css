@@ -12,10 +12,24 @@
 				background-color: var(--color_bg_1);
 				border-radius: var(--radius);
 
-				.btn_wrap {
+				.if-switch {
+					.if-switch-inner {
+						padding: 0;
+					}
+
+					&-checked {
+						.if-switch-inner {
+							padding-right: 18px;
+							padding-left: 4px;
+						}
+					}
+				}
+
+				.btn_drag {
 					padding: 4px;
 					border: 1px solid var(--color_border);
 					border-radius: var(--radius);
+					cursor: grab;
 
 					&:hover {
 						background-color: var(--color_bg_2);

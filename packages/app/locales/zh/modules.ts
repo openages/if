@@ -4,7 +4,7 @@ export default {
 	note: '笔记',
 	kanban: '看板',
 	flow: '流程',
-	board: '白板',
+	whiteboard: '白板',
 	table: '表格',
 	form: '表单',
 	chart: '图表',

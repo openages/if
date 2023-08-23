@@ -4,13 +4,17 @@
 
 	:global {
 		.app_module_item_wrap {
-			width: calc(100% / 3);
+			width: calc(100% / 2);
 			padding: 3px;
 
 			.app_module_item {
 				padding: 12px;
 				background-color: var(--color_bg_1);
 				border-radius: var(--radius);
+
+				.module {
+					font-size: 12px;
+				}
 
 				.btn_wrap {
 					padding: 4px;
@@ -19,6 +23,12 @@
 
 					&:hover {
 						background-color: var(--color_bg_2);
+					}
+
+					&.disabled {
+						background-color: var(--color_bg_2);
+						pointer-events: none;
+						opacity: 0.3;
 					}
 				}
 			}

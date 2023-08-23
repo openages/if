@@ -27,6 +27,7 @@ export namespace App {
 	// 	| 'setting'
 
 	export interface Module {
+		id: App.ModuleType
 		title: App.ModuleType
 		path: string
 		is_fixed?: boolean

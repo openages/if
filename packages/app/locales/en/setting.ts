@@ -1,9 +1,17 @@
 export default {
+	nav: {
+		titles: {
+			setting: 'Global',
+			app_center: 'Menu',
+			task_center: 'Tasks',
+			tab_center: 'Tabs'
+		}
+	},
 	Normal: {
 		title: 'Setting',
 		language: {
-                  title: 'Language',
-			desc: 'Languages used by applications and modules',
+			title: 'Language',
+			desc: 'Languages used by applications and modules'
 		},
 		theme: {
 			title: 'Theme',

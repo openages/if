@@ -1,4 +1,12 @@
 export default {
+	nav: {
+		titles: {
+			setting: '全局设置',
+			app_center: '菜单设置',
+			task_center: '任务管理器',
+			tab_center: '标签页管理'
+		}
+	},
 	Normal: {
 		title: '设置',
 		language: {

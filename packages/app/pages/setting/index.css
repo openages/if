@@ -1,13 +1,40 @@
 ._local {
-	padding-top: 36px;
-	padding-bottom: 36px;
+	padding-top: 24px;
+	padding-bottom: 24px;
 
 	:global {
+		.menu_items {
+			margin-bottom: 12px;
+
+			.menu_item {
+				width: calc((100% - 24px) / 4);
+				height: auto;
+				border: none;
+				padding: 12px 0;
+				background-color: var(--color_bg_1);
+				border-radius: var(--radius);
+				line-height: 1;
+				border: 1px dashed var(--color_border);
+
+				&:hover {
+					background-color: var(--color_bg_2);
+				}
+
+				&.active {
+					border-color: var(--color_text_grey);
+				}
+			}
+		}
+
 		.setting_title {
 			font-size: 16px;
 			font-weight: 500;
 			line-height: 1;
 			margin-bottom: 12px;
+
+			&:first-child {
+				margin-top: 24px;
+			}
 		}
 
 		.setting_items {

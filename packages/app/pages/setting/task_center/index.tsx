@@ -1,69 +1,38 @@
-import { Table } from 'antd'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
+import { ModuleIcon } from '@/components'
 import { GlobalModel } from '@/context/app'
-import { Trash } from '@phosphor-icons/react'
+import { Power } from '@phosphor-icons/react'
 
 import styles from './index.css'
-
-import type { App as AppType } from '@/types'
-import type { App } from '@/models'
-import type { TableColumnsType } from 'antd'
 
 const Index = () => {
 	const [global] = useState(() => container.resolve(GlobalModel))
 	const actives = toJS(global.app.actives)
 	const { t } = useTranslation()
 
-	const columns: TableColumnsType<App['actives'][number]> = [
-		{
-			title: '名称',
-			dataIndex: 'app',
-			align: 'center',
-			render: (v: AppType.ModuleType) => t(`translation:modules.${v}`)
-		},
-		{
-			title: 'ID',
-			dataIndex: 'app',
-			align: 'center'
-		},
-		{
-			title: 'Key',
-			dataIndex: 'key',
-
-			align: 'center'
-		},
-		{
-			title: '操作',
-			dataIndex: 'operations',
-			align: 'center',
-			render: (_, item) => (
-				<div className='flex justify_center'>
-					<div className='btn_wrap flex justify_center align_center clickable'>
-						<Trash
-							size={14}
+	return (
+		<div className={$cx('w_100 flex flex_wrap', styles._local)}>
+			{actives.map((item) => (
+				<div className='app_module_item_wrap border_box' key={item.app}>
+					<div className='app_module_item w_100 border_box flex justify_between align_center'>
+						<div className='flex align_center'>
+							<ModuleIcon type={item.app} size={24}></ModuleIcon>
+							<span className='name ml_12'>{t(`translation:modules.${item.app}`)}</span>
+						</div>
+						<div
+							className='btn_wrap flex justify_end align_center ml_12 clickable'
 							onClick={() => $app.Event.emit('global.app.exitApp', item.app)}
-						></Trash>
+						>
+							<Power size={16}></Power>
+						</div>
 					</div>
 				</div>
-			)
-		}
-	]
-
-	return (
-		<div className={$cx('limited_unchanged_content_wrap', styles._local)}>
-			<Table
-				columns={columns}
-				dataSource={actives}
-				rowKey={(item) => item.app}
-				size='small'
-				bordered
-				pagination={false}
-			></Table>
+			))}
 		</div>
 	)
 }

@@ -1,6 +1,6 @@
 import { Radio, Select } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { Fragment, useMemo } from 'react'
+import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { locale_options, themes } from '@/appdata'

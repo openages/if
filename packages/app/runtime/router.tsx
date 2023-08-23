@@ -20,17 +20,7 @@ const routes: Array<RouteObject> = [
 	},
 	{
 		path: '/setting',
-		element: <LazyElement type='pages' path='setting/layout' />,
-		children: [
-			{
-				path: '',
-				element: <LazyElement type='pages' path='setting' />
-			},
-			{
-				path: 'task_center',
-				element: <LazyElement type='pages' path='setting/task_center' />
-			}
-		]
+		element: <LazyElement type='pages' path='setting' />
 	}
 ]
 

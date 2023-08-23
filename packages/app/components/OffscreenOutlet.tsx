@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { omit } from 'lodash-es'
+import { omit, pullAt } from 'lodash-es'
 import { useEffect, useState, unstable_Offscreen as Offscreen, Fragment } from 'react'
 import { useOutlet, useLocation } from 'react-router-dom'
 
@@ -39,7 +39,22 @@ const Index = (props: IPropsOffscreenOutlet) => {
 		const result = cache_pages.some((item) => item.pathname === pathname)
 		const is_app = Boolean(apps.find((item) => item.path === pathname))
 
-		if (result || !apps.length) return
+            if (!apps.length) return
+            
+		if (result) {
+			const outdates = []
+
+			cache_pages.map((item, index) => {
+				if (item.pathname !== pathname && !item.is_app) outdates.push(index)
+			})
+
+                  if (!outdates.length) return
+                  
+                  pullAt(cache_pages, outdates)
+			setCachePages([...cache_pages])
+
+			return
+		}
 
 		setCachePages([...cache_pages, { app: current_module, is_app, pathname, key, outlet }])
 	}, [current_module, apps, cache_pages, pathname, key, outlet])
