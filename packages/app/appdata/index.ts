@@ -7,3 +7,5 @@ export * from './locales'
 export * from './theme'
 export * from './modules'
 export * from './layout'
+
+export type { ShortcutEventPaths } from './shortcuts'

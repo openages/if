@@ -5,12 +5,13 @@ import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { Wave } from '@/components'
-import { Sliders, Layout, Activity, Cards } from '@phosphor-icons/react'
+import { Sliders, Layout, Activity, Cards, Command } from '@phosphor-icons/react'
 
 import AppCenter from './app_center'
 import { ColorSelector, Normal } from './components'
 import styles from './index.css'
 import Model from './model'
+import ShortcutCenter from './shortcut_center'
 import TabCenter from './tab_center'
 import TaskCenter from './task_center'
 
@@ -47,6 +48,12 @@ const Index = () => {
 			icon: Cards,
 			key: '3',
 			children: <TabCenter></TabCenter>
+		},
+		{
+			label: t('translation:setting.nav.titles.shortcut_center'),
+			icon: Command,
+			key: '4',
+			children: <ShortcutCenter></ShortcutCenter>
 		}
 	]
 

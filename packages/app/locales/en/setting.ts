@@ -4,7 +4,8 @@ export default {
 			setting: 'Global',
 			app_center: 'Menu',
 			task_center: 'Tasks',
-			tab_center: 'Tabs'
+			tab_center: 'Tabs',
+			shortcut_center: 'Shortcuts'
 		}
 	},
 	Normal: {

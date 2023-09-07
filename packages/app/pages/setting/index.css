@@ -7,7 +7,7 @@
 			margin-bottom: 12px;
 
 			.menu_item {
-				width: calc((100% - 24px) / 4);
+				width: calc((100% - 32px) / 5);
 				height: auto;
 				border: none;
 				padding: 12px 0;

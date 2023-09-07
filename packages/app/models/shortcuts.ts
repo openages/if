@@ -4,12 +4,13 @@ import { injectable } from 'tsyringe'
 
 import { shortcuts } from '@/appdata'
 
+import type { ShortcutEventPaths } from '@/appdata'
+
 @injectable()
 export default class Index {
 	keys = shortcuts as Array<{
-		name: string
 		key_bindings: string
-		event_path: string
+		event_path: ShortcutEventPaths
 		readonly: boolean
 		special_key?: string
 		options?: {
