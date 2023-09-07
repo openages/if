@@ -43,5 +43,8 @@ export default {
 	},
 	ColorSelector: {
 		title: 'Theme Color'
+	},
+	Menu: {
+		fixed: 'Fixed'
 	}
 }

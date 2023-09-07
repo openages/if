@@ -20,8 +20,8 @@ const Index = (props: IProps) => {
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
 		id: item.id,
 		data: { index }
-      })
-      
+	})
+
 	return (
 		<div
 			className='app_module_item_wrap border_box'
@@ -37,7 +37,7 @@ const Index = (props: IProps) => {
 					<Switch
 						size='small'
 						checked={item.is_fixed}
-						checkedChildren='固定'
+						checkedChildren={t('translation:setting.Menu.fixed')}
 						onChange={(v) => changeIsFixed(index, v)}
 					></Switch>
 					<div

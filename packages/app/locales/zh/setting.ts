@@ -43,5 +43,8 @@ export default {
 	},
 	ColorSelector: {
 		title: '主题色'
+	},
+	Menu: {
+		fixed: '固定'
 	}
 }
