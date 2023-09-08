@@ -18,7 +18,7 @@ import type { Todo } from '@/types'
 const { TextArea } = Input
 
 const Index = (props: IPropsInput) => {
-	const { current_angle_id, tags } = props
+	const { current_angle_id, loading, tags, add } = props
 	const limits = useLimits()
 	const { t } = useTranslation()
 	const r = useReactive<Todo.TodoItem>({
@@ -26,12 +26,20 @@ const Index = (props: IPropsInput) => {
 		type: 'todo',
 		status: 'unchecked',
 		text: '',
-		angle_id: current_angle_id
+		angle_id: current_angle_id,
+		create_at: new Date().valueOf()
 	})
 
 	useEffect(() => {
 		;(r as Todo.Todo).tag_ids = []
 	}, [r.type])
+
+	useEffect(() => {
+		if (loading) return
+
+		r.id = id()
+		r.text = ''
+	}, [loading])
 
 	const tag_options = useMemo(() => {
 		if (!tags || !tags?.length) return []
@@ -52,6 +60,12 @@ const Index = (props: IPropsInput) => {
 		circle: cloneDeep((r as Todo.Todo).circle),
 		onChangeCircle: useMemoizedFn((v) => ((r as Todo.Todo).circle = v))
 	}
+
+	const onEnter = useMemoizedFn((e) => {
+		e.preventDefault()
+
+		add(cloneDeep(r))
+	})
 
 	return (
 		<div className={$cx('w_100 fixed bottom_0 z_index_1000', styles._local)}>
@@ -101,6 +115,7 @@ const Index = (props: IPropsInput) => {
 					autoSize
 					value={r.text}
 					onChange={({ target: { value } }) => (r.text = value)}
+					onPressEnter={onEnter}
 				></TextArea>
 			</div>
 		</div>

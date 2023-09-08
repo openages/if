@@ -9,12 +9,15 @@ export default {
                               "todo"
                         ]
                   },
-                  "text": {
-                        "type": "string"
-                  },
                   "id": {
                         "type": "string",
                         "maxLength": 30
+                  },
+                  "text": {
+                        "type": "string"
+                  },
+                  "create_at": {
+                        "type": "number"
                   },
                   "status": {
                         "type": "string",
@@ -69,6 +72,7 @@ export default {
                   }
             },
             "required": [
+                  "create_at",
                   "id",
                   "text",
                   "type"
@@ -84,12 +88,15 @@ export default {
                               "todo"
                         ]
                   },
-                  "text": {
-                        "type": "string"
-                  },
                   "id": {
                         "type": "string",
                         "maxLength": 30
+                  },
+                  "text": {
+                        "type": "string"
+                  },
+                  "create_at": {
+                        "type": "number"
                   },
                   "status": {
                         "type": "string",
@@ -144,6 +151,7 @@ export default {
                   }
             },
             "required": [
+                  "create_at",
                   "id",
                   "text",
                   "type"
@@ -156,15 +164,19 @@ export default {
                         "type": "string",
                         "const": "title"
                   },
-                  "text": {
-                        "type": "string"
-                  },
                   "id": {
                         "type": "string",
                         "maxLength": 30
+                  },
+                  "text": {
+                        "type": "string"
+                  },
+                  "create_at": {
+                        "type": "number"
                   }
             },
             "required": [
+                  "create_at",
                   "id",
                   "text",
                   "type"
@@ -176,9 +188,6 @@ export default {
                   "type": {
                         "type": "string",
                         "const": "todo"
-                  },
-                  "text": {
-                        "type": "string"
                   },
                   "status": {
                         "type": "string",
@@ -234,10 +243,17 @@ export default {
                   "id": {
                         "type": "string",
                         "maxLength": 30
+                  },
+                  "text": {
+                        "type": "string"
+                  },
+                  "create_at": {
+                        "type": "number"
                   }
             },
             "required": [
                   "angle_id",
+                  "create_at",
                   "id",
                   "status",
                   "text",

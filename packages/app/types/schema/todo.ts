@@ -1,17 +1,17 @@
 export namespace Todo {
 	type Common = {
 		/** @maxLength 30 */
-		id: string
+            id: string
+		text: string
+		create_at: number
 	}
 
 	export type Title = Common & {
 		type: 'title'
-		text: string
 	}
 
 	export type Todo = Common & {
 		type: 'todo'
-		text: string
 		status: 'checked' | 'unchecked' | 'closed'
 		/** @maxLength 30 */
 		angle_id: string

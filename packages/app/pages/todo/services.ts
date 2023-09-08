@@ -3,7 +3,7 @@ import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
 import { File } from '@/services'
-import { setStorageWhenChange } from '@/utils'
+import { setStorageWhenChange, getDocItemsData } from '@/utils'
 import { loading } from '@/utils/decorators'
 
 import type { Todo, TodoArchive, RxDB } from '@/types'
@@ -17,7 +17,7 @@ export default class Index {
 	info_query = {} as RxQuery<Todo.Data>
 	info = {} as Todo.Data
 	items_query = {} as RxDB.ItemsQuery<Todo.TodoItem>
-	items = [] as RxDB.ItemsDoc<Todo.TodoItem>
+	items = [] as Array<Todo.TodoItem>
 	archives = [] as RxDB.ItemsDoc<TodoArchive.Item>
 	current_angle_id = ''
 	archives_page = 0
@@ -29,14 +29,16 @@ export default class Index {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
-	async init() {
+	init() {
 		setStorageWhenChange([{ [`${this.id}_todo_current_angle_id`]: 'current_angle_id' }], this)
 
 		this.reactions()
 
 		if (this.id) {
 			this.file.query(this.id)
+
 			this.query()
+			this.queryItems()
 		}
 	}
 
@@ -95,6 +97,11 @@ export default class Index {
 	}
 
 	@loading
+	async add(v: Todo.TodoItem) {
+		await $db.collections[`${this.id}_todo_items`].incrementalUpsert(v)
+	}
+
+	@loading
 	async query() {
 		this.info_query = $db.todo.findOne({ selector: { id: this.id } })!
 
@@ -115,13 +122,17 @@ export default class Index {
 
 	@loading
 	async queryItems() {
-		this.items_query = $db.collections[`${this.id}_todo_items`].find({
-			selector: { angle_id: this.current_angle_id }
-		}) as RxDB.ItemsQuery<Todo.TodoItem>
+		if (!$db.collections[`${this.id}_todo_items`]) return
 
-		this.items = (await this.items_query.exec())! as RxDB.ItemsDoc<Todo.TodoItem>
+		this.items_query = $db.collections[`${this.id}_todo_items`]
+			.find({
+				selector: { angle_id: this.current_angle_id }
+			})
+			.sort({ create_at: 'asc' }) as RxDB.ItemsQuery<Todo.TodoItem>
 
-		this.items_query.$.subscribe((v) => (this.items = v))
+		this.items = getDocItemsData((await this.items_query.exec())! as RxDB.ItemsDoc<Todo.TodoItem>)
+
+		this.items_query.$.subscribe((v) => (this.items = getDocItemsData(v)))
 	}
 
 	async queryArchives() {

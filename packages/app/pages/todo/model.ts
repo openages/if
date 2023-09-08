@@ -21,9 +21,9 @@ export default class Index {
 	}
 
 	init() {
-		this.services.init()
-
-		this.on()
+            this.services.init()
+            
+            this.on()
 	}
 
 	async onInfoChange(
@@ -44,7 +44,7 @@ export default class Index {
 		}
 	}
 
-	async on() {
+	on() {
 		$app.Event.on('todo/ready', this.init)
 	}
 

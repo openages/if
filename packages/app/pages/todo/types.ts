@@ -34,7 +34,9 @@ export interface IPropsTabsItem {
 
 export interface IPropsInput {
 	current_angle_id: Services['current_angle_id']
+	loading: boolean
 	tags?: Services['info']['tags']
+	add: Services['add']
 }
 
 export interface IPropsInputCircle {

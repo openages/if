@@ -43,7 +43,9 @@ const Index = ({ id }: IProps) => {
 
 	const props_input: IPropsInput = {
 		current_angle_id: x.services.current_angle_id,
-		tags: toJS(x.services.info.tags)
+		loading: x.services.utils.loading['add'],
+		tags: toJS(x.services.info.tags),
+		add: useMemoizedFn(x.services.add)
 	}
 
 	const props_todos: IPropsTodos = {

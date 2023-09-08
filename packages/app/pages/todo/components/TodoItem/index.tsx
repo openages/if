@@ -7,17 +7,12 @@ import styles from './index.css'
 import type { IPropsTodoItem } from '../../types'
 
 const Index = (props: IPropsTodoItem) => {
-	const { type } = props
+	const { type, text } = props
 
-	if (type === 'group') {
+	if (type === 'title') {
 		return (
 			<div className={$cx('flex flex_column', styles.group_wrap)}>
-				<span className='group_title'>{props.title}</span>
-				<div className='group_items flex flex_column'>
-					{props.children.map((item) => (
-						<Index {...item} key={item.id}></Index>
-					))}
-				</div>
+				<span className='group_title'>{text}</span>
 			</div>
 		)
 	}
@@ -40,7 +35,7 @@ const Index = (props: IPropsTodoItem) => {
 					</Else>
 				</If>
 			</div>
-			<span className='text'>{props.text}</span>
+			<span className='text'>{text}</span>
 		</div>
 	)
 }
