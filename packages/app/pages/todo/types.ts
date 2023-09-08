@@ -33,7 +33,13 @@ export interface IPropsTabsItem {
 }
 
 export interface IPropsInput {
+	current_angle_id: Services['current_angle_id']
 	tags?: Services['info']['tags']
+}
+
+export interface IPropsInputCircle {
+	circle?: Todo.Todo['circle']
+	onChangeCircle: (v: IPropsInputCircle['circle']) => void
 }
 
 export interface IPropsTodos {

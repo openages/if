@@ -24,35 +24,17 @@ export default {
                               "closed"
                         ]
                   },
-                  "achive_time": {
-                        "type": "number"
-                  },
                   "angle_id": {
                         "type": "string",
                         "maxLength": 30
                   },
-                  "tags": {
+                  "achive_time": {
+                        "type": "number"
+                  },
+                  "tag_ids": {
                         "type": "array",
                         "items": {
-                              "type": "object",
-                              "properties": {
-                                    "id": {
-                                          "type": "string",
-                                          "maxLength": 30
-                                    },
-                                    "color": {
-                                          "type": "string"
-                                    },
-                                    "text": {
-                                          "type": "string",
-                                          "maxLength": 15
-                                    }
-                              },
-                              "required": [
-                                    "id",
-                                    "color",
-                                    "text"
-                              ]
+                              "type": "string"
                         }
                   },
                   "if_ids": {
@@ -62,13 +44,27 @@ export default {
                         }
                   },
                   "circle": {
-                        "type": "string"
+                        "type": "object",
+                        "properties": {
+                              "enabled": {
+                                    "type": "boolean"
+                              },
+                              "value": {
+                                    "type": "array",
+                                    "items": {
+                                          "type": "number"
+                                    }
+                              }
+                        },
+                        "required": [
+                              "enabled",
+                              "value"
+                        ]
                   },
                   "children": {
                         "type": "array",
                         "items": {
-                              "type": "object",
-                              "additionalProperties": false
+                              "type": "object"
                         }
                   }
             },
@@ -103,35 +99,17 @@ export default {
                               "closed"
                         ]
                   },
-                  "achive_time": {
-                        "type": "number"
-                  },
                   "angle_id": {
                         "type": "string",
                         "maxLength": 30
                   },
-                  "tags": {
+                  "achive_time": {
+                        "type": "number"
+                  },
+                  "tag_ids": {
                         "type": "array",
                         "items": {
-                              "type": "object",
-                              "properties": {
-                                    "id": {
-                                          "type": "string",
-                                          "maxLength": 30
-                                    },
-                                    "color": {
-                                          "type": "string"
-                                    },
-                                    "text": {
-                                          "type": "string",
-                                          "maxLength": 15
-                                    }
-                              },
-                              "required": [
-                                    "id",
-                                    "color",
-                                    "text"
-                              ]
+                              "type": "string"
                         }
                   },
                   "if_ids": {
@@ -141,18 +119,127 @@ export default {
                         }
                   },
                   "circle": {
-                        "type": "string"
+                        "type": "object",
+                        "properties": {
+                              "enabled": {
+                                    "type": "boolean"
+                              },
+                              "value": {
+                                    "type": "array",
+                                    "items": {
+                                          "type": "number"
+                                    }
+                              }
+                        },
+                        "required": [
+                              "enabled",
+                              "value"
+                        ]
                   },
                   "children": {
                         "type": "array",
                         "items": {
-                              "type": "object",
-                              "additionalProperties": false
+                              "type": "object"
                         }
                   }
             },
             "required": [
                   "id",
+                  "text",
+                  "type"
+            ]
+      },
+      "Todo.Title": {
+            "type": "object",
+            "properties": {
+                  "type": {
+                        "type": "string",
+                        "const": "title"
+                  },
+                  "text": {
+                        "type": "string"
+                  },
+                  "id": {
+                        "type": "string",
+                        "maxLength": 30
+                  }
+            },
+            "required": [
+                  "id",
+                  "text",
+                  "type"
+            ]
+      },
+      "Todo.Todo": {
+            "type": "object",
+            "properties": {
+                  "type": {
+                        "type": "string",
+                        "const": "todo"
+                  },
+                  "text": {
+                        "type": "string"
+                  },
+                  "status": {
+                        "type": "string",
+                        "enum": [
+                              "checked",
+                              "unchecked",
+                              "closed"
+                        ]
+                  },
+                  "angle_id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "achive_time": {
+                        "type": "number"
+                  },
+                  "tag_ids": {
+                        "type": "array",
+                        "items": {
+                              "type": "string"
+                        }
+                  },
+                  "if_ids": {
+                        "type": "array",
+                        "items": {
+                              "type": "string"
+                        }
+                  },
+                  "circle": {
+                        "type": "object",
+                        "properties": {
+                              "enabled": {
+                                    "type": "boolean"
+                              },
+                              "value": {
+                                    "type": "array",
+                                    "items": {
+                                          "type": "number"
+                                    }
+                              }
+                        },
+                        "required": [
+                              "enabled",
+                              "value"
+                        ]
+                  },
+                  "children": {
+                        "type": "array",
+                        "items": {
+                              "type": "object"
+                        }
+                  },
+                  "id": {
+                        "type": "string",
+                        "maxLength": 30
+                  }
+            },
+            "required": [
+                  "angle_id",
+                  "id",
+                  "status",
                   "text",
                   "type"
             ]

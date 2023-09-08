@@ -69,12 +69,6 @@
 				&:hover {
                               border-color: var(--color_text_grey);
 				}
-
-				&.disabled {
-					svg {
-						opacity: 0.3;
-					}
-				}
 			}
 		}
 	}

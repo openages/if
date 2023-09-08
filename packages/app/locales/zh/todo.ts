@@ -36,6 +36,16 @@ export default {
 	},
 	Input: {
 		placeholder: '添加待办',
-		tag_placeholder: '标签'
+		tag_placeholder: '标签',
+		type: {
+			todo: '待办',
+			title: '组'
+		},
+		Circle: {
+			title: '任务循环周期',
+			day: '天数',
+			hour: '小时',
+			minute: '分钟'
+		}
 	}
 }

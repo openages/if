@@ -36,6 +36,16 @@ export default {
 	},
 	Input: {
 		placeholder: 'Add Todo',
-		tag_placeholder: 'Tags'
+		tag_placeholder: 'Tags',
+		type: {
+			todo: 'Todo',
+			title: 'Group'
+		},
+		Circle: {
+			title: 'Task loop cycle',
+			day: 'Days',
+			hour: 'Hours',
+			minute: 'Minutes'
+		}
 	}
 }

@@ -31,6 +31,9 @@ export default (theme: Theme, color_main: string) => {
 		},
 		components: {
 			Switch: {
+				controlHeight: 32,
+                        controlHeightSM: 24,
+				controlHeightXS: 20,
 				colorPrimaryHover: color_main
 			}
 		}

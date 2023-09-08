@@ -4,10 +4,11 @@ import Color from 'color'
 import { X } from '@phosphor-icons/react'
 
 import type { CustomTagProps } from 'rc-select/lib/BaseSelect'
+import type { IPropsInput } from '../../types'
 
-const Index = (props: CustomTagProps) => {
-	const { label, value, onClose } = props
-	const { color } = JSON.parse(value)
+const Index = (tags: Required<IPropsInput['tags']>) => (props: CustomTagProps) => {
+	const { value, onClose } = props
+	const { text, color } = tags.find((item) => item.id === value)
 
 	const onPreventMouseDown = useMemoizedFn((event: React.MouseEvent<HTMLSpanElement>) => {
 		event.preventDefault()
@@ -23,7 +24,7 @@ const Index = (props: CustomTagProps) => {
 			}}
 			onMouseDown={onPreventMouseDown}
 		>
-			<span className='text'>{label}</span>
+			<span className='text'>{text}</span>
 			<span className='btn_close h_100 flex justify_center align_center cursor_point' onClick={onClose}>
 				<X size={10}></X>
 			</span>

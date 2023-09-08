@@ -9,7 +9,6 @@ import { Plus, Trash, DotsSixVertical } from '@phosphor-icons/react'
 interface IProps {
 	item: { id: string; color: string; text: string }
 	index: number
-	limitMin: boolean
 	limitMax: boolean
 	onAdd: (index: number) => void
 	onRemove: (index: number) => void
@@ -17,7 +16,7 @@ interface IProps {
 }
 
 const Index = (props: IProps) => {
-	const { item, index, limitMin, limitMax, onAdd, onRemove, onUpdate } = props
+	const { item, index, limitMax, onAdd, onRemove, onUpdate } = props
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
 		id: item.id,
 		data: { index }
@@ -67,10 +66,7 @@ const Index = (props: IProps) => {
 				<Plus size={18}></Plus>
 			</div>
 			<div
-				className={$cx(
-					'btn btn_remove border_box flex justify_center align_center clickable ml_6',
-					limitMin && 'disabled'
-				)}
+				className='btn btn_remove border_box flex justify_center align_center clickable ml_6'
 				onClick={() => onRemove(index)}
 			>
 				<Trash size={18}></Trash>

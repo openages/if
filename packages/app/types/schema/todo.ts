@@ -4,28 +4,25 @@ export namespace Todo {
 		id: string
 	}
 
-	type Title = Common & {
+	export type Title = Common & {
 		type: 'title'
 		text: string
 	}
 
-	type Todo = Common & {
+	export type Todo = Common & {
 		type: 'todo'
 		text: string
 		status: 'checked' | 'unchecked' | 'closed'
-		achive_time: number
 		/** @maxLength 30 */
 		angle_id: string
-		tags: Array<{
-			/** @maxLength 30 */
-			id: string
-			color: string
-			/** @maxLength 15 */
-			text: string
-		}>
+		achive_time?: number
+		tag_ids?: Array<string>
 		if_ids?: Array<string>
-		circle?: string
-		children: Array<Omit<Todo, 'angle_id' | 'achive_time' | 'tags' | 'circle' | 'children'>>
+		circle?: {
+			enabled: boolean
+			value: Array<number>
+		}
+		children?: Array<Omit<Todo, 'angle_id' | 'achive_time' | 'tag_ids' | 'circle' | 'children'>>
 	}
 
 	export type TodoItem = Title | Todo

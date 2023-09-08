@@ -59,7 +59,6 @@ const Index = (props: IPropsCustomFormItem<Array<{ id: string; color: string; te
 							<Item
 								item={item}
 								index={index}
-								limitMin={value.length === 1}
 								limitMax={value.length >= 12}
 								key={item.id}
 								{...{ onAdd, onRemove, onUpdate }}
