@@ -12,7 +12,7 @@ import { Header, Input, Tabs, Todos, SettingsModal } from './components'
 import styles from './index.css'
 import Model from './model'
 
-import type { IProps, IPropsHeader, IPropsTabs, IPropsTodos, IPropsSettingsModal } from './types'
+import type { IProps, IPropsHeader, IPropsTabs, IPropsInput, IPropsTodos, IPropsSettingsModal } from './types'
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
@@ -41,6 +41,10 @@ const Index = ({ id }: IProps) => {
 		setCurrentAngleId: useMemoizedFn((v) => (x.services.current_angle_id = v))
 	}
 
+	const props_input: IPropsInput = {
+		tags: toJS(x.services.info.tags)
+	}
+
 	const props_todos: IPropsTodos = {
 		items: toJS(x.services.items)
 	}
@@ -58,8 +62,8 @@ const Index = ({ id }: IProps) => {
 				<Then>
 					<Header {...props_header}></Header>
 					<Tabs {...props_tabs}></Tabs>
+					<Input {...props_input}></Input>
 					<Todos {...props_todos}></Todos>
-					<Input></Input>
 					<SettingsModal {...props_settings_modal}></SettingsModal>
 				</Then>
 				<Else>

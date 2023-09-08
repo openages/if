@@ -5,86 +5,16 @@ export default {
                   "type": {
                         "type": "string",
                         "enum": [
-                              "group",
+                              "title",
                               "todo"
                         ]
                   },
-                  "title": {
+                  "text": {
                         "type": "string"
-                  },
-                  "children": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "type": {
-                                          "type": "string",
-                                          "const": "todo"
-                                    },
-                                    "text": {
-                                          "type": "string"
-                                    },
-                                    "status": {
-                                          "type": "string",
-                                          "enum": [
-                                                "checked",
-                                                "unchecked",
-                                                "closed"
-                                          ]
-                                    },
-                                    "achive_time": {
-                                          "type": "number"
-                                    },
-                                    "angle_id": {
-                                          "type": "string",
-                                          "maxLength": 30
-                                    },
-                                    "tags": {
-                                          "type": "array",
-                                          "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                      "id": {
-                                                            "type": "string",
-                                                            "maxLength": 30
-                                                      },
-                                                      "color": {
-                                                            "type": "string"
-                                                      },
-                                                      "text": {
-                                                            "type": "string",
-                                                            "maxLength": 15
-                                                      }
-                                                },
-                                                "required": [
-                                                      "id",
-                                                      "color",
-                                                      "text"
-                                                ]
-                                          }
-                                    },
-                                    "id": {
-                                          "type": "string",
-                                          "maxLength": 30
-                                    }
-                              },
-                              "required": [
-                                    "achive_time",
-                                    "angle_id",
-                                    "id",
-                                    "status",
-                                    "tags",
-                                    "text",
-                                    "type"
-                              ]
-                        }
                   },
                   "id": {
                         "type": "string",
                         "maxLength": 30
-                  },
-                  "text": {
-                        "type": "string"
                   },
                   "status": {
                         "type": "string",
@@ -124,10 +54,27 @@ export default {
                                     "text"
                               ]
                         }
+                  },
+                  "if_ids": {
+                        "type": "array",
+                        "items": {
+                              "type": "string"
+                        }
+                  },
+                  "circle": {
+                        "type": "string"
+                  },
+                  "children": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "additionalProperties": false
+                        }
                   }
             },
             "required": [
                   "id",
+                  "text",
                   "type"
             ]
       },
@@ -137,86 +84,16 @@ export default {
                   "type": {
                         "type": "string",
                         "enum": [
-                              "group",
+                              "title",
                               "todo"
                         ]
                   },
-                  "title": {
+                  "text": {
                         "type": "string"
-                  },
-                  "children": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "type": {
-                                          "type": "string",
-                                          "const": "todo"
-                                    },
-                                    "text": {
-                                          "type": "string"
-                                    },
-                                    "status": {
-                                          "type": "string",
-                                          "enum": [
-                                                "checked",
-                                                "unchecked",
-                                                "closed"
-                                          ]
-                                    },
-                                    "achive_time": {
-                                          "type": "number"
-                                    },
-                                    "angle_id": {
-                                          "type": "string",
-                                          "maxLength": 30
-                                    },
-                                    "tags": {
-                                          "type": "array",
-                                          "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                      "id": {
-                                                            "type": "string",
-                                                            "maxLength": 30
-                                                      },
-                                                      "color": {
-                                                            "type": "string"
-                                                      },
-                                                      "text": {
-                                                            "type": "string",
-                                                            "maxLength": 15
-                                                      }
-                                                },
-                                                "required": [
-                                                      "id",
-                                                      "color",
-                                                      "text"
-                                                ]
-                                          }
-                                    },
-                                    "id": {
-                                          "type": "string",
-                                          "maxLength": 30
-                                    }
-                              },
-                              "required": [
-                                    "achive_time",
-                                    "angle_id",
-                                    "id",
-                                    "status",
-                                    "tags",
-                                    "text",
-                                    "type"
-                              ]
-                        }
                   },
                   "id": {
                         "type": "string",
                         "maxLength": 30
-                  },
-                  "text": {
-                        "type": "string"
                   },
                   "status": {
                         "type": "string",
@@ -256,10 +133,27 @@ export default {
                                     "text"
                               ]
                         }
+                  },
+                  "if_ids": {
+                        "type": "array",
+                        "items": {
+                              "type": "string"
+                        }
+                  },
+                  "circle": {
+                        "type": "string"
+                  },
+                  "children": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "additionalProperties": false
+                        }
                   }
             },
             "required": [
                   "id",
+                  "text",
                   "type"
             ]
       }

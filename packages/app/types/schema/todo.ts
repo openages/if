@@ -4,10 +4,9 @@ export namespace Todo {
 		id: string
 	}
 
-	type Group = Common & {
-		type: 'group'
-		title: string
-		children: Array<Todo>
+	type Title = Common & {
+		type: 'title'
+		text: string
 	}
 
 	type Todo = Common & {
@@ -24,13 +23,16 @@ export namespace Todo {
 			/** @maxLength 15 */
 			text: string
 		}>
+		if_ids?: Array<string>
+		circle?: string
+		children: Array<Omit<Todo, 'angle_id' | 'achive_time' | 'tags' | 'circle' | 'children'>>
 	}
 
-	export type TodoItem = Group | Todo
+	export type TodoItem = Title | Todo
 
 	export interface Data {
 		/** @maxLength 30 */
-            id: string
+		id: string
 		desc?: string
 		angles: Array<{
 			id: string

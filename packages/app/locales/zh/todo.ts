@@ -33,5 +33,9 @@ export default {
 				'7d': '一周'
 			}
 		}
+	},
+	Input: {
+		placeholder: '添加待办',
+		tag_placeholder: '标签'
 	}
 }

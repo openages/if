@@ -32,6 +32,10 @@ export interface IPropsTabsItem {
 	setCurrentAngleId: IPropsTabs['setCurrentAngleId']
 }
 
+export interface IPropsInput {
+	tags?: Services['info']['tags']
+}
+
 export interface IPropsTodos {
 	items: Services['items']
 }

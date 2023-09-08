@@ -33,5 +33,9 @@ export default {
 				'7d': '1 week'
 			}
 		}
+	},
+	Input: {
+		placeholder: 'Add Todo',
+		tag_placeholder: 'Tags'
 	}
 }

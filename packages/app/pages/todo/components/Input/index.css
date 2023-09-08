@@ -2,16 +2,61 @@
 	padding: 18px 0;
 	width: calc(100% - var(--sidebar_width) - var(--dirtree_width));
 	left: calc(var(--sidebar_width) + var(--dirtree_width));
-      
+
 	:global {
 		.input_add_todo {
 			padding: 7px 12px;
 			border-bottom-width: 2px;
 			border-bottom-style: solid;
-                  background-color: var(--color_bg);
+			background-color: var(--color_bg);
 
 			&:focus {
 				border-color: var(--color_text);
+			}
+		}
+
+		.options_wrap {
+			margin-bottom: 9px;
+
+			.select_tag {
+				min-width: 48px;
+
+                        .if-select-selection-search{
+                              width: 0 !important;
+                        }
+
+				.tag {
+					line-height: 1;
+					padding: 3px 6px;
+					border-radius: var(--radius_small);
+					font-size: 12px;
+					font-weight: bold;
+                              margin: 0 2px;
+
+					.btn_close {
+						padding: 2px;
+						margin-left: 2px;
+
+						&:hover {
+							border-radius: var(--radius_small);
+							background-color: var(--color_bg);
+						}
+					}
+				}
+			}
+
+			.if-select-dropdown {
+                        min-width: 72px !important;
+
+				.if-select-item {
+					min-height: unset;
+					padding: 3px 4px;
+					font-size: 12px;
+
+                              &-option-selected{
+                                    background-color: transparent;
+                              }
+				}
 			}
 		}
 	}

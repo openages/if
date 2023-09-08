@@ -1,6 +1,6 @@
 import { Else, If, Then } from 'react-if'
 
-import { CheckSquare, ClipboardText, Square } from '@phosphor-icons/react'
+import { CheckSquare, Square } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
