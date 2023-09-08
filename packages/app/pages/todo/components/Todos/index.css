@@ -2,4 +2,10 @@
 	padding: 0 calc(var(--limited_padding) - 11px);
 	padding-top: 36px;
 	padding-bottom: 60px;
+
+	:global {
+		.canvas_wrap {
+			top: 36px;
+		}
+	}
 }

@@ -1,7 +1,7 @@
-import { useMemoizedFn, useReactive } from 'ahooks'
+import { useMemoizedFn } from 'ahooks'
 import { Input, Select } from 'antd'
 import { cloneDeep } from 'lodash-es'
-import { useMemo, useEffect } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
 
@@ -10,6 +10,7 @@ import { id } from '@/utils'
 
 import Circle from './Circle'
 import styles from './index.css'
+import { getTodo, getGroup } from './initials'
 import getTag from './Tag'
 
 import type { IPropsInput, IPropsInputCircle } from '../../types'
@@ -21,24 +22,20 @@ const Index = (props: IPropsInput) => {
 	const { current_angle_id, loading, tags, add } = props
 	const limits = useLimits()
 	const { t } = useTranslation()
-	const r = useReactive<Todo.TodoItem>({
-		id: id(),
-		type: 'todo',
-		status: 'unchecked',
-		text: '',
-		angle_id: current_angle_id,
-		create_at: new Date().valueOf()
-	})
+	const [input, setInput] = useState<Todo.TodoItem>(getTodo(current_angle_id))
 
 	useEffect(() => {
-		;(r as Todo.Todo).tag_ids = []
-	}, [r.type])
+		if (input.type === 'todo') {
+			setInput(getTodo(current_angle_id))
+		} else {
+			setInput(getGroup(current_angle_id))
+		}
+	}, [current_angle_id, input.type])
 
 	useEffect(() => {
 		if (loading) return
 
-		r.id = id()
-		r.text = ''
+		setInput((v) => ({ ...v, id: id(), text: '' }))
 	}, [loading])
 
 	const tag_options = useMemo(() => {
@@ -57,14 +54,14 @@ const Index = (props: IPropsInput) => {
 	}, [tags])
 
 	const props_circle: IPropsInputCircle = {
-		circle: cloneDeep((r as Todo.Todo).circle),
-		onChangeCircle: useMemoizedFn((v) => ((r as Todo.Todo).circle = v))
+		circle: (input as Todo.Todo).circle,
+		onChangeCircle: useMemoizedFn((v) => setInput((input) => ({ ...input, circle: v })))
 	}
 
 	const onEnter = useMemoizedFn((e) => {
 		e.preventDefault()
 
-		add(cloneDeep(r))
+		add(input)
 	})
 
 	return (
@@ -81,12 +78,18 @@ const Index = (props: IPropsInput) => {
 							suffixIcon={null}
 							options={[
 								{ label: t('translation:todo.Input.type.todo'), value: 'todo' },
-								{ label: t('translation:todo.Input.type.title'), value: 'title' }
+								{ label: t('translation:todo.Input.type.group'), value: 'group' }
 							]}
-							value={r.type}
-							onChange={(v) => (r.type = v)}
+							value={input.type}
+							onChange={(v) => {
+								const target = cloneDeep(input)
+
+								target.type = v
+
+								setInput(target)
+							}}
 						></Select>
-						<When condition={Boolean(tags) && tags?.length && r.type === 'todo'}>
+						<When condition={Boolean(tags) && tags?.length && input.type === 'todo'}>
 							<Select
 								className='select_tag select'
 								size='small'
@@ -99,12 +102,12 @@ const Index = (props: IPropsInput) => {
 								placeholder={t('translation:todo.Input.tag_placeholder')}
 								tagRender={Tag}
 								options={tag_options}
-								value={(r as Todo.Todo).tag_ids}
-								onChange={(v) => ((r as Todo.Todo).tag_ids = v)}
+								value={(input as Todo.Todo).tag_ids}
+								onChange={(v) => setInput((input) => ({ ...input, tag_ids: v }))}
 							></Select>
 						</When>
 					</div>
-					<When condition={r.type === 'todo'}>
+					<When condition={input.type === 'todo'}>
 						<Circle {...props_circle}></Circle>
 					</When>
 				</div>
@@ -113,8 +116,8 @@ const Index = (props: IPropsInput) => {
 					placeholder={t('translation:todo.Input.placeholder')}
 					maxLength={limits.todo_text_max_length}
 					autoSize
-					value={r.text}
-					onChange={({ target: { value } }) => (r.text = value)}
+					value={input.text}
+					onChange={({ target: { value } }) => setInput((input) => ({ ...input, text: value }))}
 					onPressEnter={onEnter}
 				></TextArea>
 			</div>

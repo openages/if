@@ -121,9 +121,10 @@
 			width: 24px;
 			height: 24px;
 			border-radius: var(--radius);
-			background-color: var(--color_bg_1);
+			color: rgba(var(--color_text_rgb), 0.6);
 
 			&:hover {
+				color: rgba(var(--color_text_rgb), 1);
 				background-color: var(--color_bg_2);
 			}
 		}
@@ -140,17 +141,17 @@
 
 				.circle_input_item {
 					font-size: 12px;
-                              padding: 2px 0;
+					padding: 2px 0;
 
-                              &.en{
-                                    .label {
-                                          width: 60px;
-                                    }
-      
-                                    .slider {
-                                          width: calc(100% - 60px - 40px);
-                                    }
-                              }
+					&.en {
+						.label {
+							width: 60px;
+						}
+
+						.slider {
+							width: calc(100% - 60px - 40px);
+						}
+					}
 
 					.label {
 						width: 40px;
@@ -158,7 +159,7 @@
 
 					.slider {
 						width: calc(100% - 40px - 40px);
-                                    margin: 0;
+						margin: 0;
 					}
 
 					.value {

@@ -39,7 +39,7 @@ export default {
 		tag_placeholder: 'Tags',
 		type: {
 			todo: 'Todo',
-			title: 'Group'
+			group: 'Group'
 		},
 		Circle: {
 			title: 'Task loop cycle',

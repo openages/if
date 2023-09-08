@@ -39,7 +39,7 @@ export default {
 		tag_placeholder: '标签',
 		type: {
 			todo: '待办',
-			title: '组'
+			group: '组'
 		},
 		Circle: {
 			title: '任务循环周期',

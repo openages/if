@@ -1,20 +1,16 @@
 export namespace Todo {
 	type Common = {
 		/** @maxLength 30 */
-            id: string
+		id: string
 		text: string
+		/** @maxLength 30 */
+		angle_id: string
 		create_at: number
-	}
-
-	export type Title = Common & {
-		type: 'title'
 	}
 
 	export type Todo = Common & {
 		type: 'todo'
 		status: 'checked' | 'unchecked' | 'closed'
-		/** @maxLength 30 */
-		angle_id: string
 		achive_time?: number
 		tag_ids?: Array<string>
 		if_ids?: Array<string>
@@ -25,7 +21,11 @@ export namespace Todo {
 		children?: Array<Omit<Todo, 'angle_id' | 'achive_time' | 'tag_ids' | 'circle' | 'children'>>
 	}
 
-	export type TodoItem = Title | Todo
+	export type Group = Common & {
+		type: 'group'
+	}
+
+	export type TodoItem = Todo | Group
 
 	export interface Data {
 		/** @maxLength 30 */

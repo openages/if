@@ -97,7 +97,7 @@ export default class Index {
 	}
 
 	@loading
-	async add(v: Todo.TodoItem) {
+      async add(v: Todo.TodoItem) {
 		await $db.collections[`${this.id}_todo_items`].incrementalUpsert(v)
 	}
 

@@ -1,29 +1,4 @@
 export default {
-      "Todo.Title": {
-            "type": "object",
-            "properties": {
-                  "type": {
-                        "type": "string",
-                        "const": "title"
-                  },
-                  "id": {
-                        "type": "string",
-                        "maxLength": 30
-                  },
-                  "text": {
-                        "type": "string"
-                  },
-                  "create_at": {
-                        "type": "number"
-                  }
-            },
-            "required": [
-                  "create_at",
-                  "id",
-                  "text",
-                  "type"
-            ]
-      },
       "Todo.Todo": {
             "type": "object",
             "properties": {
@@ -39,10 +14,6 @@ export default {
                               "closed"
                         ]
                   },
-                  "angle_id": {
-                        "type": "string",
-                        "maxLength": 30
-                  },
                   "achive_time": {
                         "type": "number"
                   },
@@ -88,6 +59,10 @@ export default {
                   },
                   "text": {
                         "type": "string"
+                  },
+                  "angle_id": {
+                        "type": "string",
+                        "maxLength": 30
                   },
                   "create_at": {
                         "type": "number"
@@ -102,15 +77,12 @@ export default {
                   "type"
             ]
       },
-      "Todo.TodoItem": {
+      "Todo.Group": {
             "type": "object",
             "properties": {
                   "type": {
                         "type": "string",
-                        "enum": [
-                              "title",
-                              "todo"
-                        ]
+                        "const": "group"
                   },
                   "id": {
                         "type": "string",
@@ -119,8 +91,31 @@ export default {
                   "text": {
                         "type": "string"
                   },
+                  "angle_id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
                   "create_at": {
                         "type": "number"
+                  }
+            },
+            "required": [
+                  "angle_id",
+                  "create_at",
+                  "id",
+                  "text",
+                  "type"
+            ]
+      },
+      "Todo.TodoItem": {
+            "type": "object",
+            "properties": {
+                  "type": {
+                        "type": "string",
+                        "enum": [
+                              "todo",
+                              "group"
+                        ]
                   },
                   "status": {
                         "type": "string",
@@ -129,10 +124,6 @@ export default {
                               "unchecked",
                               "closed"
                         ]
-                  },
-                  "angle_id": {
-                        "type": "string",
-                        "maxLength": 30
                   },
                   "achive_time": {
                         "type": "number"
@@ -172,9 +163,24 @@ export default {
                         "items": {
                               "type": "object"
                         }
+                  },
+                  "id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "text": {
+                        "type": "string"
+                  },
+                  "angle_id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "create_at": {
+                        "type": "number"
                   }
             },
             "required": [
+                  "angle_id",
                   "create_at",
                   "id",
                   "text",

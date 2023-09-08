@@ -5,19 +5,9 @@ export default {
                   "type": {
                         "type": "string",
                         "enum": [
-                              "title",
-                              "todo"
+                              "todo",
+                              "group"
                         ]
-                  },
-                  "id": {
-                        "type": "string",
-                        "maxLength": 30
-                  },
-                  "text": {
-                        "type": "string"
-                  },
-                  "create_at": {
-                        "type": "number"
                   },
                   "status": {
                         "type": "string",
@@ -26,10 +16,6 @@ export default {
                               "unchecked",
                               "closed"
                         ]
-                  },
-                  "angle_id": {
-                        "type": "string",
-                        "maxLength": 30
                   },
                   "achive_time": {
                         "type": "number"
@@ -69,9 +55,24 @@ export default {
                         "items": {
                               "type": "object"
                         }
+                  },
+                  "id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "text": {
+                        "type": "string"
+                  },
+                  "angle_id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "create_at": {
+                        "type": "number"
                   }
             },
             "required": [
+                  "angle_id",
                   "create_at",
                   "id",
                   "text",
@@ -84,19 +85,9 @@ export default {
                   "type": {
                         "type": "string",
                         "enum": [
-                              "title",
-                              "todo"
+                              "todo",
+                              "group"
                         ]
-                  },
-                  "id": {
-                        "type": "string",
-                        "maxLength": 30
-                  },
-                  "text": {
-                        "type": "string"
-                  },
-                  "create_at": {
-                        "type": "number"
                   },
                   "status": {
                         "type": "string",
@@ -105,10 +96,6 @@ export default {
                               "unchecked",
                               "closed"
                         ]
-                  },
-                  "angle_id": {
-                        "type": "string",
-                        "maxLength": 30
                   },
                   "achive_time": {
                         "type": "number"
@@ -148,21 +135,6 @@ export default {
                         "items": {
                               "type": "object"
                         }
-                  }
-            },
-            "required": [
-                  "create_at",
-                  "id",
-                  "text",
-                  "type"
-            ]
-      },
-      "Todo.Title": {
-            "type": "object",
-            "properties": {
-                  "type": {
-                        "type": "string",
-                        "const": "title"
                   },
                   "id": {
                         "type": "string",
@@ -171,11 +143,16 @@ export default {
                   "text": {
                         "type": "string"
                   },
+                  "angle_id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
                   "create_at": {
                         "type": "number"
                   }
             },
             "required": [
+                  "angle_id",
                   "create_at",
                   "id",
                   "text",
@@ -197,10 +174,6 @@ export default {
                               "closed"
                         ]
                   },
-                  "angle_id": {
-                        "type": "string",
-                        "maxLength": 30
-                  },
                   "achive_time": {
                         "type": "number"
                   },
@@ -247,6 +220,10 @@ export default {
                   "text": {
                         "type": "string"
                   },
+                  "angle_id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
                   "create_at": {
                         "type": "number"
                   }
@@ -256,6 +233,36 @@ export default {
                   "create_at",
                   "id",
                   "status",
+                  "text",
+                  "type"
+            ]
+      },
+      "Todo.Group": {
+            "type": "object",
+            "properties": {
+                  "type": {
+                        "type": "string",
+                        "const": "group"
+                  },
+                  "id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "text": {
+                        "type": "string"
+                  },
+                  "angle_id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "create_at": {
+                        "type": "number"
+                  }
+            },
+            "required": [
+                  "angle_id",
+                  "create_at",
+                  "id",
                   "text",
                   "type"
             ]
