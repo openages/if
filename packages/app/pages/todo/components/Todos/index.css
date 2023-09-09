@@ -1,13 +1,13 @@
 ._local {
 	padding: 0 calc(var(--limited_padding) - 11px);
 	padding-top: 36px;
-	padding-bottom: 60px;
+	padding-bottom: 105px;
 
 	:global {
 		.stage_wrap {
 			top: 36px;
-                  left: 33px;
-                  z-index: 0;
+			left: 33px;
+			z-index: 0;
 		}
 	}
 }

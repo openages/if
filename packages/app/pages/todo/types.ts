@@ -48,9 +48,12 @@ export interface IPropsInputCircle {
 
 export interface IPropsTodos {
 	items: Services['items']
+	addIfIds: Services['addIfIds']
 }
 
-export type IPropsTodoItem = Todo.TodoItem & {
-	container: MutableRefObject<HTMLDivElement>
-	layer?: Layer
+export type IPropsTodoItem = {
+	item: Todo.TodoItem
+	addIfIds: Services['addIfIds']
 }
+
+export type ArgsUpdate=Partial<Todo.TodoItem> & { id: string }

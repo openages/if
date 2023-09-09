@@ -47,7 +47,7 @@
 			height: 14px;
 			border-radius: 50%;
 			background-color: rgba(var(--color_text_rgb), 0.12);
-			opacity: 1;
+			opacity: 0;
 
 			&:hover {
 				background-color: rgba(var(--color_text_rgb), 0.24);
@@ -67,7 +67,16 @@
 
 			&.linking {
 				opacity: 1;
+
+                        &::after {
+					background-color: var(--color_main);
+				}
 			}
+
+                  &.linked{
+				opacity: 1;
+                        background-color: transparent;
+                  }
 		}
 
 		.action_wrap {

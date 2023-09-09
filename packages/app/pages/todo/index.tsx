@@ -49,7 +49,8 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_todos: IPropsTodos = {
-		items: toJS(x.services.items)
+		items: toJS(x.services.items),
+		addIfIds: useMemoizedFn(x.services.addIfIds)
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {

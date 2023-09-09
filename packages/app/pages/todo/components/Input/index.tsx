@@ -61,7 +61,7 @@ const Index = (props: IPropsInput) => {
 	const onEnter = useMemoizedFn((e) => {
 		e.preventDefault()
 
-		add(input)
+		add({ ...input, create_at: new Date().valueOf() })
 	})
 
 	return (
