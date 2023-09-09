@@ -9,9 +9,9 @@ import styles from './index.css'
 import type { IPropsTabs, IPropsTabsNavBar, IPropsTabsContent } from '../../types'
 
 const Index = (props: IPropsTabs) => {
-	const { current_module, stacks, remove, active, update, move } = props
+	const { visible, current_module, stacks, remove, active, update, move } = props
 
-      useEffect(() => {
+	useEffect(() => {
 		const active_item = stacks.find((item) => item.is_active)
 
 		$app.Event.emit(`${current_module}/dirtree/setCurrentItem`, active_item ? active_item.file : {})
@@ -23,14 +23,14 @@ const Index = (props: IPropsTabs) => {
 		active,
 		update,
 		move
-      }
+	}
 
 	const props_content: IPropsTabsContent = {
 		stacks
 	}
 
 	return (
-		<div className='w_100 border_box flex flex_column'>
+		<div className={$cx('w_100 border_box flex flex_column', !visible && styles.hidden)}>
 			<If condition={stacks.length}>
 				<Then>
 					<NavBar {...props_nav_bar}></NavBar>

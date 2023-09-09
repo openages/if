@@ -67,7 +67,7 @@ export default class Index {
 
 		reaction(
 			() => this.current_angle_id,
-			() => {
+                  () => {
 				if (!this.id) return
 
 				this.queryItems()
@@ -110,22 +110,23 @@ export default class Index {
 	}
 
 	async addIfIds(active_id: string, over_id: string) {
+		if (active_id === over_id) return
+
 		const active_item = await $db.collections[`${this.id}_todo_items`]
 			.findOne({ selector: { id: active_id } })
 			.exec()
-
-		if (!active_item.if_ids || !active_item?.if_ids?.includes(over_id)) {
-			active_item.incrementalModify(
-				modify({ id: active_id, if_ids: [...(active_item.if_ids || []), over_id] })
-			)
-		}
 
 		const over_item = await $db.collections[`${this.id}_todo_items`]
 			.findOne({ selector: { id: over_id } })
 			.exec()
 
-		if (!over_item.if_ids || !over_item?.if_ids?.includes(active_id)) {
-			over_item.incrementalModify(modify({ id: over_id, if_ids: [...(over_item.if_ids || []), active_id] }))
+		if (
+			(!active_item.if_ids || !active_item?.if_ids?.includes(over_id)) &&
+			(!over_item.if_ids || !over_item?.if_ids?.includes(active_id))
+		) {
+			active_item.incrementalModify(
+				modify({ id: active_id, if_ids: [...(active_item.if_ids || []), over_id] })
+			)
 		}
 	}
 

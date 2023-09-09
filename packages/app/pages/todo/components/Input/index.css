@@ -149,7 +149,7 @@
 						}
 
 						.slider {
-							width: calc(100% - 60px - 40px);
+							width: calc(100% - 60px - 48px);
 						}
 					}
 
@@ -158,12 +158,12 @@
 					}
 
 					.slider {
-						width: calc(100% - 40px - 40px);
+						width: calc(100% - 40px - 48px);
 						margin: 0;
 					}
 
 					.value {
-						width: 40px;
+						width: 48px;
 
 						input {
 							text-align: right;

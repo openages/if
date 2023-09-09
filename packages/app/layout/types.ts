@@ -21,6 +21,7 @@ export interface IPropsSidebarItem {
 }
 
 export interface IPropsTabs {
+	visible: boolean
 	current_module: App.ModuleType
 	stacks: GlobalModel['tabs']['stacks']
 	remove: GlobalModel['tabs']['remove']
@@ -29,7 +30,7 @@ export interface IPropsTabs {
 	move: GlobalModel['tabs']['move']
 }
 
-export interface IPropsTabsNavBar extends Omit<IPropsTabs, 'current_module'> {}
+export interface IPropsTabsNavBar extends Omit<IPropsTabs, 'visible' | 'current_module'> {}
 
 export interface IPropsTabsNavBarItem extends Omit<IPropsTabsNavBar, 'stacks' | 'move'> {
 	item: IPropsTabsNavBar['stacks'][number]

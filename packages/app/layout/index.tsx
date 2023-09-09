@@ -77,6 +77,7 @@ const Index = () => {
 	}
 
 	const props_tabs: IPropsTabs = {
+		visible: !is_exclude_router,
 		current_module,
 		stacks: toJS(global.tabs.stacks),
 		remove: useMemoizedFn(global.tabs.remove),
@@ -112,12 +113,7 @@ const Index = () => {
 							<Sidebar {...props_sidebar} />
 							<div className={$cx(styles.container, no_dirtree && styles.no_dirtree)}>
 								<OffscreenOutlet {...props_offscreen_pages_outlet} />
-								<Offscreen
-									key='global_tabs'
-									mode={!is_exclude_router ? 'visible' : 'hidden'}
-								>
-									<Tabs {...props_tabs}></Tabs>
-								</Offscreen>
+								<Tabs {...props_tabs}></Tabs>
 							</div>
 						</div>
 						<AppMenu {...props_app_menu}></AppMenu>

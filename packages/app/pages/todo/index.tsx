@@ -22,6 +22,7 @@ const Index = ({ id }: IProps) => {
 	useLayoutEffect(() => {
 		x.services.id = id
 
+		x.on()
 		x.init()
 
 		return () => x.off()

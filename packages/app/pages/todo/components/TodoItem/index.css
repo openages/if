@@ -72,11 +72,6 @@
 					background-color: var(--color_main);
 				}
 			}
-
-                  &.linked{
-				opacity: 1;
-                        background-color: transparent;
-                  }
 		}
 
 		.action_wrap {

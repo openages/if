@@ -32,7 +32,7 @@ const Index = (props: IPropsTodoItem) => {
 			// 	end: getRelativePostion(container.current, over) + 7
 			// })
 
-			addIfIds(active_id, id)
+			// addIfIds(active_id, id)
 			setHovering(false)
 		},
 		onDragEnter: () => setHovering(true),
@@ -59,14 +59,9 @@ const Index = (props: IPropsTodoItem) => {
 				id={id}
 				className={$cx(
 					'dot_wrap border_box flex justify_center align_center absolute transition_normal cursor_point z_index_10',
-					(dragging || hovering) && 'linking',
-					item.if_ids?.length && 'linked'
+					(dragging || hovering) && 'linking'
 				)}
 				ref={linker}
-				data-id={id}
-				onDragOver={(e) => {
-					// console.log(e)
-				}}
 			></div>
 			<div className='action_wrap flex justify_center align_center cursor_point clickable'>
 				<If condition={item.status === 'unchecked'}>

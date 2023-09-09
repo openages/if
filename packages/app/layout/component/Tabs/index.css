@@ -1,3 +1,8 @@
-.content_wrap{
-      min-height: calc(100vh - 36px);
+.hidden {
+      position: fixed;
+	transform: translateX(100vw);
+}
+
+.content_wrap {
+	min-height: calc(100vh - 36px);
 }

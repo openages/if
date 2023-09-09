@@ -22,8 +22,6 @@ export default class Index {
 
 	init() {
             this.services.init()
-            
-            this.on()
 	}
 
 	async onInfoChange(

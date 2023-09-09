@@ -1,6 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { Modal, Carousel } from 'antd'
-import { chunk, debounce } from 'lodash-es'
+import { chunk } from 'lodash-es'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -18,15 +18,13 @@ const Index = (props: IPropsAppMenu) => {
 	const { t } = useTranslation()
 	const carousel = useRef<CarouselRef>(null)
 
-	const onWheel: WheelEventHandler<HTMLDivElement> = useMemoizedFn(
-		debounce((e) => {
-			if (e.deltaY > 0) {
-				carousel.current.next()
-			} else {
-				carousel.current.prev()
-			}
-		}, 100)
-	)
+	const onWheel: WheelEventHandler<HTMLDivElement> = useMemoizedFn((e) => {
+		if (e.deltaY > 0) {
+			carousel.current.next()
+		} else {
+			carousel.current.prev()
+		}
+	})
 
 	return (
 		<Modal
@@ -40,7 +38,7 @@ const Index = (props: IPropsAppMenu) => {
 			onCancel={onClose}
 		>
 			<div className='w_100' onWheel={onWheel}>
-				<Carousel ref={carousel}>
+				<Carousel ref={carousel} waitForAnimate>
 					{chunk(app_modules, 9).map((modules, index) => (
 						<div key={index}>
 							<div className='menu_items_wrap w_100 border_box flex flex_wrap'>
