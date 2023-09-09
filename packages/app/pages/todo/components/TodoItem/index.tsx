@@ -1,5 +1,5 @@
 import { useDrag, useDrop } from 'ahooks'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { Else, If, Then } from 'react-if'
 
 import { CheckSquare, Square } from '@phosphor-icons/react'
@@ -9,7 +9,7 @@ import styles from './index.css'
 import type { IPropsTodoItem } from '../../types'
 
 const Index = (props: IPropsTodoItem) => {
-	const { item, addIfIds } = props
+	const { item, makeLinkLine, addIfIds } = props
 	const { id, type, text } = item
 	const linker = useRef<HTMLDivElement>(null)
 	const [dragging, setDragging] = useState(false)
@@ -17,22 +17,20 @@ const Index = (props: IPropsTodoItem) => {
 
 	useDrag(id, linker, {
 		onDragStart: () => setDragging(true),
-		onDragEnd: () => setDragging(false)
+		onDragEnd: () => {
+			setDragging(false)
+			makeLinkLine(null)
+		}
 	})
 
 	useDrop(linker, {
-		onDom: (active_id: string) => {
-			// const active = document.getElementById(active_id) as HTMLDivElement
-			// const over = target as HTMLDivElement
+		onDom: (active_id: string, { target }) => {
+			const over = target as HTMLDivElement
+			const over_id = over.getAttribute('data-id')
 
-			// if (active_id === over.getAttribute('data-id')) return
+			if (active_id === over_id) return
 
-			// setLinkPositions({
-			// 	start: getRelativePostion(container.current, active) + 7,
-			// 	end: getRelativePostion(container.current, over) + 7
-			// })
-
-			// addIfIds(active_id, id)
+			addIfIds(active_id, id)
 			setHovering(false)
 		},
 		onDragEnter: () => setHovering(true),
@@ -59,9 +57,11 @@ const Index = (props: IPropsTodoItem) => {
 				id={id}
 				className={$cx(
 					'dot_wrap border_box flex justify_center align_center absolute transition_normal cursor_point z_index_10',
-					(dragging || hovering) && 'linking'
+					dragging && 'dragging',
+					hovering && 'hovering'
 				)}
 				ref={linker}
+				onDrag={({ clientY }) => makeLinkLine({ active_id: id, y: clientY })}
 			></div>
 			<div className='action_wrap flex justify_center align_center cursor_point clickable'>
 				<If condition={item.status === 'unchecked'}>

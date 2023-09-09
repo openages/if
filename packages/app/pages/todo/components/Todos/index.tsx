@@ -9,18 +9,18 @@ import styles from './index.css'
 import { getRelativePostion } from './utils'
 
 import type { IPropsTodos } from '../../types'
-import type { Layer as ILayer } from 'konva/lib/Layer'
 import type { Todo } from '@/types'
+
 
 const Index = (props: IPropsTodos) => {
 	const { items, addIfIds } = props
 	const container = useRef<HTMLDivElement>(null)
-	const [layer, setLayer] = useState<ILayer>(null)
 	const [lines, setLines] = useState<Array<JSX.Element>>([])
+	const [link_points, setLinkPoints] = useState<Array<number>>(null)
 	const size = useSize(container)
 	const height = useMemo(() => (size ? size.height : 0), [size])
 	const stroke = useMemo(
-		() => `rgba(${getComputedStyle(document.body).getPropertyValue('--color_text_rgb')},0.48)`,
+		() => `rgba(${getComputedStyle(document.body).getPropertyValue('--color_text_rgb')},0.72)`,
 		[]
 	)
 
@@ -45,6 +45,18 @@ const Index = (props: IPropsTodos) => {
 		return points([15, up], [1, up + (down - up) / 2], [15, down])
 	})
 
+	const makeLinkLine = useMemoizedFn((args: { active_id: string; y: number } | null) => {
+		if (!args) return setLinkPoints(null)
+
+		const { active_id, y } = args
+
+		const y_1 = getRelativePostion(container.current, document.getElementById(active_id) as HTMLDivElement) + 7
+		const y_2 = y - container.current.getBoundingClientRect().y
+		const [up, down] = y_1 < y_2 ? [y_1, y_2] : [y_2, y_1]
+
+		setLinkPoints(points([15, up], [1, up + (down - up) / 2], [15, down]))
+	})
+
 	useDeepCompareEffect(() => {
 		if (!all_if_ids.length) return
 
@@ -53,7 +65,7 @@ const Index = (props: IPropsTodos) => {
 				<Line
 					points={getPoints(item)}
 					stroke={stroke}
-					strokeWidth={1}
+					strokeWidth={0.6}
 					tension={0.12}
 					key={index}
 				></Line>
@@ -65,12 +77,22 @@ const Index = (props: IPropsTodos) => {
 		<div className={$cx('limited_content_wrap relative', styles._local)}>
 			{height > 0 && (
 				<Stage className='stage_wrap absolute' width={16} height={height}>
-					<Layer ref={(v) => setLayer(v)}>{lines}</Layer>
+					<Layer>
+						{lines}
+						{link_points && (
+							<Line
+								points={link_points}
+								stroke={stroke}
+								strokeWidth={1}
+								tension={0.12}
+							></Line>
+						)}
+					</Layer>
 				</Stage>
 			)}
 			<div className='todo_items_wrap w_100 flex flex_column' ref={container}>
 				{items.map((item, index) => (
-					<TodoItem {...{ item, addIfIds }} key={index}></TodoItem>
+					<TodoItem {...{ item, makeLinkLine, addIfIds }} key={index}></TodoItem>
 				))}
 			</div>
 		</div>

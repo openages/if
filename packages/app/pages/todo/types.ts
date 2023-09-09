@@ -53,7 +53,8 @@ export interface IPropsTodos {
 
 export type IPropsTodoItem = {
 	item: Todo.TodoItem
+	makeLinkLine: (args: { active_id: string; y: number } | null) => void
 	addIfIds: Services['addIfIds']
 }
 
-export type ArgsUpdate=Partial<Todo.TodoItem> & { id: string }
+export type ArgsUpdate = Partial<Todo.TodoItem> & { id: string }
