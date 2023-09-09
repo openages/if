@@ -101,6 +101,9 @@ importers:
       i18next:
         specifier: ^23.4.9
         version: 23.4.9
+      konva:
+        specifier: ^9.2.0
+        version: 9.2.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -143,6 +146,9 @@ importers:
       react-if:
         specifier: ^4.1.5
         version: 4.1.5(react@0.0.0-experimental-b9be4537c-20230905)
+      react-konva:
+        specifier: ^18.2.10
+        version: 18.2.10(konva@9.2.0)(react-dom@0.0.0-experimental-b9be4537c-20230905)(react@0.0.0-experimental-b9be4537c-20230905)
       react-nice-avatar:
         specifier: ^1.4.1
         version: 1.4.1(react@0.0.0-experimental-b9be4537c-20230905)
@@ -4037,7 +4043,6 @@ packages:
 
   /@types/prop-types@15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
-    dev: true
 
   /@types/qs@6.9.8:
     resolution: {integrity: sha512-u95svzDlTysU5xecFNTgfFG5RUWu1A9P0VzgpcIiGZA9iraHOdSzcxMxQ55DyeRaGCSxQi7LxXDI4rzq/MYfdg==}
@@ -4050,6 +4055,12 @@ packages:
     dependencies:
       '@types/react': 18.2.21
     dev: true
+
+  /@types/react-reconciler@0.28.4:
+    resolution: {integrity: sha512-Xd55E2aLI9Q/ikDQEmfRzIwYJs4oO0h9ZHA3FZDakzt1WR6JMZcpqtCZlF97I72KVjoY4rHXU5TfvkRDOyr/rg==}
+    dependencies:
+      '@types/react': 18.2.21
+    dev: false
 
   /@types/react@18.2.15:
     resolution: {integrity: sha512-oEjE7TQt1fFTFSbf8kkNuc798ahTUzn3Le67/PWjE8MAfYAD/qB7O8hSTcromLFqHCt9bcdOg5GXMokzTjJ5SA==}
@@ -4065,7 +4076,6 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
       csstype: 3.1.2
-    dev: true
 
   /@types/retry@0.12.0:
     resolution: {integrity: sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==}
@@ -4073,7 +4083,6 @@ packages:
 
   /@types/scheduler@0.16.3:
     resolution: {integrity: sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==}
-    dev: true
 
   /@types/send@0.17.1:
     resolution: {integrity: sha512-Cwo8LE/0rnvX7kIIa3QHCkcuF21c05Ayb0ZfxPiv0W8VRiZiNW/WuRupHKpqqGVGf7SUA44QSOUKaEd9lIrd/Q==}
@@ -6347,6 +6356,15 @@ packages:
       ws: 8.13.0
     dev: false
 
+  /its-fine@1.1.1(react@0.0.0-experimental-b9be4537c-20230905):
+    resolution: {integrity: sha512-v1Ia1xl20KbuSGlwoaGsW0oxsw8Be+TrXweidxD9oT/1lAh6O3K3/GIM95Tt6WCiv6W+h2M7RB1TwdoAjQyyKw==}
+    peerDependencies:
+      react: '>=18.0'
+    dependencies:
+      '@types/react-reconciler': 0.28.4
+      react: 0.0.0-experimental-b9be4537c-20230905
+    dev: false
+
   /jest-worker@27.5.1:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
@@ -6428,6 +6446,10 @@ packages:
 
   /jsonschema-key-compression@1.6.1:
     resolution: {integrity: sha512-7SIbS09K7J40sd/hKCAOLQ1ss45aQ76pz99K1esBlgH/CkdCbetTEx6v+gPeCIXwnT1VHU5JKGjNbJO7ktZNFQ==}
+    dev: false
+
+  /konva@9.2.0:
+    resolution: {integrity: sha512-+woI76Sk+VFVl9z7zPkuTnN2zFpEYg27YWz8BCdQXpt5IS3pdnSPAPQVPPMidcbDi9/G5b/IOIp35/KqMGiYPA==}
     dev: false
 
   /launch-editor@2.6.0:
@@ -7813,6 +7835,22 @@ packages:
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
+  /react-konva@18.2.10(konva@9.2.0)(react-dom@0.0.0-experimental-b9be4537c-20230905)(react@0.0.0-experimental-b9be4537c-20230905):
+    resolution: {integrity: sha512-ohcX1BJINL43m4ynjZ24MxFI1syjBdrXhqVxYVDw2rKgr3yuS0x/6m1Y2Z4sl4T/gKhfreBx8KHisd0XC6OT1g==}
+    peerDependencies:
+      konva: ^8.0.1 || ^7.2.5 || ^9.0.0
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+    dependencies:
+      '@types/react-reconciler': 0.28.4
+      its-fine: 1.1.1(react@0.0.0-experimental-b9be4537c-20230905)
+      konva: 9.2.0
+      react: 0.0.0-experimental-b9be4537c-20230905
+      react-dom: 0.0.0-experimental-b9be4537c-20230905(react@0.0.0-experimental-b9be4537c-20230905)
+      react-reconciler: 0.29.0(react@0.0.0-experimental-b9be4537c-20230905)
+      scheduler: 0.23.0
+    dev: false
+
   /react-nice-avatar@1.4.1(react@0.0.0-experimental-b9be4537c-20230905):
     resolution: {integrity: sha512-IKC51UTBbPm7rVsFNCiSEs/oP7W2/scod7/s8xCxqF/yMGS+Xs5HDAVxpyTEwv2iCYVoBq8H/E8SnbqwnWvupA==}
     peerDependencies:
@@ -7822,6 +7860,17 @@ packages:
       chroma-js: 2.4.2
       prop-types: 15.8.1
       react: 0.0.0-experimental-b9be4537c-20230905
+    dev: false
+
+  /react-reconciler@0.29.0(react@0.0.0-experimental-b9be4537c-20230905):
+    resolution: {integrity: sha512-wa0fGj7Zht1EYMRhKWwoo1H9GApxYLBuhoAuXN0TlltESAjDssB+Apf0T/DngVqaMyPypDmabL37vw/2aRM98Q==}
+    engines: {node: '>=0.10.0'}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      loose-envify: 1.4.0
+      react: 0.0.0-experimental-b9be4537c-20230905
+      scheduler: 0.23.0
     dev: false
 
   /react-refresh@0.14.0:
@@ -8105,6 +8154,12 @@ packages:
     resolution: {integrity: sha512-V5P9LOS+c5CG7qaCJu+Qgcz9eh/dP4nBszj3w1MCgZnMtAna6+J8ZuuUnRDMeY86F8KH+cY8Q5beIvAL2noMzA==}
     dependencies:
       loose-envify: 1.4.0
+
+  /scheduler@0.23.0:
+    resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
+    dependencies:
+      loose-envify: 1.4.0
+    dev: false
 
   /schema-utils@3.3.0:
     resolution: {integrity: sha512-pN/yOAvcC+5rQ5nERGuwrjLlYvLTbCibnZ1I7B1LaiAz9BRBlE9GMgE/eqV30P7aJQUf7Ddimy/RsbYO/GrVGg==}

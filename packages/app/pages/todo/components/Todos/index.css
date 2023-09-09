@@ -4,8 +4,10 @@
 	padding-bottom: 60px;
 
 	:global {
-		.canvas_wrap {
+		.stage_wrap {
 			top: 36px;
+                  left: 33px;
+                  z-index: 0;
 		}
 	}
 }

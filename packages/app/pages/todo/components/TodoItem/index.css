@@ -18,13 +18,13 @@
 	border: 1px dashed transparent;
 	border-radius: var(--radius);
 
-      &:hover{
-            :global{
-                  .dot_wrap{
-                        opacity: 1;
-                  }
-            }
-      }
+	&:hover {
+		:global {
+			.dot_wrap {
+				opacity: 1;
+			}
+		}
+	}
 
 	&.checked {
 		:global {
@@ -41,16 +41,16 @@
 
 	:global {
 		.dot_wrap {
-			top: 6.5px;
+			top: 6px;
 			left: -9px;
-			width: 13px;
-			height: 13px;
+			width: 14px;
+			height: 14px;
 			border-radius: 50%;
-			box-shadow: inset 0 0 8px rgba(var(--color_text_rgb), 0.18);
-                  opacity: 0;
+			background-color: rgba(var(--color_text_rgb), 0.12);
+			opacity: 1;
 
 			&:hover {
-				box-shadow: inset 0 0 8px rgba(var(--color_text_rgb), 0.36);
+				background-color: rgba(var(--color_text_rgb), 0.24);
 
 				&::after {
 					background-color: rgba(var(--color_text_rgb), 0.72);
@@ -62,12 +62,12 @@
 				width: 4px;
 				height: 4px;
 				border-radius: 50%;
-				background-color: rgba(var(--color_text_rgb), 0.36);
+				background-color: rgba(var(--color_text_rgb), 0.48);
 			}
 
-                  &.linking{
-                        opacity: 1;
-                  }
+			&.linking {
+				opacity: 1;
+			}
 		}
 
 		.action_wrap {
@@ -86,11 +86,11 @@
 		.text {
 			width: calc(100% - (24px + 4px));
 			user-select: none;
-                  text-underline-offset: 6px;
+			text-underline-offset: 6px;
 
-                  &:active{
+			&:active {
 				text-decoration: var(--color_text_grey) underline solid 1px !important;
-                  }
+			}
 
 			&:hover {
 				text-decoration: var(--color_text_grey) underline dashed 1px;

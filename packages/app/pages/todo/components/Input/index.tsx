@@ -35,7 +35,7 @@ const Index = (props: IPropsInput) => {
 	useEffect(() => {
 		if (loading) return
 
-		setInput((v) => ({ ...v, id: id(), text: '' }))
+		setInput((v) => ({ ...v, id: id(), text: '', circle: undefined }))
 	}, [loading])
 
 	const tag_options = useMemo(() => {

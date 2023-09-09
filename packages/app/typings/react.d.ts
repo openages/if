@@ -8,4 +8,9 @@ declare module 'react' {
 		},
 		any
 	>
+
+	interface DragEvent {
+		offsetX: number
+		offsetY: number
+	}
 }

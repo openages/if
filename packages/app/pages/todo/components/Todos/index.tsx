@@ -1,49 +1,32 @@
 import { useSize } from 'ahooks'
-import { useRef, useEffect } from 'react'
+import { useRef, useMemo, useState, useEffect } from 'react'
+import { Stage, Layer } from 'react-konva'
 
 import TodoItem from '../TodoItem'
 import styles from './index.css'
 
 import type { IPropsTodos } from '../../types'
+import type { Layer as ILayer } from 'konva/lib/Layer'
 
 const Index = (props: IPropsTodos) => {
 	const { items } = props
 	const container = useRef<HTMLDivElement>(null)
-	const canvas = useRef<HTMLCanvasElement>(null)
+	const [layer, setLayer] = useState<ILayer>(null)
 	const size = useSize(container)
-
-	console.log(size)
-
-	useEffect(() => {
-		if (!size) return
-		if (!canvas.current) return
-
-		const c = canvas.current.getContext('2d')
-
-		c.lineWidth = 1
-		c.strokeStyle = 'red'
-
-		c.beginPath()
-
-		c.moveTo(0, 0)
-		c.lineTo(0, 10)
-
-		c.stroke()
-	}, [size])
+	const height = useMemo(() => (size ? size.height : 0), [size])
 
 	return (
-		<div className={$cx('limited_content_wrap flex flex_column relative', styles._local)} ref={container}>
-			{size?.height && (
-				<canvas
-					className='canvas_wrap absolute left_0'
-					width={49}
-					height={size.height - 36 - 60}
-					ref={canvas}
-				></canvas>
+		<div className={$cx('limited_content_wrap relative', styles._local)}>
+			{height > 0 && (
+				<Stage className='stage_wrap absolute' width={16} height={height}>
+					<Layer ref={(v) => setLayer(v)}></Layer>
+				</Stage>
 			)}
-			{items.map((item, index) => (
-				<TodoItem {...item} key={index}></TodoItem>
-			))}
+			<div className='todo_items_wrap w_100 flex flex_column' ref={container}>
+				{items.map((item, index) => (
+					<TodoItem {...{ container, layer }} {...item} key={index}></TodoItem>
+				))}
+			</div>
 		</div>
 	)
 }

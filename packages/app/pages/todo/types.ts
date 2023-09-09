@@ -1,6 +1,8 @@
 import type { Todo, RxDB, TodoArchive, DirTree } from '@/types'
 import type Services from './services'
 import type Model from './model'
+import type { Layer } from 'konva/lib/Layer'
+import type { MutableRefObject } from 'react'
 
 export type QueryItems = RxDB.ItemsQuery<Todo.TodoItem>
 export type QueryArchives = RxDB.ItemsQuery<TodoArchive.Item>
@@ -48,4 +50,7 @@ export interface IPropsTodos {
 	items: Services['items']
 }
 
-export type IPropsTodoItem = Todo.TodoItem & {}
+export type IPropsTodoItem = Todo.TodoItem & {
+	container: MutableRefObject<HTMLDivElement>
+	layer?: Layer
+}
