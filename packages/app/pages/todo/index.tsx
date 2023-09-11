@@ -51,7 +51,9 @@ const Index = ({ id }: IProps) => {
 
 	const props_todos: IPropsTodos = {
 		items: toJS(x.services.items),
-		addIfIds: useMemoizedFn(x.services.addIfIds)
+		relations: toJS(x.services.info?.relations || []),
+		check: useMemoizedFn(x.check),
+		updateRelations: useMemoizedFn(x.updateRelations)
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {

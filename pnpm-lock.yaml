@@ -77,6 +77,9 @@ importers:
       console-ban:
         specifier: ^5.0.0
         version: 5.0.0
+      dayjs:
+        specifier: ^1.11.9
+        version: 1.11.9
       echarts:
         specifier: ^5.4.3
         version: 5.4.3

@@ -1,4 +1,102 @@
 export default {
+      "Todo.Data": {
+            "type": "object",
+            "properties": {
+                  "id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "desc": {
+                        "type": "string"
+                  },
+                  "angles": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "properties": {
+                                    "id": {
+                                          "type": "string"
+                                    },
+                                    "text": {
+                                          "type": "string"
+                                    }
+                              },
+                              "required": [
+                                    "id",
+                                    "text"
+                              ]
+                        }
+                  },
+                  "tags": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "properties": {
+                                    "id": {
+                                          "type": "string"
+                                    },
+                                    "color": {
+                                          "type": "string"
+                                    },
+                                    "text": {
+                                          "type": "string"
+                                    }
+                              },
+                              "required": [
+                                    "id",
+                                    "color",
+                                    "text"
+                              ]
+                        }
+                  },
+                  "relations": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "properties": {
+                                    "items": {
+                                          "type": "array",
+                                          "items": {
+                                                "type": "string"
+                                          }
+                                    },
+                                    "checked": {
+                                          "type": "boolean"
+                                    }
+                              },
+                              "required": [
+                                    "items",
+                                    "checked"
+                              ]
+                        }
+                  },
+                  "settings": {
+                        "type": "object",
+                        "properties": {
+                              "auto_archiving": {
+                                    "type": "string",
+                                    "enum": [
+                                          "0m",
+                                          "3m",
+                                          "3h",
+                                          "1d",
+                                          "3d",
+                                          "7d"
+                                    ]
+                              }
+                        },
+                        "required": [
+                              "auto_archiving"
+                        ]
+                  }
+            },
+            "required": [
+                  "id",
+                  "angles",
+                  "tags",
+                  "settings"
+            ]
+      },
       "Todo.Todo": {
             "type": "object",
             "properties": {
@@ -14,16 +112,10 @@ export default {
                               "closed"
                         ]
                   },
-                  "achive_time": {
+                  "archive_time": {
                         "type": "number"
                   },
                   "tag_ids": {
-                        "type": "array",
-                        "items": {
-                              "type": "string"
-                        }
-                  },
-                  "if_ids": {
                         "type": "array",
                         "items": {
                               "type": "string"
@@ -125,16 +217,10 @@ export default {
                               "closed"
                         ]
                   },
-                  "achive_time": {
+                  "archive_time": {
                         "type": "number"
                   },
                   "tag_ids": {
-                        "type": "array",
-                        "items": {
-                              "type": "string"
-                        }
-                  },
-                  "if_ids": {
                         "type": "array",
                         "items": {
                               "type": "string"
@@ -185,83 +271,6 @@ export default {
                   "id",
                   "text",
                   "type"
-            ]
-      },
-      "Todo.Data": {
-            "type": "object",
-            "properties": {
-                  "id": {
-                        "type": "string",
-                        "maxLength": 30
-                  },
-                  "desc": {
-                        "type": "string"
-                  },
-                  "angles": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "id": {
-                                          "type": "string"
-                                    },
-                                    "text": {
-                                          "type": "string"
-                                    }
-                              },
-                              "required": [
-                                    "id",
-                                    "text"
-                              ]
-                        }
-                  },
-                  "tags": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "id": {
-                                          "type": "string"
-                                    },
-                                    "color": {
-                                          "type": "string"
-                                    },
-                                    "text": {
-                                          "type": "string"
-                                    }
-                              },
-                              "required": [
-                                    "id",
-                                    "color",
-                                    "text"
-                              ]
-                        }
-                  },
-                  "settings": {
-                        "type": "object",
-                        "properties": {
-                              "auto_archiving": {
-                                    "type": "string",
-                                    "enum": [
-                                          "0m",
-                                          "3m",
-                                          "3h",
-                                          "1d",
-                                          "3d",
-                                          "7d"
-                                    ]
-                              }
-                        },
-                        "required": [
-                              "auto_archiving"
-                        ]
-                  }
-            },
-            "required": [
-                  "id",
-                  "angles",
-                  "tags",
-                  "settings"
             ]
       }
 } as const

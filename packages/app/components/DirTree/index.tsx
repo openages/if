@@ -51,6 +51,7 @@ const Index = (props: IProps) => {
 	const props_dir_items: IPropsDirItems = {
 		module: x.module,
 		data: toJS(x.services.dirtree),
+		loading: x.services.utils.loading['query'],
 		current_item: toJS(x.current_item),
 		focusing_item: toJS(x.focusing_item),
 		open_folder: toJS(x.open_folder),

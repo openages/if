@@ -1,7 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Else, If, Then } from 'react-if'
+import { Else, If, Then, When } from 'react-if'
 
 import { SimpleEmpty } from '@/components'
 import { useElementScrollRestoration } from '@/hooks'
@@ -14,7 +14,7 @@ import type { IPropsDirItems } from '../../types'
 import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core'
 
 const Index = (props: IPropsDirItems) => {
-	const { module, data, current_item, focusing_item, open_folder, onClick, showDirTreeOptions } = props
+	const { module, data, loading, current_item, focusing_item, open_folder, onClick, showDirTreeOptions } = props
 	const [active_item, setActiveItem] = useState<{ item: DirTree.Item; open: boolean } | null>(null)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }))
 	const scroll_restore = useElementScrollRestoration('todo.dirtree')
@@ -79,7 +79,9 @@ const Index = (props: IPropsDirItems) => {
 					</DndContext>
 				</Then>
 				<Else>
-					<SimpleEmpty></SimpleEmpty>
+					<When condition={!loading}>
+						<SimpleEmpty></SimpleEmpty>
+					</When>
 				</Else>
 			</If>
 		</div>

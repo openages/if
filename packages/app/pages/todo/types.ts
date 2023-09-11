@@ -48,13 +48,21 @@ export interface IPropsInputCircle {
 
 export interface IPropsTodos {
 	items: Services['items']
-	addIfIds: Services['addIfIds']
+	relations: Todo.Data['relations']
+	check: Model['check']
+	updateRelations: Model['updateRelations']
 }
 
-export type IPropsTodoItem = {
-	item: Todo.TodoItem
+export interface IPropsTodoItem {
+	item: Todo.Todo
 	makeLinkLine: (args: { active_id: string; y: number } | null) => void
-	addIfIds: Services['addIfIds']
+	check: Model['check']
+	updateRelations: Model['updateRelations']
+}
+
+export interface IPropsGroupTitle {
+	item: Todo.Group
 }
 
 export type ArgsUpdate = Partial<Todo.TodoItem> & { id: string }
+export type ArgsUpdateStatus = { id: string; status: Todo.Todo['status'] }

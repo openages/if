@@ -17,16 +17,10 @@ export default {
                               "closed"
                         ]
                   },
-                  "achive_time": {
+                  "archive_time": {
                         "type": "number"
                   },
                   "tag_ids": {
-                        "type": "array",
-                        "items": {
-                              "type": "string"
-                        }
-                  },
-                  "if_ids": {
                         "type": "array",
                         "items": {
                               "type": "string"
@@ -97,16 +91,10 @@ export default {
                               "closed"
                         ]
                   },
-                  "achive_time": {
+                  "archive_time": {
                         "type": "number"
                   },
                   "tag_ids": {
-                        "type": "array",
-                        "items": {
-                              "type": "string"
-                        }
-                  },
-                  "if_ids": {
                         "type": "array",
                         "items": {
                               "type": "string"
@@ -174,16 +162,10 @@ export default {
                               "closed"
                         ]
                   },
-                  "achive_time": {
+                  "archive_time": {
                         "type": "number"
                   },
                   "tag_ids": {
-                        "type": "array",
-                        "items": {
-                              "type": "string"
-                        }
-                  },
-                  "if_ids": {
                         "type": "array",
                         "items": {
                               "type": "string"

@@ -1,15 +1,14 @@
-import { omit } from 'lodash-es'
 import { makeAutoObservable, reaction } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
 import { File } from '@/services'
-import { setStorageWhenChange, getDocItemsData, modify } from '@/utils'
+import { setStorageWhenChange, getDocItemsData, modify, getArchiveTime } from '@/utils'
 import { loading } from '@/utils/decorators'
 
 import type { Todo, TodoArchive, RxDB } from '@/types'
 import type { RxDocument, RxQuery } from 'rxdb'
-import type { ArgsUpdate } from './types'
+import type { ArgsUpdate, ArgsUpdateStatus } from './types'
 
 const archives_page_size = 12
 
@@ -67,7 +66,7 @@ export default class Index {
 
 		reaction(
 			() => this.current_angle_id,
-                  () => {
+			() => {
 				if (!this.id) return
 
 				this.queryItems()
@@ -109,25 +108,14 @@ export default class Index {
 		await res.incrementalModify(modify(v))
 	}
 
-	async addIfIds(active_id: string, over_id: string) {
-		if (active_id === over_id) return
-
-		const active_item = await $db.collections[`${this.id}_todo_items`]
-			.findOne({ selector: { id: active_id } })
-			.exec()
-
-		const over_item = await $db.collections[`${this.id}_todo_items`]
-			.findOne({ selector: { id: over_id } })
-			.exec()
-
-		if (
-			(!active_item.if_ids || !active_item?.if_ids?.includes(over_id)) &&
-			(!over_item.if_ids || !over_item?.if_ids?.includes(active_id))
-		) {
-			active_item.incrementalModify(
-				modify({ id: active_id, if_ids: [...(active_item.if_ids || []), over_id] })
-			)
-		}
+	async updateStatus(v: ArgsUpdateStatus) {
+		await this.update({
+			...v,
+			archive_time:
+				v.status === 'checked' || v.status === 'closed'
+					? getArchiveTime(this.info.settings.auto_archiving)
+					: undefined
+		})
 	}
 
 	@loading

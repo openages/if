@@ -19,6 +19,7 @@ export interface IProps {
 export interface IPropsDirItems {
 	module: Model['module']
 	data: Model['services']['doc']['dirtree']
+	loading: boolean
 	current_item: DirTree.File
 	focusing_item: Model['focusing_item']
 	open_folder: Model['open_folder']

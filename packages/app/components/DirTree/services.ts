@@ -3,7 +3,9 @@ import { makeAutoObservable, reaction, toJS } from 'mobx'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
+import { Utils } from '@/models'
 import { id } from '@/utils'
+import { loading } from '@/utils/decorators'
 import { remove, find } from '@/utils/tree'
 import { deepEqual } from '@openages/craftkit'
 
@@ -22,7 +24,7 @@ export default class Index {
 	dirtree = [] as DirTree.Items
 	focusing_item = {} as DirTree.Item
 
-	constructor() {
+	constructor(public utils: Utils) {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
@@ -48,6 +50,7 @@ export default class Index {
 		)
 	}
 
+	@loading
 	async query() {
 		this.dirtree_query = $db.module.findOne({ selector: { module: this.module } })! as RxQuery<Module.Item>
 

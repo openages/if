@@ -30,6 +30,7 @@
             "classix": "^2.1.34",
             "color": "^4.2.3",
             "console-ban": "^5.0.0",
+            "dayjs": "^1.11.9",
             "echarts": "^5.4.3",
             "emittery": "^1.0.1",
             "emoji-mart": "^5.5.2",
