@@ -1,6 +1,7 @@
 import { makeAutoObservable, reaction } from 'mobx'
 import { injectable } from 'tsyringe'
 
+import { archive } from '@/actions/todo'
 import { Utils } from '@/models'
 import { File } from '@/services'
 import { setStorageWhenChange, getDocItemsData, modify, getArchiveTime } from '@/utils'
@@ -51,6 +52,7 @@ export default class Index {
 
 				this.file.query(v)
 				this.query()
+				this.queryItems()
 			}
 		)
 
@@ -116,6 +118,8 @@ export default class Index {
 					? getArchiveTime(this.info.settings.auto_archiving)
 					: undefined
 		})
+
+		await archive(this.id)
 	}
 
 	@loading
@@ -140,6 +144,8 @@ export default class Index {
 	@loading
 	async queryItems() {
 		if (!$db.collections[`${this.id}_todo_items`]) return
+
+		await archive(this.id)
 
 		this.items_query = $db.collections[`${this.id}_todo_items`]
 			.find({

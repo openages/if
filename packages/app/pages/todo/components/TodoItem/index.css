@@ -14,7 +14,7 @@
 	&.checked,
 	&.closed {
 		:global {
-                  .dot_wrap {
+			.dot_wrap {
 				user-select: none;
 			}
 
@@ -24,6 +24,20 @@
 
 			.text {
 				color: rgba(var(--color_text_rgb), 0.3);
+			}
+		}
+	}
+
+	&.closed {
+		:global {
+			.dot_wrap {
+				user-select: none;
+			}
+
+			.action_wrap {
+				&:hover {
+					background-color: unset;
+				}
 			}
 		}
 	}
@@ -86,6 +100,7 @@
 			margin-right: 3px;
 			border-radius: 3px;
 			color: var(--color_text_sub);
+			transition: color ease 0.3s;
 
 			&:hover {
 				background-color: var(--color_bg_2);
@@ -96,6 +111,7 @@
 			width: calc(100% - (24px + 4px));
 			user-select: none;
 			text-underline-offset: 6px;
+			transition: color ease 0.3s;
 
 			&:active {
 				text-decoration: var(--color_text_grey) underline solid 1px !important;
