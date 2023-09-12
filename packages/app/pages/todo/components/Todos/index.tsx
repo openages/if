@@ -9,7 +9,7 @@ import { points } from '@/utils'
 import GroupTitle from '../GroupTitle'
 import TodoItem from '../TodoItem'
 import styles from './index.css'
-import { getRelativePostion } from './utils'
+import { getRelativePostion, getLinkedItems } from './utils'
 
 import type { IPropsTodos } from '../../types'
 
@@ -21,18 +21,20 @@ const Index = (props: IPropsTodos) => {
 	const size = useSize(container)
 	const height = useMemo(() => (size ? size.height : 0), [size])
 	const color_text_rgb = useCssVariable('--color_text_rgb')
+	const color_text_softlight = useCssVariable('--color_text_softlight')
 
 	const relations_lines = useMemo(() => {
-		return cloneDeep(relations).reduce(
-			(total, relation) => {
-				const from = relation.items.splice(0, 1)[0]
+		const target: Array<{ point: [string, string]; checked: boolean }> = []
 
-				relation.items.map((item) => total.push({ point: [from, item], checked: relation.checked }))
+		relations.map((item) => {
+			const lines = getLinkedItems(item.items)
 
-				return total
-			},
-			[] as Array<{ point: [string, string]; checked: boolean }>
-		)
+			lines.map((point) => {
+				target.push({ point, checked: item.checked })
+			})
+		})
+
+		return target
 	}, [relations])
 
 	const getPoints = useMemoizedFn((ids: [string, string]) => {
@@ -66,7 +68,7 @@ const Index = (props: IPropsTodos) => {
 				relations_lines.map((item, index) => (
 					<Line
 						points={getPoints(item.point)}
-						stroke={`rgba(${color_text_rgb},0.${item.checked ? '24' : '72'})`}
+						stroke={item.checked ? color_text_softlight : `rgba(${color_text_rgb},0.72})`}
 						strokeWidth={1}
 						tension={0}
 						key={index}

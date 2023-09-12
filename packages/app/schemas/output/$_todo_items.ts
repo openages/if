@@ -17,6 +17,9 @@ export default {
                               "closed"
                         ]
                   },
+                  "star": {
+                        "type": "number"
+                  },
                   "archive_time": {
                         "type": "number"
                   },
@@ -91,6 +94,9 @@ export default {
                               "closed"
                         ]
                   },
+                  "star": {
+                        "type": "number"
+                  },
                   "archive_time": {
                         "type": "number"
                   },
@@ -161,6 +167,9 @@ export default {
                               "unchecked",
                               "closed"
                         ]
+                  },
+                  "star": {
+                        "type": "number"
                   },
                   "archive_time": {
                         "type": "number"

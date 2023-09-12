@@ -13,7 +13,7 @@ const Index = (props: IPropsTabs) => {
 	return (
 		<div className={$cx('w_100 border_box sticky', styles._local)}>
 			<div className='tabs_wrap limited_content_wrap flex align_center relative'>
-				<div className='tab_items_wrap w_100'>
+				<div className='tab_items_wrap w_100 relative'>
 					<ScrollMenu onWheel={onWheel}>
 						{angles.map((item) => (
 							<Item

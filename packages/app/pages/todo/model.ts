@@ -1,8 +1,8 @@
 import { omit, cloneDeep, uniq } from 'lodash-es'
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, reaction } from 'mobx'
 import { injectable } from 'tsyringe'
 
-import { update } from '@/actions/todo'
+import { update, archive } from '@/actions/todo'
 import { GlobalModel } from '@/context/app'
 
 import Services from './services'
@@ -14,6 +14,7 @@ import type { Todo } from '@/types'
 @injectable()
 export default class Index {
 	visible_settings_modal = false
+	visible_archive_modal = false
 
 	constructor(
 		public global: GlobalModel,
@@ -24,6 +25,22 @@ export default class Index {
 
 	init() {
 		this.services.init()
+
+		this.reactions()
+	}
+
+	reactions() {
+		reaction(
+			() => this.visible_archive_modal,
+			(v) => {
+				if (v) {
+					this.services.queryArchives()
+				} else {
+					this.services.loadmore.page = 0
+					this.services.loadmore.end = false
+				}
+			}
+		)
 	}
 
 	async onInfoChange(
@@ -70,6 +87,8 @@ export default class Index {
 
 			await update(this.services.id, { relations })
 		}
+
+		await archive(this.services.id)
 	}
 
 	async updateRelations(active_id: string, over_id: string) {
@@ -134,11 +153,11 @@ export default class Index {
 	}
 
 	on() {
-		$app.Event.on('todo/ready', this.init)
+		$app.Event.on('todo/ready', this.services.initQuery)
 	}
 
 	off() {
-		$app.Event.off('todo/ready', this.init)
+		$app.Event.off('todo/ready', this.services.initQuery)
 
 		this.services.info_query?.$?.unsubscribe?.()
 		this.services.items_query?.$?.unsubscribe?.()

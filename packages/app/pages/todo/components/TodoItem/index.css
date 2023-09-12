@@ -109,17 +109,6 @@
 
 		.text {
 			width: calc(100% - (24px + 4px));
-			user-select: none;
-			text-underline-offset: 6px;
-			transition: color ease 0.3s;
-
-			&:active {
-				text-decoration: var(--color_text_grey) underline solid 1px !important;
-			}
-
-			&:hover {
-				text-decoration: var(--color_text_grey) underline dashed 1px;
-			}
 		}
 	}
 }

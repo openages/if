@@ -10,7 +10,7 @@ import styles from './index.css'
 import type { IPropsHeader } from '../../types'
 
 const Index = (props: IPropsHeader) => {
-	const { name, icon, icon_hue, desc, showSettingsModal } = props
+	const { name, icon, icon_hue, desc, showSettingsModal, showArchiveModal } = props
 	const { t } = useTranslation()
 
 	return (
@@ -46,7 +46,10 @@ const Index = (props: IPropsHeader) => {
 					</div>
 				</Tooltip>
 				<Tooltip title={t('translation:todo.Header.archive')} placement='bottom'>
-					<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable'>
+					<div
+						className='icon_wrap border_box flex justify_center align_center cursor_point clickable'
+						onClick={showArchiveModal}
+					>
 						<ArchiveBox size={18}></ArchiveBox>
 					</div>
 				</Tooltip>

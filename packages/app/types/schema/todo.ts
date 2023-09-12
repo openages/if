@@ -30,13 +30,14 @@ export namespace Todo {
 	export type Todo = Common & {
 		type: 'todo'
 		status: 'checked' | 'unchecked' | 'closed'
+		star?: number
 		archive_time?: number
 		tag_ids?: Array<string>
 		circle?: {
 			enabled: boolean
 			value: Array<number>
 		}
-		children?: Array<Omit<Todo, 'angle_id' | 'archive_time' | 'tag_ids' | 'circle' | 'children'>>
+		children?: Array<Omit<Todo, 'angle_id' | 'star' | 'archive_time' | 'tag_ids' | 'circle' | 'children'>>
 	}
 
 	export type Group = Common & {

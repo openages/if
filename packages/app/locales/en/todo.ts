@@ -47,5 +47,8 @@ export default {
 			hour: 'Hours',
 			minute: 'Minutes'
 		}
-	}
+      },
+      Archive: {
+            title:'Archive'
+      }
 }

@@ -8,11 +8,19 @@ import { container } from 'tsyringe'
 import { DataEmpty } from '@/components'
 import { usePageScrollRestoration } from '@/hooks'
 
-import { Header, Input, Tabs, Todos, SettingsModal } from './components'
+import { Header, Input, Tabs, Todos, SettingsModal, Archive } from './components'
 import styles from './index.css'
 import Model from './model'
 
-import type { IProps, IPropsHeader, IPropsTabs, IPropsInput, IPropsTodos, IPropsSettingsModal } from './types'
+import type {
+	IProps,
+	IPropsHeader,
+	IPropsTabs,
+	IPropsInput,
+	IPropsTodos,
+	IPropsSettingsModal,
+	IPropsArchive
+} from './types'
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
@@ -33,7 +41,8 @@ const Index = ({ id }: IProps) => {
 		icon: x.services.file.data.icon,
 		icon_hue: x.services.file.data.icon_hue,
 		desc: x.services.info.desc,
-		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true))
+		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true)),
+		showArchiveModal: useMemoizedFn(() => (x.visible_archive_modal = true))
 	}
 
 	const props_tabs: IPropsTabs = {
@@ -63,6 +72,14 @@ const Index = ({ id }: IProps) => {
 		onInfoChange: useMemoizedFn(x.onInfoChange)
 	}
 
+	const props_archive: IPropsArchive = {
+		visible_archive_modal: x.visible_archive_modal,
+		archives: toJS(x.services.archives),
+		end: x.services.loadmore.end,
+		loadMore: useMemoizedFn(x.services.loadmore.loadMore),
+		onClose: useMemoizedFn(() => (x.visible_archive_modal = false))
+      }
+      
 	return (
 		<div className={$cx('w_100 flex flex_column', styles._local)}>
 			<If condition={x.services.id && x.services.file.data.name}>
@@ -72,6 +89,7 @@ const Index = ({ id }: IProps) => {
 					<Input {...props_input}></Input>
 					<Todos {...props_todos}></Todos>
 					<SettingsModal {...props_settings_modal}></SettingsModal>
+					<Archive {...props_archive}></Archive>
 				</Then>
 				<Else>
 					<When

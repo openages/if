@@ -1,5 +1,7 @@
 import { difference, cloneDeep } from 'lodash-es'
 
+import { Todo } from '@/types'
+
 export default async (file_id: string) => {
 	const todo_items = $db.collections[`${file_id}_todo_items`]
 	const todo_archive = $db.collections[`${file_id}_todo_archive`]
@@ -25,7 +27,7 @@ export default async (file_id: string) => {
 		.sort({ create_at: 'asc' })
 		.exec()
 
-	const archive_data = archive_items.map((item) => item.toMutableJSON())
+	const archive_data = archive_items.map((item) => item.toMutableJSON()) as Array<Todo.Todo>
 
 	await todo_archive.bulkInsert(
 		archive_data.map((item) => {
@@ -45,6 +47,10 @@ export default async (file_id: string) => {
 				item.items,
 				archive_data.map((item) => item.id)
 			)
+
+			if (relations[index].items.length === 0) {
+				relations.splice(index, 1)
+			}
 		})
 
 		await info.incrementalPatch({ relations })

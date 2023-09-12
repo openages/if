@@ -3,7 +3,7 @@ import { injectable } from 'tsyringe'
 
 import { archive } from '@/actions/todo'
 import { Utils } from '@/models'
-import { File } from '@/services'
+import { File, LoadMore } from '@/services'
 import { setStorageWhenChange, getDocItemsData, modify, getArchiveTime } from '@/utils'
 import { loading } from '@/utils/decorators'
 
@@ -11,7 +11,7 @@ import type { Todo, TodoArchive, RxDB } from '@/types'
 import type { RxDocument, RxQuery } from 'rxdb'
 import type { ArgsUpdate, ArgsUpdateStatus } from './types'
 
-const archives_page_size = 12
+const archives_page_size = 48
 
 @injectable()
 export default class Index {
@@ -20,13 +20,13 @@ export default class Index {
 	info = {} as Todo.Data
 	items_query = {} as RxDB.ItemsQuery<Todo.TodoItem>
 	items = [] as Array<Todo.TodoItem>
-	archives = [] as RxDB.ItemsDoc<TodoArchive.Item>
+	archives = [] as Array<TodoArchive.Item>
 	current_angle_id = ''
-	archives_page = 0
 
 	constructor(
 		public utils: Utils,
-		public file: File
+		public file: File,
+		public loadmore: LoadMore
 	) {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
@@ -36,13 +36,17 @@ export default class Index {
 
 		this.reactions()
 
-		if (this.id) {
+            this.initQuery()
+      }
+      
+      initQuery() {
+            if (this.id) {
 			this.file.query(this.id)
 
 			this.query()
 			this.queryItems()
 		}
-	}
+      }
 
 	reactions() {
 		reaction(
@@ -88,6 +92,15 @@ export default class Index {
 				}
 			}
 		)
+
+		reaction(
+			() => this.loadmore.page,
+			(v) => {
+				if (!v) return
+
+				this.queryArchives()
+			}
+		)
 	}
 
 	resetData() {
@@ -96,12 +109,15 @@ export default class Index {
 		this.items = [] as RxDB.ItemsDoc<Todo.TodoItem>
 		this.items_query = {} as RxDB.ItemsQuery<Todo.TodoItem>
 		this.archives = [] as RxDB.ItemsDoc<TodoArchive.Item>
-		this.archives_page = 0
+		this.loadmore.page = 0
+		this.loadmore.end = false
 	}
 
 	@loading
 	async add(v: Todo.TodoItem) {
 		await $db.collections[`${this.id}_todo_items`].incrementalUpsert(v)
+
+		window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
 	}
 
 	async update(v: ArgsUpdate) {
@@ -118,8 +134,6 @@ export default class Index {
 					? getArchiveTime(this.info.settings.auto_archiving)
 					: undefined
 		})
-
-		await archive(this.id)
 	}
 
 	@loading
@@ -161,10 +175,17 @@ export default class Index {
 	async queryArchives() {
 		const archives = (await $db.collections[`${this.id}_todo_archive`]
 			.find()
-			.skip(this.archives_page * archives_page_size)
+			.skip(this.loadmore.page * archives_page_size)
 			.limit(archives_page_size)
+			.sort({ create_at: 'desc' })
 			.exec())! as RxDB.ItemsDoc<TodoArchive.Item>
 
-		this.archives = this.archives.concat(archives)
+		if (archives.length === 0) return (this.loadmore.end = true)
+
+		if (this.loadmore.page === 0) {
+			this.archives = getDocItemsData(archives)
+		} else {
+			this.archives=this.archives.concat(getDocItemsData(archives))
+		}
 	}
 }

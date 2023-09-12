@@ -47,5 +47,8 @@ export default {
 			hour: '小时',
 			minute: '分钟'
 		}
+	},
+	Archive: {
+		title: '归档'
 	}
 }

@@ -13,6 +13,7 @@ export interface IProps {
 
 export interface IPropsHeader extends Pick<Todo.Data & DirTree.File, 'name' | 'icon' | 'icon_hue' | 'desc'> {
 	showSettingsModal: () => void
+	showArchiveModal: () => void
 }
 
 export interface IPropsSettingsModal {
@@ -62,6 +63,14 @@ export interface IPropsTodoItem {
 
 export interface IPropsGroupTitle {
 	item: Todo.Group
+}
+
+export interface IPropsArchive {
+	visible_archive_modal: Model['visible_archive_modal']
+	archives: Services['archives']
+	end: Services['loadmore']['end']
+	loadMore: () => void
+	onClose: () => void
 }
 
 export type ArgsUpdate = Partial<Todo.TodoItem> & { id: string }

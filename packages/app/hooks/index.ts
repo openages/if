@@ -10,5 +10,6 @@ export { default as useDarkIconWeight } from './useDarkIconWeight'
 export { default as useCurrentModule } from './useCurrentModule'
 export { default as useScrollToItem } from './useScrollToItem'
 export { default as useCssVariable } from './useCssVariable'
+export { default as useScrollToBottom } from './useScrollToBottom'
 
 export * from './useAntdApp'

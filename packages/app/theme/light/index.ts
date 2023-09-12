@@ -4,6 +4,7 @@ export default {
 	color_text_sub: '#363636',
 	color_text_grey: '#888',
 	color_text_light: '#aaa',
+	color_text_softlight: '#ccc',
 	color_text_contrast: 'black',
 	color_bg: '#ffffff',
 	color_bg_rgb: '255,255,255',
