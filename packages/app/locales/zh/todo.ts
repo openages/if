@@ -49,6 +49,9 @@ export default {
 		}
 	},
 	Archive: {
-		title: '归档'
+		title: '归档',
+		end: '到底了',
+		restore: '恢复',
+		remove: '删除'
 	}
 }

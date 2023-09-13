@@ -18,11 +18,11 @@ export default class GlobalModel {
 	}
 
 	async init() {
-		this.app.on()
-
 		await this.db.init()
 
+		this.app.init()
             this.shortcuts.init()
+            
 		this.on()
 	}
 

@@ -7,14 +7,16 @@ import { GlobalModel } from '@/context/app'
 
 import Services from './services'
 
-import type { ArgsUpdateStatus } from './types'
+import type { ArgsOnInfoChange_changedValues, ArgsOnInfoChange_values, ArgsUpdateStatus } from './types'
 
 import type { Todo } from '@/types'
 
 @injectable()
 export default class Index {
+	ready = false
 	visible_settings_modal = false
 	visible_archive_modal = false
+	timer: NodeJS.Timeout = null
 
 	constructor(
 		public global: GlobalModel,
@@ -27,6 +29,8 @@ export default class Index {
 		this.services.init()
 
 		this.reactions()
+
+		this.timer = setInterval(() => archive(this.services.id), 9000)
 	}
 
 	reactions() {
@@ -35,6 +39,7 @@ export default class Index {
 			(v) => {
 				if (v) {
 					this.services.queryArchives()
+					this.services.queryArchivesCounts()
 				} else {
 					this.services.loadmore.page = 0
 					this.services.loadmore.end = false
@@ -43,12 +48,7 @@ export default class Index {
 		)
 	}
 
-	async onInfoChange(
-		changedValues: Partial<Todo.Data & Services['file']['data']> & {
-			icon_info: { icon: string; icon_hue?: number }
-		},
-		values: Todo.Data & Services['file']
-	) {
+	async onInfoChange(changedValues: ArgsOnInfoChange_changedValues, values: ArgsOnInfoChange_values) {
 		if (changedValues.name || changedValues.icon_info) {
 			await $app.Event.emit('todo/dirtree/rename', {
 				id: this.services.id,
@@ -152,16 +152,24 @@ export default class Index {
 		}
 	}
 
-	on() {
-		$app.Event.on('todo/ready', this.services.initQuery)
+	setReady() {
+		this.init()
+
+		this.ready = true
+	}
+
+	onReady() {
+		$app.Event.on('todo/ready', this.setReady)
 	}
 
 	off() {
-		$app.Event.off('todo/ready', this.services.initQuery)
+		$app.Event.off('todo/ready', this.setReady)
 
 		this.services.info_query?.$?.unsubscribe?.()
 		this.services.items_query?.$?.unsubscribe?.()
 
 		this.services.file.off()
+
+		clearInterval(this.timer)
 	}
 }

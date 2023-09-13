@@ -30,8 +30,13 @@ const Index = ({ id }: IProps) => {
 	useLayoutEffect(() => {
 		x.services.id = id
 
-		x.on()
-		x.init()
+		if ($db.collections[`${id}_todo_items`]) {
+			x.init()
+
+			x.ready = true
+		} else {
+			x.onReady()
+		}
 
 		return () => x.off()
 	}, [id])
@@ -75,11 +80,16 @@ const Index = ({ id }: IProps) => {
 	const props_archive: IPropsArchive = {
 		visible_archive_modal: x.visible_archive_modal,
 		archives: toJS(x.services.archives),
+		archive_counts: x.services.archive_counts,
 		end: x.services.loadmore.end,
+		restoreArchiveItem: useMemoizedFn(x.services.restoreArchiveItem),
+		removeArchiveItem: useMemoizedFn(x.services.removeArchiveItem),
 		loadMore: useMemoizedFn(x.services.loadmore.loadMore),
 		onClose: useMemoizedFn(() => (x.visible_archive_modal = false))
-      }
-      
+	}
+
+	if (!x.ready) return null
+
 	return (
 		<div className={$cx('w_100 flex flex_column', styles._local)}>
 			<If condition={x.services.id && x.services.file.data.name}>

@@ -5,6 +5,7 @@ export { default as setFavicon } from './setFavicon'
 export { default as setGlobalAnimation } from './setGlobalAnimation'
 export { default as setStorageWhenChange } from './setStorageWhenChange'
 export { default as onWheel } from './onWheel'
+export { default as getRelativeTime } from './getRelativeTime'
 
 export * from './is'
 export * from './filter'

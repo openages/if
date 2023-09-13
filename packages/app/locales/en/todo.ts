@@ -47,8 +47,11 @@ export default {
 			hour: 'Hours',
 			minute: 'Minutes'
 		}
-      },
-      Archive: {
-            title:'Archive'
-      }
+	},
+	Archive: {
+		title: 'Archive',
+		end: 'Reached the end',
+		restore: 'Restore',
+		remove: 'Remove'
+	}
 }

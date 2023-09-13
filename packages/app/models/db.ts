@@ -41,7 +41,7 @@ export default class Index {
 
 		await this.addModuleInitData()
 
-		$app.Event.emit('db/ready')
+		this.ready = true
 	}
 
 	async addModuleInitData() {
@@ -55,7 +55,6 @@ export default class Index {
 		await window.$db.collections.module.bulkInsert(preset_data)
 		await window.$db.collections.setting.bulkInsert([{ key: 'apps', data: JSON.stringify(modules) }])
 
-		this.ready = true
 
 		return
 	}

@@ -1,41 +1,81 @@
 ._local {
 	:global {
-            .if-drawer-content-wrapper {
-                  .if-drawer-content {
-                        padding-bottom: 0;
-                  }
-            }
+		.if-drawer-content-wrapper {
+			.if-drawer-content {
+				padding: 0;
 
-		.archive_items {
-			.archive_item {
-				padding-top: 6px;
-				border-radius: var(--radius);
-				font-size: 12px;
+				.if-drawer-header {
+					padding: 18px;
+					padding-bottom: 6px;
 
-				.action_wrap {
-					width: 21px;
-					height: 21px;
-					margin-top: -1.5px;
-					margin-right: 3px;
-					border-radius: 3px;
-					color: var(--color_text_sub);
-					transition: color ease 0.3s;
+					&-title {
+						margin-bottom: 0;
+					}
 
-					&:hover {
-						background-color: var(--color_bg_2);
+					.if-drawer-close {
+						right: 18px;
 					}
 				}
 
-				.text {
-					width: calc(100% - (24px + 4px));
-					padding-bottom: 6px;
-					border-bottom: 1px dashed var(--color_border_light);
+				.if-drawer-body {
+					padding: 0 18px;
+				}
+
+				.if-drawer-footer {
+					height: 36px;
+					padding: 0 18px;
+					line-height: 1;
+					border-top-style: solid;
+				}
+			}
+		}
+
+		.archive_items {
+			padding-bottom: 24px;
+
+			.archive_item {
+				padding: 6px 0;
+				font-size: 12px;
+				border-bottom: 1px dashed var(--color_border_light);
+
+                        &:hover{
+                              .action_wrap{
+                                    display: flex;
+                              }
+                        }
+
+                        .footer_wrap{
+                              height: 24px;
+                        }
+
+                        .status_wrap{
+                              &.checked{
+                                    color: var(--color_success);
+                              }
+
+                              &.closed{
+                                   color: var(--color_warning);
+                              }
+                        }
+
+				.action_wrap {
+                              display: none;
+
+					.btn_action {
+                                    padding: 4px;
+						border-radius: var(--radius);
+                                    line-height: 1;
+
+						&:hover {
+							background-color: var(--color_bg_2);
+						}
+					}
 				}
 			}
 		}
 
 		.end {
-			padding: 12px 0;
+			padding-bottom: 24px;
 			font-size: 12px;
 			color: var(--color_text_grey);
 		}

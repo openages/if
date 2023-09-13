@@ -6,9 +6,7 @@ export default async (file_id: string) => {
 	const todo_items = $db.collections[`${file_id}_todo_items`]
 	const todo_archive = $db.collections[`${file_id}_todo_archive`]
 
-	if (!todo_items || !todo_archive) return
-
-	const archive_items = await $db.collections[`${file_id}_todo_items`]
+	const archive_items = await todo_items
 		.find({
 			selector: {
 				type: {

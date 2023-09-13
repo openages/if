@@ -68,10 +68,21 @@ export interface IPropsGroupTitle {
 export interface IPropsArchive {
 	visible_archive_modal: Model['visible_archive_modal']
 	archives: Services['archives']
+	archive_counts: Services['archive_counts']
 	end: Services['loadmore']['end']
+	restoreArchiveItem: Services['restoreArchiveItem']
+	removeArchiveItem: Services['removeArchiveItem']
 	loadMore: () => void
 	onClose: () => void
 }
 
+export interface IPropsArchiveItem extends Pick<IPropsArchive, 'restoreArchiveItem' | 'removeArchiveItem'> {
+	item: Todo.Todo
+}
+
+export type ArgsOnInfoChange_changedValues = Partial<Todo.Data & Services['file']['data']> & {
+	icon_info: { icon: string; icon_hue?: number }
+}
+export type ArgsOnInfoChange_values = Todo.Data & Services['file']
 export type ArgsUpdate = Partial<Todo.TodoItem> & { id: string }
 export type ArgsUpdateStatus = { id: string; status: Todo.Todo['status'] }

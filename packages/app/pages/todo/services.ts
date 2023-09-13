@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash-es'
 import { makeAutoObservable, reaction } from 'mobx'
 import { injectable } from 'tsyringe'
 
@@ -21,6 +22,7 @@ export default class Index {
 	items_query = {} as RxDB.ItemsQuery<Todo.TodoItem>
 	items = [] as Array<Todo.TodoItem>
 	archives = [] as Array<TodoArchive.Item>
+	archive_counts = 0
 	current_angle_id = ''
 
 	constructor(
@@ -35,18 +37,17 @@ export default class Index {
 		setStorageWhenChange([{ [`${this.id}_todo_current_angle_id`]: 'current_angle_id' }], this)
 
 		this.reactions()
+		this.initQuery()
+	}
 
-            this.initQuery()
-      }
-      
-      initQuery() {
-            if (this.id) {
+	initQuery() {
+		if (this.id) {
 			this.file.query(this.id)
 
 			this.query()
 			this.queryItems()
 		}
-      }
+	}
 
 	reactions() {
 		reaction(
@@ -157,8 +158,6 @@ export default class Index {
 
 	@loading
 	async queryItems() {
-		if (!$db.collections[`${this.id}_todo_items`]) return
-
 		await archive(this.id)
 
 		this.items_query = $db.collections[`${this.id}_todo_items`]
@@ -185,7 +184,43 @@ export default class Index {
 		if (this.loadmore.page === 0) {
 			this.archives = getDocItemsData(archives)
 		} else {
-			this.archives=this.archives.concat(getDocItemsData(archives))
+			this.archives = this.archives.concat(getDocItemsData(archives))
 		}
+	}
+
+	async queryArchivesCounts() {
+		this.archive_counts = await $db.collections[`${this.id}_todo_archive`].count().exec()
+	}
+
+	updateCurrentArchiveItems(id: string) {
+		this.archives.splice(
+			this.archives.findIndex((item) => item.id === id),
+			1
+		)
+		this.archive_counts = this.archive_counts - 1
+	}
+
+	async restoreArchiveItem(id: string) {
+		const item = await $db.collections[`${this.id}_todo_archive`].findOne({ selector: { id } }).exec()
+
+		const data = cloneDeep(item.toMutableJSON())
+
+		await item.incrementalRemove()
+
+		await $db.collections[`${this.id}_todo_items`].incrementalUpsert({
+			...data,
+			status: 'unchecked',
+			create_at: new Date().valueOf()
+		})
+
+		this.updateCurrentArchiveItems(id)
+	}
+
+	async removeArchiveItem(id: string) {
+		const item = await $db.collections[`${this.id}_todo_archive`].findOne({ selector: { id } }).exec()
+
+		await item.incrementalRemove()
+
+		this.updateCurrentArchiveItems(id)
 	}
 }

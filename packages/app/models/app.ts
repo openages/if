@@ -28,9 +28,11 @@ export default class Index {
 		})
 	}
 
-	init() {
+      init() {
 		this.reactions()
-		this.query()
+            this.query()
+            
+            this.on()
 	}
 
 	reactions() {
@@ -100,7 +102,6 @@ export default class Index {
 	}
 
 	on() {
-		$app.Event.on('db/ready', this.init)
 		$app.Event.on('global.app.toggleAppMenu', this.toggleAppMenu)
 		$app.Event.on('global.app.appSwitch', this.appSwitch)
 		$app.Event.on('global.app.handleAppSwitch', this.handleAppSwitch)
@@ -109,7 +110,6 @@ export default class Index {
 	}
 
 	off() {
-		$app.Event.off('db/ready', this.init)
 		$app.Event.off('global.app.toggleAppMenu', this.toggleAppMenu)
 		$app.Event.off('global.app.appSwitch', this.appSwitch)
 		$app.Event.off('global.app.handleAppSwitch', this.handleAppSwitch)

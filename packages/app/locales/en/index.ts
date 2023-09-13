@@ -1,3 +1,4 @@
+import common from './common'
 import components from './components'
 import dirtree from './dirtree'
 import layout from './layout'
@@ -7,7 +8,8 @@ import shortcuts from './shortcuts'
 import todo from './todo'
 
 export default {
-	translation: {
+      translation: {
+            common,
 		setting,
             modules,
             layout,
