@@ -33,7 +33,9 @@ export default class Index {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
-	init() {
+	init(id: string) {
+		this.id = id
+
 		setStorageWhenChange([{ [`${this.id}_todo_current_angle_id`]: 'current_angle_id' }], this)
 
 		this.reactions()
@@ -115,14 +117,18 @@ export default class Index {
 	}
 
 	@loading
-	async add(v: Todo.TodoItem) {
-		await $db.collections[`${this.id}_todo_items`].incrementalUpsert(v)
+	async add(v: Omit<Todo.TodoItem, 'file_id' | 'angle_id'>) {
+		await $db.collections.todo_items.incrementalUpsert({
+			...v,
+			file_id: this.id,
+			angle_id: this.current_angle_id
+		})
 
 		window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
 	}
 
 	async update(v: ArgsUpdate) {
-		const res = await $db.collections[`${this.id}_todo_items`].findOne({ selector: { id: v.id } }).exec()
+		const res = await $db.collections.todo_items.findOne({ selector: { id: v.id } }).exec()
 
 		await res.incrementalModify(modify(v))
 	}
@@ -160,10 +166,8 @@ export default class Index {
 	async queryItems() {
 		await archive(this.id)
 
-		this.items_query = $db.collections[`${this.id}_todo_items`]
-			.find({
-				selector: { angle_id: this.current_angle_id }
-			})
+		this.items_query = $db.collections.todo_items
+			.find({ selector: { file_id: this.id, angle_id: this.current_angle_id } })
 			.sort({ create_at: 'asc' }) as RxDB.ItemsQuery<Todo.TodoItem>
 
 		this.items = getDocItemsData((await this.items_query.exec())! as RxDB.ItemsDoc<Todo.TodoItem>)
@@ -172,8 +176,8 @@ export default class Index {
 	}
 
 	async queryArchives() {
-		const archives = (await $db.collections[`${this.id}_todo_archive`]
-			.find()
+		const archives = (await $db.collections.todo_archives
+			.find({ selector: { file_id: this.id } })
 			.skip(this.loadmore.page * archives_page_size)
 			.limit(archives_page_size)
 			.sort({ create_at: 'desc' })
@@ -189,7 +193,7 @@ export default class Index {
 	}
 
 	async queryArchivesCounts() {
-		this.archive_counts = await $db.collections[`${this.id}_todo_archive`].count().exec()
+		this.archive_counts = await $db.collections.todo_archives.count({ selector: { file_id: this.id } }).exec()
 	}
 
 	updateCurrentArchiveItems(id: string) {
@@ -201,13 +205,13 @@ export default class Index {
 	}
 
 	async restoreArchiveItem(id: string) {
-		const item = await $db.collections[`${this.id}_todo_archive`].findOne({ selector: { id } }).exec()
+		const item = await $db.collections.todo_archives.findOne({ selector: { id } }).exec()
 
 		const data = cloneDeep(item.toMutableJSON())
 
 		await item.incrementalRemove()
 
-		await $db.collections[`${this.id}_todo_items`].incrementalUpsert({
+		await $db.collections.todo_items.incrementalUpsert({
 			...data,
 			status: 'unchecked',
 			create_at: new Date().valueOf()
@@ -217,9 +221,7 @@ export default class Index {
 	}
 
 	async removeArchiveItem(id: string) {
-		const item = await $db.collections[`${this.id}_todo_archive`].findOne({ selector: { id } }).exec()
-
-		await item.incrementalRemove()
+		await $db.collections.todo_archives.findOne({ selector: { id } }).remove()
 
 		this.updateCurrentArchiveItems(id)
 	}

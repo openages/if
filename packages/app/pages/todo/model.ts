@@ -13,7 +13,6 @@ import type { Todo } from '@/types'
 
 @injectable()
 export default class Index {
-	ready = false
 	visible_settings_modal = false
 	visible_archive_modal = false
 	timer: NodeJS.Timeout = null
@@ -25,12 +24,11 @@ export default class Index {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
-	init() {
-		this.services.init()
+	init(id: string) {
+		this.services.init(id)
 
 		this.reactions()
-
-		this.timer = setInterval(() => archive(this.services.id), 9000)
+		this.on()
 	}
 
 	reactions() {
@@ -152,19 +150,11 @@ export default class Index {
 		}
 	}
 
-	setReady() {
-		this.init()
-
-		this.ready = true
-	}
-
-	onReady() {
-		$app.Event.on('todo/ready', this.setReady)
+	on() {
+		this.timer = setInterval(() => archive(this.services.id), 9000)
 	}
 
 	off() {
-		$app.Event.off('todo/ready', this.setReady)
-
 		this.services.info_query?.$?.unsubscribe?.()
 		this.services.items_query?.$?.unsubscribe?.()
 

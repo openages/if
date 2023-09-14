@@ -31,12 +31,8 @@ export default class Index {
 	async init(module: App.ModuleType) {
 		this.module = module
 
-		await this.query()
-		await this.actions?.getRefs?.(this.doc.dirtree)
-
+		this.query()
 		this.reactions()
-
-		$app.Event.emit(`${this.module}/ready`)
 	}
 
 	reactions() {

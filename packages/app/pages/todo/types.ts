@@ -36,15 +36,15 @@ export interface IPropsTabsItem {
 }
 
 export interface IPropsInput {
-	current_angle_id: Services['current_angle_id']
 	loading: boolean
 	tags?: Services['info']['tags']
 	add: Services['add']
 }
 
 export interface IPropsInputCircle {
-	circle?: Todo.Todo['circle']
-	onChangeCircle: (v: IPropsInputCircle['circle']) => void
+	circle_enabled: Todo.Todo['circle_enabled']
+	circle_value: Todo.Todo['circle_value']
+	onChangeCircle: (args: Partial<Pick<IPropsInputCircle, 'circle_enabled' | 'circle_value'>>) => void
 }
 
 export interface IPropsTodos {

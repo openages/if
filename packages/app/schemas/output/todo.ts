@@ -110,13 +110,17 @@ export default {
                               "checked",
                               "unchecked",
                               "closed"
-                        ]
+                        ],
+                        "maxLength": 12
                   },
                   "star": {
                         "type": "number"
                   },
                   "archive_time": {
-                        "type": "number"
+                        "type": "number",
+                        "multipleOf": 1,
+                        "minimum": 1,
+                        "maximum": 9999999999000
                   },
                   "tag_ids": {
                         "type": "array",
@@ -124,23 +128,14 @@ export default {
                               "type": "string"
                         }
                   },
-                  "circle": {
-                        "type": "object",
-                        "properties": {
-                              "enabled": {
-                                    "type": "boolean"
-                              },
-                              "value": {
-                                    "type": "array",
-                                    "items": {
-                                          "type": "number"
-                                    }
-                              }
-                        },
-                        "required": [
-                              "enabled",
-                              "value"
-                        ]
+                  "circle_enabled": {
+                        "type": "boolean"
+                  },
+                  "circle_value": {
+                        "type": "array",
+                        "items": {
+                              "type": "number"
+                        }
                   },
                   "children": {
                         "type": "array",
@@ -149,6 +144,10 @@ export default {
                         }
                   },
                   "id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "file_id": {
                         "type": "string",
                         "maxLength": 30
                   },
@@ -165,7 +164,9 @@ export default {
             },
             "required": [
                   "angle_id",
+                  "circle_enabled",
                   "create_at",
+                  "file_id",
                   "id",
                   "status",
                   "text",
@@ -183,6 +184,10 @@ export default {
                         "type": "string",
                         "maxLength": 30
                   },
+                  "file_id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
                   "text": {
                         "type": "string"
                   },
@@ -197,6 +202,7 @@ export default {
             "required": [
                   "angle_id",
                   "create_at",
+                  "file_id",
                   "id",
                   "text",
                   "type"
@@ -218,13 +224,17 @@ export default {
                               "checked",
                               "unchecked",
                               "closed"
-                        ]
+                        ],
+                        "maxLength": 12
                   },
                   "star": {
                         "type": "number"
                   },
                   "archive_time": {
-                        "type": "number"
+                        "type": "number",
+                        "multipleOf": 1,
+                        "minimum": 1,
+                        "maximum": 9999999999000
                   },
                   "tag_ids": {
                         "type": "array",
@@ -232,23 +242,14 @@ export default {
                               "type": "string"
                         }
                   },
-                  "circle": {
-                        "type": "object",
-                        "properties": {
-                              "enabled": {
-                                    "type": "boolean"
-                              },
-                              "value": {
-                                    "type": "array",
-                                    "items": {
-                                          "type": "number"
-                                    }
-                              }
-                        },
-                        "required": [
-                              "enabled",
-                              "value"
-                        ]
+                  "circle_enabled": {
+                        "type": "boolean"
+                  },
+                  "circle_value": {
+                        "type": "array",
+                        "items": {
+                              "type": "number"
+                        }
                   },
                   "children": {
                         "type": "array",
@@ -257,6 +258,10 @@ export default {
                         }
                   },
                   "id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "file_id": {
                         "type": "string",
                         "maxLength": 30
                   },
@@ -274,6 +279,7 @@ export default {
             "required": [
                   "angle_id",
                   "create_at",
+                  "file_id",
                   "id",
                   "text",
                   "type"

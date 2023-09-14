@@ -31,24 +31,15 @@ const Index = (props: IPropsArchiveItem) => {
 	const remove = useMemoizedFn(() => removeArchiveItem(id))
 
 	return (
-		<div className='archive_item w_100 border_box flex flex_column'>
+		<div className={$cx('archive_item w_100 border_box flex flex_column', status)}>
 			<span className='text w_100'>{text}</span>
-			<div className='footer_wrap flex justify_between align_center mt_2'>
-				<div className='flex align_center'>
-					<div className={$cx('status_wrap flex justify_center align_center', status)}>
-						<If condition={status === 'checked'}>
-							<Then>
-								<Check size={12} />
-							</Then>
-							<Else>
-								<X size={12} />
-							</Else>
-						</If>
-					</div>
-					<span className='create_at ml_4'>{relative_time}</span>
-				</div>
-				<div className='action_wrap align_center' onClick={restore}>
-					<div className='btn_action flex align_center cursor_point clickable' onClick={restore}>
+			<div className='footer_wrap flex justify_between align_center mt_4'>
+				<span className='create_at'>{relative_time}</span>
+				<div className='action_wrap align_center'>
+					<div
+						className='btn_action flex align_center cursor_point clickable mr_4'
+						onClick={restore}
+					>
 						<ArrowCounterClockwise size={14}></ArrowCounterClockwise>
 						<span className='btn_text ml_2'>{t('translation:todo.Archive.restore')}</span>
 					</div>

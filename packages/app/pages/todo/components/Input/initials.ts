@@ -2,19 +2,18 @@ import { id } from '@/utils'
 
 import type { Todo } from '@/types'
 
-export const getTodo = (current_angle_id: string): Todo.Todo => ({
+export const getTodo = (): Omit<Todo.Todo, 'file_id' | 'angle_id'> => ({
 	id: id(),
 	type: 'todo',
 	status: 'unchecked',
 	text: '',
-	angle_id: current_angle_id,
-	create_at: new Date().valueOf()
+	create_at: new Date().valueOf(),
+	circle_enabled: false
 })
 
-export const getGroup = (current_angle_id: string): Todo.Group => ({
+export const getGroup = (): Omit<Todo.Group, 'file_id' | 'angle_id'> => ({
 	id: id(),
 	type: 'group',
 	text: '',
-	angle_id: current_angle_id,
 	create_at: new Date().valueOf()
 })

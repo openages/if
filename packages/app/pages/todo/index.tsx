@@ -28,15 +28,7 @@ const Index = ({ id }: IProps) => {
 	usePageScrollRestoration(id, toJS(x.global.tabs.stacks))
 
 	useLayoutEffect(() => {
-		x.services.id = id
-
-		if ($db.collections[`${id}_todo_items`]) {
-			x.init()
-
-			x.ready = true
-		} else {
-			x.onReady()
-		}
+		x.init(id)
 
 		return () => x.off()
 	}, [id])
@@ -87,8 +79,6 @@ const Index = ({ id }: IProps) => {
 		loadMore: useMemoizedFn(x.services.loadmore.loadMore),
 		onClose: useMemoizedFn(() => (x.visible_archive_modal = false))
 	}
-
-	if (!x.ready) return null
 
 	return (
 		<div className={$cx('w_100 flex flex_column', styles._local)}>

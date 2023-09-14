@@ -5,7 +5,7 @@ import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 import { injectable } from 'tsyringe'
 
 import { modules } from '@/appdata'
-import { schema_module, schema_setting, schema_todo } from '@/schemas'
+import { schema_module, schema_setting, schema_todo, schema_todo_items, schema_todo_archives } from '@/schemas'
 
 import type { RxDB } from '@/types'
 
@@ -33,7 +33,9 @@ export default class Index {
 		await db.addCollections({
 			module: { schema: schema_module, autoMigrate: true },
 			setting: { schema: schema_setting, autoMigrate: true },
-			todo: { schema: schema_todo, autoMigrate: true }
+			todo: { schema: schema_todo, autoMigrate: true },
+			todo_items: { schema: schema_todo_items, autoMigrate: true },
+			todo_archives: { schema: schema_todo_archives, autoMigrate: true }
 		})
 
 		window.$db = db
@@ -54,7 +56,6 @@ export default class Index {
 
 		await window.$db.collections.module.bulkInsert(preset_data)
 		await window.$db.collections.setting.bulkInsert([{ key: 'apps', data: JSON.stringify(modules) }])
-
 
 		return
 	}

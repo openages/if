@@ -5,12 +5,12 @@ import { LazyElement } from '@/components'
 import type { IPropsTabsContent } from '../../../../types'
 
 const Index = (props: IPropsTabsContent) => {
-      const { stacks } = props
+	const { stacks } = props
 
 	return (
 		<Fragment>
 			{stacks.map((item) => (
-				<Offscreen key={item.id} mode={item.is_active ? 'visible' : 'hidden'}>
+				<Offscreen mode={item.is_active ? 'visible' : 'hidden'} key={item.id}>
 					<LazyElement type='pages' path={item.module} params={{ id: item.id }} />
 				</Offscreen>
 			))}

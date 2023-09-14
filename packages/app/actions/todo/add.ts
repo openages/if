@@ -1,7 +1,5 @@
 import { id } from '@/utils'
 
-import addRefs from './addRefs'
-
 import type { DirTree } from '@/types'
 
 export default async (file_id: string, args: Partial<DirTree.File>) => {
@@ -17,8 +15,6 @@ export default async (file_id: string, args: Partial<DirTree.File>) => {
 			auto_archiving: '3m'
 		}
 	})
-
-	await addRefs(file_id)
 
 	return
 }

@@ -1,5 +1,5 @@
 import type { RxDatabase } from 'rxdb'
-import type { DBModule, DBSetting, DBTodo, DB$TodoArchive, DB$TodoItems } from '@/schemas'
+import type { DBModule, DBSetting, DBTodo, DBTodoItems, DBTodoArchives } from '@/schemas'
 import type { RxDocument, RxQuery } from 'rxdb'
 
 export namespace RxDB {
@@ -7,8 +7,8 @@ export namespace RxDB {
 		module: DBModule
 		setting: DBSetting
 		todo: DBTodo
-		[key: `${string}_todo_archive`]: DB$TodoArchive
-		[key: `${string}_todo_items`]: DB$TodoItems
+		todo_items: DBTodoItems
+		todo_archives: DBTodoArchives
 	}>
 
 	export type ItemsDoc<T> = Array<RxDocument<T>>

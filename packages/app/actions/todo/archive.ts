@@ -3,15 +3,11 @@ import { difference, cloneDeep } from 'lodash-es'
 import { Todo } from '@/types'
 
 export default async (file_id: string) => {
-	const todo_items = $db.collections[`${file_id}_todo_items`]
-	const todo_archive = $db.collections[`${file_id}_todo_archive`]
-
-	const archive_items = await todo_items
+	const archive_items = await $db.collections.todo_items
 		.find({
 			selector: {
-				type: {
-					$eq: 'todo'
-				},
+				file_id: file_id,
+				type: 'todo',
 				status: {
 					$ne: 'unchecked'
 				},
@@ -19,15 +15,16 @@ export default async (file_id: string) => {
 					$exists: true,
 					$ne: undefined,
 					$lte: new Date().valueOf()
-				}
+				},
+				circle_enabled: false
 			}
 		})
 		.sort({ create_at: 'asc' })
-		.exec()
+		.remove()
 
 	const archive_data = archive_items.map((item) => item.toMutableJSON()) as Array<Todo.Todo>
 
-	await todo_archive.bulkInsert(
+	await $db.collections.todo_archives.bulkInsert(
 		archive_data.map((item) => {
 			item.create_at = new Date().valueOf()
 
@@ -53,6 +50,4 @@ export default async (file_id: string) => {
 
 		await info.incrementalPatch({ relations })
 	}
-
-	await Promise.all(archive_items.map(async (item) => item.incrementalRemove()))
 }

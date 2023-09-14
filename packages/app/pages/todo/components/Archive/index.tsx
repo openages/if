@@ -1,5 +1,8 @@
-import { Drawer } from 'antd'
+import { Drawer, Select } from 'antd'
 import { useTranslation } from 'react-i18next'
+import { When } from 'react-if'
+
+import { SimpleEmpty } from '@/components'
 
 import { useScrollToBottom } from './hooks'
 import styles from './index.css'
@@ -22,8 +25,27 @@ const Index = (props: IPropsArchive) => {
 	const { setRef } = useScrollToBottom(loadMore, visible_archive_modal)
 
 	const Actions = (
-		<div className='actions_wrap w_100 h_100 flex justify_between align_center'>
-			<span className='counts'>共有{archive_counts}条记录</span>
+		<div className='footer_wrap w_100 h_100 flex justify_between align_center'>
+			<div className='flex align_center'>
+				<div className='label'>清档：</div>
+				<Select
+					className='select'
+					placeholder='选择日期'
+					bordered={false}
+					suffixIcon={false}
+					size='small'
+					options={[
+						{ value: '3days' },
+						{ value: '1week' },
+						{ value: '15days' },
+						{ value: '1month' },
+						{ value: '3month' },
+						{ value: '6month' },
+						{ value: '1year' }
+					]}
+				></Select>
+			</div>
+			<span className='counts'>共{archive_counts}条记录</span>
 		</div>
 	)
 
@@ -38,12 +60,17 @@ const Index = (props: IPropsArchive) => {
 			onClose={onClose}
 			footer={Actions}
 		>
-			<div className='archive_items w_100 border_box flex flex_column'>
-				{archives.map((item) => (
-					<Item {...{ item, restoreArchiveItem, removeArchiveItem }} key={item.id}></Item>
-				))}
-			</div>
-			<div className='end w_100 text_center' ref={setRef}>
+			{archives.length > 0 && (
+				<div className='archive_items w_100 border_box flex flex_column'>
+					{archives.map((item) => (
+						<Item {...{ item, restoreArchiveItem, removeArchiveItem }} key={item.id}></Item>
+					))}
+				</div>
+			)}
+			<When condition={!archives.length && end}>
+				<SimpleEmpty></SimpleEmpty>
+			</When>
+			<div className={$cx('end w_100 text_center', !archives.length && end && 'hidden')} ref={setRef}>
 				{end && t('translation:todo.Archive.end')}
 			</div>
 		</Drawer>

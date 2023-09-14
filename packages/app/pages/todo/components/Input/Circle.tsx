@@ -27,7 +27,7 @@ const inputs = [
 ] as const
 
 const Index = (props: IPropsInputCircle) => {
-	const { circle = { enabled: false, value: [0, 0, 0] }, onChangeCircle } = props
+	const { circle_enabled, circle_value = [], onChangeCircle } = props
 	const { t, i18n } = useTranslation()
 
 	const Content = (
@@ -36,24 +36,18 @@ const Index = (props: IPropsInputCircle) => {
 				<span className='text'>{t('translation:todo.Input.Circle.title')}</span>
 				<Switch
 					size='small'
-					checked={circle.enabled}
-					onChange={(v) => {
-						const target = cloneDeep(circle)
-
-						target.enabled = v
-
-						onChangeCircle(target)
-					}}
+					checked={circle_enabled}
+					onChange={(v) => onChangeCircle({ circle_enabled: v })}
 				></Switch>
 			</div>
 			<div className='circle_input_items w_100 border_box flex flex_column'>
 				{inputs.map((item, index) => {
 					const onChange = (v: number) => {
-						const target = cloneDeep(circle)
+						const target = cloneDeep(circle_value)
 
-						target.value[index] = v
+						target[index] = v
 
-						onChangeCircle(target)
+						onChangeCircle({ circle_value: target })
 					}
 
 					return (
@@ -72,7 +66,7 @@ const Index = (props: IPropsInputCircle) => {
 								min={0}
 								max={item.max}
 								step={1}
-								value={circle.value[index]}
+								value={circle_value[index] || 0}
 								onChange={onChange}
 							></Slider>
 							<InputNumber
@@ -85,7 +79,7 @@ const Index = (props: IPropsInputCircle) => {
 								controls={false}
 								formatter={(value) => `${value}${item.unit}`}
 								parser={(value) => parseInt(value!.replace(item.unit, ''))}
-								value={circle.value[index]}
+								value={circle_value[index] || 0}
 								onChange={onChange}
 							></InputNumber>
 						</div>

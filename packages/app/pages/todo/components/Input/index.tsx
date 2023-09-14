@@ -19,23 +19,23 @@ import type { Todo } from '@/types'
 const { TextArea } = Input
 
 const Index = (props: IPropsInput) => {
-	const { current_angle_id, loading, tags, add } = props
+	const { loading, tags, add } = props
 	const limits = useLimits()
 	const { t } = useTranslation()
-	const [input, setInput] = useState<Todo.TodoItem>(getTodo(current_angle_id))
+	const [input, setInput] = useState<Omit<Todo.TodoItem, 'file_id' | 'angle_id'>>(getTodo())
 
 	useEffect(() => {
 		if (input.type === 'todo') {
-			setInput(getTodo(current_angle_id))
+			setInput(getTodo())
 		} else {
-			setInput(getGroup(current_angle_id))
+			setInput(getGroup())
 		}
-	}, [current_angle_id, input.type])
+	}, [input.type])
 
 	useEffect(() => {
 		if (loading) return
 
-		setInput((v) => ({ ...v, id: id(), text: '', circle: undefined }))
+		setInput((v) => ({ ...v, id: id(), text: '', circle_enabled: false, circle_value: undefined }))
 	}, [loading])
 
 	const tag_options = useMemo(() => {
@@ -54,12 +54,15 @@ const Index = (props: IPropsInput) => {
 	}, [tags])
 
 	const props_circle: IPropsInputCircle = {
-		circle: (input as Todo.Todo).circle,
-		onChangeCircle: useMemoizedFn((v) => setInput((input) => ({ ...input, circle: v })))
+		circle_enabled: (input as Todo.Todo).circle_enabled,
+		circle_value: (input as Todo.Todo).circle_value,
+		onChangeCircle: useMemoizedFn((v) => setInput((input) => ({ ...input, ...v })))
 	}
 
 	const onEnter = useMemoizedFn((e) => {
 		e.preventDefault()
+
+		if (loading) return
 
 		add({ ...input, create_at: new Date().valueOf() })
 	})

@@ -5,15 +5,13 @@
 				padding: 0;
 
 				.if-drawer-header {
-					padding: 18px;
-					padding-bottom: 6px;
+					flex: unset;
+					height: 36px;
+					padding: 0 18px;
+					border-bottom: 1px solid var(--color_border_light);
 
 					&-title {
 						margin-bottom: 0;
-					}
-
-					.if-drawer-close {
-						right: 18px;
 					}
 				}
 
@@ -31,6 +29,7 @@
 		}
 
 		.archive_items {
+			padding: 6px 0;
 			padding-bottom: 24px;
 
 			.archive_item {
@@ -38,33 +37,34 @@
 				font-size: 12px;
 				border-bottom: 1px dashed var(--color_border_light);
 
-                        &:hover{
-                              .action_wrap{
-                                    display: flex;
-                              }
-                        }
+				&:hover {
+					.action_wrap {
+						display: flex;
+					}
+				}
 
-                        .footer_wrap{
-                              height: 24px;
-                        }
+				&.closed {
+					.text {
+						color: var(--color_text_grey);
+						text-decoration: line-through;
+					}
+				}
 
-                        .status_wrap{
-                              &.checked{
-                                    color: var(--color_success);
-                              }
+				.footer_wrap {
+					height: 18px;
+				}
 
-                              &.closed{
-                                   color: var(--color_warning);
-                              }
-                        }
+				.create_at {
+					color: var(--color_text_grey);
+				}
 
 				.action_wrap {
-                              display: none;
+					display: none;
 
 					.btn_action {
-                                    padding: 4px;
-						border-radius: var(--radius);
-                                    line-height: 1;
+						padding: 2px 4px;
+						border-radius: var(--radius_small);
+						line-height: 1;
 
 						&:hover {
 							background-color: var(--color_bg_2);
@@ -78,6 +78,36 @@
 			padding-bottom: 24px;
 			font-size: 12px;
 			color: var(--color_text_grey);
+
+			&.hidden {
+				display: none;
+			}
+		}
+
+		.footer_wrap {
+			font-size: 12px;
+			color: var(--color_text_grey);
+
+			.select {
+				height: 24px;
+
+				.if-select-selector {
+					height: 100%;
+					line-height: 24px;
+                              font-size: 12px;
+                              padding: 0;
+
+					input {
+						height: 100% !important;
+                                    line-height: 22px !important;
+					}
+
+                              .if-select-selection-placeholder{
+                                    height: 100% !important;
+                                    line-height: 22px !important;
+                              }
+				}
+			}
 		}
 	}
 }
