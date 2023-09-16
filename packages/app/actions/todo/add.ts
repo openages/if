@@ -11,9 +11,7 @@ export default async (file_id: string, args: Partial<DirTree.File>) => {
 		id: file_id,
 		angles: angles.map((item) => ({ id: id(), text: item })),
 		tags: [],
-		settings: {
-			auto_archiving: '3m'
-		}
+		auto_archiving: '3m'
 	})
 
 	return

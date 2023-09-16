@@ -60,6 +60,7 @@
             "react-router-dom": "^6.16.0",
             "rxdb": "^14.16.0",
             "rxdb-flexsearch": "^0.1.1",
+            "rxjs": "^7.8.1",
             "smooth-scroll-into-view-if-needed": "^2.0.0",
             "ts-pattern": "^5.0.5",
             "tslib": "^2.6.2",

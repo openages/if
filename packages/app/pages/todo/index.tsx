@@ -28,60 +28,60 @@ const Index = ({ id }: IProps) => {
 	usePageScrollRestoration(id, toJS(x.global.tabs.stacks))
 
 	useLayoutEffect(() => {
-		x.init(id)
+		x.init({ id })
 
 		return () => x.off()
-	}, [id])
-
+      }, [ id ])
+      
 	const props_header: IPropsHeader = {
-		name: x.services.file.data.name,
-		icon: x.services.file.data.icon,
-		icon_hue: x.services.file.data.icon_hue,
-		desc: x.services.info.desc,
+		name: x.file.data.name,
+		icon: x.file.data.icon,
+		icon_hue: x.file.data.icon_hue,
+		desc: x.todo.desc,
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true)),
 		showArchiveModal: useMemoizedFn(() => (x.visible_archive_modal = true))
 	}
 
 	const props_tabs: IPropsTabs = {
-		angles: toJS(x.services.info.angles) || [],
-		current_angle_id: x.services.current_angle_id,
-		setCurrentAngleId: useMemoizedFn((v) => (x.services.current_angle_id = v))
+		angles: toJS(x.todo.angles) || [],
+		current_angle_id: x.current_angle_id,
+		setCurrentAngleId: useMemoizedFn((v) => (x.current_angle_id = v))
 	}
 
 	const props_input: IPropsInput = {
-		loading: x.services.utils.loading['add'],
-		tags: toJS(x.services.info.tags),
-		add: useMemoizedFn(x.services.add)
+		loading: x.utils.loading['create'],
+		tags: toJS(x.todo.tags),
+		create: useMemoizedFn(x.create)
 	}
 
 	const props_todos: IPropsTodos = {
-		items: toJS(x.services.items),
-		relations: toJS(x.services.info?.relations || []),
+		items: toJS(x.items),
+		relations: toJS(x.todo?.relations || []),
 		check: useMemoizedFn(x.check),
 		updateRelations: useMemoizedFn(x.updateRelations)
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
 		visible_settings_modal: x.visible_settings_modal,
-		info: { ...toJS(x.services.info), ...toJS(x.services.file.data) },
+		todo: { ...toJS(x.todo), ...toJS(x.file.data) },
 		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false)),
-		onInfoChange: useMemoizedFn(x.onInfoChange)
+		updateTodo: useMemoizedFn(x.updateTodo)
 	}
 
 	const props_archive: IPropsArchive = {
 		visible_archive_modal: x.visible_archive_modal,
-		archives: toJS(x.services.archives),
-		archive_counts: x.services.archive_counts,
-		end: x.services.loadmore.end,
-		restoreArchiveItem: useMemoizedFn(x.services.restoreArchiveItem),
-		removeArchiveItem: useMemoizedFn(x.services.removeArchiveItem),
-		loadMore: useMemoizedFn(x.services.loadmore.loadMore),
+		archives: toJS(x.archives),
+		archive_counts: x.archive_counts,
+		end: x.loadmore.end,
+		restoreArchiveItem: useMemoizedFn(x.restoreArchiveItem),
+		removeArchiveItem: useMemoizedFn(x.removeArchiveItem),
+		loadMore: useMemoizedFn(x.loadmore.loadMore),
 		onClose: useMemoizedFn(() => (x.visible_archive_modal = false))
 	}
 
 	return (
 		<div className={$cx('w_100 flex flex_column', styles._local)}>
-			<If condition={x.services.id && x.services.file.data.name}>
+			<If condition={x.id && x.file.data.name}>
 				<Then>
 					<Header {...props_header}></Header>
 					<Tabs {...props_tabs}></Tabs>
@@ -94,9 +94,9 @@ const Index = ({ id }: IProps) => {
 					<When
 						condition={
 							!(
-								x.services.utils.loading['queryFile'] ||
-								x.services.utils.loading['query'] ||
-								x.services.utils.loading['queryItems']
+								x.file.loading ||
+								x.utils.loading['queryTodo'] ||
+								x.utils.loading['queryItems']
 							)
 						}
 					>

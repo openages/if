@@ -14,13 +14,14 @@ import type { Active, Over } from '@dnd-kit/core'
 import type { IProps } from './types'
 import type { Item } from './types/services'
 import type { RxDocument, RxQuery } from 'rxdb'
+import type { Subscription } from 'rxjs'
 
 @injectable()
 export default class Index {
 	module = '' as App.ModuleType
 	actions = {} as IProps['actions']
 	doc = {} as Module.Item
-	doc_watcher = {} as RxQuery<Module.Item>
+	doc_watcher = null as Subscription
 	focusing_item = {} as DirTree.Item
 	current_item = {} as DirTree.File
 	modal_type = 'file' as DirTree.Type
@@ -49,6 +50,8 @@ export default class Index {
 		this.on()
 		this.watch()
 		this.reactions()
+
+		this.query()
 
 		this.onClick(this.current_item)
 	}
@@ -161,9 +164,7 @@ export default class Index {
 	}
 
 	watch() {
-		this.doc_watcher = getQuery(this.module)
-
-		this.doc_watcher.$.subscribe((doc: RxDocument<Module.Item>) => {
+		this.doc_watcher = getQuery(this.module).$.subscribe((doc: RxDocument<Module.Item>) => {
 			this.doc = doc.toMutableJSON()
 		})
 	}
@@ -178,7 +179,7 @@ export default class Index {
 	}
 
 	off() {
-		this.doc_watcher.$?.unsubscribe?.()
+		this.doc_watcher?.unsubscribe?.()
 
 		$app.Event.off(`${this.module}/dirtree/move`, this.move)
 		$app.Event.off(`${this.module}/dirtree/removeCurrentItem`, this.removeCurrentItem)

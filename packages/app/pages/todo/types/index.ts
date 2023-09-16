@@ -1,8 +1,5 @@
 import type { Todo, RxDB, TodoArchive, DirTree } from '@/types'
-import type Services from './services'
-import type Model from './model'
-import type { Layer } from 'konva/lib/Layer'
-import type { MutableRefObject } from 'react'
+import type Model from '../model'
 
 export type QueryItems = RxDB.ItemsQuery<Todo.TodoItem>
 export type QueryArchives = RxDB.ItemsQuery<TodoArchive.Item>
@@ -18,27 +15,27 @@ export interface IPropsHeader extends Pick<Todo.Data & DirTree.File, 'name' | 'i
 
 export interface IPropsSettingsModal {
 	visible_settings_modal: Model['visible_settings_modal']
-	info: Services['info'] & Services['file']['data']
+	todo: Model['todo'] & Model['file']['data']
 	closeSettingsModal: () => void
-	onInfoChange: Model['onInfoChange']
+	updateTodo: Model['updateTodo']
 }
 
 export interface IPropsTabs {
-	angles: Services['info']['angles']
-	current_angle_id: Services['current_angle_id']
-	setCurrentAngleId: (id: Services['current_angle_id']) => void
+	angles: Model['todo']['angles']
+	current_angle_id: Model['current_angle_id']
+	setCurrentAngleId: (id: Model['current_angle_id']) => void
 }
 
 export interface IPropsTabsItem {
-	item: Services['info']['angles'][number]
+	item: Model['todo']['angles'][number]
 	is_active: boolean
 	setCurrentAngleId: IPropsTabs['setCurrentAngleId']
 }
 
 export interface IPropsInput {
 	loading: boolean
-	tags?: Services['info']['tags']
-	add: Services['add']
+	tags?: Model['todo']['tags']
+	create: Model['create']
 }
 
 export interface IPropsInputCircle {
@@ -48,7 +45,7 @@ export interface IPropsInputCircle {
 }
 
 export interface IPropsTodos {
-	items: Services['items']
+	items: Model['items']
 	relations: Todo.Data['relations']
 	check: Model['check']
 	updateRelations: Model['updateRelations']
@@ -67,11 +64,11 @@ export interface IPropsGroupTitle {
 
 export interface IPropsArchive {
 	visible_archive_modal: Model['visible_archive_modal']
-	archives: Services['archives']
-	archive_counts: Services['archive_counts']
-	end: Services['loadmore']['end']
-	restoreArchiveItem: Services['restoreArchiveItem']
-	removeArchiveItem: Services['removeArchiveItem']
+	archives: Model['archives']
+	archive_counts: Model['archive_counts']
+	end: Model['loadmore']['end']
+	restoreArchiveItem: Model['restoreArchiveItem']
+	removeArchiveItem: Model['removeArchiveItem']
 	loadMore: () => void
 	onClose: () => void
 }
@@ -80,9 +77,8 @@ export interface IPropsArchiveItem extends Pick<IPropsArchive, 'restoreArchiveIt
 	item: Todo.Todo
 }
 
-export type ArgsOnInfoChange_changedValues = Partial<Todo.Data & Services['file']['data']> & {
+export type ArgsOnInfoChange_changedValues = Partial<Todo.Data & Model['file']['data']> & {
 	icon_info: { icon: string; icon_hue?: number }
 }
-export type ArgsOnInfoChange_values = Todo.Data & Services['file']
-export type ArgsUpdate = Partial<Todo.TodoItem> & { id: string }
-export type ArgsUpdateStatus = { id: string; status: Todo.Todo['status'] }
+export type ArgsOnInfoChange_values = Todo.Data & Model['file']
+

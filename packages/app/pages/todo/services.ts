@@ -1,231 +1,206 @@
-import { cloneDeep } from 'lodash-es'
-import { makeAutoObservable, reaction } from 'mobx'
-import { injectable } from 'tsyringe'
+import { cloneDeep, uniq, omit } from 'lodash-es'
 
-import { archive } from '@/actions/todo'
-import { Utils } from '@/models'
-import { File, LoadMore } from '@/services'
-import { setStorageWhenChange, getDocItemsData, modify, getArchiveTime } from '@/utils'
-import { loading } from '@/utils/decorators'
+import { update as updateTodo } from '@/actions/todo'
+import { modify, getArchiveTime } from '@/utils'
 
-import type { Todo, TodoArchive, RxDB } from '@/types'
-import type { RxDocument, RxQuery } from 'rxdb'
-import type { ArgsUpdate, ArgsUpdateStatus } from './types'
+import type {
+	ArgsCreate,
+	ArgsQueryArchives,
+	ArgsUpdate,
+	ArgsUpdateStatus,
+	ArgsCheck,
+	ArgsUpdateRelations,
+	ArgsUpdateTodoData
+} from './types/services'
+import type { Todo, RxDB } from '@/types'
 
-const archives_page_size = 48
+export const getQueryTodo = (file_id: string) => {
+	return $db.todo.findOne({ selector: { id: file_id } })
+}
 
-@injectable()
-export default class Index {
-	id = ''
-	info_query = {} as RxQuery<Todo.Data>
-	info = {} as Todo.Data
-	items_query = {} as RxDB.ItemsQuery<Todo.TodoItem>
-	items = [] as Array<Todo.TodoItem>
-	archives = [] as Array<TodoArchive.Item>
-	archive_counts = 0
-	current_angle_id = ''
+export const getQueryItems = (file_id: string, angle_id: string) => {
+	return $db.collections.todo_items
+		.find({ selector: { file_id, angle_id: angle_id } })
+		.sort({ create_at: 'asc' }) as RxDB.ItemsQuery<Todo.TodoItem>
+}
 
-	constructor(
-		public utils: Utils,
-		public file: File,
-		public loadmore: LoadMore
-	) {
-		makeAutoObservable(this, {}, { autoBind: true })
+export const create = async (args: ArgsCreate) => {
+	const { file_id, angle_id, item } = args
+
+	await $db.collections.todo_items.incrementalUpsert({
+		...item,
+		file_id,
+		angle_id
+	})
+
+	window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+}
+
+export const queryTodo = (file_id: string) => {
+	return getQueryTodo(file_id).exec()
+}
+
+export const queryItems = (file_id: string, angle_id: string) => {
+	return getQueryItems(file_id, angle_id).exec()
+}
+
+export const queryArchives = (args: ArgsQueryArchives) => {
+	const { file_id, page } = args
+
+	return $db.collections.todo_archives
+		.find({ selector: { file_id } })
+		.skip(page * 48)
+		.limit(48)
+		.sort({ create_at: 'desc' })
+		.exec()
+}
+
+export const queryArchivesCounts = (file_id: string) => {
+	return $db.collections.todo_archives.count({ selector: { file_id } }).exec()
+}
+
+export const updateTodoData = async (args: ArgsUpdateTodoData) => {
+	const { file_id, todo, changed_values, values, setTodo } = args
+
+	if (changed_values.name || changed_values.icon_info) {
+		await $app.Event.emit('todo/dirtree/updateItem', {
+			id: file_id,
+			...(changed_values.icon_info ?? changed_values)
+		})
+	} else {
+		const target = { ...todo, ...omit(values, 'icon_info') } as Todo.Data
+
+		setTodo(target)
+
+		await updateTodo(file_id, omit(target, 'id'))
 	}
+}
 
-	init(id: string) {
-		this.id = id
+export const update = async (args: ArgsUpdate) => {
+	const res = await $db.collections.todo_items.findOne({ selector: { id: args.id } }).exec()
 
-		setStorageWhenChange([{ [`${this.id}_todo_current_angle_id`]: 'current_angle_id' }], this)
+	await res.incrementalModify(modify(args))
+}
 
-		this.reactions()
-		this.initQuery()
+export const updateStatus = async (args: ArgsUpdateStatus) => {
+	const { id, status, auto_archiving } = args
+
+	await update({
+		id,
+		status,
+		archive_time: status === 'checked' || status === 'closed' ? getArchiveTime(auto_archiving) : undefined
+	})
+}
+
+export const check = async (args: ArgsCheck) => {
+	const { file_id, todo, id, status } = args
+	const { auto_archiving } = todo
+
+	const exsit_index = todo?.relations?.findIndex((item) => item.items.includes(id))
+
+	await updateStatus({ id, status, auto_archiving })
+
+	if (todo?.relations?.length && exsit_index !== -1) {
+		const relation_ids = cloneDeep(todo.relations[exsit_index]).items
+		const target_index = relation_ids.findIndex((item) => item === id)
+
+		relation_ids.splice(target_index, 1)
+
+		await Promise.all(
+			relation_ids.map((item) => {
+				return updateStatus({
+					id: item,
+					status: status === 'checked' ? 'closed' : 'unchecked',
+					auto_archiving
+				})
+			})
+		)
+
+		const relations = cloneDeep(todo.relations)
+
+		relations[exsit_index].checked = status === 'checked'
+
+		await updateTodo(file_id, { relations })
 	}
+}
 
-	initQuery() {
-		if (this.id) {
-			this.file.query(this.id)
+export const updateRelations = async (args: ArgsUpdateRelations) => {
+	const { file_id, todo, items, active_id, over_id } = args
 
-			this.query()
-			this.queryItems()
+	if (active_id === over_id) return
+
+	const active_item = items.find((item) => item.id === active_id) as Todo.Todo
+	const over_item = items.find((item) => item.id === over_id) as Todo.Todo
+
+	if (active_item.status !== 'unchecked' || over_item.status !== 'unchecked') return
+
+	if (!todo.relations) {
+		await updateTodo(file_id, { relations: [{ items: [active_id, over_id], checked: false }] })
+	} else {
+		const relations = cloneDeep(todo.relations)
+		const exsit_active_index = relations.findIndex((item) => item.items.includes(active_id))
+		const exsit_over_index = relations.findIndex((item) => item.items.includes(over_id))
+
+		if (exsit_active_index === -1 && exsit_over_index === -1) {
+			return await updateTodo(file_id, {
+				relations: [...relations, { items: [active_id, over_id], checked: false }]
+			})
 		}
-	}
 
-	reactions() {
-		reaction(
-			() => this.id,
-			(v) => {
-				if (!v) return this.resetData()
+		if (exsit_active_index === exsit_over_index) {
+			if (relations[exsit_active_index].items.length === 2) {
+				relations.splice(exsit_active_index, 1)
 
-				this.file.query(v)
-				this.query()
-				this.queryItems()
-			}
-		)
-
-		reaction(
-			() => this.info,
-			() => {
-				if (!this.info?.angles?.length) return
-				if (this.current_angle_id) return
-
-				this.current_angle_id = this.info.angles[0].id
-			}
-		)
-
-		reaction(
-			() => this.current_angle_id,
-			() => {
-				if (!this.id) return
-
-				this.queryItems()
-			}
-		)
-
-		reaction(
-			() => this.info.angles,
-			(v) => {
-				if (!this.id) return
-				if (!this.info.id) return
-
-				const exist = v.find((item) => item.id === this.current_angle_id)
-
-				if (!exist) {
-					this.current_angle_id = v[0].id
-				}
-			}
-		)
-
-		reaction(
-			() => this.loadmore.page,
-			(v) => {
-				if (!v) return
-
-				this.queryArchives()
-			}
-		)
-	}
-
-	resetData() {
-		this.current_angle_id = ''
-		this.info = {} as RxDocument<Todo.Data>
-		this.items = [] as RxDB.ItemsDoc<Todo.TodoItem>
-		this.items_query = {} as RxDB.ItemsQuery<Todo.TodoItem>
-		this.archives = [] as RxDB.ItemsDoc<TodoArchive.Item>
-		this.loadmore.page = 0
-		this.loadmore.end = false
-	}
-
-	@loading
-	async add(v: Omit<Todo.TodoItem, 'file_id' | 'angle_id'>) {
-		await $db.collections.todo_items.incrementalUpsert({
-			...v,
-			file_id: this.id,
-			angle_id: this.current_angle_id
-		})
-
-		window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
-	}
-
-	async update(v: ArgsUpdate) {
-		const res = await $db.collections.todo_items.findOne({ selector: { id: v.id } }).exec()
-
-		await res.incrementalModify(modify(v))
-	}
-
-	async updateStatus(v: ArgsUpdateStatus) {
-		await this.update({
-			...v,
-			archive_time:
-				v.status === 'checked' || v.status === 'closed'
-					? getArchiveTime(this.info.settings.auto_archiving)
-					: undefined
-		})
-	}
-
-	@loading
-	async query() {
-		this.info_query = $db.todo.findOne({ selector: { id: this.id } })!
-
-		const res = (await this.info_query.exec()) as RxDocument<Todo.Data>
-
-		if (!res) return (this.id = '')
-
-		this.info = res.toMutableJSON()
-
-            this.info_query.$.subscribe((v: RxDocument<Todo.Data>) => {
-			if (v?.toMutableJSON) {
-				this.info = v.toMutableJSON()
+				return await updateTodo(file_id, { relations })
 			} else {
-				this.info = v || ({} as Todo.Data)
+				const over_index = relations[exsit_active_index].items.findIndex((item) => item === over_id)
+
+				relations[exsit_active_index].items.splice(over_index, 1)
+
+				return await updateTodo(file_id, { relations })
 			}
-		})
-	}
+		}
 
-	@loading
-	async queryItems() {
-		await archive(this.id)
+		if (exsit_active_index !== -1 && exsit_over_index === -1) {
+			relations[exsit_active_index].items.push(over_id)
 
-		this.items_query = $db.collections.todo_items
-			.find({ selector: { file_id: this.id, angle_id: this.current_angle_id } })
-			.sort({ create_at: 'asc' }) as RxDB.ItemsQuery<Todo.TodoItem>
+			return await updateTodo(file_id, { relations })
+		}
 
-		this.items = getDocItemsData((await this.items_query.exec())! as RxDB.ItemsDoc<Todo.TodoItem>)
+		if (exsit_over_index !== -1 && exsit_active_index === -1) {
+			relations[exsit_over_index].items.push(active_id)
 
-            this.items_query.$.subscribe((v) => {
-                  console.log(123);
-                  this.items = getDocItemsData(v)
-            })
-	}
+			return await updateTodo(file_id, { relations })
+		}
 
-	async queryArchives() {
-		const archives = (await $db.collections.todo_archives
-			.find({ selector: { file_id: this.id } })
-			.skip(this.loadmore.page * archives_page_size)
-			.limit(archives_page_size)
-			.sort({ create_at: 'desc' })
-			.exec())! as RxDB.ItemsDoc<TodoArchive.Item>
+		if (exsit_active_index !== -1 && exsit_over_index !== -1) {
+			const target = uniq(relations[exsit_over_index].items.concat(relations[exsit_over_index].items))
 
-		if (archives.length === 0) return (this.loadmore.end = true)
+			relations[exsit_over_index].items = target
 
-		if (this.loadmore.page === 0) {
-			this.archives = getDocItemsData(archives)
-		} else {
-			this.archives = this.archives.concat(getDocItemsData(archives))
+			relations.splice(exsit_over_index, 1)
+
+			return await updateTodo(file_id, { relations })
 		}
 	}
+}
 
-	async queryArchivesCounts() {
-		this.archive_counts = await $db.collections.todo_archives.count({ selector: { file_id: this.id } }).exec()
-	}
+export const restoreArchiveItem = async (id: string) => {
+	const doc = await $db.collections.todo_archives.findOne({ selector: { id } }).exec()
 
-	updateCurrentArchiveItems(id: string) {
-		this.archives.splice(
-			this.archives.findIndex((item) => item.id === id),
-			1
-		)
-		this.archive_counts = this.archive_counts - 1
-	}
+	const data = cloneDeep(doc.toMutableJSON())
 
-	async restoreArchiveItem(id: string) {
-		const item = await $db.collections.todo_archives.findOne({ selector: { id } }).exec()
+	await doc.incrementalRemove()
 
-		const data = cloneDeep(item.toMutableJSON())
+	await $db.collections.todo_items.incrementalUpsert({
+		...data,
+		status: 'unchecked',
+		create_at: new Date().valueOf()
+	})
+}
 
-		await item.incrementalRemove()
+export const removeArchiveItem = async (id: string) => {
+	const doc = await $db.collections.todo_archives.findOne({ selector: { id } }).exec()
 
-		await $db.collections.todo_items.incrementalUpsert({
-			...data,
-			status: 'unchecked',
-			create_at: new Date().valueOf()
-		})
-
-		this.updateCurrentArchiveItems(id)
-	}
-
-	async removeArchiveItem(id: string) {
-		await $db.collections.todo_archives.findOne({ selector: { id } }).remove()
-
-		this.updateCurrentArchiveItems(id)
-	}
+	await doc.incrementalRemove()
 }

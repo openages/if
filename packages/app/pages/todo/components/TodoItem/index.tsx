@@ -2,7 +2,7 @@ import { useDrag, useDrop, useMemoizedFn } from 'ahooks'
 import { useState, useRef } from 'react'
 import { Switch, Case } from 'react-if'
 
-import { Square, CheckSquare, XSquare } from '@phosphor-icons/react'
+import { Square, CheckSquare } from '@phosphor-icons/react'
 
 import styles from './index.css'
 

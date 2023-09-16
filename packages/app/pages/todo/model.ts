@@ -1,164 +1,248 @@
-import { omit, cloneDeep, uniq } from 'lodash-es'
-import { makeAutoObservable, reaction } from 'mobx'
+import { cloneDeep } from 'lodash-es'
+import { makeAutoObservable, reaction, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
-import { update, archive } from '@/actions/todo'
+import { archive } from '@/actions/todo'
 import { GlobalModel } from '@/context/app'
+import { Utils, File, Loadmore } from '@/models'
+import { getDocItemsData } from '@/utils'
+import { loading } from '@/utils/decorators'
 
-import Services from './services'
+import {
+	getQueryTodo,
+	getQueryItems,
+	create,
+	queryItems,
+	queryArchives,
+	queryArchivesCounts,
+	updateTodoData,
+	check,
+	updateRelations,
+	restoreArchiveItem,
+	removeArchiveItem,
+	queryTodo
+} from './services'
 
-import type { ArgsOnInfoChange_changedValues, ArgsOnInfoChange_values, ArgsUpdateStatus } from './types'
+import type { ArgsCreate, ArgsUpdateTodoData } from './types/services'
 
-import type { Todo } from '@/types'
+import type { RxDB, Todo, TodoArchive } from '@/types'
+import type { RxDocument, RxQuery } from 'rxdb'
+import type { Subscription } from 'rxjs'
 
 @injectable()
 export default class Index {
+	id = ''
+	todo = {} as Todo.Data
+	todo_watcher = null as Subscription
+	items = [] as Array<Todo.TodoItem>
+	items_watcher = null as Subscription
+	archives = [] as Array<TodoArchive.Item>
+	archive_counts = 0
+	current_angle_id = ''
 	visible_settings_modal = false
 	visible_archive_modal = false
 	timer: NodeJS.Timeout = null
 
 	constructor(
 		public global: GlobalModel,
-		public services: Services
+		public utils: Utils,
+		public file: File,
+		public loadmore: Loadmore
 	) {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
-	init(id: string) {
-		this.services.init(id)
+	init(args: { id: string }) {
+		const { id } = args
 
-		this.reactions()
+		this.id = id
+
 		this.on()
+		this.watch()
+		this.reactions()
+
+		this.file.init(this.id)
+
+		this.queryTodo()
+		this.queryItems()
 	}
 
 	reactions() {
 		reaction(
+			() => this.current_angle_id,
+			() => {
+				if (!this.id) return
+
+				this.queryItems()
+			}
+		)
+
+		reaction(
+			() => this.todo.angles,
+			(v) => {
+				if (!this.id) return
+				if (!this.todo.id) return
+
+				const exist = v.find((item) => item.id === this.current_angle_id)
+
+				if (!exist) {
+					this.current_angle_id = v[0].id
+				}
+			}
+		)
+
+		reaction(
 			() => this.visible_archive_modal,
 			(v) => {
 				if (v) {
-					this.services.queryArchives()
-					this.services.queryArchivesCounts()
+					this.queryArchives()
+					this.queryArchivesCounts()
 				} else {
-					this.services.loadmore.page = 0
-					this.services.loadmore.end = false
+					this.loadmore.page = 0
+					this.loadmore.end = false
 				}
+			}
+		)
+
+		reaction(
+			() => this.loadmore.page,
+			(v) => {
+				if (!v) return
+
+				this.queryArchives()
 			}
 		)
 	}
 
-	async onInfoChange(changedValues: ArgsOnInfoChange_changedValues, values: ArgsOnInfoChange_values) {
-		if (changedValues.name || changedValues.icon_info) {
-			await $app.Event.emit('todo/dirtree/updateItem', {
-				id: this.services.id,
-				...(changedValues.icon_info ?? changedValues)
-			})
-		} else {
-			this.services.info = { ...this.services.info, ...omit(values, 'icon_info') } as Todo.Data
+	@loading
+	async create(item: Todo.TodoItem) {
+		await create({
+			file_id: this.id,
+			angle_id: this.current_angle_id,
+			item
+		})
+	}
 
-			await update(this.services.id, omit(this.services.info, 'id'))
+	@loading
+	async queryTodo() {
+		const todo = await queryTodo(this.id)
+
+		this.todo = todo.toMutableJSON()
+	}
+
+	@loading
+	async queryItems() {
+		await archive(this.id)
+
+		const items = await queryItems(this.id, this.current_angle_id)
+
+		this.items = getDocItemsData(items)
+
+		if (this.items_watcher) {
+			this.items_watcher.unsubscribe()
+
+			this.watchItems()
 		}
 	}
 
-	async check(v: ArgsUpdateStatus) {
-		const exsit_index = this.services.info?.relations?.findIndex((item) => item.items.includes(v.id))
+	async queryArchives() {
+		const items = (await queryArchives({
+			file_id: this.id,
+			page: this.loadmore.page
+		})) as RxDB.ItemsDoc<TodoArchive.Item>
 
-		await this.services.updateStatus(v)
+		if (items.length === 0) return (this.loadmore.end = true)
 
-		if (this.services.info?.relations?.length && exsit_index !== -1) {
-			const relation_ids = cloneDeep(this.services.info.relations[exsit_index]).items
-			const target_index = relation_ids.findIndex((item) => item === v.id)
-
-			relation_ids.splice(target_index, 1)
-
-			await Promise.all(
-				relation_ids.map((item) => {
-					return this.services.updateStatus({
-						id: item,
-						status: v.status === 'checked' ? 'closed' : 'unchecked'
-					})
-				})
-			)
-
-			const relations = cloneDeep(this.services.info.relations)
-
-			relations[exsit_index].checked = v.status === 'checked'
-
-			await update(this.services.id, { relations })
+		if (this.loadmore.page === 0) {
+			this.archives = getDocItemsData(items)
+		} else {
+			this.archives = this.archives.concat(getDocItemsData(items))
 		}
+	}
 
-		await archive(this.services.id)
+	async queryArchivesCounts() {
+		this.archive_counts = await queryArchivesCounts(this.id)
+	}
+
+	async updateTodo(changed_values: ArgsUpdateTodoData['changed_values'], values: ArgsUpdateTodoData['values']) {
+		await updateTodoData({
+			file_id: this.id,
+			todo: this.todo,
+			changed_values,
+			values,
+			setTodo: (todo) => {
+				this.todo = todo
+			}
+		})
+	}
+
+	async check(args: { id: string; status: Todo.Todo['status'] }) {
+		await check({
+			file_id: this.id,
+			todo: this.todo,
+			...args
+		})
+
+		await this.queryItems()
 	}
 
 	async updateRelations(active_id: string, over_id: string) {
-		if (active_id === over_id) return
+		await updateRelations({
+			file_id: this.id,
+			todo: this.todo,
+			items: this.items as Array<Todo.Todo>,
+			active_id,
+			over_id
+		})
+	}
 
-		const active_item = this.services.items.find((item) => item.id === active_id) as Todo.Todo
-		const over_item = this.services.items.find((item) => item.id === over_id) as Todo.Todo
+	updateArchiveItems(id: string) {
+		this.archives.splice(
+			this.archives.findIndex((item) => item.id === id),
+			1
+		)
+		this.archive_counts = this.archive_counts - 1
+	}
 
-		if (active_item.status !== 'unchecked' || over_item.status !== 'unchecked') return
+	async restoreArchiveItem(id: string) {
+		await restoreArchiveItem(id)
 
-		if (!this.services.info.relations) {
-			await update(this.services.id, { relations: [{ items: [active_id, over_id], checked: false }] })
-		} else {
-			const relations = cloneDeep(this.services.info.relations)
-			const exsit_active_index = relations.findIndex((item) => item.items.includes(active_id))
-			const exsit_over_index = relations.findIndex((item) => item.items.includes(over_id))
+		this.updateArchiveItems(id)
+	}
 
-			if (exsit_active_index === -1 && exsit_over_index === -1) {
-				return await update(this.services.id, {
-					relations: [...relations, { items: [active_id, over_id], checked: false }]
-				})
-			}
+	async removeArchiveItem(id: string) {
+		await removeArchiveItem(id)
 
-			if (exsit_active_index === exsit_over_index) {
-				if (relations[exsit_active_index].items.length === 2) {
-					relations.splice(exsit_active_index, 1)
+		this.updateArchiveItems(id)
+	}
 
-					return await update(this.services.id, { relations })
-				} else {
-					const over_index = relations[exsit_active_index].items.findIndex(
-						(item) => item === over_id
-					)
+	watchItems() {
+		this.items_watcher = getQueryItems(this.id, this.current_angle_id).$.subscribe((items) => {
+			this.items = getDocItemsData(items)
+		})
+	}
 
-					relations[exsit_active_index].items.splice(over_index, 1)
+	watch() {
+		this.todo_watcher = getQueryTodo(this.id).$.subscribe((todo) => {
+			this.todo = todo.toMutableJSON()
 
-					return await update(this.services.id, { relations })
-				}
-			}
+			if (this.current_angle_id) return
 
-			if (exsit_active_index !== -1 && exsit_over_index === -1) {
-				relations[exsit_active_index].items.push(over_id)
+			this.current_angle_id = todo.angles[0].id
+		})
 
-				return await update(this.services.id, { relations })
-			}
-
-			if (exsit_over_index !== -1 && exsit_active_index === -1) {
-				relations[exsit_over_index].items.push(active_id)
-
-				return await update(this.services.id, { relations })
-			}
-
-			if (exsit_active_index !== -1 && exsit_over_index !== -1) {
-				const target = uniq(relations[exsit_over_index].items.concat(relations[exsit_over_index].items))
-
-				relations[exsit_over_index].items = target
-
-				relations.splice(exsit_over_index, 1)
-
-				return await update(this.services.id, { relations })
-			}
-		}
+		this.watchItems()
 	}
 
 	on() {
-		this.timer = setInterval(() => archive(this.services.id), 9000)
+		this.timer = setInterval(() => archive(this.id), 9000)
 	}
 
 	off() {
-		this.services.info_query?.$?.unsubscribe?.()
-		this.services.items_query?.$?.unsubscribe?.()
+		this.todo_watcher?.unsubscribe?.()
+		this.items_watcher?.unsubscribe?.()
 
-		this.services.file.off()
+		this.file.off()
 
 		clearInterval(this.timer)
 	}

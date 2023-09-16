@@ -14,7 +14,7 @@ const { Item } = Form
 const { TextArea } = Input
 
 const Index = (props: IPropsSettingsModal) => {
-	const { visible_settings_modal, info, closeSettingsModal, onInfoChange } = props
+	const { visible_settings_modal, todo, closeSettingsModal, updateTodo } = props
 	const limits = useLimits()
 	const { t, i18n } = useTranslation()
 
@@ -33,9 +33,9 @@ const Index = (props: IPropsSettingsModal) => {
 	const props_settings_modal = {
 		className: styles._local,
 		visible: visible_settings_modal,
-		info,
+		info: todo,
 		onClose: closeSettingsModal,
-		onValuesChange: onInfoChange
+		onValuesChange: updateTodo
 	}
 
 	return (
@@ -56,10 +56,7 @@ const Index = (props: IPropsSettingsModal) => {
 				<Item name='tags' label={t('translation:todo.SettingsModal.tags.label')}>
 					<TagsEditor></TagsEditor>
 				</Item>
-				<Item
-					name={['settings', 'auto_archiving']}
-					label={t('translation:todo.SettingsModal.auto_archiving.label')}
-				>
+				<Item name='auto_archiving' label={t('translation:todo.SettingsModal.auto_archiving.label')}>
 					<Select options={auto_archiving_options}></Select>
 				</Item>
 			</div>

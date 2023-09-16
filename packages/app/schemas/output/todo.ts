@@ -49,6 +49,17 @@ export default {
                               ]
                         }
                   },
+                  "auto_archiving": {
+                        "type": "string",
+                        "enum": [
+                              "0m",
+                              "3m",
+                              "3h",
+                              "1d",
+                              "3d",
+                              "7d"
+                        ]
+                  },
                   "relations": {
                         "type": "array",
                         "items": {
@@ -69,32 +80,13 @@ export default {
                                     "checked"
                               ]
                         }
-                  },
-                  "settings": {
-                        "type": "object",
-                        "properties": {
-                              "auto_archiving": {
-                                    "type": "string",
-                                    "enum": [
-                                          "0m",
-                                          "3m",
-                                          "3h",
-                                          "1d",
-                                          "3d",
-                                          "7d"
-                                    ]
-                              }
-                        },
-                        "required": [
-                              "auto_archiving"
-                        ]
                   }
             },
             "required": [
                   "id",
                   "angles",
                   "tags",
-                  "settings"
+                  "auto_archiving"
             ]
       },
       "Todo.Todo": {

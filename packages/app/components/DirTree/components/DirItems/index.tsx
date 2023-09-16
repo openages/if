@@ -31,7 +31,7 @@ const Index = (props: IPropsDirItems) => {
 		setActiveItem(null)
 
 		$app.Event.emit(`${module}/dirtree/move`, { active, over })
-	})
+      })
 
 	return (
 		<div

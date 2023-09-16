@@ -19,7 +19,7 @@ import type { Todo } from '@/types'
 const { TextArea } = Input
 
 const Index = (props: IPropsInput) => {
-	const { loading, tags, add } = props
+	const { loading, tags, create } = props
 	const limits = useLimits()
 	const { t } = useTranslation()
 	const [input, setInput] = useState<Omit<Todo.TodoItem, 'file_id' | 'angle_id'>>(getTodo())
@@ -64,7 +64,7 @@ const Index = (props: IPropsInput) => {
 
 		if (loading) return
 
-		add({ ...input, create_at: new Date().valueOf() })
+		create({ ...input, create_at: new Date().valueOf() } as Todo.TodoItem)
 	})
 
 	return (
