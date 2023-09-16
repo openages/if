@@ -1,7 +1,7 @@
 import { Tooltip } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-import { CirclesThreePlus, FolderMinus, ListPlus } from '@phosphor-icons/react'
+import { CirclesThreePlus, ListPlus } from '@phosphor-icons/react'
 
 import styles from './index.css'
 

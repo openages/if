@@ -23,7 +23,7 @@ const Index = (props: IProps) => {
 	const { show } = useContextMenu({ id: 'dirtree_options' })
 
 	useLayoutEffect(() => {
-		x.init(module, actions)
+		x.init({ module, actions })
 
 		return () => x.off()
 	}, [module])
@@ -50,8 +50,8 @@ const Index = (props: IProps) => {
 
 	const props_dir_items: IPropsDirItems = {
 		module: x.module,
-		data: toJS(x.services.dirtree),
-		loading: x.services.utils.loading['query'],
+		data: toJS(x.doc.dirtree) || [],
+		loading: x.utils.loading['query'],
 		current_item: toJS(x.current_item),
 		focusing_item: toJS(x.focusing_item),
 		open_folder: toJS(x.open_folder),
@@ -69,12 +69,12 @@ const Index = (props: IProps) => {
 		modal_type: x.modal_type,
 		current_option: x.current_option,
 		focusing_item: toJS(x.focusing_item),
-		loading_add: x.utils.loading['add'],
-		loading_rename: x.utils.loading['rename'],
-		add: useMemoizedFn(x.add),
+		loading_create: x.utils.loading['create'],
+		loading_updateItem: x.utils.loading['updateItem'],
+		create: useMemoizedFn(x.create),
+		updateItem: useMemoizedFn(x.updateItem),
 		setModalOpen,
-		resetFocusingItem,
-		rename: useMemoizedFn(x.rename)
+		resetFocusingItem
 	}
 
 	const props_options: IPropsOptions = {

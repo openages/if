@@ -110,11 +110,11 @@
 
 /* Drawer */
 .if-drawer {
-      &.hide_mask{
-            .if-drawer-mask {
+	&.hide_mask {
+		.if-drawer-mask {
 			background-color: transparent;
 		}
-      }
+	}
 
 	&-content-wrapper {
 		box-shadow: var(--shadow) !important;
@@ -228,14 +228,47 @@
 }
 
 /* Select */
-.if-select{
-      &-dropdown{
-            .if-empty-image{
-                  margin-bottom: 0;
-            }
-            
-            .if-empty-description{
-                  display: none;
-            }
-      }
+.if-select {
+	&.borderless {
+		.if-select-selector {
+			height: 100% !important;
+			line-height: 24px !important;
+			font-size: 12px;
+			padding: 0 !important;
+
+			input {
+				height: 100% !important;
+				line-height: 22px !important;
+			}
+
+                  .if-select-selection-item{
+				line-height: 22px !important;
+                  }
+
+			.if-select-selection-placeholder {
+				height: 100% !important;
+				line-height: 22px !important;
+			}
+		}
+
+		.if-select-dropdown {
+			.if-select-item {
+				min-height: 26px;
+				line-height: 26px;
+				padding-top: 0;
+				padding-bottom: 0;
+				font-size: 12px;
+			}
+		}
+	}
+
+	&-dropdown {
+		.if-empty-image {
+			margin-bottom: 0;
+		}
+
+		.if-empty-description {
+			display: none;
+		}
+	}
 }

@@ -54,7 +54,7 @@ export default (items: DirTree.Items, active: Active, over: Over | null) => {
 					return children
 				}
 			}, items as Array<any>)
-		} else {
+            } else {
 			;(items[over_index] as DirTree.Dir).children.push(active_item)
 		}
 

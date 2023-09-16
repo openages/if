@@ -52,6 +52,19 @@ export default {
 		title: 'Archive',
 		end: 'Reached the end',
 		restore: 'Restore',
-		remove: 'Remove'
+		remove: 'Remove',
+		clean: {
+			title: 'Clean:',
+			placeholder: 'Select date',
+			options: {
+				'1year': '1 year ago',
+				'6month': '6 months ago',
+				'3month': '3 months ago',
+				'1month': '1 month ago',
+				'15days': '15 days ago',
+				'1week': '1 week ago'
+			},
+			total: 'Total of {{counts}} items'
+		}
 	}
 }

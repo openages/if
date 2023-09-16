@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 
-import type { DirTree, Todo } from '@/types'
+import type { DirTree } from '@/types'
 
 import type Model from '../model'
 import type { MouseEvent, ReactNode } from 'react'
@@ -11,13 +11,12 @@ export interface IProps {
 	actions: {
 		add: (file_id: string, data: Partial<Omit<DirTree.File, 'id'>>) => Promise<void>
 		remove: (focusing_item: DirTree.Item, current_item_id: string, module: string) => Promise<void>
-		update: (file_id: string, data: Partial<Omit<Todo.Data, 'id'>>) => Promise<void>
 	}
 }
 
 export interface IPropsDirItems {
 	module: Model['module']
-	data: Model['services']['doc']['dirtree']
+	data: Model['doc']['dirtree']
 	loading: boolean
 	current_item: DirTree.File
 	focusing_item: Model['focusing_item']
@@ -60,12 +59,12 @@ export interface IPropsModal {
 	modal_type: Model['modal_type']
 	current_option: Model['current_option']
 	focusing_item: Model['focusing_item']
-	loading_add: boolean
-	loading_rename: boolean
-	add: Model['add']
+	loading_create: boolean
+	loading_updateItem: boolean
+      create: Model[ 'create' ]
+	updateItem: Model['updateItem']
 	setModalOpen: (v: Model['modal_open'], type?: Model['modal_type']) => void
 	resetFocusingItem: () => void
-	rename: Model['rename']
 }
 
 export interface IPropsOptions {

@@ -10,7 +10,11 @@ const Index = <T>(items: Array<T & Item>, id: string): T | undefined => {
 		if (item.id === id) {
 			return item as T
 		} else {
-			if (item.children) return Index(item.children, id)
+			if (item.children?.length) {
+				const target = Index(item.children, id)
+
+				if (target) return target
+			}
 		}
 	}
 

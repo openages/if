@@ -153,7 +153,7 @@ export default class Index {
 
 		this.info = res.toMutableJSON()
 
-		this.info_query.$.subscribe((v: RxDocument<Todo.Data>) => {
+            this.info_query.$.subscribe((v: RxDocument<Todo.Data>) => {
 			if (v?.toMutableJSON) {
 				this.info = v.toMutableJSON()
 			} else {
@@ -172,7 +172,10 @@ export default class Index {
 
 		this.items = getDocItemsData((await this.items_query.exec())! as RxDB.ItemsDoc<Todo.TodoItem>)
 
-		this.items_query.$.subscribe((v) => (this.items = getDocItemsData(v)))
+            this.items_query.$.subscribe((v) => {
+                  console.log(123);
+                  this.items = getDocItemsData(v)
+            })
 	}
 
 	async queryArchives() {

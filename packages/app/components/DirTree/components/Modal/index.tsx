@@ -19,12 +19,12 @@ const Index = (props: IPropsModal) => {
 		modal_type,
 		current_option,
 		focusing_item,
-		loading_add,
-		loading_rename,
-		add,
+		loading_create,
+		loading_updateItem,
+		create,
+		updateItem,
 		setModalOpen,
-		resetFocusingItem,
-		rename
+		resetFocusingItem
 	} = props
 	const [icon, setIcon] = useState({ icon: '', icon_hue: undefined })
 	const input = useRef<InputRef>(null)
@@ -81,11 +81,11 @@ const Index = (props: IPropsModal) => {
 
 	const onOk = useMemoizedFn(() => {
 		if (!value || value.length > limits.todo_list_title_max_length) return
-		if (current_option === 'rename') return rename({ name: value, ...icon })
-		if (current_option === 'add_file') return add('file', { name: value, ...icon })
-		if (current_option === 'add_dir') return add('dir', { name: value, ...icon })
+		if (current_option === 'rename') return updateItem({ name: value, ...icon })
+		if (current_option === 'add_dir') return create({ type: 'dir', data: { name: value, ...icon } })
+		if (current_option === 'add_file') return create({ type: 'file', data: { name: value, ...icon } })
 
-		add(modal_type, { name: value, ...icon })
+		create({ type: modal_type, data: { name: value, ...icon } })
 	})
 
 	const onSelectIcon = useMemoizedFn((shortcodes) => setIcon(shortcodes))
@@ -96,7 +96,7 @@ const Index = (props: IPropsModal) => {
 			open={modal_open}
 			title={title}
 			width={300}
-			confirmLoading={loading_add || loading_rename}
+			confirmLoading={loading_create || loading_updateItem}
 			centered
 			destroyOnClose
 			maskClosable={false}

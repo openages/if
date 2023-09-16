@@ -9,7 +9,7 @@
 	--contexify-arrow-color: var(--color_text_grey);
 	--contexify-activeArrow-color: var(--color_text);
 
-      --contexify-zIndex: 666;
+      --contexify-zIndex: 999;
 	--contexify-menu-minWidth: 220px;
 	--contexify-menu-padding: 6px;
 	--contexify-menu-radius: 6px;

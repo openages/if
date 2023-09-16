@@ -1,10 +1,9 @@
 import { useMemoizedFn } from 'ahooks'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { If, Then, Else } from 'react-if'
 
 import { getRelativeTime } from '@/utils'
-import { Check, X, ArrowCounterClockwise, Trash } from '@phosphor-icons/react'
+import { ArrowCounterClockwise, Trash } from '@phosphor-icons/react'
 
 import type { IPropsArchiveItem } from '../../types'
 
@@ -33,7 +32,7 @@ const Index = (props: IPropsArchiveItem) => {
 	return (
 		<div className={$cx('archive_item w_100 border_box flex flex_column', status)}>
 			<span className='text w_100'>{text}</span>
-			<div className='footer_wrap flex justify_between align_center mt_4'>
+			<div className='flex justify_between align_center mt_4'>
 				<span className='create_at'>{relative_time}</span>
 				<div className='action_wrap align_center'>
 					<div

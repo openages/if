@@ -1,140 +1,103 @@
-import { debounce } from 'lodash-es'
-import { makeAutoObservable, reaction, toJS } from 'mobx'
-import { match } from 'ts-pattern'
-import { injectable } from 'tsyringe'
-
-import { Utils } from '@/models'
 import { id } from '@/utils'
-import { loading } from '@/utils/decorators'
 import { remove, find } from '@/utils/tree'
-import { deepEqual } from '@openages/craftkit'
 
 import { addToDir, rename } from './utils'
 
-import type { RxDocument, RxQuery } from 'rxdb'
-import type { App, DirTree, Module } from '@/types'
-import type { IProps } from './types'
+import type { App, Module, DirTree } from '@/types'
+import type { ArgsCreate, ArgsUpdateDirtree, ArgsUpdateItem, ArgsRemove } from './types/services'
+import type { RxQuery, RxDocument } from 'rxdb'
 
-@injectable()
-export default class Index {
-	module = '' as App.ModuleType
-	actions = {} as IProps['actions']
-	dirtree_query = {} as RxQuery<Module.Item>
-	doc = {} as RxDocument<Module.Item>
-	dirtree = [] as DirTree.Items
-	focusing_item = {} as DirTree.Item
+export const getQuery = (module: App.ModuleType) => {
+	return $db.module.findOne({ selector: { module: module } }) as RxQuery<Module.Item>
+}
 
-	constructor(public utils: Utils) {
-		makeAutoObservable(this, {}, { autoBind: true })
-	}
+export const create = async (args: ArgsCreate) => {
+	const { module, focusing_item, actions, item } = args
+	const { type, data } = item
 
-	async init(module: App.ModuleType) {
-		this.module = module
+	const doc = await query(module)
 
-		this.query()
-		this.reactions()
-	}
+	if (type === 'dir') {
+		const dir = { ...data, id: id(), type: 'dir', children: [] } as DirTree.Dir
 
-	reactions() {
-		reaction(
-			() => this.dirtree,
-			debounce((v) => {
-				if (deepEqual(toJS(v), toJS(this.doc.dirtree))) return
-
-				this.update(v)
-			}, 300)
-		)
-	}
-
-	@loading
-	async query() {
-		this.dirtree_query = $db.module.findOne({ selector: { module: this.module } })! as RxQuery<Module.Item>
-
-		const target = (await this.dirtree_query.exec()) as RxDocument<Module.Item>
-
-		this.doc = target
-		this.dirtree = target.dirtree
-
-		target.$.subscribe((v) => {
-			this.doc = v
-			this.dirtree = v.dirtree
-		})
-	}
-
-	async add(type: DirTree.Type, args: Partial<DirTree.Item>) {
-		return await match({ type })
-			.with({ type: 'file' }, () => this.addFile(args as DirTree.File))
-			.with({ type: 'dir' }, () => this.addDir(args as DirTree.Dir))
-			.exhaustive()
-	}
-
-	async delete(current_item_id: string) {
-		await this.actions.remove(this.focusing_item, current_item_id, this.module)
-
-		await this.doc.incrementalModify((doc) => {
-			remove(doc.dirtree, this.focusing_item.id)
-
-			return doc
-		})
-	}
-
-	async update(v: DirTree.Items) {
-		return await this.doc.incrementalModify((doc) => {
-			doc.dirtree = v
-
-			return doc
-		})
-	}
-
-	async rename(args: Partial<DirTree.Item>) {
-		const target_id = args.id ?? this.focusing_item.id
-
-		await this.doc.incrementalModify((doc) => {
-			rename(doc.dirtree, { ...args, id: target_id })
-
-			return doc
-		})
-
-		const current_file = find(this.dirtree, target_id)
-
-		await $app.Event.emit('global.tabs.updateFile', { ...current_file, ...args, id: target_id })
-	}
-
-	private async addDir(args: DirTree.Dir) {
-		const dir: DirTree.Dir = { ...args, id: id(), type: 'dir', children: [] }
-
-		if (this.focusing_item?.id) {
-			return await this.doc.incrementalModify((doc) => {
-				addToDir(doc.dirtree, this.focusing_item.id, dir)
+		if (focusing_item?.id) {
+			return await doc.incrementalModify((doc) => {
+				addToDir(doc.dirtree, focusing_item.id, dir)
 
 				return doc
 			})
 		}
 
-		return await this.doc.incrementalUpdate({
-			$push: {
-				dirtree: dir
-			}
-		})
-	}
-
-	private async addFile(args: DirTree.File) {
+		await doc.incrementalUpdate({ $push: { dirtree: dir } })
+	} else {
 		const file_id = id()
+		const file = { ...data, id: file_id, type: 'file' } as DirTree.File
 
-		await this.actions.add(file_id, args)
+		await actions.add(file_id, data)
 
-		const file: DirTree.File = { ...args, id: file_id, type: 'file' }
-
-		if (this.focusing_item?.id) {
-			return await this.doc.incrementalModify((doc) => {
-				addToDir(doc.dirtree, this.focusing_item.id, file)
+		if (focusing_item?.id) {
+			return await doc.incrementalModify((doc) => {
+				addToDir(doc.dirtree, focusing_item.id, file)
 
 				return doc
 			})
 		}
 
-		return await this.doc.incrementalUpdate({
+		await doc.incrementalUpdate({
 			$push: { dirtree: file }
 		})
 	}
+}
+
+export const query = async (module: App.ModuleType) => {
+	return getQuery(module).exec() as Promise<RxDocument<Module.Item>>
+}
+
+export const updateDirtree = async (args: ArgsUpdateDirtree) => {
+	const { module, data } = args
+
+	const doc = await query(module)
+
+	await doc.incrementalModify((doc) => {
+		doc.dirtree = data
+
+		return doc
+	})
+}
+
+export const updateItem = async (args: ArgsUpdateItem) => {
+	const { module, focusing_item, item } = args
+	const target_id = item.id ?? focusing_item.id
+
+	const doc = await query(module)
+
+	await doc.incrementalModify((doc) => {
+		rename(doc.dirtree, { ...item, id: target_id })
+
+		return doc
+	})
+
+	const target = find(doc.dirtree, target_id)
+
+	if (target.type === 'dir') return
+
+	await $app.Event.emit('global.tabs.updateFile', {
+		...target,
+		...item,
+		id: target_id
+	})
+}
+
+export const removeItem = async (args: ArgsRemove) => {
+	const { module, focusing_item, actions, current_item_id } = args
+
+	const doc = await query(module)
+
+	await actions.remove(focusing_item, current_item_id, module)
+
+	await doc.incrementalModify((doc) => {
+		remove(doc.dirtree, focusing_item.id)
+
+		return doc
+	})
 }

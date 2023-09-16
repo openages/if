@@ -48,7 +48,7 @@ export default class Index {
 
 	async onInfoChange(changedValues: ArgsOnInfoChange_changedValues, values: ArgsOnInfoChange_values) {
 		if (changedValues.name || changedValues.icon_info) {
-			await $app.Event.emit('todo/dirtree/rename', {
+			await $app.Event.emit('todo/dirtree/updateItem', {
 				id: this.services.id,
 				...(changedValues.icon_info ?? changedValues)
 			})

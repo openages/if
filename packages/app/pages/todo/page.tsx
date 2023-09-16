@@ -1,4 +1,4 @@
-import { add, remove, update } from '@/actions/todo'
+import { add, remove } from '@/actions/todo'
 import { DirTree } from '@/components'
 
 import type { IPropsDirTree } from '@/components'
@@ -8,8 +8,7 @@ const Index = () => {
 		module: 'todo',
 		actions: {
 			add,
-			remove,
-			update
+			remove
 		}
 	}
 

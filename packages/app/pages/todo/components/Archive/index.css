@@ -91,21 +91,8 @@
 			.select {
 				height: 24px;
 
-				.if-select-selector {
-					height: 100%;
-					line-height: 24px;
-                              font-size: 12px;
-                              padding: 0;
-
-					input {
-						height: 100% !important;
-                                    line-height: 22px !important;
-					}
-
-                              .if-select-selection-placeholder{
-                                    height: 100% !important;
-                                    line-height: 22px !important;
-                              }
+				.if-select-dropdown {
+					min-width: 90px !important;
 				}
 			}
 		}

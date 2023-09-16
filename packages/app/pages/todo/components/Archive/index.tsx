@@ -27,25 +27,46 @@ const Index = (props: IPropsArchive) => {
 	const Actions = (
 		<div className='footer_wrap w_100 h_100 flex justify_between align_center'>
 			<div className='flex align_center'>
-				<div className='label'>清档：</div>
+				<div className='label mr_2'>{t('translation:todo.Archive.clean.title')}</div>
 				<Select
-					className='select'
-					placeholder='选择日期'
+					className='select borderless'
+					placeholder={t('translation:todo.Archive.clean.placeholder')}
 					bordered={false}
 					suffixIcon={false}
+					popupMatchSelectWidth={false}
 					size='small'
 					options={[
-						{ value: '3days' },
-						{ value: '1week' },
-						{ value: '15days' },
-						{ value: '1month' },
-						{ value: '3month' },
-						{ value: '6month' },
-						{ value: '1year' }
+						{
+							label: t('translation:todo.Archive.clean.options.1week'),
+							value: '1week'
+						},
+						{
+							label: t('translation:todo.Archive.clean.options.15days'),
+							value: '15days'
+						},
+						{
+							label: t('translation:todo.Archive.clean.options.1month'),
+							value: '1month'
+						},
+						{
+							label: t('translation:todo.Archive.clean.options.3month'),
+							value: '3month'
+						},
+						{
+							label: t('translation:todo.Archive.clean.options.6month'),
+							value: '6month'
+						},
+						{
+							label: t('translation:todo.Archive.clean.options.1year'),
+							value: '1year'
+						}
 					]}
 				></Select>
 			</div>
-			<span className='counts'>共{archive_counts}条记录</span>
+			<span className='counts'>
+				{/* @ts-ignore   */}
+				{t('translation:todo.Archive.clean.total', { counts: archive_counts })}
+			</span>
 		</div>
 	)
 

@@ -1,39 +1,42 @@
 import { remove } from 'lodash-es'
 import { makeAutoObservable, reaction, toJS } from 'mobx'
-import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
 import { setStorageWhenChange } from '@/utils'
 import { loading } from '@/utils/decorators'
 
-import Services from './services'
+import { getQuery, create, query, updateDirtree, updateItem, removeItem } from './services'
 import { move } from './utils'
 
-import type { App, DirTree } from '@/types'
+import type { App, Module, DirTree } from '@/types'
 import type { Active, Over } from '@dnd-kit/core'
 import type { IProps } from './types'
+import type { Item } from './types/services'
+import type { RxDocument, RxQuery } from 'rxdb'
 
 @injectable()
 export default class Index {
 	module = '' as App.ModuleType
-	modal_open = false
+	actions = {} as IProps['actions']
+	doc = {} as Module.Item
+	doc_watcher = {} as RxQuery<Module.Item>
 	focusing_item = {} as DirTree.Item
 	current_item = {} as DirTree.File
 	modal_type = 'file' as DirTree.Type
 	current_option = '' as 'rename' | 'add_file' | 'add_dir' | ''
 	open_folder = [] as Array<string>
+	modal_open = false
 
-	constructor(
-		public utils: Utils,
-		public services: Services
-	) {
+	constructor(public utils: Utils) {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
-	async init(module: App.ModuleType, actions: IProps['actions']) {
+	async init(args: { module: App.ModuleType; actions: IProps['actions'] }) {
+		const { module, actions } = args
+
 		this.module = module
-		this.services.actions = actions
+		this.actions = actions
 
 		setStorageWhenChange(
 			[
@@ -44,39 +47,17 @@ export default class Index {
 		)
 
 		this.on()
+		this.watch()
 		this.reactions()
 
 		this.onClick(this.current_item)
-
-		await this.services.init(module)
 	}
 
 	reactions() {
 		reaction(
-			() => this.focusing_item,
-			(v) => (this.services.focusing_item = v)
-		)
-
-		reaction(
 			() => this.current_item,
 			(v) => this.onClick(v)
 		)
-	}
-
-	@loading
-	async add(type: DirTree.Type, args: Partial<DirTree.Item>) {
-		await this.services.add(type, args)
-
-		this.modal_open = false
-		this.focusing_item = {} as DirTree.Item
-	}
-
-	@loading
-	async rename(args: Partial<DirTree.Item>) {
-		await this.services.rename(args)
-
-		this.modal_open = false
-		this.focusing_item = {} as DirTree.Item
 	}
 
 	onClick(v: DirTree.File) {
@@ -95,37 +76,31 @@ export default class Index {
 	move(args: { active: Active; over: Over }) {
 		const { active, over } = args
 
-		const target = move(toJS(this.services.dirtree), active, over)
+		const target = move(toJS(this.doc).dirtree, active, over)
 
 		if (!target) return
 
-		this.services.dirtree = target
+		this.updateDirtree(target)
 	}
 
-	onOptions(type: 'add_file' | 'add_dir' | 'rename' | 'delete') {
-		match(type)
-			.with('add_file', () => {
-				this.current_option = 'add_file'
-				this.modal_open = true
+	async onOptions(type: 'add_dir' | 'add_file' | 'rename' | 'delete') {
+		if (type === 'add_dir' || type === 'add_file' || type === 'rename') {
+			this.current_option = type
+			this.modal_open = true
+		} else {
+			await removeItem({
+				module: this.module,
+				focusing_item: this.focusing_item,
+				actions: this.actions,
+				current_item_id: this.current_item.id
 			})
-			.with('add_dir', () => {
-				this.current_option = 'add_dir'
-				this.modal_open = true
-			})
-			.with('rename', () => {
-				this.current_option = 'rename'
-				this.modal_open = true
-			})
-			.with('delete', async () => {
-				await this.services.delete(this.current_item.id)
 
-				if (this.current_item.id === this.focusing_item.id) {
-					this.current_item = {} as DirTree.File
-				}
+			if (this.current_item.id === this.focusing_item.id) {
+				this.current_item = {} as DirTree.File
+			}
 
-				this.focusing_item = {} as DirTree.Item
-			})
-			.exhaustive()
+			this.focusing_item = {} as DirTree.Item
+		}
 	}
 
 	setCurrentItem(v: DirTree.File) {
@@ -146,23 +121,70 @@ export default class Index {
 		remove(this.open_folder, (item) => item === id)
 	}
 
+	@loading
+	async create(item: Item) {
+		await create({
+			module: this.module,
+			focusing_item: this.focusing_item,
+			actions: this.actions,
+			item
+		})
+
+		this.modal_open = false
+		this.focusing_item = {} as DirTree.Item
+	}
+
+	@loading
+	async query() {
+		const doc = await query(this.module)
+
+		this.doc = doc.toMutableJSON()
+	}
+
+	async updateDirtree(data: DirTree.Items) {
+		await updateDirtree({
+			module: this.module,
+			data
+		})
+	}
+
+	@loading
+	async updateItem(item: Partial<DirTree.Item>) {
+		await updateItem({
+			module: this.module,
+			focusing_item: this.focusing_item,
+			item
+		})
+
+		this.modal_open = false
+		this.focusing_item = {} as DirTree.Item
+	}
+
+	watch() {
+		this.doc_watcher = getQuery(this.module)
+
+		this.doc_watcher.$.subscribe((doc: RxDocument<Module.Item>) => {
+			this.doc = doc.toMutableJSON()
+		})
+	}
+
 	on() {
 		$app.Event.on(`${this.module}/dirtree/move`, this.move)
 		$app.Event.on(`${this.module}/dirtree/removeCurrentItem`, this.removeCurrentItem)
 		$app.Event.on(`${this.module}/dirtree/setCurrentItem`, this.setCurrentItem)
 		$app.Event.on(`${this.module}/dirtree/addOpenFolder`, this.addOpenFolder)
 		$app.Event.on(`${this.module}/dirtree/removeOpenFolder`, this.removeOpenFolder)
-		$app.Event.on(`${this.module}/dirtree/rename`, this.rename)
+		$app.Event.on(`${this.module}/dirtree/updateItem`, this.updateItem)
 	}
 
 	off() {
-		this.services.dirtree_query?.$?.unsubscribe?.()
+		this.doc_watcher.$?.unsubscribe?.()
 
 		$app.Event.off(`${this.module}/dirtree/move`, this.move)
 		$app.Event.off(`${this.module}/dirtree/removeCurrentItem`, this.removeCurrentItem)
 		$app.Event.off(`${this.module}/dirtree/setCurrentItem`, this.setCurrentItem)
 		$app.Event.off(`${this.module}/dirtree/addOpenFolder`, this.addOpenFolder)
 		$app.Event.off(`${this.module}/dirtree/removeOpenFolder`, this.removeOpenFolder)
-		$app.Event.off(`${this.module}/dirtree/rename`, this.rename)
+		$app.Event.off(`${this.module}/dirtree/updateItem`, this.updateItem)
 	}
 }
