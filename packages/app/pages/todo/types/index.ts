@@ -67,10 +67,15 @@ export interface IPropsArchive {
 	archives: Model['archives']
 	archive_counts: Model['archive_counts']
 	end: Model['loadmore']['end']
-	restoreArchiveItem: Model['restoreArchiveItem']
-	removeArchiveItem: Model['removeArchiveItem']
+	angles: Model['todo']['angles']
+	tags: Model['todo']['tags']
+	archive_query_params: Model['archive_query_params']
 	loadMore: () => void
 	onClose: () => void
+	restoreArchiveItem: Model['restoreArchiveItem']
+	removeArchiveItem: Model['removeArchiveItem']
+	archiveByTime: Model['archiveByTime']
+	setArchiveQueryParams: (v: Model['archive_query_params']) => void
 }
 
 export interface IPropsArchiveItem extends Pick<IPropsArchive, 'restoreArchiveItem' | 'removeArchiveItem'> {
@@ -81,4 +86,3 @@ export type ArgsOnInfoChange_changedValues = Partial<Todo.Data & Model['file']['
 	icon_info: { icon: string; icon_hue?: number }
 }
 export type ArgsOnInfoChange_values = Todo.Data & Model['file']
-

@@ -31,8 +31,8 @@ const Index = ({ id }: IProps) => {
 		x.init({ id })
 
 		return () => x.off()
-      }, [ id ])
-      
+	}, [id])
+
 	const props_header: IPropsHeader = {
 		name: x.file.data.name,
 		icon: x.file.data.icon,
@@ -72,11 +72,16 @@ const Index = ({ id }: IProps) => {
 		visible_archive_modal: x.visible_archive_modal,
 		archives: toJS(x.archives),
 		archive_counts: x.archive_counts,
-		end: x.loadmore.end,
+            end: x.loadmore.end,
+		angles: toJS(x.todo.angles) || [],
+		tags: toJS(x.todo.tags),
+		archive_query_params: toJS(x.archive_query_params),
+		loadMore: useMemoizedFn(x.loadmore.loadMore),
+		onClose: useMemoizedFn(() => (x.visible_archive_modal = false)),
 		restoreArchiveItem: useMemoizedFn(x.restoreArchiveItem),
 		removeArchiveItem: useMemoizedFn(x.removeArchiveItem),
-		loadMore: useMemoizedFn(x.loadmore.loadMore),
-		onClose: useMemoizedFn(() => (x.visible_archive_modal = false))
+		archiveByTime: useMemoizedFn(x.archiveByTime),
+		setArchiveQueryParams: useMemoizedFn((v) => (x.archive_query_params = v))
 	}
 
 	return (

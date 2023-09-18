@@ -26,3 +26,7 @@
 .color_bg {
 	background-color: var(--color_bg);
 }
+
+.color_main{
+      color: var(--color_main);
+}

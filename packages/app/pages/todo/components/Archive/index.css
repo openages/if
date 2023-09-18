@@ -8,6 +8,7 @@
 					flex: unset;
 					height: 36px;
 					padding: 0 18px;
+					padding-right: 42px;
 					border-bottom: 1px solid var(--color_border_light);
 
 					&-title {
@@ -27,6 +28,19 @@
 				}
 			}
 		}
+
+		.btn_filter {
+			width: 22px;
+			height: 22px;
+			border-radius: var(--radius_small);
+			color: rgba(var(--color_text_rgb), 0.45);
+
+			&:hover {
+				background-color: var(--color_bg_2);
+			}
+		}
+
+		
 
 		.archive_items {
 			padding: 6px 0;
@@ -97,4 +111,45 @@
 			}
 		}
 	}
+}
+
+.popover{
+      :global{
+            .filter_wrap {
+                  width: 300px;
+                  padding: 18px 15px;
+                  display: flex;
+                  flex-wrap: wrap;
+                  flex-direction: row;
+      
+                  .if-form-item {
+                        width: 50%;
+                        padding: 0 3px;
+                        margin-bottom: 12px;
+      
+                        &:last-child {
+                              margin-bottom: 0;
+                        }
+      
+                        &-label {
+                              line-height: 1;
+      
+                              label {
+                                    height: unset !important;
+                                    font-size: 12px;
+                              }
+                        }
+      
+                        &.status_item{
+                              width: 100%;
+      
+                              .if-form-item-control-input{
+                                    padding: 0 7px;
+                                    border: 1px dashed var(--color_border);
+                                    border-radius: var(--radius);
+                              }
+                        }
+                  }
+            }
+      }
 }

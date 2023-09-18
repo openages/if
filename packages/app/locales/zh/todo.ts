@@ -65,6 +65,7 @@ export default {
 				'1week': '一周前'
 			},
 			total: '共{{counts}}条记录'
-		}
+            },
+            confirm:'你讲删除{{date}}前的所有归档，请确认是否删除？'
 	}
 }

@@ -32,9 +32,15 @@ export default (theme: Theme, color_main: string) => {
 		components: {
 			Switch: {
 				controlHeight: 32,
-                        controlHeightSM: 24,
+				controlHeightSM: 24,
 				controlHeightXS: 20,
 				colorPrimaryHover: color_main
+			},
+			DatePicker: {
+				controlHeight: 30,
+				controlHeightSM: 28,
+				cellHeight: 22,
+				cellWidth: 32
 			}
 		}
 	} as ThemeConfig

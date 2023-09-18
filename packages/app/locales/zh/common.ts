@@ -9,5 +9,6 @@ export default {
 		week: '周',
 		weeks: '周',
 		x_unit_ago: '{{x}}{{unit}}前'
-	}
+	},
+	notice: '注意'
 }

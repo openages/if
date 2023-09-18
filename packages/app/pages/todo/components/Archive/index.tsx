@@ -1,8 +1,12 @@
-import { Drawer, Select } from 'antd'
+import { useMemoizedFn } from 'ahooks'
+import { Drawer, Select, Popover, Form, DatePicker, Radio } from 'antd'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
 
 import { SimpleEmpty } from '@/components'
+import { getExsitValues } from '@/utils'
+import { Funnel } from '@phosphor-icons/react'
 
 import { useScrollToBottom } from './hooks'
 import styles from './index.css'
@@ -10,19 +14,112 @@ import Item from './Item'
 
 import type { IPropsArchive } from '../../types'
 
+const { Item: FormItem } = Form
+const { Group } = Radio
+
 const Index = (props: IPropsArchive) => {
 	const {
 		visible_archive_modal,
 		archives,
 		archive_counts,
 		end,
+		angles,
+		tags,
+		archive_query_params,
+		loadMore,
+		onClose,
 		restoreArchiveItem,
 		removeArchiveItem,
-		loadMore,
-		onClose
+		archiveByTime,
+		setArchiveQueryParams
 	} = props
 	const { t } = useTranslation()
 	const { setRef } = useScrollToBottom(loadMore, visible_archive_modal)
+
+	const options_archive = useMemo(
+		() => [
+			{ label: t('translation:todo.Archive.clean.options.1week'), value: '1week' },
+			{ label: t('translation:todo.Archive.clean.options.15days'), value: '15days' },
+			{ label: t('translation:todo.Archive.clean.options.1month'), value: '1month' },
+			{ label: t('translation:todo.Archive.clean.options.3month'), value: '3month' },
+			{ label: t('translation:todo.Archive.clean.options.6month'), value: '6month' },
+			{ label: t('translation:todo.Archive.clean.options.1year'), value: '1year' }
+		],
+		[]
+	)
+
+	const onValuesChange = useMemoizedFn((_, values) => {
+		setArchiveQueryParams(values)
+	})
+
+	const Filter = (
+		<Form
+			className='filter_wrap'
+			layout='vertical'
+			size='small'
+			initialValues={archive_query_params}
+			onValuesChange={onValuesChange}
+		>
+			<FormItem label='分类' name='angle_id'>
+				<Select
+					allowClear
+					placeholder='选择分类'
+					fieldNames={{ label: 'text', value: 'id' }}
+					options={angles}
+				></Select>
+			</FormItem>
+			<FormItem label='标签' name='tags'>
+				<Select
+					allowClear
+					placeholder='选择标签'
+					mode='tags'
+					fieldNames={{ label: 'text', value: 'id' }}
+					options={tags}
+				></Select>
+			</FormItem>
+			<FormItem label='起始日期' name='begin_date'>
+				<DatePicker
+					showToday={false}
+					inputReadOnly
+					disabledDate={(v) => v.valueOf() > new Date().valueOf()}
+				></DatePicker>
+			</FormItem>
+			<FormItem label='截止日期' name='end_date'>
+				<DatePicker
+					showToday={false}
+					inputReadOnly
+					disabledDate={(v) => v.valueOf() > new Date().valueOf()}
+				></DatePicker>
+			</FormItem>
+			<FormItem className='status_item' label='状态' name='status'>
+				<Group>
+					<Radio value='checked'>已完成</Radio>
+					<Radio value='closed'>已关闭</Radio>
+				</Group>
+			</FormItem>
+		</Form>
+	)
+
+	const Extra = (
+		<Popover
+			rootClassName={styles.popover}
+			destroyTooltipOnHide
+			trigger='click'
+			content={Filter}
+			align={{ offset: [0, -8] }}
+			getPopupContainer={() => document.body}
+		>
+			<div className='btn_filter flex justify_center align_center clickable'>
+				<Funnel
+					className={$cx(
+						Object.keys(getExsitValues(archive_query_params)).length > 0 && 'color_main'
+					)}
+					size={16}
+					weight='bold'
+				></Funnel>
+			</div>
+		</Popover>
+	)
 
 	const Actions = (
 		<div className='footer_wrap w_100 h_100 flex justify_between align_center'>
@@ -35,32 +132,8 @@ const Index = (props: IPropsArchive) => {
 					suffixIcon={false}
 					popupMatchSelectWidth={false}
 					size='small'
-					options={[
-						{
-							label: t('translation:todo.Archive.clean.options.1week'),
-							value: '1week'
-						},
-						{
-							label: t('translation:todo.Archive.clean.options.15days'),
-							value: '15days'
-						},
-						{
-							label: t('translation:todo.Archive.clean.options.1month'),
-							value: '1month'
-						},
-						{
-							label: t('translation:todo.Archive.clean.options.3month'),
-							value: '3month'
-						},
-						{
-							label: t('translation:todo.Archive.clean.options.6month'),
-							value: '6month'
-						},
-						{
-							label: t('translation:todo.Archive.clean.options.1year'),
-							value: '1year'
-						}
-					]}
+					options={options_archive}
+					onSelect={archiveByTime}
 				></Select>
 			</div>
 			<span className='counts'>
@@ -79,10 +152,14 @@ const Index = (props: IPropsArchive) => {
 			destroyOnClose
 			getContainer={document.body}
 			onClose={onClose}
+			extra={Extra}
 			footer={Actions}
 		>
 			{archives.length > 0 && (
-				<div className='archive_items w_100 border_box flex flex_column'>
+                        <div className='archive_items w_100 border_box flex flex_column'>
+                              <Drawer>
+                                    {Filter}
+                              </Drawer>
 					{archives.map((item) => (
 						<Item {...{ item, restoreArchiveItem, removeArchiveItem }} key={item.id}></Item>
 					))}

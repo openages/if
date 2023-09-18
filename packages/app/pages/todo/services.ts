@@ -1,7 +1,10 @@
+import dayjs from 'dayjs'
 import { cloneDeep, uniq, omit } from 'lodash-es'
+import { match } from 'ts-pattern'
 
 import { update as updateTodo } from '@/actions/todo'
 import { modify, getArchiveTime } from '@/utils'
+import { confirm } from '@/utils/antd'
 
 import type {
 	ArgsCreate,
@@ -10,8 +13,12 @@ import type {
 	ArgsUpdateStatus,
 	ArgsCheck,
 	ArgsUpdateRelations,
-	ArgsUpdateTodoData
+	ArgsUpdateTodoData,
+	ArgsArchiveByTime
 } from './types/services'
+import type { ArchiveQueryParams } from './types/model'
+import type { MangoQuerySelector, MangoQueryOperators } from 'rxdb/dist/types/types'
+
 import type { Todo, RxDB } from '@/types'
 
 export const getQueryTodo = (file_id: string) => {
@@ -44,11 +51,53 @@ export const queryItems = (file_id: string, angle_id: string) => {
 	return getQueryItems(file_id, angle_id).exec()
 }
 
-export const queryArchives = (args: ArgsQueryArchives) => {
+export const queryArchives = (args: ArgsQueryArchives, query_params: ArchiveQueryParams) => {
 	const { file_id, page } = args
+	const { angle_id, tags, begin_date, end_date, status } = query_params
+	const selector: MangoQuerySelector<Todo.Todo> = {}
+
+	if (angle_id) {
+		selector['angle_id'] = angle_id
+	}
+
+	if (tags?.length) {
+		selector['tag_ids'] = {
+			$elemMatch: {
+				$in: tags
+			}
+		} as MangoQueryOperators<Array<string>>
+	}
+
+	if (begin_date) {
+		selector['create_at'] = {
+			$gte: begin_date.valueOf()
+		}
+	}
+
+	if (end_date) {
+		if (selector?.['create_at']?.['$gte']) {
+			selector['create_at'] = {
+				$gte: selector['create_at']['$gte'],
+				$lte: end_date.valueOf()
+			}
+		} else {
+			selector['create_at'] = {
+				$lte: end_date.valueOf()
+			}
+		}
+	}
+
+	if (status) {
+		selector['status'] = status
+	}
 
 	return $db.collections.todo_archives
-		.find({ selector: { file_id } })
+		.find({
+			selector: {
+				file_id,
+				...selector
+			}
+		})
 		.skip(page * 48)
 		.limit(48)
 		.sort({ create_at: 'desc' })
@@ -203,4 +252,36 @@ export const removeArchiveItem = async (id: string) => {
 	const doc = await $db.collections.todo_archives.findOne({ selector: { id } }).exec()
 
 	await doc.incrementalRemove()
+}
+
+export const archiveByTime = async (file_id: string, v: ArgsArchiveByTime) => {
+	const now = dayjs()
+	const target_time = match(v)
+		.with('1year', () => now.subtract(1, 'year'))
+		.with('6month', () => now.subtract(6, 'month'))
+		.with('3month', () => now.subtract(3, 'month'))
+		.with('1month', () => now.subtract(1, 'month'))
+		.with('15days', () => now.subtract(15, 'day'))
+		.with('1week', () => now.subtract(1, 'week'))
+		.exhaustive()
+
+	const res = await confirm({
+		title: $t('translation:common.notice'),
+		// @ts-ignore
+		content: $t('translation:todo.Archive.confirm', { date: target_time.format('YYYY-DD-MM') })
+	})
+
+	if (!res) return
+
+	await $db.collections.todo_archives
+		.find({
+			selector: {
+				file_id,
+				create_at: {
+					// $lte: target_time.valueOf()
+					$lte: now.subtract(3, 'second').valueOf()
+				}
+			}
+		})
+		.remove()
 }

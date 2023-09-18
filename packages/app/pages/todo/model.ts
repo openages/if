@@ -1,5 +1,4 @@
-import { cloneDeep } from 'lodash-es'
-import { makeAutoObservable, reaction, toJS } from 'mobx'
+import { makeAutoObservable, reaction } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { archive } from '@/actions/todo'
@@ -12,6 +11,7 @@ import {
 	getQueryTodo,
 	getQueryItems,
 	create,
+	queryTodo,
 	queryItems,
 	queryArchives,
 	queryArchivesCounts,
@@ -20,18 +20,18 @@ import {
 	updateRelations,
 	restoreArchiveItem,
 	removeArchiveItem,
-	queryTodo
+	archiveByTime
 } from './services'
 
-import type { ArgsCreate, ArgsUpdateTodoData } from './types/services'
-
+import type { ArgsUpdateTodoData, ArgsArchiveByTime } from './types/services'
+import type { ArchiveQueryParams } from './types/model'
 import type { RxDB, Todo, TodoArchive } from '@/types'
-import type { RxDocument, RxQuery } from 'rxdb'
 import type { Subscription } from 'rxjs'
 
 @injectable()
 export default class Index {
 	id = ''
+	timer: NodeJS.Timeout = null
 	todo = {} as Todo.Data
 	todo_watcher = null as Subscription
 	items = [] as Array<Todo.TodoItem>
@@ -41,7 +41,7 @@ export default class Index {
 	current_angle_id = ''
 	visible_settings_modal = false
 	visible_archive_modal = false
-	timer: NodeJS.Timeout = null
+	archive_query_params = {} as ArchiveQueryParams
 
 	constructor(
 		public global: GlobalModel,
@@ -100,6 +100,7 @@ export default class Index {
 				} else {
 					this.loadmore.page = 0
 					this.loadmore.end = false
+					this.archive_query_params = {}
 				}
 			}
 		)
@@ -110,6 +111,18 @@ export default class Index {
 				if (!v) return
 
 				this.queryArchives()
+			}
+		)
+
+		reaction(
+			() => this.archive_query_params,
+			() => {
+				if (!this.visible_archive_modal) return
+
+				this.loadmore.page = 0
+				this.loadmore.end = false
+
+				this.queryArchives(true)
 			}
 		)
 	}
@@ -145,13 +158,17 @@ export default class Index {
 		}
 	}
 
-	async queryArchives() {
-		const items = (await queryArchives({
-			file_id: this.id,
-			page: this.loadmore.page
-		})) as RxDB.ItemsDoc<TodoArchive.Item>
+	async queryArchives(reset?: boolean) {
+		const items = (await queryArchives(
+			{ file_id: this.id, page: this.loadmore.page },
+			this.archive_query_params
+		)) as RxDB.ItemsDoc<TodoArchive.Item>
 
-		if (items.length === 0) return (this.loadmore.end = true)
+		if (items.length === 0) {
+			this.loadmore.end = true
+
+			if (!reset) return
+		}
 
 		if (this.loadmore.page === 0) {
 			this.archives = getDocItemsData(items)
@@ -214,6 +231,15 @@ export default class Index {
 		await removeArchiveItem(id)
 
 		this.updateArchiveItems(id)
+	}
+
+	async archiveByTime(v: ArgsArchiveByTime) {
+		await archiveByTime(this.id, v)
+
+		this.loadmore.page = 0
+		this.loadmore.end = false
+
+		await this.queryArchives(true)
 	}
 
 	watchItems() {

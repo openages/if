@@ -65,6 +65,7 @@ export default {
 				'1week': '1 week ago'
 			},
 			total: 'Total of {{counts}} items'
-		}
+            },
+            confirm:'Do you want to delete all archives before {{date}}? Please confirm.'
 	}
 }

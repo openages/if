@@ -44,3 +44,6 @@ export type ArgsUpdateRelations = {
 	active_id: string
 	over_id: string
 }
+
+export type ArgsArchiveByTime = '1year' | '6month' | '3month' | '1month' | '15days' | '1week'
+
