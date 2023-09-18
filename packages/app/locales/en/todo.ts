@@ -1,4 +1,11 @@
 export default {
+	common: {
+		status: {
+			unchecked: 'Unchecked',
+			checked: 'Checked',
+			closed: 'Closed'
+		}
+	},
 	default_angles: ['Now', 'Plan', 'Idea', 'Wait', 'Circle', 'Trashbox'],
 	Header: {
 		edit: 'Edit',
@@ -65,7 +72,16 @@ export default {
 				'1week': '1 week ago'
 			},
 			total: 'Total of {{counts}} items'
-            },
-            confirm:'Do you want to delete all archives before {{date}}? Please confirm.'
+		},
+		confirm: 'Do you want to delete all archives before {{date}}? Please confirm.',
+		filter: {
+			select: 'select\t',
+			angle: 'Angle',
+			tags: 'Tags',
+			date: '\tDate',
+			begin: 'Begin',
+			end: 'End',
+			status: 'Status'
+		}
 	}
 }

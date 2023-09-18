@@ -29,7 +29,7 @@
 			}
 		}
 
-		.btn_filter {
+		.btn {
 			width: 22px;
 			height: 22px;
 			border-radius: var(--radius_small);
@@ -39,8 +39,6 @@
 				background-color: var(--color_bg_2);
 			}
 		}
-
-		
 
 		.archive_items {
 			padding: 6px 0;

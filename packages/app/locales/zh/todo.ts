@@ -1,4 +1,11 @@
 export default {
+	common: {
+		status: {
+			unchecked: '未完成',
+			checked: '已完成',
+			closed: '已关闭'
+		}
+	},
 	default_angles: ['此刻', '计划', '想法', '等待', '循环', '垃圾箱'],
 	Header: {
 		edit: '编辑',
@@ -65,7 +72,16 @@ export default {
 				'1week': '一周前'
 			},
 			total: '共{{counts}}条记录'
-            },
-            confirm:'你讲删除{{date}}前的所有归档，请确认是否删除？'
+		},
+		confirm: '你讲删除{{date}}前的所有归档，请确认是否删除？',
+		filter: {
+			select: '选择',
+			angle: '分类',
+			tags: '标签',
+			date: '日期',
+			begin: '起始',
+			end: '截止',
+			status: '状态'
+		}
 	}
 }

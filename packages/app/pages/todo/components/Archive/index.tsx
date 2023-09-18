@@ -6,7 +6,7 @@ import { When } from 'react-if'
 
 import { SimpleEmpty } from '@/components'
 import { getExsitValues } from '@/utils'
-import { Funnel } from '@phosphor-icons/react'
+import { ArrowCounterClockwise, Funnel } from '@phosphor-icons/react'
 
 import { useScrollToBottom } from './hooks'
 import styles from './index.css'
@@ -48,6 +48,11 @@ const Index = (props: IPropsArchive) => {
 		[]
 	)
 
+	const exsit_query_params = useMemo(
+		() => Object.keys(getExsitValues(archive_query_params)).length > 0,
+		[archive_query_params]
+	)
+
 	const onValuesChange = useMemoizedFn((_, values) => {
 		setArchiveQueryParams(values)
 	})
@@ -60,65 +65,85 @@ const Index = (props: IPropsArchive) => {
 			initialValues={archive_query_params}
 			onValuesChange={onValuesChange}
 		>
-			<FormItem label='分类' name='angle_id'>
+			<FormItem label={t('translation:todo.Archive.filter.angle')} name='angle_id'>
 				<Select
 					allowClear
-					placeholder='选择分类'
+					placeholder={
+						t('translation:todo.Archive.filter.select') +
+						t('translation:todo.Archive.filter.angle')
+					}
 					fieldNames={{ label: 'text', value: 'id' }}
 					options={angles}
 				></Select>
 			</FormItem>
-			<FormItem label='标签' name='tags'>
+			<FormItem label={t('translation:todo.Archive.filter.tags')} name='tags'>
 				<Select
 					allowClear
-					placeholder='选择标签'
+					placeholder={
+						t('translation:todo.Archive.filter.select') +
+						t('translation:todo.Archive.filter.tags')
+					}
 					mode='tags'
 					fieldNames={{ label: 'text', value: 'id' }}
 					options={tags}
 				></Select>
 			</FormItem>
-			<FormItem label='起始日期' name='begin_date'>
+			<FormItem
+				label={t('translation:todo.Archive.filter.begin') + t('translation:todo.Archive.filter.date')}
+				name='begin_date'
+			>
 				<DatePicker
 					showToday={false}
 					inputReadOnly
 					disabledDate={(v) => v.valueOf() > new Date().valueOf()}
 				></DatePicker>
 			</FormItem>
-			<FormItem label='截止日期' name='end_date'>
+			<FormItem
+				label={t('translation:todo.Archive.filter.end') + t('translation:todo.Archive.filter.date')}
+				name='end_date'
+			>
 				<DatePicker
 					showToday={false}
 					inputReadOnly
 					disabledDate={(v) => v.valueOf() > new Date().valueOf()}
 				></DatePicker>
 			</FormItem>
-			<FormItem className='status_item' label='状态' name='status'>
+			<FormItem className='status_item' label={t('translation:todo.Archive.filter.status')} name='status'>
 				<Group>
-					<Radio value='checked'>已完成</Radio>
-					<Radio value='closed'>已关闭</Radio>
+					<Radio value='checked'>{t('translation:todo.common.status.checked')}</Radio>
+					<Radio value='closed'>{t('translation:todo.common.status.closed')}</Radio>
 				</Group>
 			</FormItem>
 		</Form>
 	)
 
 	const Extra = (
-		<Popover
-			rootClassName={styles.popover}
-			destroyTooltipOnHide
-			trigger='click'
-			content={Filter}
-			align={{ offset: [0, -8] }}
-			getPopupContainer={() => document.body}
-		>
-			<div className='btn_filter flex justify_center align_center clickable'>
-				<Funnel
-					className={$cx(
-						Object.keys(getExsitValues(archive_query_params)).length > 0 && 'color_main'
-					)}
-					size={16}
-					weight='bold'
-				></Funnel>
-			</div>
-		</Popover>
+		<div className='flex align_center'>
+			<When condition={exsit_query_params}>
+				<div
+					className='btn_clear btn flex justify_center align_center clickable mr_4'
+					onClick={() => setArchiveQueryParams({})}
+				>
+					<ArrowCounterClockwise size={16} weight='bold'></ArrowCounterClockwise>
+				</div>
+			</When>
+			<Popover
+				rootClassName={styles.popover}
+				destroyTooltipOnHide
+				trigger='click'
+				content={Filter}
+				align={{ offset: [0, -8] }}
+				getPopupContainer={() => document.body}
+			>
+				<div className='btn_filter btn flex justify_center align_center clickable'>
+					<Funnel
+						className={$cx(exsit_query_params && 'color_main')}
+						size={16}
+						weight='bold'
+					></Funnel>
+				</div>
+			</Popover>
+		</div>
 	)
 
 	const Actions = (
@@ -156,10 +181,8 @@ const Index = (props: IPropsArchive) => {
 			footer={Actions}
 		>
 			{archives.length > 0 && (
-                        <div className='archive_items w_100 border_box flex flex_column'>
-                              <Drawer>
-                                    {Filter}
-                              </Drawer>
+				<div className='archive_items w_100 border_box flex flex_column'>
+					<Drawer>{Filter}</Drawer>
 					{archives.map((item) => (
 						<Item {...{ item, restoreArchiveItem, removeArchiveItem }} key={item.id}></Item>
 					))}
