@@ -63,7 +63,7 @@ const Index = () => {
 									'menu_item border_box flex justify_center align_center relative z_index_10',
 									x.active_index === index && 'active'
 								)}
-								onClick={() => (x.active_index = index)}
+								onMouseDown={() => (x.active_index = index)}
 							>
 								<item.icon size={18}></item.icon>
 								<span className='menu_name ml_4'>{item.label}</span>
@@ -77,7 +77,6 @@ const Index = () => {
 					items={nav_items}
 					activeKey={String(x.active_index)}
                               renderTabBar={ () => null }
-                              animated
 					destroyInactiveTabPane
 				></Tabs>
 			</div>

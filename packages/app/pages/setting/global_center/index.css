@@ -2,16 +2,8 @@
 	padding-bottom: 24px;
 
 	:global {
-		.setting_title {
-			font-size: 16px;
-			font-weight: 500;
-			line-height: 1;
-			margin-bottom: 12px;
-		}
-
 		.setting_items {
 			font-weight: 500;
-
 			padding: 6px 0;
 			margin-bottom: 36px;
 

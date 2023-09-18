@@ -1,6 +1,7 @@
 :root {
 	--sidebar_width: 72px;
 	--dirtree_width: 222px;
+	--dirtree_width_unchanged: 222px;
 	--limited_width: 780px;
 	--limited_width_unchanged: 780px;
 	--limited_padding: 60px;
@@ -14,4 +15,6 @@
 
 	--blur: saturate(150%) blur(9px);
 	--blur_deep: saturate(150%) blur(24px);
+
+      --border:1px solid var(--color_border_light);
 }

@@ -36,15 +36,15 @@ const Index = () => {
 	})
 
 	return (
-		<div className={$cx('flex flex_wrap', styles._local)}>
-			<DndContext onDragEnd={onDragEnd}>
-				<SortableContext items={app_modules} strategy={rectSortingStrategy}>
-					{app_modules.map((item, index) => (
-						<Item key={item.id} {...{ item, index, changeIsFixed }}></Item>
-					))}
-				</SortableContext>
-			</DndContext>
-		</div>
+			<div className={$cx('flex flex_wrap', styles._local)}>
+				<DndContext onDragEnd={onDragEnd}>
+					<SortableContext items={app_modules} strategy={rectSortingStrategy}>
+						{app_modules.map((item, index) => (
+							<Item key={item.id} {...{ item, index, changeIsFixed }}></Item>
+						))}
+					</SortableContext>
+				</DndContext>
+			</div>
 	)
 }
 

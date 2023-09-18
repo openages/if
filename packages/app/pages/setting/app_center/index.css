@@ -11,6 +11,7 @@
 				padding: 12px;
 				background-color: var(--color_bg_1);
 				border-radius: var(--radius);
+                        border-bottom: var(--border);
 
 				.if-switch {
 					.if-switch-inner {
