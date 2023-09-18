@@ -23,29 +23,14 @@ const typed_nav_items = [
 		path: '/kanban'
 	},
 	{
-		id: 'flow',
-		title: 'flow',
-		path: '/flow'
+		id: 'workflow',
+		title: 'workflow',
+		path: '/workflow'
 	},
 	{
 		id: 'whiteboard',
 		title: 'whiteboard',
 		path: '/whiteboard'
-	},
-	{
-		id: 'table',
-		title: 'table',
-		path: '/table'
-	},
-	{
-		id: 'form',
-		title: 'form',
-		path: '/form'
-	},
-	{
-		id: 'chart',
-		title: 'chart',
-		path: '/chart'
 	},
 	{
 		id: 'ppt',
@@ -71,21 +56,26 @@ const typed_nav_items = [
 		id: 'api',
 		title: 'api',
 		path: '/api'
+      },
+      {
+		id: 'dataflow',
+		title: 'dataflow',
+		path: '/dataflow'
+      },
+      {
+		id: 'table',
+		title: 'table',
+		path: '/table'
 	},
 	{
-		id: 'metatable',
-		title: 'metatable',
-		path: '/metatable'
+		id: 'form',
+		title: 'form',
+		path: '/form'
 	},
 	{
-		id: 'metaform',
-		title: 'metaform',
-		path: '/metaform'
-	},
-	{
-		id: 'metachart',
-		title: 'metachart',
-		path: '/metachart'
+		id: 'chart',
+		title: 'chart',
+		path: '/chart'
 	},
 	{
 		id: 'setting',

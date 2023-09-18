@@ -72,25 +72,23 @@
 				background-color: rgba(var(--color_text_rgb), 0.48);
 			}
 
-			&.dragging {
+			&.dragging,&.hovering {
 				opacity: 1;
 				border: 1px solid var(--color_text);
-				background-color: transparent;
+				background-color: var(--color_bg);
 
 				&::after {
+                              width: 6px;
+                              height: 6px;
 					background-color: rgba(var(--color_text_rgb), 0.72);
 				}
 			}
 
-			&.hovering {
-				opacity: 1;
-				border: 1px solid var(--color_text);
-				background-color: transparent;
-
-				&::after {
-					background-color: rgba(var(--color_text_rgb), 0.72);
-				}
-			}
+                  &.hovering{
+                        &::after{
+                              display: none;
+                        }
+                  }
 		}
 
 		.action_wrap {

@@ -58,11 +58,11 @@ export default {
 			placeholder: '选择日期',
 			options: {
 				'1year': '一年前',
-				'6month': '6个月前',
-				'3month': '3个月前',
-				'1month': '1个月前',
-				'15days': '15天前',
-				'1week': '1周前'
+				'6month': '六个月前',
+				'3month': '三个月前',
+				'1month': '一个月前',
+				'15days': '十五天前',
+				'1week': '一周前'
 			},
 			total: '共{{counts}}条记录'
 		}

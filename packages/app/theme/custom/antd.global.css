@@ -110,6 +110,9 @@
 
 /* Drawer */
 .if-drawer {
+      &:focus-visible{
+            outline: none;
+      }
 	&.hide_mask {
 		.if-drawer-mask {
 			background-color: transparent;

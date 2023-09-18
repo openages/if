@@ -1,75 +1,79 @@
-import { useMemoizedFn } from 'ahooks'
-import { Modal, Carousel } from 'antd'
-import { chunk } from 'lodash-es'
-import { useRef } from 'react'
+import { Drawer } from 'antd'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import { ModuleIcon } from '@/components'
 
+import group from './group'
 import styles from './index.css'
 
 import type { IPropsAppMenu } from '../../types'
-import type { CarouselRef } from 'antd/lib/carousel'
-import type { WheelEventHandler } from 'react'
+import type { App } from '@/types'
 
 const Index = (props: IPropsAppMenu) => {
 	const { visible, app_modules, actives, onClose } = props
 	const { t } = useTranslation()
-	const carousel = useRef<CarouselRef>(null)
 
-	const onWheel: WheelEventHandler<HTMLDivElement> = useMemoizedFn((e) => {
-		if (e.deltaY > 0) {
-			carousel.current.next()
-		} else {
-			carousel.current.prev()
-		}
-	})
+	const group_items = useMemo(() => {
+		return Object.keys(group).reduce(
+			(total, group_name: keyof typeof group) => {
+				const groups = group[group_name]
+
+				total.push({
+					name: group_name,
+					items: app_modules.filter((item) => groups.includes(item.title))
+				})
+
+				return total
+			},
+			[] as Array<{ name: keyof typeof group; items: App.Modules }>
+		)
+	}, [app_modules])
 
 	return (
-		<Modal
-			rootClassName={styles._local}
+		<Drawer
+			rootClassName={$cx('hide_mask', styles._local)}
 			open={visible}
-			width={360}
-			zIndex={10000}
-			centered
+			placement='left'
+			destroyOnClose
+			zIndex={1000}
 			closeIcon={null}
-			footer={null}
-			onCancel={onClose}
+			getContainer={false}
+			onClose={onClose}
 		>
-			<div className='w_100' onWheel={onWheel}>
-				<Carousel ref={carousel} waitForAnimate>
-					{chunk(app_modules, 9).map((modules, index) => (
-						<div key={index}>
-							<div className='menu_items_wrap w_100 border_box flex flex_wrap'>
-								{modules.map((item) => (
-									<Link
-										className={$cx(
-											'menu_item_wrap border_box',
-											actives.find((i) => i.app === item.title) && 'active'
-										)}
-										key={item.title}
-										to={item.path}
-										onClick={onClose}
-									>
-										<div className='menu_item w_100 border_box flex flex_column align_center'>
-											<ModuleIcon
-												type={item.title}
-												size={42}
-												weight='duotone'
-											></ModuleIcon>
-											<span className='app_name'>
-												{t(`translation:modules.${item.title}`)}
-											</span>
-										</div>
-									</Link>
-								))}
-							</div>
+			<div className='group_items w_100 border_box flex_column'>
+				{group_items.map((group, index) => (
+					<div className='group_item w_100 border_box flex flex_column' key={index}>
+						<span className='group_name'>{t(`translation:modules.group.${group.name}`)}</span>
+						<div className='menu_items_wrap w_100 border_box flex flex_column'>
+							{group.items.map((item) => (
+								<Link
+									className={$cx(
+										'menu_item border_box flex align_center clickable relative',
+										actives.find((i) => i.app === item.title) && 'active'
+									)}
+									key={item.title}
+									to={item.path}
+									onClick={onClose}
+								>
+									<div className='icon_wrap flex justify_center align_center'>
+										<ModuleIcon
+											type={item.title}
+											size={24}
+											weight='duotone'
+										></ModuleIcon>
+									</div>
+									<span className='app_name'>
+										{t(`translation:modules.${item.title}`)}
+									</span>
+								</Link>
+							))}
 						</div>
-					))}
-				</Carousel>
+					</div>
+				))}
 			</div>
-		</Modal>
+		</Drawer>
 	)
 }
 

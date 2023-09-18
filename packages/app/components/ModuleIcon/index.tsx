@@ -15,10 +15,8 @@ import {
 	Table,
 	TextColumns,
 	TreeStructure,
-	GridNine,
-	Keyboard,
-	ProjectorScreenChart,
-	GearSix
+	GearSix,
+	WebhooksLogo
 } from '@phosphor-icons/react'
 
 import type { IconProps } from '@phosphor-icons/react'
@@ -36,19 +34,17 @@ const Index = (props: IProps) => {
 		.with('memo', () => <Note {...icon_props} />)
 		.with('note', () => <Notebook {...icon_props} />)
 		.with('kanban', () => <Kanban {...icon_props} />)
-		.with('flow', () => <Path {...icon_props} />)
+		.with('workflow', () => <Path {...icon_props} />)
 		.with('whiteboard', () => <Clipboard {...icon_props} />)
-		.with('table', () => <Table {...icon_props} />)
-		.with('form', () => <TextColumns {...icon_props} />)
-		.with('chart', () => <ChartBarHorizontal {...icon_props} />)
 		.with('ppt', () => <MicrosoftPowerpointLogo {...icon_props} />)
 		.with('schedule', () => <CalendarCheck {...icon_props} />)
 		.with('pomodoro', () => <HourglassMedium {...icon_props} />)
 		.with('habbit', () => <Barbell {...icon_props} />)
-		.with('api', () => <TreeStructure {...icon_props} />)
-		.with('metatable', () => <GridNine {...icon_props} />)
-		.with('metaform', () => <Keyboard {...icon_props} />)
-		.with('metachart', () => <ProjectorScreenChart {...icon_props} />)
+		.with('api', () => <WebhooksLogo {...icon_props} />)
+		.with('dataflow', () => <TreeStructure {...icon_props} />)
+		.with('table', () => <Table {...icon_props} />)
+		.with('form', () => <TextColumns {...icon_props} />)
+		.with('chart', () => <ChartBarHorizontal {...icon_props} />)
 		.with('setting', () => <GearSix {...icon_props} />)
 		.exhaustive()
 }

@@ -18,84 +18,69 @@
 
 ._local {
 	:global {
-		.if-modal-content {
-			padding: 24px;
-		}
+		.if-drawer-content-wrapper {
+			width: calc(var(--sidebar_width) + var(--dirtree_width)) !important;
 
-		.slick-dots {
-			bottom: 0;
-
-			li {
-				width: 12px !important;
-				height: 12px;
-                        margin-inline: 2px;
-
-				&.slick-active {
-					button {
-						&::after {
-							background-color: rgba(var(--color_text_rgb), 0.8);
-						}
-					}
-				}
-
-				button {
-					height: 100%;
-					border-radius: 50%;
-					position: relative;
-					background-color: transparent;
-
-					&:active {
-						background-color: rgba(var(--color_text_rgb), 0.18);
-					}
-
-					&::after {
-						content: '';
-						position: absolute;
-						top: 3px;
-						left: 3px;
-						width: 50%;
-						height: 50%;
-						border-radius: 50%;
-						background-color: rgba(var(--color_text_rgb), 0.48);
-					}
-				}
+			.if-drawer-content {
+				padding: 0;
+				background-color: rgba(var(--color_bg_rgb), 0.6);
+				backdrop-filter: var(--blur);
 			}
 		}
 
-		.menu_items_wrap {
-			padding-bottom: 36px;
+		.group_items {
+			padding: 18px 24px;
+			padding-top: 36px;
 
-			.menu_item_wrap {
-				width: calc(100% / 3);
-				padding: 6px;
+			.group_item {
+				margin-bottom: 24px;
 
-				&:hover {
-					.menu_item {
-						border: 2px solid var(--color_text);
-					}
+				.group_name {
+					padding: 0 6px;
+					margin-bottom: 6px;
+					color: var(--color_text_grey);
+					font-size: 12px;
 				}
 
-				&.active {
+				.menu_items_wrap {
 					.menu_item {
-						background-color: var(--color_bg_1);
-					}
-				}
+						padding: 6px;
+						line-height: 1;
+						border: 2px solid transparent;
+						border-radius: var(--radius);
 
-				.menu_item {
-					padding: 18px 0;
-					line-height: 1;
-					border: 2px solid transparent;
-					border-radius: var(--radius);
-
-					svg {
-						path:first-child {
-							fill: var(--color_main);
+						&:hover {
+							outline: 1px dashed rgba(var(--color_text_rgb), 0.12);
 						}
-					}
 
-					.app_name {
-						margin-top: 9px;
-						font-size: 12px;
+						&.active {
+							&::after{
+                                                content: '';
+                                                position: absolute;
+                                                left: -12px;
+                                                width: 3px;
+                                                height: 18%;
+                                                background-color: var(--color_text_light);
+                                                border-radius: var(--radius_small);
+                                          }
+						}
+
+						.icon_wrap {
+							width: 36px;
+							height: 36px;
+							background-color: rgba(var(--color_text_rgb), 0.06);
+							border-radius: var(--radius);
+
+							svg {
+								path:first-child {
+									fill: var(--color_main);
+								}
+							}
+						}
+
+						.app_name {
+							margin-left: 18px;
+						}
 					}
 				}
 			}

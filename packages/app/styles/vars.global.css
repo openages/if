@@ -13,4 +13,5 @@
 	--radius_large_2: 24px;
 
 	--blur: saturate(150%) blur(9px);
+	--blur_deep: saturate(150%) blur(24px);
 }

@@ -3,18 +3,22 @@ export default {
 	memo: 'Memo',
 	note: 'Note',
 	kanban: 'Kanban',
-	flow: 'Flow',
+	workflow: 'Workflow',
 	whiteboard: 'Board',
-	table: 'Table',
-	form: 'Form',
-	chart: 'Chart',
 	ppt: 'PPT',
 	schedule: 'Schedule',
 	pomodoro: 'Pomo',
 	habbit: 'Habbit',
 	api: 'Api',
-	metatable: 'MetaTable',
-	metaform: 'MetaForm',
-	metachart: 'MetaChart',
-	setting: 'Setting'
+	dataflow: 'Dataflow',
+	table: 'Table',
+	form: 'Form',
+	chart: 'Chart',
+	setting: 'Setting',
+	group: {
+		content: 'Content',
+		plan: 'Plan',
+		data: 'Data',
+		setting: 'Setting'
+	}
 }
