@@ -1,6 +1,6 @@
 import { Button, Tabs } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useState } from 'react'
+import { useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
@@ -8,7 +8,7 @@ import { Wave } from '@/components'
 import { Sliders, Layout, Activity, Cards, Command } from '@phosphor-icons/react'
 
 import AppCenter from './app_center'
-import { ColorSelector, Normal } from './components'
+import GlobalCenter from './global_center'
 import styles from './index.css'
 import Model from './model'
 import ShortcutCenter from './shortcut_center'
@@ -24,12 +24,7 @@ const Index = () => {
 			label: t('translation:setting.nav.titles.setting'),
 			icon: Sliders,
 			key: '0',
-			children: (
-				<div className='w_100 flex flex_column'>
-					<Normal></Normal>
-					<ColorSelector></ColorSelector>
-				</div>
-			)
+			children: <GlobalCenter></GlobalCenter>
 		},
 		{
 			label: t('translation:setting.nav.titles.app_center'),
@@ -58,30 +53,35 @@ const Index = () => {
 	]
 
 	return (
-		<div className={$cx('limited_unchanged_content_wrap border_box flex flex_column', styles._local)}>
-			<div className='menu_items w_100 border_box flex justify_between sticky top_0 z_index_1000'>
-				{nav_items.map((item, index) => (
-					<Wave key={item.label}>
-						<Button
-							className={$cx(
-								'menu_item w_100 border_box flex flex_column align_center',
-								x.active_index === index && 'active'
-							)}
-							onClick={() => (x.active_index = index)}
-						>
-							<item.icon size={24}></item.icon>
-							<span className='menu_name mt_6 font_bold'>{item.label}</span>
-						</Button>
-					</Wave>
-				))}
+		<Fragment>
+			<div className={$cx('w_100 sticky top_0 relative', styles.menu)}>
+				<div className='limited_unchanged_content_wrap w_100 h_100 border_box flex'>
+					{nav_items.map((item, index) => (
+						<Wave key={item.label}>
+							<Button
+								className={$cx(
+									'menu_item border_box flex justify_center align_center relative z_index_10',
+									x.active_index === index && 'active'
+								)}
+								onClick={() => (x.active_index = index)}
+							>
+								<item.icon size={18}></item.icon>
+								<span className='menu_name ml_4'>{item.label}</span>
+							</Button>
+						</Wave>
+					))}
+				</div>
 			</div>
-			<Tabs
-				items={nav_items}
-				activeKey={String(x.active_index)}
-				renderTabBar={() => null}
-				destroyInactiveTabPane
-			></Tabs>
-		</div>
+			<div className={$cx('limited_unchanged_content_wrap border_box flex flex_column', styles._local)}>
+				<Tabs
+					items={nav_items}
+					activeKey={String(x.active_index)}
+                              renderTabBar={ () => null }
+                              animated
+					destroyInactiveTabPane
+				></Tabs>
+			</div>
+		</Fragment>
 	)
 }
 
