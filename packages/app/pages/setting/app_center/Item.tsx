@@ -24,13 +24,13 @@ const Index = (props: IProps) => {
 
 	return (
 		<div
-			className='app_module_item_wrap border_box'
+			className='app_module_item_wrap w_100 border_box'
 			ref={setNodeRef}
 			style={{ transform: CSS.Transform.toString(transform), transition }}
 		>
 			<div className='app_module_item w_100 border_box flex justify_between align_center'>
-				<div className='flex align_center'>
-					<ModuleIcon type={item.title} size={24}></ModuleIcon>
+				<div className='module_icon flex align_center'>
+					<ModuleIcon type={item.title} size={24} weight='duotone'></ModuleIcon>
 					<span className='name ml_12'>{t(`translation:modules.${item.title}`)}</span>
 				</div>
 				<div className='flex align_center'>

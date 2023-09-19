@@ -7,7 +7,7 @@ import { container } from 'tsyringe'
 
 import { GlobalModel } from '@/context/app'
 import { DndContext } from '@dnd-kit/core'
-import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable'
+import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 
 import styles from './index.css'
 import Item from './Item'
@@ -36,15 +36,15 @@ const Index = () => {
 	})
 
 	return (
-			<div className={$cx('flex flex_wrap', styles._local)}>
-				<DndContext onDragEnd={onDragEnd}>
-					<SortableContext items={app_modules} strategy={rectSortingStrategy}>
-						{app_modules.map((item, index) => (
-							<Item key={item.id} {...{ item, index, changeIsFixed }}></Item>
-						))}
-					</SortableContext>
-				</DndContext>
-			</div>
+		<div className={$cx('flex flex_column', styles._local)}>
+			<DndContext onDragEnd={onDragEnd}>
+				<SortableContext items={app_modules}>
+					{app_modules.map((item, index) => (
+						<Item key={item.id} {...{ item, index, changeIsFixed }}></Item>
+					))}
+				</SortableContext>
+			</DndContext>
+		</div>
 	)
 }
 

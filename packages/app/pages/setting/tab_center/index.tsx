@@ -17,9 +17,9 @@ const Index = () => {
 	const { t } = useTranslation()
 
 	return (
-		<div className={$cx('w_100 flex flex_wrap', styles._local)}>
+		<div className={$cx('w_100 flex flex_column', styles._local)}>
 			{stacks.map((item, index) => (
-				<div className='app_module_item_wrap border_box' key={item.id}>
+				<div className='app_module_item_wrap w_100 border_box' key={item.id}>
 					<div className='app_module_item w_100 border_box flex justify_between align_center'>
 						<div className='flex align_center'>
 							<If condition={item.file.icon}>

@@ -16,19 +16,19 @@ const Index = () => {
 	const { t } = useTranslation()
 
 	return (
-		<div className={$cx('w_100 flex flex_wrap', styles._local)}>
+		<div className={$cx('w_100 flex flex_column', styles._local)}>
 			{actives.map((item) => (
-				<div className='app_module_item_wrap border_box' key={item.app}>
+				<div className='app_module_item_wrap w_100 border_box' key={item.app}>
 					<div className='app_module_item w_100 border_box flex justify_between align_center'>
-						<div className='flex align_center'>
-							<ModuleIcon type={item.app} size={24}></ModuleIcon>
+						<div className='module_icon flex align_center'>
+							<ModuleIcon type={item.app} size={24} weight='duotone'></ModuleIcon>
 							<span className='name ml_12'>{t(`translation:modules.${item.app}`)}</span>
 						</div>
 						<div
 							className='btn_wrap flex justify_end align_center ml_12 clickable'
 							onClick={() => $app.Event.emit('global.app.exitApp', item.app)}
 						>
-							<Power size={16}></Power>
+							<Power size={16} weight='bold'></Power>
 						</div>
 					</div>
 				</div>
