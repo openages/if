@@ -21,7 +21,7 @@ const Index = () => {
 					{color_mains.map((item) => (
 						<div
 							className={$cx(
-								'color_item_wrap flex justify_center align_center cursor_point',
+								'color_item_wrap border_box flex justify_center align_center cursor_point',
 								item === Color.rgb(`rgb(${global.setting.color_main_rgb})`).hex() && 'active'
 							)}
 							onClick={() => onItem(item)}

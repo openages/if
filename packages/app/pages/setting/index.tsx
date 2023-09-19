@@ -55,28 +55,30 @@ const Index = () => {
 	return (
 		<Fragment>
 			<div className={$cx('w_100 sticky top_0 relative', styles.menu)}>
-				<div className='limited_unchanged_content_wrap w_100 h_100 border_box flex'>
-					{nav_items.map((item, index) => (
-						<Wave key={item.label}>
-							<Button
-								className={$cx(
-									'menu_item border_box flex justify_center align_center relative z_index_10',
-									x.active_index === index && 'active'
-								)}
-								onMouseDown={() => (x.active_index = index)}
-							>
-								<item.icon size={18}></item.icon>
-								<span className='menu_name ml_4'>{item.label}</span>
-							</Button>
-						</Wave>
-					))}
+				<div className='limited_unchanged_content_wrap w_100 h_100 border_box flex justify_center'>
+					<div className='menu_items flex'>
+						{nav_items.map((item, index) => (
+							<Wave key={item.label}>
+								<Button
+									className={$cx(
+										'menu_item border_box flex justify_center align_center relative z_index_10',
+										x.active_index === index && 'active'
+									)}
+									onMouseDown={() => (x.active_index = index)}
+								>
+									<item.icon size={16}></item.icon>
+									<span className='menu_name ml_4'>{item.label}</span>
+								</Button>
+							</Wave>
+						))}
+					</div>
 				</div>
 			</div>
 			<div className={$cx('limited_unchanged_content_wrap border_box flex flex_column', styles._local)}>
 				<Tabs
 					items={nav_items}
 					activeKey={String(x.active_index)}
-                              renderTabBar={ () => null }
+					renderTabBar={() => null}
 					destroyInactiveTabPane
 				></Tabs>
 			</div>

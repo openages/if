@@ -1,20 +1,23 @@
 export default {
+	color_std: 'black',
+	color_std_rgb: '0,0,0',
+
 	color_text: '#a2a5b9',
 	color_text_rgb: '162,165,185',
 	color_text_sub: 'rgba(162,165,185,0.72)',
 	color_text_grey: 'rgba(162,165,185,0.48)',
-      color_text_light: '#444',
+	color_text_light: '#444',
 	color_text_softlight: '#999',
 	color_text_contrast: 'white',
-      color_bg: '#232326',
+	color_bg: '#232326',
 	color_bg_rgb: '35,35,38',
 	color_bg_1: '#2f2f34',
 	color_bg_2: '#3b3b41',
 	color_border: '#404046',
 	color_border_light: 'rgba(255, 255, 255, 0.036)',
 	color_border_soft: 'rgba(255, 255, 255, 0.018)',
-	shadow: '0 0 1px #555',
-	shadow_right: '1px 0 1px #555',
-	shadow_top: '0 0 1px #555',
+	shadow: '0 0 48px rgba(var(--color_std_rgb), 0.24)',
+	shadow_right: '6px 0 30px rgba(var(--color_std_rgb), 0.3)',
+	shadow_top: '0 6px 30px rgba(var(--color_std_rgb), 0.48)',
 	wave: 'rgba(var(--color_text_rgb), 0.3)'
 }

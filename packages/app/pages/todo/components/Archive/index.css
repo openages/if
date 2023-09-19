@@ -113,6 +113,10 @@
 
 .popover{
       :global{
+            .if-popover-inner{
+                  border-radius: 0;
+            }
+            
             .filter_wrap {
                   width: 300px;
                   padding: 18px 15px;

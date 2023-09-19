@@ -82,6 +82,10 @@
 					margin: 0;
 				}
 
+                        .if-modal-confirm-paragraph{
+                              align-items: center;
+                        }
+
 				.if-modal-confirm-title {
 					margin-top: 12px;
 					margin-bottom: 12px;
@@ -90,7 +94,7 @@
 				}
 
 				.if-modal-confirm-content {
-					width: 100%;
+					width: 90%;
 					max-width: unset;
 					margin: 0;
 					text-align: center;

@@ -73,7 +73,7 @@ export default {
 			},
 			total: '共{{counts}}条记录'
 		},
-		confirm: '你讲删除{{date}}前的所有归档，请确认是否删除？',
+		confirm: '你将删除{{date}}前的所有归档，请确认是否删除？',
 		filter: {
 			select: '选择',
 			angle: '分类',
