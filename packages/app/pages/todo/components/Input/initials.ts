@@ -2,7 +2,7 @@ import { id } from '@/utils'
 
 import type { Todo } from '@/types'
 
-export const getTodo = (): Omit<Todo.Todo, 'file_id' | 'angle_id'> => ({
+export const getTodo = (): Omit<Todo.Todo, 'file_id' | 'angle_id' | 'sort'> => ({
 	id: id(),
 	type: 'todo',
 	status: 'unchecked',
@@ -11,7 +11,7 @@ export const getTodo = (): Omit<Todo.Todo, 'file_id' | 'angle_id'> => ({
 	circle_enabled: false
 })
 
-export const getGroup = (): Omit<Todo.Group, 'file_id' | 'angle_id'> => ({
+export const getGroup = (): Omit<Todo.Group, 'file_id' | 'angle_id' | 'sort'> => ({
 	id: id(),
 	type: 'group',
 	text: '',

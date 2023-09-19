@@ -22,7 +22,7 @@ const Index = (props: IPropsInput) => {
 	const { loading, tags, create } = props
 	const limits = useLimits()
 	const { t } = useTranslation()
-	const [input, setInput] = useState<Omit<Todo.TodoItem, 'file_id' | 'angle_id'>>(getTodo())
+	const [input, setInput] = useState<Omit<Todo.TodoItem, 'file_id' | 'angle_id' | 'sort'>>(getTodo())
 
 	useEffect(() => {
 		if (input.type === 'todo') {

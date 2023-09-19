@@ -34,10 +34,13 @@ export const getQueryItems = (file_id: string, angle_id: string) => {
 export const create = async (args: ArgsCreate) => {
 	const { file_id, angle_id, item } = args
 
+	const [{ sort }] = await $db.collections.todo_items.find().sort({ sort: 'desc' }).limit(1).exec()
+
 	await $db.collections.todo_items.incrementalUpsert({
 		...item,
 		file_id,
-		angle_id
+		angle_id,
+		sort: sort + 1
 	})
 
 	window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })

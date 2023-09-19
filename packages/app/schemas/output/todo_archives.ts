@@ -62,6 +62,9 @@ export default {
                   },
                   "create_at": {
                         "type": "number"
+                  },
+                  "sort": {
+                        "type": "number"
                   }
             },
             "required": [
@@ -70,6 +73,7 @@ export default {
                   "create_at",
                   "file_id",
                   "id",
+                  "sort",
                   "status",
                   "text",
                   "type"
@@ -138,6 +142,9 @@ export default {
                   },
                   "create_at": {
                         "type": "number"
+                  },
+                  "sort": {
+                        "type": "number"
                   }
             },
             "required": [
@@ -146,6 +153,7 @@ export default {
                   "create_at",
                   "file_id",
                   "id",
+                  "sort",
                   "status",
                   "text",
                   "type"
