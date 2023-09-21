@@ -13,8 +13,8 @@ export namespace DirTree {
 
 	export type Dir = Common & {
 		type: 'dir'
-		// children: Array<File>
-		children: Array<Item>
+		children: Array<File>
+		// // children: Array<Item>
 	}
 
 	export type File = Common & {

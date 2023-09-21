@@ -281,3 +281,25 @@
 		}
 	}
 }
+
+/* Dropdown */
+.if-dropdown-menu {
+      &-item {
+            padding: 4px 6px !important;
+            font-size: 12px;
+      }
+
+      &-submenu-title {
+            padding: 4px 6px !important;
+            display: flex;
+            align-items: center;
+
+            .if-dropdown-menu-submenu-expand-icon {
+                  line-height: 1;
+            }
+      }
+
+      &-title-content{
+            font-size: 12px;
+      }
+}

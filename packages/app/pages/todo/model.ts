@@ -1,4 +1,4 @@
-import { makeAutoObservable, reaction } from 'mobx'
+import { makeAutoObservable, reaction, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { archive } from '@/actions/todo'
@@ -6,6 +6,7 @@ import { GlobalModel } from '@/context/app'
 import { Utils, File, Loadmore } from '@/models'
 import { getDocItemsData } from '@/utils'
 import { loading } from '@/utils/decorators'
+import { arrayMove } from '@dnd-kit/sortable'
 
 import {
 	getQueryTodo,
@@ -18,13 +19,14 @@ import {
 	updateTodoData,
 	check,
 	updateRelations,
+	updateTodosSort,
 	restoreArchiveItem,
 	removeArchiveItem,
 	archiveByTime
 } from './services'
 
 import type { ArgsUpdateTodoData, ArgsArchiveByTime } from './types/services'
-import type { ArchiveQueryParams } from './types/model'
+import type { ItemsSortParams, ArchiveQueryParams } from './types/model'
 import type { RxDB, Todo, TodoArchive } from '@/types'
 import type { Subscription } from 'rxjs'
 
@@ -41,6 +43,7 @@ export default class Index {
 	current_angle_id = ''
 	visible_settings_modal = false
 	visible_archive_modal = false
+	items_sort_params = {} as ItemsSortParams
 	archive_query_params = {} as ArchiveQueryParams
 
 	constructor(
@@ -211,6 +214,12 @@ export default class Index {
 			active_id,
 			over_id
 		})
+	}
+
+	async move(args: { active_index: number; over_index: number }) {
+		this.items = arrayMove(toJS(this.items), args.active_index, args.over_index)
+
+		await updateTodosSort(this.items)
 	}
 
 	updateArchiveItems(id: string) {

@@ -48,11 +48,13 @@ export interface IPropsTodos {
 	items: Model['items']
 	relations: Todo.Data['relations']
 	check: Model['check']
-	updateRelations: Model['updateRelations']
+      updateRelations: Model[ 'updateRelations' ]
+	move: Model['move']
 }
 
 export interface IPropsTodoItem {
 	item: Todo.Todo
+	index: number
 	makeLinkLine: (args: { active_id: string; y: number } | null) => void
 	check: Model['check']
 	updateRelations: Model['updateRelations']
@@ -60,6 +62,7 @@ export interface IPropsTodoItem {
 
 export interface IPropsGroupTitle {
 	item: Todo.Group
+	index: number
 }
 
 export interface IPropsArchive {

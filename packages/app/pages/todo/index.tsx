@@ -58,7 +58,8 @@ const Index = ({ id }: IProps) => {
 		items: toJS(x.items),
 		relations: toJS(x.todo?.relations || []),
 		check: useMemoizedFn(x.check),
-		updateRelations: useMemoizedFn(x.updateRelations)
+            updateRelations: useMemoizedFn(x.updateRelations),
+		move: useMemoizedFn(x.move),
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {

@@ -42,20 +42,12 @@ export namespace Todo {
 		tag_ids?: Array<string>
 		circle_enabled: boolean
 		circle_value?: Array<number>
-		children?: Array<
-			Omit<
-				Todo,
-				| 'file_id'
-				| 'angle_id'
-				| 'sort'
-				| 'star'
-				| 'archive_time'
-				| 'tag_ids'
-				| 'circle_enabled'
-				| 'circle_value'
-				| 'children'
-			>
-		>
+		children?: Array<{
+			/** @maxLength 30 */
+			id: string
+			text: string
+			status: 'checked' | 'unchecked'
+		}>
 	}
 
 	export type Group = Common & {

@@ -21,6 +21,14 @@ import type { MangoQuerySelector, MangoQueryOperators } from 'rxdb/dist/types/ty
 
 import type { Todo, RxDB } from '@/types'
 
+const getMaxSort = async () => {
+	const [max_sort_item] = await $db.collections.todo_items.find().sort({ sort: 'desc' }).limit(1).exec()
+
+	if (max_sort_item) return max_sort_item.sort
+
+	return 1
+}
+
 export const getQueryTodo = (file_id: string) => {
 	return $db.todo.findOne({ selector: { id: file_id } })
 }
@@ -28,13 +36,13 @@ export const getQueryTodo = (file_id: string) => {
 export const getQueryItems = (file_id: string, angle_id: string) => {
 	return $db.collections.todo_items
 		.find({ selector: { file_id, angle_id: angle_id } })
-		.sort({ create_at: 'asc' }) as RxDB.ItemsQuery<Todo.TodoItem>
+		.sort({ sort: 'asc', create_at: 'asc' }) as RxDB.ItemsQuery<Todo.TodoItem>
 }
 
 export const create = async (args: ArgsCreate) => {
 	const { file_id, angle_id, item } = args
 
-	const [{ sort }] = await $db.collections.todo_items.find().sort({ sort: 'desc' }).limit(1).exec()
+	const sort = await getMaxSort()
 
 	await $db.collections.todo_items.incrementalUpsert({
 		...item,
@@ -237,6 +245,15 @@ export const updateRelations = async (args: ArgsUpdateRelations) => {
 	}
 }
 
+export const updateTodosSort = async (items: Array<Todo.TodoItem>) => {
+	await $db.collections.todo_items.bulkUpsert(
+		items.map((item, index) => ({
+			...item,
+			sort: index + 1
+		}))
+	)
+}
+
 export const restoreArchiveItem = async (id: string) => {
 	const doc = await $db.collections.todo_archives.findOne({ selector: { id } }).exec()
 
@@ -244,10 +261,13 @@ export const restoreArchiveItem = async (id: string) => {
 
 	await doc.incrementalRemove()
 
+	const sort = await getMaxSort()
+
 	await $db.collections.todo_items.incrementalUpsert({
 		...data,
 		status: 'unchecked',
-		create_at: new Date().valueOf()
+		create_at: new Date().valueOf(),
+		sort: sort + 1
 	})
 }
 
@@ -280,10 +300,7 @@ export const archiveByTime = async (file_id: string, v: ArgsArchiveByTime) => {
 		.find({
 			selector: {
 				file_id,
-				create_at: {
-					// $lte: target_time.valueOf()
-					$lte: now.subtract(3, 'second').valueOf()
-				}
+				create_at: { $lte: now.subtract(3, 'second').valueOf() }
 			}
 		})
 		.remove()

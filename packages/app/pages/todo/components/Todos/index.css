@@ -9,5 +9,27 @@
 			left: 40px;
 			z-index: 0;
 		}
+
+		.drag_wrap {
+			width: 14px;
+			height: 14px;
+			border-radius: var(--radius_small_1);
+			background-color: var(--color_bg_2);
+			opacity: 0;
+
+			&.todo {
+				top: 6px;
+				left: -30px;
+			}
+
+			&.group {
+                        top: -1px;
+				left: -9px;
+			}
+
+			&:hover {
+				background-color: rgba(var(--color_text_rgb), 0.12);
+			}
+		}
 	}
 }

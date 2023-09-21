@@ -1,6 +1,14 @@
 ._local{
       margin-top: 36px;
 
+      &:hover {
+		:global {
+			.drag_wrap {
+				opacity: 1;
+			}
+		}
+	}
+
 	:global {
 		.group_title {
 			padding: 0 11px;

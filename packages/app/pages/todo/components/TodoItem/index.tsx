@@ -2,19 +2,25 @@ import { useDrag, useDrop, useMemoizedFn } from 'ahooks'
 import { useState, useRef } from 'react'
 import { Switch, Case } from 'react-if'
 
-import { Square, CheckSquare } from '@phosphor-icons/react'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import { Square, CheckSquare, DotsSixVertical } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
 import type { IPropsTodoItem } from '../../types'
 
 const Index = (props: IPropsTodoItem) => {
-	const { item, makeLinkLine, check, updateRelations } = props
+	const { item, index, makeLinkLine, check, updateRelations } = props
 	const { id, text, status } = item
 	const linker = useRef<HTMLDivElement>(null)
 	const [dragging, setDragging] = useState(false)
 	const [hovering, setHovering] = useState(false)
-
+	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
+		id,
+		data: { index }
+      })
+      
 	useDrag(id, linker, {
 		onDragStart: () => {
 			if (status !== 'unchecked') return
@@ -62,10 +68,12 @@ const Index = (props: IPropsTodoItem) => {
 	return (
 		<div
 			className={$cx(
-				'w_100 border_box flex align_start transition_normal relative',
+				'w_100 border_box flex align_start relative',
 				styles.todo_item,
 				styles[item.status]
 			)}
+			ref={setNodeRef}
+			style={{ transform: CSS.Translate.toString(transform), transition }}
 		>
 			<div
 				id={id}
@@ -77,6 +85,16 @@ const Index = (props: IPropsTodoItem) => {
 				ref={linker}
 				onDrag={onDrag}
 			></div>
+			<div
+				className={$cx(
+					'drag_wrap todo border_box flex justify_center align_center absolute transition_normal cursor_point z_index_10'
+				)}
+				ref={setActivatorNodeRef}
+				{...attributes}
+				{...listeners}
+			>
+				<DotsSixVertical size={12} weight='bold'></DotsSixVertical>
+			</div>
 			<div
 				className='action_wrap flex justify_center align_center cursor_point clickable'
 				onClick={onCheck}

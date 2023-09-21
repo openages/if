@@ -1,16 +1,16 @@
 ._local {
-      padding-top: 36px;
+	padding-top: 36px;
 	padding-bottom: 24px;
 
 	:global {
 		.left_wrap {
 			width: calc(100% - 180px);
 
-                  em-emoji {
-                        .emoji-mart-emoji {
-                              margin-bottom: -1px;
-                        }
-                  }
+			em-emoji {
+				.emoji-mart-emoji {
+					margin-bottom: -1px;
+				}
+			}
 
 			.name {
 				font-size: 24px;
@@ -34,7 +34,7 @@
 				border: none;
 				outline: none;
 				box-shadow: none;
-                        
+
 				&:hover {
 					background-color: var(--color_bg_2);
 				}

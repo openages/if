@@ -8,9 +8,20 @@ export default {
 	},
 	default_angles: ['Now', 'Plan', 'Idea', 'Wait', 'Circle', 'Trashbox'],
 	Header: {
-		edit: 'Edit',
-		reference: 'Reference',
-		archive: 'Archive'
+		related: {
+			reference: 'Reference',
+			todograph: 'Todograph'
+		},
+		archive: 'Archive',
+		options: {
+			edit: 'Edit',
+			sort: {
+				text: 'Sort',
+				importance: 'Importance',
+				alphabetical: 'Alphabetical',
+				create_at: 'Create Time'
+			}
+		}
 	},
 	SettingsModal: {
 		desc: {

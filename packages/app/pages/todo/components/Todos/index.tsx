@@ -1,10 +1,11 @@
 import { useSize, useDeepCompareEffect, useMemoizedFn } from 'ahooks'
-import { cloneDeep } from 'lodash-es'
 import { useRef, useMemo, useState } from 'react'
 import { Stage, Layer, Line } from 'react-konva'
 
 import { useCssVariable } from '@/hooks'
 import { points } from '@/utils'
+import { DndContext } from '@dnd-kit/core'
+import { SortableContext } from '@dnd-kit/sortable'
 
 import GroupTitle from '../GroupTitle'
 import TodoItem from '../TodoItem'
@@ -12,9 +13,10 @@ import styles from './index.css'
 import { getRelativePostion, getLinkedItems } from './utils'
 
 import type { IPropsTodos } from '../../types'
+import type { DragEndEvent } from '@dnd-kit/core'
 
 const Index = (props: IPropsTodos) => {
-	const { items, relations, check, updateRelations } = props
+	const { items, relations, check, updateRelations, move } = props
 	const container = useRef<HTMLDivElement>(null)
 	const [lines, setLines] = useState<Array<JSX.Element>>([])
 	const [link_points, setLinkPoints] = useState<Array<number>>(null)
@@ -62,6 +64,12 @@ const Index = (props: IPropsTodos) => {
 		setLinkPoints(points([8, up], [1, up], [1, down], [8, down]))
 	})
 
+	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
+		if (!over?.id) return
+
+		move({ active_index: active.data.current.index, over_index: over.data.current.index })
+	})
+
 	useDeepCompareEffect(() => {
 		const timer = setTimeout(() => {
 			setLines(
@@ -98,16 +106,20 @@ const Index = (props: IPropsTodos) => {
 				</Stage>
 			)}
 			<div className='todo_items_wrap w_100 flex flex_column' ref={container}>
-				{items.map((item, index) =>
-					item.type === 'todo' ? (
-						<TodoItem
-							{...{ item, makeLinkLine, check, updateRelations }}
-							key={index}
-						></TodoItem>
-					) : (
-						<GroupTitle {...{ item }} key={index}></GroupTitle>
-					)
-				)}
+				<DndContext onDragEnd={onDragEnd}>
+					<SortableContext items={items}>
+						{items.map((item, index) =>
+							item.type === 'todo' ? (
+								<TodoItem
+									{...{ item, index, makeLinkLine, check, updateRelations }}
+									key={item.id}
+								></TodoItem>
+							) : (
+								<GroupTitle {...{ item, index }} key={item.id}></GroupTitle>
+							)
+						)}
+					</SortableContext>
+				</DndContext>
 			</div>
 		</div>
 	)

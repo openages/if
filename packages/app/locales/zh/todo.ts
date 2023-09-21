@@ -8,9 +8,20 @@ export default {
 	},
 	default_angles: ['此刻', '计划', '想法', '等待', '循环', '垃圾箱'],
 	Header: {
-		edit: '编辑',
-		reference: '参考资料',
-		archive: '归档'
+		related: {
+			reference: '参考资料',
+			todograph: '任务规划'
+		},
+		archive: '归档',
+		options: {
+			edit: '编辑',
+			sort: {
+				text: '排序',
+				importance: '重要性',
+				alphabetical: '字母顺序',
+				create_at: '创建时间'
+			}
+		}
 	},
 	SettingsModal: {
 		desc: {

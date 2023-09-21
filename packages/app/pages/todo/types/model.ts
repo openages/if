@@ -1,4 +1,10 @@
 import type { Dayjs } from "dayjs"
+import type { RxDB } from "@/types"
+
+export type ItemsSortParams = {
+      create_at: RxDB.SortType
+      star:RxDB.SortType
+}
 
 export type ArchiveQueryParams = {
 	angle_id?: string

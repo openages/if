@@ -13,4 +13,5 @@ export namespace RxDB {
 
 	export type ItemsDoc<T> = Array<RxDocument<T>>
 	export type ItemsQuery<T> = RxQuery<T, ItemsDoc<T>>
+	export type SortType = 'asc' | 'desc'
 }

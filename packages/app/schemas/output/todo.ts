@@ -132,7 +132,28 @@ export default {
                   "children": {
                         "type": "array",
                         "items": {
-                              "type": "object"
+                              "type": "object",
+                              "properties": {
+                                    "id": {
+                                          "type": "string",
+                                          "maxLength": 30
+                                    },
+                                    "text": {
+                                          "type": "string"
+                                    },
+                                    "status": {
+                                          "type": "string",
+                                          "enum": [
+                                                "checked",
+                                                "unchecked"
+                                          ]
+                                    }
+                              },
+                              "required": [
+                                    "id",
+                                    "text",
+                                    "status"
+                              ]
                         }
                   },
                   "id": {
@@ -254,7 +275,28 @@ export default {
                   "children": {
                         "type": "array",
                         "items": {
-                              "type": "object"
+                              "type": "object",
+                              "properties": {
+                                    "id": {
+                                          "type": "string",
+                                          "maxLength": 30
+                                    },
+                                    "text": {
+                                          "type": "string"
+                                    },
+                                    "status": {
+                                          "type": "string",
+                                          "enum": [
+                                                "checked",
+                                                "unchecked"
+                                          ]
+                                    }
+                              },
+                              "required": [
+                                    "id",
+                                    "text",
+                                    "status"
+                              ]
                         }
                   },
                   "id": {
