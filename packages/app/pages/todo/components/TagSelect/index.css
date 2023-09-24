@@ -1,0 +1,39 @@
+._local {
+	min-width: 48px;
+	margin-left: 1px;
+
+	:global {
+		.if-empty-image {
+			margin: 0;
+		}
+
+		.if-empty-description {
+			display: none;
+		}
+
+            .if-select-selector{
+                  background-color: var(--color_bg) !important;
+            }
+
+		.tag {
+			height: var(--height);
+			line-height: 1;
+			padding: 3px 6px;
+			border-radius: var(--radius_small);
+			font-size: 12px;
+			font-weight: bold;
+			margin: 0 2px;
+                  background-color: var(--color_bg);
+
+			.btn_close {
+				padding: 2px;
+				margin-left: 3px;
+
+				&:hover {
+					border-radius: var(--radius_small);
+					background-color: var(--color_bg);
+				}
+			}
+		}
+	}
+}

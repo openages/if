@@ -26,6 +26,57 @@
 			}
 		}
 
+		.filter_wrap {
+			right: var(--limited_padding);
+
+			.filter_item {
+				height: 25px;
+				padding: 3px;
+				border-bottom-left-radius: var(--radius_small);
+				border-bottom-right-radius: var(--radius_small);
+				font-size: 12px;
+				line-height: 1;
+				border: var(--border);
+				border-top: none;
+				user-select: none;
+
+				&.filter_tags {
+					padding: 0 3px;
+					padding-left: 0;
+				}
+
+				.btn_remove {
+					width: 16px;
+					height: 16px;
+					border-radius: var(--radius_small_1);
+
+					&:hover {
+						background-color: var(--color_bg_2);
+					}
+				}
+			}
+
+			.select_tags {
+				--height: 18px;
+
+				margin-left: 0;
+			}
+
+			.type_wrap {
+				padding: 0 6px;
+				height: 16px;
+				border-radius: var(--radius_small_1);
+
+				&:hover {
+					background-color: var(--color_bg_2);
+				}
+
+				.btn_order {
+					margin-bottom: -2px;
+				}
+			}
+		}
+
 		.actions_wrap {
 			.icon_wrap {
 				width: 30px;

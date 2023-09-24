@@ -12,12 +12,11 @@ const Index = (tags: Required<IPropsInput['tags']>) => (props: CustomTagProps) =
 
 	const onPreventMouseDown = useMemoizedFn((event: React.MouseEvent<HTMLSpanElement>) => {
 		event.preventDefault()
-		event.stopPropagation()
 	})
 
 	return (
 		<div
-			className='tag flex justify_center align_center'
+			className='tag border_box flex justify_center align_center'
 			style={{
 				backgroundColor: color ? Color(color).alpha(0.3).toString() : '',
 				color: color
@@ -25,7 +24,10 @@ const Index = (tags: Required<IPropsInput['tags']>) => (props: CustomTagProps) =
 			onMouseDown={onPreventMouseDown}
 		>
 			<span className='text'>{text}</span>
-			<span className='btn_close h_100 flex justify_center align_center cursor_point' onClick={onClose}>
+			<span
+				className='btn_close h_100 border_box flex justify_center align_center cursor_point'
+				onClick={onClose}
+			>
 				<X size={10}></X>
 			</span>
 		</div>

@@ -7,6 +7,7 @@ import { modify, getArchiveTime } from '@/utils'
 import { confirm } from '@/utils/antd'
 
 import type {
+	ArgsQueryItems,
 	ArgsCreate,
 	ArgsQueryArchives,
 	ArgsUpdate,
@@ -17,7 +18,7 @@ import type {
 	ArgsArchiveByTime
 } from './types/services'
 import type { ArchiveQueryParams } from './types/model'
-import type { MangoQuerySelector, MangoQueryOperators } from 'rxdb/dist/types/types'
+import type { MangoQuerySelector, MangoQueryOperators, MangoQuerySortPart } from 'rxdb/dist/types/types'
 
 import type { Todo, RxDB } from '@/types'
 
@@ -33,10 +34,34 @@ export const getQueryTodo = (file_id: string) => {
 	return $db.todo.findOne({ selector: { id: file_id } })
 }
 
-export const getQueryItems = (file_id: string, angle_id: string) => {
-	return $db.collections.todo_items
-		.find({ selector: { file_id, angle_id: angle_id } })
-		.sort({ sort: 'asc', create_at: 'asc' }) as RxDB.ItemsQuery<Todo.TodoItem>
+export const getQueryItems = (args: ArgsQueryItems) => {
+	const { file_id, angle_id, items_sort_param, items_filter_tags } = args
+
+	const selector: MangoQuerySelector<Todo.TodoItem> = { file_id, angle_id: angle_id }
+      const sort: MangoQuerySortPart<Todo.Todo> = { sort: 'asc', create_at: 'asc' }
+      
+      if (items_filter_tags.length || items_sort_param) {
+		selector['type'] = 'todo'
+      }
+
+	if (items_filter_tags.length) {
+		selector['tag_ids'] = {
+			$elemMatch: {
+				$in: items_filter_tags
+			}
+		} as MangoQueryOperators<Array<string>>
+	}
+
+	if (items_sort_param) {
+		delete sort['sort']
+		delete sort['create_at']
+
+		if (items_sort_param.type === 'importance') sort['star'] = items_sort_param.order
+		if (items_sort_param.type === 'alphabetical') sort['text'] = items_sort_param.order
+		if (items_sort_param.type === 'create_at') sort['create_at'] = items_sort_param.order
+	}
+
+	return $db.collections.todo_items.find({ selector }).sort(sort) as RxDB.ItemsQuery<Todo.TodoItem>
 }
 
 export const create = async (args: ArgsCreate) => {
@@ -58,8 +83,8 @@ export const queryTodo = (file_id: string) => {
 	return getQueryTodo(file_id).exec()
 }
 
-export const queryItems = (file_id: string, angle_id: string) => {
-	return getQueryItems(file_id, angle_id).exec()
+export const queryItems = (args: ArgsQueryItems) => {
+	return getQueryItems(args).exec()
 }
 
 export const queryArchives = (args: ArgsQueryArchives, query_params: ArchiveQueryParams) => {

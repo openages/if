@@ -20,7 +20,8 @@ export default {
 				importance: 'Importance',
 				alphabetical: 'Alphabetical',
 				create_at: 'Create Time'
-			}
+			},
+			tags: 'Tags'
 		}
 	},
 	SettingsModal: {

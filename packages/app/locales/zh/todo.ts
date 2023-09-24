@@ -20,7 +20,8 @@ export default {
 				importance: '重要性',
 				alphabetical: '字母顺序',
 				create_at: '创建时间'
-			}
+			},
+			tags: '标签'
 		}
 	},
 	SettingsModal: {

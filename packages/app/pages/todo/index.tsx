@@ -38,8 +38,13 @@ const Index = ({ id }: IProps) => {
 		icon: x.file.data.icon,
 		icon_hue: x.file.data.icon_hue,
 		desc: x.todo.desc,
+		tags: toJS(x.todo.tags),
+		items_sort_param: toJS(x.items_sort_param),
+		items_filter_tags: toJS(x.items_filter_tags),
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true)),
-		showArchiveModal: useMemoizedFn(() => (x.visible_archive_modal = true))
+		showArchiveModal: useMemoizedFn(() => (x.visible_archive_modal = true)),
+		setItemsSortParam: useMemoizedFn((v) => (x.items_sort_param = v)),
+		setItemsFilterTags: useMemoizedFn((v) => (x.items_filter_tags = v))
 	}
 
 	const props_tabs: IPropsTabs = {
@@ -58,8 +63,8 @@ const Index = ({ id }: IProps) => {
 		items: toJS(x.items),
 		relations: toJS(x.todo?.relations || []),
 		check: useMemoizedFn(x.check),
-            updateRelations: useMemoizedFn(x.updateRelations),
-		move: useMemoizedFn(x.move),
+		updateRelations: useMemoizedFn(x.updateRelations),
+		move: useMemoizedFn(x.move)
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
@@ -73,7 +78,7 @@ const Index = ({ id }: IProps) => {
 		visible_archive_modal: x.visible_archive_modal,
 		archives: toJS(x.archives),
 		archive_counts: x.archive_counts,
-            end: x.loadmore.end,
+		end: x.loadmore.end,
 		angles: toJS(x.todo.angles) || [],
 		tags: toJS(x.todo.tags),
 		archive_query_params: toJS(x.archive_query_params),

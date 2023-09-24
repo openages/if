@@ -1,5 +1,6 @@
 import type { Todo, RxDB, TodoArchive, DirTree } from '@/types'
 import type Model from '../model'
+import type { SelectProps } from 'antd'
 
 export type QueryItems = RxDB.ItemsQuery<Todo.TodoItem>
 export type QueryArchives = RxDB.ItemsQuery<TodoArchive.Item>
@@ -8,9 +9,21 @@ export interface IProps {
 	id: string
 }
 
-export interface IPropsHeader extends Pick<Todo.Data & DirTree.File, 'name' | 'icon' | 'icon_hue' | 'desc'> {
+export interface IPropsTagSelect {
+	options: Model['todo']['tags']
+      value: Array<string>
+	className?: SelectProps['className']
+	placement?: SelectProps['placement']
+	onChange: (v: Array<string>) => void
+}
+
+export interface IPropsHeader extends Pick<Todo.Data & DirTree.File, 'name' | 'icon' | 'icon_hue' | 'desc' | 'tags'> {
+	items_sort_param: Model['items_sort_param']
+	items_filter_tags: Model['items_filter_tags']
 	showSettingsModal: () => void
 	showArchiveModal: () => void
+	setItemsSortParam: (v: Model['items_sort_param']) => void
+	setItemsFilterTags: (v: Model['items_filter_tags']) => void
 }
 
 export interface IPropsSettingsModal {
@@ -48,7 +61,7 @@ export interface IPropsTodos {
 	items: Model['items']
 	relations: Todo.Data['relations']
 	check: Model['check']
-      updateRelations: Model[ 'updateRelations' ]
+	updateRelations: Model['updateRelations']
 	move: Model['move']
 }
 

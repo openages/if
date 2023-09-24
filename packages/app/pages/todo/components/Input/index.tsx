@@ -1,17 +1,18 @@
 import { useMemoizedFn } from 'ahooks'
-import { Input, Select } from 'antd'
+import { Input, Select, Rate } from 'antd'
 import { cloneDeep } from 'lodash-es'
-import { useMemo, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
 
 import { useLimits } from '@/hooks'
 import { id } from '@/utils'
+import { Star } from '@phosphor-icons/react'
 
+import TagSelect from '../TagSelect'
 import Circle from './Circle'
 import styles from './index.css'
 import { getTodo, getGroup } from './initials'
-import getTag from './Tag'
 
 import type { IPropsInput, IPropsInputCircle } from '../../types'
 import type { Todo } from '@/types'
@@ -35,23 +36,14 @@ const Index = (props: IPropsInput) => {
 	useEffect(() => {
 		if (loading) return
 
-		setInput((v) => ({ ...v, id: id(), text: '', circle_enabled: false, circle_value: undefined }))
-	}, [loading])
-
-	const tag_options = useMemo(() => {
-		if (!tags || !tags?.length) return []
-
-		return tags.map((item) => ({
-			label: item.text,
-			value: item.id
+		setInput((v) => ({
+			...v,
+			id: id(),
+			text: '',
+			circle_enabled: false,
+			circle_value: undefined
 		}))
-	}, [tags])
-
-	const Tag = useMemo(() => {
-		if (!tags || !tags?.length) return null
-
-		return getTag(tags)
-	}, [tags])
+	}, [loading])
 
 	const props_circle: IPropsInputCircle = {
 		circle_enabled: (input as Todo.Todo).circle_enabled,
@@ -93,25 +85,34 @@ const Index = (props: IPropsInput) => {
 							}}
 						></Select>
 						<When condition={Boolean(tags) && tags?.length && input.type === 'todo'}>
-							<Select
-								className='select_tag select'
-								size='small'
-								mode='multiple'
-								placement='topLeft'
-								bordered={false}
-								virtual={false}
-								maxTagCount={3}
-								suffixIcon={null}
-								placeholder={t('translation:todo.Input.tag_placeholder')}
-								tagRender={Tag}
-								options={tag_options}
+							<TagSelect
+								options={tags}
 								value={(input as Todo.Todo).tag_ids}
-								onChange={(v) => setInput((input) => ({ ...input, tag_ids: v }))}
-							></Select>
+								onChange={(v) => {
+									if (v?.length > 3) return
+
+									setInput((input) => ({ ...input, tag_ids: v }))
+								}}
+							></TagSelect>
 						</When>
 					</div>
 					<When condition={input.type === 'todo'}>
-						<Circle {...props_circle}></Circle>
+						<div className='flex align_center'>
+							<div className='star_wrap flex align_center mr_8 relative'>
+								<Rate
+									count={6}
+									character={({ index, value }) => (
+										<Star
+											size={18}
+											weight={value >= index + 1 ? 'duotone' : 'regular'}
+										/>
+									)}
+									value={(input as Todo.Todo).star}
+									onChange={(v) => setInput((input) => ({ ...input, star: v }))}
+								></Rate>
+							</div>
+							<Circle {...props_circle}></Circle>
+						</div>
 					</When>
 				</div>
 				<TextArea

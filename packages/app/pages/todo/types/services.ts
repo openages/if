@@ -1,5 +1,13 @@
 import type { Todo } from '@/types'
 import type { File } from '@/models'
+import type Model from '../model'
+
+export type ArgsQueryItems = {
+	file_id: string
+	angle_id: string
+	items_sort_param: Model['items_sort_param']
+	items_filter_tags: Model['items_filter_tags']
+}
 
 export type ArgsCreate = {
 	file_id: string
@@ -46,4 +54,3 @@ export type ArgsUpdateRelations = {
 }
 
 export type ArgsArchiveByTime = '1year' | '6month' | '3month' | '1month' | '15days' | '1week'
-

@@ -43,7 +43,8 @@ export default class Index {
 	current_angle_id = ''
 	visible_settings_modal = false
 	visible_archive_modal = false
-	items_sort_params = {} as ItemsSortParams
+	items_sort_param = null as ItemsSortParams
+	items_filter_tags = [] as Array<string>
 	archive_query_params = {} as ArchiveQueryParams
 
 	constructor(
@@ -72,7 +73,7 @@ export default class Index {
 
 	reactions() {
 		reaction(
-			() => this.current_angle_id,
+			() => [this.current_angle_id, this.items_sort_param, this.items_filter_tags],
 			() => {
 				if (!this.id) return
 
@@ -150,7 +151,12 @@ export default class Index {
 	async queryItems() {
 		await archive(this.id)
 
-		const items = await queryItems(this.id, this.current_angle_id)
+		const items = await queryItems({
+			file_id: this.id,
+			angle_id: this.current_angle_id,
+			items_sort_param: this.items_sort_param,
+			items_filter_tags: this.items_filter_tags
+		})
 
 		this.items = getDocItemsData(items)
 
@@ -252,7 +258,12 @@ export default class Index {
 	}
 
 	watchItems() {
-		this.items_watcher = getQueryItems(this.id, this.current_angle_id).$.subscribe((items) => {
+		this.items_watcher = getQueryItems({
+			file_id: this.id,
+			angle_id: this.current_angle_id,
+			items_sort_param: this.items_sort_param,
+			items_filter_tags: this.items_filter_tags
+		}).$.subscribe((items) => {
 			this.items = getDocItemsData(items)
 		})
 	}

@@ -1,7 +1,9 @@
+import { useMemoizedFn } from 'ahooks'
 import { Tooltip, Dropdown, ConfigProvider } from 'antd'
+import { uniq } from 'lodash-es'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { When } from 'react-if'
+import { When, If, Then, Else } from 'react-if'
 
 import { Emoji } from '@/components'
 import {
@@ -14,16 +16,33 @@ import {
 	Star,
 	ArrowsDownUp,
 	TextAa,
-	CalendarPlus
+	CalendarPlus,
+	CaretUp,
+	CaretDown,
+	X,
+	Tag
 } from '@phosphor-icons/react'
 
+import TagSelect from '../TagSelect'
 import styles from './index.css'
 
 import type { IPropsHeader } from '../../types'
 import type { MenuProps } from 'antd'
 
 const Index = (props: IPropsHeader) => {
-	const { name, icon, icon_hue, desc, showSettingsModal, showArchiveModal } = props
+	const {
+		name,
+		icon,
+		icon_hue,
+		desc,
+		tags,
+		items_sort_param,
+		items_filter_tags,
+		showSettingsModal,
+		showArchiveModal,
+		setItemsSortParam,
+		setItemsFilterTags
+	} = props
 	const { t, i18n } = useTranslation()
 
 	const related_menu: MenuProps['items'] = useMemo(
@@ -73,7 +92,10 @@ const Index = (props: IPropsHeader) => {
 					{
 						key: 'importance',
 						label: (
-							<div className='menu_item_wrap flex align_center'>
+							<div
+								className='menu_item_wrap flex align_center'
+								onClick={() => setItemsSortParam({ type: 'importance', order: 'desc' })}
+							>
 								<Star size={16}></Star>
 								<span className='text ml_6'>
 									{t('translation:todo.Header.options.sort.importance')}
@@ -84,7 +106,12 @@ const Index = (props: IPropsHeader) => {
 					{
 						key: 'alphabetical',
 						label: (
-							<div className='menu_item_wrap flex align_center'>
+							<div
+								className='menu_item_wrap flex align_center'
+								onClick={() =>
+									setItemsSortParam({ type: 'alphabetical', order: 'asc' })
+								}
+							>
 								<TextAa size={16}></TextAa>
 								<span className='text ml_6'>
 									{t('translation:todo.Header.options.sort.alphabetical')}
@@ -95,7 +122,10 @@ const Index = (props: IPropsHeader) => {
 					{
 						key: 'create_at',
 						label: (
-							<div className='menu_item_wrap flex align_center'>
+							<div
+								className='menu_item_wrap flex align_center'
+								onClick={() => setItemsSortParam({ type: 'create_at', order: 'asc' })}
+							>
 								<CalendarPlus size={16}></CalendarPlus>
 								<span className='text ml_6'>
 									{t('translation:todo.Header.options.sort.create_at')}
@@ -104,13 +134,52 @@ const Index = (props: IPropsHeader) => {
 						)
 					}
 				]
+			},
+			{
+				key: 'tags',
+				disabled: !tags?.length,
+				label: (
+					<div className='menu_item_wrap flex align_center' onClick={showSettingsModal}>
+						<Tag size={16}></Tag>
+						<span className='text ml_6'>{t('translation:todo.Header.options.tags')}</span>
+					</div>
+				),
+				children: tags?.map((item) => ({
+					key: item.id,
+					label: (
+						<div
+							className='menu_item_wrap'
+							onClick={() => setItemsFilterTags(uniq([...items_filter_tags, item.id]))}
+						>
+							{item.text}
+						</div>
+					)
+				}))
 			}
 		],
-		[i18n.language]
+		[i18n.language, tags]
 	)
 
+	const toggleSortOrder = useMemoizedFn(() => {
+		setItemsSortParam({ ...items_sort_param, order: items_sort_param.order === 'asc' ? 'desc' : 'asc' })
+	})
+
+	const resetSortParam = useMemoizedFn(() => {
+		setItemsSortParam(null)
+      })
+      
+      const resetFilterTags = useMemoizedFn(() => {
+		setItemsFilterTags([])
+	})
+
+
 	return (
-		<div className={$cx('limited_content_wrap border_box flex justify_between align_center', styles._local)}>
+		<div
+			className={$cx(
+				'limited_content_wrap border_box flex justify_between align_center relative',
+				styles._local
+			)}
+		>
 			<div className='left_wrap flex flex_column'>
 				<div className='flex align_center'>
 					<When condition={icon}>
@@ -127,6 +196,57 @@ const Index = (props: IPropsHeader) => {
 					<span className='desc'>{desc}</span>
 				</When>
 			</div>
+			{(items_filter_tags.length > 0 || items_sort_param) && (
+				<div className='filter_wrap flex absolute top_0'>
+					{items_filter_tags.length > 0 && (
+						<div className='filter_item filter_tags border_box flex align_center'>
+                                          <TagSelect
+                                                className='select_tags'
+								options={tags}
+								value={items_filter_tags}
+								placement='bottomRight'
+								onChange={(v) => setItemsFilterTags(v)}
+							></TagSelect>
+							<span
+								className='btn_remove btn flex justify_center align_center clickable'
+								onClick={resetFilterTags}
+							>
+								<X size={12} weight='bold'></X>
+							</span>
+						</div>
+					)}
+					{items_sort_param && (
+						<div className='filter_item border_box flex align_center ml_4'>
+							<div
+								className='type_wrap flex align_center clickable'
+								onClick={toggleSortOrder}
+							>
+								<span className='text'>
+									{t(
+										`translation:todo.Header.options.sort.${items_sort_param.type}`
+									)}
+								</span>
+								<span className='btn_order ml_2 flex justify_center align_center'>
+									<If condition={items_sort_param.order === 'desc'}>
+										<Then>
+											<CaretUp size={12} weight='bold'></CaretUp>
+										</Then>
+										<Else>
+											<CaretDown size={12} weight='bold'></CaretDown>
+										</Else>
+									</If>
+								</span>
+							</div>
+							<span
+								className='btn_remove flex justify_center align_center clickable'
+								onClick={resetSortParam}
+							>
+								<X size={12} weight='bold'></X>
+							</span>
+						</div>
+					)}
+				</div>
+			)}
 			<div className='actions_wrap flex align_center'>
 				<Dropdown
 					destroyPopupOnHide
