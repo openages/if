@@ -62,6 +62,7 @@ const Index = ({ id }: IProps) => {
 	const props_todos: IPropsTodos = {
 		items: toJS(x.items),
 		relations: toJS(x.todo?.relations || []),
+		drag_disabled: Boolean(x.items_sort_param) || x.items_filter_tags.length > 0,
 		check: useMemoizedFn(x.check),
 		updateRelations: useMemoizedFn(x.updateRelations),
 		move: useMemoizedFn(x.move)

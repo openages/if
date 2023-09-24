@@ -225,7 +225,11 @@ export default class Index {
 	async move(args: { active_index: number; over_index: number }) {
 		this.items = arrayMove(toJS(this.items), args.active_index, args.over_index)
 
+		this.stopWatchItems()
+
 		await updateTodosSort(this.items)
+
+		this.watchItems()
 	}
 
 	updateArchiveItems(id: string) {
@@ -255,6 +259,10 @@ export default class Index {
 		this.loadmore.end = false
 
 		await this.queryArchives(true)
+	}
+
+	stopWatchItems() {
+		if (this.items_watcher) this.items_watcher.unsubscribe()
 	}
 
 	watchItems() {

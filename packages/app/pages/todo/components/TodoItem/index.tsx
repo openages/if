@@ -11,7 +11,7 @@ import styles from './index.css'
 import type { IPropsTodoItem } from '../../types'
 
 const Index = (props: IPropsTodoItem) => {
-	const { item, index, makeLinkLine, check, updateRelations } = props
+	const { item, index, drag_disabled, makeLinkLine, check, updateRelations } = props
 	const { id, text, status } = item
 	const linker = useRef<HTMLDivElement>(null)
 	const [dragging, setDragging] = useState(false)
@@ -19,8 +19,8 @@ const Index = (props: IPropsTodoItem) => {
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
 		id,
 		data: { index }
-      })
-      
+	})
+
 	useDrag(id, linker, {
 		onDragStart: () => {
 			if (status !== 'unchecked') return
@@ -67,34 +67,34 @@ const Index = (props: IPropsTodoItem) => {
 
 	return (
 		<div
-			className={$cx(
-				'w_100 border_box flex align_start relative',
-				styles.todo_item,
-				styles[item.status]
-			)}
+			className={$cx('w_100 border_box flex align_start relative', styles.todo_item, styles[item.status])}
 			ref={setNodeRef}
 			style={{ transform: CSS.Translate.toString(transform), transition }}
 		>
-			<div
-				id={id}
-				className={$cx(
-					'dot_wrap border_box flex justify_center align_center absolute transition_normal cursor_point z_index_10',
-					dragging && 'dragging',
-					hovering && 'hovering'
-				)}
-				ref={linker}
-				onDrag={onDrag}
-			></div>
-			<div
-				className={$cx(
-					'drag_wrap todo border_box flex justify_center align_center absolute transition_normal cursor_point z_index_10'
-				)}
-				ref={setActivatorNodeRef}
-				{...attributes}
-				{...listeners}
-			>
-				<DotsSixVertical size={12} weight='bold'></DotsSixVertical>
-			</div>
+			{!drag_disabled && (
+				<div
+					id={id}
+					className={$cx(
+						'dot_wrap border_box flex justify_center align_center absolute transition_normal cursor_point z_index_10',
+						dragging && 'dragging',
+						hovering && 'hovering'
+					)}
+					ref={linker}
+					onDrag={onDrag}
+				></div>
+			)}
+			{!drag_disabled && (
+				<div
+					className={$cx(
+						'drag_wrap todo border_box flex justify_center align_center absolute transition_normal cursor_point z_index_10'
+					)}
+					ref={setActivatorNodeRef}
+					{...attributes}
+					{...listeners}
+				>
+					<DotsSixVertical size={12} weight='bold'></DotsSixVertical>
+				</div>
+			)}
 			<div
 				className='action_wrap flex justify_center align_center cursor_point clickable'
 				onClick={onCheck}

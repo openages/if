@@ -11,7 +11,7 @@ export interface IProps {
 
 export interface IPropsTagSelect {
 	options: Model['todo']['tags']
-      value: Array<string>
+	value: Array<string>
 	className?: SelectProps['className']
 	placement?: SelectProps['placement']
 	onChange: (v: Array<string>) => void
@@ -60,6 +60,7 @@ export interface IPropsInputCircle {
 export interface IPropsTodos {
 	items: Model['items']
 	relations: Todo.Data['relations']
+	drag_disabled: boolean
 	check: Model['check']
 	updateRelations: Model['updateRelations']
 	move: Model['move']
@@ -68,6 +69,7 @@ export interface IPropsTodos {
 export interface IPropsTodoItem {
 	item: Todo.Todo
 	index: number
+	drag_disabled: boolean
 	makeLinkLine: (args: { active_id: string; y: number } | null) => void
 	check: Model['check']
 	updateRelations: Model['updateRelations']

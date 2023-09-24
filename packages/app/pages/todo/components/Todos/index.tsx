@@ -16,7 +16,7 @@ import type { IPropsTodos } from '../../types'
 import type { DragEndEvent } from '@dnd-kit/core'
 
 const Index = (props: IPropsTodos) => {
-	const { items, relations, check, updateRelations, move } = props
+	const { items, relations, drag_disabled, check, updateRelations, move } = props
 	const container = useRef<HTMLDivElement>(null)
 	const [lines, setLines] = useState<Array<JSX.Element>>([])
 	const [link_points, setLinkPoints] = useState<Array<number>>(null)
@@ -90,7 +90,7 @@ const Index = (props: IPropsTodos) => {
 
 	return (
 		<div className={$cx('limited_content_wrap relative', styles._local)}>
-			{height > 0 && (
+			{height > 0 && !drag_disabled && (
 				<Stage className='stage_wrap absolute' width={9} height={height}>
 					<Layer>
 						{lines}
@@ -111,7 +111,14 @@ const Index = (props: IPropsTodos) => {
 						{items.map((item, index) =>
 							item.type === 'todo' ? (
 								<TodoItem
-									{...{ item, index, makeLinkLine, check, updateRelations }}
+									{...{
+										item,
+										index,
+										drag_disabled,
+										makeLinkLine,
+										check,
+										updateRelations
+									}}
 									key={item.id}
 								></TodoItem>
 							) : (
