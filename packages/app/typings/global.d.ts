@@ -4,8 +4,17 @@ import type { ModalStaticFunctions } from 'antd/es/modal/confirm'
 import type { NotificationInstance } from 'antd/es/notification/interface'
 import type { TFunction } from 'i18next'
 import type { NavigateFunction } from 'react-router-dom'
+import type { memo } from 'react'
+import type { handle } from '@openages/craftkit'
+import type Emittery from '@openages/emittery'
 
 type $CX = (...args: Array<string | boolean | null | undefined>) => string
+
+interface $App {
+	memo: typeof memo
+	handle: typeof handle
+	Event: Emittery
+}
 
 declare global {
 	interface Window {
