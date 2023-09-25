@@ -21,7 +21,6 @@
             "@emoji-mart/data": "^1.1.2",
             "@emoji-mart/react": "^1.1.1",
             "@openages/craftkit": "workspace:*",
-            "@openages/emittery": "workspace:*",
             "@phosphor-icons/react": "^2.0.13",
             "ahooks": "^3.7.8",
             "antd": "^5.9.2",

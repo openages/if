@@ -1,7 +1,6 @@
 import cx from 'classix'
 
-import { handle, memo } from '@openages/craftkit'
-import EventEmitter from '@openages/emittery'
+import { handle, memo, Emittery } from '@openages/craftkit'
 
 import type { MessageInstance } from 'antd/es/message/interface'
 import type { ModalStaticFunctions } from 'antd/es/modal/confirm'
@@ -12,7 +11,7 @@ window.$is_dev = process.env.NODE_ENV === 'development'
 window.$app = {
 	memo,
 	handle,
-	Event: new EventEmitter()
+	Event: new Emittery()
 }
 
 window.$t = (() => {}) as any
