@@ -1,6 +1,8 @@
 import { makeAutoObservable, reaction, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
+import Utils from '@/models/utils'
+
 import type { App } from '@/types'
 import type { RxDocument, RxQuery } from 'rxdb'
 import type { DocSetting } from '@/schemas'
@@ -15,7 +17,7 @@ export default class Index {
 	visible_app_switch = false
 	switch_index = 0
 
-	constructor() {
+	constructor(public utils: Utils) {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
@@ -28,21 +30,23 @@ export default class Index {
 		})
 	}
 
-      init() {
+	init() {
 		this.reactions()
-            this.query()
-            
-            this.on()
+		this.query()
+
+		this.on()
 	}
 
 	reactions() {
-		reaction(
-			() => [this.visible_app_menu, this.visible_app_switch],
-			([visible_app_menu, visible_app_switch]) => {
-				if (visible_app_menu) this.visible_app_switch = false
-				if (visible_app_switch) this.visible_app_menu = false
-			}
-		)
+		this.utils.acts = [
+			reaction(
+				() => [this.visible_app_menu, this.visible_app_switch],
+				([visible_app_menu, visible_app_switch]) => {
+					if (visible_app_menu) this.visible_app_switch = false
+					if (visible_app_switch) this.visible_app_menu = false
+				}
+			)
+		]
 	}
 
 	async query() {
@@ -109,7 +113,9 @@ export default class Index {
 		window.addEventListener('blur', this.handleAppSwitch)
 	}
 
-	off() {
+      off() {
+            this.utils.off()
+            
 		$app.Event.off('global.app.toggleAppMenu', this.toggleAppMenu)
 		$app.Event.off('global.app.appSwitch', this.appSwitch)
 		$app.Event.off('global.app.handleAppSwitch', this.handleAppSwitch)

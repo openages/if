@@ -1,4 +1,4 @@
-import { makeAutoObservable, toJS } from 'mobx'
+import { makeAutoObservable, reaction, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { archive } from '@/actions/todo'
@@ -7,7 +7,6 @@ import { Utils, File, Loadmore } from '@/models'
 import { getDocItemsData } from '@/utils'
 import { loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
-import { act } from '@openages/craftkit'
 
 import {
 	getQueryTodo,
@@ -74,44 +73,59 @@ export default class Index {
 
 	reactions() {
 		this.utils.acts = [
-			act([this.current_angle_id, this.items_sort_param, this.items_filter_tags], () => {
-				if (!this.id) return
+			reaction(
+				() => [this.current_angle_id, this.items_sort_param, this.items_filter_tags],
+				() => {
+					if (!this.id) return
 
-				this.queryItems()
-			}),
-			act(this.todo.angles, (v) => {
-				if (!this.id) return
-				if (!this.todo.id) return
-
-				const exist = v.find((item) => item.id === this.current_angle_id)
-
-				if (!exist) {
-					this.current_angle_id = v[0].id
+					this.queryItems()
 				}
-			}),
-			act(this.visible_archive_modal, (v) => {
-				if (v) {
+			),
+			reaction(
+				() => this.todo.angles,
+				(v) => {
+					if (!this.id) return
+					if (!this.todo.id) return
+
+					const exist = v.find((item) => item.id === this.current_angle_id)
+
+					if (!exist) {
+						this.current_angle_id = v[0].id
+					}
+				}
+			),
+			reaction(
+				() => this.visible_archive_modal,
+				(v) => {
+					if (v) {
+						this.queryArchives()
+						this.queryArchivesCounts()
+					} else {
+						this.loadmore.page = 0
+						this.loadmore.end = false
+						this.archive_query_params = {}
+					}
+				}
+			),
+			reaction(
+				() => this.loadmore.page,
+				(v) => {
+					if (!v) return
+
 					this.queryArchives()
-					this.queryArchivesCounts()
-				} else {
+				}
+			),
+			reaction(
+				() => this.archive_query_params,
+				() => {
+					if (!this.visible_archive_modal) return
+
 					this.loadmore.page = 0
 					this.loadmore.end = false
-					this.archive_query_params = {}
+
+					this.queryArchives(true)
 				}
-			}),
-			act(this.loadmore.page, (v) => {
-				if (!v) return
-
-				this.queryArchives()
-			}),
-			act(this.archive_query_params, () => {
-				if (!this.visible_archive_modal) return
-
-				this.loadmore.page = 0
-				this.loadmore.end = false
-
-				this.queryArchives(true)
-			})
+			)
 		]
 	}
 
@@ -276,9 +290,9 @@ export default class Index {
 		this.timer = setInterval(() => archive(this.id), 9000)
 	}
 
-      off() {
-            this.utils.off()
-            this.file.off()
+	off() {
+		this.utils.off()
+		this.file.off()
 
 		this.todo_watcher?.unsubscribe?.()
 		this.items_watcher?.unsubscribe?.()

@@ -38,11 +38,11 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 	const { file_id, angle_id, items_sort_param, items_filter_tags } = args
 
 	const selector: MangoQuerySelector<Todo.TodoItem> = { file_id, angle_id: angle_id }
-      const sort: MangoQuerySortPart<Todo.Todo> = { sort: 'asc', create_at: 'asc' }
-      
-      if (items_filter_tags.length || items_sort_param) {
+	const sort: MangoQuerySortPart<Todo.Todo> = { sort: 'asc', create_at: 'asc' }
+
+	if (items_filter_tags.length || items_sort_param) {
 		selector['type'] = 'todo'
-      }
+	}
 
 	if (items_filter_tags.length) {
 		selector['tag_ids'] = {
@@ -284,7 +284,7 @@ export const restoreArchiveItem = async (id: string) => {
 
 	const data = cloneDeep(doc.toMutableJSON())
 
-	await doc.incrementalRemove()
+	await doc.remove()
 
 	const sort = await getMaxSort()
 
@@ -299,7 +299,7 @@ export const restoreArchiveItem = async (id: string) => {
 export const removeArchiveItem = async (id: string) => {
 	const doc = await $db.collections.todo_archives.findOne({ selector: { id } }).exec()
 
-	await doc.incrementalRemove()
+	await doc.remove()
 }
 
 export const archiveByTime = async (file_id: string, v: ArgsArchiveByTime) => {

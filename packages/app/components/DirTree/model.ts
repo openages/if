@@ -1,11 +1,10 @@
 import { remove } from 'lodash-es'
-import { makeAutoObservable, toJS } from 'mobx'
+import { makeAutoObservable, reaction, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
 import { setStorageWhenChange } from '@/utils'
 import { loading } from '@/utils/decorators'
-import { act } from '@openages/craftkit'
 
 import { getQuery, create, query, updateDirtree, updateItem, removeItem } from './services'
 import { move } from './utils'
@@ -59,8 +58,17 @@ export default class Index {
 		this.utils.acts.push(disposer)
 	}
 
-	reactions() {
-		this.utils.acts = [act(this.current_item, (v) => this.onClick(v))]
+      reactions() {
+		this.utils.acts = [
+			reaction(
+				() => this.current_item,
+				(v) => {
+					console.log(toJS(v))
+
+					this.onClick(v)
+				}
+			)
+		]
 	}
 
 	onClick(v: DirTree.File) {
