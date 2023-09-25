@@ -8,19 +8,19 @@ import type { RouteObject } from 'react-router-dom'
 const routes: Array<RouteObject> = [
 	{
 		path: '/',
-		element: <LazyElement type='pages' path='todo/page' />
+		element: <LazyElement type='modules' path='todo/page' />
 	},
 	{
 		path: '/memo',
-		element: <LazyElement type='pages' path='memo' />
+		element: <LazyElement type='modules' path='memo' />
 	},
 	{
 		path: '/note',
-		element: <LazyElement type='pages' path='note' />
+		element: <LazyElement type='modules' path='note' />
 	},
 	{
 		path: '/setting',
-		element: <LazyElement type='pages' path='setting' />
+		element: <LazyElement type='modules' path='setting' />
 	}
 ]
 

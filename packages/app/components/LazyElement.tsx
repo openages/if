@@ -2,7 +2,7 @@ import { Suspense, lazy, useMemo } from 'react'
 import { match } from 'ts-pattern'
 
 interface IProps {
-	type: 'pages'
+	type: 'modules'
 	path: string
 	params?: any
 }
@@ -12,7 +12,7 @@ const Index = (props: IProps) => {
 
 	const Component = useMemo(() => {
 		return match(type)
-			.with('pages', () => lazy(() => import(`@/pages/${path}`)))
+			.with('modules', () => lazy(() => import(`@/modules/${path}`)))
 			.exhaustive()
 	}, [type, path])
 

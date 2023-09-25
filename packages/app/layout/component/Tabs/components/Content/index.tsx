@@ -11,7 +11,7 @@ const Index = (props: IPropsTabsContent) => {
 		<Fragment>
 			{stacks.map((item) => (
 				<Offscreen mode={item.is_active ? 'visible' : 'hidden'} key={item.id}>
-					<LazyElement type='pages' path={item.module} params={{ id: item.id }} />
+					<LazyElement type='modules' path={item.module} params={{ id: item.id }} />
 				</Offscreen>
 			))}
 		</Fragment>
