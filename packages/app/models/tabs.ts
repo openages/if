@@ -1,6 +1,7 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
+import Utils from '@/models/utils'
 import { setStorageWhenChange } from '@/utils'
 import { arrayMove } from '@dnd-kit/sortable'
 
@@ -11,9 +12,10 @@ import type { DragEndEvent } from '@dnd-kit/core'
 export default class Index {
 	stacks = [] as App.Stacks
 
-	constructor() {
+	constructor(public utils: Utils) {
 		makeAutoObservable(this, {}, { autoBind: true })
-		setStorageWhenChange(['stacks'], this)
+
+		this.utils.acts = [setStorageWhenChange(['stacks'], this)]
 	}
 
 	add(v: App.Stack) {
@@ -95,5 +97,9 @@ export default class Index {
 			active.data.current.index as number,
 			over.data.current.index as number
 		)
+      }
+      
+      off() {
+		this.utils.off()
 	}
 }

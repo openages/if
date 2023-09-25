@@ -1,4 +1,4 @@
-import { makeAutoObservable, reaction, toJS } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { archive } from '@/actions/todo'
@@ -7,6 +7,7 @@ import { Utils, File, Loadmore } from '@/models'
 import { getDocItemsData } from '@/utils'
 import { loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
+import { act } from '@openages/craftkit'
 
 import {
 	getQueryTodo,
@@ -72,18 +73,13 @@ export default class Index {
 	}
 
 	reactions() {
-		reaction(
-			() => [this.current_angle_id, this.items_sort_param, this.items_filter_tags],
-			() => {
+		this.utils.acts = [
+			act([this.current_angle_id, this.items_sort_param, this.items_filter_tags], () => {
 				if (!this.id) return
 
 				this.queryItems()
-			}
-		)
-
-		reaction(
-			() => this.todo.angles,
-			(v) => {
+			}),
+			act(this.todo.angles, (v) => {
 				if (!this.id) return
 				if (!this.todo.id) return
 
@@ -92,12 +88,8 @@ export default class Index {
 				if (!exist) {
 					this.current_angle_id = v[0].id
 				}
-			}
-		)
-
-		reaction(
-			() => this.visible_archive_modal,
-			(v) => {
+			}),
+			act(this.visible_archive_modal, (v) => {
 				if (v) {
 					this.queryArchives()
 					this.queryArchivesCounts()
@@ -106,29 +98,21 @@ export default class Index {
 					this.loadmore.end = false
 					this.archive_query_params = {}
 				}
-			}
-		)
-
-		reaction(
-			() => this.loadmore.page,
-			(v) => {
+			}),
+			act(this.loadmore.page, (v) => {
 				if (!v) return
 
 				this.queryArchives()
-			}
-		)
-
-		reaction(
-			() => this.archive_query_params,
-			() => {
+			}),
+			act(this.archive_query_params, () => {
 				if (!this.visible_archive_modal) return
 
 				this.loadmore.page = 0
 				this.loadmore.end = false
 
 				this.queryArchives(true)
-			}
-		)
+			})
+		]
 	}
 
 	@loading
@@ -232,14 +216,6 @@ export default class Index {
 		this.watchItems()
 	}
 
-	updateArchiveItems(id: string) {
-		this.archives.splice(
-			this.archives.findIndex((item) => item.id === id),
-			1
-		)
-		this.archive_counts = this.archive_counts - 1
-	}
-
 	async restoreArchiveItem(id: string) {
 		await restoreArchiveItem(id)
 
@@ -259,6 +235,14 @@ export default class Index {
 		this.loadmore.end = false
 
 		await this.queryArchives(true)
+	}
+
+	updateArchiveItems(id: string) {
+		this.archives.splice(
+			this.archives.findIndex((item) => item.id === id),
+			1
+		)
+		this.archive_counts = this.archive_counts - 1
 	}
 
 	stopWatchItems() {
@@ -292,11 +276,12 @@ export default class Index {
 		this.timer = setInterval(() => archive(this.id), 9000)
 	}
 
-	off() {
+      off() {
+            this.utils.off()
+            this.file.off()
+
 		this.todo_watcher?.unsubscribe?.()
 		this.items_watcher?.unsubscribe?.()
-
-		this.file.off()
 
 		clearInterval(this.timer)
 	}

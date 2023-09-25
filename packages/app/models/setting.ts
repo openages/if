@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
+import Utils from '@/models/utils'
 import { setFavicon, setGlobalAnimation, setStorageWhenChange } from '@/utils'
 
 import type { Theme } from '@/appdata'
@@ -12,9 +13,10 @@ export default class Index {
 	show_bar_title = false
 	page_width = '780px'
 
-	constructor() {
+	constructor(public utils: Utils) {
 		makeAutoObservable(this, {}, { autoBind: true })
-		setStorageWhenChange(['theme', 'color_main_rgb', 'show_bar_title', 'page_width'], this)
+
+		this.utils.acts = [setStorageWhenChange(['theme', 'color_main_rgb', 'show_bar_title', 'page_width'], this)]
 
 		this.setTheme(this.theme || 'light', true)
 		this.setColorMain(this.color_main_rgb || '255,0,0')
@@ -42,5 +44,9 @@ export default class Index {
 		this.page_width = v
 
 		document.documentElement.style.setProperty('--limited_width', v)
+	}
+
+	off() {
+		this.utils.off()
 	}
 }

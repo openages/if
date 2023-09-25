@@ -1,7 +1,7 @@
 import cx from 'classix'
-import EventEmitter from 'emittery'
 
 import { handle, memo } from '@openages/craftkit'
+import EventEmitter from '@openages/emittery'
 
 import type { MessageInstance } from 'antd/es/message/interface'
 import type { ModalStaticFunctions } from 'antd/es/modal/confirm'

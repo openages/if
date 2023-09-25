@@ -4,6 +4,7 @@ import { initReactI18next } from 'react-i18next'
 import { injectable } from 'tsyringe'
 
 import { en, zh } from '@/locales'
+import Utils from '@/models/utils'
 import { getLang, setStorageWhenChange } from '@/utils'
 import { local } from '@openages/craftkit'
 
@@ -13,9 +14,10 @@ import type { Lang } from '@/appdata'
 export default class Index {
 	lang = 'en' as Lang
 
-	constructor() {
-		makeAutoObservable(this, {}, { autoBind: true })
-		setStorageWhenChange(['lang'], this)
+	constructor(public utils: Utils) {
+            makeAutoObservable(this, {}, { autoBind: true })
+            
+		this.utils.acts =[setStorageWhenChange(['lang'], this)]
 
 		this.init()
 	}
@@ -37,5 +39,9 @@ export default class Index {
 		this.lang = lang
 
 		local.lang = lang
+      }
+      
+      off() {
+		this.utils.off()
 	}
 }

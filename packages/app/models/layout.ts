@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
+import Utils from '@/models/utils'
 import { getComputedStyleValue, setStorageWhenChange } from '@/utils'
 
 @injectable()
@@ -8,9 +9,10 @@ export default class Index {
 	dirtree_width = 0
 	dirtree_prev = 0
 
-	constructor() {
+	constructor(public utils: Utils) {
 		makeAutoObservable(this, {}, { autoBind: true })
-		setStorageWhenChange(['dirtree_prev', 'dirtree_width'], this)
+
+		this.utils.acts = [setStorageWhenChange(['dirtree_prev', 'dirtree_width'], this)]
 
 		this.init()
 	}
@@ -29,8 +31,8 @@ export default class Index {
 	}
 
 	toggleDirTreeVisible() {
-            if (this.dirtree_width === 0) return this.setDirTreeWidth(this.dirtree_prev || 222)
-            
+		if (this.dirtree_width === 0) return this.setDirTreeWidth(this.dirtree_prev || 222)
+
 		this.dirtree_prev = this.dirtree_width
 
 		this.setDirTreeWidth(0, true)
@@ -42,5 +44,9 @@ export default class Index {
 		this.dirtree_width = v
 
 		document.documentElement.style.setProperty('--dirtree_width', v + 'px')
+	}
+
+	off() {
+		this.utils.off()
 	}
 }

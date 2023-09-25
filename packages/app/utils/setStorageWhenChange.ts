@@ -34,7 +34,7 @@ export default (keys: Array<KeyMap>, instance: any) => {
 		}
 	})
 
-	autorun(() =>
+	return autorun(() =>
 		keys.map((key) => {
 			local.setItem(getKey(key).local_key, get(instance, getKey(key).proxy_key))
 		})

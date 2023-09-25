@@ -21,8 +21,8 @@ export default class GlobalModel {
 		await this.db.init()
 
 		this.app.init()
-            this.shortcuts.init()
-            
+		this.shortcuts.init()
+
 		this.on()
 	}
 
@@ -33,12 +33,16 @@ export default class GlobalModel {
 	}
 
 	off() {
+		this.db.instance?.destroy?.()
+		this.locale.off()
+		this.layout.off()
+		this.setting.off()
+		this.tabs.off()
+		this.app.off()
+		this.shortcuts.off()
+
 		$app.Event.off('global.tabs.add', this.tabs.add)
 		$app.Event.off('global.tabs.updateFile', this.tabs.updateFile)
 		$app.Event.off('global.tabs.removeFile', this.tabs.removeFile)
-
-		this.db.instance?.destroy?.()
-		this.app.off()
-		this.shortcuts.off()
 	}
 }

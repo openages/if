@@ -1,10 +1,11 @@
 import { remove } from 'lodash-es'
-import { makeAutoObservable, reaction, toJS } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
 import { setStorageWhenChange } from '@/utils'
 import { loading } from '@/utils/decorators'
+import { act } from '@openages/craftkit'
 
 import { getQuery, create, query, updateDirtree, updateItem, removeItem } from './services'
 import { move } from './utils'
@@ -13,7 +14,7 @@ import type { App, Module, DirTree } from '@/types'
 import type { Active, Over } from '@dnd-kit/core'
 import type { IProps } from './types'
 import type { Item } from './types/services'
-import type { RxDocument, RxQuery } from 'rxdb'
+import type { RxDocument } from 'rxdb'
 import type { Subscription } from 'rxjs'
 
 @injectable()
@@ -39,7 +40,7 @@ export default class Index {
 		this.module = module
 		this.actions = actions
 
-		setStorageWhenChange(
+		const disposer = setStorageWhenChange(
 			[
 				{ [`${this.module}_active_file`]: 'current_item' },
 				{ [`${this.module}_open_folder`]: 'open_folder' }
@@ -54,13 +55,12 @@ export default class Index {
 		this.query()
 
 		this.onClick(this.current_item)
+
+		this.utils.acts.push(disposer)
 	}
 
 	reactions() {
-		reaction(
-			() => this.current_item,
-			(v) => this.onClick(v)
-		)
+		this.utils.acts = [act(this.current_item, (v) => this.onClick(v))]
 	}
 
 	onClick(v: DirTree.File) {
@@ -179,6 +179,7 @@ export default class Index {
 	}
 
 	off() {
+		this.utils.off()
 		this.doc_watcher?.unsubscribe?.()
 
 		$app.Event.off(`${this.module}/dirtree/move`, this.move)
