@@ -1,10 +1,10 @@
 import { remove } from 'lodash-es'
-import { makeAutoObservable, reaction, toJS } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
-import { setStorageWhenChange } from '@/utils'
 import { loading } from '@/utils/decorators'
+import { setStorageWhenChange, useInstanceWatch } from '@openages/craftkit'
 
 import { getQuery, create, query, updateDirtree, updateItem, removeItem } from './services'
 import { move } from './utils'
@@ -15,6 +15,7 @@ import type { IProps } from './types'
 import type { Item } from './types/services'
 import type { RxDocument } from 'rxdb'
 import type { Subscription } from 'rxjs'
+import type { Watch } from '@openages/craftkit'
 
 @injectable()
 export default class Index {
@@ -29,8 +30,14 @@ export default class Index {
 	open_folder = [] as Array<string>
 	modal_open = false
 
+	watch = {
+		current_item: (v) => this.onClick(v)
+	} as Watch<Index>
+
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, { watch: false }, { autoBind: true })
+
+		this.utils.acts = [...useInstanceWatch(this)]
 	}
 
 	async init(args: { module: App.ModuleType; actions: IProps['actions'] }) {
@@ -48,27 +55,13 @@ export default class Index {
 		)
 
 		this.on()
-		this.watch()
-		this.reactions()
+		this.watchDoc()
 
 		this.query()
 
 		this.onClick(this.current_item)
 
 		this.utils.acts.push(disposer)
-	}
-
-      reactions() {
-		this.utils.acts = [
-			reaction(
-				() => this.current_item,
-				(v) => {
-					console.log(toJS(v))
-
-					this.onClick(v)
-				}
-			)
-		]
 	}
 
 	onClick(v: DirTree.File) {
@@ -171,7 +164,7 @@ export default class Index {
 		this.focusing_item = {} as DirTree.Item
 	}
 
-	watch() {
+	watchDoc() {
 		this.doc_watcher = getQuery(this.module).$.subscribe((doc: RxDocument<Module.Item>) => {
 			this.doc = doc.toMutableJSON()
 		})

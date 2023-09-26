@@ -2,7 +2,8 @@ import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { getComputedStyleValue, setStorageWhenChange } from '@/utils'
+import { getComputedStyleValue } from '@/utils'
+import { setStorageWhenChange } from '@openages/craftkit'
 
 @injectable()
 export default class Index {

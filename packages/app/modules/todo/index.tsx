@@ -7,6 +7,7 @@ import { container } from 'tsyringe'
 
 import { DataEmpty } from '@/components'
 import { usePageScrollRestoration } from '@/hooks'
+import { isShowEmpty } from '@/utils'
 
 import { Header, Input, Tabs, Todos, SettingsModal, Archive } from './components'
 import styles from './index.css'
@@ -104,13 +105,11 @@ const Index = ({ id }: IProps) => {
 				</Then>
 				<Else>
 					<When
-						condition={
-							!(
-								x.file.loading ||
-								x.utils.loading['queryTodo'] ||
-								x.utils.loading['queryItems']
-							)
-						}
+						condition={isShowEmpty([
+							x.file.loading,
+							x.utils.loading['queryTodo'],
+							x.utils.loading['queryItems']
+						])}
 					>
 						<DataEmpty></DataEmpty>
 					</When>

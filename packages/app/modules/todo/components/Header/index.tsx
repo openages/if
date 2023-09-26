@@ -166,12 +166,11 @@ const Index = (props: IPropsHeader) => {
 
 	const resetSortParam = useMemoizedFn(() => {
 		setItemsSortParam(null)
-      })
-      
-      const resetFilterTags = useMemoizedFn(() => {
-		setItemsFilterTags([])
 	})
 
+	const resetFilterTags = useMemoizedFn(() => {
+		setItemsFilterTags([])
+	})
 
 	return (
 		<div
@@ -200,8 +199,8 @@ const Index = (props: IPropsHeader) => {
 				<div className='filter_wrap flex absolute top_0'>
 					{items_filter_tags.length > 0 && (
 						<div className='filter_item filter_tags border_box flex align_center'>
-                                          <TagSelect
-                                                className='select_tags'
+							<TagSelect
+								className='select_tags'
 								options={tags}
 								value={items_filter_tags}
 								placement='bottomRight'
@@ -254,8 +253,10 @@ const Index = (props: IPropsHeader) => {
 					overlayStyle={{ width: 111 }}
 					menu={{ items: related_menu }}
 				>
-					<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'>
-						<Files size={18}></Files>
+					<div>
+						<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'>
+							<Files size={18}></Files>
+						</div>
 					</div>
 				</Dropdown>
 				<Tooltip title={t('translation:todo.Header.archive')} placement='top'>
@@ -273,8 +274,10 @@ const Index = (props: IPropsHeader) => {
 						overlayStyle={{ width: 90 }}
 						menu={{ items: options_menu }}
 					>
-						<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable'>
-							<DotsThreeCircleVertical size={19}></DotsThreeCircleVertical>
+						<div>
+							<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable'>
+								<DotsThreeCircleVertical size={19}></DotsThreeCircleVertical>
+							</div>
 						</div>
 					</Dropdown>
 				</ConfigProvider>

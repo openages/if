@@ -2,7 +2,8 @@ import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { setFavicon, setGlobalAnimation, setStorageWhenChange } from '@/utils'
+import { setFavicon, setGlobalAnimation } from '@/utils'
+import { setStorageWhenChange } from '@openages/craftkit'
 
 import type { Theme } from '@/appdata'
 

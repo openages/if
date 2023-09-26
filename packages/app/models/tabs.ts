@@ -2,8 +2,8 @@ import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { setStorageWhenChange } from '@/utils'
 import { arrayMove } from '@dnd-kit/sortable'
+import { setStorageWhenChange } from '@openages/craftkit'
 
 import type { App, DirTree } from '@/types'
 import type { DragEndEvent } from '@dnd-kit/core'

@@ -1,11 +1,13 @@
-import { makeAutoObservable, reaction, toJS } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
+import { useInstanceWatch } from '@openages/craftkit'
 
 import type { App } from '@/types'
 import type { RxDocument, RxQuery } from 'rxdb'
 import type { DocSetting } from '@/schemas'
+import type { Watch } from '@openages/craftkit'
 
 @injectable()
 export default class Index {
@@ -17,8 +19,21 @@ export default class Index {
 	visible_app_switch = false
 	switch_index = 0
 
+	get visibles() {
+		return [this.visible_app_menu, this.visible_app_switch]
+	}
+
+	watch = {
+		'visible_app_menu|visible_app_switch': () => {
+			if (this.visible_app_menu) this.visible_app_switch = false
+			if (this.visible_app_switch) this.visible_app_menu = false
+		}
+	} as Watch<Index & { 'visible_app_menu|visible_app_switch': any }>
+
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, { watch: false }, { autoBind: true })
+
+		this.utils.acts = [...useInstanceWatch(this)]
 	}
 
 	get apps() {
@@ -31,22 +46,9 @@ export default class Index {
 	}
 
 	init() {
-		this.reactions()
 		this.query()
 
 		this.on()
-	}
-
-	reactions() {
-		this.utils.acts = [
-			reaction(
-				() => [this.visible_app_menu, this.visible_app_switch],
-				([visible_app_menu, visible_app_switch]) => {
-					if (visible_app_menu) this.visible_app_switch = false
-					if (visible_app_switch) this.visible_app_menu = false
-				}
-			)
-		]
 	}
 
 	async query() {
@@ -113,9 +115,9 @@ export default class Index {
 		window.addEventListener('blur', this.handleAppSwitch)
 	}
 
-      off() {
-            this.utils.off()
-            
+	off() {
+		this.utils.off()
+
 		$app.Event.off('global.app.toggleAppMenu', this.toggleAppMenu)
 		$app.Event.off('global.app.appSwitch', this.appSwitch)
 		$app.Event.off('global.app.handleAppSwitch', this.handleAppSwitch)

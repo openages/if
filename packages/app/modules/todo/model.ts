@@ -1,4 +1,4 @@
-import { makeAutoObservable, reaction, toJS } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { archive } from '@/actions/todo'
@@ -7,6 +7,7 @@ import { Utils, File, Loadmore } from '@/models'
 import { getDocItemsData } from '@/utils'
 import { loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
+import { useInstanceWatch } from '@openages/craftkit'
 
 import {
 	getQueryTodo,
@@ -29,6 +30,7 @@ import type { ArgsUpdateTodoData, ArgsArchiveByTime } from './types/services'
 import type { ItemsSortParams, ArchiveQueryParams } from './types/model'
 import type { RxDB, Todo, TodoArchive } from '@/types'
 import type { Subscription } from 'rxjs'
+import type { Watch } from '@openages/craftkit'
 
 @injectable()
 export default class Index {
@@ -47,13 +49,62 @@ export default class Index {
 	items_filter_tags = [] as Array<string>
 	archive_query_params = {} as ArchiveQueryParams
 
+	watch = {
+		'current_angle_id|items_sort_param|items_filter_tags': () => {
+			if (!this.id) return
+
+			this.queryItems()
+		},
+		'todo.angles': (v) => {
+			if (!this.id) return
+			if (!this.todo.id) return
+
+			const exist = v.find((item) => item.id === this.current_angle_id)
+
+			if (!exist) {
+				this.current_angle_id = v[0].id
+			}
+		},
+		visible_archive_modal: (v) => {
+			if (v) {
+				this.queryArchives()
+				this.queryArchivesCounts()
+			} else {
+				this.loadmore.page = 0
+				this.loadmore.end = false
+				this.archive_query_params = {}
+			}
+		},
+		'loadmore.page': (v) => {
+			if (!v) return
+
+			this.queryArchives()
+		},
+		archive_query_params: () => {
+			if (!this.visible_archive_modal) return
+
+			this.loadmore.page = 0
+			this.loadmore.end = false
+
+			this.queryArchives(true)
+		}
+	} as Watch<
+		Index & {
+			'current_angle_id|items_sort_param|items_filter_tags': any
+			'todo.angles': Todo.Data['angles']
+			'loadmore.page': number
+		}
+	>
+
 	constructor(
 		public global: GlobalModel,
 		public utils: Utils,
 		public file: File,
 		public loadmore: Loadmore
 	) {
-		makeAutoObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, {}, { autoBind: true, deep: true })
+
+		this.utils.acts = [...useInstanceWatch(this)]
 	}
 
 	init(args: { id: string }) {
@@ -62,71 +113,12 @@ export default class Index {
 		this.id = id
 
 		this.on()
-		this.watch()
-		this.reactions()
+		this.watchTodo()
 
 		this.file.init(this.id)
 
 		this.queryTodo()
 		this.queryItems()
-	}
-
-	reactions() {
-		this.utils.acts = [
-			reaction(
-				() => [this.current_angle_id, this.items_sort_param, this.items_filter_tags],
-				() => {
-					if (!this.id) return
-
-					this.queryItems()
-				}
-			),
-			reaction(
-				() => this.todo.angles,
-				(v) => {
-					if (!this.id) return
-					if (!this.todo.id) return
-
-					const exist = v.find((item) => item.id === this.current_angle_id)
-
-					if (!exist) {
-						this.current_angle_id = v[0].id
-					}
-				}
-			),
-			reaction(
-				() => this.visible_archive_modal,
-				(v) => {
-					if (v) {
-						this.queryArchives()
-						this.queryArchivesCounts()
-					} else {
-						this.loadmore.page = 0
-						this.loadmore.end = false
-						this.archive_query_params = {}
-					}
-				}
-			),
-			reaction(
-				() => this.loadmore.page,
-				(v) => {
-					if (!v) return
-
-					this.queryArchives()
-				}
-			),
-			reaction(
-				() => this.archive_query_params,
-				() => {
-					if (!this.visible_archive_modal) return
-
-					this.loadmore.page = 0
-					this.loadmore.end = false
-
-					this.queryArchives(true)
-				}
-			)
-		]
 	}
 
 	@loading
@@ -274,7 +266,7 @@ export default class Index {
 		})
 	}
 
-	watch() {
+	watchTodo() {
 		this.todo_watcher = getQueryTodo(this.id).$.subscribe((todo) => {
 			this.todo = todo.toMutableJSON()
 
