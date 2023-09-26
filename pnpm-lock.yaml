@@ -253,9 +253,6 @@ importers:
         specifier: 0.0.0-experimental-9ba1bbd65-20230922
         version: 0.0.0-experimental-9ba1bbd65-20230922
     devDependencies:
-      '@rspack/cli':
-        specifier: ^0.2.12
-        version: 0.2.12(react-refresh@0.14.0)(webpack@5.88.2)
       '@types/fs-extra':
         specifier: ^11.0.1
         version: 11.0.2
@@ -269,6 +266,9 @@ importers:
         specifier: ^18.2.21
         version: 18.2.22
       bun:
+        specifier: ^1.0.3
+        version: 1.0.3
+      bun-types:
         specifier: ^1.0.3
         version: 1.0.3
       fast-glob:
@@ -4098,6 +4098,10 @@ packages:
       base64-js: 1.5.1
       ieee754: 1.2.1
     dev: false
+
+  /bun-types@1.0.3:
+    resolution: {integrity: sha512-XlyKVdYCHa7K5PHYGcwOVOrGE/bMnLS51y7zFA3ZAAXyiQ6dTaNXNCWTTufgII/6ruN770uhAXphQmzvU/r2fQ==}
+    dev: true
 
   /bun@1.0.3:
     resolution: {integrity: sha512-BABgUgJIjSDG6nIviXMfpVx828ocCZW0siajECm51LLgXA9lyraEtZMV7fcDEVm2clb8sVZfd7vm+fqCJLFZJQ==}
