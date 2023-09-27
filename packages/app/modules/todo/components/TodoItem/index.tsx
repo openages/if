@@ -1,4 +1,5 @@
 import { useDrag, useDrop, useMemoizedFn } from 'ahooks'
+import { Input } from 'antd'
 import { useState, useRef } from 'react'
 import { Switch, Case } from 'react-if'
 
@@ -9,6 +10,8 @@ import { Square, CheckSquare, DotsSixVertical } from '@phosphor-icons/react'
 import styles from './index.css'
 
 import type { IPropsTodoItem } from '../../types'
+
+const { TextArea } = Input
 
 const Index = (props: IPropsTodoItem) => {
 	const { item, index, drag_disabled, makeLinkLine, check, updateRelations } = props
@@ -108,7 +111,7 @@ const Index = (props: IPropsTodoItem) => {
 					</Case>
 				</Switch>
 			</div>
-			<span className='text'>{text}</span>
+			<TextArea className='text_wrap' bordered={false} autoSize defaultValue={text}></TextArea>
 		</div>
 	)
 }
