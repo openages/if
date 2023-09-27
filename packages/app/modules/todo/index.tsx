@@ -32,8 +32,8 @@ const Index = ({ id }: IProps) => {
 		x.init({ id })
 
 		return () => x.off()
-	}, [id])
-
+      }, [ id ])
+      
 	const props_header: IPropsHeader = {
 		name: x.file.data.name,
 		icon: x.file.data.icon,

@@ -43,7 +43,7 @@ const Index = (props: IPropsHeader) => {
 		setItemsSortParam,
 		setItemsFilterTags
 	} = props
-	const { t, i18n } = useTranslation()
+      const { t, i18n } = useTranslation()
 
 	const related_menu: MenuProps['items'] = useMemo(
 		() => [
