@@ -103,7 +103,7 @@ const Index = (props: IPropsInput) => {
 									count={6}
 									character={({ index, value }) => (
 										<Star
-											size={18}
+											size={15}
 											weight={value >= index + 1 ? 'duotone' : 'regular'}
 										/>
 									)}

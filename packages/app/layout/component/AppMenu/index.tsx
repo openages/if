@@ -12,7 +12,7 @@ import type { IPropsAppMenu } from '../../types'
 import type { App } from '@/types'
 
 const Index = (props: IPropsAppMenu) => {
-	const { visible, app_modules, actives, onClose } = props
+	const { visible, app_modules, actives, visible_dirtree, onClose } = props
 	const { t } = useTranslation()
 
 	const group_items = useMemo(() => {
@@ -33,13 +33,12 @@ const Index = (props: IPropsAppMenu) => {
 
 	return (
 		<Drawer
-			rootClassName={$cx('hide_mask', styles._local)}
+			rootClassName={$cx('hide_mask', styles._local, !visible_dirtree && styles.no_dirtree)}
 			open={visible}
 			placement='left'
 			destroyOnClose
-			zIndex={1000}
+			zIndex={3000}
 			closeIcon={null}
-			getContainer={false}
 			onClose={onClose}
 		>
 			<div className='group_items w_100 border_box flex_column'>

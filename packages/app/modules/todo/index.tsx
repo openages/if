@@ -76,8 +76,8 @@ const Index = ({ id }: IProps) => {
 		updateTodo: useMemoizedFn(x.updateTodo),
 		removeAngle: useMemoizedFn(x.removeAngle),
 		removeTag: useMemoizedFn(x.removeTag),
-	}
-
+      }
+      
 	const props_archive: IPropsArchive = {
 		visible_archive_modal: x.visible_archive_modal,
 		archives: toJS(x.archives),

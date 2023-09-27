@@ -90,6 +90,7 @@ const Index = () => {
 		visible: global.app.visible_app_menu,
 		app_modules: toJS(global.app.app_modules),
 		actives,
+		visible_dirtree: global.layout.dirtree_width !== 0,
 		onClose: useMemoizedFn(() => (global.app.visible_app_menu = false))
 	}
 
