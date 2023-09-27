@@ -39,6 +39,7 @@ const Index = (props: IPropsAppMenu) => {
 			destroyOnClose
 			zIndex={3000}
 			closeIcon={null}
+			getContainer={document.body}
 			onClose={onClose}
 		>
 			<div className='group_items w_100 border_box flex_column'>

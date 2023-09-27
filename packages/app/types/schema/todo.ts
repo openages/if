@@ -1,4 +1,6 @@
 export namespace Todo {
+      type Relations = Array<{ items: Array<string>; checked: boolean }>
+      
 	export interface Data {
 		/** @maxLength 30 */
 		id: string
@@ -13,7 +15,7 @@ export namespace Todo {
 			text: string
 		}>
 		auto_archiving: '0m' | '3m' | '3h' | '1d' | '3d' | '7d'
-		relations?: Array<{ items: Array<string>; checked: boolean }>
+		relations?: Relations
 	}
 
 	type Common = {
@@ -21,9 +23,9 @@ export namespace Todo {
 		id: string
 		/** @maxLength 30 */
 		file_id: string
-		text: string
 		/** @maxLength 30 */
-		angle_id: string
+            angle_id: string
+		text: string
 		create_at: number
 		sort: number
 	}
@@ -41,7 +43,8 @@ export namespace Todo {
 		archive_time?: number
 		tag_ids?: Array<string>
 		circle_enabled: boolean
-		circle_value?: Array<number>
+            circle_value?: Array<number>
+		relations?: Relations
 		children?: Array<{
 			/** @maxLength 30 */
 			id: string

@@ -39,6 +39,27 @@ export default {
                               "type": "number"
                         }
                   },
+                  "relations": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "properties": {
+                                    "items": {
+                                          "type": "array",
+                                          "items": {
+                                                "type": "string"
+                                          }
+                                    },
+                                    "checked": {
+                                          "type": "boolean"
+                                    }
+                              },
+                              "required": [
+                                    "items",
+                                    "checked"
+                              ]
+                        }
+                  },
                   "children": {
                         "type": "array",
                         "items": {
@@ -74,12 +95,12 @@ export default {
                         "type": "string",
                         "maxLength": 30
                   },
-                  "text": {
-                        "type": "string"
-                  },
                   "angle_id": {
                         "type": "string",
                         "maxLength": 30
+                  },
+                  "text": {
+                        "type": "string"
                   },
                   "create_at": {
                         "type": "number"
@@ -140,6 +161,27 @@ export default {
                               "type": "number"
                         }
                   },
+                  "relations": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "properties": {
+                                    "items": {
+                                          "type": "array",
+                                          "items": {
+                                                "type": "string"
+                                          }
+                                    },
+                                    "checked": {
+                                          "type": "boolean"
+                                    }
+                              },
+                              "required": [
+                                    "items",
+                                    "checked"
+                              ]
+                        }
+                  },
                   "children": {
                         "type": "array",
                         "items": {
@@ -175,12 +217,12 @@ export default {
                         "type": "string",
                         "maxLength": 30
                   },
-                  "text": {
-                        "type": "string"
-                  },
                   "angle_id": {
                         "type": "string",
                         "maxLength": 30
+                  },
+                  "text": {
+                        "type": "string"
                   },
                   "create_at": {
                         "type": "number"
