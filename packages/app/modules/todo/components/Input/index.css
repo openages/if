@@ -58,18 +58,26 @@
 		}
 
 		.star_wrap {
-                  padding:0 12px;
-                  background-color: var(--color_bg);
-                  border-radius: var(--radius);
+			padding: 0 12px;
+			background-color: var(--color_bg);
+			border-radius: var(--radius);
 
-                  .if-rate-star-full{
-                        color: var(--color_main);
-                  }
+			.if-rate-star {
+				&-second {
+					color: rgba(var(--color_text_rgb), 0.6);
+				}
+
+				&-full {
+					.if-rate-star-second {
+						color: var(--color_main);
+					}
+				}
+			}
 
 			&::after {
 				content: '';
-                        position: absolute;
-                        right: 0;
+				position: absolute;
+				right: 0;
 				height: 50%;
 				width: 1px;
 				background-color: var(--color_border_light);
@@ -85,7 +93,7 @@
 			height: 24px;
 			border-radius: var(--radius);
 			color: rgba(var(--color_text_rgb), 0.6);
-                  background-color: var(--color_bg);
+			background-color: var(--color_bg);
 
 			&:hover {
 				color: rgba(var(--color_text_rgb), 1);

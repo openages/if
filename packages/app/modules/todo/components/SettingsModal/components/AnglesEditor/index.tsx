@@ -11,10 +11,14 @@ import Item from './Item'
 import type { IPropsCustomFormItem } from '@/types'
 import type { DragEndEvent } from '@dnd-kit/core'
 
-const Index = (props: IPropsCustomFormItem<Array<{ id: string; text: string }>>) => {
-	const { value = [], onChange } = props
+interface IProps extends IPropsCustomFormItem<Array<{ id: string; text: string }>> {
+	remove: (id: string) => Promise<boolean>
+}
 
-      const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
+const Index = (props: IProps) => {
+	const { value = [], onChange, remove } = props
+
+	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
 		if (!over?.id) return false
 		if (active.id === over.id) return
 
@@ -29,7 +33,11 @@ const Index = (props: IPropsCustomFormItem<Array<{ id: string; text: string }>>)
 		onChange(items)
 	})
 
-	const onRemove = useMemoizedFn((index) => {
+	const onRemove = useMemoizedFn(async (index) => {
+		const res = await remove(value[index].id)
+
+		if (!res) return
+
 		const items = cloneDeep(value)
 
 		items.splice(index, 1)

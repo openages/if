@@ -73,7 +73,9 @@ const Index = ({ id }: IProps) => {
 		visible_settings_modal: x.visible_settings_modal,
 		todo: { ...toJS(x.todo), ...toJS(x.file.data) },
 		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false)),
-		updateTodo: useMemoizedFn(x.updateTodo)
+		updateTodo: useMemoizedFn(x.updateTodo),
+		removeAngle: useMemoizedFn(x.removeAngle),
+		removeTag: useMemoizedFn(x.removeTag),
 	}
 
 	const props_archive: IPropsArchive = {

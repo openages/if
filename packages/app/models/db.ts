@@ -22,6 +22,7 @@ export default class Index {
 		const db = await createRxDatabase<RxDB.DBContent>({
 			name: 'if/db',
 			eventReduce: true,
+			allowSlowCount: true,
 			multiInstance: false,
 			cleanupPolicy: { waitForLeadership: false },
 			ignoreDuplicate: window.$is_dev,

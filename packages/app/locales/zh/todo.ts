@@ -32,14 +32,12 @@ export default {
 		angles: {
 			label: '分类',
 			placeholder: 'todo list内部的分类',
-			remove_confirm: {
-				title: '注意',
-				content: '您正在进行分类删除操作，这将删除该分类下的所有待办项，请确认是否执行删除。'
-			}
+			remove_confirm: '你将删除该分类下的{{counts}}个待办项，请确认是否执行删除。'
 		},
 		tags: {
 			label: '标签',
-			placeholder: '标签名'
+			placeholder: '标签名',
+			remove_confirm: '该标签下有{{counts}}个待办项，不可删除（未关联任何待办的标签可删除）。'
 		},
 		auto_archiving: {
 			label: '自动归档',

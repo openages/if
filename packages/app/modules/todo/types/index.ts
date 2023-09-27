@@ -30,7 +30,9 @@ export interface IPropsSettingsModal {
 	visible_settings_modal: Model['visible_settings_modal']
 	todo: Model['todo'] & Model['file']['data']
 	closeSettingsModal: () => void
-	updateTodo: Model['updateTodo']
+      updateTodo: Model[ 'updateTodo' ]
+      removeAngle: Model[ 'removeAngle' ]
+      removeTag: Model[ 'removeTag' ]
 }
 
 export interface IPropsTabs {

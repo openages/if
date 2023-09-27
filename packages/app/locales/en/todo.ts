@@ -32,14 +32,14 @@ export default {
 		angles: {
 			label: 'Angles',
 			placeholder: 'Categories within the todo list.',
-			remove_confirm: {
-				title: 'Notice',
-				content: 'You are performing a categorical deletion operation. This will remove all the tasks under this category. Please confirm if you want to proceed with the deletion.'
-			}
+			remove_confirm:
+				'This will remove {{counts}} items under this category. Please confirm if you want to proceed with the deletion.'
 		},
 		tags: {
 			label: 'Tags',
-			placeholder: 'Tag name.'
+			placeholder: 'Tag name.',
+			remove_confirm:
+				'This tag has {{counts}} items and cannot be deleted (tags not associated with any items can be deleted).'
 		},
 		auto_archiving: {
 			label: 'Auto archiving',

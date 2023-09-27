@@ -5,6 +5,7 @@ import { archive } from '@/actions/todo'
 import { GlobalModel } from '@/context/app'
 import { Utils, File, Loadmore } from '@/models'
 import { getDocItemsData } from '@/utils'
+import { confirm } from '@/utils/antd'
 import { loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
 import { useInstanceWatch } from '@openages/craftkit'
@@ -23,7 +24,10 @@ import {
 	updateTodosSort,
 	restoreArchiveItem,
 	removeArchiveItem,
-	archiveByTime
+	archiveByTime,
+	getAngleTodoCounts,
+	removeAngle,
+	getTagTodoCounts
 } from './services'
 
 import type { ArgsUpdateTodoData, ArgsArchiveByTime } from './types/services'
@@ -50,12 +54,12 @@ export default class Index {
 	archive_query_params = {} as ArchiveQueryParams
 
 	watch = {
-		'current_angle_id|items_sort_param|items_filter_tags': () => {
+		['current_angle_id|items_sort_param|items_filter_tags']: () => {
 			if (!this.id) return
 
 			this.queryItems()
 		},
-		'todo.angles': (v) => {
+		['todo.angles']: (v) => {
 			if (!this.id) return
 			if (!this.todo.id) return
 
@@ -65,7 +69,7 @@ export default class Index {
 				this.current_angle_id = v[0].id
 			}
 		},
-		visible_archive_modal: (v) => {
+		['visible_archive_modal']: (v) => {
 			if (v) {
 				this.queryArchives()
 				this.queryArchivesCounts()
@@ -75,12 +79,12 @@ export default class Index {
 				this.archive_query_params = {}
 			}
 		},
-		'loadmore.page': (v) => {
+		['loadmore.page']: (v) => {
 			if (!v) return
 
 			this.queryArchives()
 		},
-		archive_query_params: () => {
+		['archive_query_params']: () => {
 			if (!this.visible_archive_modal) return
 
 			this.loadmore.page = 0
@@ -102,7 +106,7 @@ export default class Index {
 		public file: File,
 		public loadmore: Loadmore
 	) {
-		makeAutoObservable(this, {}, { autoBind: true, deep: true })
+		makeAutoObservable(this, { watch: false }, { autoBind: true, deep: true })
 
 		this.utils.acts = [...useInstanceWatch(this)]
 	}
@@ -241,6 +245,37 @@ export default class Index {
 		this.loadmore.end = false
 
 		await this.queryArchives(true)
+	}
+
+	async removeAngle(angle_id: string) {
+		const counts = await getAngleTodoCounts(this.id, angle_id)
+
+		const res = await confirm({
+			title: $t('translation:common.notice'),
+			// @ts-ignore
+			content: $t('translation:todo.SettingsModal.angles.remove_confirm', { counts })
+		})
+
+		if (!res) return false
+
+		return await removeAngle(this.id, angle_id)
+	}
+
+	async removeTag(tag_id: string) {
+		const counts = await getTagTodoCounts(this.id, tag_id)
+
+		if (counts > 0) {
+			$modal.warning({
+				title: $t('translation:common.notice'),
+				// @ts-ignore
+				content: $t('translation:todo.SettingsModal.tags.remove_confirm', { counts }),
+				centered: true
+			})
+
+			return false
+		}
+
+		return true
 	}
 
 	updateArchiveItems(id: string) {

@@ -14,7 +14,7 @@ const { Item } = Form
 const { TextArea } = Input
 
 const Index = (props: IPropsSettingsModal) => {
-	const { visible_settings_modal, todo, closeSettingsModal, updateTodo } = props
+	const { visible_settings_modal, todo, closeSettingsModal, updateTodo, removeAngle, removeTag } = props
 	const limits = useLimits()
 	const { t, i18n } = useTranslation()
 
@@ -51,10 +51,10 @@ const Index = (props: IPropsSettingsModal) => {
 					></TextArea>
 				</Item>
 				<Item name='angles' label={t('translation:todo.SettingsModal.angles.label')}>
-					<AnglesEditor></AnglesEditor>
+					<AnglesEditor remove={removeAngle}></AnglesEditor>
 				</Item>
 				<Item name='tags' label={t('translation:todo.SettingsModal.tags.label')}>
-					<TagsEditor></TagsEditor>
+					<TagsEditor remove={removeTag}></TagsEditor>
 				</Item>
 				<Item name='auto_archiving' label={t('translation:todo.SettingsModal.auto_archiving.label')}>
 					<Select options={auto_archiving_options}></Select>

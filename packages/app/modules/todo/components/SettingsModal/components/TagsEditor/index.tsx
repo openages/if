@@ -15,8 +15,12 @@ import type { DragEndEvent } from '@dnd-kit/core'
 
 const { useToken } = theme
 
-const Index = (props: IPropsCustomFormItem<Array<{ id: string; color: string; text: string }>>) => {
-	const { value = [], onChange } = props
+interface IProps extends IPropsCustomFormItem<Array<{ id: string; color: string; text: string }>> {
+	remove: (id: string) => Promise<boolean>
+}
+
+const Index = (props: IProps) => {
+	const { value = [], onChange, remove } = props
 	const { token } = useToken()
 
 	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
@@ -34,7 +38,11 @@ const Index = (props: IPropsCustomFormItem<Array<{ id: string; color: string; te
 		onChange(items)
 	})
 
-	const onRemove = useMemoizedFn((index) => {
+	const onRemove = useMemoizedFn(async (index) => {
+		const res = await remove(value[index].id)
+
+		if (!res) return
+
 		const items = cloneDeep(value)
 
 		items.splice(index, 1)

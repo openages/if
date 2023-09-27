@@ -50,16 +50,7 @@ const Index = (props: IProps) => {
 					'btn btn_remove border_box flex justify_center align_center clickable ml_6',
 					limitMin && 'disabled'
 				)}
-				onClick={() => {
-					$modal.confirm({
-						title: t('translation:todo.SettingsModal.angles.remove_confirm.title'),
-						content: t('translation:todo.SettingsModal.angles.remove_confirm.content'),
-						centered: true,
-						onOk() {
-							onRemove(index)
-						}
-					})
-				}}
+				onClick={() => onRemove(index)}
 			>
 				<Trash size={18}></Trash>
 			</div>

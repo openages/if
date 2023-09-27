@@ -330,3 +330,17 @@ export const archiveByTime = async (file_id: string, v: ArgsArchiveByTime) => {
 		})
 		.remove()
 }
+
+export const getAngleTodoCounts = async (file_id: string, angle_id: string) => {
+	return $db.collections.todo_items.count({ selector: { file_id, angle_id } }).exec()
+}
+
+export const removeAngle = async (file_id: string, angle_id: string) => {
+	return $db.collections.todo_items.find({ selector: { file_id, angle_id } }).remove()
+}
+
+export const getTagTodoCounts = async (file_id: string, tag_id: string) => {
+	return $db.collections.todo_items
+		.count({ selector: { file_id, tag_ids: { $elemMatch: { $in: [tag_id] } } } })
+		.exec()
+}
