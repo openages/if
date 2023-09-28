@@ -10,6 +10,7 @@ import { loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
 import { useInstanceWatch } from '@openages/craftkit'
 
+import { getTodo } from './initials'
 import {
 	getQueryTodo,
 	getQueryItems,
@@ -20,6 +21,7 @@ import {
 	queryArchivesCounts,
 	updateTodoData,
 	check,
+	update,
 	updateRelations,
 	updateTodosSort,
 	restoreArchiveItem,
@@ -31,7 +33,7 @@ import {
 } from './services'
 
 import type { ArgsUpdateTodoData, ArgsArchiveByTime } from './types/services'
-import type { ItemsSortParams, ArchiveQueryParams } from './types/model'
+import type { ItemsSortParams, ArchiveQueryParams, ArgsUpdate } from './types/model'
 import type { RxDB, Todo, TodoArchive } from '@/types'
 import type { Subscription } from 'rxjs'
 import type { Watch } from '@openages/craftkit'
@@ -100,6 +102,10 @@ export default class Index {
 		}
 	>
 
+	get is_filtered() {
+		return Boolean(this.items_sort_param) || this.items_filter_tags.length > 0
+	}
+
 	constructor(
 		public global: GlobalModel,
 		public utils: Utils,
@@ -126,12 +132,15 @@ export default class Index {
 	}
 
 	@loading
-	async create(item: Todo.TodoItem) {
-		await create({
-			file_id: this.id,
-			angle_id: this.current_angle_id,
-			item
-		})
+	async create(item: Todo.TodoItem, quick?: boolean) {
+		return await create(
+			{
+				file_id: this.id,
+				angle_id: this.current_angle_id,
+				item
+			},
+			quick
+		)
 	}
 
 	@loading
@@ -202,8 +211,16 @@ export default class Index {
 			todo: this.todo,
 			...args
 		})
+	}
 
-		await this.queryItems()
+	async update(args: ArgsUpdate) {
+		const { type, index, value } = args
+
+		if (type == 'parent') {
+			const item = this.items[index]
+
+			await update({ id: item.id, ...value })
+		}
 	}
 
 	async updateRelations(active_id: string, over_id: string) {
@@ -258,7 +275,9 @@ export default class Index {
 
 		if (!res) return false
 
-		return await removeAngle(this.id, angle_id)
+		await removeAngle(this.id, angle_id)
+
+		return true
 	}
 
 	async removeTag(tag_id: string) {
@@ -276,6 +295,26 @@ export default class Index {
 		}
 
 		return true
+	}
+
+	async insert(args: { index: number; children_index?: number }) {
+		if (this.is_filtered) return
+
+		const { index, children_index } = args
+		const todo = getTodo() as Todo.TodoItem
+		const items = toJS(this.items)
+
+		this.stopWatchItems()
+
+		if (!children_index) {
+			const item = await this.create(todo, true)
+
+			items.splice(index + 1, 0, item as Todo.TodoItem)
+
+			await updateTodosSort(items)
+		}
+
+		this.watchItems()
 	}
 
 	updateArchiveItems(id: string) {

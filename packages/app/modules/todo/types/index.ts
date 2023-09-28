@@ -66,6 +66,8 @@ export interface IPropsTodos {
 	check: Model['check']
 	updateRelations: Model['updateRelations']
 	move: Model['move']
+	insert: Model['insert']
+	update: Model['update']
 }
 
 export interface IPropsTodoItem {
@@ -74,7 +76,9 @@ export interface IPropsTodoItem {
 	drag_disabled: boolean
 	makeLinkLine: (args: { active_id: string; y: number } | null) => void
 	check: Model['check']
-	updateRelations: Model['updateRelations']
+      updateRelations: Model[ 'updateRelations' ]
+      insert: Model[ 'insert' ]
+	update: Model['update']
 }
 
 export interface IPropsGroupTitle {

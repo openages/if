@@ -32,8 +32,8 @@ const Index = ({ id }: IProps) => {
 		x.init({ id })
 
 		return () => x.off()
-      }, [ id ])
-      
+	}, [id])
+
 	const props_header: IPropsHeader = {
 		name: x.file.data.name,
 		icon: x.file.data.icon,
@@ -63,10 +63,12 @@ const Index = ({ id }: IProps) => {
 	const props_todos: IPropsTodos = {
 		items: toJS(x.items),
 		relations: toJS(x.todo?.relations || []),
-		drag_disabled: Boolean(x.items_sort_param) || x.items_filter_tags.length > 0,
+		drag_disabled: x.is_filtered,
 		check: useMemoizedFn(x.check),
 		updateRelations: useMemoizedFn(x.updateRelations),
-		move: useMemoizedFn(x.move)
+		move: useMemoizedFn(x.move),
+            insert: useMemoizedFn(x.insert),
+            update: useMemoizedFn(x.update),
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
@@ -75,9 +77,9 @@ const Index = ({ id }: IProps) => {
 		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false)),
 		updateTodo: useMemoizedFn(x.updateTodo),
 		removeAngle: useMemoizedFn(x.removeAngle),
-		removeTag: useMemoizedFn(x.removeTag),
-      }
-      
+		removeTag: useMemoizedFn(x.removeTag)
+	}
+
 	const props_archive: IPropsArchive = {
 		visible_archive_modal: x.visible_archive_modal,
 		archives: toJS(x.archives),

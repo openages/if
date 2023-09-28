@@ -64,19 +64,23 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 	return $db.collections.todo_items.find({ selector }).sort(sort) as RxDB.ItemsQuery<Todo.TodoItem>
 }
 
-export const create = async (args: ArgsCreate) => {
+export const create = async (args: ArgsCreate, quick?: boolean) => {
 	const { file_id, angle_id, item } = args
 
 	const sort = await getMaxSort()
 
-	await $db.collections.todo_items.incrementalUpsert({
+	const res = await $db.collections.todo_items.incrementalUpsert({
 		...item,
 		file_id,
 		angle_id,
 		sort: sort + 1
 	})
 
-	window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+	if (!quick) {
+		window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+	}
+
+	return res.toMutableJSON()
 }
 
 export const queryTodo = (file_id: string) => {

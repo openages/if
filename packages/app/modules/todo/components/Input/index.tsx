@@ -9,10 +9,10 @@ import { useLimits } from '@/hooks'
 import { id } from '@/utils'
 import { Star } from '@phosphor-icons/react'
 
+import { getTodo, getGroup } from '../../initials'
 import TagSelect from '../TagSelect'
 import Circle from './Circle'
 import styles from './index.css'
-import { getTodo, getGroup } from './initials'
 
 import type { IPropsInput, IPropsInputCircle } from '../../types'
 import type { Todo } from '@/types'

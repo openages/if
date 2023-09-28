@@ -1,8 +1,10 @@
 import { useDrag, useDrop, useMemoizedFn } from 'ahooks'
 import { Input } from 'antd'
+import { debounce } from 'lodash-es'
 import { useState, useRef } from 'react'
 import { Switch, Case } from 'react-if'
 
+import { useMounted } from '@/hooks'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Square, CheckSquare, DotsSixVertical } from '@phosphor-icons/react'
@@ -14,8 +16,9 @@ import type { IPropsTodoItem } from '../../types'
 const { TextArea } = Input
 
 const Index = (props: IPropsTodoItem) => {
-	const { item, index, drag_disabled, makeLinkLine, check, updateRelations } = props
+	const { item, index, drag_disabled, makeLinkLine, check, updateRelations, insert, update } = props
 	const { id, text, status } = item
+	const mounted = useMounted()
 	const linker = useRef<HTMLDivElement>(null)
 	const [dragging, setDragging] = useState(false)
 	const [hovering, setHovering] = useState(false)
@@ -68,6 +71,22 @@ const Index = (props: IPropsTodoItem) => {
 		makeLinkLine({ active_id: id, y: clientY })
 	})
 
+	const onChange = useMemoizedFn(
+		debounce(
+			({ target: { value } }) => {
+				update({ type: 'parent', index, value: { text: value } })
+			},
+			450,
+			{ leading: false }
+		)
+	)
+
+	const onEnter = useMemoizedFn((e) => {
+		e.preventDefault()
+
+		insert({ index })
+	})
+
 	return (
 		<div
 			className={$cx('w_100 border_box flex align_start relative', styles.todo_item, styles[item.status])}
@@ -111,7 +130,15 @@ const Index = (props: IPropsTodoItem) => {
 					</Case>
 				</Switch>
 			</div>
-			<TextArea className='text_wrap' bordered={false} autoSize defaultValue={text}></TextArea>
+			<TextArea
+				className='text_wrap'
+                        autoSize
+				bordered={false}
+				autoFocus={!text}
+				defaultValue={text}
+				onChange={onChange}
+				onPressEnter={onEnter}
+			></TextArea>
 		</div>
 	)
 }
