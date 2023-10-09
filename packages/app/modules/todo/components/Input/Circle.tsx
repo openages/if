@@ -92,8 +92,10 @@ const Index = (props: IPropsInputCircle) => {
 	return (
 		<div className={$cx(styles.circle)}>
 			<Popover trigger='click' placement='top' content={Content}>
-				<div className='btn_circle flex justify_center align_center clickable'>
-					<HourglassMedium size={15}></HourglassMedium>
+				<div>
+					<div className='btn_circle flex justify_center align_center clickable'>
+						<HourglassMedium size={15}></HourglassMedium>
+					</div>
 				</div>
 			</Popover>
 		</div>
