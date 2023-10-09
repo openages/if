@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
 
-import { useLimits } from '@/hooks'
 import { id } from '@/utils'
 import { Star } from '@phosphor-icons/react'
 
@@ -21,7 +20,6 @@ const { TextArea } = Input
 
 const Index = (props: IPropsInput) => {
 	const { loading, tags, create } = props
-	const limits = useLimits()
 	const { t } = useTranslation()
 	const [input, setInput] = useState<Omit<Todo.TodoItem, 'file_id' | 'angle_id' | 'sort'>>(getTodo())
 
@@ -118,7 +116,6 @@ const Index = (props: IPropsInput) => {
 				<TextArea
 					className='input_add_todo w_100 border_box'
 					placeholder={t('translation:todo.Input.placeholder')}
-					maxLength={limits.todo_text_max_length}
 					autoSize
 					value={input.text}
 					onChange={({ target: { value } }) => setInput((input) => ({ ...input, text: value }))}

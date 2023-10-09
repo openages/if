@@ -195,6 +195,9 @@ importers:
       '@types/lodash-es':
         specifier: ^4.17.9
         version: 4.17.9
+      '@types/nice-try':
+        specifier: ^2.1.0
+        version: 2.1.0
       '@types/node':
         specifier: ^20.8.3
         version: 20.8.3
@@ -3454,6 +3457,10 @@ packages:
 
   /@types/mime@3.0.1:
     resolution: {integrity: sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==}
+
+  /@types/nice-try@2.1.0:
+    resolution: {integrity: sha512-pJaR/8Ijp4SbMJfzNLc/BgvkfbYTIvDiaheb5yGrdF4AeqPPQJq2K/Gk2tL4WasRITUAWXSa6+MvB8yyjQQnlQ==}
+    dev: true
 
   /@types/node@20.6.5:
     resolution: {integrity: sha512-2qGq5LAOTh9izcc0+F+dToFigBWiK1phKPt7rNhOqJSr35y8rlIBjDwGtFSgAI6MGIhjwOVNSQZVdJsZJ2uR1w==}

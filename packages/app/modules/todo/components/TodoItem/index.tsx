@@ -1,31 +1,34 @@
 import { useDrag, useDrop, useMemoizedFn } from 'ahooks'
-import { Input } from 'antd'
 import { debounce } from 'lodash-es'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Switch, Case } from 'react-if'
 
-import { useMounted } from '@/hooks'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Square, CheckSquare, DotsSixVertical } from '@phosphor-icons/react'
 
+import { getCursorPosition, setCursorPosition } from '../../utils'
 import styles from './index.css'
 
 import type { IPropsTodoItem } from '../../types'
 
-const { TextArea } = Input
-
 const Index = (props: IPropsTodoItem) => {
 	const { item, index, drag_disabled, makeLinkLine, check, updateRelations, insert, update } = props
 	const { id, text, status } = item
-	const mounted = useMounted()
 	const linker = useRef<HTMLDivElement>(null)
+	const input = useRef<HTMLDivElement>(null)
 	const [dragging, setDragging] = useState(false)
 	const [hovering, setHovering] = useState(false)
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
 		id,
 		data: { index }
 	})
+
+	useEffect(() => {
+		const el = input.current
+
+		if (el.innerText === '') el.focus()
+	}, [])
 
 	useDrag(id, linker, {
 		onDragStart: () => {
@@ -71,21 +74,37 @@ const Index = (props: IPropsTodoItem) => {
 		makeLinkLine({ active_id: id, y: clientY })
 	})
 
-	const onChange = useMemoizedFn(
+	const onInput = useMemoizedFn(
 		debounce(
-			({ target: { value } }) => {
-				update({ type: 'parent', index, value: { text: value } })
+			async ({ target: { innerText } }) => {
+				if (innerText?.length > 360) {
+					innerText = innerText.slice(0, 360)
+
+					input.current.blur()
+
+					input.current.innerText = innerText
+
+					await update({ type: 'parent', index, value: { text: innerText } })
+				} else {
+					const start = getCursorPosition(input.current)
+
+					await update({ type: 'parent', index, value: { text: innerText } })
+
+					setCursorPosition(input.current, start)
+				}
 			},
 			450,
 			{ leading: false }
 		)
 	)
 
-	const onEnter = useMemoizedFn((e) => {
-		e.preventDefault()
+	const onKeyDown = useMemoizedFn((e) => {
+		if (e.key === 'Enter') {
+			e.preventDefault()
 
-		insert({ index })
-	})
+			insert({ index })
+		}
+      })
 
 	return (
 		<div
@@ -130,15 +149,14 @@ const Index = (props: IPropsTodoItem) => {
 					</Case>
 				</Switch>
 			</div>
-			<TextArea
+			<div
 				className='text_wrap'
-                        autoSize
-				bordered={false}
-				autoFocus={!text}
-				defaultValue={text}
-				onChange={onChange}
-				onPressEnter={onEnter}
-			></TextArea>
+				ref={input}
+				contentEditable
+				dangerouslySetInnerHTML={{ __html: text }}
+				onInput={onInput}
+				onKeyDown={onKeyDown}
+			></div>
 		</div>
 	)
 }

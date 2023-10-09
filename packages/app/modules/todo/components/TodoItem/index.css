@@ -111,6 +111,7 @@
 			width: calc(100% - (24px + 4px));
                   min-height: unset;
                   padding: 0;
+                  outline: none;
 		}
 	}
 }
