@@ -48,9 +48,9 @@ const typed_nav_items = [
 		path: '/pomodoro'
 	},
 	{
-		id: 'habbit',
-		title: 'habbit',
-		path: '/habbit'
+		id: 'flag',
+		title: 'flag',
+		path: '/flag'
 	},
 	{
 		id: 'api',

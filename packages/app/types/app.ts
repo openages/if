@@ -16,7 +16,7 @@ export namespace App {
             | 'ppt'
             | 'schedule'
             | 'pomodoro'
-            | 'habbit'
+            | 'flag'
             | 'api'
             | 'dataflow'
             | 'table'

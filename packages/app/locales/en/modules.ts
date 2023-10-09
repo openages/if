@@ -8,7 +8,7 @@ export default {
 	ppt: 'PPT',
 	schedule: 'Schedule',
 	pomodoro: 'Pomo',
-	habbit: 'Habbit',
+	flag: 'Flag',
 	api: 'Api',
 	dataflow: 'Dataflow',
 	table: 'Table',

@@ -39,7 +39,7 @@ const Index = (props: IProps) => {
 		.with('ppt', () => <MicrosoftPowerpointLogo {...icon_props} />)
 		.with('schedule', () => <CalendarCheck {...icon_props} />)
 		.with('pomodoro', () => <HourglassMedium {...icon_props} />)
-		.with('habbit', () => <Barbell {...icon_props} />)
+		.with('flag', () => <Barbell {...icon_props} />)
 		.with('api', () => <WebhooksLogo {...icon_props} />)
 		.with('dataflow', () => <TreeStructure {...icon_props} />)
 		.with('table', () => <Table {...icon_props} />)

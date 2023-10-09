@@ -8,7 +8,7 @@ export default {
 	ppt: '报告',
 	schedule: '安排',
 	pomodoro: '番茄钟',
-	habbit: '习惯',
+	flag: '小目标',
 	api: '接口',
 	dataflow: '数据流',
 	table: '表格',
