@@ -38,7 +38,7 @@ module.exports = defineConfig({
 		incrementalRebuild: true,
 		outputModule: true,
 		rspackFuture: {
-			// newResolver: true,
+			newResolver: true,
 			newTreeshaking: true,
 			disableTransformByDefault: true
 		}

@@ -30,9 +30,9 @@ export interface IPropsSettingsModal {
 	visible_settings_modal: Model['visible_settings_modal']
 	todo: Model['todo'] & Model['file']['data']
 	closeSettingsModal: () => void
-      updateTodo: Model[ 'updateTodo' ]
-      removeAngle: Model[ 'removeAngle' ]
-      removeTag: Model[ 'removeTag' ]
+	updateTodo: Model['updateTodo']
+	removeAngle: Model['removeAngle']
+	removeTag: Model['removeTag']
 }
 
 export interface IPropsTabs {
@@ -68,6 +68,7 @@ export interface IPropsTodos {
 	move: Model['move']
 	insert: Model['insert']
 	update: Model['update']
+	tab: Model['tab']
 }
 
 export interface IPropsTodoItem {
@@ -76,9 +77,28 @@ export interface IPropsTodoItem {
 	drag_disabled: boolean
 	makeLinkLine: (args: { active_id: string; y: number } | null) => void
 	check: Model['check']
-      updateRelations: Model[ 'updateRelations' ]
-      insert: Model[ 'insert' ]
+	updateRelations: Model['updateRelations']
+	insert: Model['insert']
 	update: Model['update']
+	tab: Model['tab']
+}
+
+export interface IPropsChildren {
+	items: Todo.Todo['children']
+	index: number
+	fold: boolean
+	handled: boolean
+	update: Model['update']
+	tab: Model['tab']
+}
+
+export interface IPropsChildrenItem {
+	item: Todo.Todo['children'][number]
+	index: number
+	children_index: number
+	insert: (index: number) => Promise<void>
+	update: (children_index: number, value: Partial<Omit<Todo.Todo['children'][number], 'id'>>) => Promise<void>
+	tab: Model['tab']
 }
 
 export interface IPropsGroupTitle {

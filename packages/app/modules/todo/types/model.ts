@@ -16,4 +16,6 @@ export type ArchiveQueryParams = {
 
 export type ArgsUpdate =
 	| { type: 'parent'; index: number; value: Partial<Omit<Todo.TodoItem, 'id'>> }
-	| { type: 'children'; index: number; value: Partial<Omit<Todo.Todo['children'][number], 'id'>> }
+	| { type: 'children'; index: number; value: Todo.Todo['children'] }
+
+export type ArgsTab = { type: 'in'; index: number } | { type: 'out'; index: number; children_index: number }

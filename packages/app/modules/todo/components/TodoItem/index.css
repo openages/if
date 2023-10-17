@@ -23,9 +23,19 @@
 				color: rgba(var(--color_text_rgb), 0.3);
 			}
 
-			.text {
+			.text_wrap {
 				color: rgba(var(--color_text_rgb), 0.3);
 			}
+
+                  .children_wrap {
+                        .action_wrap {
+                              color: rgba(var(--color_text_rgb), 0.3) !important;
+                        }
+            
+                        .text_wrap {
+                              color: rgba(var(--color_text_rgb), 0.3);
+                        }
+                  }
 		}
 	}
 
@@ -109,9 +119,9 @@
 
 		.text_wrap {
 			width: calc(100% - (24px + 4px));
-                  min-height: unset;
-                  padding: 0;
-                  outline: none;
+			min-height: unset;
+			padding: 0;
+			outline: none;
 		}
 	}
 }

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
 
+import { todo } from '@/appdata'
 import { id } from '@/utils'
 import { Star } from '@phosphor-icons/react'
 
@@ -117,6 +118,7 @@ const Index = (props: IPropsInput) => {
 					className='input_add_todo w_100 border_box'
 					placeholder={t('translation:todo.Input.placeholder')}
 					autoSize
+					maxLength={todo.text_max_length}
 					value={input.text}
 					onChange={({ target: { value } }) => setInput((input) => ({ ...input, text: value }))}
 					onPressEnter={onEnter}

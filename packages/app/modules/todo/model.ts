@@ -1,3 +1,4 @@
+import { pick } from 'lodash-es'
 import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
@@ -24,6 +25,7 @@ import {
 	update,
 	updateRelations,
 	updateTodosSort,
+	removeTodoItem,
 	restoreArchiveItem,
 	removeArchiveItem,
 	archiveByTime,
@@ -33,7 +35,7 @@ import {
 } from './services'
 
 import type { ArgsUpdateTodoData, ArgsArchiveByTime } from './types/services'
-import type { ItemsSortParams, ArchiveQueryParams, ArgsUpdate } from './types/model'
+import type { ItemsSortParams, ArchiveQueryParams, ArgsUpdate, ArgsTab } from './types/model'
 import type { RxDB, Todo, TodoArchive } from '@/types'
 import type { Subscription } from 'rxjs'
 import type { Watch } from '@openages/craftkit'
@@ -215,11 +217,12 @@ export default class Index {
 
 	async update(args: ArgsUpdate) {
 		const { type, index, value } = args
+		const item = this.items[index]
 
 		if (type == 'parent') {
-			const item = this.items[index]
-
 			await update({ id: item.id, ...value })
+		} else {
+			await update({ id: item.id, children: value })
 		}
 	}
 
@@ -297,24 +300,64 @@ export default class Index {
 		return true
 	}
 
-	async insert(args: { index: number; children_index?: number }) {
+	async insert(args: { index: number; data?: Todo.Todo }) {
 		if (this.is_filtered) return
 
-		const { index, children_index } = args
-		const todo = getTodo() as Todo.TodoItem
+		const { index, data } = args
+		const todo = data ?? (getTodo() as Todo.TodoItem)
 		const items = toJS(this.items)
 
 		this.stopWatchItems()
 
-		if (!children_index) {
-			const item = await this.create(todo, true)
+		const item = await this.create(todo, true)
 
-			items.splice(index + 1, 0, item as Todo.TodoItem)
+		items.splice(index + 1, 0, item as Todo.TodoItem)
 
-			await updateTodosSort(items)
-		}
+		await updateTodosSort(items)
 
 		this.watchItems()
+	}
+
+	async tab(args: ArgsTab) {
+		const { type, index } = args
+
+		const item = this.items[index] as Todo.Todo
+
+		if (type === 'in') {
+			this.stopWatchItems()
+
+			const prev_item = this.items[index - 1]
+
+			if (!prev_item || prev_item.type === 'group') return
+
+			const exsit_index = this.todo.relations.findIndex((relation) => relation.items.includes(item.id))
+
+			if (exsit_index !== -1) return
+
+			await removeTodoItem(item.id)
+
+			const data = { ...pick(item, ['id', 'text']), status: 'unchecked' } as Todo.Todo['children'][number]
+
+			const children = prev_item.children ? [...prev_item.children, data] : [data]
+
+			update({ id: prev_item.id, children })
+
+			this.watchItems()
+		} else {
+			const children_index = args.children_index
+			const data = item.children[children_index]
+
+			update({ id: item.id, children: item.children.splice(children_index, 1) })
+
+			this.insert({
+				index,
+				data: {
+					...getTodo(),
+					text: data.text,
+					status: 'unchecked'
+				} as Todo.Todo
+			})
+		}
 	}
 
 	updateArchiveItems(id: string) {

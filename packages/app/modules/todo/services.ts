@@ -283,6 +283,10 @@ export const updateTodosSort = async (items: Array<Todo.TodoItem>) => {
 	)
 }
 
+export const removeTodoItem = async (id: string) => {
+	await $db.collections.todo_items.findOne({ selector: { id } }).remove()
+}
+
 export const restoreArchiveItem = async (id: string) => {
 	const doc = await $db.collections.todo_archives.findOne({ selector: { id } }).exec()
 
@@ -301,9 +305,7 @@ export const restoreArchiveItem = async (id: string) => {
 }
 
 export const removeArchiveItem = async (id: string) => {
-	const doc = await $db.collections.todo_archives.findOne({ selector: { id } }).exec()
-
-	await doc.remove()
+	await $db.collections.todo_archives.findOne({ selector: { id } }).remove()
 }
 
 export const archiveByTime = async (file_id: string, v: ArgsArchiveByTime) => {

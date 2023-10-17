@@ -44,7 +44,6 @@ export namespace Todo {
 		tag_ids?: Array<string>
 		circle_enabled: boolean
             circle_value?: Array<number>
-		relations?: Relations
 		children?: Array<{
 			/** @maxLength 30 */
 			id: string

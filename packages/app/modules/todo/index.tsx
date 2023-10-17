@@ -69,6 +69,7 @@ const Index = ({ id }: IProps) => {
 		move: useMemoizedFn(x.move),
             insert: useMemoizedFn(x.insert),
             update: useMemoizedFn(x.update),
+            tab: useMemoizedFn(x.tab),
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {

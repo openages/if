@@ -5,7 +5,7 @@ import { Stage, Layer, Line } from 'react-konva'
 import { useCssVariable } from '@/hooks'
 import { points } from '@/utils'
 import { DndContext } from '@dnd-kit/core'
-import { SortableContext } from '@dnd-kit/sortable'
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 
 import GroupTitle from '../GroupTitle'
 import TodoItem from '../TodoItem'
@@ -16,7 +16,7 @@ import type { IPropsTodos } from '../../types'
 import type { DragEndEvent } from '@dnd-kit/core'
 
 const Index = (props: IPropsTodos) => {
-	const { items, relations, drag_disabled, check, updateRelations, move, insert, update } = props
+	const { items, relations, drag_disabled, check, updateRelations, move, insert, update, tab } = props
 	const container = useRef<HTMLDivElement>(null)
 	const [lines, setLines] = useState<Array<JSX.Element>>([])
 	const [link_points, setLinkPoints] = useState<Array<number>>(null)
@@ -107,7 +107,7 @@ const Index = (props: IPropsTodos) => {
 			)}
 			<div className='todo_items_wrap w_100 flex flex_column' ref={container}>
 				<DndContext onDragEnd={onDragEnd}>
-					<SortableContext items={items}>
+					<SortableContext items={items} strategy={verticalListSortingStrategy}>
 						{items.map((item, index) =>
 							item.type === 'todo' ? (
 								<TodoItem
@@ -119,7 +119,8 @@ const Index = (props: IPropsTodos) => {
 										check,
 										updateRelations,
 										insert,
-										update
+										update,
+										tab
 									}}
 									key={item.id}
 								></TodoItem>
