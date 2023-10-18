@@ -1,10 +1,10 @@
 import { useDrag, useDrop, useMemoizedFn } from 'ahooks'
-import { sanitize } from 'dompurify'
 import { debounce } from 'lodash-es'
 import { Fragment, useState, useRef, useEffect } from 'react'
 import { Switch, Case } from 'react-if'
 
 import { todo } from '@/appdata'
+import { purify } from '@/utils'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Square, CheckSquare, DotsSixVertical } from '@phosphor-icons/react'
@@ -31,9 +31,9 @@ const Index = (props: IPropsTodoItem) => {
 	useEffect(() => {
 		const el = input.current
 
-		if (el.innerText === text) return
+		if (el.innerHTML === text) return
 
-		el.innerText = text
+		el.innerHTML = purify(text)
 	}, [text])
 
 	useDrag(id, linker, {
@@ -82,22 +82,22 @@ const Index = (props: IPropsTodoItem) => {
 
 	const onInput = useMemoizedFn(
 		debounce(
-			async ({ target: { innerText } }) => {
-				if (innerText?.length > todo.text_max_length) {
-					innerText = sanitize(innerText.slice(0, todo.text_max_length))
+			async ({ target: { innerHTML } }) => {
+				if (innerHTML?.length > todo.text_max_length) {
+					innerHTML = purify(innerHTML).slice(0, todo.text_max_length)
 
 					input.current.blur()
 
-					input.current.innerText = innerText
+					input.current.innerHTML = innerHTML
 
-					await update({ type: 'parent', index, value: { text: innerText } })
+					await update({ type: 'parent', index, value: { text: innerHTML } })
 				} else {
-					const filter_text = sanitize(innerText)
+					const filter_text = purify(innerHTML)
 
-					if (innerText !== filter_text) {
+					if (innerHTML !== filter_text) {
 						input.current.blur()
 
-						input.current.innerText = filter_text
+						input.current.innerHTML = filter_text
 
 						await update({ type: 'parent', index, value: { text: filter_text } })
 					} else {

@@ -1,10 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
-import { sanitize } from 'dompurify'
 import { debounce } from 'lodash-es'
 import { useRef, useEffect } from 'react'
 import { Switch, Case } from 'react-if'
 
 import { todo } from '@/appdata'
+import { purify } from '@/utils'
 import { Square, CheckSquare } from '@phosphor-icons/react'
 
 import { getCursorPosition, setCursorPosition } from '../../utils'
@@ -20,29 +20,29 @@ const Index = (props: IPropsChildrenItem) => {
 	useEffect(() => {
 		const el = input.current
 
-		if (el.innerText === text) return
+		if (el.innerHTML === text) return
 
-		el.innerText = text
+		el.innerHTML = purify(text)
 	}, [text])
 
 	const onInput = useMemoizedFn(
 		debounce(
-			async ({ target: { innerText } }) => {
-				if (innerText?.length > todo.child_max_length) {
-					innerText = sanitize(innerText.slice(0, todo.child_max_length))
+			async ({ target: { innerHTML } }) => {
+				if (innerHTML?.length > todo.text_max_length) {
+					innerHTML = purify(innerHTML).slice(0, todo.text_max_length)
 
 					input.current.blur()
 
-					input.current.innerText = innerText
+					input.current.innerHTML = innerHTML
 
-					await update(children_index, { text: innerText })
+					await update(children_index, { text: innerHTML })
 				} else {
-					const filter_text = sanitize(innerText)
+					const filter_text = purify(innerHTML)
 
-					if (innerText !== filter_text) {
+					if (innerHTML !== filter_text) {
 						input.current.blur()
 
-						input.current.innerText = filter_text
+						input.current.innerHTML = filter_text
 
 						await update(children_index, { text: filter_text })
 					} else {
@@ -72,9 +72,9 @@ const Index = (props: IPropsChildrenItem) => {
 			insert(children_index)
 		}
 
-            if (e.key === 'Tab') {
+		if (e.key === 'Tab') {
 			e.preventDefault()
-                  
+
 			tab({ type: 'out', index, children_index })
 		}
 	})

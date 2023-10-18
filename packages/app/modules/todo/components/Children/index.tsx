@@ -23,14 +23,17 @@ const Index = (props: IPropsChildren) => {
 
 	const insert = useMemoizedFn(async (children_index: number) => {
 		const children = [...items]
+		const item_id = id()
 
 		children.splice(children_index + 1, 0, {
-			id: id(),
+			id: item_id,
 			text: '',
 			status: 'unchecked'
 		})
 
 		await updateChildren({ type: 'children', index, value: children })
+
+		setTimeout(() => document.getElementById(`todo_${item_id}`)?.focus(), 0)
 	})
 
 	return (

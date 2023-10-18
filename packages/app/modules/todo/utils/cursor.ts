@@ -17,9 +17,12 @@ export const setCursorPosition = (el: HTMLDivElement, start: number) => {
 	const range = document.createRange()
 	const selection = window.getSelection()
 
-	range.setStart(el.firstChild, start > el.innerText.length ? el.innerText.length : start)
-	range.collapse(true)
-
-	selection.removeAllRanges()
-	selection.addRange(range)
+	try {
+		range.setStart(el.firstChild, start > el.innerText.length ? el.innerText.length : start)
+      } catch (error) { }
+      
+      range.collapse(true)
+            
+      selection.removeAllRanges()
+      selection.addRange(range)
 }

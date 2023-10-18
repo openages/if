@@ -86,7 +86,7 @@ const Index = (props: IPropsTodos) => {
 		}, 120)
 
 		return () => clearTimeout(timer)
-	}, [color_text_rgb, relations_lines, items])
+      }, [ color_text_rgb, relations_lines, items ])
 
 	return (
 		<div className={$cx('limited_content_wrap relative', styles._local)}>

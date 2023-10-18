@@ -299,10 +299,10 @@ export default class Index {
 		return true
 	}
 
-	async insert(args: { index: number; data?: Todo.Todo }) {
+	async insert(args: { index: number; data?: Todo.Todo; callback?: () => Promise<void> }) {
 		if (this.is_filtered) return
 
-		const { index, data } = args
+		const { index, data, callback } = args
 		const todo = data ?? (getTodo() as Todo.TodoItem)
 		const items = toJS(this.items)
 
@@ -314,12 +314,17 @@ export default class Index {
 
 		await updateTodosSort(items)
 
+		if (callback) await callback()
+
 		this.watchItems()
+
+		if (!data) setTimeout(() => document.getElementById(`todo_${item.id}`)?.focus(), 0)
 	}
 
 	async tab(args: ArgsTab) {
-		const { type, index } = args
+		if (this.is_filtered) return
 
+		const { type, index } = args
 		const item = this.items[index] as Todo.Todo
 
 		if (type === 'in') {
@@ -341,22 +346,26 @@ export default class Index {
 
 			const children = prev_item.children ? [...prev_item.children, data] : [data]
 
-			update({ id: prev_item.id, children })
+			await update({ id: prev_item.id, children })
 
 			this.watchItems()
 		} else {
 			const children_index = args.children_index
 			const data = item.children[children_index]
+			const children = toJS(item.children)
 
-			update({ id: item.id, children: item.children.splice(children_index, 1) })
+			children.splice(children_index, 1)
 
-			this.insert({
+			await this.insert({
 				index,
 				data: {
 					...getTodo(),
 					text: data.text,
 					status: 'unchecked'
-				} as Todo.Todo
+				} as Todo.Todo,
+				callback: async () => {
+					await update({ id: item.id, children })
+				}
 			})
 		}
 	}
