@@ -31,12 +31,6 @@ const Index = (props: IPropsTodoItem) => {
 	useEffect(() => {
 		const el = input.current
 
-		if (el.innerText === '') el.focus()
-	}, [])
-
-	useEffect(() => {
-		const el = input.current
-
 		if (el.innerText === text) return
 
 		el.innerText = text
@@ -130,6 +124,8 @@ const Index = (props: IPropsTodoItem) => {
 		}
 
 		if (e.key === 'Tab') {
+			e.preventDefault()
+
 			tab({ type: 'in', index })
 		}
 	})
@@ -192,6 +188,7 @@ const Index = (props: IPropsTodoItem) => {
 					</Switch>
 				</div>
 				<div
+					id={`todo_${id}`}
 					className='text_wrap'
 					ref={input}
 					contentEditable

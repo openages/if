@@ -329,7 +329,9 @@ export default class Index {
 
 			if (!prev_item || prev_item.type === 'group') return
 
-			const exsit_index = this.todo.relations.findIndex((relation) => relation.items.includes(item.id))
+			const exsit_index = this.todo.relations
+				? this.todo.relations.findIndex((relation) => relation.items.includes(item.id))
+				: -1
 
 			if (exsit_index !== -1) return
 

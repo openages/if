@@ -20,12 +20,6 @@ const Index = (props: IPropsChildrenItem) => {
 	useEffect(() => {
 		const el = input.current
 
-		if (el.innerText === '') el.focus()
-	}, [])
-
-	useEffect(() => {
-		const el = input.current
-
 		if (el.innerText === text) return
 
 		el.innerText = text
@@ -78,7 +72,9 @@ const Index = (props: IPropsChildrenItem) => {
 			insert(children_index)
 		}
 
-		if (e.key === 'Tab') {
+            if (e.key === 'Tab') {
+			e.preventDefault()
+                  
 			tab({ type: 'out', index, children_index })
 		}
 	})
@@ -103,7 +99,14 @@ const Index = (props: IPropsChildrenItem) => {
 					</Case>
 				</Switch>
 			</div>
-			<div className='text_wrap' ref={input} contentEditable onInput={onInput} onKeyDown={onKeyDown}></div>
+			<div
+				id={`todo_${id}`}
+				className='text_wrap'
+				ref={input}
+				contentEditable
+				onInput={onInput}
+				onKeyDown={onKeyDown}
+			></div>
 		</div>
 	)
 }
