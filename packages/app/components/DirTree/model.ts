@@ -36,13 +36,12 @@ export default class Index {
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { watch: false }, { autoBind: true })
-
-		this.utils.acts = [...useInstanceWatch(this)]
 	}
 
 	async init(args: { module: App.ModuleType; actions: IProps['actions'] }) {
 		const { module, actions } = args
 
+		this.utils.acts = [...useInstanceWatch(this)]
 		this.module = module
 		this.actions = actions
 

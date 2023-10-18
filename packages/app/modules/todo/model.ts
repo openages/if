@@ -115,13 +115,12 @@ export default class Index {
 		public loadmore: Loadmore
 	) {
 		makeAutoObservable(this, { watch: false }, { autoBind: true, deep: true })
-
-		this.utils.acts = [...useInstanceWatch(this)]
 	}
 
 	init(args: { id: string }) {
 		const { id } = args
 
+		this.utils.acts = [...useInstanceWatch(this)]
 		this.id = id
 
 		this.on()

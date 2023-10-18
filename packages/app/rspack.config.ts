@@ -36,7 +36,7 @@ module.exports = defineConfig({
 	},
 	experiments: {
 		incrementalRebuild: true,
-		outputModule: true,
+		outputModule: !is_prod,
 		rspackFuture: {
 			newResolver: true,
 			newTreeshaking: true,
@@ -51,7 +51,7 @@ module.exports = defineConfig({
 				use: {
 					loader: 'builtin:swc-loader',
 					options: {
-                                    sourceMaps: !is_prod,
+						sourceMaps: !is_prod,
 						jsc: {
 							parser: {
 								syntax: 'typescript',

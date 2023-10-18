@@ -1,6 +1,3 @@
-import to from 'await-to-js'
-import ntry from 'nice-try'
-
 export const getCursorPosition = (el: HTMLDivElement) => {
 	const selection = window.getSelection()
 	const range = selection.getRangeAt(0)
@@ -15,9 +12,11 @@ export const getCursorPosition = (el: HTMLDivElement) => {
 }
 
 export const setCursorPosition = (el: HTMLDivElement, start: number) => {
+	if (!el.firstChild) return
+
 	const range = document.createRange()
-      const selection = window.getSelection()
-      
+	const selection = window.getSelection()
+
 	range.setStart(el.firstChild, start > el.innerText.length ? el.innerText.length : start)
 	range.collapse(true)
 

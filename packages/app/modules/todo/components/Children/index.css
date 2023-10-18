@@ -20,7 +20,7 @@
 
 	:global {
 		.children_wrap {
-			padding-left: 12px;
+			padding-left: 10px;
 			border-left: var(--border);
 
 			.todo_child_item {
