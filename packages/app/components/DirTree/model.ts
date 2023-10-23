@@ -4,7 +4,7 @@ import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
 import { loading } from '@/utils/decorators'
-import { setStorageWhenChange, useInstanceWatch } from '@openages/craftkit'
+import { setStorageWhenChange, useInstanceWatch } from '@openages/stk'
 
 import { getQuery, create, query, updateDirtree, updateItem, removeItem } from './services'
 import { move } from './utils'
@@ -15,7 +15,7 @@ import type { IProps } from './types'
 import type { Item } from './types/services'
 import type { RxDocument } from 'rxdb'
 import type { Subscription } from 'rxjs'
-import type { Watch } from '@openages/craftkit'
+import type { Watch } from '@openages/stk'
 
 @injectable()
 export default class Index {

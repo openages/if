@@ -3,7 +3,7 @@ import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
 import { arrayMove } from '@dnd-kit/sortable'
-import { setStorageWhenChange } from '@openages/craftkit'
+import { setStorageWhenChange } from '@openages/stk'
 
 import type { App, DirTree } from '@/types'
 import type { DragEndEvent } from '@dnd-kit/core'

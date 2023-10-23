@@ -1,3 +1,3 @@
-import { setPrefix } from '@openages/craftkit'
+import { setPrefix } from '@openages/stk'
 
 setPrefix('if')

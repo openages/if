@@ -1,4 +1,4 @@
-import { local } from '@openages/craftkit'
+import { local } from '@openages/stk'
 
 import type { DirTree } from '@/types'
 

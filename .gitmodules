@@ -1,6 +1,7 @@
-[submodule "packages/mindkit"]
-	path = packages/mindkit
-	url = git@whatreal:openages/mindkit.git
 [submodule "packages/stk"]
 	path = packages/stk
 	url = git@whatreal:openages/stk.git
+
+[submodule "packages/mindkit"]
+	path = packages/mindkit
+	url = git@whatreal:openages/mindkit.git

@@ -3,7 +3,7 @@ import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
 import { setFavicon, setGlobalAnimation } from '@/utils'
-import { setStorageWhenChange } from '@openages/craftkit'
+import { setStorageWhenChange } from '@openages/stk'
 
 import type { Theme } from '@/appdata'
 

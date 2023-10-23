@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
-import { useDeepMemo } from '@openages/craftkit'
+import { useDeepMemo } from '@openages/stk'
 
 import DirItem from '../index'
 import Item from './Item'

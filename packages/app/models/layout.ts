@@ -3,7 +3,7 @@ import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
 import { getComputedStyleValue } from '@/utils'
-import { setStorageWhenChange } from '@openages/craftkit'
+import { setStorageWhenChange } from '@openages/stk'
 
 @injectable()
 export default class Index {

@@ -1,5 +1,5 @@
 import { Logo } from '@/components'
-import { local } from '@openages/craftkit'
+import { local } from '@openages/stk'
 
 import styles from './index.css'
 

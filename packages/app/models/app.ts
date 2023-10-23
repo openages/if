@@ -2,12 +2,12 @@ import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { useInstanceWatch } from '@openages/craftkit'
+import { useInstanceWatch } from '@openages/stk'
 
 import type { App } from '@/types'
 import type { RxDocument, RxQuery } from 'rxdb'
 import type { DocSetting } from '@/schemas'
-import type { Watch } from '@openages/craftkit'
+import type { Watch } from '@openages/stk'
 
 @injectable()
 export default class Index {

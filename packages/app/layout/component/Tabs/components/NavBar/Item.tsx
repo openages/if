@@ -5,7 +5,7 @@ import { Wave, LeftIcon, ModuleIcon, Emoji } from '@/components'
 import { useScrollToItem } from '@/hooks'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { useDoubleClick } from '@openages/craftkit'
+import { useDoubleClick } from '@openages/stk'
 import { X } from '@phosphor-icons/react'
 
 import type { IPropsTabsNavBarItem } from '@/layout/types'

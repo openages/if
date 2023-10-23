@@ -6,7 +6,7 @@ import { injectable } from 'tsyringe'
 import { en, zh } from '@/locales'
 import Utils from '@/models/utils'
 import { getLang } from '@/utils'
-import { local, setStorageWhenChange } from '@openages/craftkit'
+import { local, setStorageWhenChange } from '@openages/stk'
 
 import type { Lang } from '@/appdata'
 

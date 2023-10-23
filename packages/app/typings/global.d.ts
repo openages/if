@@ -5,7 +5,7 @@ import type { NotificationInstance } from 'antd/es/notification/interface'
 import type { TFunction } from 'i18next'
 import type { NavigateFunction } from 'react-router-dom'
 import type { memo } from 'react'
-import type { handle, Emittery } from '@openages/craftkit'
+import type { handle, Emittery } from '@openages/stk'
 
 type $CX = (...args: Array<string | boolean | null | undefined>) => string
 

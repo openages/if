@@ -9,7 +9,7 @@ import { getDocItemsData } from '@/utils'
 import { confirm } from '@/utils/antd'
 import { loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
-import { useInstanceWatch } from '@openages/craftkit'
+import { useInstanceWatch } from '@openages/stk'
 
 import { getTodo } from './initials'
 import {
@@ -38,7 +38,7 @@ import type { ArgsUpdateTodoData, ArgsArchiveByTime } from './types/services'
 import type { ItemsSortParams, ArchiveQueryParams, ArgsUpdate, ArgsTab } from './types/model'
 import type { RxDB, Todo, TodoArchive } from '@/types'
 import type { Subscription } from 'rxjs'
-import type { Watch } from '@openages/craftkit'
+import type { Watch } from '@openages/stk'
 
 @injectable()
 export default class Index {

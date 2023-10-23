@@ -1,4 +1,4 @@
-import { local } from '@openages/craftkit'
+import { local } from '@openages/stk'
 
 interface IProps {
 	className?: HTMLDivElement['className']
