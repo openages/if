@@ -1,7 +1,6 @@
-[submodule "packages/craftkit"]
-	path = packages/craftkit
-	url = git@whatreal:openages/craftkit.git
-      
 [submodule "packages/mindkit"]
 	path = packages/mindkit
 	url = git@whatreal:openages/mindkit.git
+[submodule "packages/stk"]
+	path = packages/stk
+	url = git@whatreal:openages/stk.git
