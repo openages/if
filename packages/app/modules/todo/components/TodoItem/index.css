@@ -27,15 +27,15 @@
 				color: rgba(var(--color_text_rgb), 0.3);
 			}
 
-                  .children_wrap {
-                        .action_wrap {
-                              color: rgba(var(--color_text_rgb), 0.3) !important;
-                        }
-            
-                        .text_wrap {
-                              color: rgba(var(--color_text_rgb), 0.3);
-                        }
-                  }
+			.children_wrap {
+				.action_wrap {
+					opacity: 0.3 !important;
+				}
+
+				.text_wrap {
+					opacity: 0.3;
+				}
+			}
 		}
 	}
 

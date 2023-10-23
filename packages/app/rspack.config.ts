@@ -19,7 +19,8 @@ module.exports = defineConfig({
 	resolve: {
 		tsConfigPath: resolve(__dirname, 'tsconfig.json')
 	},
-	optimization: {
+      optimization: {
+            sideEffects: true,
 		splitChunks: {
 			chunks: 'all',
 			maxSize: 30000
@@ -76,7 +77,7 @@ module.exports = defineConfig({
 				}
 			},
 			{
-				test: /\.global\.css$/,
+                        test: /\.global\.css$/,
 				use: [
 					{
 						loader: 'postcss-loader',

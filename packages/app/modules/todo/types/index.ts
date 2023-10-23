@@ -69,6 +69,7 @@ export interface IPropsTodos {
 	insert: Model['insert']
 	update: Model['update']
 	tab: Model['tab']
+	remove: Model['remove']
 }
 
 export interface IPropsTodoItem {
@@ -81,6 +82,7 @@ export interface IPropsTodoItem {
 	insert: Model['insert']
 	update: Model['update']
 	tab: Model['tab']
+	remove: Model['remove']
 }
 
 export interface IPropsChildren {
@@ -88,17 +90,25 @@ export interface IPropsChildren {
 	index: number
 	fold: boolean
 	handled: boolean
+	ChildrenContextMenu: Array<{
+		key: string
+		label: JSX.Element
+	}>
 	update: Model['update']
 	tab: Model['tab']
+	insertChildren: (children_index?: number) => Promise<void>
+	removeChildren: (children_index: number) => Promise<void>
 }
 
 export interface IPropsChildrenItem {
 	item: Todo.Todo['children'][number]
 	index: number
 	children_index: number
-	insert: (index: number) => Promise<void>
+	ChildrenContextMenu: IPropsChildren['ChildrenContextMenu']
 	update: (children_index: number, value: Partial<Omit<Todo.Todo['children'][number], 'id'>>) => Promise<void>
 	tab: Model['tab']
+      insertChildren: (children_index?: number) => Promise<void>
+	removeChildren: (children_index: number) => Promise<void>
 }
 
 export interface IPropsGroupTitle {

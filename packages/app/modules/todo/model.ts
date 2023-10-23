@@ -245,27 +245,6 @@ export default class Index {
 		this.watchItems()
 	}
 
-	async restoreArchiveItem(id: string) {
-		await restoreArchiveItem(id)
-
-		this.updateArchiveItems(id)
-	}
-
-	async removeArchiveItem(id: string) {
-		await removeArchiveItem(id)
-
-		this.updateArchiveItems(id)
-	}
-
-	async archiveByTime(v: ArgsArchiveByTime) {
-		await archiveByTime(this.id, v)
-
-		this.loadmore.page = 0
-		this.loadmore.end = false
-
-		await this.queryArchives(true)
-	}
-
 	async removeAngle(angle_id: string) {
 		const counts = await getAngleTodoCounts(this.id, angle_id)
 
@@ -368,6 +347,31 @@ export default class Index {
 				}
 			})
 		}
+	}
+
+	async remove(id: string) {
+		await removeTodoItem(id)
+	}
+
+	async restoreArchiveItem(id: string) {
+		await restoreArchiveItem(id)
+
+		this.updateArchiveItems(id)
+	}
+
+	async removeArchiveItem(id: string) {
+		await removeArchiveItem(id)
+
+		this.updateArchiveItems(id)
+	}
+
+	async archiveByTime(v: ArgsArchiveByTime) {
+		await archiveByTime(this.id, v)
+
+		this.loadmore.page = 0
+		this.loadmore.end = false
+
+		await this.queryArchives(true)
 	}
 
 	updateArchiveItems(id: string) {

@@ -6,6 +6,12 @@ export default {
 			closed: '已关闭'
 		}
 	},
+	context_menu: {
+		detail: '查看详情',
+		insert: '添加',
+		insert_children: '添加子任务',
+		remove: '删除'
+	},
 	default_angles: ['此刻', '计划', '想法', '等待', '循环', '垃圾箱'],
 	Header: {
 		related: {

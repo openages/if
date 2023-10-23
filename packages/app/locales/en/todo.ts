@@ -6,6 +6,12 @@ export default {
 			closed: 'Closed'
 		}
 	},
+	context_menu: {
+		detail: 'Detail',
+		insert: 'Insert',
+		insert_children: 'Insert Children',
+		remove: 'Remove'
+	},
 	default_angles: ['Now', 'Plan', 'Idea', 'Wait', 'Circle', 'Trashbox'],
 	Header: {
 		related: {

@@ -1,22 +1,24 @@
 import { useDrag, useDrop, useMemoizedFn } from 'ahooks'
+import { Dropdown } from 'antd'
 import { debounce } from 'lodash-es'
 import { Fragment, useState, useRef, useEffect } from 'react'
 import { Switch, Case } from 'react-if'
 
 import { todo } from '@/appdata'
-import { purify } from '@/utils'
+import { id as genID, purify } from '@/utils'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Square, CheckSquare, DotsSixVertical } from '@phosphor-icons/react'
 
 import { getCursorPosition, setCursorPosition } from '../../utils'
 import Children from '../Children'
+import { useContextMenu } from './hooks'
 import styles from './index.css'
 
 import type { IPropsTodoItem, IPropsChildren } from '../../types'
 
 const Index = (props: IPropsTodoItem) => {
-	const { item, index, drag_disabled, makeLinkLine, check, updateRelations, insert, update, tab } = props
+	const { item, index, drag_disabled, makeLinkLine, check, updateRelations, insert, update, tab, remove } = props
 	const { id, text, status, children } = item
 	const linker = useRef<HTMLDivElement>(null)
 	const input = useRef<HTMLDivElement>(null)
@@ -27,6 +29,7 @@ const Index = (props: IPropsTodoItem) => {
 		id,
 		data: { index }
 	})
+	const { TodoContextMenu, ChildrenContextMenu } = useContextMenu()
 
 	useEffect(() => {
 		const el = input.current
@@ -130,13 +133,55 @@ const Index = (props: IPropsTodoItem) => {
 		}
 	})
 
+	const insertChildren = useMemoizedFn(async (children_index?: number) => {
+		const children = [...item.children]
+		const target = { id: genID(), text: '', status: 'unchecked' } as const
+
+		if (children_index === undefined) {
+			children.push(target)
+		} else {
+			children.splice(children_index + 1, 0, target)
+		}
+
+		await update({ type: 'children', index, value: children })
+
+		setTimeout(() => document.getElementById(`todo_${target.id}`)?.focus(), 0)
+	})
+
+	const removeChildren = useMemoizedFn(async (children_index: number) => {
+		const children = [...item.children]
+
+		children.splice(children_index, 1)
+
+		await update({ type: 'children', index, value: children })
+	})
+
+	const onContextMenu = useMemoizedFn(({ key }) => {
+		switch (key) {
+			case 'detail':
+				break
+			case 'insert':
+				insert({ index })
+				break
+			case 'insert_children':
+				insertChildren()
+				break
+			case 'remove':
+				remove(id)
+				break
+		}
+	})
+
 	const props_children: IPropsChildren = {
 		items: children,
 		index,
 		fold,
 		handled: item.status === 'checked' || item.status === 'closed',
+		ChildrenContextMenu,
 		update,
-		tab
+		tab,
+		insertChildren,
+		removeChildren
 	}
 
 	return (
@@ -187,14 +232,21 @@ const Index = (props: IPropsTodoItem) => {
 						</Case>
 					</Switch>
 				</div>
-				<div
-					id={`todo_${id}`}
-					className='text_wrap'
-					ref={input}
-					contentEditable
-					onInput={onInput}
-					onKeyDown={onKeyDown}
-				></div>
+				<Dropdown
+					destroyPopupOnHide
+					trigger={['contextMenu']}
+					overlayStyle={{ width: 132 }}
+					menu={{ items: TodoContextMenu, onClick: onContextMenu }}
+				>
+					<div
+						id={`todo_${id}`}
+						className='text_wrap'
+						ref={input}
+						contentEditable
+						onInput={onInput}
+						onKeyDown={onKeyDown}
+					></div>
+				</Dropdown>
 			</div>
 			{children && <Children {...props_children}></Children>}
 		</Fragment>

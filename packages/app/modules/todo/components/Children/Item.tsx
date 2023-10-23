@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import { Dropdown } from 'antd'
 import { debounce } from 'lodash-es'
 import { useRef, useEffect } from 'react'
 import { Switch, Case } from 'react-if'
@@ -13,7 +14,7 @@ import styles from './index.css'
 import type { IPropsChildrenItem } from '../../types'
 
 const Index = (props: IPropsChildrenItem) => {
-	const { item, index, children_index, insert, update, tab } = props
+	const { item, index, children_index, ChildrenContextMenu, update, tab, insertChildren, removeChildren } = props
 	const { id, text, status } = item
 	const input = useRef<HTMLDivElement>(null)
 
@@ -69,13 +70,24 @@ const Index = (props: IPropsChildrenItem) => {
 		if (e.key === 'Enter') {
 			e.preventDefault()
 
-			insert(children_index)
+			insertChildren(children_index)
 		}
 
 		if (e.key === 'Tab') {
 			e.preventDefault()
 
 			tab({ type: 'out', index, children_index })
+		}
+	})
+
+	const onContextMenu = useMemoizedFn(({ key }) => {
+		switch (key) {
+			case 'insert':
+				insertChildren(children_index)
+				break
+			case 'remove':
+				removeChildren(children_index)
+				break
 		}
 	})
 
@@ -99,14 +111,22 @@ const Index = (props: IPropsChildrenItem) => {
 					</Case>
 				</Switch>
 			</div>
-			<div
-				id={`todo_${id}`}
-				className='text_wrap'
-				ref={input}
-				contentEditable
-				onInput={onInput}
-				onKeyDown={onKeyDown}
-			></div>
+
+			<Dropdown
+				destroyPopupOnHide
+				trigger={['contextMenu']}
+				overlayStyle={{ width: 90 }}
+				menu={{ items: ChildrenContextMenu, onClick: onContextMenu }}
+			>
+				<div
+					id={`todo_${id}`}
+					className='text_wrap'
+					ref={input}
+					contentEditable
+					onInput={onInput}
+					onKeyDown={onKeyDown}
+				></div>
+			</Dropdown>
 		</div>
 	)
 }

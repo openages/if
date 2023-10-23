@@ -67,9 +67,10 @@ const Index = ({ id }: IProps) => {
 		check: useMemoizedFn(x.check),
 		updateRelations: useMemoizedFn(x.updateRelations),
 		move: useMemoizedFn(x.move),
-            insert: useMemoizedFn(x.insert),
-            update: useMemoizedFn(x.update),
-            tab: useMemoizedFn(x.tab),
+		insert: useMemoizedFn(x.insert),
+		update: useMemoizedFn(x.update),
+		tab: useMemoizedFn(x.tab),
+		remove: useMemoizedFn(x.remove)
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
