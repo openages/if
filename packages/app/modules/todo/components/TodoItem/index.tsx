@@ -328,7 +328,10 @@ const Index = (props: IPropsTodoItem) => {
 					>
 						<div
 							id={`todo_${id}`}
-							className={$cx('text_wrap', children && children?.length && 'has_children')}
+							className={$cx(
+								'text_wrap',
+								children && children?.length && fold && 'has_children'
+							)}
 							ref={input}
 							contentEditable
 							style={{ textIndent: target_tag_width }}
