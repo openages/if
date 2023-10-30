@@ -12,15 +12,14 @@ module.exports = defineConfig({
 	output: {
 		clean: is_prod
 	},
-	devtool: is_prod ? false : 'source-map',
 	watchOptions: {
 		ignored: /node_modules/
 	},
 	resolve: {
 		tsConfigPath: resolve(__dirname, 'tsconfig.json')
 	},
-      optimization: {
-            sideEffects: true,
+	optimization: {
+		sideEffects: true,
 		splitChunks: {
 			chunks: 'all',
 			maxSize: 30000
@@ -40,7 +39,6 @@ module.exports = defineConfig({
 		outputModule: !is_prod,
 		rspackFuture: {
 			newResolver: true,
-			newTreeshaking: true,
 			disableTransformByDefault: true
 		}
 	},
@@ -49,6 +47,7 @@ module.exports = defineConfig({
 		rules: [
 			{
 				test: /\.tsx?$/,
+				type: 'javascript/auto',
 				use: {
 					loader: 'builtin:swc-loader',
 					options: {
@@ -77,7 +76,8 @@ module.exports = defineConfig({
 				}
 			},
 			{
-                        test: /\.global\.css$/,
+				test: /\.global\.css$/,
+				type: 'css',
 				use: [
 					{
 						loader: 'postcss-loader',
@@ -87,11 +87,11 @@ module.exports = defineConfig({
 							}
 						}
 					}
-				],
-				type: 'css'
+				]
 			},
 			{
 				test: /\.css$/,
+				type: 'css/module',
 				exclude: /\.global\.css$/,
 				use: [
 					{
@@ -102,11 +102,10 @@ module.exports = defineConfig({
 							}
 						}
 					}
-				],
-				type: 'css/module'
+				]
 			},
 			{
-				test: /\.svg$/,
+				test: /\.(png|svg|jpg)$/,
 				type: 'asset/source'
 			}
 		]
