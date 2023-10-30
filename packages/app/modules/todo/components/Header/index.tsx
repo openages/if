@@ -139,7 +139,7 @@ const Index = (props: IPropsHeader) => {
 				key: 'tags',
 				disabled: !tags?.length,
 				label: (
-					<div className='menu_item_wrap flex align_center' onClick={showSettingsModal}>
+					<div className='menu_item_wrap flex align_center'>
 						<Tag size={16}></Tag>
 						<span className='text ml_6'>{t('translation:todo.Header.options.tags')}</span>
 					</div>

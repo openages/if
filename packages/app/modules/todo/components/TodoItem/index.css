@@ -117,6 +117,11 @@
 			}
 		}
 
+            .tags_wrap{
+                  top: 6px;
+                  left: 27px;
+            }
+
 		.text_wrap {
 			width: calc(100% - (24px + 4px));
 			min-height: unset;

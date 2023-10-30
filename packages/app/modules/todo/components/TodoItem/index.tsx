@@ -1,8 +1,8 @@
-import { useDrag, useDrop, useMemoizedFn } from 'ahooks'
+import { useDrag, useDrop, useMemoizedFn, useSize } from 'ahooks'
 import { Dropdown } from 'antd'
 import { debounce } from 'lodash-es'
-import { Fragment, useState, useRef, useEffect } from 'react'
-import { Switch, Case } from 'react-if'
+import { Fragment, useState, useRef, useEffect, useLayoutEffect } from 'react'
+import { Switch, Case, When } from 'react-if'
 
 import { todo } from '@/appdata'
 import { id as genID, purify } from '@/utils'
@@ -12,16 +12,20 @@ import { Square, CheckSquare, DotsSixVertical } from '@phosphor-icons/react'
 
 import { getCursorPosition, setCursorPosition } from '../../utils'
 import Children from '../Children'
+import TagSelect from '../TagSelect'
 import { useContextMenu } from './hooks'
 import styles from './index.css'
 
 import type { IPropsTodoItem, IPropsChildren } from '../../types'
+import type { Todo } from '@/types'
 
 const Index = (props: IPropsTodoItem) => {
-	const { item, index, drag_disabled, makeLinkLine, check, updateRelations, insert, update, tab, remove } = props
-	const { id, text, status, children } = item
+	const { item, index, tags, drag_disabled, makeLinkLine, check, updateRelations, insert, update, tab, remove } =
+		props
+	const { id, text, status, tag_ids, children } = item
 	const linker = useRef<HTMLDivElement>(null)
 	const input = useRef<HTMLDivElement>(null)
+	const tags_wrap = useRef<HTMLDivElement>(null)
 	const [dragging, setDragging] = useState(false)
 	const [hovering, setHovering] = useState(false)
 	const [fold, setFold] = useState(false)
@@ -30,6 +34,9 @@ const Index = (props: IPropsTodoItem) => {
 		data: { index }
 	})
 	const { TodoContextMenu, ChildrenContextMenu } = useContextMenu()
+	const tags_size = useSize(tags_wrap)
+
+	console.log(tags_size)
 
 	useEffect(() => {
 		const el = input.current
@@ -38,6 +45,15 @@ const Index = (props: IPropsTodoItem) => {
 
 		el.innerHTML = purify(text)
 	}, [text])
+
+	useLayoutEffect(() => {
+		const el = input.current
+		const width = tags_size?.width
+
+		if (!el || !width) return
+
+		el.style.setProperty('text-indent', `${width - 2}px`)
+	}, [tags_size])
 
 	useDrag(id, linker, {
 		onDragStart: () => {
@@ -82,6 +98,8 @@ const Index = (props: IPropsTodoItem) => {
 
 		makeLinkLine({ active_id: id, y: clientY })
 	})
+
+	const toggleChildren = useMemoizedFn(() => setFold(!fold))
 
 	const onInput = useMemoizedFn(
 		debounce(
@@ -184,6 +202,12 @@ const Index = (props: IPropsTodoItem) => {
 		removeChildren
 	}
 
+	const updateTags = useMemoizedFn((v) => {
+		if (v?.length > 3) return
+
+		update({ type: 'parent', index, value: { tag_ids: v } as Todo.Todo })
+	})
+
 	return (
 		<Fragment>
 			<div
@@ -205,6 +229,7 @@ const Index = (props: IPropsTodoItem) => {
 						)}
 						ref={linker}
 						onDrag={onDrag}
+						onClick={toggleChildren}
 					></div>
 				)}
 				{!drag_disabled && (
@@ -232,6 +257,16 @@ const Index = (props: IPropsTodoItem) => {
 						</Case>
 					</Switch>
 				</div>
+				<When condition={Boolean(tags) && tags?.length && tag_ids?.length}>
+					<div className='tags_wrap flex align_center absolute z_index_1000' ref={tags_wrap}>
+						<TagSelect
+							options={tags}
+							value={tag_ids}
+							useByTodo
+							onChange={updateTags}
+						></TagSelect>
+					</div>
+				</When>
 				<Dropdown
 					destroyPopupOnHide
 					trigger={['contextMenu']}
@@ -248,7 +283,7 @@ const Index = (props: IPropsTodoItem) => {
 					></div>
 				</Dropdown>
 			</div>
-			{children && <Children {...props_children}></Children>}
+			<Children {...props_children}></Children>
 		</Fragment>
 	)
 }

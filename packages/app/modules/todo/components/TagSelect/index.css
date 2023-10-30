@@ -2,6 +2,19 @@
 	min-width: 48px;
 	margin-left: 1px;
 
+	&.useByTodo {
+		--height: 14px;
+
+		:global {
+			.tag {
+				padding: 0 2px;
+				margin: 0 1px;
+				font-size: 10px;
+				border-radius: var(--radius_small_1);
+			}
+		}
+	}
+
 	:global {
 		.if-empty-image {
 			margin: 0;
@@ -11,9 +24,9 @@
 			display: none;
 		}
 
-            .if-select-selector{
-                  background-color: var(--color_bg) !important;
-            }
+		.if-select-selector {
+			background-color: var(--color_bg) !important;
+		}
 
 		.tag {
 			height: var(--height);
@@ -23,7 +36,7 @@
 			font-size: 12px;
 			font-weight: bold;
 			margin: 0 2px;
-                  background-color: var(--color_bg);
+			background-color: var(--color_bg);
 
 			.btn_close {
 				padding: 2px;

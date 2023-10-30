@@ -292,6 +292,7 @@
 
 			.if-select-selection-search {
 				width: 1px !important;
+                        opacity: 0;
 			}
 
 			.if-select-selection-overflow {

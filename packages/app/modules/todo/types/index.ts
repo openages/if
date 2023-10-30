@@ -12,6 +12,7 @@ export interface IProps {
 export interface IPropsTagSelect {
 	options: Model['todo']['tags']
 	value: Array<string>
+	useByTodo?: boolean
 	className?: SelectProps['className']
 	placement?: SelectProps['placement']
 	onChange: (v: Array<string>) => void
@@ -61,6 +62,7 @@ export interface IPropsInputCircle {
 
 export interface IPropsTodos {
 	items: Model['items']
+	tags: Model['todo']['tags']
 	relations: Todo.Data['relations']
 	drag_disabled: boolean
 	check: Model['check']
@@ -75,6 +77,7 @@ export interface IPropsTodos {
 export interface IPropsTodoItem {
 	item: Todo.Todo
 	index: number
+	tags: Model['todo']['tags']
 	drag_disabled: boolean
 	makeLinkLine: (args: { active_id: string; y: number } | null) => void
 	check: Model['check']
@@ -107,7 +110,7 @@ export interface IPropsChildrenItem {
 	ChildrenContextMenu: IPropsChildren['ChildrenContextMenu']
 	update: (children_index: number, value: Partial<Omit<Todo.Todo['children'][number], 'id'>>) => Promise<void>
 	tab: Model['tab']
-      insertChildren: (children_index?: number) => Promise<void>
+	insertChildren: (children_index?: number) => Promise<void>
 	removeChildren: (children_index: number) => Promise<void>
 }
 

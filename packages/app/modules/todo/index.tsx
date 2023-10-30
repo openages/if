@@ -61,7 +61,8 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_todos: IPropsTodos = {
-		items: toJS(x.items),
+            items: toJS(x.items),
+		tags: toJS(x.todo.tags),
 		relations: toJS(x.todo?.relations || []),
 		drag_disabled: x.is_filtered,
 		check: useMemoizedFn(x.check),

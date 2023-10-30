@@ -16,7 +16,7 @@ import type { IPropsTodos } from '../../types'
 import type { DragEndEvent } from '@dnd-kit/core'
 
 const Index = (props: IPropsTodos) => {
-	const { items, relations, drag_disabled, check, updateRelations, move, insert, update, tab, remove } = props
+	const { items, tags, relations, drag_disabled, check, updateRelations, move, insert, update, tab, remove } = props
 	const container = useRef<HTMLDivElement>(null)
 	const [lines, setLines] = useState<Array<JSX.Element>>([])
 	const [link_points, setLinkPoints] = useState<Array<number>>(null)
@@ -114,14 +114,15 @@ const Index = (props: IPropsTodos) => {
 									{...{
 										item,
 										index,
+										tags,
 										drag_disabled,
 										makeLinkLine,
 										check,
 										updateRelations,
 										insert,
 										update,
-                                                            tab,
-                                                            remove
+										tab,
+										remove
 									}}
 									key={item.id}
 								></TodoItem>
