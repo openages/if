@@ -239,7 +239,7 @@ const Index = (props: IPropsTodoItem) => {
 	})
 
 	const target_tag_width = useMemo(() => {
-		if (tag_ids.length) {
+		if (tag_ids?.length) {
 			return tag_width ? tag_width - 2 : 'unset'
 		} else {
 			return 'unset'
