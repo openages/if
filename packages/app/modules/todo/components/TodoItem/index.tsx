@@ -1,4 +1,4 @@
-import { useDrag, useDrop, useMemoizedFn, useSize } from 'ahooks'
+import { useDrag, useDrop, useMemoizedFn, useSize, useUpdateEffect, usePrevious } from 'ahooks'
 import { Dropdown } from 'antd'
 import { debounce } from 'lodash-es'
 import { Fragment, useState, useRef, useEffect, useLayoutEffect } from 'react'
@@ -8,6 +8,7 @@ import { todo } from '@/appdata'
 import { id as genID, purify } from '@/utils'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { deepEqual } from '@openages/stk'
 import { Square, CheckSquare, DotsSixVertical } from '@phosphor-icons/react'
 
 import { getCursorPosition, setCursorPosition } from '../../utils'
@@ -20,31 +21,36 @@ import type { IPropsTodoItem, IPropsChildren } from '../../types'
 import type { Todo } from '@/types'
 
 const Index = (props: IPropsTodoItem) => {
-	const { item, index, tags, drag_disabled, makeLinkLine, check, updateRelations, insert, update, tab, remove } =
-		props
+	const {
+		item,
+		index,
+		tags,
+		drag_disabled,
+		makeLinkLine,
+		renderLines,
+		check,
+		updateRelations,
+		insert,
+		update,
+		tab,
+		remove
+	} = props
 	const { id, text, status, tag_ids, children } = item
 	const linker = useRef<HTMLDivElement>(null)
 	const input = useRef<HTMLDivElement>(null)
 	const tags_wrap = useRef<HTMLDivElement>(null)
 	const [dragging, setDragging] = useState(false)
 	const [hovering, setHovering] = useState(false)
-	const [fold, setFold] = useState(false)
-	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
-		id,
-		data: { index }
-	})
+	const [fold, setFold] = useState(true)
+	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } = useSortable(
+		{
+			id,
+			data: { index }
+		}
+	)
 	const { TodoContextMenu, ChildrenContextMenu } = useContextMenu()
 	const tags_size = useSize(tags_wrap)
-
-	console.log(tags_size)
-
-	useEffect(() => {
-		const el = input.current
-
-		if (el.innerHTML === text) return
-
-		el.innerHTML = purify(text)
-	}, [text])
+	const prev_children = usePrevious(children)
 
 	useLayoutEffect(() => {
 		const el = input.current
@@ -54,6 +60,36 @@ const Index = (props: IPropsTodoItem) => {
 
 		el.style.setProperty('text-indent', `${width - 2}px`)
 	}, [tags_size])
+
+	useLayoutEffect(() => {
+		const el = input.current
+
+		if (!el || !children || !children?.length) return
+
+		const checked_children = children.filter((item) => item.status === 'checked')
+
+		el.setAttribute('data-children', `${checked_children.length}/${children.length}`)
+	}, [children])
+
+	useUpdateEffect(() => {
+		if (deepEqual(children, prev_children)) return
+
+		setFold(children?.length === 0)
+	}, [children, prev_children])
+
+	useEffect(() => {
+		const el = input.current
+
+		if (el.innerHTML === text) return
+
+		el.innerHTML = purify(text)
+	}, [text])
+
+	useEffect(() => {
+		if (isDragging) setFold(true)
+	}, [isDragging])
+
+	useUpdateEffect(() => renderLines(id), [fold])
 
 	useDrag(id, linker, {
 		onDragStart: () => {
@@ -194,6 +230,7 @@ const Index = (props: IPropsTodoItem) => {
 		items: children,
 		index,
 		fold,
+		isDragging,
 		handled: item.status === 'checked' || item.status === 'closed',
 		ChildrenContextMenu,
 		update,
@@ -275,7 +312,7 @@ const Index = (props: IPropsTodoItem) => {
 				>
 					<div
 						id={`todo_${id}`}
-						className='text_wrap'
+						className={$cx('text_wrap', children && children?.length && 'has_children')}
 						ref={input}
 						contentEditable
 						onInput={onInput}

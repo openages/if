@@ -20,12 +20,16 @@
 			}
 
 			.action_wrap {
-				color: rgba(var(--color_text_rgb), 0.3);
+				opacity: 0.3;
 			}
 
 			.text_wrap {
-				color: rgba(var(--color_text_rgb), 0.3);
+				opacity: 0.3;
 			}
+
+                  .tags_wrap{
+				opacity: 0.3;
+                  }
 
 			.children_wrap {
 				.action_wrap {
@@ -127,6 +131,23 @@
 			min-height: unset;
 			padding: 0;
 			outline: none;
+
+                  &.has_children{
+                        &::after{
+                              content: attr(data-children);
+                              display: inline-flex;
+                              box-sizing: border-box;
+                              height: 14px;
+                              padding: 0 3px;
+                              margin-left: 6px;
+                              line-height: 12px;
+                              font-size: 10px;
+                              background-color: var(--color_bg_1);
+                              border-radius: 8px;
+                              border: var(--border);
+                              transform: translateY(-1px);
+                        }
+                  }
 		}
 	}
 }

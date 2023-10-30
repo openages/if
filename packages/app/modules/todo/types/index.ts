@@ -80,6 +80,7 @@ export interface IPropsTodoItem {
 	tags: Model['todo']['tags']
 	drag_disabled: boolean
 	makeLinkLine: (args: { active_id: string; y: number } | null) => void
+	renderLines: (id: string) => void
 	check: Model['check']
 	updateRelations: Model['updateRelations']
 	insert: Model['insert']
@@ -92,6 +93,7 @@ export interface IPropsChildren {
 	items: Todo.Todo['children']
 	index: number
 	fold: boolean
+	isDragging: boolean
 	handled: boolean
 	ChildrenContextMenu: Array<{
 		key: string

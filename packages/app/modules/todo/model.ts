@@ -307,17 +307,15 @@ export default class Index {
 		const item = this.items[index] as Todo.Todo
 
 		if (type === 'in') {
-			this.stopWatchItems()
-
 			const prev_item = this.items[index - 1]
-
-			if (!prev_item || prev_item.type === 'group') return
-
 			const exsit_index = this.todo.relations
 				? this.todo.relations.findIndex((relation) => relation.items.includes(item.id))
 				: -1
 
+			if (!prev_item || prev_item.type === 'group') return
 			if (exsit_index !== -1) return
+
+			this.stopWatchItems()
 
 			await removeTodoItem(item.id)
 

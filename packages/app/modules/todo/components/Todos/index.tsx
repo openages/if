@@ -13,17 +13,18 @@ import styles from './index.css'
 import { getRelativePostion, getLinkedItems } from './utils'
 
 import type { IPropsTodos } from '../../types'
-import type { DragEndEvent } from '@dnd-kit/core'
+import type { DragStartEvent, DragEndEvent } from '@dnd-kit/core'
 
 const Index = (props: IPropsTodos) => {
 	const { items, tags, relations, drag_disabled, check, updateRelations, move, insert, update, tab, remove } = props
 	const container = useRef<HTMLDivElement>(null)
+	const stoper = useRef<number>()
 	const [lines, setLines] = useState<Array<JSX.Element>>([])
 	const [link_points, setLinkPoints] = useState<Array<number>>(null)
 	const size = useSize(container)
 	const height = useMemo(() => (size ? size.height : 0), [size])
-	const color_text_rgb = useCssVariable('--color_text_rgb')
-	const color_text_softlight = useCssVariable('--color_text_softlight')
+	const color_text_line = useCssVariable('--color_text_line')
+      const color_text_softlight = useCssVariable('--color_text_softlight')
 
 	const relations_lines = useMemo(() => {
 		const target: Array<{ point: [string, string]; checked: boolean }> = []
@@ -64,29 +65,57 @@ const Index = (props: IPropsTodos) => {
 		setLinkPoints(points([8, up], [1, up], [1, down], [8, down]))
 	})
 
+	const onDragStart = useMemoizedFn(({ active }: DragStartEvent) => {
+		const exsit_index = relations?.findIndex((item) => item.items.includes(active.id as string))
+
+		if (exsit_index === -1) return
+
+		stoper.current = requestAnimationFrame(frameRenderLines)
+	})
+
 	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
 		if (!over?.id) return
 
 		move({ active_index: active.data.current.index, over_index: over.data.current.index })
+
+		cancelAnimationFrame(stoper.current)
+	})
+
+      const markLines = useMemoizedFn(() => {
+		setLines(
+			relations_lines.map((item, index) => (
+				<Line
+					points={getPoints(item.point)}
+					stroke={item.checked ? color_text_softlight : color_text_line}
+					strokeWidth={1}
+					tension={0}
+					key={index}
+				></Line>
+			))
+		)
+	})
+
+	const frameRenderLines = useMemoizedFn(() => {
+		markLines()
+
+		stoper.current = requestAnimationFrame(frameRenderLines)
+	})
+
+	const renderLines = useMemoizedFn((id: string) => {
+		const exsit_index = relations?.findIndex((item) => item.items.includes(id))
+
+		if (exsit_index === -1) return
+
+		stoper.current = requestAnimationFrame(frameRenderLines)
+
+		setTimeout(() => cancelAnimationFrame(stoper.current), 180)
 	})
 
 	useDeepCompareEffect(() => {
-		const timer = setTimeout(() => {
-			setLines(
-				relations_lines.map((item, index) => (
-					<Line
-						points={getPoints(item.point)}
-						stroke={item.checked ? color_text_softlight : `rgba(${color_text_rgb},0.72})`}
-						strokeWidth={1}
-						tension={0}
-						key={index}
-					></Line>
-				))
-			)
-		}, 120)
+		const timer = setTimeout(() => markLines(), 120)
 
 		return () => clearTimeout(timer)
-	}, [color_text_rgb, relations_lines, items])
+	}, [color_text_line, color_text_softlight, relations_lines, items])
 
 	return (
 		<div className={$cx('limited_content_wrap relative', styles._local)}>
@@ -97,7 +126,7 @@ const Index = (props: IPropsTodos) => {
 						{link_points && (
 							<Line
 								points={link_points}
-								stroke={`rgba(${color_text_rgb},0.72)`}
+								stroke={color_text_line}
 								strokeWidth={1}
 								tension={0}
 							></Line>
@@ -106,7 +135,7 @@ const Index = (props: IPropsTodos) => {
 				</Stage>
 			)}
 			<div className='todo_items_wrap w_100 flex flex_column' ref={container}>
-				<DndContext onDragEnd={onDragEnd}>
+				<DndContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
 					<SortableContext items={items} strategy={verticalListSortingStrategy}>
 						{items.map((item, index) =>
 							item.type === 'todo' ? (
@@ -117,6 +146,7 @@ const Index = (props: IPropsTodos) => {
 										tags,
 										drag_disabled,
 										makeLinkLine,
+										renderLines,
 										check,
 										updateRelations,
 										insert,

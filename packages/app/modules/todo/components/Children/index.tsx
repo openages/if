@@ -13,6 +13,7 @@ const Index = (props: IPropsChildren) => {
 		items,
 		index,
 		fold,
+		isDragging,
 		handled,
 		ChildrenContextMenu,
 		update: updateChildren,
@@ -34,8 +35,8 @@ const Index = (props: IPropsChildren) => {
 	if (!items || !items.length) return null
 
 	return (
-		<AnimatePresence>
-			{fold && (
+		<AnimatePresence mode={isDragging ? 'popLayout' : 'sync'}>
+			{!fold && (
 				<motion.div
 					className={$cx('w_100 border_box', styles._local, handled && styles.handled)}
 					initial={{ opacity: 0, height: 0 }}
