@@ -16,7 +16,21 @@ import type { IPropsTodos } from '../../types'
 import type { DragStartEvent, DragEndEvent } from '@dnd-kit/core'
 
 const Index = (props: IPropsTodos) => {
-	const { items, tags, relations, drag_disabled, check, updateRelations, move, insert, update, tab, remove } = props
+	const {
+		items,
+		tags,
+		angles,
+		relations,
+		drag_disabled,
+		check,
+		updateRelations,
+		move,
+		insert,
+		update,
+		tab,
+		moveTo,
+		remove
+	} = props
 	const container = useRef<HTMLDivElement>(null)
 	const stoper = useRef<number>()
 	const [lines, setLines] = useState<Array<JSX.Element>>([])
@@ -24,7 +38,7 @@ const Index = (props: IPropsTodos) => {
 	const size = useSize(container)
 	const height = useMemo(() => (size ? size.height : 0), [size])
 	const color_text_line = useCssVariable('--color_text_line')
-      const color_text_softlight = useCssVariable('--color_text_softlight')
+	const color_text_softlight = useCssVariable('--color_text_softlight')
 
 	const relations_lines = useMemo(() => {
 		const target: Array<{ point: [string, string]; checked: boolean }> = []
@@ -81,7 +95,7 @@ const Index = (props: IPropsTodos) => {
 		cancelAnimationFrame(stoper.current)
 	})
 
-      const markLines = useMemoizedFn(() => {
+	const markLines = useMemoizedFn(() => {
 		setLines(
 			relations_lines.map((item, index) => (
 				<Line
@@ -144,6 +158,7 @@ const Index = (props: IPropsTodos) => {
 										item,
 										index,
 										tags,
+										angles,
 										drag_disabled,
 										makeLinkLine,
 										renderLines,
@@ -152,6 +167,7 @@ const Index = (props: IPropsTodos) => {
 										insert,
 										update,
 										tab,
+										moveTo,
 										remove
 									}}
 									key={item.id}

@@ -63,6 +63,7 @@ export interface IPropsInputCircle {
 export interface IPropsTodos {
 	items: Model['items']
 	tags: Model['todo']['tags']
+	angles: Model['todo']['angles']
 	relations: Todo.Data['relations']
 	drag_disabled: boolean
 	check: Model['check']
@@ -70,7 +71,8 @@ export interface IPropsTodos {
 	move: Model['move']
 	insert: Model['insert']
 	update: Model['update']
-	tab: Model['tab']
+      tab: Model[ 'tab' ]
+      moveTo: Model['moveTo']
 	remove: Model['remove']
 }
 
@@ -78,6 +80,7 @@ export interface IPropsTodoItem {
 	item: Todo.Todo
 	index: number
 	tags: Model['todo']['tags']
+	angles: Model['todo']['angles']
 	drag_disabled: boolean
 	makeLinkLine: (args: { active_id: string; y: number } | null) => void
 	renderLines: (id: string) => void
@@ -85,7 +88,8 @@ export interface IPropsTodoItem {
 	updateRelations: Model['updateRelations']
 	insert: Model['insert']
 	update: Model['update']
-	tab: Model['tab']
+      tab: Model[ 'tab' ]
+	moveTo: Model['moveTo']
 	remove: Model['remove']
 }
 

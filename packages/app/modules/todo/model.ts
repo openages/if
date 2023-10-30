@@ -347,6 +347,10 @@ export default class Index {
 		}
 	}
 
+	async moveTo(todo_id: string, angle_id: string) {
+		await update({ id: todo_id, angle_id })
+	}
+
 	async remove(id: string) {
 		await removeTodoItem(id)
 	}

@@ -135,7 +135,6 @@
                   &.has_children{
                         &::after{
                               content: attr(data-children);
-                              display: inline-flex;
                               box-sizing: border-box;
                               height: 14px;
                               padding: 0 3px;

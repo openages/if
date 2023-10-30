@@ -10,6 +10,7 @@ export default {
 		detail: 'Detail',
 		insert: 'Insert',
 		insert_children: 'Insert Children',
+		move: 'Move To',
 		remove: 'Remove'
 	},
 	default_angles: ['Now', 'Plan', 'Idea', 'Wait', 'Circle', 'Trashbox'],

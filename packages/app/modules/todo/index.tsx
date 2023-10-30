@@ -1,7 +1,8 @@
 import { useMemoizedFn } from 'ahooks'
+import { omitBy } from 'lodash-es'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState, useMemo } from 'react'
 import { Else, If, Then, When } from 'react-if'
 import { container } from 'tsyringe'
 
@@ -22,9 +23,9 @@ import type {
 	IPropsSettingsModal,
 	IPropsArchive
 } from './types'
-
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
+	const angles = toJS(x.todo.angles || [])
 
 	usePageScrollRestoration(id, toJS(x.global.tabs.stacks))
 
@@ -60,9 +61,12 @@ const Index = ({ id }: IProps) => {
 		create: useMemoizedFn(x.create)
 	}
 
+	const move_to_angles = useMemo(() => angles.filter((item) => item.id !== x.current_angle_id), [angles])
+
 	const props_todos: IPropsTodos = {
-            items: toJS(x.items),
-		tags: toJS(x.todo.tags),
+		items: toJS(x.items),
+		tags: toJS(x.todo.tags || []),
+		angles: move_to_angles,
 		relations: toJS(x.todo?.relations || []),
 		drag_disabled: x.is_filtered,
 		check: useMemoizedFn(x.check),
@@ -71,6 +75,7 @@ const Index = ({ id }: IProps) => {
 		insert: useMemoizedFn(x.insert),
 		update: useMemoizedFn(x.update),
 		tab: useMemoizedFn(x.tab),
+		moveTo: useMemoizedFn(x.moveTo),
 		remove: useMemoizedFn(x.remove)
 	}
 

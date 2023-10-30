@@ -1,9 +1,16 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TextIndent, Plus, AlignCenterHorizontal, Trash } from '@phosphor-icons/react'
+import { TextIndent, Plus, AlignCenterHorizontal, Trash, ArrowsOutCardinal } from '@phosphor-icons/react'
 
-export default () => {
+import type { IPropsTodoItem } from '../../../types'
+
+type HookArgs = {
+	angles: IPropsTodoItem['angles']
+}
+
+export default (args: HookArgs) => {
+	const { angles } = args
 	const { t, i18n } = useTranslation()
 
 	const TodoContextMenu = useMemo(
@@ -36,6 +43,23 @@ export default () => {
 						</span>
 					</div>
 				)
+			},
+			{
+				key: 'move',
+				label: (
+					<div className='menu_item_wrap flex align_center'>
+						<ArrowsOutCardinal size={16}></ArrowsOutCardinal>
+						<span className='text ml_6'>{t('translation:todo.context_menu.move')}</span>
+					</div>
+				),
+				children: angles.map((item) => ({
+					key: item.id,
+					label: (
+						<div className='menu_item_wrap flex align_center'>
+							<span className='text'>{item.text}</span>
+						</div>
+					)
+				}))
 			},
 			{
 				key: 'remove',
