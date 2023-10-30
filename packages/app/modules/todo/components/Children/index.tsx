@@ -1,16 +1,20 @@
 import { useMemoizedFn } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
 
 import { Todo } from '@/types'
+import { DndContext } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
 
 import styles from './index.css'
 import Item from './Item'
 
 import type { IPropsChildren } from '../../types'
+import type { DragEndEvent } from '@dnd-kit/core'
 
 const Index = (props: IPropsChildren) => {
 	const {
-		items,
+		items: _items,
 		index,
 		fold,
 		isDragging,
@@ -21,6 +25,9 @@ const Index = (props: IPropsChildren) => {
 		insertChildren,
 		removeChildren
 	} = props
+	const [items, setItems] = useState(_items)
+
+	useEffect(() => setItems(_items), [_items])
 
 	const update = useMemoizedFn(
 		async (children_index: number, value: Partial<Omit<Todo.Todo['children'][number], 'id'>>) => {
@@ -31,6 +38,16 @@ const Index = (props: IPropsChildren) => {
 			await updateChildren({ type: 'children', index, value: children })
 		}
 	)
+
+	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
+		if (!over?.id) return
+
+		const value = arrayMove(items, active.data.current.index, over.data.current.index)
+
+		setItems(value)
+
+		updateChildren({ type: 'children', index, value })
+	})
 
 	if (!items || !items.length) return null
 
@@ -45,21 +62,25 @@ const Index = (props: IPropsChildren) => {
 					transition={{ duration: 0.18 }}
 				>
 					<div className='children_wrap w_100 border_box flex flex_column'>
-						{items.map((item, children_index) => (
-							<Item
-								{...{
-									item,
-									index,
-									children_index,
-									ChildrenContextMenu,
-									update,
-									tab,
-									insertChildren,
-									removeChildren
-								}}
-								key={item.id}
-							></Item>
-						))}
+						<DndContext onDragEnd={onDragEnd}>
+							<SortableContext items={items} strategy={verticalListSortingStrategy}>
+								{items.map((item, children_index) => (
+									<Item
+										{...{
+											item,
+											index,
+											children_index,
+											ChildrenContextMenu,
+											update,
+											tab,
+											insertChildren,
+											removeChildren
+										}}
+										key={item.id}
+									></Item>
+								))}
+							</SortableContext>
+						</DndContext>
 					</div>
 				</motion.div>
 			)}

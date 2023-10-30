@@ -6,7 +6,9 @@ import { Switch, Case } from 'react-if'
 
 import { todo } from '@/appdata'
 import { purify } from '@/utils'
-import { Square, CheckSquare } from '@phosphor-icons/react'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import { Square, CheckSquare, DotsSixVertical } from '@phosphor-icons/react'
 
 import { getCursorPosition, setCursorPosition } from '../../utils'
 import styles from './index.css'
@@ -17,6 +19,10 @@ const Index = (props: IPropsChildrenItem) => {
 	const { item, index, children_index, ChildrenContextMenu, update, tab, insertChildren, removeChildren } = props
 	const { id, text, status } = item
 	const input = useRef<HTMLDivElement>(null)
+	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
+		id,
+		data: { index: children_index }
+	})
 
 	useEffect(() => {
 		const el = input.current
@@ -97,7 +103,19 @@ const Index = (props: IPropsChildrenItem) => {
 				'todo_child_item w_100 flex align_start relative',
 				item.status === 'checked' && styles.checked
 			)}
+			ref={setNodeRef}
+			style={{ transform: CSS.Translate.toString(transform), transition }}
 		>
+			<div
+				className={$cx(
+					'drag_wrap children border_box flex justify_center align_center absolute transition_normal cursor_point z_index_10'
+				)}
+				ref={setActivatorNodeRef}
+				{...attributes}
+				{...listeners}
+			>
+				<DotsSixVertical size={10} weight='bold'></DotsSixVertical>
+			</div>
 			<div
 				className='action_wrap flex justify_center align_center cursor_point clickable'
 				onClick={onCheck}
@@ -111,7 +129,6 @@ const Index = (props: IPropsChildrenItem) => {
 					</Case>
 				</Switch>
 			</div>
-
 			<Dropdown
 				destroyPopupOnHide
 				trigger={['contextMenu']}
