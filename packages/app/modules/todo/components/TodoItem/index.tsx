@@ -1,7 +1,7 @@
-import { useDrag, useDrop, useMemoizedFn, useSize, useUpdateEffect, usePrevious } from 'ahooks'
+import { useDrag, useDrop, useMemoizedFn, useUpdateEffect, usePrevious } from 'ahooks'
 import { Dropdown, ConfigProvider } from 'antd'
 import { debounce } from 'lodash-es'
-import { Fragment, useState, useRef, useEffect, useLayoutEffect } from 'react'
+import { Fragment, useState, useRef, useEffect, useLayoutEffect, useMemo } from 'react'
 import { Switch, Case, When } from 'react-if'
 
 import { todo } from '@/appdata'
@@ -19,7 +19,6 @@ import styles from './index.css'
 
 import type { IPropsTodoItem, IPropsChildren } from '../../types'
 import type { Todo } from '@/types'
-
 const Index = (props: IPropsTodoItem) => {
 	const {
 		item,
@@ -37,7 +36,7 @@ const Index = (props: IPropsTodoItem) => {
 		moveTo,
 		remove
 	} = props
-	const { id, text, status, tag_ids, children } = item
+	const { id, text, status, tag_ids, tag_width, children } = item
 	const linker = useRef<HTMLDivElement>(null)
 	const input = useRef<HTMLDivElement>(null)
 	const tags_wrap = useRef<HTMLDivElement>(null)
@@ -51,17 +50,7 @@ const Index = (props: IPropsTodoItem) => {
 		}
 	)
 	const { TodoContextMenu, ChildrenContextMenu } = useContextMenu({ angles })
-	const tags_size = useSize(tags_wrap)
 	const prev_children = usePrevious(children)
-
-	useLayoutEffect(() => {
-		const el = input.current
-		const width = tags_size?.width
-
-		if (!el || !width) return
-
-		el.style.setProperty('text-indent', `${width - 2}px`)
-	}, [tags_size])
 
 	useLayoutEffect(() => {
 		const el = input.current
@@ -194,7 +183,6 @@ const Index = (props: IPropsTodoItem) => {
 		const target = { id: genID(), text: '', status: 'unchecked' } as const
 
 		if (children_index === undefined) {
-			console.log(123)
 			children.push(target)
 		} else {
 			children.splice(children_index + 1, 0, target)
@@ -240,6 +228,24 @@ const Index = (props: IPropsTodoItem) => {
 		}
 	})
 
+	const updateTags = useMemoizedFn((v) => {
+		if (v?.length > 3) return
+
+		update({ type: 'parent', index, value: { tag_ids: v } as Todo.Todo })
+	})
+
+	const updateTagWidth = useMemoizedFn((v) => {
+		update({ type: 'parent', index, value: { tag_width: v } as Todo.Todo })
+	})
+
+	const target_tag_width = useMemo(() => {
+		if (tag_ids.length) {
+			return tag_width ? tag_width - 2 : 'unset'
+		} else {
+			return 'unset'
+		}
+	}, [tag_ids, tag_width])
+
 	const props_children: IPropsChildren = {
 		items: children,
 		index,
@@ -252,12 +258,6 @@ const Index = (props: IPropsTodoItem) => {
 		insertChildren,
 		removeChildren
 	}
-
-	const updateTags = useMemoizedFn((v) => {
-		if (v?.length > 3) return
-
-		update({ type: 'parent', index, value: { tag_ids: v } as Todo.Todo })
-	})
 
 	return (
 		<Fragment>
@@ -315,6 +315,7 @@ const Index = (props: IPropsTodoItem) => {
 							value={tag_ids}
 							useByTodo
 							onChange={updateTags}
+							onWidth={updateTagWidth}
 						></TagSelect>
 					</div>
 				</When>
@@ -330,6 +331,7 @@ const Index = (props: IPropsTodoItem) => {
 							className={$cx('text_wrap', children && children?.length && 'has_children')}
 							ref={input}
 							contentEditable
+							style={{ textIndent: target_tag_width }}
 							onInput={onInput}
 							onKeyDown={onKeyDown}
 						></div>

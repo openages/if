@@ -5,6 +5,8 @@
 	&.useByTodo {
 		--height: 14px;
 
+		min-width: unset;
+
 		:global {
 			.tag {
 				padding: 0 2px;

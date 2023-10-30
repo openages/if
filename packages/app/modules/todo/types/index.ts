@@ -15,7 +15,8 @@ export interface IPropsTagSelect {
 	useByTodo?: boolean
 	className?: SelectProps['className']
 	placement?: SelectProps['placement']
-	onChange: (v: Array<string>) => void
+	onChange?: (v: Array<string>) => void
+	onWidth?: (v?: number) => void
 }
 
 export interface IPropsHeader extends Pick<Todo.Data & DirTree.File, 'name' | 'icon' | 'icon_hue' | 'desc' | 'tags'> {
@@ -71,8 +72,8 @@ export interface IPropsTodos {
 	move: Model['move']
 	insert: Model['insert']
 	update: Model['update']
-      tab: Model[ 'tab' ]
-      moveTo: Model['moveTo']
+	tab: Model['tab']
+	moveTo: Model['moveTo']
 	remove: Model['remove']
 }
 
@@ -88,7 +89,7 @@ export interface IPropsTodoItem {
 	updateRelations: Model['updateRelations']
 	insert: Model['insert']
 	update: Model['update']
-      tab: Model[ 'tab' ]
+	tab: Model['tab']
 	moveTo: Model['moveTo']
 	remove: Model['remove']
 }

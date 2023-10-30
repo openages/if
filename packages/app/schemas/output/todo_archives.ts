@@ -30,6 +30,9 @@ export default {
                               "type": "string"
                         }
                   },
+                  "tag_width": {
+                        "type": "number"
+                  },
                   "circle_enabled": {
                         "type": "boolean"
                   },
@@ -37,27 +40,6 @@ export default {
                         "type": "array",
                         "items": {
                               "type": "number"
-                        }
-                  },
-                  "relations": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "items": {
-                                          "type": "array",
-                                          "items": {
-                                                "type": "string"
-                                          }
-                                    },
-                                    "checked": {
-                                          "type": "boolean"
-                                    }
-                              },
-                              "required": [
-                                    "items",
-                                    "checked"
-                              ]
                         }
                   },
                   "children": {
@@ -152,6 +134,9 @@ export default {
                               "type": "string"
                         }
                   },
+                  "tag_width": {
+                        "type": "number"
+                  },
                   "circle_enabled": {
                         "type": "boolean"
                   },
@@ -159,27 +144,6 @@ export default {
                         "type": "array",
                         "items": {
                               "type": "number"
-                        }
-                  },
-                  "relations": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "items": {
-                                          "type": "array",
-                                          "items": {
-                                                "type": "string"
-                                          }
-                                    },
-                                    "checked": {
-                                          "type": "boolean"
-                                    }
-                              },
-                              "required": [
-                                    "items",
-                                    "checked"
-                              ]
                         }
                   },
                   "children": {

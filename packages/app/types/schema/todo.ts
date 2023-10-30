@@ -1,6 +1,6 @@
 export namespace Todo {
-      type Relations = Array<{ items: Array<string>; checked: boolean }>
-      
+	type Relations = Array<{ items: Array<string>; checked: boolean }>
+
 	export interface Data {
 		/** @maxLength 30 */
 		id: string
@@ -24,7 +24,7 @@ export namespace Todo {
 		/** @maxLength 30 */
 		file_id: string
 		/** @maxLength 30 */
-            angle_id: string
+		angle_id: string
 		text: string
 		create_at: number
 		sort: number
@@ -42,8 +42,9 @@ export namespace Todo {
 		 * */
 		archive_time?: number
 		tag_ids?: Array<string>
+		tag_width?: number
 		circle_enabled: boolean
-            circle_value?: Array<number>
+		circle_value?: Array<number>
 		children?: Array<{
 			/** @maxLength 30 */
 			id: string
