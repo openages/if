@@ -314,6 +314,7 @@ export default class Index {
 
 			if (!prev_item || prev_item.type === 'group') return
 			if (exsit_index !== -1) return
+			if (item.children?.length) return
 
 			this.stopWatchItems()
 

@@ -1,24 +1,17 @@
-import { useDrag, useDrop, useMemoizedFn, useUpdateEffect, usePrevious } from 'ahooks'
 import { Dropdown, ConfigProvider } from 'antd'
-import { debounce, remove } from 'lodash-es'
-import { Fragment, useState, useRef, useEffect, useLayoutEffect, useMemo } from 'react'
+import { Fragment } from 'react'
 import { Switch, Case, When } from 'react-if'
 
-import { todo } from '@/appdata'
-import { id as genID, purify } from '@/utils'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { deepEqual } from '@openages/stk'
 import { Square, CheckSquare, DotsSixVertical } from '@phosphor-icons/react'
 
-import { getCursorPosition, setCursorPosition } from '../../utils'
 import Children from '../Children'
 import TagSelect from '../TagSelect'
-import { useContextMenu } from './hooks'
+import { useContextMenu, useHandlers, useLink, useInput, useOpen, useOnContextMenu, useTagWidth } from './hooks'
 import styles from './index.css'
 
 import type { IPropsTodoItem, IPropsChildren } from '../../types'
-import type { Todo } from '@/types'
 
 const Index = (props: IPropsTodoItem) => {
 	const {
@@ -37,245 +30,28 @@ const Index = (props: IPropsTodoItem) => {
 		moveTo,
 		remove
 	} = props
-	const { id, text, status, open, tag_ids, tag_width, children } = item
-	const linker = useRef<HTMLDivElement>(null)
-	const input = useRef<HTMLDivElement>(null)
-	const tags_wrap = useRef<HTMLDivElement>(null)
-	const [dragging, setDragging] = useState(false)
-	const [hovering, setHovering] = useState(false)
+	const { id, status, open, tag_ids, children } = item
 	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } = useSortable(
-		{
-			id,
-			data: { index }
-		}
+		{ id, data: { index } }
 	)
+	const {
+		setOpen,
+		onCheck,
+		onDrag,
+		toggleChildren,
+		insertChildren,
+		removeChildren,
+		onKeyDown,
+		updateTags,
+		updateTagWidth
+	} = useHandlers({ item, index, makeLinkLine, check, insert, update, tab })
+	const { linker, dragging, hovering } = useLink({ item, makeLinkLine, updateRelations })
+	const { input, onInput } = useInput({ item, index, update })
 	const { TodoContextMenu, ChildrenContextMenu } = useContextMenu({ angles, tags, tag_ids })
-	const prev_children = usePrevious(children)
+	const { onContextMenu } = useOnContextMenu({ item, index, update, moveTo, insert, tab, remove, insertChildren })
+	const { target_tag_width } = useTagWidth({ item })
 
-	const setOpen = useMemoizedFn((v: boolean) => {
-		update({ type: 'parent', index, value: { open: v } as Todo.Todo })
-	})
-
-	useLayoutEffect(() => {
-		const el = input.current
-
-		if (!el || !children || !children?.length) return
-
-		const checked_children = children.filter((item) => item.status === 'checked')
-
-		el.setAttribute('data-children', `${checked_children.length}/${children.length}`)
-	}, [children])
-
-	useUpdateEffect(() => {
-		if (deepEqual(children, prev_children)) return
-
-		setOpen(children?.length > 0)
-	}, [children, prev_children])
-
-	useEffect(() => {
-		const el = input.current
-
-		if (el.innerHTML === text) return
-
-		el.innerHTML = purify(text)
-	}, [text])
-
-	useEffect(() => {
-		if (isDragging) setOpen(false)
-	}, [isDragging])
-
-	useUpdateEffect(() => renderLines(id), [open])
-
-	useDrag(id, linker, {
-		onDragStart: () => {
-			if (status !== 'unchecked') return
-
-			setDragging(true)
-		},
-		onDragEnd: () => {
-			setDragging(false)
-			makeLinkLine(null)
-		}
-	})
-
-	useDrop(linker, {
-		onDom: (active_id: string, { target }) => {
-			if (status !== 'unchecked') return
-
-			const over = target as HTMLDivElement
-			const over_id = over.getAttribute('data-id')
-
-			if (active_id === over_id) return
-
-			updateRelations(active_id, id)
-			setHovering(false)
-		},
-		onDragEnter: () => {
-			if (status !== 'unchecked') return
-
-			setHovering(true)
-		},
-		onDragLeave: () => setHovering(false)
-	})
-
-	const onCheck = useMemoizedFn(() => {
-		if (status === 'closed') return
-
-		check({ id, status: status === 'unchecked' ? 'checked' : 'unchecked' })
-	})
-
-	const onDrag = useMemoizedFn(({ clientY }) => {
-		if (status !== 'unchecked') return
-
-		makeLinkLine({ active_id: id, y: clientY })
-	})
-
-	const toggleChildren = useMemoizedFn(() => {
-		if (!children?.length) return
-
-		setOpen(!open)
-	})
-
-	const onInput = useMemoizedFn(
-		debounce(
-			async ({ target: { innerHTML } }) => {
-				if (innerHTML?.length > todo.text_max_length) {
-					innerHTML = purify(innerHTML).slice(0, todo.text_max_length)
-
-					input.current.blur()
-
-					input.current.innerHTML = innerHTML
-
-					await update({ type: 'parent', index, value: { text: innerHTML } })
-				} else {
-					const filter_text = purify(innerHTML)
-
-					if (innerHTML !== filter_text) {
-						input.current.blur()
-
-						input.current.innerHTML = filter_text
-
-						await update({ type: 'parent', index, value: { text: filter_text } })
-					} else {
-						const start = getCursorPosition(input.current)
-
-						await update({ type: 'parent', index, value: { text: filter_text } })
-
-						if (document.activeElement !== input.current) return
-
-						setCursorPosition(input.current, start)
-					}
-				}
-			},
-			450,
-			{ leading: false }
-		)
-	)
-
-	const onKeyDown = useMemoizedFn((e) => {
-		if (e.key === 'Enter') {
-			e.preventDefault()
-
-			insert({ index })
-		}
-
-		if (e.key === 'Tab') {
-			e.preventDefault()
-
-			tab({ type: 'in', index })
-		}
-	})
-
-	const insertChildren = useMemoizedFn(async (children_index?: number) => {
-		const children = [...(item.children || [])]
-		const target = { id: genID(), text: '', status: 'unchecked' } as const
-
-		if (children_index === undefined) {
-			children.push(target)
-		} else {
-			children.splice(children_index + 1, 0, target)
-		}
-
-		await update({ type: 'children', index, value: children })
-
-		setTimeout(() => document.getElementById(`todo_${target.id}`)?.focus(), 0)
-	})
-
-	const removeChildren = useMemoizedFn(async (children_index: number) => {
-		const children = [...(item.children || [])]
-
-		children.splice(children_index, 1)
-
-		await update({ type: 'children', index, value: children })
-	})
-
-	const onContextMenu = useMemoizedFn(({ key, keyPath }) => {
-		if (keyPath.length > 1) {
-			const parent_key = keyPath.at(-1)
-			const target_id = keyPath.at(0)
-
-			switch (parent_key) {
-				case 'add_tags':
-					let target = [] as Array<string>
-
-					if (tag_ids?.length) {
-						if (tag_ids.includes(target_id)) {
-							target = tag_ids.filter((item) => item !== target_id)
-						} else {
-							target = [...tag_ids, target_id]
-						}
-					} else {
-						target.push(target_id)
-					}
-
-					update({
-						type: 'parent',
-						index,
-						value: { tag_ids: target } as Todo.Todo
-					})
-
-					break
-				case 'move':
-					moveTo(id, target_id)
-					break
-			}
-		} else {
-			switch (key) {
-				case 'detail':
-					break
-				case 'insert':
-					insert({ index })
-					break
-				case 'insert_children':
-					insertChildren()
-					break
-				case 'move_into':
-					tab({ type: 'in', index })
-					break
-				case 'remove':
-					remove(id)
-					break
-			}
-		}
-	})
-
-	const updateTags = useMemoizedFn((v) => {
-		if (v?.length > 3) return
-
-		update({ type: 'parent', index, value: { tag_ids: v } as Todo.Todo })
-	})
-
-	const updateTagWidth = useMemoizedFn((v) => {
-		update({ type: 'parent', index, value: { tag_width: v } as Todo.Todo })
-	})
-
-	const target_tag_width = useMemo(() => {
-		if (tag_ids?.length) {
-			return tag_width ? tag_width - 2 : 'unset'
-		} else {
-			return 'unset'
-		}
-	}, [tag_ids, tag_width])
+	useOpen({ item, input, isDragging, renderLines, setOpen })
 
 	const props_children: IPropsChildren = {
 		items: children,
@@ -340,7 +116,7 @@ const Index = (props: IPropsTodoItem) => {
 					</Switch>
 				</div>
 				<When condition={Boolean(tags) && tags?.length && tag_ids?.length}>
-					<div className='tags_wrap flex align_center absolute z_index_1000' ref={tags_wrap}>
+					<div className='tags_wrap flex align_center absolute z_index_1000'>
 						<TagSelect
 							options={tags}
 							value={tag_ids}
