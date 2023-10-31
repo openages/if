@@ -41,6 +41,12 @@ export default (theme: Theme, color_main: string) => {
 				controlHeightSM: 28,
 				cellHeight: 22,
 				cellWidth: 32
+                  },
+                  Dropdown: {
+                        controlItemBgHover: vars.color_bg_2,
+                  },
+			Select: {
+				optionActiveBg: vars.color_bg_2
 			}
 		}
 	} as ThemeConfig

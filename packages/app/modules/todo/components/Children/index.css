@@ -1,5 +1,6 @@
 ._local {
 	padding-left: 17px;
+	overflow-y: hidden;
 
 	&.handled {
 		:global {

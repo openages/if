@@ -1,6 +1,6 @@
 import type { Todo, RxDB, TodoArchive, DirTree } from '@/types'
 import type Model from '../model'
-import type { SelectProps } from 'antd'
+import type { SelectProps, MenuProps } from 'antd'
 
 export type QueryItems = RxDB.ItemsQuery<Todo.TodoItem>
 export type QueryArchives = RxDB.ItemsQuery<TodoArchive.Item>
@@ -100,10 +100,7 @@ export interface IPropsChildren {
 	fold: boolean
 	isDragging: boolean
 	handled: boolean
-	ChildrenContextMenu: Array<{
-		key: string
-		label: JSX.Element
-	}>
+	ChildrenContextMenu: MenuProps['items']
 	update: Model['update']
 	tab: Model['tab']
 	insertChildren: (children_index?: number) => Promise<void>

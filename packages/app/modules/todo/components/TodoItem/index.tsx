@@ -221,6 +221,9 @@ const Index = (props: IPropsTodoItem) => {
 				case 'insert_children':
 					insertChildren()
 					break
+				case 'move_into':
+					tab({ type: 'in', index })
+					break
 				case 'remove':
 					remove(id)
 					break

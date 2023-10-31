@@ -328,6 +328,13 @@
 }
 
 /* Dropdown */
+[data-theme='dark']{
+      .if-dropdown-menu {
+            box-shadow: 0 0 30px rgba(var(--color_std_rgb), 0.72) !important;
+            border: var(--border);
+      }
+}
+
 .if-dropdown-menu {
 	&-item {
 		padding: 4px 6px !important;

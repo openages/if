@@ -37,7 +37,7 @@ const Index = () => {
 								global.locale.setLang(v)
 
 								changeLanguage(v)
-							}}
+                                          } }
 						></Select>
 					</div>
 				</div>

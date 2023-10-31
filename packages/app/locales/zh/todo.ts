@@ -11,7 +11,9 @@ export default {
 		insert: '添加',
 		insert_children: '添加子任务',
 		move: '移动到',
-		remove: '删除'
+		remove: '删除',
+		move_into: '移为子任务',
+		move_out: '移为一级'
 	},
 	default_angles: ['此刻', '计划', '想法', '等待', '循环', '垃圾箱'],
 	Header: {

@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { Dropdown } from 'antd'
+import { Dropdown, ConfigProvider } from 'antd'
 import { debounce } from 'lodash-es'
 import { useRef, useEffect } from 'react'
 import { Switch, Case } from 'react-if'
@@ -91,6 +91,9 @@ const Index = (props: IPropsChildrenItem) => {
 			case 'insert':
 				insertChildren(children_index)
 				break
+			case 'move_out':
+				tab({ type: 'out', index, children_index })
+				break
 			case 'remove':
 				removeChildren(children_index)
 				break
@@ -129,21 +132,23 @@ const Index = (props: IPropsChildrenItem) => {
 					</Case>
 				</Switch>
 			</div>
-			<Dropdown
-				destroyPopupOnHide
-				trigger={['contextMenu']}
-				overlayStyle={{ width: 90 }}
-				menu={{ items: ChildrenContextMenu, onClick: onContextMenu }}
-			>
-				<div
-					id={`todo_${id}`}
-					className='text_wrap'
-					ref={input}
-					contentEditable
-					onInput={onInput}
-					onKeyDown={onKeyDown}
-				></div>
-			</Dropdown>
+			<ConfigProvider getPopupContainer={() => document.body}>
+				<Dropdown
+					destroyPopupOnHide
+					trigger={['contextMenu']}
+					overlayStyle={{ width: 102 }}
+					menu={{ items: ChildrenContextMenu, onClick: onContextMenu }}
+				>
+					<div
+						id={`todo_${id}`}
+						className='text_wrap'
+						ref={input}
+						contentEditable
+						onInput={onInput}
+						onKeyDown={onKeyDown}
+					></div>
+				</Dropdown>
+			</ConfigProvider>
 		</div>
 	)
 }

@@ -9,9 +9,11 @@ export default {
 	context_menu: {
 		detail: 'Detail',
 		insert: 'Insert',
-		insert_children: 'Insert Children',
+		insert_children: 'Add Child',
 		move: 'Move To',
-		remove: 'Remove'
+		remove: 'Remove',
+		move_into: 'Into Child',
+		move_out: 'Out'
 	},
 	default_angles: ['Now', 'Plan', 'Idea', 'Wait', 'Circle', 'Trashbox'],
 	Header: {
