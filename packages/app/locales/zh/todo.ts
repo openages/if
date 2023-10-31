@@ -9,6 +9,7 @@ export default {
 	context_menu: {
 		detail: '查看详情',
 		insert: '添加',
+		add_tags: '添加标签',
 		insert_children: '添加子任务',
 		move: '移动到',
 		remove: '删除',

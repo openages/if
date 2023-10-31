@@ -8,7 +8,8 @@ export default {
 	},
 	context_menu: {
 		detail: 'Detail',
-		insert: 'Insert',
+            insert: 'Insert',
+            add_tags: 'Add Tags',
 		insert_children: 'Add Child',
 		move: 'Move To',
 		remove: 'Remove',

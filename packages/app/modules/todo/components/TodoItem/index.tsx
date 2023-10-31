@@ -1,6 +1,6 @@
 import { useDrag, useDrop, useMemoizedFn, useUpdateEffect, usePrevious } from 'ahooks'
 import { Dropdown, ConfigProvider } from 'antd'
-import { debounce } from 'lodash-es'
+import { debounce, remove } from 'lodash-es'
 import { Fragment, useState, useRef, useEffect, useLayoutEffect, useMemo } from 'react'
 import { Switch, Case, When } from 'react-if'
 
@@ -49,7 +49,7 @@ const Index = (props: IPropsTodoItem) => {
 			data: { index }
 		}
 	)
-	const { TodoContextMenu, ChildrenContextMenu } = useContextMenu({ angles })
+	const { TodoContextMenu, ChildrenContextMenu } = useContextMenu({ angles, tags, tag_ids })
 	const prev_children = usePrevious(children)
 
 	const setOpen = useMemoizedFn((v: boolean) => {
@@ -212,11 +212,31 @@ const Index = (props: IPropsTodoItem) => {
 	const onContextMenu = useMemoizedFn(({ key, keyPath }) => {
 		if (keyPath.length > 1) {
 			const parent_key = keyPath.at(-1)
-			const angle_id = keyPath.at(0)
+			const target_id = keyPath.at(0)
 
 			switch (parent_key) {
+				case 'add_tags':
+					let target = [] as Array<string>
+
+					if (tag_ids?.length) {
+						if (tag_ids.includes(target_id)) {
+							target = tag_ids.filter((item) => item !== target_id)
+						} else {
+							target = [...tag_ids, target_id]
+						}
+					} else {
+						target.push(target_id)
+					}
+
+					update({
+						type: 'parent',
+						index,
+						value: { tag_ids: target } as Todo.Todo
+					})
+
+					break
 				case 'move':
-					moveTo(id, angle_id)
+					moveTo(id, target_id)
 					break
 			}
 		} else {
