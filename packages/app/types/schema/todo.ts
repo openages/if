@@ -34,6 +34,7 @@ export namespace Todo {
 		type: 'todo'
 		/** @maxLength 12 */
 		status: 'checked' | 'unchecked' | 'closed'
+		open?: boolean
 		star?: number
 		/**
 		 * @multipleOf 1

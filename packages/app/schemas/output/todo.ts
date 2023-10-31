@@ -105,6 +105,9 @@ export default {
                         ],
                         "maxLength": 12
                   },
+                  "open": {
+                        "type": "boolean"
+                  },
                   "star": {
                         "type": "number"
                   },
@@ -250,6 +253,9 @@ export default {
                               "closed"
                         ],
                         "maxLength": 12
+                  },
+                  "open": {
+                        "type": "boolean"
                   },
                   "star": {
                         "type": "number"

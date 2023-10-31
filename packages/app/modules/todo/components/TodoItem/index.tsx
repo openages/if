@@ -19,6 +19,7 @@ import styles from './index.css'
 
 import type { IPropsTodoItem, IPropsChildren } from '../../types'
 import type { Todo } from '@/types'
+
 const Index = (props: IPropsTodoItem) => {
 	const {
 		item,
@@ -36,13 +37,12 @@ const Index = (props: IPropsTodoItem) => {
 		moveTo,
 		remove
 	} = props
-	const { id, text, status, tag_ids, tag_width, children } = item
+	const { id, text, status, open, tag_ids, tag_width, children } = item
 	const linker = useRef<HTMLDivElement>(null)
 	const input = useRef<HTMLDivElement>(null)
 	const tags_wrap = useRef<HTMLDivElement>(null)
 	const [dragging, setDragging] = useState(false)
 	const [hovering, setHovering] = useState(false)
-	const [fold, setFold] = useState(true)
 	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } = useSortable(
 		{
 			id,
@@ -51,6 +51,10 @@ const Index = (props: IPropsTodoItem) => {
 	)
 	const { TodoContextMenu, ChildrenContextMenu } = useContextMenu({ angles })
 	const prev_children = usePrevious(children)
+
+	const setOpen = useMemoizedFn((v: boolean) => {
+		update({ type: 'parent', index, value: { open: v } as Todo.Todo })
+	})
 
 	useLayoutEffect(() => {
 		const el = input.current
@@ -65,7 +69,7 @@ const Index = (props: IPropsTodoItem) => {
 	useUpdateEffect(() => {
 		if (deepEqual(children, prev_children)) return
 
-		setFold(children?.length === 0)
+		setOpen(children?.length > 0)
 	}, [children, prev_children])
 
 	useEffect(() => {
@@ -77,10 +81,10 @@ const Index = (props: IPropsTodoItem) => {
 	}, [text])
 
 	useEffect(() => {
-		if (isDragging) setFold(true)
+		if (isDragging) setOpen(false)
 	}, [isDragging])
 
-	useUpdateEffect(() => renderLines(id), [fold])
+	useUpdateEffect(() => renderLines(id), [open])
 
 	useDrag(id, linker, {
 		onDragStart: () => {
@@ -126,7 +130,11 @@ const Index = (props: IPropsTodoItem) => {
 		makeLinkLine({ active_id: id, y: clientY })
 	})
 
-	const toggleChildren = useMemoizedFn(() => setFold(!fold))
+	const toggleChildren = useMemoizedFn(() => {
+		if (!children?.length) return
+
+		setOpen(!open)
+	})
 
 	const onInput = useMemoizedFn(
 		debounce(
@@ -252,7 +260,7 @@ const Index = (props: IPropsTodoItem) => {
 	const props_children: IPropsChildren = {
 		items: children,
 		index,
-		fold,
+		fold: !open,
 		isDragging,
 		handled: item.status === 'checked' || item.status === 'closed',
 		ChildrenContextMenu,
@@ -333,7 +341,7 @@ const Index = (props: IPropsTodoItem) => {
 							id={`todo_${id}`}
 							className={$cx(
 								'text_wrap',
-								children && children?.length && fold && 'has_children'
+								children && children?.length && !open && 'has_children'
 							)}
 							ref={input}
 							contentEditable

@@ -2,6 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 
+import { useMounted } from '@/hooks'
 import { Todo } from '@/types'
 import { DndContext } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
@@ -26,6 +27,7 @@ const Index = (props: IPropsChildren) => {
 		removeChildren
 	} = props
 	const [items, setItems] = useState(_items)
+	const mounted = useMounted()
 
 	useEffect(() => setItems(_items), [_items])
 
@@ -56,7 +58,7 @@ const Index = (props: IPropsChildren) => {
 			{!fold && (
 				<motion.div
 					className={$cx('w_100 border_box', styles._local, handled && styles.handled)}
-					initial={{ opacity: 0, height: 0 }}
+					initial={mounted ? { opacity: 0, height: 0 } : { opacity: 1, height: 'auto' }}
 					animate={{ opacity: 1, height: 'auto' }}
 					exit={{ opacity: 0, height: 0 }}
 					transition={{ duration: 0.18 }}
