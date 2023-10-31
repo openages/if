@@ -16,7 +16,17 @@ import styles from './index.css'
 import type { IPropsChildrenItem } from '../../types'
 
 const Index = (props: IPropsChildrenItem) => {
-	const { item, index, children_index, ChildrenContextMenu, update, tab, insertChildren, removeChildren } = props
+	const {
+		item,
+		index,
+		children_index,
+		useByDetail,
+		ChildrenContextMenu,
+		update,
+		tab,
+		insertChildren,
+		removeChildren
+	} = props
 	const { id, text, status } = item
 	const input = useRef<HTMLDivElement>(null)
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
@@ -140,7 +150,7 @@ const Index = (props: IPropsChildrenItem) => {
 					menu={{ items: ChildrenContextMenu, onClick: onContextMenu }}
 				>
 					<div
-						id={`todo_${id}`}
+						id={`${useByDetail ? 'detail_' : ''}todo_${id}`}
 						className='text_wrap'
 						ref={input}
 						contentEditable

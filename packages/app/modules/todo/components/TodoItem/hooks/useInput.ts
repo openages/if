@@ -16,13 +16,14 @@ interface HookArgs {
 }
 
 export default (args: HookArgs) => {
-	const { item, index, update } = args
+      const { item, index, update } = args
 	const { text } = item
-	const input = useRef<HTMLDivElement>(null)
-
+      const input = useRef<HTMLDivElement>(null)
+      
 	useEffect(() => {
 		const el = input.current
 
+		if (text === undefined) return
 		if (el.innerHTML === text) return
 
 		el.innerHTML = purify(text)

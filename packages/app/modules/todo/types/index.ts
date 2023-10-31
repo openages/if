@@ -66,7 +66,7 @@ export interface IPropsTodos {
 	tags: Model['todo']['tags']
 	angles: Model['todo']['angles']
 	relations: Todo.Data['relations']
-	drag_disabled: boolean
+      drag_disabled: boolean
 	check: Model['check']
 	updateRelations: Model['updateRelations']
 	move: Model['move']
@@ -75,6 +75,7 @@ export interface IPropsTodos {
 	tab: Model['tab']
 	moveTo: Model['moveTo']
 	remove: Model['remove']
+	showDetailModal: (index: number) => void
 }
 
 export interface IPropsTodoItem {
@@ -92,6 +93,7 @@ export interface IPropsTodoItem {
 	tab: Model['tab']
 	moveTo: Model['moveTo']
 	remove: Model['remove']
+	showDetailModal: IPropsTodos['showDetailModal']
 }
 
 export interface IPropsChildren {
@@ -99,8 +101,9 @@ export interface IPropsChildren {
 	index: number
 	fold: boolean
 	isDragging: boolean
-	handled: boolean
-	ChildrenContextMenu: MenuProps['items']
+      handled: boolean
+	useByDetail?: boolean
+      ChildrenContextMenu: MenuProps[ 'items' ]
 	update: Model['update']
 	tab: Model['tab']
 	insertChildren: (children_index?: number) => Promise<void>
@@ -110,7 +113,8 @@ export interface IPropsChildren {
 export interface IPropsChildrenItem {
 	item: Todo.Todo['children'][number]
 	index: number
-	children_index: number
+      children_index: number
+	useByDetail: IPropsChildren['useByDetail']
 	ChildrenContextMenu: IPropsChildren['ChildrenContextMenu']
 	update: (children_index: number, value: Partial<Omit<Todo.Todo['children'][number], 'id'>>) => Promise<void>
 	tab: Model['tab']
@@ -143,7 +147,11 @@ export interface IPropsArchiveItem extends Pick<IPropsArchive, 'restoreArchiveIt
 	item: Todo.Todo
 }
 
-export type ArgsOnInfoChange_changedValues = Partial<Todo.Data & Model['file']['data']> & {
-	icon_info: { icon: string; icon_hue?: number }
+export interface IPropsDetail {
+	visible_detail_modal: Model['visible_archive_modal']
+	current_detail_index: Model['current_detail_index']
+	current_detail_item: Model['current_detail_item']
+	update: Model['update']
+	tab: Model['tab']
+	closeDetailModal: () => void
 }
-export type ArgsOnInfoChange_values = Todo.Data & Model['file']

@@ -1,5 +1,4 @@
 import { useMemoizedFn } from 'ahooks'
-import { omitBy } from 'lodash-es'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState, useMemo } from 'react'
@@ -10,7 +9,7 @@ import { DataEmpty } from '@/components'
 import { usePageScrollRestoration } from '@/hooks'
 import { isShowEmpty } from '@/utils'
 
-import { Header, Input, Tabs, Todos, SettingsModal, Archive } from './components'
+import { Header, Input, Tabs, Todos, SettingsModal, Archive, Detail } from './components'
 import styles from './index.css'
 import Model from './model'
 
@@ -21,8 +20,10 @@ import type {
 	IPropsInput,
 	IPropsTodos,
 	IPropsSettingsModal,
-	IPropsArchive
+	IPropsArchive,
+	IPropsDetail
 } from './types'
+
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const angles = toJS(x.todo.angles || [])
@@ -76,7 +77,11 @@ const Index = ({ id }: IProps) => {
 		update: useMemoizedFn(x.update),
 		tab: useMemoizedFn(x.tab),
 		moveTo: useMemoizedFn(x.moveTo),
-		remove: useMemoizedFn(x.remove)
+		remove: useMemoizedFn(x.remove),
+		showDetailModal: useMemoizedFn((index: number) => {
+			x.visible_detail_modal = true
+			x.current_detail_index = index
+		})
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
@@ -104,6 +109,15 @@ const Index = ({ id }: IProps) => {
 		setArchiveQueryParams: useMemoizedFn((v) => (x.archive_query_params = v))
 	}
 
+	const props_detail: IPropsDetail = {
+		visible_detail_modal: x.visible_detail_modal,
+		current_detail_index: toJS(x.current_detail_index),
+		current_detail_item: toJS(x.current_detail_item),
+		update: useMemoizedFn(x.update),
+		tab: useMemoizedFn(x.tab),
+		closeDetailModal: useMemoizedFn(() => (x.visible_detail_modal = false))
+	}
+
 	return (
 		<div className={$cx('w_100 flex flex_column', styles._local)}>
 			<If condition={x.id && x.file.data.name}>
@@ -114,6 +128,7 @@ const Index = ({ id }: IProps) => {
 					<Todos {...props_todos}></Todos>
 					<SettingsModal {...props_settings_modal}></SettingsModal>
 					<Archive {...props_archive}></Archive>
+					<Detail {...props_detail}></Detail>
 				</Then>
 				<Else>
 					<When

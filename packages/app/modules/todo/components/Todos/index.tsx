@@ -21,7 +21,7 @@ const Index = (props: IPropsTodos) => {
 		tags,
 		angles,
 		relations,
-		drag_disabled,
+            drag_disabled,
 		check,
 		updateRelations,
 		move,
@@ -29,7 +29,8 @@ const Index = (props: IPropsTodos) => {
 		update,
 		tab,
 		moveTo,
-		remove
+		remove,
+		showDetailModal
 	} = props
 	const container = useRef<HTMLDivElement>(null)
 	const stoper = useRef<number>()
@@ -159,7 +160,7 @@ const Index = (props: IPropsTodos) => {
 										index,
 										tags,
 										angles,
-										drag_disabled,
+                                                            drag_disabled,
 										makeLinkLine,
 										renderLines,
 										check,
@@ -168,7 +169,8 @@ const Index = (props: IPropsTodos) => {
 										update,
 										tab,
 										moveTo,
-										remove
+										remove,
+										showDetailModal
 									}}
 									key={item.id}
 								></TodoItem>

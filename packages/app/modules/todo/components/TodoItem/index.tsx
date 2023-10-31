@@ -28,7 +28,8 @@ const Index = (props: IPropsTodoItem) => {
 		update,
 		tab,
 		moveTo,
-		remove
+		remove,
+		showDetailModal
 	} = props
 	const { id, status, open, tag_ids, children } = item
 	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } = useSortable(
@@ -48,7 +49,17 @@ const Index = (props: IPropsTodoItem) => {
 	const { linker, dragging, hovering } = useLink({ item, makeLinkLine, updateRelations })
 	const { input, onInput } = useInput({ item, index, update })
 	const { TodoContextMenu, ChildrenContextMenu } = useContextMenu({ angles, tags, tag_ids })
-	const { onContextMenu } = useOnContextMenu({ item, index, update, moveTo, insert, tab, remove, insertChildren })
+	const { onContextMenu } = useOnContextMenu({
+		item,
+		index,
+		update,
+		moveTo,
+		insert,
+		tab,
+		remove,
+		showDetailModal,
+		insertChildren
+	})
 	const { target_tag_width } = useTagWidth({ item })
 
 	useOpen({ item, input, isDragging, renderLines, setOpen })

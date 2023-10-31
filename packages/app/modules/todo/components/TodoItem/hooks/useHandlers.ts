@@ -8,15 +8,16 @@ import type { Todo } from '@/types'
 interface HookArgs {
 	item: IPropsTodoItem['item']
 	index: IPropsTodoItem['index']
-	makeLinkLine: IPropsTodoItem['makeLinkLine']
-	check: IPropsTodoItem['check']
-	insert: IPropsTodoItem['insert']
+	visible_detail_modal?: IPropsTodoItem['visible_detail_modal']
+	makeLinkLine?: IPropsTodoItem['makeLinkLine']
+	check?: IPropsTodoItem['check']
+	insert?: IPropsTodoItem['insert']
 	update: IPropsTodoItem['update']
-	tab: IPropsTodoItem['tab']
+	tab?: IPropsTodoItem['tab']
 }
 
 export default (args: HookArgs) => {
-	const { item, index, makeLinkLine, check, insert, update, tab } = args
+	const { item, index, visible_detail_modal, makeLinkLine, check, insert, update, tab } = args
 	const { id, status, open, children } = item
 
 	const setOpen = useMemoizedFn((v: boolean) => {
@@ -53,7 +54,10 @@ export default (args: HookArgs) => {
 
 		await update({ type: 'children', index, value: children })
 
-		setTimeout(() => document.getElementById(`todo_${target.id}`)?.focus(), 0)
+		setTimeout(
+			() => document.getElementById(`${visible_detail_modal ? 'detail_' : ''}todo_${target.id}`)?.focus(),
+			0
+		)
 	})
 
 	const removeChildren = useMemoizedFn(async (children_index: number) => {

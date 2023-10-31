@@ -20,6 +20,7 @@ const Index = (props: IPropsChildren) => {
 		fold,
 		isDragging,
 		handled,
+		useByDetail,
 		ChildrenContextMenu,
 		update: updateChildren,
 		tab,
@@ -57,7 +58,12 @@ const Index = (props: IPropsChildren) => {
 		<AnimatePresence mode={isDragging ? 'popLayout' : 'sync'}>
 			{!fold && (
 				<motion.div
-					className={$cx('w_100 border_box', styles._local, handled && styles.handled)}
+					className={$cx(
+						'w_100 border_box',
+						styles._local,
+						handled && styles.handled,
+						useByDetail && styles.useByDetail
+					)}
 					initial={mounted ? { opacity: 0, height: 0 } : { opacity: 1, height: 'auto' }}
 					animate={{ opacity: 1, height: 'auto' }}
 					exit={{ opacity: 0, height: 0 }}
@@ -71,7 +77,8 @@ const Index = (props: IPropsChildren) => {
 										{...{
 											item,
 											index,
-											children_index,
+                                                                  children_index,
+                                                                  useByDetail,
 											ChildrenContextMenu,
 											update,
 											tab,

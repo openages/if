@@ -44,18 +44,25 @@ import type { Watch } from '@openages/stk'
 export default class Index {
 	id = ''
 	timer: NodeJS.Timeout = null
+
 	todo = {} as Todo.Data
 	todo_watcher = null as Subscription
 	items = [] as Array<Todo.TodoItem>
 	items_watcher = null as Subscription
+
 	archives = [] as Array<TodoArchive.Item>
 	archive_counts = 0
-	current_angle_id = ''
-	visible_settings_modal = false
-	visible_archive_modal = false
+	archive_query_params = {} as ArchiveQueryParams
+
 	items_sort_param = null as ItemsSortParams
 	items_filter_tags = [] as Array<string>
-	archive_query_params = {} as ArchiveQueryParams
+
+	visible_settings_modal = false
+	visible_archive_modal = false
+	visible_detail_modal = true
+
+	current_angle_id = ''
+	current_detail_index = -1
 
 	watch = {
 		['current_angle_id|items_sort_param|items_filter_tags']: () => {
@@ -106,6 +113,12 @@ export default class Index {
 
 	get is_filtered() {
 		return Boolean(this.items_sort_param) || this.items_filter_tags.length > 0
+	}
+
+	get current_detail_item() {
+		if (this.current_detail_index === -1) return {} as Todo.Todo
+
+		return this.items[this.current_detail_index] as Todo.Todo
 	}
 
 	constructor(

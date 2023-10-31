@@ -105,5 +105,8 @@ export default {
 			end: 'End',
 			status: 'Status'
 		}
+      },
+      Detail: {
+		title: 'Detail'
 	}
 }

@@ -11,11 +11,12 @@ interface HookArgs {
 	insert: IPropsTodoItem['insert']
 	tab: IPropsTodoItem['tab']
 	remove: IPropsTodoItem['remove']
+	showDetailModal: IPropsTodoItem['showDetailModal']
 	insertChildren: (children_index?: number) => Promise<void>
 }
 
 export default (args: HookArgs) => {
-	const { item, index, update, moveTo, insert, tab, remove, insertChildren } = args
+	const { item, index, update, moveTo, insert, tab, remove, showDetailModal, insertChildren } = args
 	const { id, tag_ids } = item
 
 	const onContextMenu = useMemoizedFn(({ key, keyPath }) => {
@@ -51,6 +52,7 @@ export default (args: HookArgs) => {
 		} else {
 			switch (key) {
 				case 'detail':
+					showDetailModal(index)
 					break
 				case 'insert':
 					insert({ index })

@@ -1,0 +1,47 @@
+._local {
+	:global {
+		.if-drawer-content-wrapper {
+			.if-drawer-content {
+				padding: 0;
+			}
+
+			.if-drawer-header {
+				flex: unset;
+				height: 36px;
+				padding: 0 18px;
+				padding-right: 42px;
+				border-bottom: 1px solid var(--color_border_light);
+
+				&-title {
+					margin-bottom: 0;
+				}
+			}
+		}
+
+		.detail_item_wrap {
+			padding: 18px;
+
+			.todo_text_wrap {
+				padding: 0;
+				margin-bottom: 12px;
+				outline: none;
+				font-size: 16px;
+				font-weight: 500;
+			}
+
+			.drag_wrap {
+				width: 12px;
+				height: 12px;
+				top: 7px;
+				left: -12px;
+				border-radius: var(--radius_small_1);
+				background-color: var(--color_bg_2);
+				opacity: 0;
+
+				&:hover {
+					background-color: rgba(var(--color_text_rgb), 0.12);
+				}
+			}
+		}
+	}
+}

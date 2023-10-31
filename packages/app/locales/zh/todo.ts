@@ -103,5 +103,8 @@ export default {
 			end: '截止',
 			status: '状态'
 		}
+	},
+	Detail: {
+		title: '任务详情'
 	}
 }
