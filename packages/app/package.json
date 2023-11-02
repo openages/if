@@ -76,7 +76,7 @@
             "@types/lodash-es": "^4.17.10",
             "@types/nice-try": "^2.1.1",
             "@types/node": "^20.8.10",
-            "@types/react": "^18.2.33",
+            "@types/react": "^18.2.34",
             "@types/react-dom": "^18.2.14",
             "bun": "^1.0.7",
             "cross-env": "^7.0.3",
