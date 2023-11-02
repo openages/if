@@ -4,12 +4,13 @@ export default {
 			unchecked: 'Unchecked',
 			checked: 'Checked',
 			closed: 'Closed'
-		}
+		},
+		star: 'Star'
 	},
 	context_menu: {
 		detail: 'Detail',
-            insert: 'Insert',
-            add_tags: 'Add Tags',
+		insert: 'Insert',
+		add_tags: 'Add Tags',
 		insert_children: 'Add Child',
 		move: 'Move To',
 		remove: 'Remove',
@@ -71,10 +72,12 @@ export default {
 			group: 'Group'
 		},
 		Circle: {
-			title: 'Task loop cycle',
+			title: 'Repeat',
 			day: 'Days',
 			hour: 'Hours',
-			minute: 'Minutes'
+			minute: 'Minutes',
+			disabled: 'Disabled',
+			unset: 'Unset'
 		}
 	},
 	Archive: {
@@ -105,8 +108,8 @@ export default {
 			end: 'End',
 			status: 'Status'
 		}
-      },
-      Detail: {
+	},
+	Detail: {
 		title: 'Detail'
 	}
 }

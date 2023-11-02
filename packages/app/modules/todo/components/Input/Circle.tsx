@@ -1,5 +1,6 @@
 import { Popover, Slider, InputNumber, Switch } from 'antd'
 import { cloneDeep } from 'lodash-es'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { HourglassMedium } from '@phosphor-icons/react'
@@ -7,7 +8,6 @@ import { HourglassMedium } from '@phosphor-icons/react'
 import styles from './index.css'
 
 import type { IPropsInputCircle } from '../../types'
-
 const inputs = [
 	{
 		label: 'day',
@@ -27,7 +27,7 @@ const inputs = [
 ] as const
 
 const Index = (props: IPropsInputCircle) => {
-	const { circle_enabled, circle_value = [], onChangeCircle } = props
+	const { circle_enabled, circle_value = [], useByDetail, onChangeCircle } = props
 	const { t, i18n } = useTranslation()
 
 	const Content = (
@@ -89,14 +89,36 @@ const Index = (props: IPropsInputCircle) => {
 		</div>
 	)
 
+	const Trigger = useMemo(() => {
+		if (!useByDetail) {
+			return (
+				<div className='btn_circle flex justify_center align_center clickable'>
+					<HourglassMedium size={15}></HourglassMedium>
+				</div>
+			)
+		}
+
+		if (!circle_enabled) {
+			return <span className='not_enabled cursor_point'>{t('translation:todo.Input.Circle.disabled')}</span>
+		}
+
+		if (!circle_value[0] && !circle_value[1] && !circle_value[2]) {
+			return <span className='not_enabled cursor_point'>{t('translation:todo.Input.Circle.unset')}</span>
+		}
+
+		let target = ''
+
+		if (circle_value[0]) target += circle_value[0] + t('translation:todo.Input.Circle.day') + '  '
+		if (circle_value[1]) target += circle_value[1] + t('translation:todo.Input.Circle.hour') + '  '
+		if (circle_value[2]) target += circle_value[2] + t('translation:todo.Input.Circle.minute')
+
+		return <span className='cursor_point'>{target}</span>
+	}, [i18n.language, circle_enabled, circle_value, useByDetail])
+
 	return (
 		<div className={$cx(styles.circle)}>
-			<Popover trigger='click' placement='top' content={Content}>
-				<div>
-					<div className='btn_circle flex justify_center align_center clickable'>
-						<HourglassMedium size={15}></HourglassMedium>
-					</div>
-				</div>
+			<Popover trigger='click' placement={useByDetail?'bottomLeft':'top'} content={Content}>
+				<div>{Trigger}</div>
 			</Popover>
 		</div>
 	)

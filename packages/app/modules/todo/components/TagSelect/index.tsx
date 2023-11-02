@@ -7,8 +7,9 @@ import getTag from './getTag'
 import styles from './index.css'
 
 import type { IPropsTagSelect } from '../../types'
+
 const Index = (props: IPropsTagSelect) => {
-	const { options, value, useByTodo, className, placement, onChange, onWidth } = props
+	const { options, value, useByTodo, useByDetail, className, placement, onChange, onWidth } = props
 	const { t } = useTranslation()
 	const tags_wrap = useRef()
 	const size = useSize(tags_wrap)
@@ -29,7 +30,13 @@ const Index = (props: IPropsTagSelect) => {
 	return (
 		<div className='flex' ref={tags_wrap}>
 			<Select
-				className={$cx('borderless no_suffix', styles._local, className, useByTodo && styles.useByTodo)}
+				className={$cx(
+					'borderless no_suffix',
+					styles._local,
+					className,
+					useByTodo && styles.useByTodo,
+					useByDetail && styles.useByDetail
+				)}
 				size='small'
 				mode='tags'
 				placement={placement || 'topLeft'}

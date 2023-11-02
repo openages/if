@@ -2,20 +2,6 @@
 	:global {
 		.if-drawer-content-wrapper {
 			.if-drawer-content {
-				padding: 0;
-
-				.if-drawer-header {
-					flex: unset;
-					height: 36px;
-					padding: 0 18px;
-					padding-right: 42px;
-					border-bottom: 1px solid var(--color_border_light);
-
-					&-title {
-						margin-bottom: 0;
-					}
-				}
-
 				.if-drawer-body {
 					padding: 0 18px;
 				}

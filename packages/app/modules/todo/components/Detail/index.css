@@ -1,23 +1,5 @@
 ._local {
 	:global {
-		.if-drawer-content-wrapper {
-			.if-drawer-content {
-				padding: 0;
-			}
-
-			.if-drawer-header {
-				flex: unset;
-				height: 36px;
-				padding: 0 18px;
-				padding-right: 42px;
-				border-bottom: 1px solid var(--color_border_light);
-
-				&-title {
-					margin-bottom: 0;
-				}
-			}
-		}
-
 		.detail_item_wrap {
 			padding: 18px;
 
@@ -42,6 +24,24 @@
 					background-color: rgba(var(--color_text_rgb), 0.12);
 				}
 			}
+
+                  .option_items{
+                        border-radius: var(--radius);
+
+                        .option_item{
+                             height: 30px;
+                             padding: 0 9px;
+
+                              .name_wrap{
+                                    width: 90px;
+
+                                    .name{
+                                          margin-left: 6px;
+                                          font-size: 12px;
+                                    }
+                              }
+                        }
+                  }
 		}
 	}
 }

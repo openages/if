@@ -4,7 +4,8 @@ export default {
 			unchecked: '未完成',
 			checked: '已完成',
 			closed: '已关闭'
-		}
+		},
+		star: '重要性'
 	},
 	context_menu: {
 		detail: '查看详情',
@@ -69,10 +70,12 @@ export default {
 			group: '组'
 		},
 		Circle: {
-			title: '任务循环周期',
+			title: '重复',
 			day: '天数',
 			hour: '小时',
-			minute: '分钟'
+			minute: '分钟',
+			disabled: '未开启',
+			unset: '未设置'
 		}
 	},
 	Archive: {

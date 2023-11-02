@@ -1,22 +1,28 @@
 import { Drawer } from 'antd'
 import { useTranslation } from 'react-i18next'
 
+import { Tag, BellRinging, HourglassMedium } from '@phosphor-icons/react'
+
 import Children from '../Children'
+import Circle from '../Input/Circle'
+import Star from '../Input/Star'
+import TagSelect from '../TagSelect'
 import { useInput, useHandlers, useContextMenu } from '../TodoItem/hooks'
 import styles from './index.css'
 
 import type { IPropsDetail, IPropsChildren } from '../../types'
 
 const Index = (props: IPropsDetail) => {
-	const { visible_detail_modal, current_detail_index, current_detail_item, update, tab, closeDetailModal } = props
+	const { visible_detail_modal, current_detail_index, current_detail_item, tags, update, tab, closeDetailModal } =
+		props
 	const { t } = useTranslation()
-	const { status, children } = current_detail_item
+	const { status, children, tag_ids, star, circle_enabled, circle_value } = current_detail_item
 	const { input, onInput } = useInput({
 		item: current_detail_item,
 		index: current_detail_index,
 		update
 	})
-	const { insertChildren, removeChildren } = useHandlers({
+	const { insertChildren, removeChildren, updateTags, updateTagWidth, updateStar, updateCircle } = useHandlers({
 		item: current_detail_item,
 		index: current_detail_index,
 		visible_detail_modal,
@@ -40,18 +46,53 @@ const Index = (props: IPropsDetail) => {
 
 	return (
 		<Drawer
-			rootClassName={$cx('hide_mask', styles._local)}
+			rootClassName={$cx('hide_mask custom', styles._local)}
 			open={visible_detail_modal}
 			title={t('translation:todo.Detail.title')}
 			width={360}
 			mask={false}
 			destroyOnClose
-			getContainer={document.body}
+			getContainer={false}
 			onClose={closeDetailModal}
 		>
 			{current_detail_item.id && (
 				<div className='detail_item_wrap w_100 border_box flex flex_column'>
 					<div className='todo_text_wrap w_100' ref={input} contentEditable onInput={onInput}></div>
+					<div className='option_items w_100 border_box flex flex_column mb_12'>
+						<div className='option_item w_100 border_box flex align_center'>
+							<div className='name_wrap flex align_center'>
+								<Tag size={16}></Tag>
+								<span className='name'>
+									{t('translation:todo.SettingsModal.tags.label')}
+								</span>
+							</div>
+							<TagSelect
+								options={tags}
+								value={tag_ids}
+								useByDetail
+								onChange={updateTags}
+							></TagSelect>
+						</div>
+						<div className='option_item w_100 border_box flex align_center'>
+							<div className='name_wrap flex align_center'>
+								<BellRinging size={16}></BellRinging>
+								<span className='name'>{t('translation:todo.common.star')}</span>
+							</div>
+							<Star value={star} onChangeStar={updateStar}></Star>
+						</div>
+						<div className='option_item w_100 border_box flex align_center'>
+							<div className='name_wrap flex align_center'>
+								<HourglassMedium size={16}></HourglassMedium>
+								<span className='name'>{t('translation:todo.Input.Circle.title')}</span>
+							</div>
+							<Circle
+								circle_enabled={circle_enabled}
+								circle_value={circle_value}
+								useByDetail
+								onChangeCircle={updateCircle}
+							></Circle>
+						</div>
+					</div>
 					{current_detail_item.children && <Children {...props_children}></Children>}
 				</div>
 			)}

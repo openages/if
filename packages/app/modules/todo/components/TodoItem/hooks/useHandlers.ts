@@ -8,7 +8,7 @@ import type { Todo } from '@/types'
 interface HookArgs {
 	item: IPropsTodoItem['item']
 	index: IPropsTodoItem['index']
-	visible_detail_modal?: IPropsTodoItem['visible_detail_modal']
+	visible_detail_modal?: boolean
 	makeLinkLine?: IPropsTodoItem['makeLinkLine']
 	check?: IPropsTodoItem['check']
 	insert?: IPropsTodoItem['insert']
@@ -92,6 +92,14 @@ export default (args: HookArgs) => {
 		update({ type: 'parent', index, value: { tag_width: v } as Todo.Todo })
 	})
 
+	const updateStar = useMemoizedFn((v) => {
+		update({ type: 'parent', index, value: { star: v } as Todo.Todo })
+	})
+
+	const updateCircle = useMemoizedFn((v) => {
+		update({ type: 'parent', index, value: { ...v } as Todo.Todo })
+	})
+
 	return {
 		setOpen,
 		onCheck,
@@ -101,6 +109,8 @@ export default (args: HookArgs) => {
 		removeChildren,
 		onKeyDown,
 		updateTags,
-		updateTagWidth
+		updateTagWidth,
+            updateStar,
+            updateCircle
 	}
 }

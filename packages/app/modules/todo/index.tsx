@@ -113,6 +113,7 @@ const Index = ({ id }: IProps) => {
 		visible_detail_modal: x.visible_detail_modal,
 		current_detail_index: toJS(x.current_detail_index),
 		current_detail_item: toJS(x.current_detail_item),
+		tags: toJS(x.todo.tags),
 		update: useMemoizedFn(x.update),
 		tab: useMemoizedFn(x.tab),
 		closeDetailModal: useMemoizedFn(() => (x.visible_detail_modal = false))

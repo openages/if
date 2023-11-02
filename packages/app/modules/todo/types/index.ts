@@ -13,6 +13,7 @@ export interface IPropsTagSelect {
 	options: Model['todo']['tags']
 	value: Array<string>
 	useByTodo?: boolean
+	useByDetail?: boolean
 	className?: SelectProps['className']
 	placement?: SelectProps['placement']
 	onChange?: (v: Array<string>) => void
@@ -55,9 +56,15 @@ export interface IPropsInput {
 	create: Model['create']
 }
 
+export interface IPropsInputStar {
+	value: Todo.Todo['star']
+	onChangeStar: (v: Todo.Todo['star']) => void
+}
+
 export interface IPropsInputCircle {
 	circle_enabled: Todo.Todo['circle_enabled']
 	circle_value: Todo.Todo['circle_value']
+	useByDetail?: boolean
 	onChangeCircle: (args: Partial<Pick<IPropsInputCircle, 'circle_enabled' | 'circle_value'>>) => void
 }
 
@@ -66,7 +73,7 @@ export interface IPropsTodos {
 	tags: Model['todo']['tags']
 	angles: Model['todo']['angles']
 	relations: Todo.Data['relations']
-      drag_disabled: boolean
+	drag_disabled: boolean
 	check: Model['check']
 	updateRelations: Model['updateRelations']
 	move: Model['move']
@@ -101,9 +108,9 @@ export interface IPropsChildren {
 	index: number
 	fold: boolean
 	isDragging: boolean
-      handled: boolean
+	handled: boolean
 	useByDetail?: boolean
-      ChildrenContextMenu: MenuProps[ 'items' ]
+	ChildrenContextMenu: MenuProps['items']
 	update: Model['update']
 	tab: Model['tab']
 	insertChildren: (children_index?: number) => Promise<void>
@@ -113,7 +120,7 @@ export interface IPropsChildren {
 export interface IPropsChildrenItem {
 	item: Todo.Todo['children'][number]
 	index: number
-      children_index: number
+	children_index: number
 	useByDetail: IPropsChildren['useByDetail']
 	ChildrenContextMenu: IPropsChildren['ChildrenContextMenu']
 	update: (children_index: number, value: Partial<Omit<Todo.Todo['children'][number], 'id'>>) => Promise<void>
@@ -151,6 +158,7 @@ export interface IPropsDetail {
 	visible_detail_modal: Model['visible_archive_modal']
 	current_detail_index: Model['current_detail_index']
 	current_detail_item: Model['current_detail_item']
+	tags: Model['todo']['tags']
 	update: Model['update']
 	tab: Model['tab']
 	closeDetailModal: () => void

@@ -1,11 +1,22 @@
 ._local {
 	min-width: 48px;
-	margin-left: 1px;
+	margin-left: -2px;
+
+      &.useByDetail{
+            :global{
+                  .if-select-selector {
+                        .if-select-selection-placeholder{
+                              inset-inline: 0 !important;
+                        }
+                  }
+            }
+      }
 
 	&.useByTodo {
 		--height: 14px;
 
 		min-width: unset;
+		margin-left: 0;
 
 		:global {
 			.tag {

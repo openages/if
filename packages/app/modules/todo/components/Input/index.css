@@ -21,6 +21,7 @@
 
 			.select_type {
 				height: 22px;
+				margin-right: 3px;
 
 				.if-select-selector {
 					height: 22px;
@@ -67,32 +68,7 @@
 			padding: 0 12px;
 			background-color: var(--color_bg);
 			border-radius: var(--radius);
-
-			.if-rate {
-				display: flex;
-				align-items: center;
-
-				.if-rate-star {
-					font-size: 15px;
-					height: 15px;
-
-					div[role='radio'] {
-						height: 15px;
-					}
-
-					&-second {
-						height: 100%;
-						color: rgba(var(--color_text_rgb), 0.24);
-					}
-
-					&-full {
-						.if-rate-star-second {
-							color: var(--color_main);
-						}
-					}
-				}
-			}
-
+			
 			&::after {
 				content: '';
 				position: absolute;
@@ -105,8 +81,37 @@
 	}
 }
 
+.star {
+	display: flex;
+	align-items: center;
+
+	:global {
+		.if-rate-star {
+			font-size: 15px;
+			height: 15px;
+
+			div[role='radio'] {
+				height: 15px;
+			}
+
+			&-second {
+				height: 100%;
+				color: rgba(var(--color_text_rgb), 0.24);
+			}
+
+			&-full {
+				.if-rate-star-second {
+					color: var(--color_main);
+				}
+			}
+		}
+	}
+}
+
 .circle {
 	:global {
+            font-size: 12px;
+            
 		.btn_circle {
 			width: 24px;
 			height: 24px;
@@ -120,6 +125,10 @@
 			}
 		}
 
+            .not_enabled{
+			color: rgba(var(--color_text_rgb), 0.3);
+            }
+
 		.circle_input_wrap {
 			.title_wrap {
 				padding: 6px 12px;
@@ -127,7 +136,7 @@
 			}
 
 			.circle_input_items {
-				width: 240px;
+				width: 210px;
 				padding: 6px 12px;
 
 				.circle_input_item {

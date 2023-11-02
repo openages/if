@@ -7,12 +7,12 @@ import { When } from 'react-if'
 
 import { todo } from '@/appdata'
 import { id } from '@/utils'
-import { Star } from '@phosphor-icons/react'
 
 import { getTodo, getGroup } from '../../initials'
 import TagSelect from '../TagSelect'
 import Circle from './Circle'
 import styles from './index.css'
+import Star from './Star'
 
 import type { IPropsInput, IPropsInputCircle } from '../../types'
 import type { Todo } from '@/types'
@@ -44,9 +44,9 @@ const Index = (props: IPropsInput) => {
 			circle_enabled: false,
 			circle_value: undefined
 		}))
-      }, [ loading ])
-      
-      useEffect(() => {
+	}, [loading])
+
+	useEffect(() => {
 		if (tags_size?.width === undefined) return
 
 		setInput((input) => ({ ...input, tag_width: tags_size.width }))
@@ -113,17 +113,10 @@ const Index = (props: IPropsInput) => {
 					<When condition={input.type === 'todo'}>
 						<div className='flex align_center'>
 							<div className='star_wrap flex align_center mr_8 relative'>
-								<Rate
-									count={6}
-									character={({ index, value }) => (
-										<Star
-											size={15}
-											weight={value >= index + 1 ? 'duotone' : 'regular'}
-										/>
-									)}
+								<Star
 									value={(input as Todo.Todo).star}
-									onChange={(v) => setInput((input) => ({ ...input, star: v }))}
-								></Rate>
+									onChangeStar={(v) => setInput((input) => ({ ...input, star: v }))}
+								></Star>
 							</div>
 							<Circle {...props_circle}></Circle>
 						</div>

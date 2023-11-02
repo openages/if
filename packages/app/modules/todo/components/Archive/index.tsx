@@ -170,7 +170,7 @@ const Index = (props: IPropsArchive) => {
 
 	return (
 		<Drawer
-			rootClassName={$cx('hide_mask', styles._local)}
+			rootClassName={$cx('hide_mask custom', styles._local)}
 			open={visible_archive_modal}
 			title={t('translation:todo.Archive.title')}
 			width={300}

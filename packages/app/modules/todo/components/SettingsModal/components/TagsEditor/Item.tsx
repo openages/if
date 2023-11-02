@@ -39,7 +39,7 @@ const Index = (props: IProps) => {
 			<Input
 				className='input'
 				placeholder={t('translation:todo.SettingsModal.tags.placeholder')}
-				maxLength={15}
+				maxLength={12}
 				value={item.text}
 				onChange={({ target: { value } }) => onUpdate('text', index, value)}
 			></Input>
