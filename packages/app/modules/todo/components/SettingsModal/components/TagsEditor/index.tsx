@@ -1,6 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
-import { theme } from 'antd'
 import { cloneDeep } from 'lodash-es'
+import genColor from 'uniqolor'
 
 import { id } from '@/utils'
 import { DndContext } from '@dnd-kit/core'
@@ -13,15 +13,12 @@ import Item from './Item'
 import type { IPropsCustomFormItem } from '@/types'
 import type { DragEndEvent } from '@dnd-kit/core'
 
-const { useToken } = theme
-
 interface IProps extends IPropsCustomFormItem<Array<{ id: string; color: string; text: string }>> {
 	remove: (id: string) => Promise<boolean>
 }
 
 const Index = (props: IProps) => {
 	const { value = [], onChange, remove } = props
-	const { token } = useToken()
 
 	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
 		if (!over?.id) return false
@@ -33,7 +30,11 @@ const Index = (props: IProps) => {
 	const onAdd = useMemoizedFn((index) => {
 		const items = cloneDeep(value)
 
-		items.splice(index + 1, 0, { id: id(), color: token.colorPrimary, text: '' })
+		items.splice(index + 1, 0, {
+			id: id(),
+			color: genColor.random({ saturation: [0, 100], lightness: [20, 72], differencePoint: 300 }).color,
+			text: ''
+		})
 
 		onChange(items)
 	})

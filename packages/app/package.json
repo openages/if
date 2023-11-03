@@ -65,6 +65,7 @@
             "ts-pattern": "^5.0.5",
             "tslib": "^2.6.2",
             "tsyringe": "^4.8.0",
+            "uniqolor": "^1.1.0",
             "zod": "^3.22.4"
       },
       "devDependencies": {

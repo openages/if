@@ -182,6 +182,9 @@ importers:
       tsyringe:
         specifier: ^4.8.0
         version: 4.8.0
+      uniqolor:
+        specifier: ^1.1.0
+        version: 1.1.0
       zod:
         specifier: ^3.22.4
         version: 3.22.4
@@ -2443,6 +2446,14 @@ packages:
     dev: true
     optional: true
 
+  /@oven/bun-linux-aarch64@1.0.8:
+    resolution: {integrity: sha512-OuYX+WS8rVztHIgqw8eRNDYlA/qj+TmnlhYiTvMt8RQ9dd7cozaFC8qUGHIBU3wmPyEg/l/+6a3NFs6zBKSeIw==}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
   /@oven/bun-linux-x64-baseline@1.0.7:
     resolution: {integrity: sha512-URNn0plTU7VJ4uRXuHfVFln7n90vmG8VU68TboLd1CSe+nukkhNid7fZl1yDfXU7Y4l4iKn7meqGxRDXyrjeXw==}
     cpu: [x64]
@@ -2451,8 +2462,24 @@ packages:
     dev: true
     optional: true
 
+  /@oven/bun-linux-x64-baseline@1.0.8:
+    resolution: {integrity: sha512-ss0UK2foomr6q6yRsClsZhD6Bb7r1zYx2euv27L1eR/JpiJfWJvq+1xfyo7ywLBp8aM44KyfcRtWJsCeEfrWbg==}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
   /@oven/bun-linux-x64@1.0.7:
     resolution: {integrity: sha512-fYlJgm10g4WLPV55cH1cVhrE2Z1Uu7nYKBXX7jur9YGn9suNw+xeLp36I716pX9EIkYBVKXyfJ38q2BT+RbEug==}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@oven/bun-linux-x64@1.0.8:
+    resolution: {integrity: sha512-A6aAWqKWXGb1BSpm9dcNlsbi+zCQWhPLxl3Yjmgvw7u7s4TTApSXpVHeQcJov4Ljm5dOk28+EL9uvLDKMBKXuA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
@@ -4262,6 +4289,9 @@ packages:
       '@oven/bun-darwin-aarch64': 1.0.8
       '@oven/bun-darwin-x64': 1.0.8
       '@oven/bun-darwin-x64-baseline': 1.0.8
+      '@oven/bun-linux-aarch64': 1.0.8
+      '@oven/bun-linux-x64': 1.0.8
+      '@oven/bun-linux-x64-baseline': 1.0.8
     dev: true
 
   /bytes@3.0.0:
@@ -8481,6 +8511,10 @@ packages:
     resolution: {integrity: sha512-6t3foTQI9qne+OZoVQB/8x8rk2k1eVy1gRXhV3oFQ5T6R1dqQ1xtin3XqSlx3+ATBkliTaR/hHyJBm+LVPNM8w==}
     engines: {node: '>=4'}
     dev: true
+
+  /uniqolor@1.1.0:
+    resolution: {integrity: sha512-j2XyokF24fsj+L5u6fbu4rM3RQc6VWJuAngYM2k0ZdG3yiVxt0smLkps2GmQIYqK8VkELGdM9vFU/HfOkK/zoQ==}
+    dev: false
 
   /universalify@2.0.0:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
