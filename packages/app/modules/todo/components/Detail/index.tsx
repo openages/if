@@ -13,8 +13,16 @@ import styles from './index.css'
 import type { IPropsDetail, IPropsChildren } from '../../types'
 
 const Index = (props: IPropsDetail) => {
-	const { visible_detail_modal, current_detail_index, current_detail_item, tags, update, tab, closeDetailModal } =
-		props
+	const {
+		visible_detail_modal,
+		current_detail_index,
+		current_detail_item,
+		tags,
+		update,
+		tab,
+		closeDetailModal,
+		clearCurrentDetail
+	} = props
 	const { t } = useTranslation()
 	const { status, children, tag_ids, star, circle_enabled, circle_value } = current_detail_item
 	const { input, onInput } = useInput({
@@ -22,7 +30,7 @@ const Index = (props: IPropsDetail) => {
 		index: current_detail_index,
 		update
 	})
-	const { insertChildren, removeChildren, updateTags, updateTagWidth, updateStar, updateCircle } = useHandlers({
+	const { insertChildren, removeChildren, updateTags, updateStar, updateCircle } = useHandlers({
 		item: current_detail_item,
 		index: current_detail_index,
 		visible_detail_modal,
@@ -54,6 +62,7 @@ const Index = (props: IPropsDetail) => {
 			destroyOnClose
 			getContainer={false}
 			onClose={closeDetailModal}
+			afterOpenChange={clearCurrentDetail}
 		>
 			{current_detail_item.id && (
 				<div className='detail_item_wrap w_100 border_box flex flex_column'>

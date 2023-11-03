@@ -5,13 +5,6 @@
 				.if-drawer-body {
 					padding: 0 18px;
 				}
-
-				.if-drawer-footer {
-					height: 36px;
-					padding: 0 18px;
-					line-height: 1;
-					border-top-style: solid;
-				}
 			}
 		}
 

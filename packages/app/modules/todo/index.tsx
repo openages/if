@@ -9,7 +9,7 @@ import { DataEmpty } from '@/components'
 import { usePageScrollRestoration } from '@/hooks'
 import { isShowEmpty } from '@/utils'
 
-import { Header, Input, Tabs, Todos, SettingsModal, Archive, Detail } from './components'
+import { Header, Input, Tabs, Todos, SettingsModal, Archive, Detail, Help } from './components'
 import styles from './index.css'
 import Model from './model'
 
@@ -21,7 +21,8 @@ import type {
 	IPropsTodos,
 	IPropsSettingsModal,
 	IPropsArchive,
-	IPropsDetail
+	IPropsDetail,
+	IPropsHelp
 } from './types'
 
 const Index = ({ id }: IProps) => {
@@ -46,6 +47,7 @@ const Index = ({ id }: IProps) => {
 		items_filter_tags: toJS(x.items_filter_tags),
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true)),
 		showArchiveModal: useMemoizedFn(() => (x.visible_archive_modal = true)),
+		showHelpModal: useMemoizedFn(() => (x.visible_help_modal = true)),
 		setItemsSortParam: useMemoizedFn((v) => (x.items_sort_param = v)),
 		setItemsFilterTags: useMemoizedFn((v) => (x.items_filter_tags = v))
 	}
@@ -116,7 +118,17 @@ const Index = ({ id }: IProps) => {
 		tags: toJS(x.todo.tags),
 		update: useMemoizedFn(x.update),
 		tab: useMemoizedFn(x.tab),
-		closeDetailModal: useMemoizedFn(() => (x.visible_detail_modal = false))
+		closeDetailModal: useMemoizedFn(() => (x.visible_detail_modal = false)),
+		clearCurrentDetail: useMemoizedFn((visible: boolean) => {
+			if (visible) return
+
+			x.current_detail_index = -1
+		})
+	}
+
+	const props_help: IPropsHelp = {
+		visible_help_modal: x.visible_help_modal,
+		closeHelpModal: useMemoizedFn(() => (x.visible_help_modal = false))
 	}
 
 	return (
@@ -130,6 +142,7 @@ const Index = ({ id }: IProps) => {
 					<SettingsModal {...props_settings_modal}></SettingsModal>
 					<Archive {...props_archive}></Archive>
 					<Detail {...props_detail}></Detail>
+					<Help {...props_help}></Help>
 				</Then>
 				<Else>
 					<When

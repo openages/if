@@ -60,6 +60,7 @@ export default class Index {
 	visible_settings_modal = false
 	visible_archive_modal = false
 	visible_detail_modal = false
+	visible_help_modal = false
 
 	current_angle_id = ''
 	current_detail_index = -1

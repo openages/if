@@ -19,12 +19,13 @@ export default (args: HookArgs) => {
       const { item, index, update } = args
 	const { text } = item
       const input = useRef<HTMLDivElement>(null)
-      
-	useEffect(() => {
-		const el = input.current
 
+	useEffect(() => {
+            const el = input.current
+
+		if (!el) return
 		if (text === undefined) return
-		if (el.innerHTML === text) return
+            if (el.innerHTML === text) return
 
 		el.innerHTML = purify(text)
 	}, [text])

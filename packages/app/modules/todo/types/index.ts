@@ -25,6 +25,7 @@ export interface IPropsHeader extends Pick<Todo.Data & DirTree.File, 'name' | 'i
 	items_filter_tags: Model['items_filter_tags']
 	showSettingsModal: () => void
 	showArchiveModal: () => void
+	showHelpModal: () => void
 	setItemsSortParam: (v: Model['items_sort_param']) => void
 	setItemsFilterTags: (v: Model['items_filter_tags']) => void
 }
@@ -155,11 +156,17 @@ export interface IPropsArchiveItem extends Pick<IPropsArchive, 'restoreArchiveIt
 }
 
 export interface IPropsDetail {
-	visible_detail_modal: Model['visible_archive_modal']
+	visible_detail_modal: Model['visible_detail_modal']
 	current_detail_index: Model['current_detail_index']
 	current_detail_item: Model['current_detail_item']
 	tags: Model['todo']['tags']
 	update: Model['update']
 	tab: Model['tab']
 	closeDetailModal: () => void
+	clearCurrentDetail: (visible: boolean) => void
+}
+
+export interface IPropsHelp {
+	visible_help_modal: Model['visible_help_modal']
+	closeHelpModal: () => void
 }

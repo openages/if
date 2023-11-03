@@ -32,7 +32,8 @@ export default {
 				alphabetical: 'Alphabetical',
 				create_at: 'Create Time'
 			},
-			tags: 'Tags'
+			tags: 'Tags',
+			help: 'Help'
 		}
 	},
 	SettingsModal: {
@@ -111,5 +112,19 @@ export default {
 	},
 	Detail: {
 		title: 'Detail'
-	}
+	},
+	Help: [
+		{
+			title: 'Quick Insert',
+			desc: 'When the cursor is focused on task or subtask text, press Enter to insert the next task.'
+		},
+		{
+			title: 'Move as Subtask',
+			desc: 'When the cursor is focused on task text, press Tab to append the current task as a subtask to the previous task. Please note that Tab operation is disabled if the current task is a mutually exclusive task or if the list is in a filtered state.'
+		},
+		{
+			title: 'Move as Top-Level Task',
+			desc: 'When the cursor is focused on subtask text, press Tab to change the current subtask to the next top-level task. Please note that Tab operation is disabled if the list is in a filtered state.'
+		}
+	]
 }
