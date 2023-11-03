@@ -16,7 +16,7 @@ interface HookArgs {
 
 export default (args: HookArgs) => {
 	const { item, input, isDragging, renderLines, setOpen } = args
-	const { id, children } = item
+	const { id, children, open } = item
 	const prev_children = usePrevious(children)
 
 	useLayoutEffect(() => {
