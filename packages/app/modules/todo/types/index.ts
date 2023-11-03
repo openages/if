@@ -160,8 +160,10 @@ export interface IPropsDetail {
 	current_detail_index: Model['current_detail_index']
 	current_detail_item: Model['current_detail_item']
 	tags: Model['todo']['tags']
+	next: boolean
 	update: Model['update']
 	tab: Model['tab']
+	setCurrentDetailIndex: (v: Model['current_detail_index']) => void
 	closeDetailModal: () => void
 	clearCurrentDetail: (visible: boolean) => void
 }

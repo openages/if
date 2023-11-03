@@ -1,7 +1,7 @@
 import { Drawer } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-import { Tag, BellRinging, HourglassMedium } from '@phosphor-icons/react'
+import { Tag, BellRinging, HourglassMedium, CaretUp, CaretDown } from '@phosphor-icons/react'
 
 import Children from '../Children'
 import Circle from '../Input/Circle'
@@ -18,10 +18,12 @@ const Index = (props: IPropsDetail) => {
 		current_detail_index,
 		current_detail_item,
 		tags,
+		next,
 		update,
 		tab,
 		closeDetailModal,
-		clearCurrentDetail
+		clearCurrentDetail,
+		setCurrentDetailIndex
 	} = props
 	const { t } = useTranslation()
 	const { status, children, tag_ids, star, circle_enabled, circle_value } = current_detail_item
@@ -64,6 +66,26 @@ const Index = (props: IPropsDetail) => {
 			onClose={closeDetailModal}
 			afterOpenChange={clearCurrentDetail}
 		>
+			<div className='toggle_wrap flex absolute'>
+				<div
+					className={$cx(
+						'btn_toggle flex justify_center align_center clickable mr_6',
+						current_detail_index === 0 && 'disabled'
+					)}
+					onClick={() => setCurrentDetailIndex(current_detail_index - 1)}
+				>
+					<CaretUp size={16}></CaretUp>
+				</div>
+				<div
+					className={$cx(
+						'btn_toggle flex justify_center align_center clickable',
+						!next && 'disabled'
+					)}
+					onClick={() => setCurrentDetailIndex(current_detail_index + 1)}
+				>
+					<CaretDown size={16}></CaretDown>
+				</div>
+			</div>
 			{current_detail_item.id && (
 				<div className='detail_item_wrap w_100 border_box flex flex_column'>
 					<div className='todo_text_wrap w_100' ref={input} contentEditable onInput={onInput}></div>

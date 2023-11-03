@@ -1,5 +1,24 @@
 ._local {
 	:global {
+		.toggle_wrap {
+			top: 7px;
+			right: 42px;
+
+			.btn_toggle {
+				width: 21px;
+				height: 21px;
+				border-radius: var(--radius_small);
+
+				&:hover {
+					background-color: var(--color_bg_2);
+				}
+
+				&.disabled {
+					opacity: 0.3;
+				}
+			}
+		}
+
 		.detail_item_wrap {
 			padding: 18px;
 
@@ -25,23 +44,23 @@
 				}
 			}
 
-                  .option_items{
-                        border-radius: var(--radius);
+			.option_items {
+				border-radius: var(--radius);
 
-                        .option_item{
-                             height: 30px;
-                             padding: 0 9px;
+				.option_item {
+					height: 30px;
+					padding: 0 9px;
 
-                              .name_wrap{
-                                    width: 90px;
+					.name_wrap {
+						width: 90px;
 
-                                    .name{
-                                          margin-left: 6px;
-                                          font-size: 12px;
-                                    }
-                              }
-                        }
-                  }
+						.name {
+							margin-left: 6px;
+							font-size: 12px;
+						}
+					}
+				}
+			}
 		}
 	}
 }
