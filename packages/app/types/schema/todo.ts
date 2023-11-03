@@ -43,7 +43,7 @@ export namespace Todo {
 		 * */
 		archive_time?: number
 		tag_ids?: Array<string>
-		tag_width?: number
+		options_width?: number
 		circle_enabled: boolean
 		circle_value?: Array<number>
 		children?: Array<{

@@ -11,13 +11,12 @@ export interface IProps {
 
 export interface IPropsTagSelect {
 	options: Model['todo']['tags']
-	value: Array<string>
+      value: Array<string>
 	useByTodo?: boolean
 	useByDetail?: boolean
 	className?: SelectProps['className']
 	placement?: SelectProps['placement']
 	onChange?: (v: Array<string>) => void
-	onWidth?: (v?: number) => void
 }
 
 export interface IPropsHeader extends Pick<Todo.Data & DirTree.File, 'name' | 'icon' | 'icon_hue' | 'desc' | 'tags'> {

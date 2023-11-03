@@ -10,8 +10,8 @@ const Index = (tags: Required<IPropsInput['tags']>, useByTodo?: boolean) => (pro
 	const { value, onClose } = props
 	const { text, color } = tags.find((item) => item.id === value)
 
-	const onPreventMouseDown = useMemoizedFn((event: React.MouseEvent<HTMLSpanElement>) => {
-		event.preventDefault()
+	const onPreventMouseDown = useMemoizedFn((e: React.MouseEvent<HTMLSpanElement>) => {
+		e.preventDefault()
 	})
 
 	return (

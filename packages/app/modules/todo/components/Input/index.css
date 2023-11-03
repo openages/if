@@ -56,19 +56,13 @@
 					}
 				}
 			}
-
-			.tags_wrap {
-				z-index: -1;
-				visibility: hidden;
-				pointer-events: none;
-			}
 		}
 
 		.star_wrap {
 			padding: 0 12px;
 			background-color: var(--color_bg);
 			border-radius: var(--radius);
-			
+
 			&::after {
 				content: '';
 				position: absolute;
@@ -110,8 +104,8 @@
 
 .circle {
 	:global {
-            font-size: 12px;
-            
+		font-size: 12px;
+
 		.btn_circle {
 			width: 24px;
 			height: 24px;
@@ -125,9 +119,9 @@
 			}
 		}
 
-            .not_enabled{
+		.not_enabled {
 			color: rgba(var(--color_text_rgb), 0.3);
-            }
+		}
 
 		.circle_input_wrap {
 			.title_wrap {

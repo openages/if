@@ -74,9 +74,9 @@ export default {
 		},
 		Circle: {
 			title: 'Repeat',
-			day: 'Days',
-			hour: 'Hours',
-			minute: 'Minutes',
+			day: 'days',
+			hour: 'hours',
+			minute: 'minutes',
 			disabled: 'Disabled',
 			unset: 'Unset'
 		}

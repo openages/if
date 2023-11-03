@@ -18,7 +18,7 @@ interface HookArgs {
 
 export default (args: HookArgs) => {
 	const { item, index, visible_detail_modal, makeLinkLine, check, insert, update, tab } = args
-	const { id, status, open, children } = item
+	const { id, status, open, star, circle_enabled, circle_value, options_width, children } = item
 
 	const setOpen = useMemoizedFn((v: boolean) => {
 		update({ type: 'parent', index, value: { open: v } as Todo.Todo })
@@ -89,7 +89,9 @@ export default (args: HookArgs) => {
 	})
 
 	const updateTagWidth = useMemoizedFn((v) => {
-		update({ type: 'parent', index, value: { tag_width: v } as Todo.Todo })
+		if (v === options_width) return
+
+		update({ type: 'parent', index, value: { options_width: v } as Todo.Todo })
 	})
 
 	const updateStar = useMemoizedFn((v) => {
@@ -110,7 +112,7 @@ export default (args: HookArgs) => {
 		onKeyDown,
 		updateTags,
 		updateTagWidth,
-            updateStar,
-            updateCircle
+		updateStar,
+		updateCircle
 	}
 }

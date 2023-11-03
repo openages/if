@@ -1,7 +1,7 @@
 import { useMemoizedFn, useSize } from 'ahooks'
-import { Input, Select, Rate } from 'antd'
+import { Input, Select } from 'antd'
 import { cloneDeep } from 'lodash-es'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
 
@@ -22,9 +22,7 @@ const { TextArea } = Input
 const Index = (props: IPropsInput) => {
 	const { loading, tags, create } = props
 	const { t } = useTranslation()
-	const tags_wrap = useRef()
 	const [input, setInput] = useState<Omit<Todo.TodoItem, 'file_id' | 'angle_id' | 'sort'>>(getTodo())
-	const tags_size = useSize(tags_wrap)
 
 	useEffect(() => {
 		if (input.type === 'todo') {
@@ -45,12 +43,6 @@ const Index = (props: IPropsInput) => {
 			circle_value: undefined
 		}))
 	}, [loading])
-
-	useEffect(() => {
-		if (tags_size?.width === undefined) return
-
-		setInput((input) => ({ ...input, tag_width: tags_size.width }))
-	}, [tags_size])
 
 	const props_circle: IPropsInputCircle = {
 		circle_enabled: (input as Todo.Todo).circle_enabled,
@@ -101,13 +93,6 @@ const Index = (props: IPropsInput) => {
 									setInput((input) => ({ ...input, tag_ids: v }))
 								}}
 							></TagSelect>
-							<div className='tags_wrap absolute right_0 bottom_0' ref={tags_wrap}>
-								<TagSelect
-									options={tags}
-									value={(input as Todo.Todo).tag_ids}
-									useByTodo
-								></TagSelect>
-							</div>
 						</When>
 					</div>
 					<When condition={input.type === 'todo'}>

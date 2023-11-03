@@ -123,7 +123,7 @@ export default {
                               "type": "string"
                         }
                   },
-                  "tag_width": {
+                  "options_width": {
                         "type": "number"
                   },
                   "circle_enabled": {
@@ -272,7 +272,7 @@ export default {
                               "type": "string"
                         }
                   },
-                  "tag_width": {
+                  "options_width": {
                         "type": "number"
                   },
                   "circle_enabled": {

@@ -1,14 +1,15 @@
+import { useSize, useUpdateEffect } from 'ahooks'
 import { Dropdown, ConfigProvider } from 'antd'
-import { Fragment } from 'react'
-import { Switch, Case, When } from 'react-if'
+import { Fragment, useRef } from 'react'
+import { Switch, Case } from 'react-if'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { Square, CheckSquare, DotsSixVertical } from '@phosphor-icons/react'
+import { Square, CheckSquare, DotsSixVertical, Star, HourglassMedium } from '@phosphor-icons/react'
 
 import Children from '../Children'
 import TagSelect from '../TagSelect'
-import { useContextMenu, useHandlers, useLink, useInput, useOpen, useOnContextMenu, useTagWidth } from './hooks'
+import { useContextMenu, useHandlers, useLink, useInput, useOpen, useOnContextMenu } from './hooks'
 import styles from './index.css'
 
 import type { IPropsTodoItem, IPropsChildren } from '../../types'
@@ -31,7 +32,7 @@ const Index = (props: IPropsTodoItem) => {
 		remove,
 		showDetailModal
 	} = props
-	const { id, status, open, tag_ids, children } = item
+	const { id, status, open, tag_ids, star, circle_enabled, circle_value, options_width, children } = item
 	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } = useSortable(
 		{ id, data: { index } }
 	)
@@ -60,7 +61,14 @@ const Index = (props: IPropsTodoItem) => {
 		showDetailModal,
 		insertChildren
 	})
-	const { target_tag_width } = useTagWidth({ item })
+	const options_wrap = useRef<HTMLDivElement>(null)
+	const options_size = useSize(options_wrap)
+
+	useUpdateEffect(() => {
+		if (options_size?.width === undefined) return
+
+		updateTagWidth(options_size.width)
+	}, [options_size])
 
 	useOpen({ item, input, isDragging, renderLines, setOpen })
 
@@ -126,17 +134,29 @@ const Index = (props: IPropsTodoItem) => {
 						</Case>
 					</Switch>
 				</div>
-				<When condition={Boolean(tags) && tags?.length && tag_ids?.length}>
-					<div className='tags_wrap flex align_center absolute z_index_1000'>
+				<div className='options_wrap flex align_center absolute z_index_1000' ref={options_wrap}>
+					{tags?.length > 0 && tag_ids?.length > 0 && (
 						<TagSelect
 							options={tags}
 							value={tag_ids}
 							useByTodo
 							onChange={updateTags}
-							onWidth={updateTagWidth}
 						></TagSelect>
-					</div>
-				</When>
+                              ) }
+                              {star > 0 && (
+						<div
+							className='other_wrap white flex justify_center align_center'
+							style={{backgroundColor: `rgba(var(--color_main_rgb),${star / 6})`}}
+						>
+							<Star className='icon' size={12}></Star>
+						</div>
+					)}
+					{circle_enabled && (circle_value?.[0] || circle_value?.[1] || circle_value?.[2]) && (
+						<div className='other_wrap flex justify_center align_center'>
+							<HourglassMedium className='icon' size={12}></HourglassMedium>
+						</div>
+					)}
+				</div>
 				<ConfigProvider getPopupContainer={() => document.body}>
 					<Dropdown
 						destroyPopupOnHide
@@ -152,7 +172,7 @@ const Index = (props: IPropsTodoItem) => {
 							)}
 							ref={input}
 							contentEditable
-							style={{ textIndent: target_tag_width }}
+							style={{ textIndent: options_width ?? 'unset' }}
 							onInput={onInput}
 							onKeyDown={onKeyDown}
 						></div>
