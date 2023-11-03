@@ -125,6 +125,14 @@ export default {
 		{
 			title: 'Move as Top-Level Task',
 			desc: 'When the cursor is focused on subtask text, press Tab to change the current subtask to the next top-level task. Please note that Tab operation is disabled if the list is in a filtered state.'
+		},
+		{
+			title: 'Mutually Exclusive Tasks',
+			desc: 'Drag the small dot in front of a task onto the small dot of the target task to mark tasks as mutually exclusive. You can mark multiple tasks as mutually exclusive simultaneously. To cancel the mutual exclusion, drag the small dot back to the already mutually exclusive tasks.'
+		},
+		{
+			title: 'Expand Subtasks',
+			desc: 'Click the small dot to expand subtasks.'
 		}
 	]
 }
