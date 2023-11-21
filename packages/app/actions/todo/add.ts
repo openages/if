@@ -2,7 +2,7 @@ import { id } from '@/utils'
 
 import type { DirTree } from '@/types'
 
-export default async (file_id: string, args: Partial<DirTree.File>) => {
+export default async (file_id: string, args: Partial<DirTree.Item>) => {
 	// @ts-ignore
 	const angles = $t('translation:todo.default_angles', { returnObjects: true }) as Array<string>
 

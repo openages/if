@@ -66,7 +66,7 @@ export default class Index {
 		this.stacks[index] = { ...this.stacks[index], ...v }
 	}
 
-	updateFile(v: DirTree.File) {
+	updateFile(v: DirTree.Item) {
 		const index = this.stacks.findIndex((item) => item.id === v.id)
 
 		if (index === -1) return

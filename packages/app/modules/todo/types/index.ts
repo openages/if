@@ -19,7 +19,7 @@ export interface IPropsTagSelect {
 	onChange?: (v: Array<string>) => void
 }
 
-export interface IPropsHeader extends Pick<Todo.Data & DirTree.File, 'name' | 'icon' | 'icon_hue' | 'desc' | 'tags'> {
+export interface IPropsHeader extends Pick<Todo.Data & DirTree.Item, 'name' | 'icon' | 'icon_hue' | 'desc' | 'tags'> {
 	items_sort_param: Model['items_sort_param']
 	items_filter_tags: Model['items_filter_tags']
 	showSettingsModal: () => void

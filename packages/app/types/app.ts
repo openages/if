@@ -34,9 +34,9 @@ export namespace App {
 	export type Modules = Array<Module>
 
 	export interface Stack {
-		id: DirTree.File['id']
+		id: DirTree.Item['id']
 		module: App.ModuleType
-		file: DirTree.File
+		file: DirTree.Item
 		is_active: boolean
 		is_fixed: boolean
 	}

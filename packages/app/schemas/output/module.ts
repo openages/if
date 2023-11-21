@@ -36,39 +36,13 @@ export default {
                                                 "file"
                                           ]
                                     },
-                                    "children": {
-                                          "type": "array",
-                                          "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                      "type": {
-                                                            "type": "string",
-                                                            "const": "file"
-                                                      },
-                                                      "id": {
-                                                            "type": "string"
-                                                      },
-                                                      "name": {
-                                                            "type": "string"
-                                                      },
-                                                      "icon": {
-                                                            "type": "string"
-                                                      },
-                                                      "icon_hue": {
-                                                            "type": "number"
-                                                      }
-                                                },
-                                                "required": [
-                                                      "id",
-                                                      "name",
-                                                      "type"
-                                                ]
-                                          }
-                                    },
                                     "id": {
                                           "type": "string"
                                     },
                                     "name": {
+                                          "type": "string"
+                                    },
+                                    "pid": {
                                           "type": "string"
                                     },
                                     "icon": {
@@ -79,9 +53,9 @@ export default {
                                     }
                               },
                               "required": [
+                                    "type",
                                     "id",
-                                    "name",
-                                    "type"
+                                    "name"
                               ]
                         }
                   }
@@ -123,39 +97,13 @@ export default {
                               "file"
                         ]
                   },
-                  "children": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "type": {
-                                          "type": "string",
-                                          "const": "file"
-                                    },
-                                    "id": {
-                                          "type": "string"
-                                    },
-                                    "name": {
-                                          "type": "string"
-                                    },
-                                    "icon": {
-                                          "type": "string"
-                                    },
-                                    "icon_hue": {
-                                          "type": "number"
-                                    }
-                              },
-                              "required": [
-                                    "id",
-                                    "name",
-                                    "type"
-                              ]
-                        }
-                  },
                   "id": {
                         "type": "string"
                   },
                   "name": {
+                        "type": "string"
+                  },
+                  "pid": {
                         "type": "string"
                   },
                   "icon": {
@@ -166,91 +114,9 @@ export default {
                   }
             },
             "required": [
+                  "type",
                   "id",
-                  "name",
-                  "type"
-            ]
-      },
-      "DirTree.Dir": {
-            "type": "object",
-            "properties": {
-                  "type": {
-                        "type": "string",
-                        "const": "dir"
-                  },
-                  "children": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "type": {
-                                          "type": "string",
-                                          "const": "file"
-                                    },
-                                    "id": {
-                                          "type": "string"
-                                    },
-                                    "name": {
-                                          "type": "string"
-                                    },
-                                    "icon": {
-                                          "type": "string"
-                                    },
-                                    "icon_hue": {
-                                          "type": "number"
-                                    }
-                              },
-                              "required": [
-                                    "id",
-                                    "name",
-                                    "type"
-                              ]
-                        }
-                  },
-                  "id": {
-                        "type": "string"
-                  },
-                  "name": {
-                        "type": "string"
-                  },
-                  "icon": {
-                        "type": "string"
-                  },
-                  "icon_hue": {
-                        "type": "number"
-                  }
-            },
-            "required": [
-                  "children",
-                  "id",
-                  "name",
-                  "type"
-            ]
-      },
-      "DirTree.File": {
-            "type": "object",
-            "properties": {
-                  "type": {
-                        "type": "string",
-                        "const": "file"
-                  },
-                  "id": {
-                        "type": "string"
-                  },
-                  "name": {
-                        "type": "string"
-                  },
-                  "icon": {
-                        "type": "string"
-                  },
-                  "icon_hue": {
-                        "type": "number"
-                  }
-            },
-            "required": [
-                  "id",
-                  "name",
-                  "type"
+                  "name"
             ]
       }
 } as const

@@ -18,7 +18,7 @@ export const create = async (args: ArgsCreate) => {
 	const doc = await query(module)
 
 	if (type === 'dir') {
-		const dir = { ...data, id: id(), type: 'dir', children: [] } as DirTree.Dir
+		const dir = { ...data, id: id(), type: 'dir', children: [] } as DirTree.Item
 
 		if (focusing_item?.id) {
 			return await doc.incrementalModify((doc) => {
@@ -31,7 +31,7 @@ export const create = async (args: ArgsCreate) => {
 		await doc.incrementalUpdate({ $push: { dirtree: dir } })
 	} else {
 		const file_id = id()
-		const file = { ...data, id: file_id, type: 'file' } as DirTree.File
+		const file = { ...data, id: file_id, type: 'file' } as DirTree.Item
 
 		await actions.add(file_id, data)
 

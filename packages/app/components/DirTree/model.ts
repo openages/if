@@ -24,8 +24,8 @@ export default class Index {
 	doc = {} as Module.Item
 	doc_watcher = null as Subscription
 	focusing_item = {} as DirTree.Item
-	current_item = {} as DirTree.File
-	modal_type = 'file' as DirTree.Type
+	current_item = {} as DirTree.Item
+	modal_type = 'file' as DirTree.Item['type']
 	current_option = '' as 'rename' | 'add_file' | 'add_dir' | ''
 	open_folder = [] as Array<string>
 	modal_open = false
@@ -63,7 +63,7 @@ export default class Index {
 		this.utils.acts.push(disposer)
 	}
 
-	onClick(v: DirTree.File) {
+	onClick(v: DirTree.Item) {
 		if (!v?.id) return
 
 		$app.Event.emit('global.tabs.add', {
@@ -99,19 +99,19 @@ export default class Index {
 			})
 
 			if (this.current_item.id === this.focusing_item.id) {
-				this.current_item = {} as DirTree.File
+				this.current_item = {} as DirTree.Item
 			}
 
 			this.focusing_item = {} as DirTree.Item
 		}
 	}
 
-	setCurrentItem(v: DirTree.File) {
+	setCurrentItem(v: DirTree.Item) {
 		this.current_item = v
 	}
 
 	removeCurrentItem() {
-		this.current_item = {} as DirTree.File
+		this.current_item = {} as DirTree.Item
 	}
 
 	addOpenFolder(id: string) {

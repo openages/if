@@ -28,7 +28,7 @@ const Index = (props: IProps) => {
 		return () => x.off()
 	}, [module])
 
-	const onClick = useMemoizedFn((v: DirTree.File) => (x.current_item = v))
+	const onClick = useMemoizedFn((v: DirTree.Item) => (x.current_item = v))
 
 	const setModalOpen = useMemoizedFn((v: Model['modal_open'], type?: Model['modal_type']) => {
 		x.focusing_item = {} as DirTree.Item

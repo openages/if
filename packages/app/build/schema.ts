@@ -10,7 +10,6 @@ const root = process.cwd()
 const paths = globby.globbySync([`${root}/types/schema/*.ts`])
 
 const raw_app_types = fs.readFileSync(`${root}/types/app.ts`).toString()
-const raw_dirtree_types = fs.readFileSync(`${root}/types/dirtree.ts`).toString()
 
 fs.writeFileSync(
 	`${root}/types/app.ts`,
@@ -57,15 +56,6 @@ fs.writeFileSync(
 		)
 )
 
-fs.writeFileSync(
-	`${root}/types/dirtree.ts`,
-	fs
-		.readFileSync(`${root}/types/dirtree.ts`)
-		.toString()
-		.replace(`// children: Array<File>`, `children: Array<File>`)
-		.replace(`children: Array<Item>`, `// children: Array<Item>`)
-)
-
 const getConfig = (path: string) => {
 	return {
 		path,
@@ -92,4 +82,3 @@ paths.map((item) => {
 })
 
 fs.writeFileSync(`${root}/types/app.ts`, raw_app_types)
-fs.writeFileSync(`${root}/types/dirtree.ts`, raw_dirtree_types)

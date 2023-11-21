@@ -26,7 +26,7 @@ export default (items: DirTree.Items, active: Active, over: Over | null) => {
 	const takeActiveItem = () => {
 		if (active_parent_index.length > 0) {
 			active_parent_index.reduce((total: DirTree.Items, index, idx) => {
-				const children = (total[index] as DirTree.Dir).children
+				const children = (total[index] as DirTree.Item).children
 
 				if (idx === active_parent_index.length - 1) {
 					children.splice(active_index, 1)
@@ -44,10 +44,10 @@ export default (items: DirTree.Items, active: Active, over: Over | null) => {
 	if (over_item.type === 'dir') {
 		if (over_parent_index.length > 0) {
 			over_parent_index.reduce((total: DirTree.Items, index, idx) => {
-				const children = (total[index] as DirTree.Dir).children
+				const children = (total[index] as DirTree.Item).children
 
 				if (idx === over_parent_index.length - 1) {
-					;(children[over_index] as DirTree.Dir).children.push(active_item)
+					;(children[over_index] as DirTree.Item).children.push(active_item)
 
 					return total
 				} else {
@@ -55,7 +55,7 @@ export default (items: DirTree.Items, active: Active, over: Over | null) => {
 				}
 			}, items as Array<any>)
             } else {
-			;(items[over_index] as DirTree.Dir).children.push(active_item)
+			;(items[over_index] as DirTree.Item).children.push(active_item)
 		}
 
 		takeActiveItem()
@@ -63,10 +63,10 @@ export default (items: DirTree.Items, active: Active, over: Over | null) => {
 		if (active_parent_index.join(',') === over_parent_index.join(',')) {
 			if (active_parent_index.length > 0) {
 				active_parent_index.reduce((total: DirTree.Items, index, idx) => {
-					const children = (total[index] as DirTree.Dir).children
+					const children = (total[index] as DirTree.Item).children
 
 					if (idx === active_parent_index.length - 1) {
-						;(total[index] as DirTree.Dir).children = arrayMove(
+						;(total[index] as DirTree.Item).children = arrayMove(
 							children,
 							active_index,
 							over_index
@@ -91,7 +91,7 @@ export default (items: DirTree.Items, active: Active, over: Over | null) => {
 
 			if (over_parent_index.length > 0) {
 				over_parent_index.reduce((total: DirTree.Items, index, idx) => {
-					const children = (total[index] as DirTree.Dir).children
+					const children = (total[index] as DirTree.Item).children
 
 					if (idx === over_parent_index.length - 1) {
 						children.splice(over_index + 1, 0, active_item)

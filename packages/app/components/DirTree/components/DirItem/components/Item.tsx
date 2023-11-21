@@ -24,7 +24,7 @@ const Index = (props: IPropsDirItem_Item) => {
 	} = props
 	const { id, name, type } = item
 
-	const onItem = useMemoizedFn(() => onClick(item as DirTree.File))
+	const onItem = useMemoizedFn(() => onClick(item as DirTree.Item))
 
 	return (
 		<Wave>
@@ -64,9 +64,9 @@ const Index = (props: IPropsDirItem_Item) => {
 							type === 'dir' && item.children.length === 0 && 'no_children'
 						)}
 					>
-						<When condition={(item as DirTree.Dir).children?.length}>
+						<When condition={(item as DirTree.Item).children?.length}>
 							<span className='children_count text_center'>
-								{(item as DirTree.Dir).children?.length}
+								{(item as DirTree.Item).children?.length}
 							</span>
 						</When>
 						<CaretRight

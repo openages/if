@@ -1,7 +1,7 @@
 import type { App, DirTree } from '@/types'
 import type { IProps } from './index'
 
-export type Item = { type: 'dir'; data: Partial<DirTree.Dir> } | { type: 'file'; data: Partial<DirTree.File> }
+export type Item = { type: 'dir'; data: Partial<DirTree.Item> } | { type: 'file'; data: Partial<DirTree.Item> }
 
 export type ArgsCreate = {
 	module: App.ModuleType

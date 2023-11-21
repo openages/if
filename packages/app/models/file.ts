@@ -9,7 +9,7 @@ import type { Subscription } from 'rxjs'
 @injectable()
 export default class Index {
 	id = ''
-	data = {} as DirTree.File
+	data = {} as DirTree.Item
 	data_watcher = {} as Subscription
 	loading = false
 
@@ -33,14 +33,14 @@ export default class Index {
 
 		const target = await this.getQuery().exec()
 
-		this.data = find(target.dirtree, this.id) as DirTree.File
+		this.data = find(target.dirtree, this.id) as DirTree.Item
 
 		this.loading = false
 	}
 
 	watch() {
 		this.data_watcher = this.getQuery().$.subscribe(({ dirtree }) => {
-			this.data = find(dirtree, this.id) as DirTree.File
+			this.data = find(dirtree, this.id) as DirTree.Item
 		})
 	}
 

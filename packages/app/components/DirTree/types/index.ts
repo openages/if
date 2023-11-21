@@ -9,7 +9,7 @@ export interface IProps {
 	module: Model['module']
 	height?: CSSProperties['height']
 	actions: {
-		add: (file_id: string, data: Partial<Omit<DirTree.File, 'id'>>) => Promise<void>
+		add: (file_id: string, data: Partial<Omit<DirTree.Item, 'id'>>) => Promise<void>
 		remove: (focusing_item: DirTree.Item, current_item_id: string, module: string) => Promise<void>
 	}
 }
@@ -18,17 +18,17 @@ export interface IPropsDirItems {
 	module: Model['module']
 	data: Model['doc']['dirtree']
 	loading: boolean
-	current_item: DirTree.File
+	current_item: DirTree.Item
 	focusing_item: Model['focusing_item']
 	open_folder: Model['open_folder']
-	onClick: (v: DirTree.File) => void
+	onClick: (v: DirTree.Item) => void
 	showDirTreeOptions: (e: MouseEvent<HTMLElement>, v: DirTree.Item) => void
 }
 
 export interface IPropsDirItem {
 	module: Model['module']
 	item: DirTree.Item
-	current_item: DirTree.File
+	current_item: DirTree.Item
 	focusing_item: Model['focusing_item']
 	open_folder?: Model['open_folder']
 	parent_index?: Array<number>
