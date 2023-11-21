@@ -2,6 +2,7 @@ import { useMemoizedFn, useUpdateEffect, useDeepCompareEffect } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 
+import { DirTree } from '@/types'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { useDeepMemo } from '@openages/stk'
@@ -34,7 +35,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 	}, [open_folder, item.id])
 
 	const children = useDeepMemo(() => {
-		if (item.type === 'dir') return item.children
+		if (item.type === 'dir') return (item as DirTree.Dir).children
 	}, [item])
 
 	useUpdateEffect(() => {
@@ -93,7 +94,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 						exit={{ opacity: 0, height: 0 }}
 						transition={{ duration: 0.18 }}
 					>
-						{item.children.map((it, index) => (
+						{(item as DirTree.Dir).children.map((it, index) => (
 							<DirItem
 								{...props}
 								item={it}

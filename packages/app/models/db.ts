@@ -5,7 +5,7 @@ import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 import { injectable } from 'tsyringe'
 
 import { modules } from '@/appdata'
-import { schema_module, schema_setting, schema_todo, schema_todo_items, schema_todo_archives } from '@/schemas'
+import { schema_dirtree_items, schema_setting, schema_todo, schema_todo_items, schema_todo_archives } from '@/schemas'
 
 import type { RxDB } from '@/types'
 
@@ -23,8 +23,8 @@ export default class Index {
 			name: 'if/db',
 			eventReduce: true,
 			allowSlowCount: true,
-			multiInstance: false,
-			cleanupPolicy: { waitForLeadership: false },
+			multiInstance: true,
+			cleanupPolicy: { waitForLeadership: true },
 			ignoreDuplicate: window.$is_dev,
 			storage: wrappedKeyCompressionStorage({
 				storage: getRxStorageDexie()
@@ -32,7 +32,7 @@ export default class Index {
 		})
 
 		await db.addCollections({
-			module: { schema: schema_module, autoMigrate: true },
+			dirtree_items: { schema: schema_dirtree_items, autoMigrate: true },
 			setting: { schema: schema_setting, autoMigrate: true },
 			todo: { schema: schema_todo, autoMigrate: true },
 			todo_items: { schema: schema_todo_items, autoMigrate: true },
@@ -48,14 +48,8 @@ export default class Index {
 	}
 
 	async addModuleInitData() {
-		if ((await $db.module.count().exec()) > 0) return (this.ready = true)
+		if ((await $db.dirtree_items.count().exec()) > 0) return (this.ready = true)
 
-		const preset_data = modules.map((item) => ({
-			module: item.title,
-			dirtree: []
-		}))
-
-		await window.$db.collections.module.bulkInsert(preset_data)
 		await window.$db.collections.setting.bulkInsert([{ key: 'apps', data: JSON.stringify(modules) }])
 
 		return

@@ -1,4 +1,4 @@
-export * from './module'
+export * from './dirtree_items'
 export * from './setting'
 export * from './todo'
 export * from './todo_archives'

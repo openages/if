@@ -3,26 +3,26 @@ import { modules } from '@/appdata'
 import type { DirTree } from './dirtree'
 
 export namespace App {
-	// export type ModuleType = (typeof modules)[number]['title']
-	// build:schema 时使用下列配置
+	export type ModuleTypes = (typeof modules)[number]['title']
+
 	/** @maxLength 30 */
 	export type ModuleType =
 		| 'todo'
-            | 'memo'
-            | 'note'
-            | 'kanban'
-            | 'workflow'
-            | 'whiteboard'
-            | 'ppt'
-            | 'schedule'
-            | 'pomodoro'
-            | 'flag'
-            | 'api'
-            | 'dataflow'
-            | 'table'
-            | 'form'
-            | 'chart'
-            | 'setting'
+		| 'memo'
+		| 'note'
+		| 'kanban'
+		| 'workflow'
+		| 'whiteboard'
+		| 'ppt'
+		| 'schedule'
+		| 'pomodoro'
+		| 'flag'
+		| 'api'
+		| 'dataflow'
+		| 'table'
+		| 'form'
+		| 'chart'
+		| 'setting'
 
 	export interface Module {
 		id: App.ModuleType

@@ -22,7 +22,7 @@ const Index = (props: IPropsModal) => {
 		loading_create,
 		loading_updateItem,
 		create,
-		updateItem,
+		update,
 		setModalOpen,
 		resetFocusingItem
 	} = props
@@ -81,11 +81,11 @@ const Index = (props: IPropsModal) => {
 
 	const onOk = useMemoizedFn(() => {
 		if (!value || value.length > limits.todo_list_title_max_length) return
-		if (current_option === 'rename') return updateItem({ name: value, ...icon })
-		if (current_option === 'add_dir') return create({ type: 'dir', data: { name: value, ...icon } })
-		if (current_option === 'add_file') return create({ type: 'file', data: { name: value, ...icon } })
+		if (current_option === 'rename') return update({ name: value, ...icon })
+		if (current_option === 'add_dir') return create({ type: 'dir', name: value, ...icon })
+		if (current_option === 'add_file') return create({ type: 'file', name: value, ...icon })
 
-		create({ type: modal_type, data: { name: value, ...icon } })
+		create({ type: modal_type, name: value, ...icon })
 	})
 
 	const onSelectIcon = useMemoizedFn((shortcodes) => setIcon(shortcodes))

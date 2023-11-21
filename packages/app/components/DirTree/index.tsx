@@ -50,7 +50,7 @@ const Index = (props: IProps) => {
 
 	const props_dir_items: IPropsDirItems = {
 		module: x.module,
-		data: toJS(x.doc.dirtree) || [],
+		data: toJS(x.items) || [],
 		loading: x.utils.loading['query'],
 		current_item: toJS(x.current_item),
 		focusing_item: toJS(x.focusing_item),
@@ -72,7 +72,7 @@ const Index = (props: IProps) => {
 		loading_create: x.utils.loading['create'],
 		loading_updateItem: x.utils.loading['updateItem'],
 		create: useMemoizedFn(x.create),
-		updateItem: useMemoizedFn(x.updateItem),
+		update: useMemoizedFn(x.update),
 		setModalOpen,
 		resetFocusingItem
 	}

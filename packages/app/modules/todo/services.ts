@@ -152,7 +152,7 @@ export const updateTodoData = async (args: ArgsUpdateTodoData) => {
 	const { file_id, todo, changed_values, values, setTodo } = args
 
 	if (changed_values.name || changed_values.icon_info) {
-		await $app.Event.emit('todo/dirtree/updateItem', {
+		await $app.Event.emit('todo/dirtree/update', {
 			id: file_id,
 			...(changed_values.icon_info ?? changed_values)
 		})
@@ -189,7 +189,7 @@ export const check = async (args: ArgsCheck) => {
 
 	await updateStatus({ id, status, auto_archiving })
 
-      if (todo?.relations?.length && exsit_index !== -1) {
+	if (todo?.relations?.length && exsit_index !== -1) {
 		const relation_ids = cloneDeep(todo.relations[exsit_index]).items
 		const target_index = relation_ids.findIndex((item) => item === id)
 

@@ -16,7 +16,7 @@ export interface IProps {
 
 export interface IPropsDirItems {
 	module: Model['module']
-	data: Model['doc']['dirtree']
+	data: Model['items']
 	loading: boolean
 	current_item: DirTree.Item
 	focusing_item: Model['focusing_item']
@@ -61,8 +61,8 @@ export interface IPropsModal {
 	focusing_item: Model['focusing_item']
 	loading_create: boolean
 	loading_updateItem: boolean
-      create: Model[ 'create' ]
-	updateItem: Model['updateItem']
+	create: Model['create']
+	update: Model['update']
 	setModalOpen: (v: Model['modal_open'], type?: Model['modal_type']) => void
 	resetFocusingItem: () => void
 }

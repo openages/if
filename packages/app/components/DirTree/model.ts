@@ -1,19 +1,18 @@
-import { remove } from 'lodash-es'
-import { makeAutoObservable, toJS } from 'mobx'
+import { remove as lodash_remove } from 'lodash-es'
+import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
 import { loading } from '@/utils/decorators'
+import { getDocItemsData } from '@/utils/rxdb'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk'
 
-import { getQuery, create, query, updateDirtree, updateItem, removeItem } from './services'
-import { move } from './utils'
+import { getQuery, query, create, update, remove } from './services'
+import { move, transform } from './utils'
 
-import type { App, Module, DirTree } from '@/types'
+import type { App, DirTree } from '@/types'
 import type { Active, Over } from '@dnd-kit/core'
 import type { IProps } from './types'
-import type { Item } from './types/services'
-import type { RxDocument } from 'rxdb'
 import type { Subscription } from 'rxjs'
 import type { Watch } from '@openages/stk'
 
@@ -21,8 +20,8 @@ import type { Watch } from '@openages/stk'
 export default class Index {
 	module = '' as App.ModuleType
 	actions = {} as IProps['actions']
-	doc = {} as Module.Item
-	doc_watcher = null as Subscription
+	items = [] as Array<DirTree.Item>
+	items_watcher = null as Subscription
 	focusing_item = {} as DirTree.Item
 	current_item = {} as DirTree.Item
 	modal_type = 'file' as DirTree.Item['type']
@@ -33,6 +32,10 @@ export default class Index {
 	watch = {
 		current_item: (v) => this.onClick(v)
 	} as Watch<Index>
+
+	get data() {
+		return transform(this.items)
+	}
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { watch: false }, { autoBind: true })
@@ -63,6 +66,54 @@ export default class Index {
 		this.utils.acts.push(disposer)
 	}
 
+	@loading
+	async query() {
+		const doc = await query(this.module)
+
+		this.items = getDocItemsData(doc)
+	}
+
+	@loading
+	async create(item: Partial<DirTree.Item>) {
+		await create({
+			module: this.module,
+			focusing_item: this.focusing_item,
+			actions: this.actions,
+			item
+		})
+
+		this.modal_open = false
+		this.focusing_item = {} as DirTree.Item
+	}
+
+	@loading
+	async update(item: Partial<DirTree.Item>) {
+		await update({ focusing_item: this.focusing_item, item })
+
+		this.modal_open = false
+		this.focusing_item = {} as DirTree.Item
+	}
+
+	async onOptions(type: 'add_dir' | 'add_file' | 'rename' | 'delete') {
+		if (type === 'add_dir' || type === 'add_file' || type === 'rename') {
+			this.current_option = type
+			this.modal_open = true
+		} else {
+			await remove({
+				module: this.module,
+				focusing_item: this.focusing_item,
+				actions: this.actions,
+				current_item_id: this.current_item.id
+			})
+
+			if (this.current_item.id === this.focusing_item.id) {
+				this.current_item = {} as DirTree.Item
+			}
+
+			this.focusing_item = {} as DirTree.Item
+		}
+	}
+
 	onClick(v: DirTree.Item) {
 		if (!v?.id) return
 
@@ -79,31 +130,13 @@ export default class Index {
 	move(args: { active: Active; over: Over }) {
 		const { active, over } = args
 
-		const target = move(toJS(this.doc).dirtree, active, over)
+		const target = move(this.items, active, over)
 
 		if (!target) return
 
-		this.updateDirtree(target)
-	}
+		this.items = target
 
-	async onOptions(type: 'add_dir' | 'add_file' | 'rename' | 'delete') {
-		if (type === 'add_dir' || type === 'add_file' || type === 'rename') {
-			this.current_option = type
-			this.modal_open = true
-		} else {
-			await removeItem({
-				module: this.module,
-				focusing_item: this.focusing_item,
-				actions: this.actions,
-				current_item_id: this.current_item.id
-			})
-
-			if (this.current_item.id === this.focusing_item.id) {
-				this.current_item = {} as DirTree.Item
-			}
-
-			this.focusing_item = {} as DirTree.Item
-		}
+		// this.updateDirtree(target)
 	}
 
 	setCurrentItem(v: DirTree.Item) {
@@ -121,51 +154,12 @@ export default class Index {
 	}
 
 	removeOpenFolder(id: string) {
-		remove(this.open_folder, (item) => item === id)
-	}
-
-	@loading
-	async create(item: Item) {
-		await create({
-			module: this.module,
-			focusing_item: this.focusing_item,
-			actions: this.actions,
-			item
-		})
-
-		this.modal_open = false
-		this.focusing_item = {} as DirTree.Item
-	}
-
-	@loading
-	async query() {
-		const doc = await query(this.module)
-
-		this.doc = doc.toMutableJSON()
-	}
-
-	async updateDirtree(data: DirTree.Items) {
-		await updateDirtree({
-			module: this.module,
-			data
-		})
-	}
-
-	@loading
-	async updateItem(item: Partial<DirTree.Item>) {
-		await updateItem({
-			module: this.module,
-			focusing_item: this.focusing_item,
-			item
-		})
-
-		this.modal_open = false
-		this.focusing_item = {} as DirTree.Item
+		lodash_remove(this.open_folder, (item) => item === id)
 	}
 
 	watchDoc() {
-		this.doc_watcher = getQuery(this.module).$.subscribe((doc: RxDocument<Module.Item>) => {
-			this.doc = doc.toMutableJSON()
+		this.items_watcher = getQuery(this.module).$.subscribe((items) => {
+			this.items = getDocItemsData(items)
 		})
 	}
 
@@ -175,18 +169,18 @@ export default class Index {
 		$app.Event.on(`${this.module}/dirtree/setCurrentItem`, this.setCurrentItem)
 		$app.Event.on(`${this.module}/dirtree/addOpenFolder`, this.addOpenFolder)
 		$app.Event.on(`${this.module}/dirtree/removeOpenFolder`, this.removeOpenFolder)
-		$app.Event.on(`${this.module}/dirtree/updateItem`, this.updateItem)
+		$app.Event.on(`${this.module}/dirtree/update`, this.update)
 	}
 
 	off() {
 		this.utils.off()
-		this.doc_watcher?.unsubscribe?.()
+		this.items_watcher?.unsubscribe?.()
 
 		$app.Event.off(`${this.module}/dirtree/move`, this.move)
 		$app.Event.off(`${this.module}/dirtree/removeCurrentItem`, this.removeCurrentItem)
 		$app.Event.off(`${this.module}/dirtree/setCurrentItem`, this.setCurrentItem)
 		$app.Event.off(`${this.module}/dirtree/addOpenFolder`, this.addOpenFolder)
 		$app.Event.off(`${this.module}/dirtree/removeOpenFolder`, this.removeOpenFolder)
-		$app.Event.off(`${this.module}/dirtree/updateItem`, this.updateItem)
+		$app.Event.off(`${this.module}/dirtree/update`, this.update)
 	}
 }
