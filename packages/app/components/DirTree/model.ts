@@ -1,5 +1,5 @@
 import { remove as lodash_remove } from 'lodash-es'
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
@@ -7,8 +7,8 @@ import { loading } from '@/utils/decorators'
 import { getDocItemsData } from '@/utils/rxdb'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk'
 
-import { getQuery, query, create, update, remove } from './services'
-import { move, transform } from './utils'
+import { getQuery, query, create, update, remove, handleMove } from './services'
+import { transform, move } from './utils'
 
 import type { App, DirTree } from '@/types'
 import type { Active, Over } from '@dnd-kit/core'
@@ -22,6 +22,7 @@ export default class Index {
 	actions = {} as IProps['actions']
 	items = [] as Array<DirTree.Item>
 	items_watcher = null as Subscription
+	data = [] as Array<DirTree.TransformedItem>
 	focusing_item = {} as DirTree.Item
 	current_item = {} as DirTree.Item
 	modal_type = 'file' as DirTree.Item['type']
@@ -30,12 +31,9 @@ export default class Index {
 	modal_open = false
 
 	watch = {
-		current_item: (v) => this.onClick(v)
+		current_item: (v) => this.onClick(v),
+		items: (v) => (this.data = transform(toJS(v)))
 	} as Watch<Index>
-
-	get data() {
-		return transform(this.items)
-	}
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { watch: false }, { autoBind: true })
@@ -57,7 +55,7 @@ export default class Index {
 		)
 
 		this.on()
-		this.watchDoc()
+		this.watchItems()
 
 		this.query()
 
@@ -114,6 +112,24 @@ export default class Index {
 		}
 	}
 
+	async move(args: { active: Active; over: Over }) {
+		const { active, over } = args
+
+		const res = move(toJS(this.data), active, over)
+
+		if (!res) return
+
+		const { items, active_children, over_children } = res
+
+		this.data = items
+
+		this.stopWatchItems()
+
+		await handleMove({ active_children, over_children })
+
+		this.watchItems()
+	}
+
 	onClick(v: DirTree.Item) {
 		if (!v?.id) return
 
@@ -125,18 +141,6 @@ export default class Index {
 			is_fixed: false,
 			outlet: null
 		} as App.Stack)
-	}
-
-	move(args: { active: Active; over: Over }) {
-		const { active, over } = args
-
-		const target = move(this.items, active, over)
-
-		if (!target) return
-
-		this.items = target
-
-		// this.updateDirtree(target)
 	}
 
 	setCurrentItem(v: DirTree.Item) {
@@ -157,7 +161,11 @@ export default class Index {
 		lodash_remove(this.open_folder, (item) => item === id)
 	}
 
-	watchDoc() {
+	stopWatchItems() {
+		if (this.items_watcher) this.items_watcher.unsubscribe()
+	}
+
+	watchItems() {
 		this.items_watcher = getQuery(this.module).$.subscribe((items) => {
 			this.items = getDocItemsData(items)
 		})

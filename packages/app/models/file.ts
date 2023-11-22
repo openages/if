@@ -1,8 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
-import { find } from '@/utils/tree'
-
 import type { DirTree } from '@/types'
 import type { Subscription } from 'rxjs'
 
@@ -15,32 +13,31 @@ export default class Index {
 
 	constructor() {
 		makeAutoObservable(this, {}, { autoBind: true })
-      }
-      
-      init(id: string) {
-            this.id = id
-            
-            this.watch()
-            this.query()
-      }
+	}
+
+	init(id: string) {
+		this.id = id
+
+		this.watch()
+		this.query()
+	}
 
 	getQuery() {
-		return $db.module.findOne({ selector: { module: 'todo' } })
+		return $db.dirtree_items.findOne(this.id)
 	}
 
 	async query() {
 		this.loading = true
 
-		const target = await this.getQuery().exec()
+		const item = await this.getQuery().exec()
 
-		this.data = find(target.dirtree, this.id) as DirTree.Item
-
+		this.data = item.toMutableJSON()
 		this.loading = false
 	}
 
 	watch() {
-		this.data_watcher = this.getQuery().$.subscribe(({ dirtree }) => {
-			this.data = find(dirtree, this.id) as DirTree.Item
+		this.data_watcher = this.getQuery().$.subscribe((item) => {
+			this.data = item.toMutableJSON() as DirTree.Item
 		})
 	}
 

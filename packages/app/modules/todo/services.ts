@@ -27,7 +27,7 @@ const getMaxSort = async () => {
 
 	if (max_sort_item) return max_sort_item.sort
 
-	return 1
+	return 0
 }
 
 export const getQueryTodo = (file_id: string) => {

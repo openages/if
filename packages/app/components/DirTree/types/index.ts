@@ -27,7 +27,7 @@ export interface IPropsDirItems {
 
 export interface IPropsDirItem {
 	module: Model['module']
-	item: DirTree.Item
+	item: Omit<DirTree.Item, 'sort'>
 	current_item: DirTree.Item
 	focusing_item: Model['focusing_item']
 	open_folder?: Model['open_folder']

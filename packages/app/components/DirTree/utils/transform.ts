@@ -1,34 +1,45 @@
 import type { DirTree } from '@/types'
 
 const Index = (input: DirTree.Items) => {
-	const idToNodeMap = new Map()
+	const id_to_node_map = new Map()
 
-	for (const item of input) {
-		const { id, pid } = item
-		const node = { id }
+	function build_hierarchy(node: DirTree.TransformedItem) {
+		const children = input.filter((item) => item.pid === node.id)
 
-		if (pid) {
-			const parentNode = idToNodeMap.get(pid)
+		if (children.length > 0) {
+			node.children = []
 
-			if (!parentNode.children) {
-				parentNode.children = []
+			for (const child of children) {
+				const child_node = id_to_node_map.get(child.id)
+
+				build_hierarchy(child_node)
+
+				node.children.push(child_node)
 			}
 
-			parentNode.children.push(node)
+			node.children.sort((a, b) => a.sort - b.sort)
 		}
-
-		idToNodeMap.set(id, node)
 	}
-
-	const roots = []
 
 	for (const item of input) {
 		const { id } = item
 
+		id_to_node_map.set(id, item)
+	}
+
+	const roots = [] as Array<DirTree.TransformedItem>
+
+	for (const item of input) {
 		if (!item.pid) {
-			roots.push(idToNodeMap.get(id))
+			const root_node = id_to_node_map.get(item.id)
+
+			build_hierarchy(root_node)
+
+			roots.push(root_node)
 		}
 	}
+
+	roots.sort((a, b) => a.sort - b.sort)
 
 	return roots
 }

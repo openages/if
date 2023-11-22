@@ -1,6 +1,7 @@
 import { resolve } from 'path'
 
 import { defineConfig } from '@rspack/cli'
+import { HtmlRspackPlugin, HotModuleReplacementPlugin } from '@rspack/core'
 import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
 
 const is_prod = process.env.NODE_ENV === 'production'
@@ -25,15 +26,6 @@ module.exports = defineConfig({
 			maxSize: 30000
 		}
 	},
-	builtins: {
-		html: [
-			{
-				template: './public/index.html',
-				title: 'IF - GTD for prefessionals.'
-			}
-		],
-		progress: false
-	},
 	experiments: {
 		incrementalRebuild: true,
 		outputModule: !is_prod,
@@ -42,7 +34,13 @@ module.exports = defineConfig({
 			disableTransformByDefault: true
 		}
 	},
-	plugins: [!is_prod && new ReactRefreshPlugin()].filter(Boolean),
+	plugins: [
+		new HtmlRspackPlugin({
+			title: 'IF - GTD for prefessionals.',
+			template: './public/index.html'
+		}),
+		!is_prod && new ReactRefreshPlugin()
+	].filter(Boolean),
 	module: {
 		rules: [
 			{

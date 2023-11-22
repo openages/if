@@ -50,7 +50,7 @@ const Index = (props: IProps) => {
 
 	const props_dir_items: IPropsDirItems = {
 		module: x.module,
-		data: toJS(x.items) || [],
+		data: toJS(x.data) || [],
 		loading: x.utils.loading['query'],
 		current_item: toJS(x.current_item),
 		focusing_item: toJS(x.focusing_item),

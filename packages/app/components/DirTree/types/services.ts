@@ -19,3 +19,8 @@ export type ArgsRemove = {
 	actions: IProps['actions']
 	current_item_id: string
 }
+
+export type ArgsHandleMove = {
+	active_children: Array<DirTree.TransformedItem>
+	over_children: Array<DirTree.TransformedItem>
+}

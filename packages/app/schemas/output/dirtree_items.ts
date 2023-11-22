@@ -19,6 +19,9 @@ export default {
                   "name": {
                         "type": "string"
                   },
+                  "sort": {
+                        "type": "number"
+                  },
                   "pid": {
                         "type": "string"
                   },
@@ -33,7 +36,8 @@ export default {
                   "module",
                   "type",
                   "id",
-                  "name"
+                  "name",
+                  "sort"
             ]
       },
       "DirTree.Item": {
@@ -56,6 +60,9 @@ export default {
                   "name": {
                         "type": "string"
                   },
+                  "sort": {
+                        "type": "number"
+                  },
                   "pid": {
                         "type": "string"
                   },
@@ -70,7 +77,8 @@ export default {
                   "module",
                   "type",
                   "id",
-                  "name"
+                  "name",
+                  "sort"
             ]
       }
 } as const

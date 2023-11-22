@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import { omit } from 'lodash-es'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Else, If, Then, When } from 'react-if'
@@ -31,7 +32,7 @@ const Index = (props: IPropsDirItems) => {
 		setActiveItem(null)
 
 		$app.Event.emit(`${module}/dirtree/move`, { active, over })
-      })
+	})
 
 	return (
 		<div
@@ -45,7 +46,6 @@ const Index = (props: IPropsDirItems) => {
 							<DirItem
 								{...{
 									module,
-									item,
 									current_item,
 									focusing_item,
 									open_folder,
@@ -53,6 +53,7 @@ const Index = (props: IPropsDirItems) => {
 									onClick,
 									showDirTreeOptions
 								}}
+								item={omit(item, 'sort')}
 								parent_index={[index]}
 								key={item.id}
 							></DirItem>

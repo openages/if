@@ -1,11 +1,11 @@
 import { useMemoizedFn, useUpdateEffect, useDeepCompareEffect } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
+import { omit } from 'lodash-es'
 import { useState, useEffect } from 'react'
 
 import { DirTree } from '@/types'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
-import { useDeepMemo } from '@openages/stk'
 
 import DirItem from '../index'
 import Item from './Item'
@@ -23,7 +23,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 		dragging,
 		showDirTreeOptions
 	} = props
-	const { type } = item
+	const { type, children = [] } = item as DirTree.TransformedItem
 	const [open, setOpen] = useState(false)
 	const { attributes, listeners, transform, isDragging, setNodeRef } = useDraggable({
 		id: item.id,
@@ -33,10 +33,6 @@ const Index = (props: IPropsDirItem_Dir) => {
 	useDeepCompareEffect(() => {
 		setOpen(open_folder.includes(item.id))
 	}, [open_folder, item.id])
-
-	const children = useDeepMemo(() => {
-		if (item.type === 'dir') return (item as DirTree.Dir).children
-	}, [item])
 
 	useUpdateEffect(() => {
 		setOpen(true)
@@ -94,10 +90,10 @@ const Index = (props: IPropsDirItem_Dir) => {
 						exit={{ opacity: 0, height: 0 }}
 						transition={{ duration: 0.18 }}
 					>
-						{(item as DirTree.Dir).children.map((it, index) => (
+						{children.map((it, index) => (
 							<DirItem
 								{...props}
-								item={it}
+								item={omit(it, 'sort')}
 								parent_index={[...parent_index, index]}
 								key={it.id}
 							></DirItem>

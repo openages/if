@@ -192,6 +192,9 @@ importers:
       '@rspack/cli':
         specifier: ^0.3.14
         version: 0.3.14(react-refresh@0.14.0)(type-fest@4.8.1)
+      '@rspack/core':
+        specifier: ^0.3.14
+        version: 0.3.14
       '@rspack/plugin-react-refresh':
         specifier: ^0.3.14
         version: 0.3.14(react-refresh@0.14.0)(type-fest@4.8.1)(webpack@5.89.0)
@@ -4779,7 +4782,7 @@ packages:
     resolution: {integrity: sha512-QHTXI/sZQmko1cbDoNAa3mJ5qhWUUNAq3vR0/YiD379fWQrcfuoX1+HW2S0MTt7XmoPLapdaDKUtelUSPic7hQ==}
     engines: {node: '>=10.13.0'}
     dependencies:
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       tapable: 2.2.1
     dev: true
 

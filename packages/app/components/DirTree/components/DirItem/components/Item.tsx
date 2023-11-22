@@ -62,13 +62,13 @@ const Index = (props: IPropsDirItem_Item) => {
 						className={$cx(
 							'right_icon_wrap flex align_center justify_end',
 							type === 'dir' &&
-								(item as DirTree.Dir)?.children?.length === 0 &&
+								(item as DirTree.Item)?.children?.length === 0 &&
 								'no_children'
 						)}
 					>
-						<When condition={(item as DirTree.Dir)?.children?.length}>
+						<When condition={(item as DirTree.Item)?.children?.length}>
 							<span className='children_count text_center'>
-								{(item as DirTree.Dir)?.children?.length}
+								{(item as DirTree.Item)?.children?.length}
 							</span>
 						</When>
 						<CaretRight
