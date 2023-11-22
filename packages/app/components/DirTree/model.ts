@@ -1,4 +1,4 @@
-import { remove as lodash_remove } from 'lodash-es'
+import { remove as lodash_remove, get, flatMap } from 'lodash-es'
 import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
@@ -23,7 +23,7 @@ export default class Index {
 	items = [] as Array<DirTree.Item>
 	items_watcher = null as Subscription
 	data = [] as Array<DirTree.TransformedItem>
-	focusing_item = {} as DirTree.Item
+	focusing_index = [] as Array<number>
 	current_item = {} as DirTree.Item
 	modal_type = 'file' as DirTree.Item['type']
 	current_option = '' as 'rename' | 'add_file' | 'add_dir' | ''
@@ -34,6 +34,15 @@ export default class Index {
 		current_item: (v) => this.onClick(v),
 		items: (v) => (this.data = transform(toJS(v)))
 	} as Watch<Index>
+
+	get focusing_item(): null | DirTree.Item {
+		if (!this.focusing_index.length) return null
+
+		return get(
+			this.data,
+			flatMap(this.focusing_index, (item) => [item, 'children'])
+		)
+	}
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { watch: false }, { autoBind: true })
@@ -81,7 +90,7 @@ export default class Index {
 		})
 
 		this.modal_open = false
-		this.focusing_item = {} as DirTree.Item
+		this.focusing_index = []
 	}
 
 	@loading
@@ -89,7 +98,7 @@ export default class Index {
 		await update({ focusing_item: this.focusing_item, item })
 
 		this.modal_open = false
-		this.focusing_item = {} as DirTree.Item
+		this.focusing_index = []
 	}
 
 	async onOptions(type: 'add_dir' | 'add_file' | 'rename' | 'delete') {
@@ -108,7 +117,7 @@ export default class Index {
 				this.current_item = {} as DirTree.Item
 			}
 
-			this.focusing_item = {} as DirTree.Item
+			this.focusing_index = []
 		}
 	}
 

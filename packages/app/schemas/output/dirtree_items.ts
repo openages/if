@@ -36,8 +36,7 @@ export default {
                   "module",
                   "type",
                   "id",
-                  "name",
-                  "sort"
+                  "name"
             ]
       },
       "DirTree.Item": {
@@ -77,8 +76,7 @@ export default {
                   "module",
                   "type",
                   "id",
-                  "name",
-                  "sort"
+                  "name"
             ]
       }
 } as const

@@ -31,21 +31,21 @@ const Index = (props: IProps) => {
 	const onClick = useMemoizedFn((v: DirTree.Item) => (x.current_item = v))
 
 	const setModalOpen = useMemoizedFn((v: Model['modal_open'], type?: Model['modal_type']) => {
-		x.focusing_item = {} as DirTree.Item
+		x.focusing_index = []
 		x.modal_open = v
 		x.modal_type = type || 'file'
 		x.current_option = `add_${type || 'file'}`
 	})
 
 	const showDirTreeOptions = useMemoizedFn((e, v) => {
-		x.focusing_item = v
+		x.focusing_index = v
 
 		show({ event: e })
 	})
 
 	const resetFocusingItem = useMemoizedFn(() => {
 		x.current_option = ''
-		x.focusing_item = {} as DirTree.Item
+		x.focusing_index = []
 	})
 
 	const props_dir_items: IPropsDirItems = {

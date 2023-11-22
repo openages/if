@@ -22,7 +22,7 @@ export interface IPropsDirItems {
 	focusing_item: Model['focusing_item']
 	open_folder: Model['open_folder']
 	onClick: (v: DirTree.Item) => void
-	showDirTreeOptions: (e: MouseEvent<HTMLElement>, v: DirTree.Item) => void
+	showDirTreeOptions: (e: MouseEvent<HTMLElement>, v: Model['focusing_index']) => void
 }
 
 export interface IPropsDirItem {

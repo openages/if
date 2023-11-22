@@ -37,7 +37,7 @@ const Index = (props: IPropsDirItem_Item) => {
 				)}
 				style={{ paddingLeft: 18 * parent_index.length }}
 				onClick={onItem}
-				onContextMenu={(e) => showDirTreeOptions(e, item)}
+				onContextMenu={(e) => showDirTreeOptions(e, parent_index)}
 			>
 				<div className='left_icon_wrap flex justify_center align_center'>
 					<If condition={item.icon}>
@@ -62,13 +62,13 @@ const Index = (props: IPropsDirItem_Item) => {
 						className={$cx(
 							'right_icon_wrap flex align_center justify_end',
 							type === 'dir' &&
-								(item as DirTree.Item)?.children?.length === 0 &&
+								(item as DirTree.TransformedItem)?.children?.length === 0 &&
 								'no_children'
 						)}
 					>
-						<When condition={(item as DirTree.Item)?.children?.length}>
+						<When condition={(item as DirTree.TransformedItem)?.children?.length}>
 							<span className='children_count text_center'>
-								{(item as DirTree.Item)?.children?.length}
+								{(item as DirTree.TransformedItem)?.children?.length}
 							</span>
 						</When>
 						<CaretRight
