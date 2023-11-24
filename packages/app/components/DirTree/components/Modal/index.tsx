@@ -21,7 +21,7 @@ const Index = (props: IPropsModal) => {
 		focusing_item,
 		loading_create,
 		loading_updateItem,
-		create,
+		insert,
 		update,
 		setModalOpen,
 		resetFocusingItem
@@ -82,13 +82,15 @@ const Index = (props: IPropsModal) => {
 	const onOk = useMemoizedFn(() => {
 		if (!value || value.length > limits.todo_list_title_max_length) return
 		if (current_option === 'rename') return update({ name: value, ...icon })
-		if (current_option === 'add_dir') return create({ type: 'dir', name: value, ...icon })
-		if (current_option === 'add_file') return create({ type: 'file', name: value, ...icon })
+		if (current_option === 'add_dir') return insert({ type: 'dir', name: value, ...icon })
+		if (current_option === 'add_file') return insert({ type: 'file', name: value, ...icon })
 
-		create({ type: modal_type, name: value, ...icon })
+		insert({ type: modal_type, name: value, ...icon })
 	})
 
 	const onSelectIcon = useMemoizedFn((shortcodes) => setIcon(shortcodes))
+	const onCancel = useMemoizedFn(() => setModalOpen(false))
+	const afterClose = useMemoizedFn(() => resetFocusingItem())
 
 	return (
 		<Modal
@@ -101,10 +103,8 @@ const Index = (props: IPropsModal) => {
 			destroyOnClose
 			maskClosable={false}
 			onOk={onOk}
-			onCancel={() => {
-				setModalOpen(false)
-				resetFocusingItem()
-			}}
+			onCancel={onCancel}
+			afterClose={afterClose}
 		>
 			<div className='w_100 flex align_center justify_between'>
 				<IconEditor value={icon} onChange={onSelectIcon} left_icon_item={left_icon_item}></IconEditor>

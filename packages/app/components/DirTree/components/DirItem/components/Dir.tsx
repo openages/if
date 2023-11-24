@@ -1,6 +1,5 @@
 import { useMemoizedFn, useUpdateEffect, useDeepCompareEffect } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
-import { omit } from 'lodash-es'
 import { useState, useEffect } from 'react'
 
 import { DirTree } from '@/types'
@@ -93,7 +92,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 						{children.map((it, index) => (
 							<DirItem
 								{...props}
-								item={omit(it, 'sort')}
+								item={it}
 								parent_index={[...parent_index, index]}
 								key={it.id}
 							></DirItem>

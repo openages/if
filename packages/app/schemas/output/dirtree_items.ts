@@ -19,10 +19,13 @@ export default {
                   "name": {
                         "type": "string"
                   },
-                  "sort": {
-                        "type": "number"
-                  },
                   "pid": {
+                        "type": "string"
+                  },
+                  "prev_id": {
+                        "type": "string"
+                  },
+                  "next_id": {
                         "type": "string"
                   },
                   "icon": {
@@ -59,10 +62,13 @@ export default {
                   "name": {
                         "type": "string"
                   },
-                  "sort": {
-                        "type": "number"
-                  },
                   "pid": {
+                        "type": "string"
+                  },
+                  "prev_id": {
+                        "type": "string"
+                  },
+                  "next_id": {
                         "type": "string"
                   },
                   "icon": {

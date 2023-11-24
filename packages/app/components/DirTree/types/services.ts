@@ -1,11 +1,10 @@
 import type { App, DirTree } from '@/types'
 import type { IProps } from './index'
 
-export type ArgsCreate = {
-	module: App.ModuleType
-	focusing_item: DirTree.Item
+export type ArgsInsert = {
 	actions: IProps['actions']
-	item: Partial<DirTree.Item>
+	item: DirTree.Item
+	effect_items: DirTree.Items
 }
 
 export type ArgsUpdate = {
@@ -18,9 +17,6 @@ export type ArgsRemove = {
 	focusing_item: DirTree.Item
 	actions: IProps['actions']
 	current_item_id: string
-}
-
-export type ArgsHandleMove = {
-	active_children: Array<DirTree.TransformedItem>
-	over_children: Array<DirTree.TransformedItem>
+	remove_items: DirTree.Items
+	effect_items: DirTree.Items
 }

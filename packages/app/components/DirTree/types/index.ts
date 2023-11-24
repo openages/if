@@ -10,7 +10,7 @@ export interface IProps {
 	height?: CSSProperties['height']
 	actions: {
 		add: (file_id: string, data: Partial<Omit<DirTree.Item, 'id'>>) => Promise<void>
-		remove: (focusing_item: DirTree.Item, current_item_id: string, module: string) => Promise<void>
+		remove: (focusing_item: DirTree.Item) => Promise<void>
 	}
 }
 
@@ -27,7 +27,7 @@ export interface IPropsDirItems {
 
 export interface IPropsDirItem {
 	module: Model['module']
-	item: Omit<DirTree.Item, 'sort'>
+	item: DirTree.Item
 	current_item: DirTree.Item
 	focusing_item: Model['focusing_item']
 	open_folder?: Model['open_folder']
@@ -61,7 +61,7 @@ export interface IPropsModal {
 	focusing_item: Model['focusing_item']
 	loading_create: boolean
 	loading_updateItem: boolean
-	create: Model['create']
+	insert: Model['insert']
 	update: Model['update']
 	setModalOpen: (v: Model['modal_open'], type?: Model['modal_type']) => void
 	resetFocusingItem: () => void

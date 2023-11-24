@@ -1,5 +1,4 @@
 import { useMemoizedFn } from 'ahooks'
-import { omit } from 'lodash-es'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Else, If, Then, When } from 'react-if'
@@ -45,6 +44,7 @@ const Index = (props: IPropsDirItems) => {
 						{data.map((item, index) => (
 							<DirItem
 								{...{
+									item,
 									module,
 									current_item,
 									focusing_item,
@@ -53,7 +53,6 @@ const Index = (props: IPropsDirItems) => {
 									onClick,
 									showDirTreeOptions
 								}}
-								item={omit(item, 'sort')}
 								parent_index={[index]}
 								key={item.id}
 							></DirItem>

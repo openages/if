@@ -1,20 +1,21 @@
-import { remove as lodash_remove, get, flatMap } from 'lodash-es'
+import { remove as lodash_remove } from 'lodash-es'
 import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
+import { id } from '@/utils'
 import { loading } from '@/utils/decorators'
 import { getDocItemsData } from '@/utils/rxdb'
-import { setStorageWhenChange, useInstanceWatch } from '@openages/stk'
+import { NodeTree, setStorageWhenChange, useInstanceWatch } from '@openages/stk'
 
-import { getQuery, query, create, update, remove, handleMove } from './services'
-import { transform, move } from './utils'
+import { getQuery, query, insert, update, remove, updateItems } from './services'
 
 import type { App, DirTree } from '@/types'
 import type { Active, Over } from '@dnd-kit/core'
 import type { IProps } from './types'
 import type { Subscription } from 'rxjs'
 import type { Watch } from '@openages/stk'
+import type { MoveData } from './types/model'
 
 @injectable()
 export default class Index {
@@ -22,7 +23,6 @@ export default class Index {
 	actions = {} as IProps['actions']
 	items = [] as Array<DirTree.Item>
 	items_watcher = null as Subscription
-	data = [] as Array<DirTree.TransformedItem>
 	focusing_index = [] as Array<number>
 	current_item = {} as DirTree.Item
 	modal_type = 'file' as DirTree.Item['type']
@@ -31,20 +31,19 @@ export default class Index {
 	modal_open = false
 
 	watch = {
-		current_item: (v) => this.onClick(v),
-		items: (v) => (this.data = transform(toJS(v)))
+		current_item: (v) => this.onClick(v)
 	} as Watch<Index>
 
-	get focusing_item(): null | DirTree.Item {
-		if (!this.focusing_index.length) return null
+	get focusing_item() {
+		if (!this.focusing_index.length) return {} as DirTree.Item
 
-		return get(
-			this.data,
-			flatMap(this.focusing_index, (item) => [item, 'children'])
-		)
+		return (this.node_tree.getItem(this.focusing_index).cloned_item || {}) as DirTree.Item
 	}
 
-	constructor(public utils: Utils) {
+	constructor(
+		public utils: Utils,
+		public node_tree: NodeTree
+	) {
 		makeAutoObservable(this, { watch: false }, { autoBind: true })
 	}
 
@@ -78,65 +77,82 @@ export default class Index {
 		const doc = await query(this.module)
 
 		this.items = getDocItemsData(doc)
+
+		this.node_tree.init(toJS(this.items))
 	}
 
 	@loading
-	async create(item: Partial<DirTree.Item>) {
-		await create({
-			module: this.module,
-			focusing_item: this.focusing_item,
+	async insert(item: Partial<DirTree.Item>) {
+		const { item: target, effect_items } = this.node_tree.insert(
+			{ ...item, id: id(), module: this.module },
+			this.focusing_index
+		)
+
+		await insert({
 			actions: this.actions,
-			item
+			item: target as DirTree.Item,
+			effect_items: effect_items as DirTree.Items
 		})
 
 		this.modal_open = false
 		this.focusing_index = []
 	}
 
+	async remove() {
+		const focusing_item = toJS(this.focusing_item)
+		const { remove_items, effect_items } = this.node_tree.remove(this.focusing_index)
+
+		await remove({
+			module: this.module,
+			focusing_item: focusing_item,
+			actions: this.actions,
+			current_item_id: this.current_item.id,
+			remove_items: remove_items as DirTree.Items,
+			effect_items: effect_items as DirTree.Items
+		})
+
+		if (this.current_item.id === focusing_item.id) {
+			this.current_item = {} as DirTree.Item
+		}
+
+		this.focusing_index = []
+	}
+
 	@loading
 	async update(item: Partial<DirTree.Item>) {
+		this.node_tree.update(this.focusing_index, item)
+
 		await update({ focusing_item: this.focusing_item, item })
 
 		this.modal_open = false
 		this.focusing_index = []
 	}
 
-	async onOptions(type: 'add_dir' | 'add_file' | 'rename' | 'delete') {
+	async move(args: { active: Active; over: Over }) {
+		const { active, over } = args
+
+		if (!over?.id) return
+		if (active.id === over.id) return
+
+		const { parent_index: active_parent_index } = active.data.current as MoveData
+		const { parent_index: over_parent_index, item: over_item } = over.data.current as MoveData
+
+		const { effect_items } = this.node_tree.move({
+			active_parent_index,
+			over_parent_index,
+			droppable: over_item.type === 'dir'
+		})
+
+		await updateItems(effect_items as DirTree.Items)
+	}
+
+	onOptions(type: 'add_dir' | 'add_file' | 'rename' | 'delete') {
 		if (type === 'add_dir' || type === 'add_file' || type === 'rename') {
 			this.current_option = type
 			this.modal_open = true
 		} else {
-			await remove({
-				module: this.module,
-				focusing_item: this.focusing_item,
-				actions: this.actions,
-				current_item_id: this.current_item.id
-			})
-
-			if (this.current_item.id === this.focusing_item.id) {
-				this.current_item = {} as DirTree.Item
-			}
-
-			this.focusing_index = []
+			this.remove()
 		}
-	}
-
-	async move(args: { active: Active; over: Over }) {
-		const { active, over } = args
-
-		const res = move(toJS(this.data), active, over)
-
-		if (!res) return
-
-		const { items, active_children, over_children } = res
-
-		this.data = items
-
-		this.stopWatchItems()
-
-		await handleMove({ active_children, over_children })
-
-		this.watchItems()
 	}
 
 	onClick(v: DirTree.Item) {

@@ -1,4 +1,3 @@
-import { omit } from 'lodash-es'
 import { match } from 'ts-pattern'
 
 import { Dir, File, SortableWrap } from './components'
@@ -6,8 +5,7 @@ import { Dir, File, SortableWrap } from './components'
 import type { IPropsDirItem } from '../../types'
 
 const Index = (props: IPropsDirItem) => {
-	const { parent_index } = props
-	const item = omit(props.item, 'sort')
+	const { parent_index, item } = props
 
 	return (
 		<SortableWrap item={item} parent_index={parent_index}>

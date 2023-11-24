@@ -50,7 +50,7 @@ const Index = (props: IProps) => {
 
 	const props_dir_items: IPropsDirItems = {
 		module: x.module,
-		data: toJS(x.data) || [],
+		data: (toJS(x.node_tree.tree) as DirTree.TransformedItems) || [],
 		loading: x.utils.loading['query'],
 		current_item: toJS(x.current_item),
 		focusing_item: toJS(x.focusing_item),
@@ -69,9 +69,9 @@ const Index = (props: IProps) => {
 		modal_type: x.modal_type,
 		current_option: x.current_option,
 		focusing_item: toJS(x.focusing_item),
-		loading_create: x.utils.loading['create'],
+		loading_create: x.utils.loading['insert'],
 		loading_updateItem: x.utils.loading['updateItem'],
-		create: useMemoizedFn(x.create),
+		insert: useMemoizedFn(x.insert),
 		update: useMemoizedFn(x.update),
 		setModalOpen,
 		resetFocusingItem

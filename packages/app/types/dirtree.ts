@@ -5,8 +5,9 @@ export namespace DirTree {
 		type: 'dir' | 'file'
 		id: string
 		name: string
-		sort?: number
 		pid?: string
+		prev_id?: string
+		next_id?: string
 		icon?: string
 		icon_hue?: number
 	}
@@ -16,4 +17,5 @@ export namespace DirTree {
 	}
 
 	export type Items = Array<Item>
+	export type TransformedItems = Array<TransformedItem>
 }

@@ -28,8 +28,8 @@ const PressItem = $app.memo((props: IProps) => {
 	const ref = useRef<HTMLDivElement>(null)
 
 	useLongPress(
-            () => {
-                  pressTrigger()
+		() => {
+			pressTrigger()
 			setPressStart(Date.now())
 		},
 		ref,
@@ -54,6 +54,7 @@ const PressItem = $app.memo((props: IProps) => {
 		if (press_time > danger!) {
 			trigger?.()
 			setPressStart(0)
+			setPressTime(0)
 
 			contextMenu.hideAll()
 		}
