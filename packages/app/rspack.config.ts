@@ -27,7 +27,6 @@ module.exports = defineConfig({
 		}
 	},
 	experiments: {
-		incrementalRebuild: true,
 		outputModule: !is_prod,
 		rspackFuture: {
 			disableTransformByDefault: true
