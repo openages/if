@@ -30,7 +30,6 @@ module.exports = defineConfig({
 		incrementalRebuild: true,
 		outputModule: !is_prod,
 		rspackFuture: {
-			newResolver: true,
 			disableTransformByDefault: true
 		}
 	},
