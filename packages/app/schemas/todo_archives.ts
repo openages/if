@@ -8,7 +8,7 @@ import type { RxCollection, ExtractDocumentTypeFromTypedRxJsonSchema, RxJsonSche
 
 const schema = toTypedRxJsonSchema(
 	getCrdtSchema({
-		version: 0,
+		version: 1,
 		primaryKey: 'id',
 		keyCompression: true,
 		indexes: ['file_id', 'angle_id', 'status', 'archive_time'],

@@ -1,3 +1,4 @@
+export { default as version } from './version'
 export { default as getLang } from './getLang'
 export { default as id } from './id'
 export { default as sleep } from './sleep'

@@ -3,6 +3,7 @@ export namespace DirTree {
 		/** @maxLength 30 */
 		module: string
 		type: 'dir' | 'file'
+		/** @maxLength 30 */
 		id: string
 		name: string
 		pid?: string

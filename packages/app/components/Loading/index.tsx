@@ -3,11 +3,17 @@ import { local } from '@openages/stk'
 
 import styles from './index.css'
 
-const Index = () => {
+interface IProps {
+	desc?: string
+}
+
+const Index = (props: IProps) => {
+	const { desc } = props
+
 	return (
 		<div
 			className={$cx(
-				'w_100vw h_100vh fixed top_0 left_0 flex justify_center align_center',
+				'w_100vw h_100vh fixed top_0 left_0 flex flex_column justify_center align_center',
 				styles._local,
 				styles[local.theme]
 			)}
@@ -24,6 +30,7 @@ const Index = () => {
 					color='inherit'
 				></Logo>
 			</div>
+			{desc && <span className='desc'>{desc}</span>}
 		</div>
 	)
 }

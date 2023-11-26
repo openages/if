@@ -5,9 +5,11 @@ import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 import { injectable } from 'tsyringe'
 
 import { modules } from '@/appdata'
+import { migration_dirtree_items, migration_todo, migration_todo_items, migration_todo_archives } from '@/migrations'
 import { schema_dirtree_items, schema_setting, schema_todo, schema_todo_items, schema_todo_archives } from '@/schemas'
 
 import type { RxDB } from '@/types'
+import type { RxCollection } from 'rxdb'
 
 @injectable()
 export default class Index {
@@ -32,19 +34,42 @@ export default class Index {
 		})
 
 		await db.addCollections({
-			dirtree_items: { schema: schema_dirtree_items, autoMigrate: true },
-			setting: { schema: schema_setting, autoMigrate: true },
-			todo: { schema: schema_todo, autoMigrate: true },
-			todo_items: { schema: schema_todo_items, autoMigrate: true },
-			todo_archives: { schema: schema_todo_archives, autoMigrate: true }
+			dirtree_items: {
+				autoMigrate: false,
+				schema: schema_dirtree_items,
+				migrationStrategies: migration_dirtree_items
+			},
+			// setting: {
+			// 	autoMigrate: false,
+			// 	schema: schema_setting,
+			// 	migrationStrategies: migration_todo
+			// },
+			todo: {
+				autoMigrate: false,
+				schema: schema_todo,
+				migrationStrategies: migration_todo
+			},
+			todo_items: {
+				autoMigrate: false,
+				schema: schema_todo_items,
+				migrationStrategies: migration_todo_items
+			},
+			todo_archives: {
+				autoMigrate: false,
+				schema: schema_todo_archives,
+				migrationStrategies: migration_todo_archives
+			}
 		})
 
 		window.$db = db
 		this.instance = db
 
+		await this.migrate()
 		await this.addModuleInitData()
 
 		this.ready = true
+
+		window.$app.Event.emit('app/setLoading', { visible: false })
 	}
 
 	async addModuleInitData() {
@@ -53,5 +78,21 @@ export default class Index {
 		await window.$db.collections.setting.bulkInsert([{ key: 'apps', data: JSON.stringify(modules) }])
 
 		return
+	}
+
+	async migrate() {
+		const check_migrations = Object.values($db.collections).map(async (item) => {
+			const should_migrate = await item.migrationNeeded()
+
+			return should_migrate ? item : false
+		})
+		const should_migrations = (await Promise.all(check_migrations)).filter((item) => item)
+		const migrations = should_migrations.map((item) => (item as RxCollection).migratePromise(15))
+
+		if (migrations.length) {
+			window.$app.Event.emit('app/setLoading', { visible: true, desc: $t('translation:app.migrating') })
+
+			await Promise.all(migrations)
+		}
 	}
 }

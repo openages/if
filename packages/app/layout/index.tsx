@@ -11,7 +11,7 @@ import { useLocation } from 'react-router-dom'
 import { container } from 'tsyringe'
 
 import { exclude_paths } from '@/appdata'
-import { OffscreenOutlet, Loading } from '@/components'
+import { OffscreenOutlet, Loading, GlobalLoading } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import { useTheme, useAntdLocale, useCurrentModule } from '@/hooks'
 
@@ -103,13 +103,14 @@ const Index = () => {
 		handleAppSwitch: useMemoizedFn(global.app.handleAppSwitch)
 	}
 
-	if (!global.db.ready) return <Loading></Loading>
+	if (!global.db.ready) return <GlobalLoading visible></GlobalLoading>
 
 	return (
 		<GlobalContext.Provider value={global}>
 			<ConfigProvider {...props_config_provider}>
 				<App {...props_app}>
 					<IconContext.Provider value={{ className: 'ricon', style: { verticalAlign: 'middle' } }}>
+						<GlobalLoading></GlobalLoading>
 						<div className='w_100 border_box flex'>
 							<Sidebar {...props_sidebar} />
 							<div className={$cx(styles.container, no_dirtree && styles.no_dirtree)}>

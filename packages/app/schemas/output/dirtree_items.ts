@@ -14,7 +14,8 @@ export default {
                         ]
                   },
                   "id": {
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 30
                   },
                   "name": {
                         "type": "string"
@@ -57,7 +58,8 @@ export default {
                         ]
                   },
                   "id": {
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 30
                   },
                   "name": {
                         "type": "string"
