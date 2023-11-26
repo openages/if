@@ -16,7 +16,14 @@ package-lock.json
 # temp
 **/.tmp
 
-# Electron 
+# Electron
 release
 src/main/bundle.js
 src/main/bundle.js.map
+
+# VSCodeCounter
+
+.VSCodeCounter/**/details.md
+.VSCodeCounter/**/diff**
+.VSCodeCounter/**/results**
+!.VSCodeCounter/**/results.md
