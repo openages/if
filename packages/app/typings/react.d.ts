@@ -1,7 +1,7 @@
 import 'react'
 
 declare module 'react' {
-	export const unstable_Offscreen: ComponentClass<
+	export const unstable_Activity: ComponentClass<
 		{
 			children: ReactNode
 			mode: 'hidden' | 'visible'

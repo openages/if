@@ -1,6 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { omit, pullAt } from 'lodash-es'
-import { useEffect, useState, unstable_Offscreen as Offscreen, Fragment } from 'react'
+import { useEffect, useState, unstable_Activity as Activity, Fragment } from 'react'
 import { useOutlet, useLocation } from 'react-router-dom'
 
 import type { GlobalModel } from '@/context/app'
@@ -39,8 +39,8 @@ const Index = (props: IPropsOffscreenOutlet) => {
 		const result = cache_pages.some((item) => item.pathname === pathname)
 		const is_app = Boolean(apps.find((item) => item.path === pathname))
 
-            if (!apps.length) return
-            
+		if (!apps.length) return
+
 		if (result) {
 			const outdates = []
 
@@ -48,9 +48,9 @@ const Index = (props: IPropsOffscreenOutlet) => {
 				if (item.pathname !== pathname && !item.is_app) outdates.push(index)
 			})
 
-                  if (!outdates.length) return
-                  
-                  pullAt(cache_pages, outdates)
+			if (!outdates.length) return
+
+			pullAt(cache_pages, outdates)
 			setCachePages([...cache_pages])
 
 			return
@@ -75,9 +75,9 @@ const Index = (props: IPropsOffscreenOutlet) => {
 		<Fragment>
 			{cache_pages.map((item) =>
 				item.is_app ? (
-					<Offscreen key={item.key} mode={item.pathname === pathname ? 'visible' : 'hidden'}>
+					<Activity key={item.key} mode={item.pathname === pathname ? 'visible' : 'hidden'}>
 						{item.outlet}
-					</Offscreen>
+					</Activity>
 				) : (
 					item.pathname === pathname && <Fragment key={item.pathname}>{item.outlet}</Fragment>
 				)

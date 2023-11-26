@@ -1,7 +1,7 @@
 import { resolve } from 'path'
 
 import { defineConfig } from '@rspack/cli'
-import { HtmlRspackPlugin, HotModuleReplacementPlugin } from '@rspack/core'
+import { HtmlRspackPlugin } from '@rspack/core'
 import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
 
 const is_prod = process.env.NODE_ENV === 'production'
@@ -67,6 +67,9 @@ module.exports = defineConfig({
 									useBuiltins: true
 								}
 							}
+						},
+						env: {
+							targets: 'chrome >= 120'
 						}
 					}
 				}

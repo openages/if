@@ -1,4 +1,4 @@
-import { unstable_Offscreen as Offscreen, Fragment } from 'react'
+import { unstable_Activity as Activity, Fragment } from 'react'
 
 import { LazyElement } from '@/components'
 
@@ -10,9 +10,9 @@ const Index = (props: IPropsTabsContent) => {
 	return (
 		<Fragment>
 			{stacks.map((item) => (
-				<Offscreen mode={item.is_active ? 'visible' : 'hidden'} key={item.id}>
+				<Activity mode={item.is_active ? 'visible' : 'hidden'} key={item.id}>
 					<LazyElement type='modules' path={item.module} params={{ id: item.id }} />
-				</Offscreen>
+				</Activity>
 			))}
 		</Fragment>
 	)
