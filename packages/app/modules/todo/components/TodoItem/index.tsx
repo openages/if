@@ -150,14 +150,14 @@ const Index = (props: IPropsTodoItem) => {
 					{star > 0 && (
 						<div
 							className='other_wrap white flex justify_center align_center'
-							style={{ backgroundColor: `rgba(var(--color_main_rgb),${star / 6})` }}
+							style={{ color: `rgba(var(--color_main_rgb),${(star / 6).toFixed(2)})` }}
 						>
-							<Star className='icon' size={12}></Star>
+							<Star className='icon' size={10} weight='duotone'></Star>
 						</div>
 					)}
 					{circle_enabled && (circle_value?.[0] || circle_value?.[1] || circle_value?.[2]) && (
 						<div className='other_wrap flex justify_center align_center'>
-							<HourglassMedium className='icon' size={12}></HourglassMedium>
+							<HourglassMedium className='icon' size={10} weight='fill'></HourglassMedium>
 						</div>
 					)}
 				</div>
