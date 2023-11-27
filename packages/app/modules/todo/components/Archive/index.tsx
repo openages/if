@@ -135,12 +135,14 @@ const Index = (props: IPropsArchive) => {
 				align={{ offset: [0, -8] }}
 				getPopupContainer={() => document.body}
 			>
-				<div className='btn_filter btn flex justify_center align_center clickable'>
-					<Funnel
-						className={$cx(exsit_query_params && 'color_main')}
-						size={16}
-						weight='bold'
-					></Funnel>
+				<div>
+					<div className='btn_filter btn flex justify_center align_center clickable'>
+						<Funnel
+							className={$cx(exsit_query_params && 'color_main')}
+							size={16}
+							weight='bold'
+						></Funnel>
+					</div>
 				</div>
 			</Popover>
 		</div>

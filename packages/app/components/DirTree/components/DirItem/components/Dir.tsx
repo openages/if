@@ -1,10 +1,11 @@
-import { useMemoizedFn, useUpdateEffect, useDeepCompareEffect } from 'ahooks'
+import { useMemoizedFn, useDeepCompareEffect } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 
 import { DirTree } from '@/types'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
+import { useDeepUpdateEffect } from '@openages/stk'
 
 import DirItem from '../index'
 import Item from './Item'
@@ -33,7 +34,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 		setOpen(open_folder.includes(item.id))
 	}, [open_folder, item.id])
 
-	useUpdateEffect(() => {
+	useDeepUpdateEffect(() => {
 		setOpen(true)
 
 		if (children?.length) {
@@ -41,13 +42,15 @@ const Index = (props: IPropsDirItem_Dir) => {
 		} else {
 			$app.Event.emit(`${module}/dirtree/removeOpenFolder`, item.id)
 		}
-	}, [children, module, item.id])
+	}, [module, children, item.id])
 
 	useEffect(() => {
 		if (isDragging) {
+			setOpen(false)
+
 			$app.Event.emit(`${module}/dirtree/removeOpenFolder`, item.id)
 		}
-	}, [isDragging, module, item.id])
+	}, [module, isDragging, item.id])
 
 	const props_item: IPropsDirItem_Item = {
 		module,
@@ -59,6 +62,8 @@ const Index = (props: IPropsDirItem_Dir) => {
 		open,
 		showDirTreeOptions,
 		onClick: useMemoizedFn(() => {
+			setOpen(!open)
+
 			if (children?.length) {
 				if (!open) {
 					$app.Event.emit(`${module}/dirtree/addOpenFolder`, item.id)
@@ -66,8 +71,6 @@ const Index = (props: IPropsDirItem_Dir) => {
 					$app.Event.emit(`${module}/dirtree/removeOpenFolder`, item.id)
 				}
 			}
-
-			setOpen(!open)
 		})
 	}
 

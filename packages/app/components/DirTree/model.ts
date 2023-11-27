@@ -1,4 +1,3 @@
-import { remove as lodash_remove } from 'lodash-es'
 import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
@@ -177,13 +176,17 @@ export default class Index {
 	}
 
 	addOpenFolder(id: string) {
-		if (!this.open_folder.includes(id)) {
-			this.open_folder.push(id)
+		const open_folder = toJS(this.open_folder)
+
+		if (!open_folder.includes(id)) {
+			open_folder.push(id)
 		}
+
+		this.open_folder = open_folder
 	}
 
 	removeOpenFolder(id: string) {
-		lodash_remove(this.open_folder, (item) => item === id)
+		this.open_folder = this.open_folder.filter((item) => item !== id)
 	}
 
 	stopWatchItems() {
