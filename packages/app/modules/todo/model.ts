@@ -5,7 +5,7 @@ import { injectable } from 'tsyringe'
 import { archive } from '@/actions/todo'
 import { GlobalModel } from '@/context/app'
 import { Utils, File, Loadmore } from '@/models'
-import { getDocItemsData } from '@/utils'
+import { getDocItemsData, getDocItem } from '@/utils'
 import { confirm } from '@/utils/antd'
 import { loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
@@ -162,7 +162,7 @@ export default class Index {
 	async queryTodo() {
 		const todo = await queryTodo(this.id)
 
-		this.todo = todo.toMutableJSON()
+		this.todo = getDocItem(todo)
 	}
 
 	@loading
@@ -416,7 +416,7 @@ export default class Index {
 
 	watchTodo() {
 		this.todo_watcher = getQueryTodo(this.id).$.subscribe((todo) => {
-			this.todo = todo.toMutableJSON()
+			this.todo = getDocItem(todo)
 
 			if (this.current_angle_id) return
 

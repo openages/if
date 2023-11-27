@@ -11,8 +11,10 @@ export default <T>(arr: RxDB.ItemsDoc<T>) => {
 	})
 }
 
-export const getDocItem = (item: RxDocument) => {
-	delete item['crdts']
+export const getDocItem = <T>(item: RxDocument<T>) => {
+	const target = item.toMutableJSON()
 
-	return item
+	delete target['crdts']
+
+	return target
 }

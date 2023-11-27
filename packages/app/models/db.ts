@@ -2,7 +2,6 @@ import { makeAutoObservable } from 'mobx'
 import { createRxDatabase } from 'rxdb'
 import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
-import { injectable } from 'tsyringe'
 
 import { migration_dirtree_items, migration_todo, migration_todo_items, migration_todo_archives } from '@/migrations'
 import { schema_dirtree_items, schema_todo, schema_todo_items, schema_todo_archives } from '@/schemas'
@@ -10,7 +9,6 @@ import { schema_dirtree_items, schema_todo, schema_todo_items, schema_todo_archi
 import type { RxDB } from '@/types'
 import type { RxCollection } from 'rxdb'
 
-@injectable()
 export default class Index {
 	instance = null as RxDB.DBContent | null
 	ready = false

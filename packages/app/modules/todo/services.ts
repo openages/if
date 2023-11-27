@@ -3,7 +3,7 @@ import { cloneDeep, uniq, omit } from 'lodash-es'
 import { match } from 'ts-pattern'
 
 import { update as updateTodo } from '@/actions/todo'
-import { modify, getArchiveTime } from '@/utils'
+import { modify, getArchiveTime, getDocItem } from '@/utils'
 import { confirm } from '@/utils/antd'
 
 import type {
@@ -69,7 +69,7 @@ export const create = async (args: ArgsCreate, quick?: boolean) => {
 
 	const sort = await getMaxSort()
 
-	const res = await $db.collections.todo_items.incrementalUpsert({
+	const res = await $db.collections.todo_items.insert({
 		...item,
 		file_id,
 		angle_id,
@@ -80,7 +80,7 @@ export const create = async (args: ArgsCreate, quick?: boolean) => {
 		window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
 	}
 
-	return res.toMutableJSON()
+	return getDocItem(res)
 }
 
 export const queryTodo = (file_id: string) => {
@@ -165,10 +165,14 @@ export const updateTodoData = async (args: ArgsUpdateTodoData) => {
 	}
 }
 
-export const update = async (args: ArgsUpdate) => {
-	const res = await $db.collections.todo_items.findOne({ selector: { id: args.id } }).exec()
+export const update = async (data: ArgsUpdate) => {
+	const todo_item = await $db.collections.todo_items.findOne({ selector: { id: data.id } }).exec()
 
-	await res.incrementalModify(modify(args))
+	await todo_item.updateCRDT({
+		ifMatch: {
+			$set: omit(data, 'id')
+		}
+	})
 }
 
 export const updateStatus = async (args: ArgsUpdateStatus) => {
@@ -275,11 +279,10 @@ export const updateRelations = async (args: ArgsUpdateRelations) => {
 }
 
 export const updateTodosSort = async (items: Array<Todo.TodoItem>) => {
-	await $db.collections.todo_items.bulkUpsert(
-		items.map((item, index) => ({
-			...item,
-			sort: index + 1
-		}))
+	await Promise.all(
+		items.map((item, index) => {
+			return update({ ...item, sort: index + 1 })
+		})
 	)
 }
 
@@ -290,13 +293,13 @@ export const removeTodoItem = async (id: string) => {
 export const restoreArchiveItem = async (id: string) => {
 	const doc = await $db.collections.todo_archives.findOne({ selector: { id } }).exec()
 
-	const data = cloneDeep(doc.toMutableJSON())
+	const data = cloneDeep(getDocItem(doc))
 
 	await doc.remove()
 
 	const sort = await getMaxSort()
 
-	await $db.collections.todo_items.incrementalUpsert({
+	await $db.collections.todo_items.insert({
 		...data,
 		status: 'unchecked',
 		create_at: new Date().valueOf(),

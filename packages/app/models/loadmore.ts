@@ -1,7 +1,5 @@
 import { makeAutoObservable } from 'mobx'
-import { injectable } from 'tsyringe'
 
-@injectable()
 export default class Index {
 	page = 0
 	end = false

@@ -1,10 +1,10 @@
 import { makeAutoObservable } from 'mobx'
-import { injectable } from 'tsyringe'
+
+import { getDocItem } from '@/utils'
 
 import type { DirTree } from '@/types'
 import type { Subscription } from 'rxjs'
 
-@injectable()
 export default class Index {
 	id = ''
 	data = {} as DirTree.Item
@@ -31,13 +31,13 @@ export default class Index {
 
 		const item = await this.getQuery().exec()
 
-		this.data = item.toMutableJSON()
+		this.data = getDocItem(item)
 		this.loading = false
 	}
 
 	watch() {
 		this.data_watcher = this.getQuery().$.subscribe((item) => {
-			this.data = item.toMutableJSON() as DirTree.Item
+			this.data = getDocItem(item) as DirTree.Item
 		})
 	}
 

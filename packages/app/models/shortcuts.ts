@@ -1,12 +1,10 @@
 import hotkeys from 'hotkeys-js'
 import { makeAutoObservable } from 'mobx'
-import { injectable } from 'tsyringe'
 
 import { shortcuts } from '@/appdata'
 
 import type { ShortcutEventPaths } from '@/appdata'
 
-@injectable()
 export default class Index {
 	keys = shortcuts as Array<{
 		key_bindings: string
