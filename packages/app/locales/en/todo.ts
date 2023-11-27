@@ -115,20 +115,24 @@ export default {
 	},
 	Help: [
 		{
-			title: 'Quick Insert',
-			desc: 'When the cursor is focused on task or subtask text, press Enter to insert the next task.'
+			title: 'Quick Insertion',
+			desc: 'With the cursor focused, press Enter to insert the next task.'
 		},
 		{
-			title: 'Move as Subtask',
-			desc: 'When the cursor is focused on task text, press Tab to append the current task as a subtask to the previous task. Please note that Tab operation is disabled if the current task is a mutually exclusive task or if the list is in a filtered state.'
+			title: 'Move to Subtask',
+			desc: 'Focus the cursor and press Tab to append the current task as a subtask to the previous one.'
 		},
 		{
-			title: 'Move as Top-Level Task',
-			desc: 'When the cursor is focused on subtask text, press Tab to change the current subtask to the next top-level task. Please note that Tab operation is disabled if the list is in a filtered state.'
+			title: 'Move to Top-level Task',
+			desc: 'While focusing on the subtask text, press Tab to change the current subtask to the next top-level task.'
 		},
 		{
-			title: 'Mutually Exclusive Tasks',
-			desc: 'Drag the small dot in front of a task onto the small dot of the target task to mark tasks as mutually exclusive. You can mark multiple tasks as mutually exclusive simultaneously. To cancel the mutual exclusion, drag the small dot back to the already mutually exclusive tasks.'
+			title: 'Add Mutex Task',
+			desc: 'Drag the small dot in front of a task to the dot of the target task to mark tasks as mutually exclusive. Supports marking multiple tasks as exclusive simultaneously.'
+		},
+		{
+			title: 'Cancel Mutex Task',
+			desc: 'Drag the dot again to the already mutually exclusive task to cancel the mutex connection.'
 		},
 		{
 			title: 'Expand Subtasks',
