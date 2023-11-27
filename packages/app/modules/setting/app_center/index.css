@@ -9,7 +9,7 @@
 
 			.app_module_item {
 				background-color: var(--color_bg_1);
-				border-radius: var(--radius);
+				border-radius: var(--radius_large);
 
 				&:hover {
 					.btn_drag {

@@ -39,7 +39,7 @@ const Index = (props: IProps) => {
 				</div>
 				<div className='module_icon w_100 border_box flex flex_column align_center'>
 					<ModuleIcon type={item.title} size={36} weight='duotone'></ModuleIcon>
-					<span className='name mt_8'>{t(`translation:modules.${item.title}`)}</span>
+					<span className='name mt_4'>{t(`translation:modules.${item.title}`)}</span>
 				</div>
 				<div className='toggle_wrap w_100 border_box flex justify_between align_center'>
 					<span className='label'>{t('translation:setting.Menu.fixed')}</span>

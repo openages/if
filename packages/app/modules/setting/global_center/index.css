@@ -12,7 +12,7 @@
 				margin-bottom: 6px;
 				min-height: 66px;
 				background-color: var(--color_bg_1);
-				border-radius: var(--radius);
+				border-radius: var(--radius_large);
 
 				&:last-child {
 					margin-bottom: 0;
