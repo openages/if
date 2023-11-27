@@ -1,13 +1,15 @@
+import { useMemoizedFn } from 'ahooks'
 import { Drawer } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 import { Tag, BellRinging, HourglassMedium, CaretUp, CaretDown } from '@phosphor-icons/react'
 
+import { useInput } from '../../hooks'
 import Children from '../Children'
 import Circle from '../Input/Circle'
 import Star from '../Input/Star'
 import TagSelect from '../TagSelect'
-import { useInput, useHandlers, useContextMenu } from '../TodoItem/hooks'
+import { useHandlers, useContextMenu } from '../TodoItem/hooks'
 import styles from './index.css'
 
 import type { IPropsDetail, IPropsChildren } from '../../types'
@@ -29,8 +31,9 @@ const Index = (props: IPropsDetail) => {
 	const { status, children, tag_ids, star, circle_enabled, circle_value } = current_detail_item
 	const { input, onInput } = useInput({
 		item: current_detail_item,
-		index: current_detail_index,
-		update
+		update: useMemoizedFn((textContent) =>
+			update({ type: 'parent', index: current_detail_index, value: { text: textContent } })
+		)
 	})
 	const { insertChildren, removeChildren, updateTags, updateStar, updateCircle } = useHandlers({
 		item: current_detail_item,

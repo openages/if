@@ -1,4 +1,4 @@
-import { useSize, useUpdateEffect } from 'ahooks'
+import { useMemoizedFn, useSize, useUpdateEffect } from 'ahooks'
 import { Dropdown, ConfigProvider } from 'antd'
 import { Fragment, useRef } from 'react'
 import { Switch, Case } from 'react-if'
@@ -7,9 +7,10 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Square, CheckSquare, DotsSixVertical, Star, HourglassMedium } from '@phosphor-icons/react'
 
+import { useInput } from '../../hooks'
 import Children from '../Children'
 import TagSelect from '../TagSelect'
-import { useContextMenu, useHandlers, useLink, useInput, useOpen, useOnContextMenu } from './hooks'
+import { useContextMenu, useHandlers, useLink, useOpen, useOnContextMenu } from './hooks'
 import styles from './index.css'
 
 import type { IPropsTodoItem, IPropsChildren } from '../../types'
@@ -48,7 +49,10 @@ const Index = (props: IPropsTodoItem) => {
 		updateTagWidth
 	} = useHandlers({ item, index, makeLinkLine, check, insert, update, tab })
 	const { linker, dragging, hovering } = useLink({ item, makeLinkLine, updateRelations })
-	const { input, onInput } = useInput({ item, index, update })
+	const { input, onInput } = useInput({
+		item,
+		update: useMemoizedFn((textContent) => update({ type: 'parent', index, value: { text: textContent } }))
+	})
 	const { TodoContextMenu, ChildrenContextMenu } = useContextMenu({ angles, tags, tag_ids })
 	const { onContextMenu } = useOnContextMenu({
 		item,
@@ -142,11 +146,11 @@ const Index = (props: IPropsTodoItem) => {
 							useByTodo
 							onChange={updateTags}
 						></TagSelect>
-                              ) }
-                              {star > 0 && (
+					)}
+					{star > 0 && (
 						<div
 							className='other_wrap white flex justify_center align_center'
-							style={{backgroundColor: `rgba(var(--color_main_rgb),${star / 6})`}}
+							style={{ backgroundColor: `rgba(var(--color_main_rgb),${star / 6})` }}
 						>
 							<Star className='icon' size={12}></Star>
 						</div>

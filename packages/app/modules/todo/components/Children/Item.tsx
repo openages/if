@@ -1,16 +1,12 @@
 import { useMemoizedFn } from 'ahooks'
 import { Dropdown, ConfigProvider } from 'antd'
-import { debounce } from 'lodash-es'
-import { useRef, useEffect } from 'react'
 import { Switch, Case } from 'react-if'
 
-import { todo } from '@/appdata'
-import { purify } from '@/utils'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Square, CheckSquare, DotsSixVertical } from '@phosphor-icons/react'
 
-import { getCursorPosition, setCursorPosition } from '../../utils'
+import { useInput } from '../../hooks'
 import styles from './index.css'
 
 import type { IPropsChildrenItem } from '../../types'
@@ -27,56 +23,15 @@ const Index = (props: IPropsChildrenItem) => {
 		insertChildren,
 		removeChildren
 	} = props
-	const { id, text, status } = item
-	const input = useRef<HTMLDivElement>(null)
+	const { id, status } = item
+	const { input, onInput } = useInput({
+		item,
+		update: useMemoizedFn((textContent) => update(children_index, { text: textContent }))
+	})
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
 		id,
 		data: { index: children_index }
 	})
-
-	useEffect(() => {
-		const el = input.current
-
-		if (el.innerHTML === text) return
-
-		el.innerHTML = purify(text)
-	}, [text])
-
-	const onInput = useMemoizedFn(
-		debounce(
-			async ({ target: { innerHTML } }) => {
-				if (innerHTML?.length > todo.text_max_length) {
-					innerHTML = purify(innerHTML).slice(0, todo.text_max_length)
-
-					input.current.blur()
-
-					input.current.innerHTML = innerHTML
-
-					await update(children_index, { text: innerHTML })
-				} else {
-					const filter_text = purify(innerHTML)
-
-					if (innerHTML !== filter_text) {
-						input.current.blur()
-
-						input.current.innerHTML = filter_text
-
-						await update(children_index, { text: filter_text })
-					} else {
-						const start = getCursorPosition(input.current)
-
-						await update(children_index, { text: filter_text })
-
-						if (document.activeElement !== input.current) return
-
-						setCursorPosition(input.current, start)
-					}
-				}
-			},
-			450,
-			{ leading: false }
-		)
-	)
 
 	const onCheck = useMemoizedFn(() => {
 		update(children_index, { status: status === 'unchecked' ? 'checked' : 'unchecked' })
