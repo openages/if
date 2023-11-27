@@ -4,9 +4,8 @@ import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 import { injectable } from 'tsyringe'
 
-import { modules } from '@/appdata'
 import { migration_dirtree_items, migration_todo, migration_todo_items, migration_todo_archives } from '@/migrations'
-import { schema_dirtree_items, schema_setting, schema_todo, schema_todo_items, schema_todo_archives } from '@/schemas'
+import { schema_dirtree_items, schema_todo, schema_todo_items, schema_todo_archives } from '@/schemas'
 
 import type { RxDB } from '@/types'
 import type { RxCollection } from 'rxdb'
@@ -39,11 +38,6 @@ export default class Index {
 				schema: schema_dirtree_items,
 				migrationStrategies: migration_dirtree_items
 			},
-			// setting: {
-			// 	autoMigrate: false,
-			// 	schema: schema_setting,
-			// 	migrationStrategies: migration_todo
-			// },
 			todo: {
 				autoMigrate: false,
 				schema: schema_todo,
@@ -65,29 +59,17 @@ export default class Index {
 		this.instance = db
 
 		await this.migrate()
-		await this.addModuleInitData()
 
 		this.ready = true
 
 		window.$app.Event.emit('app/setLoading', { visible: false })
 	}
 
-	async addModuleInitData() {
-		if ((await $db.dirtree_items.count().exec()) > 0) return (this.ready = true)
-
-		await window.$db.collections.setting.bulkInsert([{ key: 'apps', data: JSON.stringify(modules) }])
-
-		return
-	}
-
 	async migrate() {
-		const check_migrations = Object.values($db.collections).map(async (item) => {
-			const should_migrate = await item.migrationNeeded()
-
-			return should_migrate ? item : false
-		})
+		const collections = Object.values($db.collections)
+		const check_migrations = collections.map(async (item) => ((await item.migrationNeeded()) ? item : false))
 		const should_migrations = (await Promise.all(check_migrations)).filter((item) => item)
-		const migrations = should_migrations.map((item) => (item as RxCollection).migratePromise(15))
+		const migrations = should_migrations.map((item) => (item as RxCollection).migratePromise(30))
 
 		if (migrations.length) {
 			window.$app.Event.emit('app/setLoading', { visible: true, desc: $t('translation:app.migrating') })

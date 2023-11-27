@@ -1,4 +1,5 @@
 import type { RxDB } from '@/types'
+import type { RxDocument } from 'rxdb'
 
 export default <T>(arr: RxDB.ItemsDoc<T>) => {
 	return arr.map((item) => {
@@ -8,4 +9,10 @@ export default <T>(arr: RxDB.ItemsDoc<T>) => {
 
 		return target
 	})
+}
+
+export const getDocItem = (item: RxDocument) => {
+	delete item['crdts']
+
+	return item
 }

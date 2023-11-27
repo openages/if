@@ -1,19 +1,16 @@
 import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
+import { modules } from '@/appdata'
 import Utils from '@/models/utils'
-import { useInstanceWatch } from '@openages/stk'
+import { useInstanceWatch, setStorageWhenChange } from '@openages/stk'
 
 import type { App } from '@/types'
-import type { RxDocument, RxQuery } from 'rxdb'
-import type { DocSetting } from '@/schemas'
 import type { Watch } from '@openages/stk'
 
 @injectable()
 export default class Index {
-	apps_query = {} as RxQuery<DocSetting>
-	apps_doc = {} as RxDocument<DocSetting>
-	app_modules = [] as App.Modules
+	app_modules = modules as App.Modules
 	actives = [] as Array<{ app: App.ModuleType; pathname: string; key: string }>
 	visible_app_menu = false
 	visible_app_switch = false
@@ -32,6 +29,8 @@ export default class Index {
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { watch: false }, { autoBind: true })
+
+		this.utils.acts = [setStorageWhenChange(['app_modules'], this)]
 	}
 
 	get apps() {
@@ -46,27 +45,11 @@ export default class Index {
 	init() {
 		this.utils.acts = [...useInstanceWatch(this)]
 
-		this.query()
-
 		this.on()
 	}
 
-	async query() {
-		this.apps_query = $db.setting.findOne({ selector: { key: 'apps' } })! as RxQuery<DocSetting>
-
-		this.apps_doc = (await this.apps_query.exec()) as RxDocument<DocSetting>
-
-		this.app_modules = JSON.parse(this.apps_doc.data)
-
-		this.apps_doc.$.subscribe(({ data }) => {
-			this.app_modules = JSON.parse(data)
-		})
-	}
-
-	async update(v: App.Modules) {
+	update(v: App.Modules) {
 		this.app_modules = v
-
-		this.apps_doc.incrementalPatch({ data: JSON.stringify(v) })
 	}
 
 	setActives(v: Index['actives']) {
@@ -121,8 +104,6 @@ export default class Index {
 		$app.Event.off('global.app.toggleAppMenu', this.toggleAppMenu)
 		$app.Event.off('global.app.appSwitch', this.appSwitch)
 		$app.Event.off('global.app.handleAppSwitch', this.handleAppSwitch)
-
-		this.apps_query?.$?.unsubscribe?.()
 
 		window.removeEventListener('blur', this.handleAppSwitch)
 	}

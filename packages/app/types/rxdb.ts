@@ -1,11 +1,10 @@
 import type { RxDatabase } from 'rxdb'
-import type { DBDirtreeItems, DBSetting, DBTodo, DBTodoItems, DBTodoArchives } from '@/schemas'
+import type { DBDirtreeItems, DBTodo, DBTodoItems, DBTodoArchives } from '@/schemas'
 import type { RxDocument, RxQuery } from 'rxdb'
 
 export namespace RxDB {
 	export type DBContent = RxDatabase<{
 		dirtree_items: DBDirtreeItems
-		setting: DBSetting
 		todo: DBTodo
 		todo_items: DBTodoItems
 		todo_archives: DBTodoArchives
