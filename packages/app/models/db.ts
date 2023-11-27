@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import { createRxDatabase } from 'rxdb'
+import { wrappedKeyEncryptionCryptoJsStorage } from 'rxdb/plugins/encryption-crypto-js'
 import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 
@@ -23,10 +24,13 @@ export default class Index {
 			eventReduce: true,
 			allowSlowCount: true,
 			multiInstance: true,
+			password: 'I16DKS#hY+Two0O',
 			cleanupPolicy: { waitForLeadership: true },
 			ignoreDuplicate: window.$is_dev,
-			storage: wrappedKeyCompressionStorage({
-				storage: getRxStorageDexie()
+			storage: wrappedKeyEncryptionCryptoJsStorage({
+				storage: wrappedKeyCompressionStorage({
+					storage: getRxStorageDexie()
+				})
 			})
 		})
 

@@ -91,8 +91,14 @@ const Index = (props: IPropsDetail) => {
 			</div>
 			{current_detail_item.id && (
 				<div className='detail_item_wrap w_100 border_box flex flex_column'>
-					<div className='todo_text_wrap w_100' ref={input} contentEditable onInput={onInput}></div>
-					<div className='option_items w_100 border_box flex flex_column mb_12'>
+					<div
+						className='todo_text_wrap w_100 border_box'
+						contentEditable
+						placeholder='任务内容'
+						ref={input}
+						onInput={onInput}
+					></div>
+					<div className='option_items w_100 border_box flex flex_column'>
 						<div className='option_item w_100 border_box flex align_center'>
 							<div className='name_wrap flex align_center'>
 								<Tag size={16}></Tag>
@@ -127,7 +133,9 @@ const Index = (props: IPropsDetail) => {
 							></Circle>
 						</div>
 					</div>
-					{current_detail_item.children && <Children {...props_children}></Children>}
+					<div className='detail_children_wrap w_100 border_box flex flex_column relative'>
+						{current_detail_item.children && <Children {...props_children}></Children>}
+					</div>
 				</div>
 			)}
 		</Drawer>

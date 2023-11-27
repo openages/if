@@ -20,11 +20,11 @@
 		}
 
 		.detail_item_wrap {
-			padding: 18px;
+			padding: 18px 0;
 
 			.todo_text_wrap {
-				padding: 0;
-				margin-bottom: 12px;
+				padding: 0 18px;
+				margin-bottom: 6px;
 				outline: none;
 				font-size: 16px;
 				font-weight: 500;
@@ -34,7 +34,7 @@
 				width: 12px;
 				height: 12px;
 				top: 7px;
-				left: -12px;
+				left: -14px;
 				border-radius: var(--radius_small_1);
 				background-color: var(--color_bg_2);
 				opacity: 0;
@@ -45,11 +45,11 @@
 			}
 
 			.option_items {
-				border-radius: var(--radius);
+				padding: 0 18px;
+				padding-bottom: 7px;
 
 				.option_item {
 					height: 30px;
-					padding: 0 9px;
 
 					.name_wrap {
 						width: 90px;
@@ -59,6 +59,21 @@
 							font-size: 12px;
 						}
 					}
+				}
+			}
+
+			.detail_children_wrap {
+				padding: 0 16px;
+				padding-top: 8px;
+
+				&::before {
+					content: '';
+					position: absolute;
+					top: 0;
+					left: 20px;
+					width: calc(100% - 40px);
+					height: 1px;
+					background-color: var(--color_border_light);
 				}
 			}
 		}

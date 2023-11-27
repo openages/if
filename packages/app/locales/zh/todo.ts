@@ -72,7 +72,7 @@ export default {
 		},
 		Circle: {
 			title: '重复',
-			day: '天数',
+			day: '天',
 			hour: '小时',
 			minute: '分钟',
 			disabled: '未开启',

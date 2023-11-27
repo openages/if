@@ -34,9 +34,27 @@ export default (args: HookArgs) => {
 		async (e: ClipboardEvent<HTMLDivElement>) => {
 			e.preventDefault()
 
-			const data = e.clipboardData.getData('text/plain')
+			const text = e.clipboardData.getData('text/plain')
+			const start = getCursorPosition(input.current)
+			const selection = window.getSelection()
+			const select_string = selection.toString()
 
-			input.current.textContent += data
+			if (select_string) {
+				const range = selection.getRangeAt(0)
+
+				const before_text = input.current.textContent.slice(0, range.startOffset)
+				const after_text = input.current.textContent.slice(range.endOffset)
+
+				input.current.textContent = before_text + text + after_text
+
+				setCursorPosition(input.current, before_text.length + text.length)
+			} else {
+				input.current.textContent += text
+
+				setCursorPosition(input.current, start + text.length)
+			}
+
+			await update(input.current.textContent)
 		},
 		{ target: input }
 	)
