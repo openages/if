@@ -12,6 +12,12 @@ const typed_nav_items = [
 		is_fixed: true
 	},
 	{
+		id: 'markdown',
+		title: 'markdown',
+		path: '/markdown',
+		is_fixed: true
+	},
+	{
 		id: 'note',
 		title: 'note',
 		path: '/note',
@@ -56,13 +62,13 @@ const typed_nav_items = [
 		id: 'api',
 		title: 'api',
 		path: '/api'
-      },
-      {
+	},
+	{
 		id: 'dataflow',
 		title: 'dataflow',
 		path: '/dataflow'
-      },
-      {
+	},
+	{
 		id: 'table',
 		title: 'table',
 		path: '/table'
@@ -80,7 +86,8 @@ const typed_nav_items = [
 	{
 		id: 'setting',
 		title: 'setting',
-		path: '/setting'
+		path: '/setting',
+		is_fixed: true
 	}
 ] as const
 

@@ -1,6 +1,7 @@
 export default {
 	todo: '待办',
 	memo: '便签',
+	markdown: '简记',
 	note: '笔记',
 	kanban: '看板',
 	workflow: '工作流',

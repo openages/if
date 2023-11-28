@@ -16,7 +16,8 @@ import {
 	TextColumns,
 	TreeStructure,
 	GearSix,
-	WebhooksLogo
+	WebhooksLogo,
+	FileText
 } from '@phosphor-icons/react'
 
 import type { IconProps } from '@phosphor-icons/react'
@@ -32,6 +33,7 @@ const Index = (props: IProps) => {
 	return match(type)
 		.with('todo', () => <CheckCircle {...icon_props} />)
 		.with('memo', () => <Note {...icon_props} />)
+		.with('markdown', () => <FileText {...icon_props} />)
 		.with('note', () => <Notebook {...icon_props} />)
 		.with('kanban', () => <Kanban {...icon_props} />)
 		.with('workflow', () => <Path {...icon_props} />)
