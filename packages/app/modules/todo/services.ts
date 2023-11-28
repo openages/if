@@ -3,7 +3,7 @@ import { cloneDeep, uniq, omit } from 'lodash-es'
 import { match } from 'ts-pattern'
 
 import { update as updateTodo } from '@/actions/todo'
-import { modify, getArchiveTime, getDocItem } from '@/utils'
+import { getArchiveTime, getDocItem } from '@/utils'
 import { confirm } from '@/utils/antd'
 
 import type {
@@ -281,7 +281,7 @@ export const updateRelations = async (args: ArgsUpdateRelations) => {
 export const updateTodosSort = async (items: Array<Todo.TodoItem>) => {
 	await Promise.all(
 		items.map((item, index) => {
-			return update({ ...item, sort: index + 1 })
+			return update({ id: item.id, sort: index + 1 })
 		})
 	)
 }

@@ -11,7 +11,7 @@ import type { Theme } from '@/appdata'
 export default class Index {
 	theme: Theme = 'light'
 	color_main_rgb = '255,0,0'
-	show_bar_title = false
+	show_bar_title = true
 	page_width = '780px'
 
 	constructor(public utils: Utils) {

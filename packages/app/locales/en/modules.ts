@@ -1,7 +1,7 @@
 export default {
 	todo: 'Todo',
 	memo: 'Memo',
-	markdown: 'Markdown',
+	typed: 'Typed',
 	note: 'Note',
 	kanban: 'Kanban',
 	workflow: 'Workflow',

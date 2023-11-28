@@ -11,7 +11,7 @@ export interface IProps {
 
 export interface IPropsTagSelect {
 	options: Model['todo']['tags']
-      value: Array<string>
+	value: Array<string>
 	useByTodo?: boolean
 	useByDetail?: boolean
 	className?: SelectProps['className']
@@ -132,6 +132,8 @@ export interface IPropsChildrenItem {
 export interface IPropsGroupTitle {
 	item: Todo.Group
 	index: number
+	update: Model['update']
+	remove: Model['remove']
 }
 
 export interface IPropsArchive {

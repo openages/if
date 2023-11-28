@@ -1,7 +1,8 @@
-._local{
-      margin-top: 36px;
+._local {
+	padding-top: 36px;
+	padding-bottom: 9px;
 
-      &:hover {
+	&:hover {
 		:global {
 			.drag_wrap {
 				opacity: 1;
@@ -10,13 +11,18 @@
 	}
 
 	:global {
+		.drag_wrap {
+			top: unset !important;
+			bottom: 8px;
+		}
+
 		.group_title {
 			padding: 0 11px;
-			margin-bottom: 9px;
 			font-size: 12px;
 			line-height: 1;
 			color: var(--color_text_grey);
-			user-select: none;
+			min-height: unset;
+			outline: none;
 		}
 	}
 }

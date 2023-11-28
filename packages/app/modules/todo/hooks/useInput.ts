@@ -6,11 +6,11 @@ import { todo } from '@/appdata'
 
 import { getCursorPosition, setCursorPosition } from '../utils'
 
-import type { IPropsTodoItem, IPropsChildrenItem } from '../types'
+import type { IPropsTodoItem, IPropsChildrenItem, IPropsGroupTitle } from '../types'
 import type { ClipboardEvent } from 'react'
 
 interface HookArgs {
-	item: IPropsTodoItem['item'] | IPropsChildrenItem['item']
+	item: IPropsTodoItem['item'] | IPropsChildrenItem['item'] | IPropsGroupTitle['item']
 	update: (textContent: string) => Promise<any>
 }
 

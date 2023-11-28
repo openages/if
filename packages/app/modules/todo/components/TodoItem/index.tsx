@@ -174,8 +174,8 @@ const Index = (props: IPropsTodoItem) => {
 								'text_wrap',
 								children && children?.length && !open && 'has_children'
 							)}
-							ref={input}
 							contentEditable
+							ref={input}
 							style={{ textIndent: options_width ?? 'unset' }}
 							onInput={onInput}
 							onKeyDown={onKeyDown}

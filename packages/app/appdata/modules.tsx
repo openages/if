@@ -12,9 +12,9 @@ const typed_nav_items = [
 		is_fixed: true
 	},
 	{
-		id: 'markdown',
-		title: 'markdown',
-		path: '/markdown',
+		id: 'typed',
+		title: 'typed',
+		path: '/typed',
 		is_fixed: true
 	},
 	{

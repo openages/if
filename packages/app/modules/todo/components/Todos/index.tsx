@@ -21,7 +21,7 @@ const Index = (props: IPropsTodos) => {
 		tags,
 		angles,
 		relations,
-            drag_disabled,
+		drag_disabled,
 		check,
 		updateRelations,
 		move,
@@ -160,7 +160,7 @@ const Index = (props: IPropsTodos) => {
 										index,
 										tags,
 										angles,
-                                                            drag_disabled,
+										drag_disabled,
 										makeLinkLine,
 										renderLines,
 										check,
@@ -175,7 +175,10 @@ const Index = (props: IPropsTodos) => {
 									key={item.id}
 								></TodoItem>
 							) : (
-								<GroupTitle {...{ item, index }} key={item.id}></GroupTitle>
+								<GroupTitle
+									{...{ item, index, update, remove }}
+									key={item.id}
+								></GroupTitle>
 							)
 						)}
 					</SortableContext>

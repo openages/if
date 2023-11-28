@@ -226,6 +226,10 @@ export default class Index {
 			todo: this.todo,
 			...args
 		})
+
+		if (this.todo.auto_archiving === '0m') {
+			await archive(this.id)
+		}
 	}
 
 	async update(args: ArgsUpdate) {
