@@ -6,10 +6,10 @@ export default {
 	token: {
 		colorSuccess: common.color_success,
 		colorWarning: common.color_warning,
-            colorError: common.color_danger,
+		colorError: common.color_danger,
 		controlHeightLG: 50,
 		controlHeight: 38,
-            controlHeightSM: 32,
+		controlHeightSM: 32,
 		controlHeightXS: 26,
 		lineType: 'dashed',
 		fontFamily: `'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',

@@ -2,7 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import { Drawer } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-import { Tag, BellRinging, HourglassMedium, CaretUp, CaretDown } from '@phosphor-icons/react'
+import { Tag, BellRinging, HourglassMedium, CaretUp, CaretDown, Plus } from '@phosphor-icons/react'
 
 import { useInput } from '../../hooks'
 import Children from '../Children'
@@ -94,7 +94,6 @@ const Index = (props: IPropsDetail) => {
 					<div
 						className='todo_text_wrap w_100 border_box'
 						contentEditable
-						placeholder='任务内容'
 						ref={input}
 						onInput={onInput}
 					></div>
@@ -133,8 +132,26 @@ const Index = (props: IPropsDetail) => {
 							></Circle>
 						</div>
 					</div>
-					<div className='detail_children_wrap w_100 border_box flex flex_column relative'>
-						{current_detail_item.children && <Children {...props_children}></Children>}
+					<div
+						className={$cx(
+							'detail_children_wrap w_100 border_box flex flex_column relative',
+							current_detail_item?.children?.length && 'has_children'
+						)}
+					>
+						{!current_detail_item?.children?.length ? (
+							<div
+								className='btn_insert w_100 border_box flex justify_center align_center clickable'
+								// @ts-ignore
+								onClick={insertChildren}
+							>
+								<Plus size={15}></Plus>
+								<span className='text ml_6'>
+									{t('translation:todo.context_menu.insert_children')}
+								</span>
+							</div>
+						) : (
+							<Children {...props_children}></Children>
+						)}
 					</div>
 				</div>
 			)}

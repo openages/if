@@ -130,7 +130,7 @@
 				height: 14px;
 				margin-right: 2px;
 				background-color: var(--color_bg_2);
-				border-radius: var(--radius_small_1);
+				border-radius: 50%;
 				z-index: 1;
 
 				&:last-child {

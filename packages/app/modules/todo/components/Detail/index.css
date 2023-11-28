@@ -64,16 +64,33 @@
 
 			.detail_children_wrap {
 				padding: 0 16px;
-				padding-top: 8px;
 
-				&::before {
-					content: '';
-					position: absolute;
-					top: 0;
-					left: 20px;
-					width: calc(100% - 40px);
-					height: 1px;
-					background-color: var(--color_border_light);
+				&.has_children {
+					padding-top: 8px;
+
+					&::before {
+						content: '';
+						position: absolute;
+						top: 0;
+						left: 20px;
+						width: calc(100% - 40px);
+						height: 1px;
+						background-color: var(--color_border_light);
+					}
+				}
+			}
+
+			.btn_insert {
+				height: 36px;
+				border-radius: var(--radius_large);
+				background-color: var(--color_bg_1);
+
+				.text {
+					font-size: 12px;
+				}
+
+				&:hover {
+					background-color: var(--color_bg_2);
 				}
 			}
 		}
