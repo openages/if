@@ -2,15 +2,15 @@
 	min-width: 48px;
 	margin-left: -2px;
 
-      &.useByDetail{
-            :global{
-                  .if-select-selector {
-                        .if-select-selection-placeholder{
-                              inset-inline: 0 !important;
-                        }
-                  }
-            }
-      }
+	&.useByDetail {
+		:global {
+			.if-select-selector {
+				.if-select-selection-placeholder {
+					inset-inline: 0 !important;
+				}
+			}
+		}
+	}
 
 	&.useByTodo {
 		--height: 14px;
@@ -20,10 +20,10 @@
 
 		:global {
 			.tag {
-				padding: 0 2px;
+				padding: 0 4px;
 				margin: 0 1px;
 				font-size: 10px;
-				border-radius: var(--radius_small_1);
+				border-radius: var(--radius_large);
 			}
 		}
 	}
@@ -45,6 +45,7 @@
 			height: var(--height);
 			line-height: 1;
 			padding: 3px 6px;
+			padding-right: 4px;
 			border-radius: var(--radius_small);
 			font-size: 12px;
 			font-weight: bold;
@@ -52,11 +53,11 @@
 			background-color: var(--color_bg);
 
 			.btn_close {
-				padding: 2px;
+				padding: 0px 3px;
 				margin-left: 3px;
+				border-radius: 50%;
 
 				&:hover {
-					border-radius: var(--radius_small);
 					background-color: var(--color_bg);
 				}
 			}
