@@ -10,7 +10,7 @@
             "build:electron": "cross-env BUILD_TARGET=electron max build"
       },
       "keywords": [],
-      "author": "Whatreal",
+      "author": "1yasa",
       "dependencies": {
             "@abraham/reflection": "^0.12.0",
             "@ant-design/happy-work-theme": "^1.0.0",
