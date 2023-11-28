@@ -30,33 +30,46 @@ const Index = (props: IPropsArchiveItem) => {
 	const restore = useMemoizedFn(() => restoreArchiveItem(id))
 	const remove = useMemoizedFn(() => removeArchiveItem(id))
 
-	return (
-		<div className='archive_item w_100 border_box flex flex_column'>
-			<div className='text_wrap w_100 relative'>
-				<div className='action_wrap flex justify_center align_center cursor_point clickable'>
+	const getTextItem = useMemoizedFn((status, text, is_parent: boolean) => {
+		const icon_size = is_parent ? 16 : 14
+
+		return (
+			<div className={$cx('text_wrap w_100 relative', is_parent ? 'parent' : 'child')}>
+				<div className='status_wrap flex justify_center align_center absolute'>
 					<Switch>
 						<Case condition={status === 'unchecked'}>
-							<Square size={14} />
+							<Square size={icon_size} />
 						</Case>
 						<Case condition={status === 'checked'}>
-							<CheckSquare size={14} />
+							<CheckSquare size={icon_size} />
 						</Case>
 					</Switch>
 				</div>
-				<span className='text'>{text}</span>
+				<span className='text flex'>{text}</span>
 			</div>
-			<div className='flex justify_between align_center mt_4'>
+		)
+	})
+
+	return (
+		<div className='archive_item w_100 border_box flex flex_column'>
+			{getTextItem(status, text, true)}
+			{item.children?.length > 0 && (
+				<div className='children_wrap w_100 border_box flex flex_column relative'>
+					{item.children.map((it) => getTextItem(it.status, it.text, false))}
+				</div>
+			)}
+			<div className='bottom_wrap flex justify_between align_center mt_4'>
 				<span className='create_at'>{relative_time}</span>
-				<div className='action_wrap align_center'>
+				<div className='actions_wrap flex align_center'>
 					<div
 						className='btn_action flex align_center cursor_point clickable mr_4'
 						onClick={restore}
 					>
-						<ArrowCounterClockwise size={14}></ArrowCounterClockwise>
+						<ArrowCounterClockwise size={12}></ArrowCounterClockwise>
 						<span className='btn_text ml_2'>{t('translation:todo.Archive.restore')}</span>
 					</div>
 					<div className='btn_action flex align_center cursor_point clickable' onClick={remove}>
-						<Trash size={14}></Trash>
+						<Trash size={12}></Trash>
 						<span className='btn_text ml_2'>{t('translation:todo.Archive.remove')}</span>
 					</div>
 				</div>
