@@ -48,8 +48,8 @@ const Index = (props: IProps) => {
 					className='tag w_100 h_100 flex justify_center align_center transition_normal'
 					style={{
 						// @ts-ignore
-						'--tag_hover_color': item.color ? Color(item.color).alpha(0.42).toString() : '',
-						backgroundColor: item.color ? Color(item.color).alpha(0.3).toString() : '',
+						'--tag_hover_color': item.color ? Color(item.color).alpha(0.3).toString() : '',
+						backgroundColor: item.color ? Color(item.color).alpha(0.15).toString() : '',
 						color: item.color
 					}}
 				>

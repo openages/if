@@ -1,9 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Switch, Case } from 'react-if'
 
 import { getRelativeTime } from '@/utils'
-import { ArrowCounterClockwise, Trash } from '@phosphor-icons/react'
+import { Square, CheckSquare, ArrowCounterClockwise, Trash } from '@phosphor-icons/react'
 
 import type { IPropsArchiveItem } from '../../types'
 
@@ -30,8 +31,20 @@ const Index = (props: IPropsArchiveItem) => {
 	const remove = useMemoizedFn(() => removeArchiveItem(id))
 
 	return (
-		<div className={$cx('archive_item w_100 border_box flex flex_column', status)}>
-			<span className='text w_100'>{text}</span>
+		<div className='archive_item w_100 border_box flex flex_column'>
+			<div className='text_wrap w_100 relative'>
+				<div className='action_wrap flex justify_center align_center cursor_point clickable'>
+					<Switch>
+						<Case condition={status === 'unchecked'}>
+							<Square size={14} />
+						</Case>
+						<Case condition={status === 'checked'}>
+							<CheckSquare size={14} />
+						</Case>
+					</Switch>
+				</div>
+				<span className='text'>{text}</span>
+			</div>
 			<div className='flex justify_between align_center mt_4'>
 				<span className='create_at'>{relative_time}</span>
 				<div className='action_wrap align_center'>
