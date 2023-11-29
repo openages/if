@@ -24,6 +24,9 @@ export default {
                   "star": {
                         "type": "number"
                   },
+                  "archive": {
+                        "type": "boolean"
+                  },
                   "archive_time": {
                         "type": "number",
                         "multipleOf": 1,
@@ -132,6 +135,9 @@ export default {
                   "star": {
                         "type": "number"
                   },
+                  "archive": {
+                        "type": "boolean"
+                  },
                   "archive_time": {
                         "type": "number",
                         "multipleOf": 1,
@@ -236,6 +242,9 @@ export default {
                   },
                   "star": {
                         "type": "number"
+                  },
+                  "archive": {
+                        "type": "boolean"
                   },
                   "archive_time": {
                         "type": "number",

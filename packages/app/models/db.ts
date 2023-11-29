@@ -4,8 +4,8 @@ import { wrappedKeyEncryptionCryptoJsStorage } from 'rxdb/plugins/encryption-cry
 import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 
-import { migration_dirtree_items, migration_todo, migration_todo_items, migration_todo_archives } from '@/migrations'
-import { schema_dirtree_items, schema_todo, schema_todo_items, schema_todo_archives } from '@/schemas'
+import { migration_dirtree_items, migration_todo, migration_todo_items } from '@/migrations'
+import { schema_dirtree_items, schema_todo, schema_todo_items } from '@/schemas'
 
 import type { RxDB } from '@/types'
 import type { RxCollection } from 'rxdb'
@@ -49,11 +49,6 @@ export default class Index {
 				autoMigrate: false,
 				schema: schema_todo_items,
 				migrationStrategies: migration_todo_items
-			},
-			todo_archives: {
-				autoMigrate: false,
-				schema: schema_todo_archives,
-				migrationStrategies: migration_todo_archives
 			}
 		})
 

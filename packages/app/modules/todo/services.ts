@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import { cloneDeep, uniq, omit } from 'lodash-es'
 import { match } from 'ts-pattern'
 
-import { update as updateTodo } from '@/actions/todo'
+import { update as updateTodo, not_archive } from '@/actions/todo'
 import { getArchiveTime, getDocItem } from '@/utils'
 import { confirm } from '@/utils/antd'
 
@@ -23,7 +23,11 @@ import type { MangoQuerySelector, MangoQueryOperators, MangoQuerySortPart } from
 import type { Todo, RxDB } from '@/types'
 
 const getMaxSort = async () => {
-	const [max_sort_item] = await $db.collections.todo_items.find().sort({ sort: 'desc' }).limit(1).exec()
+	const [max_sort_item] = await $db.collections.todo_items
+		.find({ selector: { $or: not_archive } })
+		.sort({ sort: 'desc' })
+		.limit(1)
+		.exec()
 
 	if (max_sort_item) return max_sort_item.sort
 
@@ -37,7 +41,7 @@ export const getQueryTodo = (file_id: string) => {
 export const getQueryItems = (args: ArgsQueryItems) => {
 	const { file_id, angle_id, items_sort_param, items_filter_tags } = args
 
-	const selector: MangoQuerySelector<Todo.TodoItem> = { file_id, angle_id: angle_id }
+	const selector: MangoQuerySelector<Todo.TodoItem> = { file_id, angle_id: angle_id, $or: not_archive }
 	const sort: MangoQuerySortPart<Todo.Todo> = { sort: 'asc', create_at: 'asc' }
 
 	if (items_filter_tags.length || items_sort_param) {
@@ -131,10 +135,11 @@ export const queryArchives = (args: ArgsQueryArchives, query_params: ArchiveQuer
 		selector['status'] = status
 	}
 
-	return $db.collections.todo_archives
+	return $db.collections.todo_items
 		.find({
 			selector: {
 				file_id,
+				archive: true,
 				...selector
 			}
 		})
@@ -145,7 +150,7 @@ export const queryArchives = (args: ArgsQueryArchives, query_params: ArchiveQuer
 }
 
 export const queryArchivesCounts = (file_id: string) => {
-	return $db.collections.todo_archives.count({ selector: { file_id } }).exec()
+	return $db.collections.todo_items.count({ selector: { file_id, archive: true } }).exec()
 }
 
 export const updateTodoData = async (args: ArgsUpdateTodoData) => {
@@ -291,24 +296,19 @@ export const removeTodoItem = async (id: string) => {
 }
 
 export const restoreArchiveItem = async (id: string) => {
-	const doc = await $db.collections.todo_archives.findOne({ selector: { id } }).exec()
-
-	const data = cloneDeep(getDocItem(doc))
-
-	await doc.remove()
+	const doc = await $db.collections.todo_items.findOne({ selector: { id } }).exec()
 
 	const sort = await getMaxSort()
 
-	await $db.collections.todo_items.insert({
-		...data,
-		status: 'unchecked',
-		create_at: new Date().valueOf(),
-		sort: sort + 1
+	doc.updateCRDT({
+		ifMatch: {
+			$set: {
+				archive: false,
+				status: 'unchecked',
+				sort: sort + 1
+			}
+		}
 	})
-}
-
-export const removeArchiveItem = async (id: string) => {
-	await $db.collections.todo_archives.findOne({ selector: { id } }).remove()
 }
 
 export const archiveByTime = async (file_id: string, v: ArgsArchiveByTime) => {
@@ -330,10 +330,11 @@ export const archiveByTime = async (file_id: string, v: ArgsArchiveByTime) => {
 
 	if (!res) return
 
-	await $db.collections.todo_archives
+	await $db.collections.todo_items
 		.find({
 			selector: {
 				file_id,
+				archive: true,
 				create_at: { $lte: now.subtract(3, 'second').valueOf() }
 			}
 		})

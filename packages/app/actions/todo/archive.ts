@@ -1,7 +1,12 @@
 import { difference, cloneDeep } from 'lodash-es'
 
-import { Todo } from '@/types'
-import { getDocItem } from '@/utils'
+import { getDocItemsData } from '@/utils'
+
+export const not_archive = [
+	{ archive: { $exists: false } },
+	{ archive: { $eq: false } },
+	{ archive: { $eq: undefined } }
+]
 
 export default async (file_id: string) => {
 	const archive_items = await $db.collections.todo_items
@@ -12,6 +17,7 @@ export default async (file_id: string) => {
 				status: {
 					$ne: 'unchecked'
 				},
+				$or: not_archive,
 				archive_time: {
 					$exists: true,
 					$ne: undefined,
@@ -20,12 +26,11 @@ export default async (file_id: string) => {
 				circle_enabled: false
 			}
 		})
-		.sort({ create_at: 'asc' })
-		.remove()
+		.exec()
 
-	const archive_items_data = archive_items.map((item) => getDocItem(item)) as Array<Todo.Todo>
+	const archive_items_data = getDocItemsData(archive_items)
 
-	await Promise.all(archive_items_data.map((item) => $db.collections.todo_archives.insert(item)))
+	await Promise.all(archive_items.map((item) => item.updateCRDT({ ifMatch: { $set: { archive: true } } })))
 
 	const info = await $db.todo.findOne({ selector: { id: file_id } }).exec()
 

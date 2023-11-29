@@ -27,7 +27,6 @@ import {
 	updateTodosSort,
 	removeTodoItem,
 	restoreArchiveItem,
-	removeArchiveItem,
 	archiveByTime,
 	getAngleTodoCounts,
 	removeAngle,
@@ -36,7 +35,7 @@ import {
 
 import type { ArgsUpdateTodoData, ArgsArchiveByTime } from './types/services'
 import type { ItemsSortParams, ArchiveQueryParams, ArgsUpdate, ArgsTab } from './types/model'
-import type { RxDB, Todo, TodoArchive } from '@/types'
+import type { RxDB, Todo } from '@/types'
 import type { Subscription } from 'rxjs'
 import type { Watch } from '@openages/stk'
 
@@ -50,7 +49,7 @@ export default class Index {
 	items = [] as Array<Todo.TodoItem>
 	items_watcher = null as Subscription
 
-	archives = [] as Array<TodoArchive.Item>
+	archives = [] as Array<Todo.Todo>
 	archive_counts = 0
 	archive_query_params = {} as ArchiveQueryParams
 
@@ -189,7 +188,7 @@ export default class Index {
 		const items = (await queryArchives(
 			{ file_id: this.id, page: this.loadmore.page },
 			this.archive_query_params
-		)) as RxDB.ItemsDoc<TodoArchive.Item>
+		)) as RxDB.ItemsDoc<Todo.TodoItem>
 
 		if (items.length === 0) {
 			this.loadmore.end = true
@@ -197,10 +196,12 @@ export default class Index {
 			if (!reset) return
 		}
 
+		const data = getDocItemsData(items) as Array<Todo.Todo>
+
 		if (this.loadmore.page === 0) {
-			this.archives = getDocItemsData(items)
+			this.archives = data
 		} else {
-			this.archives = this.archives.concat(getDocItemsData(items))
+			this.archives = this.archives.concat(data)
 		}
 	}
 
@@ -381,7 +382,7 @@ export default class Index {
 	}
 
 	async removeArchiveItem(id: string) {
-		await removeArchiveItem(id)
+		await removeTodoItem(id)
 
 		this.updateArchiveItems(id)
 	}

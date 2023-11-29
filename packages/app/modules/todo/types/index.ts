@@ -1,9 +1,9 @@
-import type { Todo, RxDB, TodoArchive, DirTree } from '@/types'
+import type { Todo, RxDB, DirTree } from '@/types'
 import type Model from '../model'
 import type { SelectProps, MenuProps } from 'antd'
 
 export type QueryItems = RxDB.ItemsQuery<Todo.TodoItem>
-export type QueryArchives = RxDB.ItemsQuery<TodoArchive.Item>
+export type QueryArchives = RxDB.ItemsQuery<Todo.TodoItem>
 
 export interface IProps {
 	id: string

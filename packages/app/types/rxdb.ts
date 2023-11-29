@@ -1,5 +1,5 @@
 import type { RxDatabase } from 'rxdb'
-import type { DBDirtreeItems, DBTodo, DBTodoItems, DBTodoArchives } from '@/schemas'
+import type { DBDirtreeItems, DBTodo, DBTodoItems } from '@/schemas'
 import type { RxDocument, RxQuery } from 'rxdb'
 
 export namespace RxDB {
@@ -7,7 +7,6 @@ export namespace RxDB {
 		dirtree_items: DBDirtreeItems
 		todo: DBTodo
 		todo_items: DBTodoItems
-		todo_archives: DBTodoArchives
 	}>
 
 	export type ItemsDoc<T> = Array<RxDocument<T>>

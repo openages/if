@@ -30,7 +30,7 @@
 				&:hover {
 					.bottom_wrap {
 						.actions_wrap {
-							display: flex;
+							opacity: 1;
 						}
 					}
 				}
@@ -77,14 +77,14 @@
 
 				.bottom_wrap {
 					padding-top: 3px;
+					font-size: 12px;
 
 					.actions_wrap {
-						display: none;
+						opacity: 0;
 
 						.btn_action {
 							padding: 4px 6px;
 							border-radius: var(--radius_large);
-							font-size: 12px;
 							line-height: 1;
 							background-color: var(--color_bg_1);
 

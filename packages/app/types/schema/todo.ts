@@ -36,6 +36,7 @@ export namespace Todo {
 		status: 'checked' | 'unchecked' | 'closed'
 		open?: boolean
 		star?: number
+		archive?: boolean
 		/**
 		 * @multipleOf 1
 		 * @minimum 1
