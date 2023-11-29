@@ -62,10 +62,10 @@ export interface IPropsInputStar {
 }
 
 export interface IPropsInputCircle {
-	circle_enabled: Todo.Todo['circle_enabled']
-	circle_value: Todo.Todo['circle_value']
+	cycle_enabled: Todo.Todo['cycle_enabled']
+	cycle: Todo.Todo['cycle']
 	useByDetail?: boolean
-	onChangeCircle: (args: Partial<Pick<IPropsInputCircle, 'circle_enabled' | 'circle_value'>>) => void
+	onChangeCircle: (args: Partial<Pick<IPropsInputCircle, 'cycle_enabled' | 'cycle'>>) => void
 }
 
 export interface IPropsTodos {

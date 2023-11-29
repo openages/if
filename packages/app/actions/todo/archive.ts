@@ -8,6 +8,12 @@ export const not_archive = [
 	{ archive: { $eq: undefined } }
 ]
 
+export const not_cycle = [
+	{ cycle_enabled: { $exists: false } },
+	{ cycle_enabled: { $eq: false } },
+	{ cycle_enabled: { $eq: undefined } }
+]
+
 export default async (file_id: string) => {
 	const archive_items = await $db.collections.todo_items
 		.find({
@@ -17,13 +23,12 @@ export default async (file_id: string) => {
 				status: {
 					$ne: 'unchecked'
 				},
-				$or: not_archive,
 				archive_time: {
 					$exists: true,
 					$ne: undefined,
 					$lte: new Date().valueOf()
 				},
-				circle_enabled: false
+				$or: [...not_archive, ...not_cycle]
 			}
 		})
 		.exec()

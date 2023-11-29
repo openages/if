@@ -70,13 +70,22 @@ export default {
 			todo: '待办',
 			group: '组'
 		},
-		Circle: {
+		Cycle: {
 			title: '重复',
-			day: '天',
-			hour: '小时',
-			minute: '分钟',
+			cycle: '周期',
 			disabled: '未开启',
-			unset: '未设置'
+			unset: '未设置',
+			every: '每',
+			exclude: '排除',
+			options: {
+				minite: '分钟',
+				hour: '小时',
+				day: '天',
+				week: '周',
+				month: '月',
+				season: '季度',
+				year: '年'
+			}
 		}
 	},
 	Archive: {

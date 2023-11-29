@@ -6,7 +6,7 @@ import { Tag, BellRinging, HourglassMedium, CaretUp, CaretDown, Plus } from '@ph
 
 import { useInput } from '../../hooks'
 import Children from '../Children'
-import Circle from '../Input/Circle'
+import Cycle from '../Cycle'
 import Star from '../Input/Star'
 import TagSelect from '../TagSelect'
 import { useHandlers, useContextMenu } from '../TodoItem/hooks'
@@ -28,7 +28,7 @@ const Index = (props: IPropsDetail) => {
 		setCurrentDetailIndex
 	} = props
 	const { t } = useTranslation()
-	const { status, children, tag_ids, star, circle_enabled, circle_value } = current_detail_item
+	const { status, children, tag_ids, star, cycle_enabled, cycle } = current_detail_item
 	const { input, onInput } = useInput({
 		item: current_detail_item,
 		update: useMemoizedFn((textContent) =>
@@ -122,14 +122,14 @@ const Index = (props: IPropsDetail) => {
 						<div className='option_item w_100 border_box flex align_center'>
 							<div className='name_wrap flex align_center'>
 								<HourglassMedium size={16}></HourglassMedium>
-								<span className='name'>{t('translation:todo.Input.Circle.title')}</span>
+								<span className='name'>{t('translation:todo.Input.Cycle.title')}</span>
 							</div>
-							<Circle
-								circle_enabled={circle_enabled}
-								circle_value={circle_value}
+							<Cycle
+								cycle_enabled={cycle_enabled}
+								cycle={cycle}
 								useByDetail
 								onChangeCircle={updateCircle}
-							></Circle>
+							></Cycle>
 						</div>
 					</div>
 					<div

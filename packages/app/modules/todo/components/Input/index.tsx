@@ -1,4 +1,4 @@
-import { useMemoizedFn, useSize } from 'ahooks'
+import { useMemoizedFn } from 'ahooks'
 import { Input, Select } from 'antd'
 import { cloneDeep } from 'lodash-es'
 import { useEffect, useState } from 'react'
@@ -9,8 +9,8 @@ import { todo } from '@/appdata'
 import { id } from '@/utils'
 
 import { getTodo, getGroup } from '../../initials'
+import Cycle from '../Cycle'
 import TagSelect from '../TagSelect'
-import Circle from './Circle'
 import styles from './index.css'
 import Star from './Star'
 
@@ -39,14 +39,14 @@ const Index = (props: IPropsInput) => {
 			...v,
 			id: id(),
 			text: '',
-			circle_enabled: false,
-			circle_value: undefined
+			cycle_enabled: false,
+			cycle: undefined
 		}))
 	}, [loading])
 
 	const props_circle: IPropsInputCircle = {
-		circle_enabled: (input as Todo.Todo).circle_enabled,
-		circle_value: (input as Todo.Todo).circle_value,
+		cycle_enabled: (input as Todo.Todo).cycle_enabled,
+		cycle: (input as Todo.Todo).cycle,
 		onChangeCircle: useMemoizedFn((v) => setInput((input) => ({ ...input, ...v })))
 	}
 
@@ -103,7 +103,7 @@ const Index = (props: IPropsInput) => {
 									onChangeStar={(v) => setInput((input) => ({ ...input, star: v }))}
 								></Star>
 							</div>
-							<Circle {...props_circle}></Circle>
+							<Cycle {...props_circle}></Cycle>
 						</div>
 					</When>
 				</div>

@@ -129,14 +129,29 @@ export default {
                   "options_width": {
                         "type": "number"
                   },
-                  "circle_enabled": {
+                  "cycle_enabled": {
                         "type": "boolean"
                   },
-                  "circle_value": {
-                        "type": "array",
-                        "items": {
-                              "type": "number"
-                        }
+                  "cycle": {
+                        "type": "object",
+                        "properties": {
+                              "scale": {
+                                    "type": "string"
+                              },
+                              "interval": {
+                                    "type": "number"
+                              },
+                              "exclude": {
+                                    "type": "array",
+                                    "items": {
+                                          "type": "number"
+                                    }
+                              }
+                        },
+                        "required": [
+                              "scale",
+                              "interval"
+                        ]
                   },
                   "children": {
                         "type": "array",
@@ -189,7 +204,6 @@ export default {
             },
             "required": [
                   "angle_id",
-                  "circle_enabled",
                   "create_at",
                   "file_id",
                   "id",
@@ -281,14 +295,29 @@ export default {
                   "options_width": {
                         "type": "number"
                   },
-                  "circle_enabled": {
+                  "cycle_enabled": {
                         "type": "boolean"
                   },
-                  "circle_value": {
-                        "type": "array",
-                        "items": {
-                              "type": "number"
-                        }
+                  "cycle": {
+                        "type": "object",
+                        "properties": {
+                              "scale": {
+                                    "type": "string"
+                              },
+                              "interval": {
+                                    "type": "number"
+                              },
+                              "exclude": {
+                                    "type": "array",
+                                    "items": {
+                                          "type": "number"
+                                    }
+                              }
+                        },
+                        "required": [
+                              "scale",
+                              "interval"
+                        ]
                   },
                   "children": {
                         "type": "array",

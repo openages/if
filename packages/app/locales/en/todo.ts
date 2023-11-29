@@ -72,13 +72,22 @@ export default {
 			todo: 'Todo',
 			group: 'Group'
 		},
-		Circle: {
+		Cycle: {
 			title: 'Repeat',
-			day: 'days',
-			hour: 'hours',
-			minute: 'minutes',
+			cycle: 'Cycle',
 			disabled: 'Disabled',
-			unset: 'Unset'
+			unset: 'Unset',
+			every: 'Every',
+			exclude: 'Exclude',
+			options: {
+				minite: 'Minite',
+				hour: 'Hour',
+				day: 'Day',
+				week: 'Week',
+				month: 'Month',
+				season: 'Quarter',
+				year: 'Year'
+			}
 		}
 	},
 	Archive: {

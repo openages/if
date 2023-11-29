@@ -295,19 +295,23 @@ export const removeTodoItem = async (id: string) => {
 	await $db.collections.todo_items.findOne({ selector: { id } }).remove()
 }
 
-export const restoreArchiveItem = async (id: string) => {
+export const restoreArchiveItem = async (id: string, angles: Todo.Data['angles'], current_angle_id: string) => {
 	const doc = await $db.collections.todo_items.findOne({ selector: { id } }).exec()
-
+	const angle_exsit = angles.find((item) => item.id === doc.angle_id)
 	const sort = await getMaxSort()
+
+	const target = {
+		archive: false,
+		archive_time: undefined,
+		status: 'unchecked',
+		sort: sort + 1
+	} as Todo.Todo
+
+	if (!angle_exsit) target['angle_id'] = current_angle_id
 
 	doc.updateCRDT({
 		ifMatch: {
-			$set: {
-				archive: false,
-				archive_time: undefined,
-				status: 'unchecked',
-				sort: sort + 1
-			}
+			$set: target
 		}
 	})
 }
@@ -347,7 +351,7 @@ export const getAngleTodoCounts = async (file_id: string, angle_id: string) => {
 }
 
 export const removeAngle = async (file_id: string, angle_id: string) => {
-	return $db.collections.todo_items.find({ selector: { file_id, angle_id } }).remove()
+	return $db.collections.todo_items.find({ selector: { file_id, angle_id, $or: not_archive } }).remove()
 }
 
 export const getTagTodoCounts = async (file_id: string, tag_id: string) => {

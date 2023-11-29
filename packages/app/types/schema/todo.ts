@@ -45,8 +45,12 @@ export namespace Todo {
 		archive_time?: number
 		tag_ids?: Array<string>
 		options_width?: number
-		circle_enabled: boolean
-		circle_value?: Array<number>
+		cycle_enabled?: boolean
+		cycle?: {
+			scale: 'minite' | 'hour' | 'day' | 'week' | 'month' | 'season' | 'year'
+			interval: number
+			exclude?: Array<number>
+		}
 		children?: Array<{
 			/** @maxLength 30 */
 			id: string

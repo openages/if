@@ -18,7 +18,7 @@ interface HookArgs {
 
 export default (args: HookArgs) => {
 	const { item, index, visible_detail_modal, makeLinkLine, check, insert, update, tab } = args
-	const { id, status, open, star, circle_enabled, circle_value, options_width, children } = item
+	const { id, status, open, star, cycle_enabled, cycle, options_width, children } = item
 
 	const setOpen = useMemoizedFn((v: boolean) => {
 		update({ type: 'parent', index, value: { open: v } as Todo.Todo })

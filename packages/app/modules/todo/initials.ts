@@ -7,8 +7,7 @@ export const getTodo = (): Omit<Todo.Todo, 'file_id' | 'angle_id' | 'sort'> => (
 	type: 'todo',
 	status: 'unchecked',
 	text: '',
-	create_at: new Date().valueOf(),
-	circle_enabled: false
+	create_at: new Date().valueOf()
 })
 
 export const getGroup = (): Omit<Todo.Group, 'file_id' | 'angle_id' | 'sort'> => ({

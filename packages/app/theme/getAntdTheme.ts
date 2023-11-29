@@ -31,10 +31,11 @@ export default (theme: Theme, color_main: string) => {
 		},
 		components: {
 			Switch: {
-				controlHeight: 32,
+				controlHeight: 34,
 				controlHeightSM: 24,
 				controlHeightXS: 20,
-				colorPrimaryHover: color_main
+				colorPrimaryHover: color_main,
+				colorTextQuaternary: vars.color_bg_2
 			},
 			DatePicker: {
 				controlHeight: 30,
@@ -47,6 +48,19 @@ export default (theme: Theme, color_main: string) => {
 			},
 			Select: {
 				optionActiveBg: vars.color_bg_2
+			},
+			Segmented: {
+				borderRadiusSM: 20,
+				borderRadiusXS: 20,
+				controlHeightSM: 20,
+				colorBgLayout: vars.color_bg_2
+			},
+			Slider: {
+				handleSize: 8,
+				handleSizeHover: 10
+			},
+			Radio: {
+				radioSize: 12
 			}
 		}
 	} as ThemeConfig

@@ -119,8 +119,8 @@ export default class Index {
 	}
 
 	get current_detail_item() {
-		if (this.current_detail_index === -1) return {}
-		if (!this.items.at(this.current_detail_index)) return {}
+		if (this.current_detail_index === -1) return {} as Todo.Todo
+		if (!this.items.at(this.current_detail_index)) return {} as Todo.Todo
 
 		return this.items[this.current_detail_index] as Todo.Todo
 	}
@@ -380,7 +380,7 @@ export default class Index {
 	}
 
 	async restoreArchiveItem(id: string) {
-		await restoreArchiveItem(id)
+		await restoreArchiveItem(id, this.todo.angles, this.current_angle_id)
 
 		this.updateArchiveItems(id)
 	}

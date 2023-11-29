@@ -33,7 +33,7 @@ const Index = (props: IPropsTodoItem) => {
 		remove,
 		showDetailModal
 	} = props
-	const { id, status, open, tag_ids, star, circle_enabled, circle_value, options_width, children } = item
+	const { id, status, open, tag_ids, star, cycle_enabled, cycle, options_width, children } = item
 	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } = useSortable(
 		{ id, data: { index } }
 	)
@@ -155,7 +155,7 @@ const Index = (props: IPropsTodoItem) => {
 							<Star className='icon' size={10} weight='fill'></Star>
 						</div>
 					)}
-					{circle_enabled && (circle_value?.[0] || circle_value?.[1] || circle_value?.[2]) && (
+					{cycle_enabled && (cycle?.[0] || cycle?.[1] || cycle?.[2]) && (
 						<div className='other_wrap flex justify_center align_center'>
 							<HourglassMedium className='icon' size={10} weight='fill'></HourglassMedium>
 						</div>
