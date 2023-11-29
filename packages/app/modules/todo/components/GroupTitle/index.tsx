@@ -15,7 +15,7 @@ import type { MenuProps } from 'antd'
 
 const Index = (props: IPropsGroupTitle) => {
 	const { item, index, update, remove } = props
-	const { id, text } = item
+	const { id } = item
 	const { t, i18n } = useTranslation()
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
 		id,
