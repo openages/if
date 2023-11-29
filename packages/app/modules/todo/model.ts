@@ -68,6 +68,9 @@ export default class Index {
 		['current_angle_id|items_sort_param|items_filter_tags']: () => {
 			if (!this.id) return
 
+			this.visible_detail_modal = false
+			this.current_detail_index === -1
+
 			this.queryItems()
 		},
 		['todo.angles']: (v) => {
@@ -116,7 +119,8 @@ export default class Index {
 	}
 
 	get current_detail_item() {
-		if (this.current_detail_index === -1) return {} as Todo.Todo
+		if (this.current_detail_index === -1) return {}
+		if (!this.items.at(this.current_detail_index)) return {}
 
 		return this.items[this.current_detail_index] as Todo.Todo
 	}

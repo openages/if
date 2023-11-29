@@ -54,11 +54,28 @@
 
 					.text {
 						text-indent: 18px;
+
+						&.has_children {
+							&::after {
+								content: attr(data-children);
+								box-sizing: border-box;
+								height: 14px;
+								padding: 0 3px;
+								margin-left: 6px;
+								line-height: 12px;
+								font-size: 10px;
+								background-color: var(--color_bg_1);
+								border-radius: 8px;
+								border: var(--border);
+								vertical-align: 1px;
+							}
+						}
 					}
 				}
 
 				.children_wrap {
 					padding-left: 18px;
+					overflow: hidden;
 
 					&::before {
 						content: '';

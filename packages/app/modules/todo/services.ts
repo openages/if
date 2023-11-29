@@ -304,6 +304,7 @@ export const restoreArchiveItem = async (id: string) => {
 		ifMatch: {
 			$set: {
 				archive: false,
+				archive_time: undefined,
 				status: 'unchecked',
 				sort: sort + 1
 			}
