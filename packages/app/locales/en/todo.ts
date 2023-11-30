@@ -78,7 +78,7 @@ export default {
 			disabled: 'Disabled',
 			unset: 'Unset',
 			every: 'Every',
-			exclude: 'Exclude',
+			exclude: 'exclude',
 			options: {
 				minite: 'Minite',
 				hour: 'Hour',

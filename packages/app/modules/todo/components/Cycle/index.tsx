@@ -11,10 +11,10 @@ import type { IPropsInputCircle } from '../../types'
 const { Group } = Radio
 
 const Index = (props: IPropsInputCircle) => {
-	const { cycle_enabled, cycle = { scale: 'day', interval: 1 }, useByDetail, onChangeCircle } = props
+	const { cycle_enabled, cycle, useByDetail, onChangeCircle } = props
 	const { t, i18n } = useTranslation()
 	const every_text = t(`translation:todo.Input.Cycle.every`)
-	const scale_text = t(`translation:todo.Input.Cycle.options.${cycle.scale}`)
+	const scale_text = cycle?.scale ? t(`translation:todo.Input.Cycle.options.${cycle.scale}`) : ''
 
 	const options_cycle = useMemo(
 		() => [
@@ -45,14 +45,14 @@ const Index = (props: IPropsInputCircle) => {
 		})
 	})
 
-	const Exclude = (cycle.scale === 'week' || cycle.scale === 'season') && (
+	const Exclude = (cycle?.scale === 'week' || cycle?.scale === 'season') && (
 		<div className='weekdays flex justify_between mt_8'>
-			{(cycle.scale === 'week' ? [1, 2, 3, 4, 5, 6, 7] : [1, 2, 3, 4]).map((item) => (
+			{(cycle?.scale === 'week' ? [1, 2, 3, 4, 5, 6, 7] : [1, 2, 3, 4]).map((item) => (
 				<span
 					className={$cx(
 						'weekday flex justify_center align_center clickable',
 						cycle.exclude && cycle.exclude?.includes(item) && 'exclude',
-						cycle.scale === 'season' && 'season'
+						cycle?.scale === 'season' && 'season'
 					)}
 					key={item}
 					onClick={() => onWeekday(item)}
@@ -81,7 +81,7 @@ const Index = (props: IPropsInputCircle) => {
 					className='checkbox_group'
 					size='small'
 					options={options_cycle}
-					value={cycle.scale}
+					value={cycle?.scale}
 					onChange={({ target: { value } }) => {
 						onChangeCircle({
 							cycle: { ...cycle, scale: value, interval: 1, exclude: [] }
@@ -95,9 +95,11 @@ const Index = (props: IPropsInputCircle) => {
 						placeholder={t('translation:todo.Input.Cycle.cycle')}
 						min={1}
 						max={99}
-						formatter={(value) => `${every_text}${value}${scale_text}`}
-						parser={(value) => Number(value.replace(every_text, '').replace(scale_text, ''))}
-						value={cycle.interval}
+						formatter={(value) => `${every_text} ${value} ${scale_text}`}
+						parser={(value) =>
+							Number(value.replace(every_text, '').replace(scale_text, '').trim())
+						}
+						value={cycle?.interval || 1}
 						onChange={(v) => onChangeCircle({ cycle: { ...cycle, interval: v } })}
 					></InputNumber>
 					{Exclude}
@@ -130,9 +132,9 @@ const Index = (props: IPropsInputCircle) => {
 
 		return (
 			<span className='cursor_point'>
-				{`${t('translation:todo.Input.Cycle.every')} ${cycle.interval} ${scale_text}`}
-				{cycle?.exclude?.length &&
-					`, ${t('translation:todo.Input.Cycle.exclude')}${scale_text}${cycle.exclude.join(',')}`}
+				{`${t('translation:todo.Input.Cycle.every')} ${cycle?.interval} ${scale_text}`}
+				{cycle?.exclude?.length > 0 &&
+					`, ${t('translation:todo.Input.Cycle.exclude')} ${scale_text} ${cycle.exclude.join(',')}`}
 			</span>
 		)
 	}, [i18n.language, cycle_enabled, cycle, useByDetail])
