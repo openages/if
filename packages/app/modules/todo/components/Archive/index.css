@@ -52,8 +52,23 @@
 						}
 					}
 
+					.recycle_wrap {
+						top: 6px;
+						left: 18px;
+						width: 14px;
+						height: 14px;
+						margin-right: 2px;
+						background-color: var(--color_bg_2);
+						border-radius: 50%;
+						z-index: 1;
+					}
+
 					.text {
 						text-indent: 18px;
+
+						&.recycle {
+							text-indent: 36px;
+						}
 
 						&.has_children {
 							&::after {

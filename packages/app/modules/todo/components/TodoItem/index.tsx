@@ -1,5 +1,5 @@
 import { useMemoizedFn, useSize, useUpdateEffect } from 'ahooks'
-import { Dropdown, ConfigProvider } from 'antd'
+import { Dropdown, ConfigProvider, Progress } from 'antd'
 import { Fragment, useRef } from 'react'
 import { Switch, Case } from 'react-if'
 
@@ -9,6 +9,7 @@ import { Square, CheckSquare, DotsSixVertical, Star, HourglassMedium } from '@ph
 
 import { useInput } from '../../hooks'
 import Children from '../Children'
+import CycleStatus from '../CycleStatus'
 import TagSelect from '../TagSelect'
 import { useContextMenu, useHandlers, useLink, useOpen, useOnContextMenu } from './hooks'
 import styles from './index.css'
@@ -33,7 +34,7 @@ const Index = (props: IPropsTodoItem) => {
 		remove,
 		showDetailModal
 	} = props
-	const { id, status, open, tag_ids, star, cycle_enabled, cycle, options_width, children } = item
+	const { id, status, open, tag_ids, star, cycle_enabled, cycle, recycle_time, options_width, children } = item
 	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } = useSortable(
 		{ id, data: { index } }
 	)
@@ -155,9 +156,16 @@ const Index = (props: IPropsTodoItem) => {
 							<Star className='icon' size={10} weight='fill'></Star>
 						</div>
 					)}
-					{cycle_enabled && (cycle?.[0] || cycle?.[1] || cycle?.[2]) && (
-						<div className='other_wrap flex justify_center align_center'>
-							<HourglassMedium className='icon' size={10} weight='fill'></HourglassMedium>
+					{cycle_enabled && cycle && (
+						<div className='other_wrap flex justify_center align_center relative'>
+							{recycle_time && (
+								<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
+							)}
+							<HourglassMedium
+								className='icon'
+								size={recycle_time ? 8 : 10}
+								weight={recycle_time ? 'bold' : 'fill'}
+							></HourglassMedium>
 						</div>
 					)}
 				</div>

@@ -8,6 +8,7 @@ import { HourglassMedium } from '@phosphor-icons/react'
 import styles from './index.css'
 
 import type { IPropsInputCircle } from '../../types'
+
 const { Group } = Radio
 
 const Index = (props: IPropsInputCircle) => {

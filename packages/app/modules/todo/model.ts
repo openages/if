@@ -203,6 +203,7 @@ export default class Index {
 		)) as RxDB.ItemsDoc<Todo.TodoItem>
 
 		if (items.length === 0) {
+			this.archives = []
 			this.loadmore.end = true
 
 			if (!reset) return
@@ -240,19 +241,23 @@ export default class Index {
 			...args
 		})
 
-		const todo_item = await queryItem(args.id)
-
 		if (this.todo.auto_archiving === '0m') {
 			await archive(this.id)
 		}
 
+		const todo_item = await queryItem(args.id)
+
 		if (todo_item.cycle_enabled && todo_item.cycle) {
-			const now = dayjs()
-			const scale = todo_item.cycle.scale as ManipulateType
+			if (args.status === 'checked') {
+				const now = dayjs()
+				const scale = todo_item.cycle.scale as ManipulateType
 
-			const recycle_time = now.startOf(scale).add(todo_item.cycle.interval, scale).valueOf()
+				const recycle_time = now.startOf(scale).add(todo_item.cycle.interval, scale).valueOf()
 
-			await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time } } })
+				await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time } } })
+			} else {
+				await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time: undefined } } })
+			}
 		}
 	}
 
@@ -399,6 +404,12 @@ export default class Index {
 	}
 
 	async restoreArchiveItem(id: string) {
+		const todo_item = await queryItem(id)
+
+		if (todo_item.recycle_time) {
+			await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time: undefined } } })
+		}
+
 		await restoreArchiveItem(id, this.todo.angles, this.current_angle_id)
 
 		this.updateArchiveItems(id)
@@ -417,6 +428,12 @@ export default class Index {
 		this.loadmore.end = false
 
 		await this.queryArchives(true)
+	}
+
+	async cycleByTime() {
+		if (!this.id) return
+
+		await cycle(this.id)
 	}
 
 	updateArchiveItems(id: string) {
@@ -455,8 +472,10 @@ export default class Index {
 	}
 
 	on() {
-		this.timer_cycle = setInterval(() => cycle(this.id), 30 * 1000)
+		this.timer_cycle = setInterval(this.cycleByTime, 30 * 1000)
 		this.timer_archive = setInterval(() => archive(this.id), 60 * 1000)
+
+		window.$app.Event.on('todo/cycleByTime', this.cycleByTime)
 	}
 
 	off() {
@@ -468,5 +487,7 @@ export default class Index {
 
 		clearInterval(this.timer_cycle)
 		clearInterval(this.timer_archive)
+
+		window.$app.Event.off('todo/cycleByTime', this.cycleByTime)
 	}
 }

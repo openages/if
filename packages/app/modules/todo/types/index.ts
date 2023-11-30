@@ -68,6 +68,12 @@ export interface IPropsInputCircle {
 	onChangeCircle: (args: Partial<Pick<IPropsInputCircle, 'cycle_enabled' | 'cycle'>>) => void
 }
 
+export interface IPropsCircleStatus {
+	cycle: Todo.Todo['cycle']
+	recycle_time: Todo.Todo['recycle_time']
+	useByArchive?: boolean
+}
+
 export interface IPropsTodos {
 	items: Model['items']
 	tags: Model['todo']['tags']

@@ -5,14 +5,16 @@ import { useTranslation } from 'react-i18next'
 import { Switch, Case } from 'react-if'
 
 import { getRelativeTime } from '@/utils'
-import { Square, CheckSquare, ArrowCounterClockwise, Trash } from '@phosphor-icons/react'
+import { Square, CheckSquare, ArrowCounterClockwise, Trash, HourglassMedium } from '@phosphor-icons/react'
+
+import CycleStatus from '../CycleStatus'
 
 import type { IPropsArchiveItem } from '../../types'
 import type { Todo } from '@/types'
 
 const Index = (props: IPropsArchiveItem) => {
 	const { item, restoreArchiveItem, removeArchiveItem } = props
-	const { id, text, status, create_at } = item
+	const { id, text, status, cycle_enabled, cycle, recycle_time, create_at } = item
 	const { t } = useTranslation()
 	const [open, setOpen] = useState(false)
 
@@ -43,6 +45,7 @@ const Index = (props: IPropsArchiveItem) => {
 
 	const getTextItem = useMemoizedFn((id: string, status: Todo.Todo['status'], text, is_parent: boolean) => {
 		const icon_size = is_parent ? 16 : 14
+		const recycle = is_parent && cycle_enabled && cycle && recycle_time
 
 		return (
 			<div className={$cx('text_wrap w_100 relative', is_parent ? 'parent' : 'child')} key={id}>
@@ -56,8 +59,24 @@ const Index = (props: IPropsArchiveItem) => {
 						</Case>
 					</Switch>
 				</div>
+				{recycle && (
+					<div className='recycle_wrap flex justify_center align_center absolute'>
+						{recycle_time && (
+							<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
+						)}
+						<HourglassMedium
+							className='icon'
+							size={recycle_time ? 8 : 10}
+							weight={recycle_time ? 'bold' : 'fill'}
+						></HourglassMedium>
+					</div>
+				)}
 				<span
-					className={$cx('text cursor_point block', is_parent && data_children && 'has_children')}
+					className={$cx(
+						'text cursor_point block',
+						is_parent && data_children && 'has_children',
+						recycle && 'recycle'
+					)}
 					data-children={is_parent ? data_children : ''}
 					onClick={is_parent ? () => setOpen(!open) : undefined}
 				>
