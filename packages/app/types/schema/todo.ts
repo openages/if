@@ -47,10 +47,11 @@ export namespace Todo {
 		options_width?: number
 		cycle_enabled?: boolean
 		cycle?: {
-			scale: 'minite' | 'hour' | 'day' | 'week' | 'month' | 'season' | 'year'
+			scale: 'minute' | 'hour' | 'day' | 'week' | 'month' | 'quarter' | 'year'
 			interval: number
 			exclude?: Array<number>
 		}
+		recycle_time?: number
 		children?: Array<{
 			/** @maxLength 30 */
 			id: string

@@ -60,6 +60,7 @@ export default (args: HookArgs) => {
 							</span>
 						</div>
 					),
+					disabled: !tags?.length,
 					children: tags?.map((item) => ({
 						key: item.id,
 						label: (

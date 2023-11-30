@@ -15,7 +15,6 @@ import objectSupport from 'dayjs/plugin/objectSupport'
 import quarterOfYear from 'dayjs/plugin/quarterOfYear'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import toObject from 'dayjs/plugin/toObject'
-import weekday from 'dayjs/plugin/weekday'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 
 dayjs.extend(duration)
@@ -31,6 +30,6 @@ dayjs.extend(toObject)
 dayjs.extend(isoWeek)
 dayjs.extend(isSameOrAfter)
 dayjs.extend(isSameOrBefore)
-dayjs.extend(weekday)
+dayjs.extend(isoWeek)
 dayjs.extend(weekOfYear)
 dayjs.extend(relativeTime)

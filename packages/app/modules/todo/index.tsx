@@ -115,6 +115,7 @@ const Index = ({ id }: IProps) => {
 		visible_detail_modal: x.visible_detail_modal,
 		current_detail_index: toJS(x.current_detail_index),
 		current_detail_item: toJS(x.current_detail_item),
+		relations: toJS(x.todo?.relations || []),
 		tags: toJS(x.todo.tags),
 		next: x.current_detail_index < x.items.length - 1,
 		update: useMemoizedFn(x.update),

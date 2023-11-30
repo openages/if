@@ -1,5 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { Drawer } from 'antd'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Tag, BellRinging, HourglassMedium, CaretUp, CaretDown, Plus } from '@phosphor-icons/react'
@@ -13,12 +14,12 @@ import { useHandlers, useContextMenu } from '../TodoItem/hooks'
 import styles from './index.css'
 
 import type { IPropsDetail, IPropsChildren } from '../../types'
-
 const Index = (props: IPropsDetail) => {
 	const {
 		visible_detail_modal,
 		current_detail_index,
 		current_detail_item,
+		relations,
 		tags,
 		next,
 		update,
@@ -42,6 +43,12 @@ const Index = (props: IPropsDetail) => {
 		update
 	})
 	const { ChildrenContextMenu } = useContextMenu({})
+
+	const exist_relations = useMemo(() => {
+		if (!current_detail_item.id || !relations.length) return false
+
+		return relations.find((item) => item.items.includes(current_detail_item.id))
+	}, [relations, current_detail_item])
 
 	const props_children: IPropsChildren = {
 		items: children,
@@ -119,7 +126,12 @@ const Index = (props: IPropsDetail) => {
 							</div>
 							<Star value={star} onChangeStar={updateStar}></Star>
 						</div>
-						<div className='option_item w_100 border_box flex align_center'>
+						<div
+							className={$cx(
+								'option_item w_100 border_box flex align_center',
+								exist_relations && 'disabled'
+							)}
+						>
 							<div className='name_wrap flex align_center'>
 								<HourglassMedium size={16}></HourglassMedium>
 								<span className='name'>{t('translation:todo.Input.Cycle.title')}</span>

@@ -78,12 +78,12 @@ export default {
 			every: '每',
 			exclude: '排除',
 			options: {
-				minite: '分钟',
+				minute: '分钟',
 				hour: '小时',
 				day: '天',
 				week: '周',
 				month: '月',
-				season: '季度',
+				quarter: '季度',
 				year: '年'
 			}
 		}

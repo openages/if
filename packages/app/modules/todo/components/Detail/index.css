@@ -51,6 +51,10 @@
 				.option_item {
 					height: 30px;
 
+					&.disabled {
+						opacity: 0.3;
+					}
+
 					.name_wrap {
 						width: 90px;
 

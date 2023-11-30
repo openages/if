@@ -1,8 +1,9 @@
+import dayjs from 'dayjs'
 import { pick } from 'lodash-es'
 import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
-import { archive } from '@/actions/todo'
+import { archive, cycle } from '@/actions/todo'
 import { GlobalModel } from '@/context/app'
 import { Utils, File, Loadmore } from '@/models'
 import { getDocItemsData, getDocItem } from '@/utils'
@@ -17,6 +18,7 @@ import {
 	getQueryItems,
 	create,
 	queryTodo,
+	queryItem,
 	queryItems,
 	queryArchives,
 	queryArchivesCounts,
@@ -38,11 +40,13 @@ import type { ItemsSortParams, ArchiveQueryParams, ArgsUpdate, ArgsTab } from '.
 import type { RxDB, Todo } from '@/types'
 import type { Subscription } from 'rxjs'
 import type { Watch } from '@openages/stk'
+import type { ManipulateType } from 'dayjs'
 
 @injectable()
 export default class Index {
 	id = ''
-	timer: NodeJS.Timeout = null
+	timer_cycle: NodeJS.Timeout = null
+	timer_archive: NodeJS.Timeout = null
 
 	todo = {} as Todo.Data
 	todo_watcher = null as Subscription
@@ -131,7 +135,11 @@ export default class Index {
 		public file: File,
 		public loadmore: Loadmore
 	) {
-		makeAutoObservable(this, { watch: false }, { autoBind: true, deep: true })
+		makeAutoObservable(
+			this,
+			{ watch: false, timer_cycle: false, timer_archive: false },
+			{ autoBind: true, deep: true }
+		)
 	}
 
 	init(args: { id: string }) {
@@ -232,8 +240,19 @@ export default class Index {
 			...args
 		})
 
+		const todo_item = await queryItem(args.id)
+
 		if (this.todo.auto_archiving === '0m') {
 			await archive(this.id)
+		}
+
+		if (todo_item.cycle_enabled && todo_item.cycle) {
+			const now = dayjs()
+			const scale = todo_item.cycle.scale as ManipulateType
+
+			const recycle_time = now.startOf(scale).add(todo_item.cycle.interval, scale).valueOf()
+
+			await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time } } })
 		}
 	}
 
@@ -436,7 +455,8 @@ export default class Index {
 	}
 
 	on() {
-		this.timer = setInterval(() => archive(this.id), 9000)
+		this.timer_cycle = setInterval(() => cycle(this.id), 30 * 1000)
+		this.timer_archive = setInterval(() => archive(this.id), 60 * 1000)
 	}
 
 	off() {
@@ -446,6 +466,7 @@ export default class Index {
 		this.todo_watcher?.unsubscribe?.()
 		this.items_watcher?.unsubscribe?.()
 
-		clearInterval(this.timer)
+		clearInterval(this.timer_cycle)
+		clearInterval(this.timer_archive)
 	}
 }

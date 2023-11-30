@@ -160,6 +160,7 @@ export interface IPropsDetail {
 	visible_detail_modal: Model['visible_detail_modal']
 	current_detail_index: Model['current_detail_index']
 	current_detail_item: Model['current_detail_item']
+	relations: Todo.Data['relations']
 	tags: Model['todo']['tags']
 	next: boolean
 	update: Model['update']

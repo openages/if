@@ -136,7 +136,16 @@ export default {
                         "type": "object",
                         "properties": {
                               "scale": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "enum": [
+                                          "minute",
+                                          "hour",
+                                          "day",
+                                          "week",
+                                          "month",
+                                          "quarter",
+                                          "year"
+                                    ]
                               },
                               "interval": {
                                     "type": "number"
@@ -152,6 +161,9 @@ export default {
                               "scale",
                               "interval"
                         ]
+                  },
+                  "recycle_time": {
+                        "type": "number"
                   },
                   "children": {
                         "type": "array",
@@ -302,7 +314,16 @@ export default {
                         "type": "object",
                         "properties": {
                               "scale": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "enum": [
+                                          "minute",
+                                          "hour",
+                                          "day",
+                                          "week",
+                                          "month",
+                                          "quarter",
+                                          "year"
+                                    ]
                               },
                               "interval": {
                                     "type": "number"
@@ -318,6 +339,9 @@ export default {
                               "scale",
                               "interval"
                         ]
+                  },
+                  "recycle_time": {
+                        "type": "number"
                   },
                   "children": {
                         "type": "array",

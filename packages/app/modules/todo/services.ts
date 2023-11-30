@@ -91,6 +91,10 @@ export const queryTodo = (file_id: string) => {
 	return getQueryTodo(file_id).exec()
 }
 
+export const queryItem = (id: string) => {
+	return $db.collections.todo_items.findOne(id).exec()
+}
+
 export const queryItems = (args: ArgsQueryItems) => {
 	return getQueryItems(args).exec()
 }
@@ -229,6 +233,8 @@ export const updateRelations = async (args: ArgsUpdateRelations) => {
 
 	const active_item = items.find((item) => item.id === active_id) as Todo.Todo
 	const over_item = items.find((item) => item.id === over_id) as Todo.Todo
+
+	if (active_item.cycle_enabled || over_item.cycle_enabled) return
 
 	if (active_item.status !== 'unchecked' || over_item.status !== 'unchecked') return
 

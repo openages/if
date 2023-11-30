@@ -18,12 +18,12 @@ const Index = (props: IPropsInputCircle) => {
 
 	const options_cycle = useMemo(
 		() => [
-			{ label: t('translation:todo.Input.Cycle.options.minite'), value: 'minite' },
+			{ label: t('translation:todo.Input.Cycle.options.minute'), value: 'minute' },
 			{ label: t('translation:todo.Input.Cycle.options.hour'), value: 'hour' },
 			{ label: t('translation:todo.Input.Cycle.options.day'), value: 'day' },
 			{ label: t('translation:todo.Input.Cycle.options.week'), value: 'week' },
 			{ label: t('translation:todo.Input.Cycle.options.month'), value: 'month' },
-			{ label: t('translation:todo.Input.Cycle.options.season'), value: 'season' },
+			{ label: t('translation:todo.Input.Cycle.options.quarter'), value: 'quarter' },
 			{ label: t('translation:todo.Input.Cycle.options.year'), value: 'year' }
 		],
 		[i18n.language]
@@ -45,14 +45,14 @@ const Index = (props: IPropsInputCircle) => {
 		})
 	})
 
-	const Exclude = (cycle?.scale === 'week' || cycle?.scale === 'season') && (
+	const Exclude = (cycle?.scale === 'week' || cycle?.scale === 'quarter') && (
 		<div className='weekdays flex justify_between mt_8'>
 			{(cycle?.scale === 'week' ? [1, 2, 3, 4, 5, 6, 7] : [1, 2, 3, 4]).map((item) => (
 				<span
 					className={$cx(
 						'weekday flex justify_center align_center clickable',
 						cycle.exclude && cycle.exclude?.includes(item) && 'exclude',
-						cycle?.scale === 'season' && 'season'
+						cycle?.scale === 'quarter' && 'quarter'
 					)}
 					key={item}
 					onClick={() => onWeekday(item)}

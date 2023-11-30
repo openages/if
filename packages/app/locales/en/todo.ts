@@ -80,12 +80,12 @@ export default {
 			every: 'Every',
 			exclude: 'exclude',
 			options: {
-				minite: 'Minite',
+				minute: 'Minite',
 				hour: 'Hour',
 				day: 'Day',
 				week: 'Week',
 				month: 'Month',
-				season: 'Quarter',
+				quarter: 'Quarter',
 				year: 'Year'
 			}
 		}
