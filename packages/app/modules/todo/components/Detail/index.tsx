@@ -29,7 +29,7 @@ const Index = (props: IPropsDetail) => {
 		setCurrentDetailIndex
 	} = props
 	const { t } = useTranslation()
-	const { status, children, tag_ids, star, cycle_enabled, cycle } = current_detail_item
+	const { status, children, tag_ids, star, cycle_enabled, cycle, recycle_time } = current_detail_item
 	const { input, onInput } = useInput({
 		item: current_detail_item,
 		update: useMemoizedFn((textContent) =>
@@ -129,7 +129,8 @@ const Index = (props: IPropsDetail) => {
 						<div
 							className={$cx(
 								'option_item w_100 border_box flex align_center',
-								exist_relations && 'disabled'
+								(exist_relations || (recycle_time && status === 'checked')) &&
+									'disabled'
 							)}
 						>
 							<div className='name_wrap flex align_center'>

@@ -1,8 +1,6 @@
 import dayjs from 'dayjs'
 import { match, P } from 'ts-pattern'
 
-import { getDocItemsData } from '@/utils'
-
 import type { Todo } from '@/types'
 import type { RxDocument } from 'rxdb'
 
