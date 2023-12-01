@@ -1,6 +1,6 @@
 const locales = ['en', 'zh'] as const
 
-export type Lang = (typeof locales)[ number ]
+export type Lang = (typeof locales)[number]
 
 export const locale_options = [
 	{
@@ -11,6 +11,6 @@ export const locale_options = [
 		label: '简体中文',
 		value: 'zh'
 	}
-] 
+]
 
 export default locales

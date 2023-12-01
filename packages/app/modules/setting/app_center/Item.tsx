@@ -46,7 +46,7 @@ const Index = (props: IProps) => {
 					<Switch
 						size='small'
 						checked={item.is_fixed}
-						onChange={(v) => changeIsFixed(index, v)}
+						onChange={v => changeIsFixed(index, v)}
 					></Switch>
 				</div>
 			</div>

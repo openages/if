@@ -3,17 +3,19 @@ import { Drawer } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Tag, BellRinging, HourglassMedium, CaretUp, CaretDown, Plus } from '@phosphor-icons/react'
+import { BellRinging, CaretDown, CaretUp, HourglassMedium, Plus, Tag } from '@phosphor-icons/react'
 
 import { useInput } from '../../hooks'
 import Children from '../Children'
 import Cycle from '../Cycle'
 import Star from '../Input/Star'
 import TagSelect from '../TagSelect'
-import { useHandlers, useContextMenu } from '../TodoItem/hooks'
+import { useContextMenu, useHandlers } from '../TodoItem/hooks'
+
 import styles from './index.css'
 
-import type { IPropsDetail, IPropsChildren } from '../../types'
+import type { IPropsChildren, IPropsDetail } from '../../types'
+
 const Index = (props: IPropsDetail) => {
 	const {
 		visible_detail_modal,
@@ -32,7 +34,7 @@ const Index = (props: IPropsDetail) => {
 	const { status, children, tag_ids, star, cycle_enabled, cycle, recycle_time } = current_detail_item
 	const { input, onInput } = useInput({
 		item: current_detail_item,
-		update: useMemoizedFn((textContent) =>
+		update: useMemoizedFn(textContent =>
 			update({ type: 'parent', index: current_detail_index, value: { text: textContent } })
 		)
 	})
@@ -47,7 +49,7 @@ const Index = (props: IPropsDetail) => {
 	const exist_relations = useMemo(() => {
 		if (!current_detail_item.id || !relations.length) return false
 
-		return relations.find((item) => item.items.includes(current_detail_item.id))
+		return relations.find(item => item.items.includes(current_detail_item.id))
 	}, [relations, current_detail_item])
 
 	const props_children: IPropsChildren = {

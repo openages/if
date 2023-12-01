@@ -42,7 +42,7 @@ export interface IPropsTabsContent extends Pick<IPropsTabs, 'stacks'> {}
 export interface IPropsAppMenu {
 	visible: GlobalModel['app']['visible_app_menu']
 	app_modules: GlobalModel['app']['app_modules']
-      actives: GlobalModel[ 'app' ][ 'actives' ]
+	actives: GlobalModel['app']['actives']
 	visible_dirtree: boolean
 	onClose: () => void
 }

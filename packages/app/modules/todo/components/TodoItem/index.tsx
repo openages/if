@@ -52,7 +52,7 @@ const Index = (props: IPropsTodoItem) => {
 	const { linker, dragging, hovering } = useLink({ item, makeLinkLine, updateRelations })
 	const { input, onInput } = useInput({
 		item,
-		update: useMemoizedFn((textContent) => update({ type: 'parent', index, value: { text: textContent } }))
+		update: useMemoizedFn(textContent => update({ type: 'parent', index, value: { text: textContent } }))
 	})
 	const { TodoContextMenu, ChildrenContextMenu } = useContextMenu({ angles, tags, tag_ids })
 	const { onContextMenu } = useOnContextMenu({

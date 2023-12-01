@@ -25,7 +25,7 @@ const Index = (props: IProps) => {
 		onChange(arrayMove(value, active.data.current.index as number, over.data.current.index as number))
 	})
 
-	const onAdd = useMemoizedFn((index) => {
+	const onAdd = useMemoizedFn(index => {
 		const items = cloneDeep(value)
 
 		items.splice(index + 1, 0, { id: id(), text: '' })
@@ -33,7 +33,7 @@ const Index = (props: IProps) => {
 		onChange(items)
 	})
 
-	const onRemove = useMemoizedFn(async (index) => {
+	const onRemove = useMemoizedFn(async index => {
 		const res = await remove(value[index].id)
 
 		if (!res) return

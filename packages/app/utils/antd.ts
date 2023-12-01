@@ -1,5 +1,5 @@
 export const confirm = async ({ title, content }: { title: string; content: string }) => {
-	return new Promise((resolve) => {
+	return new Promise(resolve => {
 		$modal.confirm({
 			title,
 			content,

@@ -10,7 +10,7 @@ const Index = <T>(items: Array<T & Item>, id: string): T | undefined => {
 		const item = items[index]
 
 		if (item.id === id) {
-			remove(items, (item) => item.id === id)
+			remove(items, item => item.id === id)
 
 			return
 		} else {

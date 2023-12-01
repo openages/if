@@ -129,7 +129,7 @@ export default (args: HookArgs) => {
 						<span className='text ml_6'>{t('translation:todo.Header.options.tags')}</span>
 					</div>
 				),
-				children: tags?.map((item) => ({
+				children: tags?.map(item => ({
 					key: item.id,
 					label: (
 						<div

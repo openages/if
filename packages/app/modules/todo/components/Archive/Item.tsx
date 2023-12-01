@@ -38,7 +38,7 @@ const Index = (props: IPropsArchiveItem) => {
 	const data_children = useMemo(() => {
 		if (!item.children?.length) return
 
-		const checked_children = item.children.filter((item) => item.status === 'checked')
+		const checked_children = item.children.filter(item => item.status === 'checked')
 
 		return `${checked_children.length}/${item.children.length}`
 	}, [item.children])
@@ -98,7 +98,7 @@ const Index = (props: IPropsArchiveItem) => {
 						exit={{ opacity: 0, height: 0 }}
 						transition={{ duration: 0.18 }}
 					>
-						{item.children.map((it) => getTextItem(it.id, it.status, it.text, false))}
+						{item.children.map(it => getTextItem(it.id, it.status, it.text, false))}
 					</motion.div>
 				)}
 			</AnimatePresence>

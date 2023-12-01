@@ -81,7 +81,7 @@ const Index = (props: IPropsHeader) => {
 								options={tags}
 								value={items_filter_tags}
 								placement='bottomRight'
-								onChange={(v) => setItemsFilterTags(v)}
+								onChange={v => setItemsFilterTags(v)}
 							></TagSelect>
 							<span
 								className='btn_remove btn flex justify_center align_center clickable'

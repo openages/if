@@ -30,8 +30,8 @@ export default class Index {
 	}
 
 	on() {
-		this.keys.map((item) => {
-			hotkeys(item.key_bindings, item.options || {}, (e) => {
+		this.keys.map(item => {
+			hotkeys(item.key_bindings, item.options || {}, e => {
 				e.preventDefault()
 
 				if (item.special_key) {
@@ -46,6 +46,6 @@ export default class Index {
 	}
 
 	off() {
-		this.keys.map((item) => hotkeys.unbind(item.key_bindings))
+		this.keys.map(item => hotkeys.unbind(item.key_bindings))
 	}
 }

@@ -57,7 +57,7 @@ const Index = (props: IProps) => {
 			scroll_container = root.querySelector('.scroll') as HTMLDivElement
 			nav_buttons = root.querySelectorAll('#nav button') as NodeListOf<HTMLButtonElement>
 
-			nav_buttons.forEach((item) => {
+			nav_buttons.forEach(item => {
 				item.addEventListener('click', delaymakeImgColor)
 			})
 
@@ -69,7 +69,7 @@ const Index = (props: IProps) => {
 
 			scroll_container?.removeEventListener('scroll', makeImgColor)
 
-			nav_buttons?.forEach((item) => {
+			nav_buttons?.forEach(item => {
 				item.removeEventListener('click', delaymakeImgColor)
 			})
 		}

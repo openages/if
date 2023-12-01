@@ -198,18 +198,18 @@ export const check = async (args: ArgsCheck) => {
 	const { file_id, todo, id, status } = args
 	const { auto_archiving } = todo
 
-	const exsit_index = todo?.relations?.findIndex((item) => item.items.includes(id))
+	const exsit_index = todo?.relations?.findIndex(item => item.items.includes(id))
 
 	await updateStatus({ id, status, auto_archiving })
 
 	if (todo?.relations?.length && exsit_index !== -1) {
 		const relation_ids = cloneDeep(todo.relations[exsit_index]).items
-		const target_index = relation_ids.findIndex((item) => item === id)
+		const target_index = relation_ids.findIndex(item => item === id)
 
 		relation_ids.splice(target_index, 1)
 
 		await Promise.all(
-			relation_ids.map((item) => {
+			relation_ids.map(item => {
 				return updateStatus({
 					id: item,
 					status: status === 'checked' ? 'closed' : 'unchecked',
@@ -231,8 +231,8 @@ export const updateRelations = async (args: ArgsUpdateRelations) => {
 
 	if (active_id === over_id) return
 
-	const active_item = items.find((item) => item.id === active_id) as Todo.Todo
-	const over_item = items.find((item) => item.id === over_id) as Todo.Todo
+	const active_item = items.find(item => item.id === active_id) as Todo.Todo
+	const over_item = items.find(item => item.id === over_id) as Todo.Todo
 
 	if (active_item.cycle_enabled || over_item.cycle_enabled) return
 
@@ -242,8 +242,8 @@ export const updateRelations = async (args: ArgsUpdateRelations) => {
 		await updateTodo(file_id, { relations: [{ items: [active_id, over_id], checked: false }] })
 	} else {
 		const relations = cloneDeep(todo.relations)
-		const exsit_active_index = relations.findIndex((item) => item.items.includes(active_id))
-		const exsit_over_index = relations.findIndex((item) => item.items.includes(over_id))
+		const exsit_active_index = relations.findIndex(item => item.items.includes(active_id))
+		const exsit_over_index = relations.findIndex(item => item.items.includes(over_id))
 
 		if (exsit_active_index === -1 && exsit_over_index === -1) {
 			return await updateTodo(file_id, {
@@ -257,7 +257,7 @@ export const updateRelations = async (args: ArgsUpdateRelations) => {
 
 				return await updateTodo(file_id, { relations })
 			} else {
-				const over_index = relations[exsit_active_index].items.findIndex((item) => item === over_id)
+				const over_index = relations[exsit_active_index].items.findIndex(item => item === over_id)
 
 				relations[exsit_active_index].items.splice(over_index, 1)
 
@@ -303,7 +303,7 @@ export const removeTodoItem = async (id: string) => {
 
 export const restoreArchiveItem = async (id: string, angles: Todo.Data['angles'], current_angle_id: string) => {
 	const doc = await $db.collections.todo_items.findOne({ selector: { id } }).exec()
-	const angle_exsit = angles.find((item) => item.id === doc.angle_id)
+	const angle_exsit = angles.find(item => item.id === doc.angle_id)
 	const sort = await getMaxSort()
 
 	const target = {

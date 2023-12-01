@@ -8,15 +8,7 @@ import styles from './index.css'
 import type { IPropsTagSelect } from '../../types'
 
 const Index = (props: IPropsTagSelect) => {
-	const {
-		options,
-		value,
-		useByTodo,
-		useByDetail,
-		className,
-		placement,
-		onChange,
-	} = props
+	const { options, value, useByTodo, useByDetail, className, placement, onChange } = props
 	const { t } = useTranslation()
 
 	const Tag = useMemo(() => {
@@ -46,7 +38,7 @@ const Index = (props: IPropsTagSelect) => {
 				tagRender={Tag}
 				options={options}
 				value={value}
-				onChange={(v) => onChange(v)}
+				onChange={v => onChange(v)}
 			></Select>
 		</div>
 	)

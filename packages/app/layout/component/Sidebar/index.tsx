@@ -43,10 +43,10 @@ const Index = (props: IPropsSidebar) => {
 						<div className='scroll_mask top w_100 absolute top_0'></div>
 					</When>
 					<div className='sidebar_top_wrap flex flex_column align_center' ref={ref_items_wrap}>
-						{apps.map((item) => (
+						{apps.map(item => (
 							<SidebarItem
 								{...{ current_module, theme, show_bar_title, icon_weight, item }}
-								is_active={Boolean(actives.find((i) => i.app === item.title))}
+								is_active={Boolean(actives.find(i => i.app === item.title))}
 								key={item.title}
 							></SidebarItem>
 						))}

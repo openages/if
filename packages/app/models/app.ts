@@ -34,9 +34,9 @@ export default class Index {
 	}
 
 	get apps() {
-		return toJS(this.app_modules).filter((item) => {
+		return toJS(this.app_modules).filter(item => {
 			if (item.is_fixed) return true
-			if (this.actives.find((i) => i.app === item.title)) return true
+			if (this.actives.find(i => i.app === item.title)) return true
 
 			return false
 		})

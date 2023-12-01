@@ -77,8 +77,8 @@ const Index = (props: IPropsChildren) => {
 										{...{
 											item,
 											index,
-                                                                  children_index,
-                                                                  useByDetail,
+											children_index,
+											useByDetail,
 											ChildrenContextMenu,
 											update,
 											tab,

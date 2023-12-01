@@ -17,7 +17,7 @@ const Index = () => {
 
 	return (
 		<div className={$cx('w_100 flex flex_column', styles._local)}>
-			{actives.map((item) => (
+			{actives.map(item => (
 				<div className='app_module_item_wrap w_100 border_box' key={item.app}>
 					<div className='app_module_item w_100 border_box flex justify_between align_center'>
 						<div className='module_icon flex align_center'>

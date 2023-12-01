@@ -19,7 +19,7 @@ export default class Index {
 	}
 
 	add(v: App.Stack) {
-		const exsit_stack_index = this.stacks.findIndex((item) => item.file.id === v.file.id)
+		const exsit_stack_index = this.stacks.findIndex(item => item.file.id === v.file.id)
 
 		if (exsit_stack_index === -1) {
 			const last_stack = this.stacks.at(-1)
@@ -30,13 +30,13 @@ export default class Index {
 				this.stacks.splice(this.stacks.length - 1, 1, v)
 			}
 
-			this.stacks.map((item) => {
+			this.stacks.map(item => {
 				item.is_active = false
 			})
 
 			this.stacks[this.stacks.length - 1].is_active = true
 		} else {
-			this.stacks.map((item) => {
+			this.stacks.map(item => {
 				item.is_active = false
 			})
 
@@ -47,7 +47,7 @@ export default class Index {
 	remove(index: number) {
 		this.stacks.splice(index, 1)
 
-		const exsit_active = this.stacks.some((item) => item.is_active)
+		const exsit_active = this.stacks.some(item => item.is_active)
 
 		if (!exsit_active && this.stacks.length) {
 			this.stacks[this.stacks.length - 1].is_active = true
@@ -55,7 +55,7 @@ export default class Index {
 	}
 
 	active(index: number) {
-		this.stacks.map((item) => {
+		this.stacks.map(item => {
 			item.is_active = false
 		})
 
@@ -67,7 +67,7 @@ export default class Index {
 	}
 
 	updateFile(v: DirTree.Item) {
-		const index = this.stacks.findIndex((item) => item.id === v.id)
+		const index = this.stacks.findIndex(item => item.id === v.id)
 
 		if (index === -1) return
 
@@ -79,7 +79,7 @@ export default class Index {
 	}
 
 	removeFile(id: string) {
-		this.stacks = this.stacks.filter((item) => item.id !== id)
+		this.stacks = this.stacks.filter(item => item.id !== id)
 	}
 
 	move({ active, over }: DragEndEvent) {
@@ -97,9 +97,9 @@ export default class Index {
 			active.data.current.index as number,
 			over.data.current.index as number
 		)
-      }
-      
-      off() {
+	}
+
+	off() {
 		this.utils.off()
 	}
 }

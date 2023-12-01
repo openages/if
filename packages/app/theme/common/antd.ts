@@ -2,7 +2,7 @@ import common from './index'
 
 import type { ThemeConfig } from 'antd'
 
-export default {
+export default ({
 	token: {
 		colorSuccess: common.color_success,
 		colorWarning: common.color_warning,
@@ -17,4 +17,4 @@ export default {
 		'Noto Color Emoji'`,
 		controlOutline: 'none'
 	}
-} as ThemeConfig
+} as ThemeConfig)

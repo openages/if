@@ -15,7 +15,7 @@ const Index = (props: IPropsTabs) => {
 			<div className='tabs_wrap limited_content_wrap flex align_center relative'>
 				<div className='tab_items_wrap w_100 relative'>
 					<ScrollMenu onWheel={onWheel}>
-						{angles.map((item) => (
+						{angles.map(item => (
 							<Item
 								is_active={item.id === current_angle_id}
 								key={item.id}

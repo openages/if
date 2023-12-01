@@ -12,7 +12,7 @@ const Index = (props: IPropsTabs) => {
 	const { visible, current_module, stacks, remove, active, update, move } = props
 
 	useEffect(() => {
-		const active_item = stacks.find((item) => item.is_active)
+		const active_item = stacks.find(item => item.is_active)
 
 		$app.Event.emit(`${current_module}/dirtree/setCurrentItem`, active_item ? active_item.file : {})
 	}, [current_module, stacks])

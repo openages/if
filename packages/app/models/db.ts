@@ -64,9 +64,9 @@ export default class Index {
 
 	async migrate() {
 		const collections = Object.values($db.collections)
-		const check_migrations = collections.map(async (item) => ((await item.migrationNeeded()) ? item : false))
-		const should_migrations = (await Promise.all(check_migrations)).filter((item) => item)
-		const migrations = should_migrations.map((item) => (item as RxCollection).migratePromise(30))
+		const check_migrations = collections.map(async item => ((await item.migrationNeeded()) ? item : false))
+		const should_migrations = (await Promise.all(check_migrations)).filter(item => item)
+		const migrations = should_migrations.map(item => (item as RxCollection).migratePromise(30))
 
 		if (migrations.length) {
 			window.$app.Event.emit('app/setLoading', { visible: true, desc: $t('translation:app.migrating') })

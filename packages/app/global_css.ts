@@ -6,4 +6,3 @@ import '@/styles/contexify.global.css'
 import '@/styles/special.global.css'
 import '@/styles/react-horizontal-scrolling-menu.global.css'
 import '@/theme/custom/antd.global.css'
-

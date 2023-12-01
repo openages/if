@@ -23,7 +23,7 @@ const Index = (props: IPropsGroupTitle) => {
 	})
 	const { input, onInput } = useInput({
 		item,
-		update: useMemoizedFn((textContent) => update({ type: 'parent', index, value: { text: textContent } }))
+		update: useMemoizedFn(textContent => update({ type: 'parent', index, value: { text: textContent } }))
 	})
 
 	const ContextMenu = useMemo(

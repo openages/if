@@ -24,7 +24,7 @@ const Index = (props: IPropsSettingsModal) => {
 			returnObjects: true
 		}) as Record<string, string>
 
-		return Object.keys(locale_options).map((key) => ({
+		return Object.keys(locale_options).map(key => ({
 			label: locale_options[key],
 			value: key
 		}))

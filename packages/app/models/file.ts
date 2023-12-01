@@ -36,7 +36,7 @@ export default class Index {
 	}
 
 	watch() {
-		this.data_watcher = this.getQuery().$.subscribe((item) => {
+		this.data_watcher = this.getQuery().$.subscribe(item => {
 			this.data = getDocItem(item) as DirTree.Item
 		})
 	}

@@ -17,6 +17,7 @@ const recycle = async (item: RxDocument<Todo.Todo>) => {
 				$set: {
 					status: 'unchecked',
 					archive: false,
+					archive_time: undefined,
 					recycle_time: undefined
 				}
 			}
@@ -55,5 +56,5 @@ export default async (file_id: string) => {
 		})
 		.exec()
 
-	await Promise.all(cycle_items.map((item) => recycle(item as RxDocument<Todo.Todo>)))
+	await Promise.all(cycle_items.map(item => recycle(item as RxDocument<Todo.Todo>)))
 }

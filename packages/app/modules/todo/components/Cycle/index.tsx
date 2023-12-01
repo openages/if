@@ -36,7 +36,7 @@ const Index = (props: IPropsInputCircle) => {
 		let target_exclude = [...raw_exclude]
 
 		if (raw_exclude.includes(day)) {
-			target_exclude = raw_exclude.filter((item) => item !== day)
+			target_exclude = raw_exclude.filter(item => item !== day)
 		} else {
 			target_exclude.push(day)
 		}
@@ -48,7 +48,7 @@ const Index = (props: IPropsInputCircle) => {
 
 	const Exclude = (cycle?.scale === 'week' || cycle?.scale === 'quarter') && (
 		<div className='weekdays flex justify_between mt_8'>
-			{(cycle?.scale === 'week' ? [1, 2, 3, 4, 5, 6, 7] : [1, 2, 3, 4]).map((item) => (
+			{(cycle?.scale === 'week' ? [1, 2, 3, 4, 5, 6, 7] : [1, 2, 3, 4]).map(item => (
 				<span
 					className={$cx(
 						'weekday flex justify_center align_center clickable',
@@ -74,7 +74,7 @@ const Index = (props: IPropsInputCircle) => {
 					className='switch'
 					size='small'
 					checked={cycle_enabled}
-					onChange={(v) => onChangeCircle({ cycle_enabled: v })}
+					onChange={v => onChangeCircle({ cycle_enabled: v })}
 				></Switch>
 			</div>
 			<div className='cycle_input_items w_100 border_box flex flex_column'>
@@ -96,12 +96,12 @@ const Index = (props: IPropsInputCircle) => {
 						placeholder={t('translation:todo.Input.Cycle.cycle')}
 						min={1}
 						max={99}
-						formatter={(value) => `${every_text} ${value} ${scale_text}`}
-						parser={(value) =>
+						formatter={value => `${every_text} ${value} ${scale_text}`}
+						parser={value =>
 							Number(value.replace(every_text, '').replace(scale_text, '').trim())
 						}
 						value={cycle?.interval || 1}
-						onChange={(v) => onChangeCircle({ cycle: { ...cycle, interval: v } })}
+						onChange={v => onChangeCircle({ cycle: { ...cycle, interval: v } })}
 					></InputNumber>
 					{Exclude}
 				</div>

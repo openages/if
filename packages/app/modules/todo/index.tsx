@@ -48,14 +48,14 @@ const Index = ({ id }: IProps) => {
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true)),
 		showArchiveModal: useMemoizedFn(() => (x.visible_archive_modal = true)),
 		showHelpModal: useMemoizedFn(() => (x.visible_help_modal = true)),
-		setItemsSortParam: useMemoizedFn((v) => (x.items_sort_param = v)),
-		setItemsFilterTags: useMemoizedFn((v) => (x.items_filter_tags = v))
+		setItemsSortParam: useMemoizedFn(v => (x.items_sort_param = v)),
+		setItemsFilterTags: useMemoizedFn(v => (x.items_filter_tags = v))
 	}
 
 	const props_tabs: IPropsTabs = {
 		angles: toJS(x.todo.angles) || [],
 		current_angle_id: x.current_angle_id,
-		setCurrentAngleId: useMemoizedFn((v) => (x.current_angle_id = v))
+		setCurrentAngleId: useMemoizedFn(v => (x.current_angle_id = v))
 	}
 
 	const props_input: IPropsInput = {
@@ -64,7 +64,7 @@ const Index = ({ id }: IProps) => {
 		create: useMemoizedFn(x.create)
 	}
 
-	const move_to_angles = useMemo(() => angles.filter((item) => item.id !== x.current_angle_id), [angles])
+	const move_to_angles = useMemo(() => angles.filter(item => item.id !== x.current_angle_id), [angles])
 
 	const props_todos: IPropsTodos = {
 		items: toJS(x.items),
@@ -108,7 +108,7 @@ const Index = ({ id }: IProps) => {
 		restoreArchiveItem: useMemoizedFn(x.restoreArchiveItem),
 		removeArchiveItem: useMemoizedFn(x.removeArchiveItem),
 		archiveByTime: useMemoizedFn(x.archiveByTime),
-		setArchiveQueryParams: useMemoizedFn((v) => (x.archive_query_params = v))
+		setArchiveQueryParams: useMemoizedFn(v => (x.archive_query_params = v))
 	}
 
 	const props_detail: IPropsDetail = {
@@ -120,7 +120,7 @@ const Index = ({ id }: IProps) => {
 		next: x.current_detail_index < x.items.length - 1,
 		update: useMemoizedFn(x.update),
 		tab: useMemoizedFn(x.tab),
-		setCurrentDetailIndex: useMemoizedFn((v) => (x.current_detail_index = v)),
+		setCurrentDetailIndex: useMemoizedFn(v => (x.current_detail_index = v)),
 		closeDetailModal: useMemoizedFn(() => (x.visible_detail_modal = false)),
 		clearCurrentDetail: useMemoizedFn((visible: boolean) => {
 			if (visible) return

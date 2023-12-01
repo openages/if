@@ -30,7 +30,7 @@ export default class Index {
 	modal_open = false
 
 	watch = {
-		current_item: (v) => this.onClick(v)
+		current_item: v => this.onClick(v)
 	} as Watch<Index>
 
 	get focusing_item() {
@@ -39,10 +39,7 @@ export default class Index {
 		return (this.node_tree.getItem(this.focusing_index).cloned_item || {}) as DirTree.Item
 	}
 
-	constructor(
-		public utils: Utils,
-		public node_tree: NodeTree
-	) {
+	constructor(public utils: Utils, public node_tree: NodeTree) {
 		makeAutoObservable(this, { watch: false }, { autoBind: true })
 	}
 
@@ -186,7 +183,7 @@ export default class Index {
 	}
 
 	removeOpenFolder(id: string) {
-		this.open_folder = this.open_folder.filter((item) => item !== id)
+		this.open_folder = this.open_folder.filter(item => item !== id)
 	}
 
 	stopWatchItems() {
@@ -194,7 +191,7 @@ export default class Index {
 	}
 
 	watchItems() {
-		this.items_watcher = getQuery(this.module).$.subscribe((items) => {
+		this.items_watcher = getQuery(this.module).$.subscribe(items => {
 			this.items = getDocItemsData(items)
 		})
 	}

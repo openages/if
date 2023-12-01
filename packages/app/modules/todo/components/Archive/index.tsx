@@ -95,7 +95,7 @@ const Index = (props: IPropsArchive) => {
 				<DatePicker
 					showToday={false}
 					inputReadOnly
-					disabledDate={(v) => v.valueOf() > new Date().valueOf()}
+					disabledDate={v => v.valueOf() > new Date().valueOf()}
 				></DatePicker>
 			</FormItem>
 			<FormItem
@@ -105,7 +105,7 @@ const Index = (props: IPropsArchive) => {
 				<DatePicker
 					showToday={false}
 					inputReadOnly
-					disabledDate={(v) => v.valueOf() > new Date().valueOf()}
+					disabledDate={v => v.valueOf() > new Date().valueOf()}
 				></DatePicker>
 			</FormItem>
 			<FormItem className='status_item' label={t('translation:todo.Archive.filter.status')} name='status'>
@@ -185,7 +185,7 @@ const Index = (props: IPropsArchive) => {
 			{archives.length > 0 && (
 				<div className='archive_items w_100 border_box flex flex_column'>
 					<Drawer>{Filter}</Drawer>
-					{archives.map((item) => (
+					{archives.map(item => (
 						<Item {...{ item, restoreArchiveItem, removeArchiveItem }} key={item.id}></Item>
 					))}
 				</div>

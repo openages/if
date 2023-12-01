@@ -8,7 +8,7 @@ import setting from './setting'
 import shortcuts from './shortcuts'
 import todo from './todo'
 
-export default {
+export default ({
 	translation: {
 		app,
 		common,
@@ -20,4 +20,4 @@ export default {
 		components,
 		todo
 	}
-} as const
+} as const)

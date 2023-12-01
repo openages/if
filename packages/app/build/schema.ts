@@ -21,7 +21,7 @@ const getConfig = (path: string) => {
 	} as Config
 }
 
-paths.map((item) => {
+paths.map(item => {
 	const buffer = tsj.createGenerator(getConfig(item)).createSchema('*')
 
 	// console.log(JSON.stringify(buffer,null,4));

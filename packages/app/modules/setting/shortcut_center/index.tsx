@@ -27,7 +27,7 @@ const Index = () => {
 									: t('translation:shortcuts.keydown')}
 							</span>
 							<div className='key_bindings flex justify_end'>
-								{(item.special_key || item.key_bindings).split('+').map((key) => {
+								{(item.special_key || item.key_bindings).split('+').map(key => {
 									const Icon = icons[key]
 
 									return (

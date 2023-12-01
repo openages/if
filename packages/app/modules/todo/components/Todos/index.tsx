@@ -44,10 +44,10 @@ const Index = (props: IPropsTodos) => {
 	const relations_lines = useMemo(() => {
 		const target: Array<{ point: [string, string]; checked: boolean }> = []
 
-		relations.map((item) => {
+		relations.map(item => {
 			const lines = getLinkedItems(item.items)
 
-			lines.map((point) => {
+			lines.map(point => {
 				target.push({ point, checked: item.checked })
 			})
 		})
@@ -81,7 +81,7 @@ const Index = (props: IPropsTodos) => {
 	})
 
 	const onDragStart = useMemoizedFn(({ active }: DragStartEvent) => {
-		const exsit_index = relations?.findIndex((item) => item.items.includes(active.id as string))
+		const exsit_index = relations?.findIndex(item => item.items.includes(active.id as string))
 
 		if (exsit_index === -1) return
 
@@ -117,7 +117,7 @@ const Index = (props: IPropsTodos) => {
 	})
 
 	const renderLines = useMemoizedFn((id: string) => {
-		const exsit_index = relations?.findIndex((item) => item.items.includes(id))
+		const exsit_index = relations?.findIndex(item => item.items.includes(id))
 
 		if (exsit_index === -1) return
 

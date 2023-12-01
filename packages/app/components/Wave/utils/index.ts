@@ -1,1 +1,1 @@
-export {default as waveEffect} from './waveEffect'
+export { default as waveEffect } from './waveEffect'

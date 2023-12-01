@@ -9,7 +9,7 @@ export default async (file_id: string, args: Partial<DirTree.Item>) => {
 	await $db.collections.todo.insert({
 		...args,
 		id: file_id,
-		angles: angles.map((item) => ({ id: id(), text: item })),
+		angles: angles.map(item => ({ id: id(), text: item })),
 		tags: [],
 		auto_archiving: '3m'
 	})

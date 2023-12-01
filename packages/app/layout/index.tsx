@@ -44,10 +44,10 @@ const Index = () => {
 	}, [])
 
 	useEffect(() => {
-		global.app.switch_index = global.app.actives.findIndex((item) => item.app === current_module)
+		global.app.switch_index = global.app.actives.findIndex(item => item.app === current_module)
 	}, [current_module, global.app.actives])
 
-	const is_exclude_router = useMemo(() => exclude_paths.some((item) => minimatch(pathname, item)), [pathname])
+	const is_exclude_router = useMemo(() => exclude_paths.some(item => minimatch(pathname, item)), [pathname])
 
 	const props_sidebar: IPropsSidebar = {
 		current_module,
@@ -63,7 +63,7 @@ const Index = () => {
 		iconPrefixCls: 'if-icon',
 		theme,
 		locale,
-		getPopupContainer: (n) => n?.parentElement!
+		getPopupContainer: n => n?.parentElement!
 	}
 
 	const props_app: AppProps = {

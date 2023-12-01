@@ -25,7 +25,7 @@ const Index = (props: IPropsOffscreenOutlet) => {
 
 	const exitApp = useMemoizedFn((title: string) => {
 		cache_pages.splice(
-			cache_pages.findIndex((item) => item.app === title),
+			cache_pages.findIndex(item => item.app === title),
 			1
 		)
 
@@ -36,8 +36,8 @@ const Index = (props: IPropsOffscreenOutlet) => {
 	})
 
 	useEffect(() => {
-		const result = cache_pages.some((item) => item.pathname === pathname)
-		const is_app = Boolean(apps.find((item) => item.path === pathname))
+		const result = cache_pages.some(item => item.pathname === pathname)
+		const is_app = Boolean(apps.find(item => item.path === pathname))
 
 		if (!apps.length) return
 
@@ -60,7 +60,7 @@ const Index = (props: IPropsOffscreenOutlet) => {
 	}, [current_module, apps, cache_pages, pathname, key, outlet])
 
 	useEffect(() => {
-		setActives(cache_pages.map((item) => omit(item, 'outlet')).filter((item) => item.is_app))
+		setActives(cache_pages.map(item => omit(item, 'outlet')).filter(item => item.is_app))
 	}, [cache_pages])
 
 	useEffect(() => {
@@ -73,7 +73,7 @@ const Index = (props: IPropsOffscreenOutlet) => {
 
 	return (
 		<Fragment>
-			{cache_pages.map((item) =>
+			{cache_pages.map(item =>
 				item.is_app ? (
 					<Activity key={item.key} mode={item.pathname === pathname ? 'visible' : 'hidden'}>
 						{item.outlet}

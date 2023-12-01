@@ -35,7 +35,7 @@ const Index = (props: IPropsInput) => {
 	useEffect(() => {
 		if (loading) return
 
-		setInput((v) => ({
+		setInput(v => ({
 			...v,
 			id: id(),
 			text: '',
@@ -47,10 +47,10 @@ const Index = (props: IPropsInput) => {
 	const props_circle: IPropsInputCircle = {
 		cycle_enabled: (input as Todo.Todo).cycle_enabled,
 		cycle: (input as Todo.Todo).cycle,
-		onChangeCircle: useMemoizedFn((v) => setInput((input) => ({ ...input, ...v })))
+		onChangeCircle: useMemoizedFn(v => setInput(input => ({ ...input, ...v })))
 	}
 
-	const onEnter = useMemoizedFn((e) => {
+	const onEnter = useMemoizedFn(e => {
 		e.preventDefault()
 
 		if (loading) return
@@ -75,7 +75,7 @@ const Index = (props: IPropsInput) => {
 								{ label: t('translation:todo.Input.type.group'), value: 'group' }
 							]}
 							value={input.type}
-							onChange={(v) => {
+							onChange={v => {
 								const target = cloneDeep(input)
 
 								target.type = v
@@ -87,10 +87,10 @@ const Index = (props: IPropsInput) => {
 							<TagSelect
 								options={tags}
 								value={(input as Todo.Todo).tag_ids}
-								onChange={(v) => {
+								onChange={v => {
 									if (v?.length > 3) return
 
-									setInput((input) => ({ ...input, tag_ids: v }))
+									setInput(input => ({ ...input, tag_ids: v }))
 								}}
 							></TagSelect>
 						</When>
@@ -100,7 +100,7 @@ const Index = (props: IPropsInput) => {
 							<div className='star_wrap flex align_center mr_8 relative'>
 								<Star
 									value={(input as Todo.Todo).star}
-									onChangeStar={(v) => setInput((input) => ({ ...input, star: v }))}
+									onChangeStar={v => setInput(input => ({ ...input, star: v }))}
 								></Star>
 							</div>
 							<Cycle {...props_circle}></Cycle>
@@ -113,7 +113,7 @@ const Index = (props: IPropsInput) => {
 					autoSize
 					maxLength={todo.text_max_length}
 					value={input.text}
-					onChange={({ target: { value } }) => setInput((input) => ({ ...input, text: value }))}
+					onChange={({ target: { value } }) => setInput(input => ({ ...input, text: value }))}
 					onPressEnter={onEnter}
 				></TextArea>
 			</div>

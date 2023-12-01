@@ -1,6 +1,6 @@
 export { default as Locale } from './locale'
 export { default as Setting } from './setting'
-export { default as Layout} from './layout'
+export { default as Layout } from './layout'
 export { default as DB } from './db'
 export { default as Utils } from './utils'
 export { default as Tabs } from './tabs'

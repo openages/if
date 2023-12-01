@@ -26,7 +26,7 @@ const Index = (props: IPropsChildrenItem) => {
 	const { id, status } = item
 	const { input, onInput } = useInput({
 		item,
-		update: useMemoizedFn((textContent) => update(children_index, { text: textContent }))
+		update: useMemoizedFn(textContent => update(children_index, { text: textContent }))
 	})
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
 		id,
@@ -37,7 +37,7 @@ const Index = (props: IPropsChildrenItem) => {
 		update(children_index, { status: status === 'unchecked' ? 'checked' : 'unchecked' })
 	})
 
-	const onKeyDown = useMemoizedFn((e) => {
+	const onKeyDown = useMemoizedFn(e => {
 		if (e.key === 'Enter') {
 			e.preventDefault()
 

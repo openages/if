@@ -3,8 +3,8 @@ export default {
 	add: 'New ',
 	file: 'File',
 	dir: 'Folder',
-      input_placeholder: 'Please input name',
-      options: {
+	input_placeholder: 'Please input name',
+	options: {
 		rename: 'Rename',
 		delete: 'Delete'
 	}

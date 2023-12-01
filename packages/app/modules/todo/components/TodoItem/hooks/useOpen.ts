@@ -24,7 +24,7 @@ export default (args: HookArgs) => {
 
 		if (!el || !children || !children?.length) return
 
-		const checked_children = children.filter((item) => item.status === 'checked')
+		const checked_children = children.filter(item => item.status === 'checked')
 
 		el.setAttribute('data-children', `${checked_children.length}/${children.length}`)
 	}, [children])

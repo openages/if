@@ -68,7 +68,7 @@ export default (args: HookArgs) => {
 		await update({ type: 'children', index, value: children })
 	})
 
-	const onKeyDown = useMemoizedFn((e) => {
+	const onKeyDown = useMemoizedFn(e => {
 		if (e.key === 'Enter') {
 			e.preventDefault()
 
@@ -82,23 +82,23 @@ export default (args: HookArgs) => {
 		}
 	})
 
-	const updateTags = useMemoizedFn((v) => {
+	const updateTags = useMemoizedFn(v => {
 		if (v?.length > 3) return
 
 		update({ type: 'parent', index, value: { tag_ids: v } as Todo.Todo })
 	})
 
-	const updateTagWidth = useMemoizedFn((v) => {
+	const updateTagWidth = useMemoizedFn(v => {
 		if (v === options_width) return
 
 		update({ type: 'parent', index, value: { options_width: v } as Todo.Todo })
 	})
 
-	const updateStar = useMemoizedFn((v) => {
+	const updateStar = useMemoizedFn(v => {
 		update({ type: 'parent', index, value: { star: v } as Todo.Todo })
 	})
 
-	const updateCircle = useMemoizedFn((v) => {
+	const updateCircle = useMemoizedFn(v => {
 		update({ type: 'parent', index, value: { ...v } as Todo.Todo })
 	})
 

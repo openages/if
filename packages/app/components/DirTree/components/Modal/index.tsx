@@ -88,7 +88,7 @@ const Index = (props: IPropsModal) => {
 		insert({ type: modal_type, name: value, ...icon })
 	})
 
-	const onSelectIcon = useMemoizedFn((shortcodes) => setIcon(shortcodes))
+	const onSelectIcon = useMemoizedFn(shortcodes => setIcon(shortcodes))
 	const onCancel = useMemoizedFn(() => setModalOpen(false))
 	const afterClose = useMemoizedFn(() => resetFocusingItem())
 

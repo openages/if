@@ -33,11 +33,11 @@ const Index = () => {
 							className='select'
 							value={global.locale.lang}
 							options={locale_options}
-							onSelect={(v) => {
+							onSelect={v => {
 								global.locale.setLang(v)
 
 								changeLanguage(v)
-                                          } }
+							}}
 						></Select>
 					</div>
 				</div>
@@ -53,11 +53,11 @@ const Index = () => {
 						<Select
 							className='select'
 							value={global.setting.theme}
-							options={themes.map((item) => ({
+							options={themes.map(item => ({
 								label: t(`translation:setting.Normal.theme.options.${item}`),
 								value: item
 							}))}
-							onSelect={(v) => global.setting.setTheme(v)}
+							onSelect={v => global.setting.setTheme(v)}
 						></Select>
 					</div>
 				</div>

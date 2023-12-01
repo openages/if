@@ -8,7 +8,7 @@ import type { IPropsInput } from '../../types'
 
 const Index = (tags: Required<IPropsInput['tags']>, useByTodo?: boolean) => (props: CustomTagProps) => {
 	const { value, onClose } = props
-	const { text, color } = tags.find((item) => item.id === value)
+	const { text, color } = tags.find(item => item.id === value)
 
 	const onPreventMouseDown = useMemoizedFn((e: React.MouseEvent<HTMLSpanElement>) => {
 		e.preventDefault()

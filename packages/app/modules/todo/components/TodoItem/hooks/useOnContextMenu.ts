@@ -30,7 +30,7 @@ export default (args: HookArgs) => {
 
 					if (tag_ids?.length) {
 						if (tag_ids.includes(target_id)) {
-							target = tag_ids.filter((item) => item !== target_id)
+							target = tag_ids.filter(item => item !== target_id)
 						} else {
 							target = [...tag_ids, target_id]
 						}

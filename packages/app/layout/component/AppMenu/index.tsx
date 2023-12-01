@@ -22,7 +22,7 @@ const Index = (props: IPropsAppMenu) => {
 
 				total.push({
 					name: group_name,
-					items: app_modules.filter((item) => groups.includes(item.title))
+					items: app_modules.filter(item => groups.includes(item.title))
 				})
 
 				return total
@@ -47,11 +47,11 @@ const Index = (props: IPropsAppMenu) => {
 					<div className='group_item w_100 border_box flex flex_column' key={index}>
 						<span className='group_name'>{t(`translation:modules.group.${group.name}`)}</span>
 						<div className='menu_items_wrap w_100 border_box flex flex_column'>
-							{group.items.map((item) => (
+							{group.items.map(item => (
 								<Link
 									className={$cx(
 										'menu_item border_box flex align_center clickable relative',
-										actives.find((i) => i.app === item.title) && 'active'
+										actives.find(i => i.app === item.title) && 'active'
 									)}
 									key={item.title}
 									to={item.path}

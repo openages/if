@@ -18,7 +18,9 @@ const Index = (props: IPropsActions) => {
 				onClick={() => setModalOpen(true, 'file')}
 			>
 				<ListPlus size={16}></ListPlus>
-				<span className='text ml_6'>{t('translation:dirtree.add') + t('translation:dirtree.file')}</span>
+				<span className='text ml_6'>
+					{t('translation:dirtree.add') + t('translation:dirtree.file')}
+				</span>
 			</div>
 			<Tooltip title={t('translation:dirtree.add') + t('translation:dirtree.dir')} placement='top'>
 				<div

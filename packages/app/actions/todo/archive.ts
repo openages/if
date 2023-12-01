@@ -29,7 +29,7 @@ export default async (file_id: string) => {
 
 	const archive_items_data = getDocItemsData(archive_items)
 
-	await Promise.all(archive_items.map((item) => item.updateCRDT({ ifMatch: { $set: { archive: true } } })))
+	await Promise.all(archive_items.map(item => item.updateCRDT({ ifMatch: { $set: { archive: true } } })))
 
 	const info = await $db.todo.findOne({ selector: { id: file_id } }).exec()
 
@@ -39,7 +39,7 @@ export default async (file_id: string) => {
 		relations.map((item, index) => {
 			relations[index].items = difference(
 				item.items,
-				archive_items_data.map((item) => item.id)
+				archive_items_data.map(item => item.id)
 			)
 
 			if (relations[index].items.length === 0) {

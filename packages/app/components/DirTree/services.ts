@@ -40,7 +40,7 @@ export const remove = async (args: ArgsRemove) => {
 	await removeItem(focusing_item)
 
 	if (remove_items.length) {
-		await Promise.all(remove_items.map((item) => removeItem(item)))
+		await Promise.all(remove_items.map(item => removeItem(item)))
 	}
 
 	await updateItems(effect_items)
@@ -65,7 +65,7 @@ export const update = async (args: ArgsUpdate) => {
 export const updateItems = async (effect_items: DirTree.Items) => {
 	if (effect_items.length) {
 		await Promise.all(
-			effect_items.map(async (item) => {
+			effect_items.map(async item => {
 				const doc = await $db.dirtree_items.findOne(item.id).exec()
 
 				return doc.updateCRDT({

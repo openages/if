@@ -91,4 +91,4 @@ const typed_nav_items = [
 	}
 ] as const
 
-export default typed_nav_items.map((item) => item)
+export default typed_nav_items.map(item => item)

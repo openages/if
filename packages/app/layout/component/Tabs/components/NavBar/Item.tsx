@@ -19,7 +19,7 @@ const Index = (props: IPropsTabsNavBarItem) => {
 
 	useScrollToItem(item.id, item.is_active)
 
-	const fixedItem = useDoubleClick((index) => update({ index, v: { is_fixed: true } }))
+	const fixedItem = useDoubleClick(index => update({ index, v: { is_fixed: true } }))
 
 	return (
 		<div
@@ -36,7 +36,7 @@ const Index = (props: IPropsTabsNavBarItem) => {
 						item.is_active && 'is_active',
 						item.is_fixed && 'is_fixed'
 					)}
-					onMouseDown={(e) => {
+					onMouseDown={e => {
 						if (e.button !== 0) return
 
 						active(index)
@@ -63,7 +63,7 @@ const Index = (props: IPropsTabsNavBarItem) => {
 					</div>
 					<div
 						className='btn_remove flex justify_center align_center clickable ml_2'
-						onMouseDown={(e) => e.stopPropagation()}
+						onMouseDown={e => e.stopPropagation()}
 						onClick={() => remove(index)}
 					>
 						<X size={12} weight='bold'></X>

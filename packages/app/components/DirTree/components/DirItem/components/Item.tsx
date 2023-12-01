@@ -37,7 +37,7 @@ const Index = (props: IPropsDirItem_Item) => {
 				)}
 				style={{ paddingLeft: 18 * parent_index.length }}
 				onClick={onItem}
-				onContextMenu={(e) => showDirTreeOptions(e, parent_index)}
+				onContextMenu={e => showDirTreeOptions(e, parent_index)}
 			>
 				<div className='left_icon_wrap flex justify_center align_center'>
 					<If condition={item.icon}>

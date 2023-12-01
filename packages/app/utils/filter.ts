@@ -5,7 +5,7 @@ export const getComputedStyleValue = (el: Element, property: string) => {
 }
 
 export const getExsitValues = (v: any) => {
-	Object.keys(v).map((key) => {
+	Object.keys(v).map(key => {
 		if (v[key] === undefined || v[key] === null) {
 			delete v[key]
 		}

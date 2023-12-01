@@ -61,7 +61,7 @@ export default (args: HookArgs) => {
 						</div>
 					),
 					disabled: !tags?.length,
-					children: tags?.map((item) => ({
+					children: tags?.map(item => ({
 						key: item.id,
 						label: (
 							<div
@@ -108,7 +108,7 @@ export default (args: HookArgs) => {
 							<span className='text ml_6'>{t('translation:todo.context_menu.move')}</span>
 						</div>
 					),
-					children: angles?.map((item) => ({
+					children: angles?.map(item => ({
 						key: item.id,
 						label: (
 							<div className='menu_item_wrap flex align_center'>

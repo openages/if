@@ -5,8 +5,8 @@ import { injectable } from 'tsyringe'
 
 import { archive, cycle } from '@/actions/todo'
 import { GlobalModel } from '@/context/app'
-import { Utils, File, Loadmore } from '@/models'
-import { getDocItemsData, getDocItem } from '@/utils'
+import { File, Loadmore, Utils } from '@/models'
+import { getDocItem, getDocItemsData } from '@/utils'
 import { confirm } from '@/utils/antd'
 import { loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
@@ -14,33 +14,33 @@ import { useInstanceWatch } from '@openages/stk'
 
 import { getTodo } from './initials'
 import {
-	getQueryTodo,
-	getQueryItems,
+	archiveByTime,
+	check,
 	create,
-	queryTodo,
-	queryItem,
-	queryItems,
+	getAngleTodoCounts,
+	getQueryItems,
+	getQueryTodo,
+	getTagTodoCounts,
 	queryArchives,
 	queryArchivesCounts,
-	updateTodoData,
-	check,
-	update,
-	updateRelations,
-	updateTodosSort,
+	queryItem,
+	queryItems,
+	queryTodo,
+	removeAngle,
 	removeTodoItem,
 	restoreArchiveItem,
-	archiveByTime,
-	getAngleTodoCounts,
-	removeAngle,
-	getTagTodoCounts
+	update,
+	updateRelations,
+	updateTodoData,
+	updateTodosSort
 } from './services'
 
-import type { ArgsUpdateTodoData, ArgsArchiveByTime } from './types/services'
-import type { ItemsSortParams, ArchiveQueryParams, ArgsUpdate, ArgsTab } from './types/model'
 import type { RxDB, Todo } from '@/types'
-import type { Subscription } from 'rxjs'
 import type { Watch } from '@openages/stk'
 import type { ManipulateType } from 'dayjs'
+import type { Subscription } from 'rxjs'
+import type { ArchiveQueryParams, ArgsTab, ArgsUpdate, ItemsSortParams } from './types/model'
+import type { ArgsArchiveByTime, ArgsUpdateTodoData } from './types/services'
 
 @injectable()
 export default class Index {
@@ -77,17 +77,17 @@ export default class Index {
 
 			this.queryItems()
 		},
-		['todo.angles']: (v) => {
+		['todo.angles']: v => {
 			if (!this.id) return
 			if (!this.todo.id) return
 
-			const exist = v.find((item) => item.id === this.current_angle_id)
+			const exist = v.find(item => item.id === this.current_angle_id)
 
 			if (!exist) {
 				this.current_angle_id = v[0].id
 			}
 		},
-		['visible_archive_modal']: (v) => {
+		['visible_archive_modal']: v => {
 			if (v) {
 				this.queryArchives()
 				this.queryArchivesCounts()
@@ -97,7 +97,7 @@ export default class Index {
 				this.archive_query_params = {}
 			}
 		},
-		['loadmore.page']: (v) => {
+		['loadmore.page']: v => {
 			if (!v) return
 
 			this.queryArchives()
@@ -129,12 +129,7 @@ export default class Index {
 		return this.items[this.current_detail_index] as Todo.Todo
 	}
 
-	constructor(
-		public global: GlobalModel,
-		public utils: Utils,
-		public file: File,
-		public loadmore: Loadmore
-	) {
+	constructor(public global: GlobalModel, public utils: Utils, public file: File, public loadmore: Loadmore) {
 		makeAutoObservable(
 			this,
 			{ watch: false, timer_cycle: false, timer_archive: false },
@@ -228,7 +223,7 @@ export default class Index {
 			todo: this.todo,
 			changed_values,
 			values,
-			setTodo: (todo) => {
+			setTodo: todo => {
 				this.todo = todo
 			}
 		})
@@ -356,7 +351,7 @@ export default class Index {
 		if (type === 'in') {
 			const prev_item = this.items[index - 1]
 			const exsit_index = this.todo.relations
-				? this.todo.relations.findIndex((relation) => relation.items.includes(item.id))
+				? this.todo.relations.findIndex(relation => relation.items.includes(item.id))
 				: -1
 
 			if (!prev_item || prev_item.type === 'group') return
@@ -438,7 +433,7 @@ export default class Index {
 
 	updateArchiveItems(id: string) {
 		this.archives.splice(
-			this.archives.findIndex((item) => item.id === id),
+			this.archives.findIndex(item => item.id === id),
 			1
 		)
 		this.archive_counts = this.archive_counts - 1
@@ -454,13 +449,13 @@ export default class Index {
 			angle_id: this.current_angle_id,
 			items_sort_param: this.items_sort_param,
 			items_filter_tags: this.items_filter_tags
-		}).$.subscribe((items) => {
+		}).$.subscribe(items => {
 			this.items = getDocItemsData(items)
 		})
 	}
 
 	watchTodo() {
-		this.todo_watcher = getQueryTodo(this.id).$.subscribe((todo) => {
+		this.todo_watcher = getQueryTodo(this.id).$.subscribe(todo => {
 			this.todo = getDocItem(todo)
 
 			if (this.current_angle_id) return

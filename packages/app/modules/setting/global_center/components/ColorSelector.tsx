@@ -18,11 +18,12 @@ const Index = () => {
 			<span className='setting_title'>{t('translation:setting.ColorSelector.title')}</span>
 			<div className='setting_items w_100 border_box flex flex_column'>
 				<div className='setting_item w_100 border_box flex align_center justify_between'>
-					{color_mains.map((item) => (
+					{color_mains.map(item => (
 						<div
 							className={$cx(
 								'color_item_wrap border_box flex justify_center align_center cursor_point',
-								item === Color.rgb(`rgb(${global.setting.color_main_rgb})`).hex() && 'active'
+								item === Color.rgb(`rgb(${global.setting.color_main_rgb})`).hex() &&
+									'active'
 							)}
 							onClick={() => onItem(item)}
 							key={item}
