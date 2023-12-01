@@ -70,11 +70,25 @@ export default {
 			todo: '待办',
 			group: '组'
 		},
+		Remind: {
+			title: '提醒',
+			options: {
+				two_hour: '二小时后',
+				half_day: '半天后',
+				day: '明天',
+				after_tomorrow: '后天',
+				three_day: '三天后',
+				week: '一周后',
+				half_month: '半个月后',
+				month: '一个月后',
+				half_year: '半年后',
+				year: '一年后'
+			}
+		},
 		Cycle: {
 			title: '重复',
 			cycle: '周期',
 			disabled: '未开启',
-			unset: '未设置',
 			every: '每',
 			exclude: '排除',
 			options: {

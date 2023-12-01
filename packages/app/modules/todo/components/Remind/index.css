@@ -1,0 +1,53 @@
+._local {
+	padding: 0 !important;
+
+	&.useByInput {
+		:global {
+			.if-picker-input {
+				&:hover {
+					border-radius: var(--radius);
+					color: rgba(var(--color_text_rgb), 1);
+					background-color: var(--color_bg_2);
+
+					.btn_remind {
+						color: rgba(var(--color_text_rgb), 1);
+					}
+				}
+
+				input {
+					opacity: 0;
+					width: 1px !important;
+					margin-right: -1px;
+				}
+			}
+
+			.if-picker-clear {
+				right: 5px;
+				border-radius: 50%;
+			}
+		}
+	}
+
+	:global {
+		.if-picker-input {
+			input {
+				font-size: 12px;
+			}
+		}
+
+		.if-picker-suffix {
+			margin: 0;
+		}
+
+		.btn_remind {
+			width: 24px;
+			height: 24px;
+			border-radius: var(--radius);
+			color: rgba(var(--color_text_rgb), 0.24);
+
+			&.remind_time {
+				color: rgba(var(--color_text_rgb), 1);
+			}
+		}
+	}
+}

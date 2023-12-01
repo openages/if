@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { Popover, InputNumber, Switch, Radio } from 'antd'
+import { InputNumber, Popover, Radio, Switch } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -7,11 +7,11 @@ import { HourglassMedium } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
-import type { IPropsInputCircle } from '../../types'
+import type { IPropsCircle } from '../../types'
 
 const { Group } = Radio
 
-const Index = (props: IPropsInputCircle) => {
+const Index = (props: IPropsCircle) => {
 	const { cycle_enabled, cycle, useByDetail, onChangeCircle } = props
 	const { t, i18n } = useTranslation()
 	const every_text = t(`translation:todo.Input.Cycle.every`)
@@ -79,7 +79,7 @@ const Index = (props: IPropsInputCircle) => {
 			</div>
 			<div className='cycle_input_items w_100 border_box flex flex_column'>
 				<Group
-					className='checkbox_group'
+					className='radio_group'
 					size='small'
 					options={options_cycle}
 					value={cycle?.scale}
@@ -128,7 +128,7 @@ const Index = (props: IPropsInputCircle) => {
 		}
 
 		if (!cycle) {
-			return <span className='not_enabled cursor_point'>{t('translation:todo.Input.Cycle.unset')}</span>
+			return <span className='not_enabled cursor_point'>{t('translation:common.unset')}</span>
 		}
 
 		return (

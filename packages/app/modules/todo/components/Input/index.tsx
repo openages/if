@@ -8,14 +8,15 @@ import { When } from 'react-if'
 import { todo } from '@/appdata'
 import { id } from '@/utils'
 
-import { getTodo, getGroup } from '../../initials'
+import { getGroup, getTodo } from '../../initials'
 import Cycle from '../Cycle'
+import Remind from '../Remind'
+import Star from '../Star'
 import TagSelect from '../TagSelect'
 import styles from './index.css'
-import Star from './Star'
 
-import type { IPropsInput, IPropsInputCircle } from '../../types'
 import type { Todo } from '@/types'
+import type { IPropsCircle, IPropsInput, IPropsRemind } from '../../types'
 
 const { TextArea } = Input
 
@@ -39,12 +40,18 @@ const Index = (props: IPropsInput) => {
 			...v,
 			id: id(),
 			text: '',
+			remind_time: undefined,
 			cycle_enabled: false,
 			cycle: undefined
 		}))
 	}, [loading])
 
-	const props_circle: IPropsInputCircle = {
+	const props_remind: IPropsRemind = {
+		remind_time: (input as Todo.Todo).remind_time,
+		onChangeRemind: useMemoizedFn(v => setInput(input => ({ ...input, remind_time: v })))
+	}
+
+	const props_circle: IPropsCircle = {
 		cycle_enabled: (input as Todo.Todo).cycle_enabled,
 		cycle: (input as Todo.Todo).cycle,
 		onChangeCircle: useMemoizedFn(v => setInput(input => ({ ...input, ...v })))
@@ -103,6 +110,9 @@ const Index = (props: IPropsInput) => {
 									onChangeStar={v => setInput(input => ({ ...input, star: v }))}
 								></Star>
 							</div>
+							<div className='divide_line'></div>
+							<Remind {...props_remind}></Remind>
+							<div className='divide_line'></div>
 							<Cycle {...props_circle}></Cycle>
 						</div>
 					</When>

@@ -10,5 +10,6 @@ export default {
 		weeks: 'weeks',
 		x_unit_ago: '{{x}} {{unit}} ago'
 	},
-	notice: 'Notice'
+	notice: 'Notice',
+	unset: 'Unset'
 }

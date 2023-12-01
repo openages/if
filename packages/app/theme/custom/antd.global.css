@@ -126,8 +126,8 @@
 		}
 	}
 
-      &.custom{
-            .if-drawer-content-wrapper {
+	&.custom {
+		.if-drawer-content-wrapper {
 			.if-drawer-content {
 				padding: 0;
 			}
@@ -144,15 +144,14 @@
 				}
 			}
 
-                  .if-drawer-footer {
-                        height: 36px;
-                        padding: 0 18px;
-                        line-height: 1;
-                        border-top-style: solid;
-                  }
+			.if-drawer-footer {
+				height: 36px;
+				padding: 0 18px;
+				line-height: 1;
+				border-top-style: solid;
+			}
 		}
-
-      }
+	}
 
 	&-content-wrapper {
 		box-shadow: var(--shadow) !important;
@@ -392,7 +391,27 @@
 
 			.icon_selected {
 				right: 6px;
-                        color: var(--color_main);
+				color: var(--color_main);
+			}
+		}
+	}
+}
+
+/* DatePicker */
+.if-picker-dropdown {
+	.if-picker-footer {
+		.if-picker-ranges {
+			margin-top: 0;
+		}
+	}
+
+	.if-picker-presets {
+		min-width: 81px !important;
+		font-size: 12px;
+
+		ul {
+			li {
+				margin: 0 !important;
 			}
 		}
 	}

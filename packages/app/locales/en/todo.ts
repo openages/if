@@ -72,11 +72,25 @@ export default {
 			todo: 'Todo',
 			group: 'Group'
 		},
+		Remind: {
+			title: 'Remind',
+			options: {
+				two_hour: 'Two hours later',
+				half_day: 'Half a day later',
+				day: 'Tomorrow',
+				after_tomorrow: 'The day after tomorrow',
+				three_day: 'Three days later',
+				week: 'A week later',
+				half_month: 'Half a month later',
+				month: 'A month later',
+				half_year: 'Six months later',
+				year: 'A year later'
+			}
+		},
 		Cycle: {
 			title: 'Repeat',
 			cycle: 'Cycle',
 			disabled: 'Disabled',
-			unset: 'Unset',
 			every: 'Every',
 			exclude: 'exclude',
 			options: {

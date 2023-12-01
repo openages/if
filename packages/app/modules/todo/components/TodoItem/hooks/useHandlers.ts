@@ -2,8 +2,8 @@ import { useMemoizedFn } from 'ahooks'
 
 import { id as genID } from '@/utils'
 
-import type { IPropsTodoItem } from '../../../types'
 import type { Todo } from '@/types'
+import type { IPropsTodoItem } from '../../../types'
 
 interface HookArgs {
 	item: IPropsTodoItem['item']
@@ -98,6 +98,10 @@ export default (args: HookArgs) => {
 		update({ type: 'parent', index, value: { star: v } as Todo.Todo })
 	})
 
+	const updateRemind = useMemoizedFn(v => {
+		update({ type: 'parent', index, value: { remind_time: v } as Todo.Todo })
+	})
+
 	const updateCircle = useMemoizedFn(v => {
 		update({ type: 'parent', index, value: { ...v } as Todo.Todo })
 	})
@@ -113,6 +117,7 @@ export default (args: HookArgs) => {
 		updateTags,
 		updateTagWidth,
 		updateStar,
+		updateRemind,
 		updateCircle
 	}
 }

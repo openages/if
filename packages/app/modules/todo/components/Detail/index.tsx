@@ -3,12 +3,13 @@ import { Drawer } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { BellRinging, CaretDown, CaretUp, HourglassMedium, Plus, Tag } from '@phosphor-icons/react'
+import { Bell, CaretDown, CaretUp, HourglassMedium, Plus, Star as StarIcon, Tag } from '@phosphor-icons/react'
 
 import { useInput } from '../../hooks'
 import Children from '../Children'
 import Cycle from '../Cycle'
-import Star from '../Input/Star'
+import Remind from '../Remind'
+import Star from '../Star'
 import TagSelect from '../TagSelect'
 import { useContextMenu, useHandlers } from '../TodoItem/hooks'
 
@@ -31,14 +32,14 @@ const Index = (props: IPropsDetail) => {
 		setCurrentDetailIndex
 	} = props
 	const { t } = useTranslation()
-	const { status, children, tag_ids, star, cycle_enabled, cycle, recycle_time } = current_detail_item
+	const { status, children, tag_ids, star, remind_time, cycle_enabled, cycle, recycle_time } = current_detail_item
 	const { input, onInput } = useInput({
 		item: current_detail_item,
 		update: useMemoizedFn(textContent =>
 			update({ type: 'parent', index: current_detail_index, value: { text: textContent } })
 		)
 	})
-	const { insertChildren, removeChildren, updateTags, updateStar, updateCircle } = useHandlers({
+	const { insertChildren, removeChildren, updateTags, updateStar, updateRemind, updateCircle } = useHandlers({
 		item: current_detail_item,
 		index: current_detail_index,
 		visible_detail_modal,
@@ -123,10 +124,21 @@ const Index = (props: IPropsDetail) => {
 						</div>
 						<div className='option_item w_100 border_box flex align_center'>
 							<div className='name_wrap flex align_center'>
-								<BellRinging size={16}></BellRinging>
+								<StarIcon size={16}></StarIcon>
 								<span className='name'>{t('translation:todo.common.star')}</span>
 							</div>
 							<Star value={star} onChangeStar={updateStar}></Star>
+						</div>
+						<div className='option_item w_100 border_box flex align_center'>
+							<div className='name_wrap flex align_center'>
+								<Bell size={16}></Bell>
+								<span className='name'>{t('translation:todo.Input.Remind.title')}</span>
+							</div>
+							<Remind
+								remind_time={remind_time}
+								useByDetail
+								onChangeRemind={updateRemind}
+							></Remind>
 						</div>
 						<div
 							className={$cx(

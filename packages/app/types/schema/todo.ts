@@ -36,15 +36,9 @@ export namespace Todo {
 		status: 'checked' | 'unchecked' | 'closed'
 		open?: boolean
 		star?: number
-		archive?: boolean
-		/**
-		 * @multipleOf 1
-		 * @minimum 1
-		 * @maximum 9999999999000
-		 * */
-		archive_time?: number
 		tag_ids?: Array<string>
 		options_width?: number
+		remind_time?: number
 		cycle_enabled?: boolean
 		cycle?: {
 			scale: 'minute' | 'hour' | 'day' | 'week' | 'month' | 'quarter' | 'year'
@@ -52,6 +46,8 @@ export namespace Todo {
 			exclude?: Array<number>
 		}
 		recycle_time?: number
+		archive?: boolean
+		archive_time?: number
 		children?: Array<{
 			/** @maxLength 30 */
 			id: string

@@ -1,7 +1,8 @@
 ._local {
-	:global {
-		font-size: 12px;
+	font-size: 12px;
+	line-height: 1;
 
+	:global {
 		.btn_cycle {
 			width: 24px;
 			height: 24px;
@@ -12,6 +13,9 @@
 			&:hover,
 			&.cycle_enabled {
 				color: rgba(var(--color_text_rgb), 1);
+			}
+
+			&:hover {
 				background-color: var(--color_bg_2);
 			}
 		}
@@ -21,7 +25,7 @@
 		}
 
 		.cycle_input_wrap {
-			.checkbox_group {
+			.radio_group {
 				.if-radio-wrapper {
 					width: calc(50% - 1px);
 					padding: 6px 12px;

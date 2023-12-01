@@ -1,6 +1,6 @@
-import type { Todo, RxDB, DirTree } from '@/types'
+import type { DirTree, RxDB, Todo } from '@/types'
+import type { MenuProps, SelectProps } from 'antd'
 import type Model from '../model'
-import type { SelectProps, MenuProps } from 'antd'
 
 export type QueryItems = RxDB.ItemsQuery<Todo.TodoItem>
 export type QueryArchives = RxDB.ItemsQuery<Todo.TodoItem>
@@ -56,16 +56,22 @@ export interface IPropsInput {
 	create: Model['create']
 }
 
-export interface IPropsInputStar {
+export interface IPropsStar {
 	value: Todo.Todo['star']
 	onChangeStar: (v: Todo.Todo['star']) => void
 }
 
-export interface IPropsInputCircle {
+export interface IPropsRemind {
+	remind_time: Todo.Todo['remind_time']
+	useByDetail?: boolean
+	onChangeRemind: (v: Todo.Todo['remind_time']) => void
+}
+
+export interface IPropsCircle {
 	cycle_enabled: Todo.Todo['cycle_enabled']
 	cycle: Todo.Todo['cycle']
 	useByDetail?: boolean
-	onChangeCircle: (args: Partial<Pick<IPropsInputCircle, 'cycle_enabled' | 'cycle'>>) => void
+	onChangeCircle: (args: Partial<Pick<IPropsCircle, 'cycle_enabled' | 'cycle'>>) => void
 }
 
 export interface IPropsCircleStatus {
