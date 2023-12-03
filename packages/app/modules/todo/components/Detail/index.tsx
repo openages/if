@@ -33,18 +33,21 @@ const Index = (props: IPropsDetail) => {
 	} = props
 	const { t } = useTranslation()
 	const { status, children, tag_ids, star, remind_time, cycle_enabled, cycle, recycle_time } = current_detail_item
+
 	const { input, onInput } = useInput({
 		item: current_detail_item,
 		update: useMemoizedFn(textContent =>
 			update({ type: 'parent', index: current_detail_index, value: { text: textContent } })
 		)
 	})
+
 	const { insertChildren, removeChildren, updateTags, updateStar, updateRemind, updateCircle } = useHandlers({
 		item: current_detail_item,
 		index: current_detail_index,
 		visible_detail_modal,
 		update
 	})
+
 	const { ChildrenContextMenu } = useContextMenu({})
 
 	const exist_relations = useMemo(() => {
@@ -129,7 +132,12 @@ const Index = (props: IPropsDetail) => {
 							</div>
 							<Star value={star} onChangeStar={updateStar}></Star>
 						</div>
-						<div className='option_item w_100 border_box flex align_center'>
+						<div
+							className={$cx(
+								'option_item w_100 border_box flex align_center',
+								status === 'checked' && 'disabled'
+							)}
+						>
 							<div className='name_wrap flex align_center'>
 								<Bell size={16}></Bell>
 								<span className='name'>{t('translation:todo.Input.Remind.title')}</span>
