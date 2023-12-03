@@ -3,6 +3,8 @@
 	margin-left: -2px;
 
 	&.useByDetail {
+		--height: 18px;
+
 		:global {
 			.if-select-selector {
 				.if-select-selection-placeholder {
