@@ -134,7 +134,10 @@ export default {
 		}
 	},
 	Detail: {
-		title: 'Detail'
+		title: 'Detail',
+		remark: {
+			placeholder: 'Add Remark'
+		}
 	},
 	Help: [
 		{

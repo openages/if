@@ -132,7 +132,10 @@ export default {
 		}
 	},
 	Detail: {
-		title: '任务详情'
+		title: '任务详情',
+		remark: {
+			placeholder: '添加备注'
+		}
 	},
 	Help: [
 		{

@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { Drawer } from 'antd'
+import { Drawer, Input } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -17,6 +17,8 @@ import styles from './index.css'
 
 import type { IPropsChildren, IPropsDetail } from '../../types'
 
+const { TextArea } = Input
+
 const Index = (props: IPropsDetail) => {
 	const {
 		visible_detail_modal,
@@ -32,7 +34,8 @@ const Index = (props: IPropsDetail) => {
 		setCurrentDetailIndex
 	} = props
 	const { t } = useTranslation()
-	const { status, children, tag_ids, star, remind_time, cycle_enabled, cycle, recycle_time } = current_detail_item
+	const { status, children, tag_ids, star, remind_time, cycle_enabled, cycle, recycle_time, remark } =
+		current_detail_item
 
 	const { input, onInput } = useInput({
 		item: current_detail_item,
@@ -41,12 +44,13 @@ const Index = (props: IPropsDetail) => {
 		)
 	})
 
-	const { insertChildren, removeChildren, updateTags, updateStar, updateRemind, updateCircle } = useHandlers({
-		item: current_detail_item,
-		index: current_detail_index,
-		visible_detail_modal,
-		update
-	})
+	const { insertChildren, removeChildren, updateTags, updateStar, updateRemind, updateCircle, updateRemark } =
+		useHandlers({
+			item: current_detail_item,
+			index: current_detail_index,
+			visible_detail_modal,
+			update
+		})
 
 	const { ChildrenContextMenu } = useContextMenu({})
 
@@ -187,6 +191,17 @@ const Index = (props: IPropsDetail) => {
 						) : (
 							<Children {...props_children}></Children>
 						)}
+					</div>
+					<div className='textarea_wrap w_100 border_box'>
+						<TextArea
+							className='textarea w_100 border_box'
+							autoSize
+							placeholder={t('translation:todo.Detail.remark.placeholder')}
+							bordered={false}
+							maxLength={1200}
+							defaultValue={remark}
+							onBlur={updateRemark}
+						></TextArea>
 					</div>
 				</div>
 			)}

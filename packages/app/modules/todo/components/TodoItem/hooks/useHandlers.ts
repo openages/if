@@ -3,6 +3,7 @@ import { useMemoizedFn } from 'ahooks'
 import { id as genID } from '@/utils'
 
 import type { Todo } from '@/types'
+import type { ChangeEvent } from 'react'
 import type { IPropsTodoItem } from '../../../types'
 
 interface HookArgs {
@@ -106,6 +107,10 @@ export default (args: HookArgs) => {
 		update({ type: 'parent', index, value: { ...v } as Todo.Todo })
 	})
 
+	const updateRemark = useMemoizedFn(({ target: { value } }: ChangeEvent<HTMLTextAreaElement>) => {
+		update({ type: 'parent', index, value: { remark: value } as Todo.Todo })
+	})
+
 	return {
 		setOpen,
 		onCheck,
@@ -118,6 +123,7 @@ export default (args: HookArgs) => {
 		updateTagWidth,
 		updateStar,
 		updateRemind,
-		updateCircle
+		updateCircle,
+		updateRemark
 	}
 }

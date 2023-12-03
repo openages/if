@@ -20,7 +20,6 @@
 
 	&.useByDetail {
 		padding-left: 0;
-		margin-bottom: 12px;
 		overflow: visible;
 
 		:global {

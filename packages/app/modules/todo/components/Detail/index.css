@@ -72,21 +72,37 @@
 
 				&.has_children {
 					padding-top: 8px;
+					padding-bottom: 8px;
+					margin-bottom: 6px;
 
-					&::before {
+					&::before,
+					&::after {
 						content: '';
 						position: absolute;
-						top: 0;
 						left: 20px;
 						width: calc(100% - 40px);
 						height: 1px;
-						background-color: var(--color_border_light);
+						background-image: linear-gradient(
+							to right,
+							var(--color_border) 50%,
+							transparent 50%
+						);
+						background-size: 8px 100%;
+					}
+
+					&::before {
+						top: 0;
+					}
+
+					&::after {
+						bottom: 0;
 					}
 				}
 			}
 
 			.btn_insert {
 				height: 36px;
+				margin-bottom: 9px;
 				border-radius: var(--radius_large);
 				background-color: var(--color_bg_1);
 
@@ -96,6 +112,23 @@
 
 				&:hover {
 					background-color: var(--color_bg_2);
+				}
+			}
+
+			.textarea_wrap {
+				padding: 0 18px;
+
+				.textarea {
+					min-height: 150px;
+					padding: 0;
+					border-radius: 0;
+					font-size: 12px;
+					line-height: 1.8;
+					color: rgba(var(--color_text_rgb), 0.6) !important;
+
+					textarea {
+						background-color: transparent;
+					}
 				}
 			}
 		}
