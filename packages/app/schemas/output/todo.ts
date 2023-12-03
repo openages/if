@@ -159,6 +159,27 @@ export default {
                   "recycle_time": {
                         "type": "number"
                   },
+                  "links": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "properties": {
+                                    "type": {
+                                          "type": "string"
+                                    },
+                                    "id": {
+                                          "type": "string"
+                                    }
+                              },
+                              "required": [
+                                    "type",
+                                    "id"
+                              ]
+                        }
+                  },
+                  "remark": {
+                        "type": "string"
+                  },
                   "archive": {
                         "type": "boolean"
                   },
@@ -171,8 +192,7 @@ export default {
                               "type": "object",
                               "properties": {
                                     "id": {
-                                          "type": "string",
-                                          "maxLength": 30
+                                          "type": "string"
                                     },
                                     "text": {
                                           "type": "string"
@@ -337,6 +357,27 @@ export default {
                   "recycle_time": {
                         "type": "number"
                   },
+                  "links": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "properties": {
+                                    "type": {
+                                          "type": "string"
+                                    },
+                                    "id": {
+                                          "type": "string"
+                                    }
+                              },
+                              "required": [
+                                    "type",
+                                    "id"
+                              ]
+                        }
+                  },
+                  "remark": {
+                        "type": "string"
+                  },
                   "archive": {
                         "type": "boolean"
                   },
@@ -349,8 +390,7 @@ export default {
                               "type": "object",
                               "properties": {
                                     "id": {
-                                          "type": "string",
-                                          "maxLength": 30
+                                          "type": "string"
                                     },
                                     "text": {
                                           "type": "string"

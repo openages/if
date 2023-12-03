@@ -46,10 +46,14 @@ export namespace Todo {
 			exclude?: Array<number>
 		}
 		recycle_time?: number
+		links?: Array<{
+			type: string
+			id: string
+		}>
+		remark?: string
 		archive?: boolean
 		archive_time?: number
 		children?: Array<{
-			/** @maxLength 30 */
 			id: string
 			text: string
 			status: 'checked' | 'unchecked'
