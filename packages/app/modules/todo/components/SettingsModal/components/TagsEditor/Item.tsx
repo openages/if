@@ -1,10 +1,10 @@
-import { Input, ColorPicker } from 'antd'
+import { ColorPicker, Input } from 'antd'
 import Color from 'color'
 import { useTranslation } from 'react-i18next'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { Plus, Trash, DotsSixVertical } from '@phosphor-icons/react'
+import { DotsSixVertical, Plus, Trash } from '@phosphor-icons/react'
 
 interface IProps {
 	item: { id: string; color: string; text: string }
@@ -48,8 +48,8 @@ const Index = (props: IProps) => {
 					className='tag w_100 h_100 flex justify_center align_center transition_normal'
 					style={{
 						// @ts-ignore
-						'--tag_hover_color': item.color ? Color(item.color).alpha(0.3).toString() : '',
-						backgroundColor: item.color ? Color(item.color).alpha(0.15).toString() : '',
+						'--tag_hover_color': item.color ? Color(item.color).lightness(72).toString() : '',
+						backgroundColor: item.color ? Color(item.color).lightness(81).toString() : '',
 						color: item.color
 					}}
 				>

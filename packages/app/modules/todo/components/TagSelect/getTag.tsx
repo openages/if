@@ -18,7 +18,7 @@ const Index = (tags: Required<IPropsInput['tags']>, useByTodo?: boolean) => (pro
 		<div
 			className='tag border_box flex justify_center align_center'
 			style={{
-				backgroundColor: color ? Color(color).alpha(0.15).toString() : '',
+				backgroundColor: color ? Color(color).lightness(81).toString() : '',
 				color: color
 			}}
 			onMouseDown={onPreventMouseDown}
