@@ -166,7 +166,7 @@ const Index = (props: IPropsTodoItem) => {
 							className='other_wrap white flex justify_center align_center'
 							style={{ color: `rgba(var(--color_main_rgb),${(star / 6).toFixed(2)})` }}
 						>
-							<Star className='icon' size={10} weight='fill'></Star>
+							<Star className='icon' size={10} weight='duotone'></Star>
 						</div>
 					)}
 					{remind_time && <RemindStatus remind_time={remind_time}></RemindStatus>}

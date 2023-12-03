@@ -1,3 +1,3 @@
 export default {
-	migrating: 'Migrating'
+	migrating: 'Version updated, data Migrating, don`t close.'
 }

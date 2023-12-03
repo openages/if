@@ -18,6 +18,10 @@
 			.loading_wrap {
 				fill: white;
 			}
+
+			.desc {
+				color: white;
+			}
 		}
 	}
 
@@ -42,12 +46,10 @@
 		}
 
 		.desc {
-			padding: 4px 6px;
-			font-weight: 500;
-			line-height: 1;
-			margin-top: 12px;
-			background-color: var(--color_main);
-			color: white;
+			width: 160px;
+			margin-top: 15px;
+			color: var(--color_main);
+			user-select: none;
 		}
 	}
 }

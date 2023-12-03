@@ -30,7 +30,7 @@ const Index = (props: IProps) => {
 					color='inherit'
 				></Logo>
 			</div>
-			{desc && <span className='desc'>{desc}</span>}
+			{desc && <span className='desc border_box text_center'>{desc}</span>}
 		</div>
 	)
 }

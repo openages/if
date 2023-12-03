@@ -1,11 +1,11 @@
+import { migration_dirtree_items, migration_todo, migration_todo_items } from '@/migrations'
+import { schema_dirtree_items, schema_todo, schema_todo_items } from '@/schemas'
 import { makeAutoObservable } from 'mobx'
 import { createRxDatabase } from 'rxdb'
 import { wrappedKeyEncryptionCryptoJsStorage } from 'rxdb/plugins/encryption-crypto-js'
 import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
+import { migrateStorage } from 'rxdb/plugins/migration-storage'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
-
-import { migration_dirtree_items, migration_todo, migration_todo_items } from '@/migrations'
-import { schema_dirtree_items, schema_todo, schema_todo_items } from '@/schemas'
 
 import type { RxDB } from '@/types'
 import type { RxCollection } from 'rxdb'
@@ -20,7 +20,7 @@ export default class Index {
 
 	async init() {
 		const db = await createRxDatabase<RxDB.DBContent>({
-			name: 'if/db',
+			name: 'if_v1',
 			eventReduce: true,
 			allowSlowCount: true,
 			multiInstance: true,
@@ -55,14 +55,26 @@ export default class Index {
 		window.$db = db
 		this.instance = db
 
-		await this.migrate()
+		await this.migrateSchema()
 
 		this.ready = true
 
 		window.$app.Event.emit('app/setLoading', { visible: false })
 	}
 
-	async migrate() {
+	async migrateRxdb() {
+		window.$app.Event.emit('app/setLoading', { visible: true, desc: $t('translation:app.migrating') })
+
+		await migrateStorage({
+			oldDatabaseName: 'if_v1',
+			database: window.$db as any,
+			oldStorage: window.$db.storage,
+			batchSize: 300,
+			parallel: true
+		})
+	}
+
+	async migrateSchema() {
 		const collections = Object.values($db.collections)
 		const check_migrations = collections.map(async item => ((await item.migrationNeeded()) ? item : false))
 		const should_migrations = (await Promise.all(check_migrations)).filter(item => item)
