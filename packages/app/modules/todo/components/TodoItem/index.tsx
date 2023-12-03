@@ -1,20 +1,21 @@
 import { useMemoizedFn, useSize, useUpdateEffect } from 'ahooks'
-import { Dropdown, ConfigProvider, Progress } from 'antd'
+import { ConfigProvider, Dropdown } from 'antd'
 import { Fragment, useRef } from 'react'
-import { Switch, Case } from 'react-if'
+import { Case, Switch } from 'react-if'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { Square, CheckSquare, DotsSixVertical, Star, HourglassMedium } from '@phosphor-icons/react'
+import { CheckSquare, DotsSixVertical, Square, Star } from '@phosphor-icons/react'
 
 import { useInput } from '../../hooks'
 import Children from '../Children'
 import CycleStatus from '../CycleStatus'
+import RemindStatus from '../RemindStatus'
 import TagSelect from '../TagSelect'
-import { useContextMenu, useHandlers, useLink, useOpen, useOnContextMenu } from './hooks'
+import { useContextMenu, useHandlers, useLink, useOnContextMenu, useOpen } from './hooks'
 import styles from './index.css'
 
-import type { IPropsTodoItem, IPropsChildren } from '../../types'
+import type { IPropsChildren, IPropsTodoItem } from '../../types'
 
 const Index = (props: IPropsTodoItem) => {
 	const {
@@ -34,7 +35,19 @@ const Index = (props: IPropsTodoItem) => {
 		remove,
 		showDetailModal
 	} = props
-	const { id, status, open, tag_ids, star, cycle_enabled, cycle, recycle_time, options_width, children } = item
+	const {
+		id,
+		status,
+		open,
+		tag_ids,
+		star,
+		remind_time,
+		cycle_enabled,
+		cycle,
+		recycle_time,
+		options_width,
+		children
+	} = item
 	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } = useSortable(
 		{ id, data: { index } }
 	)
@@ -156,17 +169,9 @@ const Index = (props: IPropsTodoItem) => {
 							<Star className='icon' size={10} weight='fill'></Star>
 						</div>
 					)}
+					{remind_time && <RemindStatus remind_time={remind_time}></RemindStatus>}
 					{cycle_enabled && cycle && (
-						<div className='other_wrap flex justify_center align_center relative'>
-							{recycle_time && (
-								<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
-							)}
-							<HourglassMedium
-								className='icon'
-								size={recycle_time ? 8 : 10}
-								weight={recycle_time ? 'bold' : 'fill'}
-							></HourglassMedium>
-						</div>
+						<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
 					)}
 				</div>
 				<ConfigProvider getPopupContainer={() => document.body}>

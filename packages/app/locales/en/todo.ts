@@ -76,12 +76,12 @@ export default {
 			title: 'Remind',
 			options: {
 				two_hour: 'Two hours later',
-				half_day: 'Half a day later',
+				half_day: 'Half day later',
 				day: 'Tomorrow',
-				after_tomorrow: 'The day after tomorrow',
+				after_tomorrow: 'Day after tomorrow',
 				three_day: 'Three days later',
 				week: 'A week later',
-				half_month: 'Half a month later',
+				half_month: 'Half month later',
 				month: 'A month later',
 				half_year: 'Six months later',
 				year: 'A year later'

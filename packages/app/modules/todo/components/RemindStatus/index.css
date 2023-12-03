@@ -1,0 +1,29 @@
+@keyframes shaking {
+	0%,
+	100% {
+		transform: rotate(0deg);
+	}
+	25% {
+		transform: rotate(30deg);
+	}
+	50% {
+		transform: rotate(-30deg);
+	}
+	75% {
+		transform: rotate(18deg);
+	}
+}
+
+._local {
+	:global {
+		.icon {
+			&.timeout {
+				color: rgba(var(--color_main_rgb), 0.72);
+
+				:local {
+					animation: shaking 1.2s ease-in-out infinite;
+				}
+			}
+		}
+	}
+}

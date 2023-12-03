@@ -2,15 +2,15 @@ import { useMemoizedFn } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Switch, Case } from 'react-if'
+import { Case, Switch } from 'react-if'
 
 import { getRelativeTime } from '@/utils'
-import { Square, CheckSquare, ArrowCounterClockwise, Trash, HourglassMedium } from '@phosphor-icons/react'
+import { ArrowCounterClockwise, CheckSquare, HourglassMedium, Square, Trash } from '@phosphor-icons/react'
 
 import CycleStatus from '../CycleStatus'
 
-import type { IPropsArchiveItem } from '../../types'
 import type { Todo } from '@/types'
+import type { IPropsArchiveItem } from '../../types'
 
 const Index = (props: IPropsArchiveItem) => {
 	const { item, restoreArchiveItem, removeArchiveItem } = props
@@ -59,18 +59,7 @@ const Index = (props: IPropsArchiveItem) => {
 						</Case>
 					</Switch>
 				</div>
-				{recycle && (
-					<div className='recycle_wrap flex justify_center align_center absolute'>
-						{recycle_time && (
-							<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
-						)}
-						<HourglassMedium
-							className='icon'
-							size={recycle_time ? 8 : 10}
-							weight={recycle_time ? 'bold' : 'fill'}
-						></HourglassMedium>
-					</div>
-				)}
+				{recycle && <CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>}
 				<span
 					className={$cx(
 						'text cursor_point block',

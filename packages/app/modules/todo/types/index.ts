@@ -67,6 +67,11 @@ export interface IPropsRemind {
 	onChangeRemind: (v: Todo.Todo['remind_time']) => void
 }
 
+export interface IPropsRemindStatus {
+	remind_time: Todo.Todo['remind_time']
+	useByArchive?: boolean
+}
+
 export interface IPropsCircle {
 	cycle_enabled: Todo.Todo['cycle_enabled']
 	cycle: Todo.Todo['cycle']

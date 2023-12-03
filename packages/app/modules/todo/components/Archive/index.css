@@ -52,15 +52,18 @@
 						}
 					}
 
-					.recycle_wrap {
-						top: 6px;
-						left: 18px;
+					.other_wrap {
 						width: 14px;
 						height: 14px;
 						margin-right: 2px;
 						background-color: var(--color_bg_2);
 						border-radius: 50%;
 						z-index: 1;
+
+						&.recycle_wrap {
+							top: 6px;
+							left: 18px;
+						}
 					}
 
 					.text {

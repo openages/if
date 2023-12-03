@@ -242,6 +242,10 @@ export default class Index {
 
 		const todo_item = await queryItem(args.id)
 
+		if (todo_item.remind_time) {
+			await todo_item.updateCRDT({ ifMatch: { $set: { remind_time: undefined } } })
+		}
+
 		if (todo_item.cycle_enabled && todo_item.cycle) {
 			if (args.status === 'checked') {
 				const now = dayjs()

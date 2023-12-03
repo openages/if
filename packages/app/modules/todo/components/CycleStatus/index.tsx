@@ -1,7 +1,7 @@
+import { HourglassMedium } from '@phosphor-icons/react'
 import { Progress } from 'antd'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
-
 import styles from './index.css'
 
 import type { IPropsCircleStatus } from '../../types'
@@ -33,7 +33,7 @@ const Index = (props: IPropsCircleStatus) => {
 		return () => clearInterval(timer)
 	}, [cycle, recycle_time])
 
-	return (
+	const progress = (
 		<Progress
 			className={$cx(!useByArchive && 'absolute top_0 left_0', styles._local)}
 			type='circle'
@@ -45,6 +45,17 @@ const Index = (props: IPropsCircleStatus) => {
 			strokeWidth={6}
 			percent={percent}
 		></Progress>
+	)
+
+	return (
+		<div className='other_wrap recycle_wrap flex justify_center align_center relative'>
+			{recycle_time && progress}
+			<HourglassMedium
+				className='icon'
+				size={recycle_time ? 8 : 10}
+				weight={recycle_time ? 'bold' : 'fill'}
+			></HourglassMedium>
+		</div>
 	)
 }
 
