@@ -3,7 +3,6 @@ import { useMemoizedFn } from 'ahooks'
 import { id as genID } from '@/utils'
 
 import type { Todo } from '@/types'
-import type { ChangeEvent } from 'react'
 import type { IPropsTodoItem } from '../../../types'
 
 interface HookArgs {
@@ -107,8 +106,8 @@ export default (args: HookArgs) => {
 		update({ type: 'parent', index, value: { ...v } as Todo.Todo })
 	})
 
-	const updateRemark = useMemoizedFn(({ target: { value } }: ChangeEvent<HTMLTextAreaElement>) => {
-		update({ type: 'parent', index, value: { remark: value } as Todo.Todo })
+	const updateRemark = useMemoizedFn(v => {
+		update({ type: 'parent', index, value: { remark: v } as Todo.Todo })
 	})
 
 	return {

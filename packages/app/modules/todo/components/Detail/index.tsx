@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { Drawer, Input } from 'antd'
+import { Drawer } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -12,12 +12,11 @@ import Remind from '../Remind'
 import Star from '../Star'
 import TagSelect from '../TagSelect'
 import { useContextMenu, useHandlers } from '../TodoItem/hooks'
+import Remark from './components/Remark'
 
 import styles from './index.css'
 
 import type { IPropsChildren, IPropsDetail } from '../../types'
-
-const { TextArea } = Input
 
 const Index = (props: IPropsDetail) => {
 	const {
@@ -34,11 +33,11 @@ const Index = (props: IPropsDetail) => {
 		setCurrentDetailIndex
 	} = props
 	const { t } = useTranslation()
-	const { status, children, tag_ids, star, remind_time, cycle_enabled, cycle, recycle_time, remark } =
+	const { status, text, children, tag_ids, star, remind_time, cycle_enabled, cycle, recycle_time, remark } =
 		current_detail_item
 
 	const { input, onInput } = useInput({
-		item: current_detail_item,
+		value: text,
 		update: useMemoizedFn(textContent =>
 			update({ type: 'parent', index: current_detail_index, value: { text: textContent } })
 		)
@@ -192,17 +191,7 @@ const Index = (props: IPropsDetail) => {
 							<Children {...props_children}></Children>
 						)}
 					</div>
-					<div className='textarea_wrap w_100 border_box'>
-						<TextArea
-							className='textarea w_100 border_box'
-							autoSize
-							placeholder={t('translation:todo.Detail.remark.placeholder')}
-							bordered={false}
-							maxLength={1200}
-							defaultValue={remark}
-							onBlur={updateRemark}
-						></TextArea>
-					</div>
+					<Remark remark={remark} updateRemark={updateRemark}></Remark>
 				</div>
 			)}
 		</Drawer>

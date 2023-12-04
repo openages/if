@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { Dropdown, ConfigProvider } from 'antd'
+import { ConfigProvider, Dropdown } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -10,19 +10,19 @@ import { DotsSixVertical, Trash } from '@phosphor-icons/react'
 import { useInput } from '../../hooks'
 import styles from './index.css'
 
-import type { IPropsGroupTitle } from '../../types'
 import type { MenuProps } from 'antd'
+import type { IPropsGroupTitle } from '../../types'
 
 const Index = (props: IPropsGroupTitle) => {
 	const { item, index, update, remove } = props
-	const { id } = item
+	const { id, text } = item
 	const { t, i18n } = useTranslation()
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
 		id,
 		data: { index }
 	})
 	const { input, onInput } = useInput({
-		item,
+		value: text,
 		update: useMemoizedFn(textContent => update({ type: 'parent', index, value: { text: textContent } }))
 	})
 

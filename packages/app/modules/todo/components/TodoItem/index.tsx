@@ -35,9 +35,11 @@ const Index = (props: IPropsTodoItem) => {
 		remove,
 		showDetailModal
 	} = props
+
 	const {
 		id,
 		status,
+		text,
 		open,
 		tag_ids,
 		star,
@@ -48,9 +50,11 @@ const Index = (props: IPropsTodoItem) => {
 		options_width,
 		children
 	} = item
+
 	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } = useSortable(
 		{ id, data: { index } }
 	)
+
 	const {
 		setOpen,
 		onCheck,
@@ -62,12 +66,16 @@ const Index = (props: IPropsTodoItem) => {
 		updateTags,
 		updateTagWidth
 	} = useHandlers({ item, index, makeLinkLine, check, insert, update, tab })
+
 	const { linker, dragging, hovering } = useLink({ item, makeLinkLine, updateRelations })
+
 	const { input, onInput } = useInput({
-		item,
+		value: text,
 		update: useMemoizedFn(textContent => update({ type: 'parent', index, value: { text: textContent } }))
 	})
+
 	const { TodoContextMenu, ChildrenContextMenu } = useContextMenu({ angles, tags, tag_ids })
+
 	const { onContextMenu } = useOnContextMenu({
 		item,
 		index,
@@ -79,6 +87,7 @@ const Index = (props: IPropsTodoItem) => {
 		showDetailModal,
 		insertChildren
 	})
+
 	const options_wrap = useRef<HTMLDivElement>(null)
 	const options_size = useSize(options_wrap)
 

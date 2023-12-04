@@ -1,33 +1,62 @@
-import { useMemoizedFn, useEventListener } from 'ahooks'
+import { useEventListener, useMemoizedFn } from 'ahooks'
 import { debounce } from 'lodash-es'
-import { useRef, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { todo } from '@/appdata'
 
 import { getCursorPosition, setCursorPosition } from '../utils'
 
-import type { IPropsTodoItem, IPropsChildrenItem, IPropsGroupTitle } from '../types'
 import type { ClipboardEvent } from 'react'
 
 interface HookArgs {
-	item: IPropsTodoItem['item'] | IPropsChildrenItem['item'] | IPropsGroupTitle['item']
-	update: (textContent: string) => Promise<any>
+	value: string
+	update: (textContent: string) => Promise<any> | void
 }
 
 export default (args: HookArgs) => {
-	const { item, update } = args
-	const { text } = item
+	const { value, update } = args
 	const input = useRef<HTMLDivElement>(null)
+	const [compositing, setCompositing] = useState(false)
 
 	useEffect(() => {
 		const el = input.current
 
 		if (!el) return
-		if (text === undefined) return
-		if (el.textContent === text) return
+		if (value === undefined) return
+		if (el.textContent === value) return
 
-		el.textContent = text
-	}, [text])
+		el.textContent = value
+	}, [value])
+
+	const updateValue = useMemoizedFn(async (textContent: string) => {
+		if (textContent?.length > todo.text_max_length) {
+			textContent = textContent.slice(0, todo.text_max_length)
+
+			input.current.blur()
+
+			await update(textContent)
+		} else {
+			const start = getCursorPosition(input.current)
+
+			await update(textContent)
+
+			if (document.activeElement !== input.current) return
+
+			setCursorPosition(input.current, start)
+		}
+	})
+
+	useEventListener('compositionstart', () => setCompositing(true), { target: input })
+
+	useEventListener(
+		'compositionend',
+		() => {
+			setCompositing(false)
+
+			updateValue(input.current.textContent)
+		},
+		{ target: input }
+	)
 
 	useEventListener(
 		'paste',
@@ -61,24 +90,12 @@ export default (args: HookArgs) => {
 
 	const onInput = useMemoizedFn(
 		debounce(
-			async ({ target: { textContent } }) => {
-				if (textContent?.length > todo.text_max_length) {
-					textContent = textContent.slice(0, todo.text_max_length)
+			({ target: { textContent } }) => {
+				if (compositing) return
 
-					input.current.blur()
-
-					await update(textContent)
-				} else {
-					const start = getCursorPosition(input.current)
-
-					await update(textContent)
-
-					if (document.activeElement !== input.current) return
-
-					setCursorPosition(input.current, start)
-				}
+				updateValue(textContent)
 			},
-			450,
+			600,
 			{ leading: false }
 		)
 	)

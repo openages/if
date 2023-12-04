@@ -1,10 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
-import { Dropdown, ConfigProvider } from 'antd'
-import { Switch, Case } from 'react-if'
+import { ConfigProvider, Dropdown } from 'antd'
+import { Case, Switch } from 'react-if'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { Square, CheckSquare, DotsSixVertical } from '@phosphor-icons/react'
+import { CheckSquare, DotsSixVertical, Square } from '@phosphor-icons/react'
 
 import { useInput } from '../../hooks'
 import styles from './index.css'
@@ -23,9 +23,9 @@ const Index = (props: IPropsChildrenItem) => {
 		insertChildren,
 		removeChildren
 	} = props
-	const { id, status } = item
+	const { id, status, text } = item
 	const { input, onInput } = useInput({
-		item,
+		value: text,
 		update: useMemoizedFn(textContent => update(children_index, { text: textContent }))
 	})
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({

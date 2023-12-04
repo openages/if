@@ -187,6 +187,11 @@ export interface IPropsDetail {
 	clearCurrentDetail: (visible: boolean) => void
 }
 
+export interface IPropsDetailRemark {
+	remark: Todo.Todo['remark']
+	updateRemark: (v: Todo.Todo['remark']) => void
+}
+
 export interface IPropsHelp {
 	visible_help_modal: Model['visible_help_modal']
 	closeHelpModal: () => void
