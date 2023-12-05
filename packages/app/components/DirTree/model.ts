@@ -5,15 +5,15 @@ import { Utils } from '@/models'
 import { id } from '@/utils'
 import { loading } from '@/utils/decorators'
 import { getDocItemsData } from '@/utils/rxdb'
-import { NodeTree, setStorageWhenChange, useInstanceWatch } from '@openages/stk'
+import { DirTree as NodeTree, setStorageWhenChange, useInstanceWatch } from '@openages/stk'
 
-import { getQuery, query, insert, update, remove, updateItems } from './services'
+import { getQuery, insert, query, remove, update, updateItems } from './services'
 
 import type { App, DirTree } from '@/types'
 import type { Active, Over } from '@dnd-kit/core'
-import type { IProps } from './types'
-import type { Subscription } from 'rxjs'
 import type { Watch } from '@openages/stk'
+import type { Subscription } from 'rxjs'
+import type { IProps } from './types'
 import type { MoveData } from './types/model'
 
 @injectable()
