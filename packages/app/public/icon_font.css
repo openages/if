@@ -1,4 +1,94 @@
 @font-face {
+	font-weight: 300;
+	font-style: normal;
+	font-family: 'RedditSans';
+	src:
+		local('RedditSans'),
+		url('./font/RedditSans/RedditSans-Light.woff2') format('woff2');
+}
+
+@font-face {
+	font-weight: 300;
+	font-style: italic;
+	font-family: 'RedditSans';
+	src:
+		local('RedditSans'),
+		url('./font/RedditSans/RedditSans-LightItalic.woff2') format('woff2');
+}
+
+@font-face {
+	font-weight: 400;
+	font-style: normal;
+	font-family: 'RedditSans';
+	src:
+		local('RedditSans'),
+		url('./font/RedditSans/RedditSans-Regular.woff2') format('woff2');
+}
+
+@font-face {
+	font-weight: 400;
+	font-style: italic;
+	font-family: 'RedditSans';
+	src:
+		local('RedditSans'),
+		url('./font/RedditSans/RedditSans-Italic.woff2') format('woff2');
+}
+
+@font-face {
+	font-weight: 500;
+	font-style: normal;
+	font-family: 'RedditSans';
+	src:
+		local('RedditSans'),
+		url('./font/RedditSans/RedditSans-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+	font-weight: 500;
+	font-style: italic;
+	font-family: 'RedditSans';
+	src:
+		local('RedditSans'),
+		url('./font/RedditSans/RedditSans-SemiBoldItalic.woff2') format('woff2');
+}
+
+@font-face {
+	font-weight: 600;
+	font-style: normal;
+	font-family: 'RedditSans';
+	src:
+		local('RedditSans'),
+		url('./font/RedditSans/RedditSans-Bold.woff2') format('woff2');
+}
+
+@font-face {
+	font-weight: 600;
+	font-style: italic;
+	font-family: 'RedditSans';
+	src:
+		local('RedditSans'),
+		url('./font/RedditSans/RedditSans-BoldItalic.woff2') format('woff2');
+}
+
+@font-face {
+	font-weight: 800;
+	font-style: normal;
+	font-family: 'RedditSans';
+	src:
+		local('RedditSans'),
+		url('./font/RedditSans/RedditSans-ExtraBold.woff2') format('woff2');
+}
+
+@font-face {
+	font-weight: 800;
+	font-style: italic;
+	font-family: 'RedditSans';
+	src:
+		local('RedditSans'),
+		url('./font/RedditSans/RedditSans-ExtraBoldItalic.woff2') format('woff2');
+}
+
+@font-face {
 	font-weight: 400;
 	font-style: normal;
 	font-family: 'md_icon_outline';
@@ -23,87 +113,6 @@
 	src:
 		local('fa_icon'),
 		url('./icon/fa_icon.woff') format('woff');
-}
-
-@font-face {
-	font-weight: 100;
-	font-style: normal;
-	font-family: 'Outfit';
-	src:
-		local('Outfit'),
-		url('./font/static/Outfit-Thin.ttf') format('truetype');
-}
-
-@font-face {
-	font-weight: 200;
-	font-style: normal;
-	font-family: 'Outfit';
-	src:
-		local('Outfit'),
-		url('./font/static/Outfit-ExtraLight.ttf') format('truetype');
-}
-
-@font-face {
-	font-weight: 300;
-	font-style: normal;
-	font-family: 'Outfit';
-	src:
-		local('Outfit'),
-		url('./font/static/Outfit-Light.ttf') format('truetype');
-}
-
-@font-face {
-	font-weight: 400;
-	font-style: normal;
-	font-family: 'Outfit';
-	src:
-		local('Outfit'),
-		url('./font/static/Outfit-Regular.ttf') format('truetype');
-}
-
-@font-face {
-	font-weight: 500;
-	font-style: normal;
-	font-family: 'Outfit';
-	src:
-		local('Outfit'),
-		url('./font/static/Outfit-Medium.ttf') format('truetype');
-}
-
-@font-face {
-	font-weight: 600;
-	font-style: normal;
-	font-family: 'Outfit';
-	src:
-		local('Outfit'),
-		url('./font/static/Outfit-SemiBold.ttf') format('truetype');
-}
-
-@font-face {
-	font-weight: 700;
-	font-style: normal;
-	font-family: 'Outfit';
-	src:
-		local('Outfit'),
-		url('./font/static/Outfit-Bold.ttf') format('truetype');
-}
-
-@font-face {
-	font-weight: 800;
-	font-style: normal;
-	font-family: 'Outfit';
-	src:
-		local('Outfit'),
-		url('./font/static/Outfit-ExtraBold.ttf') format('truetype');
-}
-
-@font-face {
-	font-weight: 900;
-	font-style: normal;
-	font-family: 'Outfit';
-	src:
-		local('Outfit'),
-		url('./font/static/Outfit-Black.ttf') format('truetype');
 }
 
 @font-face {
