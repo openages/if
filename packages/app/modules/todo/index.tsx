@@ -1,35 +1,32 @@
 import { useMemoizedFn } from 'ahooks'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState, useMemo } from 'react'
+import { useLayoutEffect, useMemo, useState } from 'react'
 import { Else, If, Then, When } from 'react-if'
 import { container } from 'tsyringe'
 
 import { DataEmpty } from '@/components'
-import { usePageScrollRestoration } from '@/hooks'
 import { isShowEmpty } from '@/utils'
 
-import { Header, Input, Tabs, Todos, SettingsModal, Archive, Detail, Help } from './components'
+import { Archive, Detail, Header, Help, Input, SettingsModal, Tabs, Todos } from './components'
 import styles from './index.css'
 import Model from './model'
 
 import type {
 	IProps,
-	IPropsHeader,
-	IPropsTabs,
-	IPropsInput,
-	IPropsTodos,
-	IPropsSettingsModal,
 	IPropsArchive,
 	IPropsDetail,
-	IPropsHelp
+	IPropsHeader,
+	IPropsHelp,
+	IPropsInput,
+	IPropsSettingsModal,
+	IPropsTabs,
+	IPropsTodos
 } from './types'
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const angles = toJS(x.todo.angles || [])
-
-	usePageScrollRestoration(id, toJS(x.global.tabs.stacks))
 
 	useLayoutEffect(() => {
 		x.init({ id })
@@ -112,6 +109,7 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_detail: IPropsDetail = {
+		id: x.id,
 		visible_detail_modal: x.visible_detail_modal,
 		current_detail_index: toJS(x.current_detail_index),
 		current_detail_item: toJS(x.current_detail_item),

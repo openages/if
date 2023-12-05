@@ -8,8 +8,7 @@
 			padding: 7px 12px;
 			border-bottom-width: 2px;
 			border-bottom-style: solid;
-			background-color: transparent;
-			backdrop-filter: var(--blur);
+			background-color: var(--color_bg);
 
 			&:focus {
 				border-color: var(--color_text);

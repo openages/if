@@ -2,6 +2,7 @@
 	width: var(--sidebar_width);
 	background-color: var(--color_bg);
 	box-shadow: var(--shadow);
+
 	-webkit-app-region: drag;
 
 	--logo_height: 42px;
@@ -58,14 +59,14 @@
 
 				width: 42px;
 				height: 42px;
-                        margin-bottom: 9px;
+				margin-bottom: 9px;
 				text-decoration: none;
 				opacity: 0.36;
-                        border-radius: var(--radius);
+				border-radius: var(--radius);
 
-                        &:first-child{
-                              margin-top: 3px;
-                        }
+				&:first-child {
+					margin-top: 3px;
+				}
 
 				&:hover,
 				&.active {
@@ -78,14 +79,14 @@
 					}
 				}
 
-                        &.current{
-                              background-color: var(--color_bg_2);
-                        }
+				&.current {
+					background-color: var(--color_bg_2);
+				}
 
 				&.show_bar_title {
-                              width: 42px;
+					width: 42px;
 					height: 51px;
-                              margin-bottom: 8px;
+					margin-bottom: 8px;
 				}
 
 				&_title {
@@ -100,11 +101,11 @@
 					.btn_apps {
 						width: 42px;
 						height: 42px;
-                                    border-radius: var(--radius);
+						border-radius: var(--radius);
 
-                                    &:hover{
-                                          background-color: var(--color_bg_2);
-                                    }
+						&:hover {
+							background-color: var(--color_bg_2);
+						}
 					}
 				}
 			}

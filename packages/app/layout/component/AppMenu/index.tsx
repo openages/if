@@ -8,8 +8,8 @@ import { ModuleIcon } from '@/components'
 import group from './group'
 import styles from './index.css'
 
-import type { IPropsAppMenu } from '../../types'
 import type { App } from '@/types'
+import type { IPropsAppMenu } from '../../types'
 
 const Index = (props: IPropsAppMenu) => {
 	const { visible, app_modules, actives, visible_dirtree, onClose } = props
@@ -37,7 +37,7 @@ const Index = (props: IPropsAppMenu) => {
 			open={visible}
 			placement='left'
 			destroyOnClose
-			zIndex={3000}
+			zIndex={100000}
 			closeIcon={null}
 			getContainer={document.body}
 			onClose={onClose}

@@ -1,6 +1,5 @@
-import { unstable_Activity as Activity, Fragment } from 'react'
-
-import { LazyElement } from '@/components'
+import { Fragment, unstable_Activity as Activity } from 'react'
+import View from '../View'
 
 import type { IPropsTabsContent } from '../../../../types'
 
@@ -11,7 +10,7 @@ const Index = (props: IPropsTabsContent) => {
 		<Fragment>
 			{stacks.map(item => (
 				<Activity mode={item.is_active ? 'visible' : 'hidden'} key={item.id}>
-					<LazyElement type='modules' path={item.module} params={{ id: item.id }} />
+					<View module={item.module} id={item.id}></View>
 				</Activity>
 			))}
 		</Fragment>

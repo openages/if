@@ -1,6 +1,6 @@
 import type { GlobalModel } from '@/context/app'
-import type { IconProps } from '@phosphor-icons/react'
 import type { App } from '@/types'
+import type { IconProps } from '@phosphor-icons/react'
 
 export interface IPropsSidebar {
 	current_module: App.ModuleType
@@ -38,6 +38,11 @@ export interface IPropsTabsNavBarItem extends Omit<IPropsTabsNavBar, 'stacks' | 
 }
 
 export interface IPropsTabsContent extends Pick<IPropsTabs, 'stacks'> {}
+
+export interface IPropsTabsView {
+	module: App.ModuleType
+	id: string
+}
 
 export interface IPropsAppMenu {
 	visible: GlobalModel['app']['visible_app_menu']

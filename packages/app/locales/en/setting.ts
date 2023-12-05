@@ -18,24 +18,24 @@ export default {
 			title: 'Theme',
 			desc: 'App theme color, component color',
 			options: {
-				light: 'light',
-				dark: 'dark'
+				light: 'Light',
+				dark: 'Dark'
 			}
 		},
 		show_bar_title: {
 			title: 'Bar Title',
 			desc: 'Display title below navigation icon',
 			options: {
-				hide: 'hide',
-				show: 'show'
+				hide: 'Hide',
+				show: 'Show'
 			}
 		},
 		page_width: {
 			title: 'Page Width',
 			desc: 'Width rules of content page',
 			options: {
-				unlimited: 'full',
-				limited: 'limited'
+				unlimited: 'Full',
+				limited: 'Limited'
 			}
 		}
 	},

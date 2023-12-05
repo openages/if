@@ -80,6 +80,24 @@ export default {
                                     "checked"
                               ]
                         }
+                  },
+                  "links": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "properties": {
+                                    "type": {
+                                          "type": "string"
+                                    },
+                                    "id": {
+                                          "type": "string"
+                                    }
+                              },
+                              "required": [
+                                    "type",
+                                    "id"
+                              ]
+                        }
                   }
             },
             "required": [

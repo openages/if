@@ -20,6 +20,7 @@ import type { IPropsChildren, IPropsDetail } from '../../types'
 
 const Index = (props: IPropsDetail) => {
 	const {
+		id,
 		visible_detail_modal,
 		current_detail_index,
 		current_detail_item,

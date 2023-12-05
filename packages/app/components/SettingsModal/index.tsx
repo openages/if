@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Form } from './components'
 import styles from './index.css'
 
-import type { ReactNode, HTMLAttributes } from 'react'
+import type { HTMLAttributes, ReactNode } from 'react'
 
 export interface IPropsSettingsModal {
 	children: ReactNode
@@ -27,6 +27,7 @@ const Index = (props: IPropsSettingsModal) => {
 			width={450}
 			centered
 			destroyOnClose
+			getContainer={false}
 			maskClosable={false}
 			onCancel={onClose}
 			footer={null}

@@ -1,7 +1,7 @@
 ._local {
 	padding: 0 calc(var(--limited_padding) - 11px);
 	padding-top: 36px;
-	padding-bottom: 105px;
+	padding-bottom: 150px;
 
 	:global {
 		.stage_wrap {

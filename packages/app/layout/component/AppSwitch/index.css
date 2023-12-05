@@ -25,7 +25,7 @@
 				border: 2px solid transparent;
 				border-radius: var(--radius);
 				color: rgba(var(--color_bg_rgb), 0.72);
-                        user-select: none;
+				user-select: none;
 
 				&.active {
 					background-color: rgba(var(--color_bg_rgb), 0.1);

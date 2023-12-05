@@ -16,7 +16,7 @@ const Index = (props: IPropsAppSwitch) => {
 			rootClassName={styles._local}
 			open={visible}
 			width='auto'
-			zIndex={10000}
+			zIndex={100000}
 			centered
 			mask={false}
 			closeIcon={null}

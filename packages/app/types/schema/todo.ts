@@ -16,6 +16,10 @@ export namespace Todo {
 		}>
 		auto_archiving: '0m' | '3m' | '3h' | '1d' | '3d' | '7d'
 		relations?: Relations
+		links?: Array<{
+			type: string
+			id: string
+		}>
 	}
 
 	type Common = {

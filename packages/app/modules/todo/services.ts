@@ -1,26 +1,26 @@
 import dayjs from 'dayjs'
-import { cloneDeep, uniq, omit } from 'lodash-es'
+import { cloneDeep, omit, uniq } from 'lodash-es'
 import { match } from 'ts-pattern'
 
-import { update as updateTodo, not_archive } from '@/actions/todo'
+import { not_archive, update as updateTodo } from '@/actions/todo'
 import { getArchiveTime, getDocItem } from '@/utils'
 import { confirm } from '@/utils/antd'
 
+import type { MangoQueryOperators, MangoQuerySelector, MangoQuerySortPart } from 'rxdb/dist/types/types'
+import type { ArchiveQueryParams } from './types/model'
 import type {
-	ArgsQueryItems,
+	ArgsArchiveByTime,
+	ArgsCheck,
 	ArgsCreate,
 	ArgsQueryArchives,
+	ArgsQueryItems,
 	ArgsUpdate,
-	ArgsUpdateStatus,
-	ArgsCheck,
 	ArgsUpdateRelations,
-	ArgsUpdateTodoData,
-	ArgsArchiveByTime
+	ArgsUpdateStatus,
+	ArgsUpdateTodoData
 } from './types/services'
-import type { ArchiveQueryParams } from './types/model'
-import type { MangoQuerySelector, MangoQueryOperators, MangoQuerySortPart } from 'rxdb/dist/types/types'
 
-import type { Todo, RxDB } from '@/types'
+import type { RxDB, Todo } from '@/types'
 
 const getMaxSort = async () => {
 	const [max_sort_item] = await $db.collections.todo_items

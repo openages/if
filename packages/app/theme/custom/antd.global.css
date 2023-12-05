@@ -1,3 +1,13 @@
+/* Global */
+.if {
+	color: var(--color_text);
+}
+
+/* Input */
+.if-input {
+	font-family: 'RedditSans';
+}
+
 /* Tooltip */
 [data-theme='dark'] {
 	.if-tooltip {
@@ -35,7 +45,12 @@
 /* Modal */
 .if-modal-root {
 	.if-modal-mask {
+		z-index: 10000;
 		backdrop-filter: var(--blur);
+	}
+
+	.if-modal-wrap {
+		z-index: 10001;
 	}
 
 	.if-modal-content {
