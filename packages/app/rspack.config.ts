@@ -23,15 +23,17 @@ module.exports = defineConfig({
 		compress: false
 	},
 	optimization: {
-		sideEffects: true,
 		splitChunks: {
 			chunks: 'all',
 			maxSize: 30000
 		}
 	},
 	experiments: {
+		topLevelAwait: true,
 		outputModule: !is_prod,
 		rspackFuture: {
+			newResolver: true,
+			// newTreeshaking: true,
 			disableTransformByDefault: true
 		}
 	},

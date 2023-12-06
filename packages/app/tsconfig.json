@@ -10,14 +10,13 @@
 		"jsx": "react-jsx",
 		"baseUrl": ".",
 		"esModuleInterop": true,
-            "resolveJsonModule": true,
+		"resolveJsonModule": true,
 		"paths": { "@/*": ["./*"] },
 		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"ignoreDeprecations": "5.0"
+		"experimentalDecorators": true
 	},
-      "include": ["**/*.ts","**/*.tsx"],
-      "exclude": ["./node_modules"],
+	"include": ["**/*.ts", "**/*.tsx"],
+	"exclude": ["./node_modules"],
 	"ts-node": {
 		"compilerOptions": {
 			"module": "commonjs"
