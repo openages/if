@@ -45,7 +45,7 @@ const Index = (props: IProps) => {
 					<span className='label'>{t('translation:setting.Menu.fixed')}</span>
 					<Switch
 						size='small'
-						checked={item.is_fixed}
+						checked={item.fixed}
 						onChange={v => changeIsFixed(index, v)}
 					></Switch>
 				</div>

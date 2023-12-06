@@ -46,7 +46,7 @@ const Index = (props: IPropsSidebar) => {
 						{apps.map(item => (
 							<SidebarItem
 								{...{ current_module, theme, show_bar_title, icon_weight, item }}
-								is_active={Boolean(actives.find(i => i.app === item.title))}
+								active={Boolean(actives.find(i => i.app === item.title))}
 								key={item.title}
 							></SidebarItem>
 						))}

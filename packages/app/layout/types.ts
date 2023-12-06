@@ -17,27 +17,27 @@ export interface IPropsSidebarItem {
 	show_bar_title: GlobalModel['setting']['show_bar_title']
 	icon_weight: IconProps['weight']
 	item: App.Module
-	is_active: boolean
+	active: boolean
 }
 
 export interface IPropsTabs {
 	visible: boolean
 	current_module: App.ModuleType
-	stacks: GlobalModel['tabs']['stacks']
-	remove: GlobalModel['tabs']['remove']
-	active: GlobalModel['tabs']['active']
-	update: GlobalModel['tabs']['update']
-	move: GlobalModel['tabs']['move']
+	columns: GlobalModel['stack']['columns']
+	remove: GlobalModel['stack']['remove']
+	click: GlobalModel['stack']['click']
+	update: GlobalModel['stack']['update']
+	move: GlobalModel['stack']['move']
 }
 
 export interface IPropsTabsNavBar extends Omit<IPropsTabs, 'visible' | 'current_module'> {}
 
 export interface IPropsTabsNavBarItem extends Omit<IPropsTabsNavBar, 'stacks' | 'move'> {
-	item: IPropsTabsNavBar['stacks'][number]
+	item: IPropsTabsNavBar['columns'][number]
 	index: number
 }
 
-export interface IPropsTabsContent extends Pick<IPropsTabs, 'stacks'> {}
+export interface IPropsTabsContent extends Pick<IPropsTabs, 'columns'> {}
 
 export interface IPropsTabsView {
 	module: App.ModuleType

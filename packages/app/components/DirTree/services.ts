@@ -1,5 +1,5 @@
 import type { App, DirTree } from '@/types'
-import type { ArgsInsert, ArgsUpdate, ArgsRemove } from './types/services'
+import type { ArgsInsert, ArgsRemove, ArgsUpdate } from './types/services'
 
 export const getQuery = (module: App.ModuleType) => {
 	return $db.dirtree_items.find({ selector: { module: module } })
@@ -29,7 +29,7 @@ export const remove = async (args: ArgsRemove) => {
 		if (item.type === 'dir') $app.Event.emit(`${module}/dirtree/removeOpenFolder`, item.id)
 
 		if (item.type === 'file') {
-			$app.Event.emit('global.tabs.removeFile', item.id)
+			$app.Event.emit('global.stack.removeFile', item.id)
 
 			await actions.remove(item)
 		}
@@ -56,7 +56,7 @@ export const update = async (args: ArgsUpdate) => {
 
 	if (doc.type === 'dir') return
 
-	await $app.Event.emit('global.tabs.updateFile', {
+	await $app.Event.emit('global.stack.updateFile', {
 		...item,
 		id: target_id
 	})

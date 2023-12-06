@@ -46,7 +46,7 @@ export interface IPropsTabs {
 
 export interface IPropsTabsItem {
 	item: Model['todo']['angles'][number]
-	is_active: boolean
+	active: boolean
 	setCurrentAngleId: IPropsTabs['setCurrentAngleId']
 }
 

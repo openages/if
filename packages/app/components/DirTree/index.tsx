@@ -13,8 +13,8 @@ import { Actions, DirItems, DragLine, Modal, Options, Search } from './component
 import styles from './index.css'
 import Model from './model'
 
-import type { IProps, IPropsActions, IPropsModal, IPropsDirItems, IPropsOptions } from './types'
 import type { DirTree } from '@/types'
+import type { IProps, IPropsActions, IPropsDirItems, IPropsModal, IPropsOptions } from './types'
 
 const Index = (props: IProps) => {
 	const { module, height = '100vh', actions } = props

@@ -9,7 +9,7 @@ const Index = (props: IPropsTabsContent) => {
 	return (
 		<Fragment>
 			{stacks.map(item => (
-				<Activity mode={item.is_active ? 'visible' : 'hidden'} key={item.id}>
+				<Activity mode={item.active ? 'visible' : 'hidden'} key={item.id}>
 					<View module={item.module} id={item.id}></View>
 				</Activity>
 			))}

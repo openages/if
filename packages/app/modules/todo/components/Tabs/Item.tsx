@@ -1,16 +1,16 @@
-import type { IPropsTabsItem } from '../../types'
 import { useScrollToItem } from '@/hooks'
+import type { IPropsTabsItem } from '../../types'
 
 const Index = (props: IPropsTabsItem) => {
-	const { item, is_active, setCurrentAngleId } = props
+	const { item, active, setCurrentAngleId } = props
 
-	useScrollToItem(item.id, is_active)
+	useScrollToItem(item.id, active)
 
 	return (
 		<div
 			className={$cx(
 				'tab_item_wrap border_box inline_block cursor_point clickable relative',
-				is_active && 'active'
+				active && 'active'
 			)}
 			onMouseDown={() => setCurrentAngleId(item.id)}
 		>

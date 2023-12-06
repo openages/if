@@ -1,21 +1,33 @@
 import { useMemoizedFn } from 'ahooks'
 import { throttle } from 'lodash-es'
-import { useLayoutEffect, useEffect, useMemo } from 'react'
+import { useEffect, useLayoutEffect, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { session } from '@openages/stk'
 
-import type { App } from '@/types'
+import type { Stack } from '@/types'
 
-export default (id: string, stacks: App.Stacks) => {
+export default (id: string, columns: Stack.Columns) => {
 	const { pathname } = useLocation()
 	const scroll_key = `_page_scroll_position_${pathname}_${id}`
 
-	const active_id = useMemo(() => stacks.find(item => item.is_active)?.id, [stacks])
+	const active_ids = useMemo(() => {
+		const ids = [] as Array<string>
+
+		columns.forEach(column => {
+			column.views.forEach(view => {
+				if (view.active) {
+					ids.push(view.id)
+				}
+			})
+		})
+
+		return ids
+	}, [columns])
 
 	const scrollHandler = useMemoizedFn(
 		throttle(() => {
-			if (id !== active_id) return
+			if (!active_ids.includes(id)) return
 
 			session.setItem(scroll_key, {
 				scroll_top: window.scrollY,
@@ -30,7 +42,7 @@ export default (id: string, stacks: App.Stacks) => {
 		return () => {
 			window.removeEventListener('scroll', scrollHandler)
 		}
-	}, [id, scroll_key, active_id])
+	}, [id, scroll_key, columns])
 
 	useEffect(() => {
 		const position = session.getItem(scroll_key)

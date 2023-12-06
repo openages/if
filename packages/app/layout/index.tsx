@@ -79,11 +79,11 @@ const Index = () => {
 	const props_tabs: IPropsTabs = {
 		visible: !is_exclude_router,
 		current_module,
-		stacks: toJS(global.tabs.stacks),
-		remove: useMemoizedFn(global.tabs.remove),
-		active: useMemoizedFn(global.tabs.active),
-		update: useMemoizedFn(global.tabs.update),
-		move: useMemoizedFn(global.tabs.move)
+		columns: toJS(global.stack.columns),
+		remove: useMemoizedFn(global.stack.remove),
+		click: useMemoizedFn(global.stack.click),
+		update: useMemoizedFn(global.stack.update),
+		move: useMemoizedFn(global.stack.move)
 	}
 
 	const props_app_menu: IPropsAppMenu = {

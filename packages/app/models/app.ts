@@ -3,7 +3,7 @@ import { injectable } from 'tsyringe'
 
 import { modules } from '@/appdata'
 import Utils from '@/models/utils'
-import { useInstanceWatch, setStorageWhenChange } from '@openages/stk'
+import { setStorageWhenChange, useInstanceWatch } from '@openages/stk'
 
 import type { App } from '@/types'
 import type { Watch } from '@openages/stk'
@@ -35,7 +35,7 @@ export default class Index {
 
 	get apps() {
 		return toJS(this.app_modules).filter(item => {
-			if (item.is_fixed) return true
+			if (item.fixed) return true
 			if (this.actives.find(i => i.app === item.title)) return true
 
 			return false

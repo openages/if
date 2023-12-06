@@ -1,7 +1,7 @@
 import { Button } from 'antd'
 import { Else, If, Then } from 'react-if'
 
-import { Wave, LeftIcon, ModuleIcon, Emoji } from '@/components'
+import { Emoji, LeftIcon, ModuleIcon, Wave } from '@/components'
 import { useScrollToItem } from '@/hooks'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -17,9 +17,9 @@ const Index = (props: IPropsTabsNavBarItem) => {
 		data: { index }
 	})
 
-	useScrollToItem(item.id, item.is_active)
+	useScrollToItem(item.id, item.active)
 
-	const fixedItem = useDoubleClick(index => update({ index, v: { is_fixed: true } }))
+	const fixedItem = useDoubleClick(index => update({ index, v: { fixed: true } }))
 
 	return (
 		<div
@@ -33,8 +33,8 @@ const Index = (props: IPropsTabsNavBarItem) => {
 				<Button
 					className={$cx(
 						'nav_bar_item_wrap h_100 border_box flex align_center',
-						item.is_active && 'is_active',
-						item.is_fixed && 'is_fixed'
+						item.active && 'active',
+						item.fixed && 'fixed'
 					)}
 					onMouseDown={e => {
 						if (e.button !== 0) return

@@ -2,7 +2,7 @@ import { Popover, Slider } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { Else, If, Then } from 'react-if'
 
-import { EmojiPicker, LeftIcon, Emoji } from '@/components'
+import { Emoji, EmojiPicker, LeftIcon } from '@/components'
 
 import styles from './index.css'
 
@@ -23,7 +23,9 @@ const Index = (props: IProps) => {
 			placement='left'
 			trigger='click'
 			destroyTooltipOnHide
+			getPopupContainer={() => document.body}
 			align={{ offset: [-30, 0] }}
+			zIndex={100000}
 			content={
 				<div className='flex flex_column'>
 					<EmojiPicker

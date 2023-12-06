@@ -3,25 +3,25 @@ const typed_nav_items = [
 		id: 'todo',
 		title: 'todo',
 		path: '/',
-		is_fixed: true
+		fixed: true
 	},
 	{
 		id: 'memo',
 		title: 'memo',
 		path: '/memo',
-		is_fixed: true
+		fixed: true
 	},
 	{
 		id: 'typed',
 		title: 'typed',
 		path: '/typed',
-		is_fixed: true
+		fixed: true
 	},
 	{
 		id: 'note',
 		title: 'note',
 		path: '/note',
-		is_fixed: true
+		fixed: true
 	},
 	{
 		id: 'kanban',
@@ -87,7 +87,7 @@ const typed_nav_items = [
 		id: 'setting',
 		title: 'setting',
 		path: '/setting',
-		is_fixed: true
+		fixed: true
 	}
 ] as const
 

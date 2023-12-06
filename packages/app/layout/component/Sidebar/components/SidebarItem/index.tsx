@@ -6,17 +6,17 @@ import { NavLink } from 'react-router-dom'
 
 import { ModuleIcon } from '@/components'
 
-import type { IPropsSidebarItem } from '../../../../types'
 import type { MouseEvent } from 'react'
+import type { IPropsSidebarItem } from '../../../../types'
 
 const Index = (props: IPropsSidebarItem) => {
-	const { current_module, show_bar_title, icon_weight, item, is_active } = props
+	const { current_module, show_bar_title, icon_weight, item, active } = props
 	const { t } = useTranslation()
 
 	const exitApp = useMemoizedFn((e: MouseEvent<HTMLAnchorElement>) => {
 		e.preventDefault()
 
-		if (!is_active) return
+		if (!active) return
 		if (current_module === item.title) return
 
 		$app.Event.emit('global.app.exitApp', item.title)
@@ -27,7 +27,7 @@ const Index = (props: IPropsSidebarItem) => {
 			className={$cx(
 				'sidebar_item clickable flex flex_column justify_center align_center transition_normal',
 				show_bar_title && 'show_bar_title',
-				is_active && 'active',
+				active && 'active',
 				current_module === item.title && 'current'
 			)}
 			to={item.path}

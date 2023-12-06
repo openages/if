@@ -17,7 +17,7 @@ const Index = (props: IPropsTabs) => {
 					<ScrollMenu onWheel={onWheel}>
 						{angles.map(item => (
 							<Item
-								is_active={item.id === current_angle_id}
+								active={item.id === current_angle_id}
 								key={item.id}
 								{...{ item, setCurrentAngleId }}
 							></Item>

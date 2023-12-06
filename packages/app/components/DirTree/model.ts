@@ -3,13 +3,13 @@ import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
 import { id } from '@/utils'
-import { loading } from '@/utils/decorators'
+import { disableWatcher, loading } from '@/utils/decorators'
 import { getDocItemsData } from '@/utils/rxdb'
 import { DirTree as NodeTree, setStorageWhenChange, useInstanceWatch } from '@openages/stk'
 
 import { getQuery, insert, query, remove, update, updateItems } from './services'
 
-import type { App, DirTree } from '@/types'
+import type { App, DirTree, Stack } from '@/types'
 import type { Active, Over } from '@dnd-kit/core'
 import type { Watch } from '@openages/stk'
 import type { Subscription } from 'rxjs'
@@ -20,7 +20,6 @@ import type { MoveData } from './types/model'
 export default class Index {
 	module = '' as App.ModuleType
 	actions = {} as IProps['actions']
-	items = [] as Array<DirTree.Item>
 	items_watcher = null as Subscription
 	focusing_index = [] as Array<number>
 	current_item = {} as DirTree.Item
@@ -28,6 +27,7 @@ export default class Index {
 	current_option = '' as 'rename' | 'add_file' | 'add_dir' | ''
 	open_folder = [] as Array<string>
 	modal_open = false
+	disable_watcher = false
 
 	watch = {
 		current_item: v => this.onClick(v)
@@ -68,15 +68,15 @@ export default class Index {
 		this.utils.acts.push(disposer)
 	}
 
+	@disableWatcher
 	@loading
 	async query() {
-		const doc = await query(this.module)
+		const items = await query(this.module)
 
-		this.items = getDocItemsData(doc)
-
-		this.node_tree.init(toJS(this.items))
+		this.node_tree.init(getDocItemsData(items))
 	}
 
+	@disableWatcher
 	@loading
 	async insert(item: Partial<DirTree.Item>) {
 		const { item: target, effect_items } = this.node_tree.insert(
@@ -94,6 +94,7 @@ export default class Index {
 		this.focusing_index = []
 	}
 
+	@disableWatcher
 	async remove() {
 		const focusing_item = toJS(this.focusing_item)
 		const { remove_items, effect_items } = this.node_tree.remove(this.focusing_index)
@@ -114,6 +115,7 @@ export default class Index {
 		this.focusing_index = []
 	}
 
+	@disableWatcher
 	@loading
 	async update(item: Partial<DirTree.Item>) {
 		this.node_tree.update(this.focusing_index, item)
@@ -124,6 +126,7 @@ export default class Index {
 		this.focusing_index = []
 	}
 
+	@disableWatcher
 	async move(args: { active: Active; over: Over }) {
 		const { active, over } = args
 
@@ -154,14 +157,14 @@ export default class Index {
 	onClick(v: DirTree.Item) {
 		if (!v?.id) return
 
-		$app.Event.emit('global.tabs.add', {
+		$app.Event.emit('global.stack.add', {
 			id: v.id,
 			module: this.module,
 			file: v,
-			is_active: true,
-			is_fixed: false,
+			active: true,
+			fixed: false,
 			outlet: null
-		} as App.Stack)
+		} as Stack.View)
 	}
 
 	setCurrentItem(v: DirTree.Item) {
@@ -186,13 +189,11 @@ export default class Index {
 		this.open_folder = this.open_folder.filter(item => item !== id)
 	}
 
-	stopWatchItems() {
-		if (this.items_watcher) this.items_watcher.unsubscribe()
-	}
-
 	watchItems() {
 		this.items_watcher = getQuery(this.module).$.subscribe(items => {
-			this.items = getDocItemsData(items)
+			if (this.disable_watcher) return
+
+			this.node_tree.init(getDocItemsData(items))
 		})
 	}
 

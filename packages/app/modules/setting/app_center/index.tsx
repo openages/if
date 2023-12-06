@@ -9,8 +9,8 @@ import { GlobalModel } from '@/context/app'
 import { DndContext } from '@dnd-kit/core'
 import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable'
 
-import styles from './index.css'
 import Item from './Item'
+import styles from './index.css'
 
 import type { DragEndEvent } from '@dnd-kit/core'
 
@@ -21,7 +21,7 @@ const Index = () => {
 	const changeIsFixed = useMemoizedFn((index: number, v: boolean) => {
 		const _app_modules = cloneDeep(app_modules)
 
-		_app_modules[index].is_fixed = v
+		_app_modules[index].fixed = v
 
 		global.app.update(_app_modules)
 	})

@@ -1,18 +1,18 @@
 import { useEffect } from 'react'
-import { If, Then, Else } from 'react-if'
+import { Else, If, Then } from 'react-if'
 
 import { Logo } from '@/components'
 
-import { NavBar, Content } from './components'
+import { Content, NavBar } from './components'
 import styles from './index.css'
 
-import type { IPropsTabs, IPropsTabsNavBar, IPropsTabsContent } from '../../types'
+import type { IPropsTabs, IPropsTabsContent, IPropsTabsNavBar } from '../../types'
 
 const Index = (props: IPropsTabs) => {
 	const { visible, current_module, stacks, remove, active, update, move } = props
 
 	useEffect(() => {
-		const active_item = stacks.find(item => item.is_active)
+		const active_item = stacks.find(item => item.active)
 
 		$app.Event.emit(`${current_module}/dirtree/setCurrentItem`, active_item ? active_item.file : {})
 	}, [current_module, stacks])

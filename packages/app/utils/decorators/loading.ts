@@ -1,7 +1,5 @@
-export default (target: any, methodName: string, descriptor: PropertyDescriptor) => {
+export default (_target: any, methodName: string, descriptor: PropertyDescriptor) => {
 	const func = descriptor.value
-
-	target.loading = {}
 
 	descriptor.value = async function (...args: any[]) {
 		// @ts-ignore

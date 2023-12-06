@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Else, If, Then } from 'react-if'
 import { container } from 'tsyringe'
 
-import { LeftIcon, Emoji, ModuleIcon } from '@/components'
+import { Emoji, LeftIcon, ModuleIcon } from '@/components'
 import { GlobalModel } from '@/context/app'
 import { Trash } from '@phosphor-icons/react'
 
@@ -13,7 +13,7 @@ import styles from './index.css'
 
 const Index = () => {
 	const [global] = useState(() => container.resolve(GlobalModel))
-	const stacks = toJS(global.tabs.stacks)
+	const stacks = toJS(global.stack.stacks)
 	const { t } = useTranslation()
 
 	return (
@@ -46,9 +46,9 @@ const Index = () => {
 							<div
 								className={$cx(
 									'btn_wrap flex justify_end align_center ml_12 clickable',
-									item.is_active && 'disabled'
+									item.active && 'disabled'
 								)}
-								onClick={() => global.tabs.remove(index)}
+								onClick={() => global.stack.remove(index)}
 							>
 								<Trash size={16}></Trash>
 							</div>
