@@ -18,6 +18,8 @@ export default class GlobalModel {
 	}
 
 	async init() {
+		this.stack.init()
+
 		await this.db.init()
 
 		this.app.init()

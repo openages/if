@@ -110,7 +110,7 @@ const Index = (props: IPropsDetail) => {
 				<div className='detail_item_wrap w_100 border_box flex flex_column'>
 					<div
 						className='todo_text_wrap w_100 border_box'
-						contentEditable
+						contentEditable='plaintext-only'
 						ref={input}
 						onInput={onInput}
 					></div>

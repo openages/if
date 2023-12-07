@@ -73,7 +73,12 @@ const Index = (props: IPropsGroupTitle) => {
 					overlayStyle={{ width: 90 }}
 					menu={{ items: ContextMenu, onClick: onContextMenu }}
 				>
-					<div className='group_title' contentEditable ref={input} onInput={onInput}></div>
+					<div
+						className='group_title'
+						contentEditable='plaintext-only'
+						ref={input}
+						onInput={onInput}
+					></div>
 				</Dropdown>
 			</ConfigProvider>
 		</div>

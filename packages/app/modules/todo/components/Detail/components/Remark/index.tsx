@@ -16,7 +16,7 @@ const Index = (props: IPropsDetailRemark) => {
 		<div className={$cx('w_100 border_box relative', styles._local)}>
 			<div
 				className='textarea w_100 border_box'
-				contentEditable
+				contentEditable='plaintext-only'
 				data-placeholder={t('translation:todo.Detail.remark.placeholder')}
 				ref={input}
 				onInput={onInput}

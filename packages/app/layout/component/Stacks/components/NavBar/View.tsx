@@ -8,18 +8,18 @@ import { CSS } from '@dnd-kit/utilities'
 import { useDoubleClick } from '@openages/stk'
 import { X } from '@phosphor-icons/react'
 
-import type { IPropsTabsNavBarItem } from '@/layout/types'
+import type { IPropsStacksNavBarView } from '@/layout/types'
 
-const Index = (props: IPropsTabsNavBarItem) => {
-	const { item, index, remove, active, update } = props
-	const { attributes, listeners, transform, transition, setNodeRef } = useSortable({
-		id: item.id,
-		data: { index }
+const Index = (props: IPropsStacksNavBarView) => {
+	const { column_index, view_index, view, focus, drag_overlay, click, remove, update } = props
+	const { attributes, listeners, transform, transition, isDragging, setNodeRef } = useSortable({
+		id: view.id,
+		data: { column: column_index, view: view_index }
 	})
 
-	useScrollToItem(item.id, item.active)
+	useScrollToItem(view.id, view.active, isDragging)
 
-	const fixedItem = useDoubleClick(index => update({ index, v: { fixed: true } }))
+	const fixedItem = useDoubleClick(position => update({ position, v: { fixed: true } }))
 
 	return (
 		<div
@@ -33,38 +33,40 @@ const Index = (props: IPropsTabsNavBarItem) => {
 				<Button
 					className={$cx(
 						'nav_bar_item_wrap h_100 border_box flex align_center',
-						item.active && 'active',
-						item.fixed && 'fixed'
+						view.active && 'active',
+						view.fixed && 'is_fixed',
+						isDragging && 'isDragging',
+						drag_overlay && 'drag_overlay'
 					)}
 					onMouseDown={e => {
 						if (e.button !== 0) return
 
-						active(index)
-						fixedItem(index)
+						click({ column: column_index, view: view_index })
+						fixedItem({ column: column_index, view: view_index })
 					}}
 				>
 					<div className='icon_wrap h_100 flex align_center'>
-						<If condition={item.file.icon}>
+						<If condition={view.file.icon}>
 							<Then>
 								<Emoji
-									shortcodes={item.file.icon}
+									shortcodes={view.file.icon}
 									size={12}
-									hue={item.file.icon_hue}
+									hue={view.file.icon_hue}
 								></Emoji>
 							</Then>
 							<Else>
-								<LeftIcon module={item.module} item={item.file} size={12}></LeftIcon>
+								<LeftIcon module={view.module} item={view.file} size={12}></LeftIcon>
 							</Else>
 						</If>
 					</div>
-					<span className='name_wrap ml_4'>{item.file.name}</span>
+					<span className='name_wrap ml_4'>{view.file.name}</span>
 					<div className='icon_module_wrap flex justify_center align_center ml_2'>
-						<ModuleIcon type={item.module}></ModuleIcon>
+						<ModuleIcon type={view.module}></ModuleIcon>
 					</div>
 					<div
 						className='btn_remove flex justify_center align_center clickable ml_2'
 						onMouseDown={e => e.stopPropagation()}
-						onClick={() => remove(index)}
+						onClick={() => remove({ column: column_index, view: view_index })}
 					>
 						<X size={12} weight='bold'></X>
 					</div>

@@ -13,7 +13,7 @@
 			z-index: 10;
 			width: 100%;
 			height: 100%;
-			border: 2px dotted var(--color_main);
+			border: 1px dashed var(--color_text);
 			border-radius: var(--radius);
 		}
 	}
@@ -28,7 +28,7 @@
 			z-index: 10;
 			width: 100%;
 			height: 0px;
-			border-bottom: 2px dotted var(--color_main);
+			border-bottom: 1px dashed var(--color_text);
 		}
 	}
 
@@ -57,7 +57,7 @@
 
 			&.dragging {
 				padding: 0 18px !important;
-				outline: 2px solid var(--color_main);
+				outline: 1px dashed var(--color_text);
 				border-radius: var(--radius);
 				background-color: transparent !important;
 				backdrop-filter: var(--blur);

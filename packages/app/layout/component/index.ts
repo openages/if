@@ -1,4 +1,4 @@
 export { default as Sidebar } from './Sidebar'
-export { default as Tabs } from './Tabs'
+export { default as Stacks } from './Stacks'
 export { default as AppMenu } from './AppMenu'
 export { default as AppSwitch } from './AppSwitch'

@@ -1,8 +1,0 @@
-.hidden {
-	position: fixed;
-	transform: translateX(100vw);
-}
-
-.content_wrap {
-	height: calc(100vh - 36px);
-}

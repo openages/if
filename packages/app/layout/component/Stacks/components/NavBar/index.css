@@ -1,4 +1,4 @@
-._local {
+.Column {
 	height: 36px;
 	z-index: 999;
 	background-color: rgba(var(--color_bg_rgb), 0.6);
@@ -9,6 +9,10 @@
 			height: 1px;
 			background-color: var(--color_border_light);
 			z-index: -1;
+		}
+
+		.drag_wrap {
+			outline: none;
 		}
 
 		.nav_bar_item_wrap {
@@ -53,8 +57,12 @@
 				}
 			}
 
-			&.fixed {
+			&.is_fixed {
 				font-style: normal;
+			}
+
+			&.isDragging {
+				opacity: 0;
 			}
 
 			.name_wrap {

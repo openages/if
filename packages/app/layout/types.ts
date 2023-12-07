@@ -20,26 +20,36 @@ export interface IPropsSidebarItem {
 	active: boolean
 }
 
-export interface IPropsTabs {
+export interface IPropsStacks {
 	visible: boolean
 	current_module: App.ModuleType
 	columns: GlobalModel['stack']['columns']
-	remove: GlobalModel['stack']['remove']
+	focus: GlobalModel['stack']['focus']
 	click: GlobalModel['stack']['click']
+	remove: GlobalModel['stack']['remove']
 	update: GlobalModel['stack']['update']
 	move: GlobalModel['stack']['move']
+	observe: GlobalModel['stack']['observe']
+	unobserve: GlobalModel['stack']['unobserve']
 }
 
-export interface IPropsTabsNavBar extends Omit<IPropsTabs, 'visible' | 'current_module'> {}
+export interface IPropsStacksNavBar
+	extends Omit<IPropsStacks, 'visible' | 'current_module' | 'observe' | 'unobserve'> {}
 
-export interface IPropsTabsNavBarItem extends Omit<IPropsTabsNavBar, 'stacks' | 'move'> {
-	item: IPropsTabsNavBar['columns'][number]
-	index: number
+export interface IPropsStacksNavBarColumn extends Omit<IPropsStacksNavBar, 'columns'> {
+	column: IPropsStacksNavBar['columns'][number]
+	column_index: number
 }
 
-export interface IPropsTabsContent extends Pick<IPropsTabs, 'columns'> {}
+export interface IPropsStacksNavBarView extends Omit<IPropsStacksNavBarColumn, 'column' | 'move'> {
+	view_index: number
+	view: IPropsStacksNavBar['columns'][number]['views'][number]
+	drag_overlay?: boolean
+}
 
-export interface IPropsTabsView {
+export interface IPropsStacksContent extends Pick<IPropsStacks, 'columns'> {}
+
+export interface IPropsStacksView {
 	module: App.ModuleType
 	id: string
 }

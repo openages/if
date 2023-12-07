@@ -10,13 +10,23 @@ import type { DragEndEvent } from '@dnd-kit/core'
 
 @injectable()
 export default class Index {
+	observer = null as ResizeObserver
 	columns = [] as Stack.Columns
-	focus = { column: 0, view: 0 } as Stack.Position
+	focus = { column: -1, view: -1 } as Stack.Position
+	container_width = 0
 
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, {}, { autoBind: true, deep: true })
 
-		this.utils.acts = [setStorageWhenChange(['columns', 'focus'], this)]
+		this.utils.acts = [setStorageWhenChange(['columns', 'focus', 'container_width'], this)]
+	}
+
+	init() {
+		this.getObserver()
+	}
+
+	updateColumns() {
+		this.columns = toJS(this.columns)
 	}
 
 	find(id: string) {
@@ -46,6 +56,12 @@ export default class Index {
 			return
 		}
 
+		if (this.focus.column === -1) {
+			this.columns = [{ views: [view], width: this.container_width }]
+
+			return
+		}
+
 		const target_views = this.columns[this.focus.column].views
 		const last_view = target_views.at(-1)
 
@@ -60,6 +76,8 @@ export default class Index {
 		target_views[target_views.length - 1].active = true
 
 		this.focus.view = target_views.length - 1
+
+		this.updateColumns()
 	}
 
 	remove(position: Stack.Position) {
@@ -75,12 +93,14 @@ export default class Index {
 				let target_column = this.columns[this.columns.length - 1]
 
 				if (!target_column) {
-					this.focus = { column: 0, view: 0 }
+					this.focus = { column: -1, view: -1 }
 				} else {
 					this.focus.column = this.columns.length - 1
 					this.focus.view = target_column.views.length - 1
 				}
 			}
+
+			this.updateColumns()
 
 			return
 		}
@@ -94,17 +114,23 @@ export default class Index {
 		if (this.focus.column === column && this.focus.view === view) {
 			this.focus.view = target_views.length - 1
 		}
+
+		this.updateColumns()
 	}
 
 	click(position: Stack.Position) {
 		const { column, view } = position
 		const target_views = this.columns[column].views
 
+		if (target_views[view].active) return
+
 		target_views.forEach(item => (item.active = false))
 
 		target_views[view].active = true
 
 		this.focus = position
+
+		this.updateColumns()
 	}
 
 	update({ position, v }: { position: Stack.Position; v: Partial<Stack.View> }) {
@@ -112,6 +138,8 @@ export default class Index {
 			...this.columns[position.column].views[position.view],
 			...v
 		}
+
+		this.updateColumns()
 	}
 
 	updateFile(v: DirTree.Item) {
@@ -120,6 +148,8 @@ export default class Index {
 		if (!exsit_view?.view) return
 
 		this.columns[exsit_view.column_index].views[exsit_view.view_index].file = v
+
+		this.updateColumns()
 	}
 
 	removeFile(id: string) {
@@ -130,7 +160,7 @@ export default class Index {
 		this.remove({ column: exsit_view.column_index, view: exsit_view.view_index })
 	}
 
-	move({ active, over }: DragEndEvent) {
+	move({ active, over }: Pick<DragEndEvent, 'active' | 'over'>) {
 		if (!over?.id) return false
 		if (active.id === over.id) return
 
@@ -154,6 +184,8 @@ export default class Index {
 					active_view,
 					over_view
 				)
+
+				this.focus.view = over_view
 			} else {
 				const target = toJS(this.columns[active_column].views[active_view])
 
@@ -195,14 +227,41 @@ export default class Index {
 
 			target_column.width = width
 
-			this.columns.splice(direction === 'left' ? index : index + 1, 0, {
+			const target_index = direction === 'left' ? index : index + 1
+
+			this.columns.splice(target_index, 0, {
 				views: target_views,
 				width
 			} as Stack.Column)
+
+			this.focus = { column: target_index, view: 0 }
 		}
+
+		this.updateColumns()
+	}
+
+	getObserver() {
+		this.observer = new ResizeObserver(elements => {
+			if (!elements.length) return
+
+			const width = elements[0].contentRect.width
+
+			if (this.container_width === width) return
+
+			this.container_width = width
+		})
+	}
+
+	observe() {
+		this.observer.observe(document.getElementById('stacks_container'))
+	}
+
+	unobserve() {
+		this.observer?.disconnect()
 	}
 
 	off() {
+		this.observer?.disconnect()
 		this.utils.off()
 	}
 }

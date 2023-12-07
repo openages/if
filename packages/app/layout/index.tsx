@@ -11,18 +11,18 @@ import { useLocation } from 'react-router-dom'
 import { container } from 'tsyringe'
 
 import { exclude_paths } from '@/appdata'
-import { GlobalLoading, Loading, OffscreenOutlet } from '@/components'
+import { GlobalLoading, OffscreenOutlet } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
 
-import { AppMenu, AppSwitch, Sidebar, Tabs } from './component'
+import { AppMenu, AppSwitch, Sidebar, Stacks } from './component'
 import { useGlobalNavigate, useGlobalTranslate, useLayout } from './hooks'
 import styles from './index.css'
 
 import type { IPropsOffscreenOutlet } from '@/components/OffscreenOutlet'
 import type { AppProps } from 'antd'
 import type { ConfigProviderProps } from 'antd/es/config-provider'
-import type { IPropsAppMenu, IPropsAppSwitch, IPropsSidebar, IPropsTabs } from './types'
+import type { IPropsAppMenu, IPropsAppSwitch, IPropsSidebar, IPropsStacks } from './types'
 
 const Index = () => {
 	const { pathname } = useLocation()
@@ -76,14 +76,17 @@ const Index = () => {
 		setActives: useMemoizedFn(global.app.setActives)
 	}
 
-	const props_tabs: IPropsTabs = {
+	const props_stacks: IPropsStacks = {
 		visible: !is_exclude_router,
 		current_module,
 		columns: toJS(global.stack.columns),
+		focus: toJS(global.stack.focus),
 		remove: useMemoizedFn(global.stack.remove),
 		click: useMemoizedFn(global.stack.click),
 		update: useMemoizedFn(global.stack.update),
-		move: useMemoizedFn(global.stack.move)
+		move: useMemoizedFn(global.stack.move),
+		observe: useMemoizedFn(global.stack.observe),
+		unobserve: useMemoizedFn(global.stack.unobserve)
 	}
 
 	const props_app_menu: IPropsAppMenu = {
@@ -115,7 +118,7 @@ const Index = () => {
 							<Sidebar {...props_sidebar} />
 							<div className={$cx(styles.container, no_dirtree && styles.no_dirtree)}>
 								<OffscreenOutlet {...props_offscreen_pages_outlet} />
-								<Tabs {...props_tabs}></Tabs>
+								<Stacks {...props_stacks}></Stacks>
 							</div>
 						</div>
 						<AppMenu {...props_app_menu}></AppMenu>

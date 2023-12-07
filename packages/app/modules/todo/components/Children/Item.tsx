@@ -108,7 +108,7 @@ const Index = (props: IPropsChildrenItem) => {
 						id={`${useByDetail ? 'detail_' : ''}todo_${id}`}
 						className='text_wrap'
 						ref={input}
-						contentEditable
+						contentEditable='plaintext-only'
 						onInput={onInput}
 						onKeyDown={onKeyDown}
 					></div>

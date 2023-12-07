@@ -2,9 +2,9 @@ import { LazyElement } from '@/components'
 import { useElementScrollRestoration } from '@/hooks'
 import styles from './index.css'
 
-import type { IPropsTabsView } from '../../../../types'
+import type { IPropsStacksView } from '../../../../types'
 
-const Index = (props: IPropsTabsView) => {
+const Index = (props: IPropsStacksView) => {
 	const { module, id } = props
 	const scroll_restore = useElementScrollRestoration('todo.dirtree')
 
