@@ -37,8 +37,8 @@ export interface IPropsStacksNavBar
 	extends Omit<IPropsStacks, 'visible' | 'current_module' | 'observe' | 'unobserve'> {}
 
 export interface IPropsStacksNavBarColumn extends Omit<IPropsStacksNavBar, 'columns'> {
-	column: IPropsStacksNavBar['columns'][number]
 	column_index: number
+	column: IPropsStacksNavBar['columns'][number]
 }
 
 export interface IPropsStacksNavBarView extends Omit<IPropsStacksNavBarColumn, 'column' | 'move'> {
@@ -48,6 +48,20 @@ export interface IPropsStacksNavBarView extends Omit<IPropsStacksNavBarColumn, '
 }
 
 export interface IPropsStacksContent extends Pick<IPropsStacks, 'columns'> {}
+
+export interface IPropsStacksContentColumn {
+	column_index: number
+	column: IPropsStacksNavBar['columns'][number]
+}
+
+export interface IPropsStacksContentDrop {
+	column_index: number
+	direction: 'left' | 'right'
+}
+
+export interface IPropsStacksContentView {
+	view: IPropsStacksNavBar['columns'][number]['views'][number]
+}
 
 export interface IPropsStacksView {
 	module: App.ModuleType

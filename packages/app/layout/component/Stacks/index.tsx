@@ -61,7 +61,7 @@ const Index = (props: IPropsStacks) => {
 	return (
 		<div
 			id='stacks_container'
-			className={$cx('w_100 border_box flex flex_column', styles._local, !visible && styles.hidden)}
+			className={$cx('w_100 h_100vh border_box flex flex_column', styles._local, !visible && styles.hidden)}
 		>
 			<If condition={columns.length}>
 				<Then>
@@ -82,7 +82,7 @@ const Index = (props: IPropsStacks) => {
 					</DndContext>
 				</Then>
 				<Else>
-					<div className={'w_100 h_100vh flex justify_center align_center'}>
+					<div className={'w_100 h_100 flex justify_center align_center'}>
 						<Logo size={96}></Logo>
 					</div>
 				</Else>

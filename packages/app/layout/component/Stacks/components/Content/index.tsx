@@ -1,6 +1,4 @@
-import { unstable_Activity as Activity } from 'react'
-import View from '../View'
-import styles from './index.css'
+import Column from './Column'
 
 import type { IPropsStacksContent } from '../../../../types'
 
@@ -10,13 +8,7 @@ const Index = (props: IPropsStacksContent) => {
 	return (
 		<div className='w_100 flex'>
 			{columns.map((column, index) => (
-				<div className={$cx(styles.Column)} style={{ width: column.width }} key={index}>
-					{column.views.map(item => (
-						<Activity mode={item.active ? 'visible' : 'hidden'} key={item.id}>
-							<View module={item.module} id={item.id}></View>
-						</Activity>
-					))}
-				</div>
+				<Column column={column} column_index={index} key={index}></Column>
 			))}
 		</div>
 	)

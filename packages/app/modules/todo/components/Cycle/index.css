@@ -8,7 +8,6 @@
 			height: 24px;
 			border-radius: var(--radius);
 			color: rgba(var(--color_text_rgb), 0.24);
-			background-color: var(--color_bg);
 
 			&:hover,
 			&.cycle_enabled {

@@ -2,6 +2,7 @@
 	padding: 18px 0;
 	width: calc(100% - var(--sidebar_width) - var(--dirtree_width));
 	left: calc(var(--sidebar_width) + var(--dirtree_width));
+	z-index: 90;
 
 	:global {
 		.input_add_todo {
@@ -58,7 +59,6 @@
 		}
 
 		.star_wrap {
-			background-color: var(--color_bg);
 			border-radius: var(--radius);
 		}
 

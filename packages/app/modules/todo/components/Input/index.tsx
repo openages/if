@@ -66,7 +66,7 @@ const Index = (props: IPropsInput) => {
 	})
 
 	return (
-		<div className={$cx('w_100 fixed bottom_0 z_index_1000', styles._local)}>
+		<div className={$cx('w_100 fixed bottom_0', styles._local)}>
 			<div className='limited_content_wrap flex flex_column'>
 				<div className='options_wrap flex justify_between align_center'>
 					<div className='flex align_center'>

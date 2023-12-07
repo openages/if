@@ -14,7 +14,7 @@ const Index = (props: IPropsStacksNavBarView) => {
 	const { column_index, view_index, view, focus, drag_overlay, click, remove, update } = props
 	const { attributes, listeners, transform, transition, isDragging, setNodeRef } = useSortable({
 		id: view.id,
-		data: { column: column_index, view: view_index }
+		data: { type: 'stack', column: column_index, view: view_index }
 	})
 
 	useScrollToItem(view.id, view.active, isDragging)

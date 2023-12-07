@@ -1,5 +1,5 @@
 ._local {
-	.hidden {
+	&.hidden {
 		position: fixed;
 		transform: translateX(100vw);
 	}

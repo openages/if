@@ -1,3 +1,12 @@
 .Column {
 	height: calc(100vh - 36px);
 }
+
+.droppable_container {
+	width: 50%;
+	z-index: 100;
+
+	&.isOver {
+		background-color: rgba(var(--color_text_rgb), 0.09);
+	}
+}

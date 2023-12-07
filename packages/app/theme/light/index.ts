@@ -1,4 +1,7 @@
 export default {
+	color_std: 'white',
+	color_std_rgb: '255,255,255',
+
 	color_text: '#000',
 	color_text_rgb: '0,0,0',
 	color_text_sub: '#363636',

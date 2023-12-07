@@ -12,7 +12,7 @@ const Index = (props: IPropsStacksNavBarColumn) => {
 	const { column, column_index, focus, click, remove, update, move } = props
 
 	return (
-		<div className={$cx('w_100 border_box sticky top_0', styles.Column)} style={{ width: column.width }}>
+		<div className={$cx('border_box relative', styles.Column)} style={{ width: column.width }}>
 			<div className='bottom_line w_100 absolute bottom_0'></div>
 			<SortableContext items={column.views} strategy={horizontalListSortingStrategy}>
 				<ScrollMenu onWheel={onWheel}>

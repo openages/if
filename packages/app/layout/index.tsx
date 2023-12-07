@@ -114,9 +114,15 @@ const Index = () => {
 				<App {...props_app}>
 					<IconContext.Provider value={{ className: 'ricon', style: { verticalAlign: 'middle' } }}>
 						<GlobalLoading></GlobalLoading>
-						<div className='w_100 border_box flex'>
-							<Sidebar {...props_sidebar} />
-							<div className={$cx(styles.container, no_dirtree && styles.no_dirtree)}>
+						<Sidebar {...props_sidebar} />
+						<div
+							className={$cx(
+								'w_100vw border_box',
+								styles.container,
+								no_dirtree && styles.no_dirtree
+							)}
+						>
+							<div className='w_100 border_box'>
 								<OffscreenOutlet {...props_offscreen_pages_outlet} />
 								<Stacks {...props_stacks}></Stacks>
 							</div>

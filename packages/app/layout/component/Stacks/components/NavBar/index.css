@@ -1,14 +1,10 @@
 .Column {
 	height: 36px;
-	z-index: 999;
-	background-color: rgba(var(--color_bg_rgb), 0.6);
-	backdrop-filter: var(--blur);
 
 	:global {
 		.bottom_line {
 			height: 1px;
 			background-color: var(--color_border_light);
-			z-index: -1;
 		}
 
 		.drag_wrap {
