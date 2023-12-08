@@ -46,7 +46,6 @@
 .if-modal-root {
 	.if-modal-mask {
 		z-index: 10000;
-		backdrop-filter: var(--blur);
 	}
 
 	.if-modal-wrap {

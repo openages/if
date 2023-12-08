@@ -132,7 +132,7 @@ const Index = ({ id }: IProps) => {
 	}
 
 	return (
-		<div className={$cx('w_100 flex flex_column', styles._local)}>
+		<div className='w_100 flex flex_column'>
 			<If condition={x.id && x.file.data.name}>
 				<Then>
 					<Header {...props_header}></Header>

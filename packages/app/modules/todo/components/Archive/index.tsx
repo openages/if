@@ -171,9 +171,9 @@ const Index = (props: IPropsArchive) => {
 			width={342}
 			destroyOnClose
 			getContainer={false}
-			onClose={onClose}
 			extra={Extra}
 			footer={Actions}
+			onClose={onClose}
 		>
 			{archives.length > 0 && (
 				<div className='archive_items w_100 border_box flex flex_column'>

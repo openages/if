@@ -1,4 +1,4 @@
-import { useMemoizedFn, useSize, useUpdateEffect } from 'ahooks'
+import { useDebounce, useMemoizedFn, useSize, useUpdateEffect } from 'ahooks'
 import { ConfigProvider, Dropdown } from 'antd'
 import { Fragment, useRef } from 'react'
 import { Case, Switch } from 'react-if'
@@ -90,12 +90,13 @@ const Index = (props: IPropsTodoItem) => {
 
 	const options_wrap = useRef<HTMLDivElement>(null)
 	const options_size = useSize(options_wrap)
+	const real_options_size = useDebounce(options_size, { wait: 30 })
 
 	useUpdateEffect(() => {
-		if (options_size?.width === undefined) return
+		if (real_options_size?.width === undefined) return
 
-		updateTagWidth(options_size.width)
-	}, [options_size])
+		updateTagWidth(real_options_size.width)
+	}, [real_options_size])
 
 	useOpen({ item, input, isDragging, renderLines, setOpen })
 

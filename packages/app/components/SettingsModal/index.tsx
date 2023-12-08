@@ -1,6 +1,5 @@
 import { Modal } from 'antd'
 import { useTranslation } from 'react-i18next'
-
 import { Form } from './components'
 import styles from './index.css'
 
@@ -24,13 +23,15 @@ const Index = (props: IPropsSettingsModal) => {
 			rootClassName={$cx(styles._local, className)}
 			open={visible}
 			title={`${t('translation:components.SettingsModal.edit')} ${info.name}`}
-			width={450}
+			width={420}
 			centered
 			destroyOnClose
+			forceRender
+			transitionName=''
 			getContainer={false}
 			maskClosable={false}
-			onCancel={onClose}
 			footer={null}
+			onCancel={onClose}
 		>
 			<Form info={info} onValuesChange={onValuesChange}>
 				{children}
