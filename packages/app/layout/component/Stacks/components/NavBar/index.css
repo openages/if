@@ -1,12 +1,12 @@
+.bottom_line {
+	height: 1px;
+	background-color: var(--color_border_light);
+}
+
 .Column {
 	height: 36px;
 
 	:global {
-		.bottom_line {
-			height: 1px;
-			background-color: var(--color_border_light);
-		}
-
 		.drag_wrap {
 			outline: none;
 		}

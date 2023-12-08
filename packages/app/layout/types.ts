@@ -34,9 +34,9 @@ export interface IPropsStacks {
 }
 
 export interface IPropsStacksNavBar
-	extends Omit<IPropsStacks, 'visible' | 'current_module' | 'observe' | 'unobserve'> {}
+	extends Omit<IPropsStacks, 'visible' | 'current_module' | 'move' | 'observe' | 'unobserve'> {}
 
-export interface IPropsStacksNavBarColumn extends Omit<IPropsStacksNavBar, 'columns'> {
+export interface IPropsStacksNavBarColumn extends Omit<IPropsStacksNavBar, 'columns' | 'move'> {
 	column_index: number
 	column: IPropsStacksNavBar['columns'][number]
 }

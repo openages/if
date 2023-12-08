@@ -143,27 +143,35 @@
 
 	&.custom {
 		.if-drawer-content-wrapper {
+			box-shadow: var(--shadow_left) !important;
+
 			.if-drawer-content {
 				padding: 0;
+				background-color: var(--color_bg_blur);
+				backdrop-filter: var(--blur);
 			}
 
 			.if-drawer-header {
+				padding: 15px 18px;
+				padding-bottom: 3px;
 				flex: unset;
-				height: 36px;
-				padding: 0 18px;
 				padding-right: 42px;
-				border-bottom: 1px solid var(--color_border_light);
+				line-height: 1;
 
 				&-title {
 					margin-bottom: 0;
+
+					.if-drawer-title {
+						font-size: 14px;
+						font-weight: normal;
+					}
 				}
 			}
 
 			.if-drawer-footer {
-				height: 36px;
-				padding: 0 18px;
-				line-height: 1;
-				border-top-style: solid;
+				padding: 15px 18px;
+				padding-top: 0;
+				border-top: none;
 			}
 		}
 	}

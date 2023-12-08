@@ -146,15 +146,19 @@
 			}
 		}
 
-		.footer_wrap {
-			font-size: 12px;
-			color: var(--color_text_grey);
+		.if-drawer-footer {
+			padding-bottom: 10px !important;
 
-			.select {
-				height: 24px;
+			.footer_wrap {
+				font-size: 12px;
+				color: var(--color_text_grey);
 
-				.if-select-dropdown {
-					min-width: 90px !important;
+				.select {
+					height: 22px;
+
+					.if-select-dropdown {
+						min-width: 90px !important;
+					}
 				}
 			}
 		}
@@ -168,7 +172,7 @@
 		}
 
 		.filter_wrap {
-			width: 300px;
+			width: 342px;
 			padding: 18px 15px;
 			display: flex;
 			flex-wrap: wrap;

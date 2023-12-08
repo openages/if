@@ -161,7 +161,7 @@ const Index = (props: IPropsTodoItem) => {
 						</Case>
 					</Switch>
 				</div>
-				<div className='options_wrap flex align_center absolute z_index_1000' ref={options_wrap}>
+				<div className='options_wrap flex align_center absolute z_index_10' ref={options_wrap}>
 					{tags?.length > 0 && tag_ids?.length > 0 && (
 						<TagSelect
 							options={tags}

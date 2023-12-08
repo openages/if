@@ -13,8 +13,8 @@
 				padding: 8px;
 				border: 1px dashed var(--color_border);
 
-                        &:hover {
-                              border-color: var(--color_text_grey);
+				&:hover {
+					border-color: var(--color_text_grey);
 				}
 
 				.ant-color-picker-color-block {
@@ -44,19 +44,16 @@
 				border: 1px dashed var(--color_border);
 				border-radius: var(--radius);
 
-                        &:hover{
-                              border-color: var(--color_text_grey);
-
-                              .tag {
-                                    background-color: var(--tag_hover_color) !important;
-                              }
-                        }
+				&:hover {
+					border-color: var(--color_text_grey);
+				}
 
 				.tag {
 					border-radius: var(--radius_small);
 					font-size: 12px;
 					font-weight: bold;
-                              overflow: hidden;
+					overflow: hidden;
+					border-radius: 30px;
 				}
 			}
 
@@ -67,7 +64,7 @@
 				border: 1px dashed var(--color_border);
 
 				&:hover {
-                              border-color: var(--color_text_grey);
+					border-color: var(--color_text_grey);
 				}
 			}
 		}

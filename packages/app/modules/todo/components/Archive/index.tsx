@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { Drawer, Select, Popover, Form, DatePicker, Radio } from 'antd'
+import { DatePicker, Drawer, Form, Popover, Radio, Select } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
@@ -8,9 +8,9 @@ import { SimpleEmpty } from '@/components'
 import { getExsitValues } from '@/utils'
 import { ArrowCounterClockwise, Funnel } from '@phosphor-icons/react'
 
+import Item from './Item'
 import { useScrollToBottom } from './hooks'
 import styles from './index.css'
-import Item from './Item'
 
 import type { IPropsArchive } from '../../types'
 
@@ -127,14 +127,7 @@ const Index = (props: IPropsArchive) => {
 					<ArrowCounterClockwise size={16} weight='bold'></ArrowCounterClockwise>
 				</div>
 			</When>
-			<Popover
-				rootClassName={styles.popover}
-				destroyTooltipOnHide
-				trigger='click'
-				content={Filter}
-				align={{ offset: [0, -8] }}
-				getPopupContainer={() => document.body}
-			>
+			<Popover rootClassName={styles.popover} destroyTooltipOnHide trigger='click' content={Filter}>
 				<div>
 					<div className='btn_filter btn flex justify_center align_center clickable'>
 						<Funnel
@@ -175,9 +168,9 @@ const Index = (props: IPropsArchive) => {
 			rootClassName={$cx('hide_mask custom', styles._local)}
 			open={visible_archive_modal}
 			title={t('translation:todo.Archive.title')}
-			width={300}
+			width={342}
 			destroyOnClose
-			getContainer={document.body}
+			getContainer={false}
 			onClose={onClose}
 			extra={Extra}
 			footer={Actions}

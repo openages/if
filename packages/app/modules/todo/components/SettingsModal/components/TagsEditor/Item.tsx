@@ -1,10 +1,9 @@
-import { ColorPicker, Input } from 'antd'
-import Color from 'color'
-import { useTranslation } from 'react-i18next'
-
+import { useTagColor } from '@/hooks'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { DotsSixVertical, Plus, Trash } from '@phosphor-icons/react'
+import { ColorPicker, Input } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 interface IProps {
 	item: { id: string; color: string; text: string }
@@ -22,6 +21,7 @@ const Index = (props: IProps) => {
 		data: { index }
 	})
 	const { t } = useTranslation()
+	const color = useTagColor(item.color)
 
 	return (
 		<div
@@ -47,10 +47,8 @@ const Index = (props: IProps) => {
 				<span
 					className='tag w_100 h_100 flex justify_center align_center transition_normal'
 					style={{
-						// @ts-ignore
-						'--tag_hover_color': item.color ? Color(item.color).lightness(72).toString() : '',
-						backgroundColor: item.color ? Color(item.color).lightness(81).toString() : '',
-						color: item.color
+						backgroundColor: item.color,
+						color
 					}}
 				>
 					{item.text || t('translation:todo.SettingsModal.tags.placeholder')}

@@ -9,11 +9,10 @@ import styles from './index.css'
 import type { IPropsStacksNavBarColumn } from '../../../../types'
 
 const Index = (props: IPropsStacksNavBarColumn) => {
-	const { column, column_index, focus, click, remove, update, move } = props
+	const { column, column_index, focus, click, remove, update } = props
 
 	return (
-		<div className={$cx('border_box relative', styles.Column)} style={{ width: column.width }}>
-			<div className='bottom_line w_100 absolute bottom_0'></div>
+		<div className={$cx('border_box', styles.Column)} style={{ width: column.width }}>
 			<SortableContext items={column.views} strategy={horizontalListSortingStrategy}>
 				<ScrollMenu onWheel={onWheel}>
 					{column.views.map((view, view_index) => (

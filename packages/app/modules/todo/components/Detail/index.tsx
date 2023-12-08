@@ -20,7 +20,6 @@ import type { IPropsChildren, IPropsDetail } from '../../types'
 
 const Index = (props: IPropsDetail) => {
 	const {
-		id,
 		visible_detail_modal,
 		current_detail_index,
 		current_detail_item,
@@ -79,7 +78,7 @@ const Index = (props: IPropsDetail) => {
 			rootClassName={$cx('hide_mask custom', styles._local)}
 			open={visible_detail_modal}
 			title={t('translation:todo.Detail.title')}
-			width={360}
+			width={342}
 			mask={false}
 			destroyOnClose
 			getContainer={false}

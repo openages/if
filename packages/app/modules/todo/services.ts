@@ -81,7 +81,9 @@ export const create = async (args: ArgsCreate, quick?: boolean) => {
 	})
 
 	if (!quick) {
-		window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+		const container = document.getElementById(file_id)
+
+		container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' })
 	}
 
 	return getDocItem(res)

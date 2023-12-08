@@ -1,14 +1,14 @@
-import { useMemoizedFn } from 'ahooks'
-import Color from 'color'
-
+import { useTagColor } from '@/hooks'
 import { X } from '@phosphor-icons/react'
+import { useMemoizedFn } from 'ahooks'
 
 import type { CustomTagProps } from 'rc-select/lib/BaseSelect'
 import type { IPropsInput } from '../../types'
 
 const Index = (tags: Required<IPropsInput['tags']>, useByTodo?: boolean) => (props: CustomTagProps) => {
 	const { value, onClose } = props
-	const { text, color } = tags.find(item => item.id === value)
+	const { text, color: bg_color } = tags.find(item => item.id === value)
+	const color = useTagColor(bg_color)
 
 	const onPreventMouseDown = useMemoizedFn((e: React.MouseEvent<HTMLSpanElement>) => {
 		e.preventDefault()
@@ -18,8 +18,8 @@ const Index = (tags: Required<IPropsInput['tags']>, useByTodo?: boolean) => (pro
 		<div
 			className='tag border_box flex justify_center align_center'
 			style={{
-				backgroundColor: color ? Color(color).lightness(81).toString() : '',
-				color: color
+				backgroundColor: bg_color,
+				color
 			}}
 			onMouseDown={onPreventMouseDown}
 		>

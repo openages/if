@@ -11,6 +11,12 @@
 					inset-inline: 0 !important;
 				}
 			}
+
+			.tag {
+				.btn_close {
+					padding: 0px 1px;
+				}
+			}
 		}
 	}
 
@@ -40,10 +46,11 @@
 		}
 
 		.if-select-selector {
-			background-color: var(--color_bg) !important;
+			background-color: transparent !important;
 		}
 
 		.tag {
+			z-index: 0;
 			height: var(--height);
 			line-height: 1;
 			padding: 3px 6px;
@@ -60,7 +67,7 @@
 				border-radius: 50%;
 
 				&:hover {
-					background-color: var(--color_bg);
+					outline: 1px dashed;
 				}
 			}
 		}

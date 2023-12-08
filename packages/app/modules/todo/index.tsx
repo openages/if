@@ -109,7 +109,6 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_detail: IPropsDetail = {
-		id: x.id,
 		visible_detail_modal: x.visible_detail_modal,
 		current_detail_index: toJS(x.current_detail_index),
 		current_detail_item: toJS(x.current_detail_item),
@@ -138,8 +137,8 @@ const Index = ({ id }: IProps) => {
 				<Then>
 					<Header {...props_header}></Header>
 					<Tabs {...props_tabs}></Tabs>
-					<Input {...props_input}></Input>
 					<Todos {...props_todos}></Todos>
+					<Input {...props_input}></Input>
 					<SettingsModal {...props_settings_modal}></SettingsModal>
 					<Archive {...props_archive}></Archive>
 					<Detail {...props_detail}></Detail>

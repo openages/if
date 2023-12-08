@@ -50,8 +50,7 @@ const Index = (props: IPropsStacks) => {
 		focus,
 		click,
 		remove,
-		update,
-		move
+		update
 	}
 
 	const props_content: IPropsStacksContent = {
