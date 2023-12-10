@@ -93,8 +93,10 @@ const Index = (props: IPropsArchive) => {
 				name='begin_date'
 			>
 				<DatePicker
+					className='w_100'
 					showToday={false}
 					inputReadOnly
+					style={{ height: 30 }}
 					disabledDate={v => v.valueOf() > new Date().valueOf()}
 				></DatePicker>
 			</FormItem>
@@ -103,8 +105,10 @@ const Index = (props: IPropsArchive) => {
 				name='end_date'
 			>
 				<DatePicker
+					className='w_100'
 					showToday={false}
 					inputReadOnly
+					style={{ height: 30 }}
 					disabledDate={v => v.valueOf() > new Date().valueOf()}
 				></DatePicker>
 			</FormItem>
@@ -121,13 +125,19 @@ const Index = (props: IPropsArchive) => {
 		<div className='flex align_center'>
 			<When condition={exsit_query_params}>
 				<div
-					className='btn_clear btn flex justify_center align_center clickable mr_4'
+					className='btn_clear btn flex justify_center align_center clickable absolute'
 					onClick={() => setArchiveQueryParams({})}
 				>
 					<ArrowCounterClockwise size={16} weight='bold'></ArrowCounterClockwise>
 				</div>
 			</When>
-			<Popover rootClassName={styles.popover} destroyTooltipOnHide trigger='click' content={Filter}>
+			<Popover
+				rootClassName={styles.popover}
+				destroyTooltipOnHide
+				trigger='click'
+				content={Filter}
+				align={{ offset: [0, -6] }}
+			>
 				<div>
 					<div className='btn_filter btn flex justify_center align_center clickable'>
 						<Funnel
@@ -165,10 +175,10 @@ const Index = (props: IPropsArchive) => {
 
 	return (
 		<Drawer
-			rootClassName={$cx('hide_mask custom', styles._local)}
+			rootClassName={styles._local}
 			open={visible_archive_modal}
 			title={t('translation:todo.Archive.title')}
-			width={342}
+			width={360}
 			destroyOnClose
 			getContainer={false}
 			extra={Extra}

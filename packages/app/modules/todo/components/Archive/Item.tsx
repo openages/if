@@ -62,7 +62,7 @@ const Index = (props: IPropsArchiveItem) => {
 				{recycle && <CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>}
 				<span
 					className={$cx(
-						'text cursor_point block',
+						'text block',
 						is_parent && data_children && 'has_children',
 						recycle && 'recycle'
 					)}
@@ -91,7 +91,7 @@ const Index = (props: IPropsArchiveItem) => {
 					</motion.div>
 				)}
 			</AnimatePresence>
-			<div className='bottom_wrap flex justify_between align_center mt_4'>
+			<div className='bottom_wrap flex justify_between align_center'>
 				<span className='create_at'>{relative_time}</span>
 				<div className='actions_wrap flex align_center'>
 					<div

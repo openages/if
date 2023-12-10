@@ -1,31 +1,29 @@
 ._local {
 	:global {
-		.if-drawer-content-wrapper {
-			.if-drawer-content {
-				.if-drawer-body {
-					padding: 0 18px;
+		.if-drawer-extra {
+			position: absolute;
+			right: 36px;
+
+			.btn {
+				width: 22px;
+				height: 22px;
+				border-radius: var(--radius_small);
+				color: rgba(var(--color_text_rgb), 0.45);
+
+				&:hover {
+					color: rgba(var(--color_text_rgb), 1);
+					background-color: var(--color_bg_2);
+				}
+
+				&_clear {
+					right: 24px;
 				}
 			}
 		}
 
-		.btn {
-			width: 22px;
-			height: 22px;
-			border-radius: var(--radius_small);
-			color: rgba(var(--color_text_rgb), 0.45);
-
-			&:hover {
-				background-color: var(--color_bg_2);
-			}
-		}
-
 		.archive_items {
-			padding: 9px 0;
-			padding-bottom: 24px;
-
 			.archive_item {
-				padding: 6px 0;
-				border-bottom: var(--border);
+				margin-bottom: 18px;
 
 				&:hover {
 					.bottom_wrap {
@@ -33,6 +31,10 @@
 							opacity: 1;
 						}
 					}
+				}
+
+				&:last-child {
+					margin-bottom: 0;
 				}
 
 				.text_wrap {
@@ -111,7 +113,7 @@
 				}
 
 				.bottom_wrap {
-					padding-top: 3px;
+					margin-top: 3px;
 					font-size: 12px;
 
 					.actions_wrap {
@@ -119,9 +121,8 @@
 
 						.btn_action {
 							padding: 4px 6px;
-							border-radius: var(--radius_large);
+							border-radius: var(--radius_small);
 							line-height: 1;
-							background-color: var(--color_bg_1);
 
 							&:hover {
 								background-color: var(--color_bg_2);
@@ -147,7 +148,8 @@
 		}
 
 		.if-drawer-footer {
-			padding-bottom: 10px !important;
+			padding-top: 6px !important;
+			padding-bottom: 6px !important;
 
 			.footer_wrap {
 				font-size: 12px;
@@ -172,7 +174,7 @@
 		}
 
 		.filter_wrap {
-			width: 342px;
+			width: 360px;
 			padding: 18px 15px;
 			display: flex;
 			flex-wrap: wrap;

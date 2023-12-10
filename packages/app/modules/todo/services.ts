@@ -192,6 +192,7 @@ export const updateStatus = async (args: ArgsUpdateStatus) => {
 	await update({
 		id,
 		status,
+		create_at: new Date().valueOf(),
 		archive_time: status === 'checked' || status === 'closed' ? getArchiveTime(auto_archiving) : undefined
 	})
 }

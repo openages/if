@@ -84,7 +84,9 @@ const Index = (props: IProps) => {
 									</span>
 								</div>
 							)}
-							{children}
+							<div className={$cx(styles.body, className, 'border_box flex flex_column')}>
+								{children}
+							</div>
 						</div>
 					</motion.div>
 				)}

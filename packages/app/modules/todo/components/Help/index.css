@@ -1,22 +1,12 @@
 ._local {
 	:global {
-		.if-drawer-content-wrapper {
-			.if-drawer-content {
-				.if-drawer-body {
-					padding: 18px;
-				}
-			}
-		}
-
 		.help_item {
-                  padding-bottom: 12px;
-                  margin-bottom: 12px;
-                  border-bottom: var(--border);
+			margin-bottom: 18px;
 
-                  .title{
-                        font-weight: 500;
-                  }
-                  
+			.title {
+				font-weight: 500;
+			}
+
 			.desc {
 				font-size: 12px;
 			}

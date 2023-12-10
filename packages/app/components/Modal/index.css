@@ -30,23 +30,26 @@
 }
 
 .content {
-	padding: 18px;
 	margin: 0 auto;
 	background-color: var(--color_bg);
 	border-radius: var(--radius);
+	overflow: hidden;
 
 	.header {
 		line-height: 1;
-		margin-bottom: 9px;
+		padding: 9px 18px;
+		border-bottom: 1px dashed var(--color_border_light);
 
 		:global {
 			.title {
-				font-weight: 500;
+				font-size: 16px;
+				font-weight: 600;
 			}
 
 			.btn_close {
 				width: 21px;
 				height: 21px;
+				margin-right: -3px;
 				border-radius: var(--radius);
 
 				&:hover {
@@ -54,5 +57,9 @@
 				}
 			}
 		}
+	}
+
+	.body {
+		padding: 18px;
 	}
 }

@@ -33,7 +33,7 @@ const Index = (props: IPropsAppMenu) => {
 
 	return (
 		<Drawer
-			rootClassName={$cx('hide_mask', styles._local, !visible_dirtree && styles.no_dirtree)}
+			rootClassName={$cx(styles._local, !visible_dirtree && styles.no_dirtree)}
 			open={visible}
 			placement='left'
 			destroyOnClose

@@ -75,7 +75,7 @@ const Index = (props: IPropsDetail) => {
 
 	return (
 		<Drawer
-			rootClassName={$cx('hide_mask custom', styles._local)}
+			rootClassName={styles._local}
 			open={visible_detail_modal}
 			title={t('translation:todo.Detail.title')}
 			width={342}

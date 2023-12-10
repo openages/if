@@ -24,6 +24,7 @@ const Index = (props: IPropsSettingsModal) => {
 			title={`${t('translation:components.SettingsModal.edit')} ${info.name}`}
 			open={visible}
 			width={420}
+			maskClosable
 			onCancel={onClose}
 		>
 			<Form info={info} onValuesChange={onValuesChange}>
