@@ -326,6 +326,7 @@ export const restoreArchiveItem = async (id: string, angles: Todo.Data['angles']
 
 export const archiveByTime = async (file_id: string, v: ArgsArchiveByTime) => {
 	const now = dayjs()
+
 	const target_time = match(v)
 		.with('1year', () => now.subtract(1, 'year'))
 		.with('6month', () => now.subtract(6, 'month'))
@@ -336,6 +337,7 @@ export const archiveByTime = async (file_id: string, v: ArgsArchiveByTime) => {
 		.exhaustive()
 
 	const res = await confirm({
+		id: file_id,
 		title: $t('translation:common.notice'),
 		// @ts-ignore
 		content: $t('translation:todo.Archive.confirm', { date: target_time.format('YYYY-DD-MM') })

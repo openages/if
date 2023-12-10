@@ -1,14 +1,5 @@
 ._local {
 	:global {
-		.if-modal-mask,
-		.if-modal-wrap {
-			position: absolute;
-		}
-
-		.if-modal-wrap {
-			padding: 120px 60px;
-		}
-
 		.if-form-item {
 			margin-bottom: 12px;
 

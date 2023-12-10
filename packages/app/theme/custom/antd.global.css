@@ -43,13 +43,17 @@
 }
 
 /* Modal */
+[data-theme='dark'] {
+	.if-modal-root {
+		.if-modal-mask {
+			background-color: rgba(0, 0, 0, 0.75);
+		}
+	}
+}
+
 .if-modal-root {
 	.if-modal-mask {
-		z-index: 10000;
-	}
-
-	.if-modal-wrap {
-		z-index: 10001;
+		background-color: rgba(0, 0, 0, 0.3);
 	}
 
 	.if-modal-content {

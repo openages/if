@@ -295,6 +295,7 @@ export default class Index {
 		const counts = await getAngleTodoCounts(this.id, angle_id)
 
 		const res = await confirm({
+			id: this.id,
 			title: $t('translation:common.notice'),
 			// @ts-ignore
 			content: $t('translation:todo.SettingsModal.angles.remove_confirm', { counts })
@@ -315,7 +316,8 @@ export default class Index {
 				title: $t('translation:common.notice'),
 				// @ts-ignore
 				content: $t('translation:todo.SettingsModal.tags.remove_confirm', { counts }),
-				centered: true
+				centered: true,
+				getContainer: () => document.getElementById(this.id)
 			})
 
 			return false

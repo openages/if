@@ -1,9 +1,10 @@
-export const confirm = async ({ title, content }: { title: string; content: string }) => {
+export const confirm = async ({ id, title, content }: { id: string; title: string; content: string }) => {
 	return new Promise(resolve => {
 		$modal.confirm({
 			title,
 			content,
 			centered: true,
+			getContainer: () => document.getElementById(id),
 			onOk() {
 				resolve(true)
 			},
