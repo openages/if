@@ -1,7 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 
-import type { IPropsTodoItem } from '../../../types'
 import type { Todo } from '@/types'
+import type { IPropsTodoItem } from '../../../types'
 
 interface HookArgs {
 	item: IPropsTodoItem['item']
@@ -22,20 +22,20 @@ export default (args: HookArgs) => {
 	const onContextMenu = useMemoizedFn(({ key, keyPath }) => {
 		if (keyPath.length > 1) {
 			const parent_key = keyPath.at(-1)
-			const target_id = keyPath.at(0)
+			const target_key = keyPath.at(0)
 
 			switch (parent_key) {
 				case 'add_tags':
 					let target = [] as Array<string>
 
 					if (tag_ids?.length) {
-						if (tag_ids.includes(target_id)) {
-							target = tag_ids.filter(item => item !== target_id)
+						if (tag_ids.includes(target_key)) {
+							target = tag_ids.filter(item => item !== target_key)
 						} else {
-							target = [...tag_ids, target_id]
+							target = [...tag_ids, target_key]
 						}
 					} else {
-						target.push(target_id)
+						target.push(target_key)
 					}
 
 					update({
@@ -46,7 +46,7 @@ export default (args: HookArgs) => {
 
 					break
 				case 'move':
-					moveTo(id, target_id)
+					moveTo(id, target_key)
 					break
 			}
 		} else {

@@ -1,17 +1,18 @@
+import { useMemoizedFn } from 'ahooks'
 import { uniq } from 'lodash-es'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
-	PencilSimple,
-	Note,
-	GitFork,
-	Star,
 	ArrowsDownUp,
-	TextAa,
 	CalendarPlus,
+	GitFork,
+	Note,
+	PencilSimple,
+	Question,
+	Star,
 	Tag,
-	Question
+	TextAa
 } from '@phosphor-icons/react'
 
 import type { MenuProps } from 'antd'
@@ -59,7 +60,7 @@ export default (args: HookArgs) => {
 			{
 				key: 'edit',
 				label: (
-					<div className='menu_item_wrap flex align_center' onClick={showSettingsModal}>
+					<div className='menu_item_wrap flex align_center'>
 						<PencilSimple size={16}></PencilSimple>
 						<span className='text ml_6'>{t('translation:todo.Header.options.edit')}</span>
 					</div>
@@ -77,10 +78,7 @@ export default (args: HookArgs) => {
 					{
 						key: 'importance',
 						label: (
-							<div
-								className='menu_item_wrap flex align_center'
-								onClick={() => setItemsSortParam({ type: 'importance', order: 'desc' })}
-							>
+							<div className='menu_item_wrap flex align_center'>
 								<Star size={16}></Star>
 								<span className='text ml_6'>
 									{t('translation:todo.Header.options.sort.importance')}
@@ -91,12 +89,7 @@ export default (args: HookArgs) => {
 					{
 						key: 'alphabetical',
 						label: (
-							<div
-								className='menu_item_wrap flex align_center'
-								onClick={() =>
-									setItemsSortParam({ type: 'alphabetical', order: 'asc' })
-								}
-							>
+							<div className='menu_item_wrap flex align_center'>
 								<TextAa size={16}></TextAa>
 								<span className='text ml_6'>
 									{t('translation:todo.Header.options.sort.alphabetical')}
@@ -107,10 +100,7 @@ export default (args: HookArgs) => {
 					{
 						key: 'create_at',
 						label: (
-							<div
-								className='menu_item_wrap flex align_center'
-								onClick={() => setItemsSortParam({ type: 'create_at', order: 'asc' })}
-							>
+							<div className='menu_item_wrap flex align_center'>
 								<CalendarPlus size={16}></CalendarPlus>
 								<span className='text ml_6'>
 									{t('translation:todo.Header.options.sort.create_at')}
@@ -131,20 +121,13 @@ export default (args: HookArgs) => {
 				),
 				children: tags?.map(item => ({
 					key: item.id,
-					label: (
-						<div
-							className='menu_item_wrap'
-							onClick={() => setItemsFilterTags(uniq([...items_filter_tags, item.id]))}
-						>
-							{item.text}
-						</div>
-					)
+					label: <div className='menu_item_wrap'>{item.text}</div>
 				}))
 			},
 			{
 				key: 'help',
 				label: (
-					<div className='menu_item_wrap flex align_center' onClick={showHelpModal}>
+					<div className='menu_item_wrap flex align_center'>
 						<Question size={16}></Question>
 						<span className='text ml_6'>{t('translation:todo.Header.options.help')}</span>
 					</div>
@@ -154,5 +137,39 @@ export default (args: HookArgs) => {
 		[i18n.language, tags, items_filter_tags]
 	)
 
-	return { related_menu, options_menu }
+	const onContextMenu = useMemoizedFn(({ key, keyPath }) => {
+		if (keyPath.length > 1) {
+			const parent_key = keyPath.at(-1)
+			const target_key = keyPath.at(0)
+
+			if (parent_key === 'sort') {
+				switch (target_key) {
+					case 'importance':
+						setItemsSortParam({ type: 'importance', order: 'desc' })
+						break
+					case 'alphabetical':
+						setItemsSortParam({ type: 'alphabetical', order: 'asc' })
+						break
+					case 'create_at':
+						setItemsSortParam({ type: 'create_at', order: 'desc' })
+						break
+				}
+			}
+
+			if (parent_key === 'tags') {
+				setItemsFilterTags(uniq([...items_filter_tags, target_key]))
+			}
+		} else {
+			switch (key) {
+				case 'edit':
+					showSettingsModal()
+					break
+				case 'help':
+					showHelpModal()
+					break
+			}
+		}
+	})
+
+	return { related_menu, options_menu, onContextMenu }
 }

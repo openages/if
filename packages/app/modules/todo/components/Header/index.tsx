@@ -1,10 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
-import { Tooltip, Dropdown, ConfigProvider } from 'antd'
+import { ConfigProvider, Dropdown, Tooltip } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { When, If, Then, Else } from 'react-if'
+import { Else, If, Then, When } from 'react-if'
 
 import { Emoji } from '@/components'
-import { Files, ArchiveBox, DotsThreeCircleVertical, CaretUp, CaretDown, X } from '@phosphor-icons/react'
+import { ArchiveBox, CaretDown, CaretUp, DotsThreeCircleVertical, Files, X } from '@phosphor-icons/react'
 
 import TagSelect from '../TagSelect'
 import { useContextMenu } from './hooks'
@@ -28,7 +28,7 @@ const Index = (props: IPropsHeader) => {
 		setItemsFilterTags
 	} = props
 	const { t } = useTranslation()
-	const { related_menu, options_menu } = useContextMenu({
+	const { related_menu, options_menu, onContextMenu } = useContextMenu({
 		tags,
 		items_filter_tags,
 		showSettingsModal,
@@ -149,7 +149,7 @@ const Index = (props: IPropsHeader) => {
 						destroyPopupOnHide
 						trigger={['click']}
 						overlayStyle={{ width: 90 }}
-						menu={{ items: options_menu }}
+						menu={{ items: options_menu, onClick: onContextMenu }}
 					>
 						<div>
 							<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable'>
