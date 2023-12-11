@@ -2,7 +2,7 @@ export default {
 	color_std: 'white',
 	color_std_rgb: '255,255,255',
 
-	color_text: '#000',
+	color_text: '#000000',
 	color_text_rgb: '0,0,0',
 	color_text_sub: '#363636',
 	color_text_grey: '#888',
@@ -18,7 +18,7 @@ export default {
 	color_border_light: 'rgba(0, 0, 0, 0.06)',
 	color_border_soft: 'rgba(0, 0, 0, 0.03)',
 	shadow: '0 0 30px #eee',
-	shadow_left: '-6px 12px 30px #eee',
+	shadow_left: '-6px 6px 30px #eee',
 	shadow_right: '15px 0 30px #eee',
 	shadow_top: '0 0 30px #eee',
 	wave: 'rgba(var(--color_main_rgb), 0.06)'

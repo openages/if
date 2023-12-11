@@ -1,5 +1,5 @@
 ._local {
-	padding: 0 18px;
+	padding: 0 var(--padding);
 
 	:global {
 		.textarea {
@@ -12,8 +12,10 @@
 			color: rgba(var(--color_text_rgb), 0.6) !important;
 			white-space: pre-wrap;
 
-			&:empty::after {
-				content: attr(data-placeholder);
+			&:empty {
+				&::after {
+					content: attr(data-placeholder);
+				}
 			}
 		}
 	}

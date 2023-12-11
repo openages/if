@@ -2,7 +2,7 @@
 	position: fixed;
 	left: var(--sidebar_width);
 	width: var(--dirtree_width);
-	border-right: 1px solid var(--color_border_light);
+	border-right: var(--border);
 
 	&.hide {
 		width: 0;

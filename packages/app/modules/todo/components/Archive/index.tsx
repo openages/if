@@ -96,7 +96,7 @@ const Index = (props: IPropsArchive) => {
 					className='w_100'
 					showToday={false}
 					inputReadOnly
-					style={{ height: 30 }}
+					style={{ height: 32 }}
 					disabledDate={v => v.valueOf() > new Date().valueOf()}
 				></DatePicker>
 			</FormItem>
@@ -108,7 +108,7 @@ const Index = (props: IPropsArchive) => {
 					className='w_100'
 					showToday={false}
 					inputReadOnly
-					style={{ height: 30 }}
+					style={{ height: 32 }}
 					disabledDate={v => v.valueOf() > new Date().valueOf()}
 				></DatePicker>
 			</FormItem>
@@ -178,7 +178,7 @@ const Index = (props: IPropsArchive) => {
 			rootClassName={styles._local}
 			open={visible_archive_modal}
 			title={t('translation:todo.Archive.title')}
-			width={360}
+			width={342}
 			destroyOnClose
 			getContainer={false}
 			extra={Extra}

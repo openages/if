@@ -1,0 +1,7 @@
+._local {
+	transition: padding ease 0.3s;
+
+	&.visible_detail_modal {
+		padding-right: 342px;
+	}
+}

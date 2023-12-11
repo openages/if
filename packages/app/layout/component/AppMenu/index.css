@@ -57,13 +57,23 @@
 	}
 
 	:global {
+		.if-drawer-mask {
+			background-color: transparent !important;
+		}
+
 		.if-drawer-content-wrapper {
 			width: calc(var(--sidebar_width) + var(--dirtree_width)) !important;
+			padding: 0;
+			box-shadow: var(--shadow) !important;
 
 			.if-drawer-content {
 				padding: 0;
 				background-color: rgba(var(--color_bg_rgb), 0.6);
 				backdrop-filter: var(--blur);
+
+				.if-drawer-body {
+					padding: 0;
+				}
 			}
 		}
 

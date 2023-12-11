@@ -18,7 +18,7 @@ export default {
 	color_border_light: 'rgba(255, 255, 255, 0.036)',
 	color_border_soft: 'rgba(255, 255, 255, 0.018)',
 	shadow: '0 0 48px rgba(var(--color_std_rgb), 0.36)',
-	shadow_left: '-6px 12px 30px rgba(var(--color_std_rgb), 0.36)',
+	shadow_left: '-6px 6px 30px rgba(var(--color_std_rgb), 0.36)',
 	shadow_right: '6px 0 30px rgba(var(--color_std_rgb), 0.36)',
 	shadow_top: '0 6px 30px rgba(var(--color_std_rgb), 0.36)',
 	wave: 'rgba(var(--color_text_rgb), 0.3)'

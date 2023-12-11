@@ -12,7 +12,7 @@ const Index = (props: IPropsStacksNavBarColumn) => {
 	const { column, column_index, focus, click, remove, update } = props
 
 	return (
-		<div className={$cx('border_box', styles.Column)} style={{ width: column.width }}>
+		<div className={$cx('border_box relative', styles.Column)} style={{ width: column.width }}>
 			<SortableContext items={column.views} strategy={horizontalListSortingStrategy}>
 				<ScrollMenu onWheel={onWheel}>
 					{column.views.map((view, view_index) => (

@@ -80,6 +80,7 @@ const Index = (props: IPropsDetail) => {
 			title={t('translation:todo.Detail.title')}
 			width={342}
 			mask={false}
+			zIndex={100}
 			destroyOnClose
 			getContainer={false}
 			onClose={closeDetailModal}
