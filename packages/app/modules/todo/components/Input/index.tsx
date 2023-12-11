@@ -24,7 +24,7 @@ const Index = (props: IPropsInput) => {
 	const { t } = useTranslation()
 	const [input, setInput] = useState<Omit<Todo.TodoItem, 'file_id' | 'angle_id' | 'sort'>>(getTodo())
 	const { input: input_ref, onInput } = useInput({
-		value: '',
+		value: input.text,
 		update: useMemoizedFn(v => setInput(input => ({ ...input, text: v })))
 	})
 

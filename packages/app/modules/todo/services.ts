@@ -1,10 +1,10 @@
-import dayjs from 'dayjs'
-import { cloneDeep, omit, uniq } from 'lodash-es'
-import { match } from 'ts-pattern'
-
 import { not_archive, update as updateTodo } from '@/actions/todo'
 import { getArchiveTime, getDocItem } from '@/utils'
 import { confirm } from '@/utils/antd'
+import dayjs from 'dayjs'
+import { cloneDeep, omit, uniq } from 'lodash-es'
+import { toJS } from 'mobx'
+import { match } from 'ts-pattern'
 
 import type { MangoQueryOperators, MangoQuerySelector, MangoQuerySortPart } from 'rxdb/dist/types/types'
 import type { ArchiveQueryParams } from './types/model'
@@ -168,7 +168,7 @@ export const updateTodoData = async (args: ArgsUpdateTodoData) => {
 			...(changed_values.icon_info ?? changed_values)
 		})
 	} else {
-		const target = { ...todo, ...omit(values, 'icon_info') } as Todo.Data
+		const target = { ...toJS(todo), ...omit(values, 'icon_info') } as Todo.Data
 
 		setTodo(target)
 

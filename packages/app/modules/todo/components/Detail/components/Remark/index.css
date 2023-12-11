@@ -15,6 +15,7 @@
 			&:empty {
 				&::after {
 					content: attr(data-placeholder);
+					color: var(--color_text_light);
 				}
 			}
 		}
