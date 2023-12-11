@@ -6,12 +6,21 @@
 	:global {
 		.input_add_todo {
 			padding: 7px 12px;
+			border: 1px dashed var(--color_border);
+			border-radius: var(--radius);
 			border-bottom-width: 2px;
 			border-bottom-style: solid;
-			background-color: transparent;
+			outline: none;
 
 			&:focus {
 				border-color: var(--color_text);
+			}
+
+			&:empty {
+				&::after {
+					color: var(--color_text_light);
+					content: attr(data-placeholder);
+				}
 			}
 		}
 

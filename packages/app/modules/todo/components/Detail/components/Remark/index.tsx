@@ -9,6 +9,7 @@ const Index = (props: IPropsDetailRemark) => {
 	const { t } = useTranslation()
 	const { input, onInput } = useInput({
 		value: remark,
+		max_length: 3000,
 		update: updateRemark
 	})
 

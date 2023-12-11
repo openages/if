@@ -8,6 +8,7 @@ import { getCursorPosition, setCursorPosition } from '../utils'
 
 interface HookArgs {
 	value: string
+	max_length?: number
 	update: (textContent: string) => Promise<any> | void
 }
 
@@ -15,6 +16,7 @@ export default (args: HookArgs) => {
 	const { value, update } = args
 	const input = useRef<HTMLDivElement>(null)
 	const [compositing, setCompositing] = useState(false)
+	const max_length = args.max_length ?? todo.text_max_length
 
 	useEffect(() => {
 		const el = input.current
@@ -26,8 +28,10 @@ export default (args: HookArgs) => {
 	}, [value])
 
 	const updateValue = useMemoizedFn(async (textContent: string) => {
-		if (textContent?.length > todo.text_max_length) {
-			textContent = textContent.slice(0, todo.text_max_length)
+		if (textContent?.length > max_length) {
+			textContent = textContent.slice(0, max_length)
+
+			input.current.textContent = textContent
 
 			input.current.blur()
 

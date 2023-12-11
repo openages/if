@@ -1,3 +1,3 @@
 export const todo = {
-	text_max_length: 3000
+	text_max_length: 600
 }
