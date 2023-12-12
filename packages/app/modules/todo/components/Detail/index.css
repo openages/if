@@ -1,6 +1,18 @@
 ._local {
 	--padding: 24px;
 
+	&.narrow {
+		:global {
+			.if-drawer {
+				&-content-wrapper {
+					.if-drawer-content {
+						box-shadow: var(--shadow_left);
+					}
+				}
+			}
+		}
+	}
+
 	:global {
 		.if-drawer {
 			&-content-wrapper {

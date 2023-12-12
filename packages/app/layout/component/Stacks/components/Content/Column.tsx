@@ -7,7 +7,7 @@ import styles from './index.css'
 import type { IPropsStacksContentColumn } from '../../../../types'
 
 const Index = (props: IPropsStacksContentColumn) => {
-	const { column, column_index } = props
+	const { column_index, column, width, click } = props
 	const [visible_indicator, setVisibleIndicator] = useState(false)
 
 	useDndMonitor({
@@ -16,15 +16,22 @@ const Index = (props: IPropsStacksContentColumn) => {
 	})
 
 	return (
-		<div className={$cx('relative', styles.Column)} style={{ width: column.width }}>
+		<div className={$cx('border_box relative', styles.Column)} style={{ width: column.width }}>
 			{visible_indicator && (
 				<Fragment>
 					<Drop column_index={column_index} direction='left'></Drop>
 					<Drop column_index={column_index} direction='right'></Drop>
 				</Fragment>
 			)}
-			{column.views.map(view => (
-				<View view={view} key={view.id}></View>
+			{column.views.map((view, view_index) => (
+				<View
+					column_index={column_index}
+					view_index={view_index}
+					view={view}
+					width={width}
+					click={click}
+					key={view.id}
+				></View>
 			))}
 		</div>
 	)

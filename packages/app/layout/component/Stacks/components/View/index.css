@@ -1,3 +1,7 @@
+.position_wrap {
+	overflow: hidden;
+}
+
 ._local {
 	overflow: scroll;
 

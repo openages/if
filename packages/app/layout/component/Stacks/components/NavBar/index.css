@@ -1,5 +1,10 @@
 .Column {
 	height: 36px;
+	border-right: var(--border);
+
+	&:last-child {
+		border-right: none;
+	}
 
 	&::after {
 		content: '';
@@ -9,6 +14,10 @@
 		bottom: 0;
 		width: 100%;
 		border-bottom: var(--border);
+	}
+
+	&.isOver {
+		background-color: var(--color_bg_1);
 	}
 
 	:global {
@@ -44,6 +53,7 @@
 
 				.btn_remove {
 					display: flex;
+					color: rgba(var(--color_text_rgb), 0.72);
 				}
 			}
 
@@ -69,6 +79,12 @@
 				opacity: 0;
 			}
 
+			&.is_focus {
+				.btn_remove {
+					color: rgba(var(--color_text_rgb), 0.72);
+				}
+			}
+
 			.name_wrap {
 				font-size: 12px;
 			}
@@ -84,7 +100,7 @@
 				width: 18px;
 				height: 18px;
 				border-radius: var(--radius_small);
-				color: var(--color_text_grey);
+				color: rgba(var(--color_text_rgb), 0.3);
 
 				&:hover {
 					background-color: var(--color_bg_2);

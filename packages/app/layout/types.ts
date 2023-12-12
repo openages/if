@@ -47,25 +47,35 @@ export interface IPropsStacksNavBarView extends Omit<IPropsStacksNavBarColumn, '
 	drag_overlay?: boolean
 }
 
-export interface IPropsStacksContent extends Pick<IPropsStacks, 'columns'> {}
-
-export interface IPropsStacksContentColumn {
-	column_index: number
-	column: IPropsStacksNavBar['columns'][number]
-}
+export interface IPropsStacksContent extends Pick<IPropsStacks, 'columns' | 'click'> {}
 
 export interface IPropsStacksContentDrop {
 	column_index: number
 	direction: 'left' | 'right'
 }
 
+export interface IPropsStacksContentColumn {
+	column_index: number
+	column: IPropsStacksNavBar['columns'][number]
+	width: number
+	click: IPropsStacksContent['click']
+}
+
 export interface IPropsStacksContentView {
+	column_index: number
+	view_index: number
 	view: IPropsStacksNavBar['columns'][number]['views'][number]
+	width: number
+	click: IPropsStacksContent['click']
 }
 
 export interface IPropsStacksView {
+	column_index: number
+	view_index: number
 	module: App.ModuleType
 	id: string
+	width: number
+	click: IPropsStacksContent['click']
 }
 
 export interface IPropsAppMenu {

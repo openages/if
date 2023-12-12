@@ -1,12 +1,12 @@
+import { DataEmpty } from '@/components'
+import { useStack } from '@/context/stack'
+import { isShowEmpty } from '@/utils'
 import { useMemoizedFn } from 'ahooks'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useMemo, useState } from 'react'
 import { Else, If, Then, When } from 'react-if'
 import { container } from 'tsyringe'
-
-import { DataEmpty } from '@/components'
-import { isShowEmpty } from '@/utils'
 
 import { Archive, Detail, Header, Help, Input, SettingsModal, Tabs, Todos } from './components'
 import styles from './index.css'
@@ -27,6 +27,9 @@ import type {
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const angles = toJS(x.todo.angles || [])
+	const { width } = useStack()
+
+	const narrow = useMemo(() => width <= 801, [width])
 
 	useLayoutEffect(() => {
 		x.init({ id })
@@ -109,6 +112,7 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_detail: IPropsDetail = {
+		narrow,
 		visible_detail_modal: x.visible_detail_modal,
 		current_detail_index: toJS(x.current_detail_index),
 		current_detail_item: toJS(x.current_detail_item),
@@ -136,7 +140,7 @@ const Index = ({ id }: IProps) => {
 			className={$cx(
 				'w_100 border_box flex flex_column',
 				styles._local,
-				x.visible_detail_modal && styles.visible_detail_modal
+				!narrow && x.visible_detail_modal && styles.visible_detail_modal
 			)}
 		>
 			<If condition={x.id && x.file.data.name}>

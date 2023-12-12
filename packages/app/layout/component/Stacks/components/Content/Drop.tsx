@@ -7,7 +7,7 @@ const Index = (props: IPropsStacksContentDrop) => {
 	const { column_index, direction } = props
 	const { isOver, setNodeRef } = useDroppable({
 		id: `column_${column_index}_${direction}`,
-		data: { type: 'stack', column: column_index }
+		data: { type: 'stack', column: column_index, split: true, direction }
 	})
 
 	return (

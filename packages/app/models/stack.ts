@@ -16,17 +16,13 @@ export default class Index {
 	container_width = 0
 
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, {}, { autoBind: true, deep: true })
+		makeAutoObservable(this, {}, { autoBind: true })
 
 		this.utils.acts = [setStorageWhenChange(['columns', 'focus', 'container_width'], this)]
 	}
 
 	init() {
 		this.getObserver()
-	}
-
-	updateColumns() {
-		this.columns = toJS(this.columns)
 	}
 
 	find(id: string) {
@@ -58,6 +54,7 @@ export default class Index {
 
 		if (this.focus.column === -1) {
 			this.columns = [{ views: [view], width: this.container_width }]
+			this.focus = { column: 0, view: 0 }
 
 			return
 		}
@@ -77,7 +74,7 @@ export default class Index {
 
 		this.focus.view = target_views.length - 1
 
-		this.updateColumns()
+		this.updateColumnsFocus()
 	}
 
 	remove(position: Stack.Position) {
@@ -100,7 +97,7 @@ export default class Index {
 				}
 			}
 
-			this.updateColumns()
+			this.updateColumnsFocus()
 
 			return
 		}
@@ -115,22 +112,24 @@ export default class Index {
 			this.focus.view = target_views.length - 1
 		}
 
-		this.updateColumns()
+		this.updateColumnsFocus()
 	}
 
-	click(position: Stack.Position) {
+	click(position: Stack.Position, ignore_columns?: boolean) {
 		const { column, view } = position
 		const target_views = this.columns[column].views
 
-		if (target_views[view].active) return
+		if (!target_views[view].active) {
+			target_views.forEach(item => (item.active = false))
 
-		target_views.forEach(item => (item.active = false))
-
-		target_views[view].active = true
+			target_views[view].active = true
+		}
 
 		this.focus = position
 
-		this.updateColumns()
+		if (!ignore_columns) {
+			this.updateColumnsFocus()
+		}
 	}
 
 	update({ position, v }: { position: Stack.Position; v: Partial<Stack.View> }) {
@@ -139,7 +138,7 @@ export default class Index {
 			...v
 		}
 
-		this.updateColumns()
+		this.updateColumnsFocus()
 	}
 
 	updateFile(v: DirTree.Item) {
@@ -149,7 +148,7 @@ export default class Index {
 
 		this.columns[exsit_view.column_index].views[exsit_view.view_index].file = v
 
-		this.updateColumns()
+		this.updateColumnsFocus()
 	}
 
 	removeFile(id: string) {
@@ -162,6 +161,7 @@ export default class Index {
 
 	move({ active, over }: Pick<DragEndEvent, 'active' | 'over'>) {
 		if (!over?.id) return false
+		if (active.data.current.type !== 'stack' || over.data.current.type !== 'stack') return
 		if (active.id === over.id) return
 
 		const active_column = active.data.current.column as number
@@ -189,8 +189,6 @@ export default class Index {
 			} else {
 				const target = toJS(this.columns[active_column].views[active_view])
 
-				this.remove({ column: active_column, view: active_view })
-
 				this.columns[over_column].views.push(target)
 
 				const target_views = this.columns[over_column].views
@@ -199,10 +197,12 @@ export default class Index {
 
 				target_views[target_views.length - 1].active = true
 
+				this.remove({ column: active_column, view: active_view })
+
 				this.focus = { column: over_column, view: target_views.length - 1 }
 			}
 		} else {
-			const direction = 'left' as 'left' | 'right'
+			const direction = over.data.current.direction as 'left' | 'right'
 			const target_column = this.columns[active_column]
 			const target_views = [toJS(target_column.views[active_view])]
 
@@ -212,13 +212,9 @@ export default class Index {
 			if (active_column === over_column) {
 				if (this.columns[active_column].views.length === 1) return
 
-				this.remove({ column: active_column, view: active_view })
-
 				width = target_column.width / 2
 				index = active_column
 			} else {
-				this.remove({ column: active_column, view: active_view })
-
 				width = (target_column.width + this.columns[over_column].width) / 3
 				index = active_column
 
@@ -229,6 +225,8 @@ export default class Index {
 
 			const target_index = direction === 'left' ? index : index + 1
 
+			this.remove({ column: active_column, view: active_view })
+
 			this.columns.splice(target_index, 0, {
 				views: target_views,
 				width
@@ -237,7 +235,12 @@ export default class Index {
 			this.focus = { column: target_index, view: 0 }
 		}
 
-		this.updateColumns()
+		this.updateColumnsFocus()
+	}
+
+	updateColumnsFocus() {
+		this.columns = toJS(this.columns)
+		this.focus = toJS(this.focus)
 	}
 
 	getObserver() {

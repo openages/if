@@ -1,5 +1,10 @@
 .Column {
 	height: calc(100vh - 36px);
+	border-right: var(--border);
+
+	&:last-child {
+		border-right: none;
+	}
 }
 
 .droppable_container {

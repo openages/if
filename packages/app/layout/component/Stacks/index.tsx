@@ -54,7 +54,8 @@ const Index = (props: IPropsStacks) => {
 	}
 
 	const props_content: IPropsStacksContent = {
-		columns
+		columns,
+		click
 	}
 
 	return (

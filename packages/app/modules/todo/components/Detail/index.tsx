@@ -20,6 +20,7 @@ import type { IPropsChildren, IPropsDetail } from '../../types'
 
 const Index = (props: IPropsDetail) => {
 	const {
+		narrow,
 		visible_detail_modal,
 		current_detail_index,
 		current_detail_item,
@@ -75,7 +76,7 @@ const Index = (props: IPropsDetail) => {
 
 	return (
 		<Drawer
-			rootClassName={styles._local}
+			rootClassName={$cx(styles._local, narrow && styles.narrow)}
 			open={visible_detail_modal}
 			title={t('translation:todo.Detail.title')}
 			width={342}

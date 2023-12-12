@@ -9,6 +9,8 @@ import { useDoubleClick } from '@openages/stk'
 import { X } from '@phosphor-icons/react'
 
 import type { IPropsStacksNavBarView } from '@/layout/types'
+import { useMemoizedFn } from 'ahooks'
+import { useMemo } from 'react'
 
 const Index = (props: IPropsStacksNavBarView) => {
 	const { column_index, view_index, view, focus, drag_overlay, click, remove, update } = props
@@ -19,7 +21,19 @@ const Index = (props: IPropsStacksNavBarView) => {
 
 	useScrollToItem(view.id, view.active, isDragging)
 
+	const is_focus = useMemo(
+		() => column_index === focus.column && view_index === focus.view,
+		[column_index, view_index, focus]
+	)
+
 	const fixedItem = useDoubleClick(position => update({ position, v: { fixed: true } }))
+
+	const onMouseDown = useMemoizedFn(e => {
+		if (e.button !== 0) return
+
+		click({ column: column_index, view: view_index })
+		fixedItem({ column: column_index, view: view_index })
+	})
 
 	return (
 		<div
@@ -36,14 +50,10 @@ const Index = (props: IPropsStacksNavBarView) => {
 						view.active && 'active',
 						view.fixed && 'is_fixed',
 						isDragging && 'isDragging',
-						drag_overlay && 'drag_overlay'
+						drag_overlay && 'drag_overlay',
+						is_focus && 'is_focus'
 					)}
-					onMouseDown={e => {
-						if (e.button !== 0) return
-
-						click({ column: column_index, view: view_index })
-						fixedItem({ column: column_index, view: view_index })
-					}}
+					onMouseDown={onMouseDown}
 				>
 					<div className='icon_wrap h_100 flex align_center'>
 						<If condition={view.file.icon}>
