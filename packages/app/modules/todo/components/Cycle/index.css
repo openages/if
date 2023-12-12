@@ -77,7 +77,7 @@
 							color: white;
 							border-radius: 50%;
 
-							&.season {
+							&.quarter {
 								width: 39px;
 								border-radius: var(--radius_large);
 							}
@@ -87,6 +87,13 @@
 								color: var(--color_text);
 							}
 						}
+					}
+				}
+
+				.if-input-number {
+					input {
+						font-size: 12px;
+						font-weight: bold;
 					}
 				}
 			}

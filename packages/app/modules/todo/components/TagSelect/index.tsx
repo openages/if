@@ -27,6 +27,7 @@ const Index = (props: IPropsTagSelect) => {
 					useByTodo && styles.useByTodo,
 					useByDetail && styles.useByDetail
 				)}
+				popupClassName='borderless'
 				size='small'
 				mode='tags'
 				placement={placement || 'topLeft'}
@@ -34,6 +35,7 @@ const Index = (props: IPropsTagSelect) => {
 				bordered={false}
 				virtual={false}
 				suffixIcon={null}
+				getPopupContainer={() => document.body}
 				placeholder={t('translation:todo.Input.tag_placeholder')}
 				tagRender={Tag}
 				options={options}

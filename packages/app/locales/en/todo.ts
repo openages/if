@@ -49,7 +49,7 @@ export default {
 		},
 		tags: {
 			label: 'Tags',
-			placeholder: 'Tag name.',
+			placeholder: 'Tag name',
 			remove_confirm:
 				'This tag has {{counts}} items and cannot be deleted (tags not associated with any items can be deleted).'
 		},

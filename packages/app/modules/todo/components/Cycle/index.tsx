@@ -142,7 +142,12 @@ const Index = (props: IPropsCircle) => {
 
 	return (
 		<div className={$cx(styles._local)}>
-			<Popover trigger='click' placement={useByDetail ? 'bottomLeft' : 'top'} content={Content}>
+			<Popover
+				trigger='click'
+				placement={useByDetail ? 'bottomLeft' : 'topRight'}
+				content={Content}
+				align={!useByDetail ? { offset: [8, -8] } : {}}
+			>
 				<div>{Trigger}</div>
 			</Popover>
 		</div>

@@ -299,17 +299,6 @@
 				line-height: var(--height) !important;
 			}
 		}
-
-		.if-select-dropdown {
-			width: unset !important;
-			min-width: 81px !important;
-
-			.if-select-item {
-				min-height: unset;
-				padding: 3px 4px;
-				font-size: 12px;
-			}
-		}
 	}
 
 	&.no_suffix {
@@ -342,6 +331,17 @@
 	}
 
 	&-dropdown {
+		&.borderless {
+			width: unset !important;
+			min-width: 81px !important;
+
+			.if-select-item {
+				min-height: unset;
+				padding: 3px 4px;
+				font-size: 12px;
+			}
+		}
+
 		.if-empty-image {
 			margin-bottom: 0;
 		}

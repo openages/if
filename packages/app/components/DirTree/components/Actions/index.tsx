@@ -22,7 +22,11 @@ const Index = (props: IPropsActions) => {
 					{t('translation:dirtree.add') + t('translation:dirtree.file')}
 				</span>
 			</div>
-			<Tooltip title={t('translation:dirtree.add') + t('translation:dirtree.dir')} placement='top'>
+			<Tooltip
+				title={t('translation:dirtree.add') + t('translation:dirtree.dir')}
+				placement='top'
+				getPopupContainer={() => document.body}
+			>
 				<div
 					className='add_group_wrap other_action h_100 border_box flex justify_center align_center transition_normal cursor_point'
 					onClick={() => setModalOpen(true, 'dir')}

@@ -4,11 +4,11 @@ import genColor from 'uniqolor'
 
 import { id } from '@/utils'
 import { DndContext } from '@dnd-kit/core'
-import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
+import { SortableContext, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { Plus } from '@phosphor-icons/react'
 
-import styles from './index.css'
 import Item from './Item'
+import styles from './index.css'
 
 import type { IPropsCustomFormItem } from '@/types'
 import type { DragEndEvent } from '@dnd-kit/core'
@@ -32,7 +32,7 @@ const Index = (props: IProps) => {
 
 		items.splice(index + 1, 0, {
 			id: id(),
-			color: genColor.random({ saturation: [0, 100], lightness: [20, 72], differencePoint: 300 }).color,
+			color: genColor.random().color,
 			text: ''
 		})
 
