@@ -1,18 +1,17 @@
 import { Button, Tabs } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useState, Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { Wave } from '@/components'
-import { Sliders, Layout, Activity, Cards, Command } from '@phosphor-icons/react'
+import { Activity, Command, Layout, Sliders } from '@phosphor-icons/react'
 
 import AppCenter from './app_center'
 import GlobalCenter from './global_center'
 import styles from './index.css'
 import Model from './model'
 import ShortcutCenter from './shortcut_center'
-import TabCenter from './tab_center'
 import TaskCenter from './task_center'
 
 const Index = () => {
@@ -22,32 +21,26 @@ const Index = () => {
 	const nav_items = [
 		{
 			label: t('translation:setting.nav.titles.setting'),
-			icon: Sliders,
+			icon: <Sliders size={16}></Sliders>,
 			key: '0',
 			children: <GlobalCenter></GlobalCenter>
 		},
 		{
 			label: t('translation:setting.nav.titles.app_center'),
-			icon: Layout,
+			icon: <Layout size={16}></Layout>,
 			key: '1',
 			children: <AppCenter></AppCenter>
 		},
 		{
 			label: t('translation:setting.nav.titles.task_center'),
-			icon: Activity,
+			icon: <Activity size={16}></Activity>,
 			key: '2',
 			children: <TaskCenter></TaskCenter>
 		},
 		{
-			label: t('translation:setting.nav.titles.tab_center'),
-			icon: Cards,
-			key: '3',
-			children: <TabCenter></TabCenter>
-		},
-		{
 			label: t('translation:setting.nav.titles.shortcut_center'),
-			icon: Command,
-			key: '4',
+			icon: <Command size={16}></Command>,
+			key: '3',
 			children: <ShortcutCenter></ShortcutCenter>
 		}
 	]
@@ -66,7 +59,7 @@ const Index = () => {
 									)}
 									onMouseDown={() => (x.active_index = index)}
 								>
-									<item.icon size={16}></item.icon>
+									{item.icon}
 									<span className='menu_name ml_4'>{item.label}</span>
 								</Button>
 							</Wave>

@@ -5,6 +5,10 @@
 ._local {
 	overflow: scroll;
 
+	&.narrow {
+		--limited_padding: 30px;
+	}
+
 	:global {
 		.if-modal-root {
 			.if-modal-mask,

@@ -147,8 +147,7 @@ const Index = ({ id }: IProps) => {
 			className={$cx(
 				'w_100 border_box flex flex_column',
 				styles._local,
-				!narrow && x.visible_detail_modal && styles.visible_detail_modal,
-				narrow === '390' && styles.narrow
+				!narrow && x.visible_detail_modal && styles.visible_detail_modal
 			)}
 		>
 			<If condition={x.id && x.file.data.name}>

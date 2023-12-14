@@ -4,8 +4,4 @@
 	&.visible_detail_modal {
 		padding-right: 342px;
 	}
-
-	&.narrow {
-		--limited_padding: 30px;
-	}
 }
