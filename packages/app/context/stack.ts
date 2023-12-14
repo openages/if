@@ -6,6 +6,7 @@ export interface StackContext {
 	module: App.ModuleType
 	id: string
 	width: number
+	container_width: number
 }
 
 // @ts-ignore Avoid duplicate declarations

@@ -76,11 +76,11 @@ const Index = (props: IPropsDetail) => {
 
 	return (
 		<Drawer
-			rootClassName={$cx(styles._local, narrow && styles.narrow)}
+			rootClassName={$cx(styles._local, narrow && styles.narrow, narrow === '390' && styles.narrow_390)}
 			open={visible_detail_modal}
 			title={t('translation:todo.Detail.title')}
 			width={342}
-			mask={false}
+			mask={!!narrow}
 			zIndex={100}
 			destroyOnClose
 			getContainer={false}

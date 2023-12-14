@@ -27,9 +27,16 @@ import type {
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const angles = toJS(x.todo.angles || [])
-	const { width } = useStack()
+	const { width, container_width } = useStack()
 
-	const narrow = useMemo(() => width <= 801, [width])
+	const narrow = useMemo(() => {
+		const target_width = width * 0.01 * container_width
+
+		if (target_width <= 390) return '390'
+		if (target_width <= 801) return '801'
+
+		return
+	}, [width, container_width])
 
 	useLayoutEffect(() => {
 		x.init({ id })
@@ -140,7 +147,8 @@ const Index = ({ id }: IProps) => {
 			className={$cx(
 				'w_100 border_box flex flex_column',
 				styles._local,
-				!narrow && x.visible_detail_modal && styles.visible_detail_modal
+				!narrow && x.visible_detail_modal && styles.visible_detail_modal,
+				narrow === '390' && styles.narrow
 			)}
 		>
 			<If condition={x.id && x.file.data.name}>

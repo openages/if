@@ -25,6 +25,7 @@ export interface IPropsStacks {
 	current_module: App.ModuleType
 	columns: GlobalModel['stack']['columns']
 	focus: GlobalModel['stack']['focus']
+	container_width: GlobalModel['stack']['container_width']
 	click: GlobalModel['stack']['click']
 	remove: GlobalModel['stack']['remove']
 	update: GlobalModel['stack']['update']
@@ -34,7 +35,7 @@ export interface IPropsStacks {
 }
 
 export interface IPropsStacksNavBar
-	extends Omit<IPropsStacks, 'visible' | 'current_module' | 'move' | 'observe' | 'unobserve'> {}
+	extends Omit<IPropsStacks, 'visible' | 'current_module' | 'container_width' | 'move' | 'observe' | 'unobserve'> {}
 
 export interface IPropsStacksNavBarColumn extends Omit<IPropsStacksNavBar, 'columns' | 'move'> {
 	column_index: number
@@ -47,7 +48,7 @@ export interface IPropsStacksNavBarView extends Omit<IPropsStacksNavBarColumn, '
 	drag_overlay?: boolean
 }
 
-export interface IPropsStacksContent extends Pick<IPropsStacks, 'columns' | 'click'> {}
+export interface IPropsStacksContent extends Pick<IPropsStacks, 'columns' | 'container_width' | 'click'> {}
 
 export interface IPropsStacksContentDrop {
 	column_index: number
@@ -58,6 +59,7 @@ export interface IPropsStacksContentColumn {
 	column_index: number
 	column: IPropsStacksNavBar['columns'][number]
 	width: number
+	container_width: IPropsStacksContent['container_width']
 	click: IPropsStacksContent['click']
 }
 
@@ -66,6 +68,7 @@ export interface IPropsStacksContentView {
 	view_index: number
 	view: IPropsStacksNavBar['columns'][number]['views'][number]
 	width: number
+	container_width: IPropsStacksContent['container_width']
 	click: IPropsStacksContent['click']
 }
 
@@ -75,6 +78,7 @@ export interface IPropsStacksView {
 	module: App.ModuleType
 	id: string
 	width: number
+	container_width: IPropsStacksContent['container_width']
 	click: IPropsStacksContent['click']
 }
 

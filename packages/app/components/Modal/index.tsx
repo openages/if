@@ -59,12 +59,16 @@ const Index = (props: IProps) => {
 						className={$cx(
 							styles.content_wrap,
 							on_body && styles.on_body,
-							'w_100 h_100 border_box'
+							'if_modal_wrap w_100 h_100 border_box flex align_center'
 						)}
 						ref={ref_content_wrap}
 					>
 						<div
-							className={$cx(styles.content, className, 'border_box flex flex_column')}
+							className={$cx(
+								styles.content,
+								className,
+								'if_modal_content border_box flex flex_column'
+							)}
 							style={{ width: width ?? 360 }}
 							ref={ref_content}
 						>
@@ -84,7 +88,13 @@ const Index = (props: IProps) => {
 									</span>
 								</div>
 							)}
-							<div className={$cx(styles.body, className, 'border_box flex flex_column')}>
+							<div
+								className={$cx(
+									styles.body,
+									className,
+									'if_modal_body border_box flex flex_column'
+								)}
+							>
 								{children}
 							</div>
 						</div>

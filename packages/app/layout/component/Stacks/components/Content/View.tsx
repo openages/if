@@ -4,7 +4,7 @@ import View from '../View'
 import type { IPropsStacksContentView } from '../../../../types'
 
 const Index = (props: IPropsStacksContentView) => {
-	const { column_index, view_index, view, width, click } = props
+	const { column_index, view_index, view, width, container_width, click } = props
 
 	return (
 		<Activity mode={view.active ? 'visible' : 'hidden'}>
@@ -14,6 +14,7 @@ const Index = (props: IPropsStacksContentView) => {
 				module={view.module}
 				id={view.id}
 				width={width}
+				container_width={container_width}
 				click={click}
 			></View>
 		</Activity>

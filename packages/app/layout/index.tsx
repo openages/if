@@ -81,6 +81,7 @@ const Index = () => {
 		current_module,
 		columns: toJS(global.stack.columns),
 		focus: toJS(global.stack.focus),
+		container_width: global.stack.container_width,
 		remove: useMemoizedFn(global.stack.remove),
 		click: useMemoizedFn(global.stack.click),
 		update: useMemoizedFn(global.stack.update),

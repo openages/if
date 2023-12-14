@@ -5,8 +5,30 @@
 		:global {
 			.if-drawer {
 				&-content-wrapper {
+					padding: 12px;
+
 					.if-drawer-content {
-						box-shadow: var(--shadow_left);
+						border-radius: var(--radius);
+					}
+				}
+			}
+
+			.toggle_wrap {
+				top: 29px;
+				right: 62px;
+			}
+		}
+	}
+
+	&.narrow_390 {
+		:global {
+			.if-drawer {
+				&-content-wrapper {
+					width: 100% !important;
+					box-sizing: border-box !important;
+
+					.if-drawer-content {
+						width: 100% !important;
 					}
 				}
 			}

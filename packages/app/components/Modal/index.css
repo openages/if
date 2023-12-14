@@ -30,6 +30,7 @@
 }
 
 .content {
+	max-height: 100%;
 	margin: 0 auto;
 	background-color: var(--color_bg);
 	border-radius: var(--radius);
@@ -61,5 +62,7 @@
 
 	.body {
 		padding: 18px;
+		max-height: calc(100% - 40px);
+		overflow-y: scroll;
 	}
 }

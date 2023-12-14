@@ -7,7 +7,7 @@ import styles from './index.css'
 import type { IPropsStacksContentColumn } from '../../../../types'
 
 const Index = (props: IPropsStacksContentColumn) => {
-	const { column_index, column, width, click } = props
+	const { column_index, column, width, container_width, click } = props
 	const [visible_indicator, setVisibleIndicator] = useState(false)
 
 	useDndMonitor({
@@ -29,6 +29,7 @@ const Index = (props: IPropsStacksContentColumn) => {
 					view_index={view_index}
 					view={view}
 					width={width}
+					container_width={container_width}
 					click={click}
 					key={view.id}
 				></View>

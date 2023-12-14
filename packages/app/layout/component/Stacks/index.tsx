@@ -12,7 +12,19 @@ import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core'
 import type { IPropsStacks, IPropsStacksContent, IPropsStacksNavBar } from '../../types'
 
 const Index = (props: IPropsStacks) => {
-	const { visible, current_module, columns, focus, click, remove, update, move, observe, unobserve } = props
+	const {
+		visible,
+		current_module,
+		columns,
+		focus,
+		container_width,
+		click,
+		remove,
+		update,
+		move,
+		observe,
+		unobserve
+	} = props
 	const [drag_view, setDragView] = useState<{ column_index: number; view_index: number; view: Stack.View }>(null)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
 
@@ -55,6 +67,7 @@ const Index = (props: IPropsStacks) => {
 
 	const props_content: IPropsStacksContent = {
 		columns,
+		container_width,
 		click
 	}
 

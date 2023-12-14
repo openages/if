@@ -3,7 +3,7 @@ import Column from './Column'
 import type { IPropsStacksContent } from '../../../../types'
 
 const Index = (props: IPropsStacksContent) => {
-	const { columns, click } = props
+	const { columns, container_width, click } = props
 
 	return (
 		<div className='w_100 flex'>
@@ -12,6 +12,7 @@ const Index = (props: IPropsStacksContent) => {
 					column={column}
 					column_index={index}
 					width={column.width}
+					container_width={container_width}
 					click={click}
 					key={index}
 				></Column>
