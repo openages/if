@@ -52,7 +52,7 @@ const Index = (props: IPropsHeader) => {
 	return (
 		<div
 			className={$cx(
-				'limited_content_wrap border_box flex justify_between align_center relative',
+				'limited_content_wrap border_box flex flex_wrap justify_between align_center relative',
 				styles._local
 			)}
 		>

@@ -23,7 +23,7 @@ const Index = (props: IPropsStacksNavBarColumn) => {
 				styles.Column,
 				active?.data?.current?.column !== column_index && isOver && styles.isOver
 			)}
-			style={{ width: column.width }}
+			style={{ width: `${column.width}%` }}
 			ref={setNodeRef}
 		>
 			<SortableContext items={column.views} strategy={horizontalListSortingStrategy}>

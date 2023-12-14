@@ -4,8 +4,6 @@
 
 	:global {
 		.left_wrap {
-			width: calc(100% - 180px);
-
 			em-emoji {
 				.emoji-mart-emoji {
 					margin-bottom: -1px;

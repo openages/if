@@ -1,9 +1,9 @@
-import { makeAutoObservable, toJS } from 'mobx'
-import { injectable } from 'tsyringe'
-
 import Utils from '@/models/utils'
 import { arrayMove } from '@dnd-kit/sortable'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk'
+import { Decimal } from 'decimal.js'
+import { makeAutoObservable, toJS } from 'mobx'
+import { injectable } from 'tsyringe'
 
 import type { DirTree, Stack } from '@/types'
 import type { DragEndEvent } from '@dnd-kit/core'
@@ -26,7 +26,7 @@ export default class Index {
 	}
 
 	watch = {
-		columns: v => {
+		columns(v) {
 			if (v.length) return
 
 			this.focus = { column: -1, view: -1 }
@@ -65,7 +65,7 @@ export default class Index {
 		}
 
 		if (this.focus.column === -1) {
-			this.columns = [{ views: [view], width: this.container_width }]
+			this.columns = [{ views: [view], width: 100 }]
 			this.focus = { column: 0, view: 0 }
 
 			return
@@ -96,7 +96,7 @@ export default class Index {
 		target_views.splice(view, 1)
 
 		if (!target_views.length) {
-			this.columns.splice(column, 1)
+			const [remove_column] = this.columns.splice(column, 1)
 
 			if (this.focus.column === column && this.focus.view === view) {
 				let target_column = this.columns[this.columns.length - 1]
@@ -106,6 +106,24 @@ export default class Index {
 				} else {
 					this.focus.column = this.columns.length - 1
 					this.focus.view = target_column.views.length - 1
+				}
+			}
+
+			if (this.columns.length) {
+				const is_width_euqal = this.columns.every(item => item.width === this.columns[0].width)
+
+				if (is_width_euqal) {
+					const width = new Decimal(Decimal.div(100, this.columns.length).toFixed(2)).toNumber()
+
+					this.columns.forEach(item => (item.width = width))
+				} else {
+					if (this.columns.at(column - 1)) {
+						this.columns[column - 1].width += remove_column.width
+					}
+
+					if (this.columns.at(column)) {
+						this.columns[column].width += remove_column.width
+					}
 				}
 			}
 
@@ -222,28 +240,15 @@ export default class Index {
 				this.focus = { column: over_column, view: target_views.length - 1 }
 			}
 		} else {
+			if (active_column === over_column && this.columns[active_column].views.length === 1) return
+
 			const direction = over.data.current.direction as 'left' | 'right'
 			const target_column = this.columns[active_column]
 			const target_views = [toJS(target_column.views[active_view])]
 
-			let width = 0
-			let index = 0
+			const width = new Decimal(Decimal.div(100, this.columns.length + 1).toFixed(2)).toNumber()
 
-			if (active_column === over_column) {
-				if (this.columns[active_column].views.length === 1) return
-
-				width = target_column.width / 2
-				index = active_column
-			} else {
-				width = (target_column.width + this.columns[over_column].width) / 3
-				index = active_column
-
-				this.columns[over_column].width = width
-			}
-
-			target_column.width = width
-
-			const target_index = direction === 'left' ? index : index + 1
+			const target_index = direction === 'left' ? active_column : active_column + 1
 
 			this.remove({ column: active_column, view: active_view })
 
@@ -252,18 +257,20 @@ export default class Index {
 				width
 			} as Stack.Column)
 
+			this.columns.forEach(item => (item.width = width))
+
 			this.focus = { column: target_index, view: 0 }
 		}
 
 		this.updateColumnsFocus()
 	}
 
-	updateColumnsFocus() {
+	private updateColumnsFocus() {
 		this.columns = toJS(this.columns)
 		this.focus = toJS(this.focus)
 	}
 
-	getObserver() {
+	private getObserver() {
 		this.observer = new ResizeObserver(elements => {
 			if (!elements.length) return
 

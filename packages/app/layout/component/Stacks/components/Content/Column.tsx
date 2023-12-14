@@ -16,7 +16,7 @@ const Index = (props: IPropsStacksContentColumn) => {
 	})
 
 	return (
-		<div className={$cx('border_box relative', styles.Column)} style={{ width: column.width }}>
+		<div className={$cx('border_box relative', styles.Column)} style={{ width: `${column.width}%` }}>
 			{visible_indicator && (
 				<Fragment>
 					<Drop column_index={column_index} direction='left'></Drop>
