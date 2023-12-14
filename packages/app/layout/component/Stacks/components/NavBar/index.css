@@ -1,6 +1,7 @@
 .Column {
 	height: 36px;
 	border-right: var(--border);
+	transition: width ease 0.18s;
 
 	&:last-child {
 		border-right: none;

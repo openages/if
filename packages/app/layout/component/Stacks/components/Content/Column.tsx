@@ -1,13 +1,15 @@
 import { useDndMonitor } from '@dnd-kit/core'
 import { Fragment, useState } from 'react'
+import DragLine from './DragLine'
 import Drop from './Drop'
 import View from './View'
 import styles from './index.css'
 
+import { useMemoizedFn } from 'ahooks'
 import type { IPropsStacksContentColumn } from '../../../../types'
 
 const Index = (props: IPropsStacksContentColumn) => {
-	const { column_index, column, width, container_width, click } = props
+	const { column_index, column, width, container_width, click, resize } = props
 	const [visible_indicator, setVisibleIndicator] = useState(false)
 
 	useDndMonitor({
@@ -15,8 +17,12 @@ const Index = (props: IPropsStacksContentColumn) => {
 		onDragEnd: ({ active }) => active.data.current.type === 'stack' && setVisibleIndicator(false)
 	})
 
+	const getWidth = useMemoizedFn(() => width * 0.01 * container_width)
+	const setWidth = useMemoizedFn((v: number) => resize(column_index, v))
+
 	return (
 		<div className={$cx('border_box relative', styles.Column)} style={{ width: `${column.width}%` }}>
+			{column_index !== 0 && <DragLine getWidth={getWidth} setWidth={setWidth}></DragLine>}
 			{visible_indicator && (
 				<Fragment>
 					<Drop column_index={column_index} direction='left'></Drop>

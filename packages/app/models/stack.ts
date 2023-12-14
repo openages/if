@@ -2,6 +2,7 @@ import Utils from '@/models/utils'
 import { arrayMove } from '@dnd-kit/sortable'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk'
 import { Decimal } from 'decimal.js'
+import { debounce } from 'lodash-es'
 import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
@@ -19,10 +20,7 @@ export default class Index {
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { watch: false }, { autoBind: true })
 
-		this.utils.acts = [
-			setStorageWhenChange(['columns', 'focus', 'container_width'], this),
-			...useInstanceWatch(this)
-		]
+		this.utils.acts = [setStorageWhenChange(['columns', 'focus'], this), ...useInstanceWatch(this)]
 	}
 
 	watch = {
@@ -240,7 +238,7 @@ export default class Index {
 				this.focus = { column: over_column, view: target_views.length - 1 }
 			}
 		} else {
-			if (active_column === over_column && this.columns[active_column].views.length === 1) return
+			if (this.columns[active_column].views.length === 1) return
 
 			const direction = over.data.current.direction as 'left' | 'right'
 			const target_column = this.columns[active_column]
@@ -248,7 +246,7 @@ export default class Index {
 
 			const width = new Decimal(Decimal.div(100, this.columns.length + 1).toFixed(2)).toNumber()
 
-			const target_index = direction === 'left' ? active_column : active_column + 1
+			const target_index = direction === 'left' ? over_column : over_column + 1
 
 			this.remove({ column: active_column, view: active_view })
 
@@ -263,6 +261,16 @@ export default class Index {
 		}
 
 		this.updateColumnsFocus()
+	}
+
+	resize(column: number, width: number) {
+		const percent = new Decimal(Decimal.div(width, this.container_width).mul(100).toFixed(2)).toNumber()
+		const total = this.columns[column].width + this.columns[column - 1].width
+
+		this.columns[column].width = percent
+		this.columns[column - 1].width = Decimal.sub(total, percent).toNumber()
+
+		this.columns = toJS(this.columns)
 	}
 
 	private updateColumnsFocus() {

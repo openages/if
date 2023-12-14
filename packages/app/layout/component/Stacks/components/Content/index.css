@@ -1,6 +1,7 @@
 .Column {
 	height: calc(100vh - 36px);
 	border-right: var(--border);
+	transition: width ease 0.18s;
 
 	&:last-child {
 		border-right: none;
@@ -13,5 +14,21 @@
 
 	&.isOver {
 		background-color: rgba(var(--color_text_rgb), 0.09);
+	}
+}
+
+.drag_line {
+	left: -2px;
+	opacity: 0;
+	width: 3px;
+	background-color: var(--color_border);
+	cursor: col-resize;
+
+	&:hover {
+		opacity: 1;
+	}
+
+	&.draging {
+		opacity: 1;
 	}
 }

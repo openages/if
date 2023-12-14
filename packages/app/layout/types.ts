@@ -30,12 +30,16 @@ export interface IPropsStacks {
 	remove: GlobalModel['stack']['remove']
 	update: GlobalModel['stack']['update']
 	move: GlobalModel['stack']['move']
+	resize: GlobalModel['stack']['resize']
 	observe: GlobalModel['stack']['observe']
 	unobserve: GlobalModel['stack']['unobserve']
 }
 
 export interface IPropsStacksNavBar
-	extends Omit<IPropsStacks, 'visible' | 'current_module' | 'container_width' | 'move' | 'observe' | 'unobserve'> {}
+	extends Omit<
+		IPropsStacks,
+		'visible' | 'current_module' | 'container_width' | 'move' | 'resize' | 'observe' | 'unobserve'
+	> {}
 
 export interface IPropsStacksNavBarColumn extends Omit<IPropsStacksNavBar, 'columns' | 'move'> {
 	column_index: number
@@ -48,7 +52,7 @@ export interface IPropsStacksNavBarView extends Omit<IPropsStacksNavBarColumn, '
 	drag_overlay?: boolean
 }
 
-export interface IPropsStacksContent extends Pick<IPropsStacks, 'columns' | 'container_width' | 'click'> {}
+export interface IPropsStacksContent extends Pick<IPropsStacks, 'columns' | 'container_width' | 'click' | 'resize'> {}
 
 export interface IPropsStacksContentDrop {
 	column_index: number
@@ -61,6 +65,7 @@ export interface IPropsStacksContentColumn {
 	width: number
 	container_width: IPropsStacksContent['container_width']
 	click: IPropsStacksContent['click']
+	resize: IPropsStacksContent['resize']
 }
 
 export interface IPropsStacksContentView {
@@ -80,6 +85,11 @@ export interface IPropsStacksView {
 	width: number
 	container_width: IPropsStacksContent['container_width']
 	click: IPropsStacksContent['click']
+}
+
+export interface IPropsStacksDragLine {
+	getWidth: () => number
+	setWidth: (v: number) => void
 }
 
 export interface IPropsAppMenu {

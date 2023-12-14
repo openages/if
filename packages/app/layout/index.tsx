@@ -86,6 +86,7 @@ const Index = () => {
 		click: useMemoizedFn(global.stack.click),
 		update: useMemoizedFn(global.stack.update),
 		move: useMemoizedFn(global.stack.move),
+		resize: useMemoizedFn(global.stack.resize),
 		observe: useMemoizedFn(global.stack.observe),
 		unobserve: useMemoizedFn(global.stack.unobserve)
 	}

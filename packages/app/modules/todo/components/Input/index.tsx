@@ -72,7 +72,7 @@ const Index = (props: IPropsInput) => {
 	return (
 		<div className={$cx('w_100 sticky bottom_0 z_index_10', styles._local)}>
 			<div className='limited_content_wrap flex flex_column'>
-				<div className='options_wrap flex justify_between align_center'>
+				<div className='options_wrap flex flex_wrap justify_between align_center'>
 					<div className='flex align_center'>
 						<Select
 							className='select_type select'
