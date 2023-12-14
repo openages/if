@@ -1,5 +1,5 @@
 import { throttle } from 'lodash-es'
-import { useRef, useLayoutEffect, MutableRefObject } from 'react'
+import { MutableRefObject, useLayoutEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { session } from '@openages/stk'

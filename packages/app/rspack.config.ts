@@ -30,7 +30,7 @@ module.exports = defineConfig({
 	},
 	experiments: {
 		topLevelAwait: true,
-		outputModule: !is_prod,
+		// outputModule: !is_prod,
 		rspackFuture: {
 			newResolver: true,
 			// newTreeshaking: true,
@@ -43,7 +43,7 @@ module.exports = defineConfig({
 			template: './public/index.html'
 		}),
 		!is_prod && new ReactRefreshPlugin()
-	].filter(Boolean),
+	],
 	module: {
 		rules: [
 			{
@@ -71,7 +71,8 @@ module.exports = defineConfig({
 									runtime: 'automatic',
 									useBuiltins: true
 								}
-							}
+							},
+							externalHelpers: true
 						},
 						env: {
 							targets: 'chrome >= 120'

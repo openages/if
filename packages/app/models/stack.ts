@@ -3,10 +3,11 @@ import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
 import { arrayMove } from '@dnd-kit/sortable'
-import { setStorageWhenChange } from '@openages/stk'
+import { setStorageWhenChange, useInstanceWatch } from '@openages/stk'
 
 import type { DirTree, Stack } from '@/types'
 import type { DragEndEvent } from '@dnd-kit/core'
+import type { Watch } from '@openages/stk'
 
 @injectable()
 export default class Index {
@@ -16,10 +17,21 @@ export default class Index {
 	container_width = 0
 
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, { watch: false }, { autoBind: true })
 
-		this.utils.acts = [setStorageWhenChange(['columns', 'focus', 'container_width'], this)]
+		this.utils.acts = [
+			setStorageWhenChange(['columns', 'focus', 'container_width'], this),
+			...useInstanceWatch(this)
+		]
 	}
+
+	watch = {
+		columns: v => {
+			if (v.length) return
+
+			this.focus = { column: -1, view: -1 }
+		}
+	} as Watch<Index>
 
 	init() {
 		this.getObserver()
@@ -162,11 +174,19 @@ export default class Index {
 	move({ active, over }: Pick<DragEndEvent, 'active' | 'over'>) {
 		if (!over?.id) return false
 		if (active.data.current.type !== 'stack' || over.data.current.type !== 'stack') return
-		if (active.id === over.id) return
 
 		const active_column = active.data.current.column as number
-		const over_column = over.data.current.column as number
 		const active_view = active.data.current.view as number
+
+		if (!this.columns[active_column].views[active_view].fixed) {
+			this.columns[active_column].views[active_view].fixed = true
+
+			this.columns = toJS(this.columns)
+		}
+
+		if (active.id === over.id) return
+
+		const over_column = over.data.current.column as number
 		const over_view = over.data.current.view as number
 		const split = over.data.current.split as boolean
 
