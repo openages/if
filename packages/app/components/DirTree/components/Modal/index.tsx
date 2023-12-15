@@ -1,6 +1,6 @@
-import { useEventTarget, useKeyPress, useMemoizedFn, useDeepCompareEffect } from 'ahooks'
+import { useDeepCompareEffect, useEventTarget, useKeyPress, useMemoizedFn } from 'ahooks'
 import { Input, Modal } from 'antd'
-import { useEffect, useState, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { match } from 'ts-pattern'
 
@@ -9,9 +9,9 @@ import { useLimits } from '@/hooks'
 
 import styles from './index.css'
 
-import type { IPropsModal } from '../../types'
 import type { DirTree } from '@/types'
 import type { InputRef } from 'antd'
+import type { IPropsModal } from '../../types'
 
 const Index = (props: IPropsModal) => {
 	const {

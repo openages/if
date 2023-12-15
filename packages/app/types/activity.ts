@@ -1,0 +1,16 @@
+export namespace Activity {
+	export type Item = {
+		/** @maxLength 30 */
+		id: string
+		module: string
+		/** @maxLength 30 */
+		file_id: string
+		name: string
+		action: Action
+		timestamp: number
+	}
+
+	export type TodoAction = 'insert' | 'check'
+
+	export type Action = TodoAction
+}

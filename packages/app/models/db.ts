@@ -1,5 +1,5 @@
-import { migration_dirtree_items, migration_todo, migration_todo_items } from '@/migrations'
-import { schema_dirtree_items, schema_todo, schema_todo_items } from '@/schemas'
+import { migration_activity_items, migration_dirtree_items, migration_todo, migration_todo_items } from '@/migrations'
+import { schema_activity_items, schema_dirtree_items, schema_todo, schema_todo_items } from '@/schemas'
 import { makeAutoObservable } from 'mobx'
 import { createRxDatabase } from 'rxdb'
 import { wrappedKeyEncryptionCryptoJsStorage } from 'rxdb/plugins/encryption-crypto-js'
@@ -35,6 +35,11 @@ export default class Index {
 		})
 
 		await db.addCollections({
+			activity_items: {
+				autoMigrate: false,
+				schema: schema_activity_items,
+				migrationStrategies: migration_activity_items
+			},
 			dirtree_items: {
 				autoMigrate: false,
 				schema: schema_dirtree_items,
@@ -89,24 +94,19 @@ export default class Index {
 		}
 	}
 
+	async updateTimeStamp(id: string) {
+		const doc = await $db.dirtree_items.findOne(id).exec()
+
+		return doc.updateCRDT({ ifMatch: { $set: { update_at: new Date().valueOf() } } })
+	}
+
 	hooks() {
-		$db.dirtree_items.postInsert((_, doc) => {
-			return doc.updateCRDT({ ifMatch: { $set: { create_at: new Date().valueOf() } } })
-		}, false)
+		$db.dirtree_items.postInsert(
+			(_, doc) => doc.updateCRDT({ ifMatch: { $set: { create_at: new Date().valueOf() } } }),
+			false
+		)
 
-		// $db.todo.postSave(async data => {
-		// 	console.log(123)
-		// 	const doc = await $db.dirtree_items.findOne(data.id).exec()
-
-		// 	return doc.updateCRDT({ ifMatch: { $set: { update_at: new Date().valueOf() } } })
-		// }, false)
-
-		// $db.todo_items.postSave(async data => {
-		// 	console.log(666)
-
-		// 	const doc = await $db.dirtree_items.findOne(data.id).exec()
-
-		// 	return doc.updateCRDT({ ifMatch: { $set: { update_at: new Date().valueOf() } } })
-		// }, false)
+		$db.todo.postSave(async data => this.updateTimeStamp(data.id), false)
+		$db.todo_items.postSave(async data => this.updateTimeStamp(data.file_id), false)
 	}
 }

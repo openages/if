@@ -6,9 +6,9 @@ import { injectable } from 'tsyringe'
 import { archive, cycle } from '@/actions/todo'
 import { GlobalModel } from '@/context/app'
 import { File, Loadmore, Utils } from '@/models'
-import { getDocItem, getDocItemsData } from '@/utils'
+import { getDocItem, getDocItemsData, id } from '@/utils'
 import { confirm } from '@/utils/antd'
-import { loading } from '@/utils/decorators'
+import { disableWatcher, loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
 import { useInstanceWatch } from '@openages/stk'
 
@@ -150,6 +150,8 @@ export default class Index {
 
 	@loading
 	async create(item: Todo.TodoItem, quick?: boolean) {
+		await this.setActivity('insert')
+
 		return await create(
 			{
 				file_id: this.id,
@@ -226,6 +228,8 @@ export default class Index {
 	}
 
 	async check(args: { id: string; status: Todo.Todo['status'] }) {
+		await this.setActivity('check')
+
 		await check({
 			file_id: this.id,
 			todo: this.todo,
@@ -322,14 +326,13 @@ export default class Index {
 		return true
 	}
 
+	@disableWatcher
 	async insert(args: { index: number; data?: Todo.Todo; callback?: () => Promise<void> }) {
 		if (this.is_filtered) return
 
 		const { index, data, callback } = args
 		const todo = data ?? (getTodo() as Todo.TodoItem)
 		const items = toJS(this.items)
-
-		this.stopWatchItems()
 
 		const item = await this.create(todo, true)
 
@@ -338,8 +341,6 @@ export default class Index {
 		await updateTodosSort(items)
 
 		if (callback) await callback()
-
-		this.watchItems()
 
 		if (!data) setTimeout(() => document.getElementById(`todo_${item.id}`)?.focus(), 0)
 	}
@@ -431,6 +432,17 @@ export default class Index {
 		if (!this.id) return
 
 		await cycle(this.id)
+	}
+
+	async setActivity(action: 'insert' | 'check') {
+		return $db.activity_items.insert({
+			id: id(),
+			module: 'todo',
+			file_id: this.id,
+			name: this.file.data.name,
+			timestamp: new Date().valueOf(),
+			action
+		})
 	}
 
 	updateArchiveItems(id: string) {

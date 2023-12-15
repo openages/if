@@ -11,7 +11,7 @@ interface IProps {
 	children: ReactNode
 	open: boolean
 	className?: HTMLDivElement['className']
-	title?: string
+	title?: string | number
 	width?: number
 	maskClosable?: boolean
 	onCancel: (e: MouseEvent<HTMLDivElement>) => void
