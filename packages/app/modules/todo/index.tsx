@@ -27,16 +27,7 @@ import type {
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const angles = toJS(x.todo.angles || [])
-	const { width, container_width } = useStack()
-
-	const narrow = useMemo(() => {
-		const target_width = width * 0.01 * container_width
-
-		if (target_width <= 390) return '390'
-		if (target_width <= 801) return '801'
-
-		return
-	}, [width, container_width])
+	const { breakpoint } = useStack()
 
 	useLayoutEffect(() => {
 		x.init({ id })
@@ -119,7 +110,7 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_detail: IPropsDetail = {
-		narrow,
+		breakpoint,
 		visible_detail_modal: x.visible_detail_modal,
 		current_detail_index: toJS(x.current_detail_index),
 		current_detail_item: toJS(x.current_detail_item),
@@ -147,7 +138,7 @@ const Index = ({ id }: IProps) => {
 			className={$cx(
 				'w_100 border_box flex flex_column',
 				styles._local,
-				!narrow && x.visible_detail_modal && styles.visible_detail_modal
+				!breakpoint && x.visible_detail_modal && styles.visible_detail_modal
 			)}
 		>
 			<If condition={x.id && x.file.data.name}>

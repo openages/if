@@ -20,7 +20,7 @@ import type { IPropsChildren, IPropsDetail } from '../../types'
 
 const Index = (props: IPropsDetail) => {
 	const {
-		narrow,
+		breakpoint,
 		visible_detail_modal,
 		current_detail_index,
 		current_detail_item,
@@ -76,11 +76,15 @@ const Index = (props: IPropsDetail) => {
 
 	return (
 		<Drawer
-			rootClassName={$cx(styles._local, narrow && styles.narrow, narrow === '390' && styles.narrow_390)}
+			rootClassName={$cx(
+				styles._local,
+				breakpoint && styles.breakpoint,
+				breakpoint === 390 && styles.narrow_390
+			)}
 			open={visible_detail_modal}
 			title={t('translation:todo.Detail.title')}
 			width={342}
-			mask={!!narrow}
+			mask={Boolean(breakpoint)}
 			zIndex={100}
 			destroyOnClose
 			getContainer={false}

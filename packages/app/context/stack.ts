@@ -7,6 +7,7 @@ export interface StackContext {
 	id: string
 	width: number
 	container_width: number
+	breakpoint?: 801 | 390
 }
 
 // @ts-ignore Avoid duplicate declarations

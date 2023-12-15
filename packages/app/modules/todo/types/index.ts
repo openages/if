@@ -174,7 +174,7 @@ export interface IPropsArchiveItem extends Pick<IPropsArchive, 'restoreArchiveIt
 }
 
 export interface IPropsDetail {
-	narrow: string
+	breakpoint?: number
 	visible_detail_modal: Model['visible_detail_modal']
 	current_detail_index: Model['current_detail_index']
 	current_detail_item: Model['current_detail_item']

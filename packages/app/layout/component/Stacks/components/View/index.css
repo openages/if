@@ -5,7 +5,7 @@
 ._local {
 	overflow: scroll;
 
-	&.narrow {
+	&.breakpoint_390 {
 		--limited_padding: 30px;
 	}
 

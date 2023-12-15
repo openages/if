@@ -1,7 +1,7 @@
 ._local {
 	--padding: 24px;
 
-	&.narrow {
+	&.breakpoint {
 		:global {
 			.if-drawer {
 				&-content-wrapper {
@@ -20,7 +20,7 @@
 		}
 	}
 
-	&.narrow_390 {
+	&.breakpoint_390 {
 		:global {
 			.if-drawer {
 				&-content-wrapper {

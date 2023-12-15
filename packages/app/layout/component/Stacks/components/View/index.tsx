@@ -9,14 +9,24 @@ import type { IPropsStacksView } from '../../../../types'
 const Index = (props: IPropsStacksView) => {
 	const { column_index, view_index, module, id, width, container_width, click } = props
 
-	const narrow = useMemo(() => width * 0.01 * container_width <= 390, [width, container_width])
+	const breakpoint = useMemo(() => {
+		const target_width = width * 0.01 * container_width
+
+		if (target_width <= 390) return 390
+		if (target_width <= 801) return 801
+
+		return
+	}, [width, container_width])
 
 	const onMouseDown = useMemoizedFn(() => click({ column: column_index, view: view_index }, true))
 
 	return (
-		<StackContext.Provider value={{ module, id, width, container_width }}>
+		<StackContext.Provider value={{ module, id, width, container_width, breakpoint }}>
 			<div className={$cx('w_100 h_100 relative', styles.position_wrap)} onMouseDown={onMouseDown}>
-				<div id={id} className={$cx('w_100 h_100', styles._local, narrow && styles.narrow)}>
+				<div
+					id={id}
+					className={$cx('w_100 h_100', styles._local, breakpoint === 390 && styles.breakpoint_390)}
+				>
 					<LazyElement type='modules' path={module} params={{ id }} />
 				</div>
 			</div>
