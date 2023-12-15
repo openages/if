@@ -36,14 +36,18 @@ export default (args: HookArgs) => {
 			input.current.blur()
 
 			await update(textContent)
+
+			return textContent
 		} else {
 			const start = getCursorPosition(input.current)
 
 			await update(textContent)
 
-			if (document.activeElement !== input.current) return
+			if (document.activeElement !== input.current) return textContent
 
 			setCursorPosition(input.current, start)
+
+			return textContent
 		}
 	})
 
@@ -71,5 +75,5 @@ export default (args: HookArgs) => {
 		)
 	)
 
-	return { input, onInput }
+	return { input, onInput, updateValue }
 }

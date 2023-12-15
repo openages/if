@@ -23,7 +23,11 @@ const Index = (props: IPropsInput) => {
 	const { loading, tags, create } = props
 	const { t } = useTranslation()
 	const [input, setInput] = useState<Omit<Todo.TodoItem, 'file_id' | 'angle_id' | 'sort'>>(getTodo())
-	const { input: input_ref, onInput } = useInput({
+	const {
+		input: input_ref,
+		onInput,
+		updateValue
+	} = useInput({
 		value: input.text,
 		update: useMemoizedFn(v => setInput(input => ({ ...input, text: v })))
 	})
@@ -60,13 +64,15 @@ const Index = (props: IPropsInput) => {
 		onChangeCircle: useMemoizedFn(v => setInput(input => ({ ...input, ...v })))
 	}
 
-	const onKeyDown = useMemoizedFn((e: KeyboardEvent<HTMLDivElement>) => {
+	const onKeyDown = useMemoizedFn(async (e: KeyboardEvent<HTMLDivElement>) => {
 		if (e.key !== 'Enter') return
 		if (loading) return
 
 		e.preventDefault()
 
-		create({ ...input, create_at: new Date().valueOf() } as Todo.TodoItem)
+		const textContent = await updateValue(input_ref.current.textContent)
+
+		create({ ...input, text: textContent, create_at: new Date().valueOf() } as Todo.TodoItem)
 	})
 
 	return (
