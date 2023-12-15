@@ -25,7 +25,8 @@ const Index = (props: IPropsCircle) => {
 			{ label: t('translation:todo.Input.Cycle.options.week'), value: 'week' },
 			{ label: t('translation:todo.Input.Cycle.options.month'), value: 'month' },
 			{ label: t('translation:todo.Input.Cycle.options.quarter'), value: 'quarter' },
-			{ label: t('translation:todo.Input.Cycle.options.year'), value: 'year' }
+			{ label: t('translation:todo.Input.Cycle.options.year'), value: 'year' },
+			{ label: t('translation:todo.Input.Cycle.options.reset'), value: 'reset' }
 		],
 		[i18n.language]
 	)
@@ -46,22 +47,36 @@ const Index = (props: IPropsCircle) => {
 		})
 	})
 
-	const Exclude = (cycle?.scale === 'week' || cycle?.scale === 'quarter') && (
-		<div className='weekdays flex justify_between mt_8'>
-			{(cycle?.scale === 'week' ? [1, 2, 3, 4, 5, 6, 7] : [1, 2, 3, 4]).map(item => (
-				<span
-					className={$cx(
-						'weekday flex justify_center align_center clickable',
-						cycle.exclude && cycle.exclude?.includes(item) && 'exclude',
-						cycle?.scale === 'quarter' && 'quarter'
-					)}
-					key={item}
-					onClick={() => onWeekday(item)}
-				>
-					{item}
-				</span>
-			))}
-		</div>
+	const onChangeEnabled = useMemoizedFn(v => onChangeCircle({ cycle_enabled: v }))
+
+	const onChangeScale = useMemoizedFn(({ target: { value } }) => {
+		onChangeCircle({
+			cycle: value === 'reset' ? undefined : { ...cycle, scale: value, interval: 1, exclude: [] }
+		})
+	})
+
+	const onChangeInterval = useMemoizedFn(v => onChangeCircle({ cycle: { ...cycle, interval: v } }))
+
+	const Exclude = useMemo(
+		() =>
+			(cycle?.scale === 'week' || cycle?.scale === 'quarter') && (
+				<div className='weekdays flex justify_between mt_8'>
+					{(cycle?.scale === 'week' ? [1, 2, 3, 4, 5, 6, 7] : [1, 2, 3, 4]).map(item => (
+						<span
+							className={$cx(
+								'weekday flex justify_center align_center clickable',
+								cycle?.exclude && cycle?.exclude?.includes(item) && 'exclude',
+								cycle?.scale === 'quarter' && 'quarter'
+							)}
+							key={item}
+							onClick={() => onWeekday(item)}
+						>
+							{item}
+						</span>
+					))}
+				</div>
+			),
+		[cycle?.scale, cycle?.exclude]
 	)
 
 	const Content = (
@@ -74,7 +89,7 @@ const Index = (props: IPropsCircle) => {
 					className='switch'
 					size='small'
 					checked={cycle_enabled}
-					onChange={v => onChangeCircle({ cycle_enabled: v })}
+					onChange={onChangeEnabled}
 				></Switch>
 			</div>
 			<div className='cycle_input_items w_100 border_box flex flex_column'>
@@ -83,11 +98,7 @@ const Index = (props: IPropsCircle) => {
 					size='small'
 					options={options_cycle}
 					value={cycle?.scale}
-					onChange={({ target: { value } }) => {
-						onChangeCircle({
-							cycle: { ...cycle, scale: value, interval: 1, exclude: [] }
-						})
-					}}
+					onChange={onChangeScale}
 				></Group>
 				<div className='cycle_wrap mt_6'>
 					<InputNumber
@@ -101,7 +112,7 @@ const Index = (props: IPropsCircle) => {
 							Number(value.replace(every_text, '').replace(scale_text, '').trim())
 						}
 						value={cycle?.interval || 1}
-						onChange={v => onChangeCircle({ cycle: { ...cycle, interval: v } })}
+						onChange={onChangeInterval}
 					></InputNumber>
 					{Exclude}
 				</div>

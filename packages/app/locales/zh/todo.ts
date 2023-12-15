@@ -98,7 +98,8 @@ export default {
 				week: '周',
 				month: '月',
 				quarter: '季度',
-				year: '年'
+				year: '年',
+				reset: '重置'
 			}
 		}
 	},

@@ -100,7 +100,8 @@ export default {
 				week: 'Week',
 				month: 'Month',
 				quarter: 'Quarter',
-				year: 'Year'
+				year: 'Year',
+				reset: 'Reset'
 			}
 		}
 	},

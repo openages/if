@@ -69,7 +69,14 @@ export default class Index {
 			return
 		}
 
-		const target_views = this.columns[this.focus.column].views
+		const target_views = this.columns[this.focus.column]?.views
+
+		if (!target_views) {
+			this.focus = { column: -1, view: -1 }
+
+			return
+		}
+
 		const last_view = target_views.at(-1)
 
 		if (!last_view || last_view?.fixed) {

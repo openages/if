@@ -7,7 +7,7 @@ export default {
 	workflow: '工作流',
 	whiteboard: '白板',
 	ppt: '报告',
-	schedule: '安排',
+	schedule: '日程',
 	pomodoro: '番茄钟',
 	flag: '小目标',
 	api: '接口',

@@ -157,6 +157,7 @@ const Index = (props: IPropsArchive) => {
 				<div className='label mr_2'>{t('translation:todo.Archive.clean.title')}</div>
 				<Select
 					className='select borderless'
+					popupClassName='borderless'
 					placeholder={t('translation:todo.Archive.clean.placeholder')}
 					bordered={false}
 					suffixIcon={false}
