@@ -130,11 +130,7 @@ export default class Index {
 	}
 
 	constructor(public global: GlobalModel, public utils: Utils, public file: File, public loadmore: Loadmore) {
-		makeAutoObservable(
-			this,
-			{ watch: false, timer_cycle: false, timer_archive: false },
-			{ autoBind: true, deep: true }
-		)
+		makeAutoObservable(this, { watch: false, timer_cycle: false, timer_archive: false }, { autoBind: true })
 	}
 
 	init(args: { id: string }) {

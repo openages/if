@@ -60,6 +60,8 @@ export default class Index {
 		this.ready = true
 
 		window.$app.Event.emit('app/setLoading', { visible: false })
+
+		this.hooks()
 	}
 
 	async migrateRxdb() {
@@ -85,5 +87,26 @@ export default class Index {
 
 			await Promise.all(migrations)
 		}
+	}
+
+	hooks() {
+		$db.dirtree_items.postInsert((_, doc) => {
+			return doc.updateCRDT({ ifMatch: { $set: { create_at: new Date().valueOf() } } })
+		}, false)
+
+		// $db.todo.postSave(async data => {
+		// 	console.log(123)
+		// 	const doc = await $db.dirtree_items.findOne(data.id).exec()
+
+		// 	return doc.updateCRDT({ ifMatch: { $set: { update_at: new Date().valueOf() } } })
+		// }, false)
+
+		// $db.todo_items.postSave(async data => {
+		// 	console.log(666)
+
+		// 	const doc = await $db.dirtree_items.findOne(data.id).exec()
+
+		// 	return doc.updateCRDT({ ifMatch: { $set: { update_at: new Date().valueOf() } } })
+		// }, false)
 	}
 }

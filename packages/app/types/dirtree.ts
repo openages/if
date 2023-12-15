@@ -11,6 +11,9 @@ export namespace DirTree {
 		next_id?: string
 		icon?: string
 		icon_hue?: number
+		create_at?: number
+		update_at?: number
+		backup_at?: number
 	}
 
 	export type TransformedItem = Item & {

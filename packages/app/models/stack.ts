@@ -2,7 +2,7 @@ import Utils from '@/models/utils'
 import { arrayMove } from '@dnd-kit/sortable'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk'
 import { Decimal } from 'decimal.js'
-import { debounce } from 'lodash-es'
+import { omit } from 'lodash-es'
 import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
@@ -181,7 +181,10 @@ export default class Index {
 
 		if (!exsit_view?.view) return
 
-		this.columns[exsit_view.column_index].views[exsit_view.view_index].file = v
+		this.columns[exsit_view.column_index].views[exsit_view.view_index].file = {
+			...toJS(this.columns[exsit_view.column_index].views[exsit_view.view_index].file),
+			...omit(v, 'id')
+		}
 
 		this.updateColumnsFocus()
 	}

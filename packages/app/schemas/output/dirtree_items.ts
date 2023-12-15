@@ -34,6 +34,15 @@ export default {
                   },
                   "icon_hue": {
                         "type": "number"
+                  },
+                  "create_at": {
+                        "type": "number"
+                  },
+                  "update_at": {
+                        "type": "number"
+                  },
+                  "backup_at": {
+                        "type": "number"
                   }
             },
             "required": [
@@ -77,6 +86,15 @@ export default {
                         "type": "string"
                   },
                   "icon_hue": {
+                        "type": "number"
+                  },
+                  "create_at": {
+                        "type": "number"
+                  },
+                  "update_at": {
+                        "type": "number"
+                  },
+                  "backup_at": {
                         "type": "number"
                   }
             },
