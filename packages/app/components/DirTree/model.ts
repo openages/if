@@ -160,7 +160,7 @@ export default class Index {
 		$app.Event.emit('global.stack.add', {
 			id: v.id,
 			module: this.module,
-			file: v,
+			file: toJS(v),
 			active: true,
 			fixed: false,
 			outlet: null

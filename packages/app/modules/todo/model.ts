@@ -52,6 +52,8 @@ export default class Index {
 	todo_watcher = null as Subscription
 	items = [] as Array<Todo.TodoItem>
 	items_watcher = null as Subscription
+	kanbans = {} as { [key: string]: { angle: Todo.Data['angles'][number]; items: Array<Todo.Todo> } }
+	kanbans_watcher = [] as Array<Subscription>
 
 	archives = [] as Array<Todo.Todo>
 	archive_counts = 0
@@ -64,6 +66,7 @@ export default class Index {
 	visible_archive_modal = false
 	visible_detail_modal = false
 	visible_help_modal = false
+	kanban_mode = false
 
 	current_angle_id = ''
 	current_detail_index = -1
@@ -109,6 +112,15 @@ export default class Index {
 			this.loadmore.end = false
 
 			this.queryArchives(true)
+		},
+		['kanban_mode']: v => {
+			if (v) {
+				this.stopWatchItems()
+				this.watchKanbans()
+			} else {
+				this.stopWatchKanbans()
+				this.watchItems()
+			}
 		}
 	} as Watch<
 		Index & {
@@ -141,6 +153,7 @@ export default class Index {
 
 		this.on()
 		this.watchTodo()
+		this.watchItems()
 
 		this.file.init(this.id)
 
@@ -303,7 +316,11 @@ export default class Index {
 
 		if (!res) return false
 
+		if (this.kanban_mode) this.stopWatchKanbans()
+
 		await removeAngle(this.id, angle_id)
+
+		if (this.kanban_mode) this.watchKanbans()
 
 		return true
 	}
@@ -445,16 +462,18 @@ export default class Index {
 		})
 	}
 
+	toggleKanbanMode() {
+		this.kanban_mode = !this.kanban_mode
+		this.items_sort_param = null
+		this.items_filter_tags = []
+	}
+
 	updateArchiveItems(id: string) {
 		this.archives.splice(
 			this.archives.findIndex(item => item.id === id),
 			1
 		)
 		this.archive_counts = this.archive_counts - 1
-	}
-
-	stopWatchItems() {
-		if (this.items_watcher) this.items_watcher.unsubscribe()
 	}
 
 	watchItems() {
@@ -476,8 +495,32 @@ export default class Index {
 
 			this.current_angle_id = todo.angles[0].id
 		})
+	}
 
-		this.watchItems()
+	watchKanbans() {
+		this.kanbans_watcher = this.todo.angles.map(item => {
+			return getQueryItems({ file_id: this.id, angle_id: item.id, selector: { type: 'todo' } }).$.subscribe(
+				items => {
+					console.log(items, items)
+					this.kanbans[item.id] = {
+						angle: toJS(item),
+						items: getDocItemsData(items) as Array<Todo.Todo>
+					}
+				}
+			)
+		})
+	}
+
+	stopWatchItems() {
+		if (this.items_watcher) this.items_watcher.unsubscribe()
+	}
+
+	stopWatchKanbans() {
+		if (!this.kanbans_watcher.length) return
+
+		this.kanbans_watcher.forEach(item => item.unsubscribe())
+
+		this.kanbans_watcher = []
 	}
 
 	on() {
@@ -493,6 +536,7 @@ export default class Index {
 
 		this.todo_watcher?.unsubscribe?.()
 		this.items_watcher?.unsubscribe?.()
+		this.kanbans_watcher.forEach(item => item?.unsubscribe?.())
 
 		clearInterval(this.timer_cycle)
 		clearInterval(this.timer_archive)

@@ -1,12 +1,14 @@
-import type { Todo } from '@/types'
 import type { File } from '@/models'
+import type { Todo } from '@/types'
+import type { MangoQuerySelector } from 'rxdb'
 import type Model from '../model'
 
 export type ArgsQueryItems = {
 	file_id: string
 	angle_id: string
-	items_sort_param: Model['items_sort_param']
-	items_filter_tags: Model['items_filter_tags']
+	items_sort_param?: Model['items_sort_param']
+	items_filter_tags?: Model['items_filter_tags']
+	selector?: MangoQuerySelector<Todo.TodoItem>
 }
 
 export type ArgsCreate = {

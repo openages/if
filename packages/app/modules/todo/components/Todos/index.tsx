@@ -1,6 +1,6 @@
-import { useSize, useDeepCompareEffect, useMemoizedFn } from 'ahooks'
-import { useRef, useMemo, useState } from 'react'
-import { Stage, Layer, Line } from 'react-konva'
+import { useDeepCompareEffect, useMemoizedFn, useSize } from 'ahooks'
+import { useMemo, useRef, useState } from 'react'
+import { Layer, Line, Stage } from 'react-konva'
 
 import { useCssVariable } from '@/hooks'
 import { points } from '@/utils'
@@ -10,10 +10,10 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import GroupTitle from '../GroupTitle'
 import TodoItem from '../TodoItem'
 import styles from './index.css'
-import { getRelativePostion, getLinkedItems } from './utils'
+import { getLinkedItems, getRelativePostion } from './utils'
 
+import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core'
 import type { IPropsTodos } from '../../types'
-import type { DragStartEvent, DragEndEvent } from '@dnd-kit/core'
 
 const Index = (props: IPropsTodos) => {
 	const {
@@ -22,6 +22,7 @@ const Index = (props: IPropsTodos) => {
 		angles,
 		relations,
 		drag_disabled,
+		kanban_mode,
 		check,
 		updateRelations,
 		move,
@@ -133,7 +134,7 @@ const Index = (props: IPropsTodos) => {
 	}, [color_text_line, color_text_softlight, relations_lines, items])
 
 	return (
-		<div className={$cx('limited_content_wrap relative', styles._local)}>
+		<div className={$cx('limited_content_wrap relative', styles._local, kanban_mode && styles.kanban_mode)}>
 			{height > 0 && !drag_disabled && (
 				<Stage className='stage_wrap absolute' width={9} height={height}>
 					<Layer>
@@ -172,6 +173,7 @@ const Index = (props: IPropsTodos) => {
 										remove,
 										showDetailModal
 									}}
+									kanban_mode={kanban_mode}
 									key={item.id}
 								></TodoItem>
 							) : (

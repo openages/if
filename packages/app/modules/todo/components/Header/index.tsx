@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Else, If, Then, When } from 'react-if'
 
 import { Emoji } from '@/components'
-import { ArchiveBox, CaretDown, CaretUp, DotsThreeCircleVertical, Files, X } from '@phosphor-icons/react'
+import { ArchiveBox, CaretDown, CaretUp, DotsThreeCircleVertical, Kanban, ListChecks, X } from '@phosphor-icons/react'
 
 import TagSelect from '../TagSelect'
 import { useContextMenu } from './hooks'
@@ -19,8 +19,10 @@ const Index = (props: IPropsHeader) => {
 		icon_hue,
 		desc,
 		tags,
+		kanban_mode,
 		items_sort_param,
 		items_filter_tags,
+		toggleKanbanMode,
 		showSettingsModal,
 		showArchiveModal,
 		showHelpModal,
@@ -28,8 +30,9 @@ const Index = (props: IPropsHeader) => {
 		setItemsFilterTags
 	} = props
 	const { t } = useTranslation()
-	const { related_menu, options_menu, onContextMenu } = useContextMenu({
+	const { options_menu, onOptionsContextMenu } = useContextMenu({
 		tags,
+		kanban_mode,
 		items_filter_tags,
 		showSettingsModal,
 		showHelpModal,
@@ -52,8 +55,9 @@ const Index = (props: IPropsHeader) => {
 	return (
 		<div
 			className={$cx(
-				'limited_content_wrap border_box flex flex_wrap justify_between align_center relative',
-				styles._local
+				'limited_content_wrap border_box flex flex_wrap justify_between align_center transition_normal relative',
+				styles._local,
+				kanban_mode && styles.kanban_mode
 			)}
 		>
 			<div className='left_wrap flex flex_column'>
@@ -68,7 +72,7 @@ const Index = (props: IPropsHeader) => {
 					</When>
 					<div className='name flex justify_between align_center'>{name}</div>
 				</div>
-				<When condition={desc}>
+				<When condition={!kanban_mode && desc}>
 					<span className='desc'>{desc}</span>
 				</When>
 			</div>
@@ -124,24 +128,20 @@ const Index = (props: IPropsHeader) => {
 				</div>
 			)}
 			<div className='actions_wrap flex align_center'>
-				<Dropdown
-					destroyPopupOnHide
-					trigger={['click']}
-					overlayStyle={{ width: 111 }}
-					menu={{ items: related_menu }}
+				<div
+					className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'
+					onClick={toggleKanbanMode}
 				>
+					{kanban_mode ? <ListChecks size={18}></ListChecks> : <Kanban size={18}></Kanban>}
+				</div>
+				<Tooltip title={t('translation:todo.Header.archive')}>
 					<div>
-						<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'>
-							<Files size={18}></Files>
+						<div
+							className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'
+							onClick={showArchiveModal}
+						>
+							<ArchiveBox size={18}></ArchiveBox>
 						</div>
-					</div>
-				</Dropdown>
-				<Tooltip title={t('translation:todo.Header.archive')} placement='top'>
-					<div
-						className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'
-						onClick={showArchiveModal}
-					>
-						<ArchiveBox size={18}></ArchiveBox>
 					</div>
 				</Tooltip>
 				<ConfigProvider getPopupContainer={() => document.body}>
@@ -149,7 +149,7 @@ const Index = (props: IPropsHeader) => {
 						destroyPopupOnHide
 						trigger={['click']}
 						overlayStyle={{ width: 90 }}
-						menu={{ items: options_menu, onClick: onContextMenu }}
+						menu={{ items: options_menu, onClick: onOptionsContextMenu }}
 					>
 						<div>
 							<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable'>

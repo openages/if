@@ -1,6 +1,10 @@
 ._local {
 	transition: padding 0.3s;
 
+	&.kanban_mode {
+		height: 100%;
+	}
+
 	&.visible_detail_modal {
 		padding-right: 342px;
 	}

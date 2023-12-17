@@ -3,23 +3,14 @@ import { uniq } from 'lodash-es'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import {
-	ArrowsDownUp,
-	CalendarPlus,
-	GitFork,
-	Note,
-	PencilSimple,
-	Question,
-	Star,
-	Tag,
-	TextAa
-} from '@phosphor-icons/react'
+import { ArrowsDownUp, CalendarPlus, PencilSimple, Question, Star, Tag, TextAa } from '@phosphor-icons/react'
 
 import type { MenuProps } from 'antd'
 import type { IPropsHeader } from '../../../types'
 
 interface HookArgs {
 	tags: IPropsHeader['tags']
+	kanban_mode: IPropsHeader['kanban_mode']
 	items_filter_tags: IPropsHeader['items_filter_tags']
 	showSettingsModal: IPropsHeader['showSettingsModal']
 	showHelpModal: IPropsHeader['showHelpModal']
@@ -28,32 +19,16 @@ interface HookArgs {
 }
 
 export default (args: HookArgs) => {
-	const { tags, items_filter_tags, showSettingsModal, showHelpModal, setItemsSortParam, setItemsFilterTags } = args
+	const {
+		tags,
+		kanban_mode,
+		items_filter_tags,
+		showSettingsModal,
+		showHelpModal,
+		setItemsSortParam,
+		setItemsFilterTags
+	} = args
 	const { t, i18n } = useTranslation()
-
-	const related_menu: MenuProps['items'] = useMemo(
-		() => [
-			{
-				key: 'reference',
-				label: (
-					<div className='menu_item_wrap flex align_center'>
-						<Note size={16}></Note>
-						<span className='text ml_6'>{t('translation:todo.Header.related.reference')}</span>
-					</div>
-				)
-			},
-			{
-				key: 'todograph',
-				label: (
-					<div className='menu_item_wrap flex align_center'>
-						<GitFork size={16}></GitFork>
-						<span className='text ml_6'>{t('translation:todo.Header.related.todograph')}</span>
-					</div>
-				)
-			}
-		],
-		[i18n.language]
-	)
 
 	const options_menu: MenuProps['items'] = useMemo(
 		() => [
@@ -74,6 +49,7 @@ export default (args: HookArgs) => {
 						<span className='text ml_6'>{t('translation:todo.Header.options.sort.text')}</span>
 					</div>
 				),
+				disabled: kanban_mode,
 				children: [
 					{
 						key: 'importance',
@@ -137,7 +113,7 @@ export default (args: HookArgs) => {
 		[i18n.language, tags, items_filter_tags]
 	)
 
-	const onContextMenu = useMemoizedFn(({ key, keyPath }) => {
+	const onOptionsContextMenu = useMemoizedFn(({ key, keyPath }) => {
 		if (keyPath.length > 1) {
 			const parent_key = keyPath.at(-1)
 			const target_key = keyPath.at(0)
@@ -171,5 +147,5 @@ export default (args: HookArgs) => {
 		}
 	})
 
-	return { related_menu, options_menu, onContextMenu }
+	return { options_menu, onOptionsContextMenu }
 }

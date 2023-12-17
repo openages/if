@@ -2,13 +2,14 @@ import { DataEmpty } from '@/components'
 import { useStack } from '@/context/stack'
 import { isShowEmpty } from '@/utils'
 import { useMemoizedFn } from 'ahooks'
+import { omit } from 'lodash-es'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useMemo, useState } from 'react'
 import { Else, If, Then, When } from 'react-if'
 import { container } from 'tsyringe'
 
-import { Archive, Detail, Header, Help, Input, SettingsModal, Tabs, Todos } from './components'
+import { Archive, Detail, Header, Help, Input, Kanban, SettingsModal, Tabs, Todos } from './components'
 import styles from './index.css'
 import Model from './model'
 
@@ -19,6 +20,7 @@ import type {
 	IPropsHeader,
 	IPropsHelp,
 	IPropsInput,
+	IPropsKanban,
 	IPropsSettingsModal,
 	IPropsTabs,
 	IPropsTodos
@@ -41,8 +43,10 @@ const Index = ({ id }: IProps) => {
 		icon_hue: x.file.data.icon_hue,
 		desc: x.todo.desc,
 		tags: toJS(x.todo.tags),
+		kanban_mode: x.kanban_mode,
 		items_sort_param: toJS(x.items_sort_param),
 		items_filter_tags: toJS(x.items_filter_tags),
+		toggleKanbanMode: useMemoizedFn(x.toggleKanbanMode),
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true)),
 		showArchiveModal: useMemoizedFn(() => (x.visible_archive_modal = true)),
 		showHelpModal: useMemoizedFn(() => (x.visible_help_modal = true)),
@@ -82,6 +86,11 @@ const Index = ({ id }: IProps) => {
 			x.visible_detail_modal = true
 			x.current_detail_index = index
 		})
+	}
+
+	const props_kanban: IPropsKanban = {
+		kanbans: toJS(x.kanbans),
+		...omit(props_todos, 'items')
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
@@ -138,15 +147,23 @@ const Index = ({ id }: IProps) => {
 			className={$cx(
 				'w_100 border_box flex flex_column',
 				styles._local,
+				x.kanban_mode && styles.kanban_mode,
 				!breakpoint && x.visible_detail_modal && styles.visible_detail_modal
 			)}
 		>
 			<If condition={x.id && x.file.data.name}>
 				<Then>
 					<Header {...props_header}></Header>
-					<Tabs {...props_tabs}></Tabs>
-					<Todos {...props_todos}></Todos>
-					<Input {...props_input}></Input>
+					<If condition={x.kanban_mode}>
+						<Then>
+							<Kanban {...props_kanban}></Kanban>
+						</Then>
+						<Else>
+							<Tabs {...props_tabs}></Tabs>
+							<Todos {...props_todos}></Todos>
+							<Input {...props_input}></Input>
+						</Else>
+					</If>
 					<SettingsModal {...props_settings_modal}></SettingsModal>
 					<Archive {...props_archive}></Archive>
 					<Detail {...props_detail}></Detail>

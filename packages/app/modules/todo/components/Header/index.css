@@ -2,6 +2,13 @@
 	padding-top: 36px;
 	padding-bottom: 24px;
 
+	&.kanban_mode {
+		max-width: 100%;
+		height: 60px;
+		padding: 0 18px;
+		border-bottom: 1px dashed var(--color_border_light);
+	}
+
 	:global {
 		.left_wrap {
 			em-emoji {

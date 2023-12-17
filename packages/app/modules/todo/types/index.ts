@@ -20,22 +20,15 @@ export interface IPropsTagSelect {
 }
 
 export interface IPropsHeader extends Pick<Todo.Data & DirTree.Item, 'name' | 'icon' | 'icon_hue' | 'desc' | 'tags'> {
+	kanban_mode: Model['kanban_mode']
 	items_sort_param: Model['items_sort_param']
 	items_filter_tags: Model['items_filter_tags']
+	toggleKanbanMode: Model['toggleKanbanMode']
 	showSettingsModal: () => void
 	showArchiveModal: () => void
 	showHelpModal: () => void
 	setItemsSortParam: (v: Model['items_sort_param']) => void
 	setItemsFilterTags: (v: Model['items_filter_tags']) => void
-}
-
-export interface IPropsSettingsModal {
-	visible_settings_modal: Model['visible_settings_modal']
-	todo: Model['todo'] & Model['file']['data']
-	closeSettingsModal: () => void
-	updateTodo: Model['updateTodo']
-	removeAngle: Model['removeAngle']
-	removeTag: Model['removeTag']
 }
 
 export interface IPropsTabs {
@@ -91,6 +84,7 @@ export interface IPropsTodos {
 	angles: Model['todo']['angles']
 	relations: Todo.Data['relations']
 	drag_disabled: boolean
+	kanban_mode?: Model['kanban_mode']
 	check: Model['check']
 	updateRelations: Model['updateRelations']
 	move: Model['move']
@@ -108,6 +102,7 @@ export interface IPropsTodoItem {
 	tags: Model['todo']['tags']
 	angles: Model['todo']['angles']
 	drag_disabled: boolean
+	kanban_mode?: Model['kanban_mode']
 	makeLinkLine: (args: { active_id: string; y: number } | null) => void
 	renderLines: (id: string) => void
 	check: Model['check']
@@ -151,6 +146,32 @@ export interface IPropsGroupTitle {
 	index: number
 	update: Model['update']
 	remove: Model['remove']
+}
+
+export interface IPropsKanban {
+	kanbans: Model['kanbans']
+	tags: Model['todo']['tags']
+	angles: Model['todo']['angles']
+	relations: Todo.Data['relations']
+	drag_disabled: boolean
+	check: Model['check']
+	updateRelations: Model['updateRelations']
+	move: Model['move']
+	insert: Model['insert']
+	update: Model['update']
+	tab: Model['tab']
+	moveTo: Model['moveTo']
+	remove: Model['remove']
+	showDetailModal: (index: number) => void
+}
+
+export interface IPropsSettingsModal {
+	visible_settings_modal: Model['visible_settings_modal']
+	todo: Model['todo'] & Model['file']['data']
+	closeSettingsModal: () => void
+	updateTodo: Model['updateTodo']
+	removeAngle: Model['removeAngle']
+	removeTag: Model['removeTag']
 }
 
 export interface IPropsArchive {
