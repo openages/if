@@ -15,8 +15,9 @@ const Index = () => {
 	const global = useGlobal()
 
 	const getWidth = useMemoizedFn(() => getComputedStyleValue(document.documentElement, '--dirtree_width'))
+	const setWidth = useMemoizedFn(global.layout.setDirTreeWidth)
 
-	const draging = useDragWidth(ref, getWidth, global.layout.setDirTreeWidth)
+	const draging = useDragWidth({ ref, getWidth, setWidth })
 
 	return (
 		<div

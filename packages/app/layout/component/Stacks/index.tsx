@@ -18,11 +18,13 @@ const Index = (props: IPropsStacks) => {
 		columns,
 		focus,
 		container_width,
+		resizing,
 		click,
 		remove,
 		update,
 		move,
 		resize,
+		setResizing,
 		observe,
 		unobserve
 	} = props
@@ -61,6 +63,7 @@ const Index = (props: IPropsStacks) => {
 	const props_nav_bar: IPropsStacksNavBar = {
 		columns,
 		focus,
+		resizing,
 		click,
 		remove,
 		update
@@ -69,8 +72,10 @@ const Index = (props: IPropsStacks) => {
 	const props_content: IPropsStacksContent = {
 		columns,
 		container_width,
+		resizing,
 		click,
-		resize
+		resize,
+		setResizing
 	}
 
 	return (

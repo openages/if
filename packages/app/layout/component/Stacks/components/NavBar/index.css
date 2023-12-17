@@ -17,6 +17,10 @@
 		border-bottom: var(--border);
 	}
 
+	&.resizing {
+		transition: none;
+	}
+
 	&.isOver {
 		background-color: var(--color_bg_1);
 	}

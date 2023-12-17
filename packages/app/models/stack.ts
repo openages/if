@@ -3,6 +3,7 @@ import { arrayMove } from '@dnd-kit/sortable'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk'
 import { Decimal } from 'decimal.js'
 import { omit } from 'lodash-es'
+import { debounce, throttle } from 'lodash-es'
 import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
@@ -16,6 +17,7 @@ export default class Index {
 	columns = [] as Stack.Columns
 	focus = { column: -1, view: -1 } as Stack.Position
 	container_width = 0
+	resizing = false
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { watch: false }, { autoBind: true })
@@ -289,15 +291,17 @@ export default class Index {
 	}
 
 	private getObserver() {
-		this.observer = new ResizeObserver(elements => {
-			if (!elements.length) return
+		this.observer = new ResizeObserver(
+			debounce(elements => {
+				if (!elements.length) return
 
-			const width = elements[0].contentRect.width
+				const width = elements[0].contentRect.width
 
-			if (this.container_width === width) return
+				if (this.container_width === width) return
 
-			this.container_width = width
-		})
+				this.container_width = width
+			}, 450)
+		)
 	}
 
 	observe() {

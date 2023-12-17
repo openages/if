@@ -12,5 +12,6 @@ export { default as useScrollToItem } from './useScrollToItem'
 export { default as useCssVariable } from './useCssVariable'
 export { default as useScrollToBottom } from './useScrollToBottom'
 export { default as useTagColor } from './useTagColor'
+export { default as useChanging } from './useChanging'
 
 export * from './useAntdApp'

@@ -6,6 +6,10 @@
 	&:last-child {
 		border-right: none;
 	}
+
+	&.resizing {
+		transition: none;
+	}
 }
 
 .droppable_container {
@@ -28,7 +32,7 @@
 		opacity: 1;
 	}
 
-	&.draging {
+	&.dragging {
 		opacity: 1;
 	}
 }

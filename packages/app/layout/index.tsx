@@ -82,11 +82,13 @@ const Index = () => {
 		columns: toJS(global.stack.columns),
 		focus: toJS(global.stack.focus),
 		container_width: global.stack.container_width,
+		resizing: global.stack.resizing,
 		remove: useMemoizedFn(global.stack.remove),
 		click: useMemoizedFn(global.stack.click),
 		update: useMemoizedFn(global.stack.update),
 		move: useMemoizedFn(global.stack.move),
 		resize: useMemoizedFn(global.stack.resize),
+		setResizing: useMemoizedFn((v: boolean) => (global.stack.resizing = v)),
 		observe: useMemoizedFn(global.stack.observe),
 		unobserve: useMemoizedFn(global.stack.unobserve)
 	}
