@@ -2,12 +2,19 @@
 	height: calc(100% - 60px);
 	overflow-x: scroll;
 	outline: none;
+	padding-left: 12px;
 
 	.kanban_item_wrap {
+		z-index: 0;
 		width: 270px;
 		min-width: 270px;
+		padding: 0 18px;
 		background-color: var(--color_bg);
 		border-right: 1px dashed var(--color_border_light);
+
+		&:first-child {
+			padding-left: 6px;
+		}
 
 		&:last-child {
 			margin-right: 0;
@@ -16,7 +23,6 @@
 
 		.kanban_item_header {
 			height: 48px;
-			padding: 0 18px;
 			line-height: 1;
 
 			:global {
