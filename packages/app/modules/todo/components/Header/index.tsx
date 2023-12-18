@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next'
 import { Else, If, Then, When } from 'react-if'
 
 import { Emoji } from '@/components'
-import { ArchiveBox, CaretDown, CaretUp, DotsThreeCircleVertical, Kanban, ListChecks, X } from '@phosphor-icons/react'
+import { ArchiveBox, CaretDown, CaretUp, CubeTransparent, DotsThreeCircleVertical, Tag, X } from '@phosphor-icons/react'
+import { Shapes } from 'lucide-react'
 
 import TagSelect from '../TagSelect'
 import { useContextMenu } from './hooks'
@@ -14,14 +15,16 @@ import type { IPropsHeader } from '../../types'
 
 const Index = (props: IPropsHeader) => {
 	const {
+		mode,
+		kanban_mode,
 		name,
 		icon,
 		icon_hue,
 		desc,
 		tags,
-		kanban_mode,
 		items_sort_param,
 		items_filter_tags,
+		setMode,
 		toggleKanbanMode,
 		showSettingsModal,
 		showArchiveModal,
@@ -30,10 +33,11 @@ const Index = (props: IPropsHeader) => {
 		setItemsFilterTags
 	} = props
 	const { t } = useTranslation()
-	const { options_menu, onOptionsContextMenu } = useContextMenu({
+	const { options_mode, options_menu, onModeContextMenu, onOptionsContextMenu } = useContextMenu({
 		tags,
-		kanban_mode,
+		mode,
 		items_filter_tags,
+		setMode,
 		showSettingsModal,
 		showHelpModal,
 		setItemsSortParam,
@@ -57,22 +61,17 @@ const Index = (props: IPropsHeader) => {
 			className={$cx(
 				'limited_content_wrap border_box flex flex_wrap justify_between align_center transition_normal relative',
 				styles._local,
-				kanban_mode && styles.kanban_mode
+				mode !== 'list' && styles.other_mode
 			)}
 		>
 			<div className='left_wrap flex flex_column'>
 				<div className='flex align_center'>
 					<When condition={icon}>
-						<Emoji
-							className='mr_8 icon_emoji'
-							shortcodes={icon}
-							size={21}
-							hue={icon_hue}
-						></Emoji>
+						<Emoji className='icon_emoji' shortcodes={icon} size={21} hue={icon_hue}></Emoji>
 					</When>
 					<div className='name flex justify_between align_center'>{name}</div>
 				</div>
-				<When condition={!kanban_mode && desc}>
+				<When condition={mode === 'list' && desc}>
 					<span className='desc'>{desc}</span>
 				</When>
 			</div>
@@ -128,12 +127,28 @@ const Index = (props: IPropsHeader) => {
 				</div>
 			)}
 			<div className='actions_wrap flex align_center'>
-				<div
-					className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'
-					onClick={toggleKanbanMode}
-				>
-					{kanban_mode ? <ListChecks size={18}></ListChecks> : <Kanban size={18}></Kanban>}
-				</div>
+				{mode === 'kanban' && (
+					<div
+						className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'
+						onClick={toggleKanbanMode}
+					>
+						{kanban_mode === 'angle' ? <Tag size={18}></Tag> : <Shapes size={15}></Shapes>}
+					</div>
+				)}
+				<ConfigProvider getPopupContainer={() => document.body}>
+					<Dropdown
+						destroyPopupOnHide
+						trigger={['click']}
+						overlayStyle={{ width: 90 }}
+						menu={{ items: options_mode, onClick: onModeContextMenu }}
+					>
+						<div>
+							<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'>
+								<CubeTransparent size={18}></CubeTransparent>
+							</div>
+						</div>
+					</Dropdown>
+				</ConfigProvider>
 				<Tooltip title={t('translation:todo.Header.archive')}>
 					<div>
 						<div

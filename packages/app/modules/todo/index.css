@@ -1,7 +1,7 @@
 ._local {
 	transition: padding 0.3s;
 
-	&.kanban_mode {
+	&.other_mode {
 		height: 100%;
 	}
 

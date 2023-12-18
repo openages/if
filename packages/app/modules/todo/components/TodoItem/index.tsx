@@ -1,6 +1,6 @@
 import { useDebounce, useMemoizedFn, useSize, useUpdateEffect } from 'ahooks'
 import { ConfigProvider, Dropdown } from 'antd'
-import { useRef } from 'react'
+import { Fragment, useRef } from 'react'
 import { Case, Switch } from 'react-if'
 
 import { useSortable } from '@dnd-kit/sortable'
@@ -114,10 +114,8 @@ const Index = (props: IPropsTodoItem) => {
 		removeChildren
 	}
 
-	console.log(kanban_mode)
-
 	return (
-		<div className={$cx('flex flex_column', styles.wrap, kanban_mode && styles.kanban_mode)}>
+		<Fragment>
 			<div
 				className={$cx(
 					'w_100 border_box flex align_start relative',
@@ -211,7 +209,7 @@ const Index = (props: IPropsTodoItem) => {
 				</ConfigProvider>
 			</div>
 			<Children {...props_children}></Children>
-		</div>
+		</Fragment>
 	)
 }
 

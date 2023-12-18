@@ -2,16 +2,17 @@
 	padding-top: 36px;
 	padding-bottom: 24px;
 
-	&.kanban_mode {
+	&.other_mode {
 		max-width: 100%;
-		height: 60px;
-		padding: 0 18px;
-		border-bottom: 1px dashed var(--color_border_light);
+		height: 72px;
+		padding: 0 30px;
 	}
 
 	:global {
 		.left_wrap {
 			em-emoji {
+				margin-right: 8px;
+
 				.emoji-mart-emoji {
 					margin-bottom: -1px;
 				}

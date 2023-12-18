@@ -43,11 +43,14 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 
 	const selector: MangoQuerySelector<Todo.TodoItem> = {
 		file_id,
-		angle_id: angle_id,
 		$or: not_archive,
 		..._selector
 	}
 	const sort: MangoQuerySortPart<Todo.Todo> = { sort: 'asc', create_at: 'asc' }
+
+	if (angle_id) {
+		selector['angle_id'] = angle_id
+	}
 
 	if (items_filter_tags?.length || items_sort_param) {
 		selector['type'] = 'todo'

@@ -19,13 +19,12 @@ export default {
 	},
 	default_angles: ['Now', 'Plan', 'Idea', 'Wait', 'Circle', 'Trashbox'],
 	Header: {
-		kanban: 'Kanban',
-		list: 'List',
-		archive: 'Archive',
-		related: {
-			reference: 'Reference',
-			todograph: 'Todograph'
+		mode: {
+			list: '列表',
+			kanban: '看板',
+			table: '表格'
 		},
+		archive: 'Archive',
 		options: {
 			edit: 'Edit',
 			sort: {

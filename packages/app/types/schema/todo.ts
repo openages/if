@@ -1,19 +1,23 @@
 export namespace Todo {
 	type Relations = Array<{ items: Array<string>; checked: boolean }>
 
+	export interface Angle {
+		id: string
+		text: string
+	}
+
+	export interface Tag {
+		id: string
+		color: string
+		text: string
+	}
+
 	export interface Data {
 		/** @maxLength 30 */
 		id: string
 		desc?: string
-		angles: Array<{
-			id: string
-			text: string
-		}>
-		tags: Array<{
-			id: string
-			color: string
-			text: string
-		}>
+		angles: Array<Angle>
+		tags: Array<Tag>
 		auto_archiving: '0m' | '3m' | '3h' | '1d' | '3d' | '7d'
 		relations?: Relations
 		links?: Array<{

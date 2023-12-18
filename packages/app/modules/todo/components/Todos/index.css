@@ -5,10 +5,9 @@
 	padding-bottom: 150px;
 
 	&.kanban_mode {
-		height: calc(100% - 36px);
-		padding: 0 12px;
+		height: calc(100% - 21px);
+		padding: 3px 9px;
 		overflow-y: scroll;
-		overflow-x: visible;
 	}
 
 	:global {

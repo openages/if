@@ -3,15 +3,27 @@ import { uniq } from 'lodash-es'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ArrowsDownUp, CalendarPlus, PencilSimple, Question, Star, Tag, TextAa } from '@phosphor-icons/react'
+import {
+	ArrowsDownUp,
+	CalendarPlus,
+	Kanban,
+	ListChecks,
+	PencilSimple,
+	Question,
+	Star,
+	Table,
+	Tag,
+	TextAa
+} from '@phosphor-icons/react'
 
 import type { MenuProps } from 'antd'
 import type { IPropsHeader } from '../../../types'
 
 interface HookArgs {
 	tags: IPropsHeader['tags']
-	kanban_mode: IPropsHeader['kanban_mode']
+	mode: IPropsHeader['mode']
 	items_filter_tags: IPropsHeader['items_filter_tags']
+	setMode: IPropsHeader['setMode']
 	showSettingsModal: IPropsHeader['showSettingsModal']
 	showHelpModal: IPropsHeader['showHelpModal']
 	setItemsSortParam: IPropsHeader['setItemsSortParam']
@@ -21,14 +33,50 @@ interface HookArgs {
 export default (args: HookArgs) => {
 	const {
 		tags,
-		kanban_mode,
+		mode,
 		items_filter_tags,
+		setMode,
 		showSettingsModal,
 		showHelpModal,
 		setItemsSortParam,
 		setItemsFilterTags
 	} = args
 	const { t, i18n } = useTranslation()
+
+	const options_mode: MenuProps['items'] = useMemo(
+		() => [
+			{
+				key: 'list',
+				label: (
+					<div className='menu_item_wrap flex align_center'>
+						<ListChecks size={16}></ListChecks>
+						<span className='text ml_6'>{t('translation:todo.Header.mode.list')}</span>
+					</div>
+				)
+			},
+			{
+				key: 'kanban',
+				label: (
+					<div className='menu_item_wrap flex align_center'>
+						<Kanban size={16}></Kanban>
+						<span className='text ml_6'>{t('translation:todo.Header.mode.kanban')}</span>
+					</div>
+				)
+			},
+			{
+				key: 'table',
+				label: (
+					<div className='menu_item_wrap flex align_center'>
+						<Table size={16}></Table>
+						<span className='text ml_6'>{t('translation:todo.Header.mode.table')}</span>
+					</div>
+				)
+			}
+		],
+		[i18n.language]
+	)
+
+	const onModeContextMenu = useMemoizedFn(({ key }) => setMode(key))
 
 	const options_menu: MenuProps['items'] = useMemo(
 		() => [
@@ -49,7 +97,7 @@ export default (args: HookArgs) => {
 						<span className='text ml_6'>{t('translation:todo.Header.options.sort.text')}</span>
 					</div>
 				),
-				disabled: kanban_mode,
+				disabled: mode !== 'list',
 				children: [
 					{
 						key: 'importance',
@@ -147,5 +195,5 @@ export default (args: HookArgs) => {
 		}
 	})
 
-	return { options_menu, onOptionsContextMenu }
+	return { options_mode, options_menu, onModeContextMenu, onOptionsContextMenu }
 }

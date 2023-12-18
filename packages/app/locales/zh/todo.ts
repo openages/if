@@ -19,13 +19,12 @@ export default {
 	},
 	default_angles: ['此刻', '计划', '想法', '等待', '循环', '垃圾箱'],
 	Header: {
-		kanban: '看板',
-		list: '列表',
-		archive: '归档',
-		related: {
-			reference: '参考资料',
-			todograph: '任务规划'
+		mode: {
+			list: '列表',
+			kanban: '看板',
+			table: '表格'
 		},
+		archive: '归档',
 		options: {
 			edit: '编辑',
 			sort: {

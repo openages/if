@@ -20,9 +20,11 @@ export interface IPropsTagSelect {
 }
 
 export interface IPropsHeader extends Pick<Todo.Data & DirTree.Item, 'name' | 'icon' | 'icon_hue' | 'desc' | 'tags'> {
+	mode: Model['mode']
 	kanban_mode: Model['kanban_mode']
 	items_sort_param: Model['items_sort_param']
 	items_filter_tags: Model['items_filter_tags']
+	setMode: Model['setMode']
 	toggleKanbanMode: Model['toggleKanbanMode']
 	showSettingsModal: () => void
 	showArchiveModal: () => void
@@ -84,7 +86,7 @@ export interface IPropsTodos {
 	angles: Model['todo']['angles']
 	relations: Todo.Data['relations']
 	drag_disabled: boolean
-	kanban_mode?: Model['kanban_mode']
+	kanban_mode?: boolean
 	check: Model['check']
 	updateRelations: Model['updateRelations']
 	move: Model['move']
@@ -102,7 +104,7 @@ export interface IPropsTodoItem {
 	tags: Model['todo']['tags']
 	angles: Model['todo']['angles']
 	drag_disabled: boolean
-	kanban_mode?: Model['kanban_mode']
+	kanban_mode?: boolean
 	makeLinkLine: (args: { active_id: string; y: number } | null) => void
 	renderLines: (id: string) => void
 	check: Model['check']
@@ -149,7 +151,8 @@ export interface IPropsGroupTitle {
 }
 
 export interface IPropsKanban {
-	kanbans: Model['kanbans']
+	kanban_mode: Model['kanban_mode']
+	kanban_items: Model['kanban_items']
 	tags: Model['todo']['tags']
 	angles: Model['todo']['angles']
 	relations: Todo.Data['relations']

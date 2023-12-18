@@ -1,5 +1,12 @@
-import type { Dayjs } from 'dayjs'
 import type { Todo } from '@/types'
+import type { Dayjs } from 'dayjs'
+
+export interface KanbanItems {
+	[key: string]: {
+		dimension: { type: 'angle'; value: Todo.Angle } | { type: 'tag'; value: Todo.Tag }
+		items: Array<Todo.Todo>
+	}
+}
 
 export type ItemsSortParams = {
 	type: 'importance' | 'alphabetical' | 'create_at'

@@ -39,12 +39,14 @@ import type { RxDB, Todo } from '@/types'
 import type { Watch } from '@openages/stk'
 import type { ManipulateType } from 'dayjs'
 import type { Subscription } from 'rxjs'
-import type { ArchiveQueryParams, ArgsTab, ArgsUpdate, ItemsSortParams } from './types/model'
+import type { ArchiveQueryParams, ArgsTab, ArgsUpdate, ItemsSortParams, KanbanItems } from './types/model'
 import type { ArgsArchiveByTime, ArgsUpdateTodoData } from './types/services'
 
 @injectable()
 export default class Index {
 	id = ''
+	mode = 'list' as 'list' | 'kanban' | 'table'
+	kanban_mode = 'angle' as 'angle' | 'tag'
 	timer_cycle: NodeJS.Timeout = null
 	timer_archive: NodeJS.Timeout = null
 
@@ -52,8 +54,8 @@ export default class Index {
 	todo_watcher = null as Subscription
 	items = [] as Array<Todo.TodoItem>
 	items_watcher = null as Subscription
-	kanbans = {} as { [key: string]: { angle: Todo.Data['angles'][number]; items: Array<Todo.Todo> } }
-	kanbans_watcher = [] as Array<Subscription>
+	kanban_items = {} as KanbanItems
+	kanban_items_watcher = [] as Array<Subscription>
 
 	archives = [] as Array<Todo.Todo>
 	archive_counts = 0
@@ -66,7 +68,6 @@ export default class Index {
 	visible_archive_modal = false
 	visible_detail_modal = false
 	visible_help_modal = false
-	kanban_mode = false
 
 	current_angle_id = ''
 	current_detail_index = -1
@@ -113,14 +114,33 @@ export default class Index {
 
 			this.queryArchives(true)
 		},
-		['kanban_mode']: v => {
-			if (v) {
-				this.stopWatchItems()
-				this.watchKanbans()
-			} else {
-				this.stopWatchKanbans()
+		['mode']: v => {
+			if (v === 'list') {
+				this.kanban_items = {}
+
+				this.stopWatchKanbanItems()
 				this.watchItems()
 			}
+
+			if (v === 'kanban') {
+				this.items = []
+
+				this.stopWatchItems()
+				this.watchKanbanItems()
+			}
+
+			if (v === 'table') {
+				this.kanban_items = {}
+
+				this.stopWatchKanbanItems()
+				this.watchItems()
+			}
+		},
+		['kanban_mode']: _ => {
+			this.kanban_items = {}
+
+			this.stopWatchKanbanItems()
+			this.watchKanbanItems()
 		}
 	} as Watch<
 		Index & {
@@ -151,14 +171,13 @@ export default class Index {
 		this.utils.acts = [...useInstanceWatch(this)]
 		this.id = id
 
-		this.on()
-		this.watchTodo()
-		this.watchItems()
-
 		this.file.init(this.id)
 
 		this.queryTodo()
-		this.queryItems()
+
+		this.on()
+		this.watchTodo()
+		this.watchItems()
 	}
 
 	@loading
@@ -316,11 +335,11 @@ export default class Index {
 
 		if (!res) return false
 
-		if (this.kanban_mode) this.stopWatchKanbans()
+		if (this.mode === 'kanban') this.stopWatchKanbanItems()
 
 		await removeAngle(this.id, angle_id)
 
-		if (this.kanban_mode) this.watchKanbans()
+		if (this.mode === 'kanban') this.watchKanbanItems()
 
 		return true
 	}
@@ -462,10 +481,15 @@ export default class Index {
 		})
 	}
 
+	setMode(v: Index['mode']) {
+		console.log(v)
+		this.mode = v
+		// this.items_sort_param = null
+		// this.items_filter_tags = []
+	}
+
 	toggleKanbanMode() {
-		this.kanban_mode = !this.kanban_mode
-		this.items_sort_param = null
-		this.items_filter_tags = []
+		this.kanban_mode = this.kanban_mode === 'angle' ? 'tag' : 'angle'
 	}
 
 	updateArchiveItems(id: string) {
@@ -474,17 +498,6 @@ export default class Index {
 			1
 		)
 		this.archive_counts = this.archive_counts - 1
-	}
-
-	watchItems() {
-		this.items_watcher = getQueryItems({
-			file_id: this.id,
-			angle_id: this.current_angle_id,
-			items_sort_param: this.items_sort_param,
-			items_filter_tags: this.items_filter_tags
-		}).$.subscribe(items => {
-			this.items = getDocItemsData(items)
-		})
 	}
 
 	watchTodo() {
@@ -497,30 +510,66 @@ export default class Index {
 		})
 	}
 
-	watchKanbans() {
-		this.kanbans_watcher = this.todo.angles.map(item => {
-			return getQueryItems({ file_id: this.id, angle_id: item.id, selector: { type: 'todo' } }).$.subscribe(
-				items => {
-					console.log(items, items)
-					this.kanbans[item.id] = {
-						angle: toJS(item),
+	watchItems() {
+		const current_angle_id = this.current_angle_id
+
+		this.items_watcher = getQueryItems({
+			file_id: this.id,
+			angle_id: this.current_angle_id,
+			items_sort_param: this.items_sort_param,
+			items_filter_tags: this.items_filter_tags
+		}).$.subscribe(items => {
+			if (!current_angle_id) return
+
+			this.items = getDocItemsData(items)
+		})
+	}
+
+	watchKanbanItems() {
+		if (this.kanban_mode === 'angle') {
+			this.kanban_items_watcher = this.todo.angles.map(item => {
+				return getQueryItems({
+					file_id: this.id,
+					selector: { type: 'todo' },
+					angle_id: item.id
+				}).$.subscribe(items => {
+					this.kanban_items[item.id] = {
+						dimension: { type: 'angle', value: item },
 						items: getDocItemsData(items) as Array<Todo.Todo>
 					}
-				}
-			)
-		})
+				})
+			})
+		} else {
+			if (!this.todo.tags.length) {
+				this.kanban_items = {}
+				this.kanban_items_watcher = []
+			}
+
+			this.kanban_items_watcher = this.todo.tags.map(item => {
+				return getQueryItems({
+					file_id: this.id,
+					selector: { type: 'todo' },
+					items_filter_tags: [item.id]
+				}).$.subscribe(items => {
+					this.kanban_items[item.id] = {
+						dimension: { type: 'tag', value: item },
+						items: getDocItemsData(items) as Array<Todo.Todo>
+					}
+				})
+			})
+		}
 	}
 
 	stopWatchItems() {
 		if (this.items_watcher) this.items_watcher.unsubscribe()
 	}
 
-	stopWatchKanbans() {
-		if (!this.kanbans_watcher.length) return
+	stopWatchKanbanItems() {
+		if (!this.kanban_items_watcher.length) return
 
-		this.kanbans_watcher.forEach(item => item.unsubscribe())
+		this.kanban_items_watcher.forEach(item => item.unsubscribe())
 
-		this.kanbans_watcher = []
+		this.kanban_items_watcher = []
 	}
 
 	on() {
@@ -536,7 +585,7 @@ export default class Index {
 
 		this.todo_watcher?.unsubscribe?.()
 		this.items_watcher?.unsubscribe?.()
-		this.kanbans_watcher.forEach(item => item?.unsubscribe?.())
+		this.kanban_items_watcher.forEach(item => item?.unsubscribe?.())
 
 		clearInterval(this.timer_cycle)
 		clearInterval(this.timer_archive)
