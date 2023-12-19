@@ -1,6 +1,6 @@
 {
 	"name": "@openages/if-app",
-	"version": "0.0.2",
+	"version": "0.0.5",
 	"description": "GTD for professionals.",
 	"scripts": {
 		"dev": "rspack serve",
