@@ -1,6 +1,6 @@
 import { useDebounce, useMemoizedFn, useSize, useUpdateEffect } from 'ahooks'
 import { ConfigProvider, Dropdown } from 'antd'
-import { Fragment, useRef } from 'react'
+import { useRef } from 'react'
 import { Case, Switch } from 'react-if'
 
 import { useSortable } from '@dnd-kit/sortable'
@@ -25,6 +25,7 @@ const Index = (props: IPropsTodoItem) => {
 		angles,
 		drag_disabled,
 		kanban_mode,
+		kanban_index,
 		makeLinkLine,
 		renderLines,
 		check,
@@ -66,7 +67,7 @@ const Index = (props: IPropsTodoItem) => {
 		onKeyDown,
 		updateTags,
 		updateTagWidth
-	} = useHandlers({ item, index, makeLinkLine, check, insert, update, tab })
+	} = useHandlers({ item, index, kanban_index, makeLinkLine, check, insert, update, tab })
 
 	const { linker, dragging, hovering } = useLink({ item, makeLinkLine, updateRelations })
 
@@ -114,14 +115,42 @@ const Index = (props: IPropsTodoItem) => {
 		removeChildren
 	}
 
+	const OptionsWrap = (
+		<div className={$cx('options_container flex absolute z_index_10', !options_width && 'no_options')}>
+			<div className='options_wrap border_box flex align_center' ref={options_wrap}>
+				{tags?.length > 0 && tag_ids?.length > 0 && (
+					<TagSelect options={tags} value={tag_ids} useByTodo onChange={updateTags}></TagSelect>
+				)}
+				{star > 0 && (
+					<div
+						className='other_wrap white flex justify_center align_center'
+						style={{ color: `rgba(var(--color_main_rgb),${(star / 6).toFixed(2)})` }}
+					>
+						<Star className='icon' size={10} weight='duotone'></Star>
+					</div>
+				)}
+				{remind_time && <RemindStatus remind_time={remind_time}></RemindStatus>}
+				{cycle_enabled && cycle && (
+					<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
+				)}
+			</div>
+		</div>
+	)
+
 	return (
-		<Fragment>
+		<div
+			className={$cx(
+				'w_100 border_box flex flex_column',
+				styles.todo_item_wrap,
+				kanban_mode && styles.kanban_mode
+			)}
+		>
+			{kanban_mode && OptionsWrap}
 			<div
 				className={$cx(
 					'w_100 border_box flex align_start relative',
 					styles.todo_item,
-					styles[item.status],
-					kanban_mode && styles.kanban_mode
+					styles[item.status]
 				)}
 				ref={setNodeRef}
 				style={{ transform: CSS.Translate.toString(transform), transition }}
@@ -151,65 +180,49 @@ const Index = (props: IPropsTodoItem) => {
 						<DotsSixVertical size={12} weight='bold'></DotsSixVertical>
 					</div>
 				)}
-				<div
-					className='action_wrap flex justify_center align_center cursor_point clickable'
-					onClick={onCheck}
-				>
-					<Switch>
-						<Case condition={status === 'unchecked' || status === 'closed'}>
-							<Square size={16} />
-						</Case>
-						<Case condition={status === 'checked'}>
-							<CheckSquare size={16} />
-						</Case>
-					</Switch>
-				</div>
-				<div className='options_wrap flex align_center absolute z_index_10' ref={options_wrap}>
-					{tags?.length > 0 && tag_ids?.length > 0 && (
-						<TagSelect
-							options={tags}
-							value={tag_ids}
-							useByTodo
-							onChange={updateTags}
-						></TagSelect>
-					)}
-					{star > 0 && (
-						<div
-							className='other_wrap white flex justify_center align_center'
-							style={{ color: `rgba(var(--color_main_rgb),${(star / 6).toFixed(2)})` }}
-						>
-							<Star className='icon' size={10} weight='duotone'></Star>
-						</div>
-					)}
-					{remind_time && <RemindStatus remind_time={remind_time}></RemindStatus>}
-					{cycle_enabled && cycle && (
-						<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
-					)}
-				</div>
-				<ConfigProvider getPopupContainer={() => document.body}>
-					<Dropdown
-						destroyPopupOnHide
-						trigger={['contextMenu']}
-						overlayStyle={{ width: 132 }}
-						menu={{ items: TodoContextMenu, onClick: onContextMenu }}
+				<div className='w_100 flex'>
+					<div
+						className='action_wrap flex justify_center align_center cursor_point clickable'
+						onClick={onCheck}
 					>
-						<div
-							id={`todo_${id}`}
-							className={$cx(
-								'text_wrap',
-								children && children?.length && !open && 'has_children'
-							)}
-							contentEditable='plaintext-only'
-							ref={input}
-							style={{ textIndent: options_width ?? 'unset' }}
-							onInput={onInput}
-							onKeyDown={onKeyDown}
-						></div>
-					</Dropdown>
-				</ConfigProvider>
+						<Switch>
+							<Case condition={status === 'unchecked' || status === 'closed'}>
+								<Square size={16} />
+							</Case>
+							<Case condition={status === 'checked'}>
+								<CheckSquare size={16} />
+							</Case>
+						</Switch>
+					</div>
+					{!kanban_mode && OptionsWrap}
+					<ConfigProvider getPopupContainer={() => document.body}>
+						<Dropdown
+							destroyPopupOnHide
+							trigger={['contextMenu']}
+							overlayStyle={{ width: 132 }}
+							menu={{ items: TodoContextMenu, onClick: onContextMenu }}
+						>
+							<div
+								id={`todo_${id}`}
+								className={$cx(
+									'text_wrap',
+									children && children?.length && !open && 'has_children'
+								)}
+								contentEditable='plaintext-only'
+								ref={input}
+								style={{
+									textIndent:
+										!kanban_mode && options_width ? options_width : 'unset'
+								}}
+								onInput={onInput}
+								onKeyDown={onKeyDown}
+							></div>
+						</Dropdown>
+					</ConfigProvider>
+				</div>
 			</div>
 			<Children {...props_children}></Children>
-		</Fragment>
+		</div>
 	)
 }
 

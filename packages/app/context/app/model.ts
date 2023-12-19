@@ -35,7 +35,7 @@ export default class GlobalModel {
 	}
 
 	off() {
-		this.db.instance?.destroy?.()
+		this.db.off()
 		this.locale.off()
 		this.layout.off()
 		this.setting.off()

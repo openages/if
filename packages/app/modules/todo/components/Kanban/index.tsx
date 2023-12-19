@@ -1,4 +1,5 @@
 import { Plus } from '@phosphor-icons/react'
+import { useTranslation } from 'react-i18next'
 import Todos from '../Todos'
 import styles from './index.css'
 
@@ -22,10 +23,11 @@ const Index = (props: IPropsKanban) => {
 		remove,
 		showDetailModal
 	} = props
+	const { t } = useTranslation()
 
 	return (
 		<div className={$cx('h_100 border_box flex', styles._local, kanban_mode === 'tag' && styles.tag_mode)}>
-			{Object.values(kanban_items).map(item => (
+			{Object.values(kanban_items).map((item, index) => (
 				<div
 					className={$cx('border_box flex flex_column', styles.kanban_item_wrap)}
 					key={item.dimension.value.id}
@@ -48,12 +50,17 @@ const Index = (props: IPropsKanban) => {
 								<span className='count ml_6'>{item.items.length}</span>
 							)}
 						</div>
-						{!item.items.length && (
-							<span className='btn_insert flex justify_center align_center clickable'>
-								<Plus size={16}></Plus>
-							</span>
-						)}
 					</div>
+					{!item.items.length && (
+						<div className={$cx('border_box', styles.btn_insert_wrap)}>
+							<div className='btn_insert w_100 h_100 border_box flex justify_center align_center clickable'>
+								<Plus size={15}></Plus>
+								<span className='text ml_6'>
+									{t('translation:todo.context_menu.insert_children')}
+								</span>
+							</div>
+						</div>
+					)}
 					<Todos
 						{...{
 							tags,
@@ -70,8 +77,9 @@ const Index = (props: IPropsKanban) => {
 							remove,
 							showDetailModal
 						}}
-						items={item.items}
 						kanban_mode
+						items={item.items}
+						kanban_index={index}
 					></Todos>
 				</div>
 			))}

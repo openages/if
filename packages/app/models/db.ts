@@ -1,6 +1,8 @@
 import { migration_activity_items, migration_dirtree_items, migration_todo, migration_todo_items } from '@/migrations'
 import { schema_activity_items, schema_dirtree_items, schema_todo, schema_todo_items } from '@/schemas'
-import { makeAutoObservable } from 'mobx'
+import { Idle, uniqBy } from '@openages/stk'
+import { debounce } from 'lodash-es'
+import { makeAutoObservable, toJS } from 'mobx'
 import { createRxDatabase } from 'rxdb'
 import { wrappedKeyEncryptionCryptoJsStorage } from 'rxdb/plugins/encryption-crypto-js'
 import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
@@ -13,9 +15,11 @@ import type { RxCollection } from 'rxdb'
 export default class Index {
 	instance = null as RxDB.DBContent | null
 	ready = false
+	update_queue = [] as Array<{ id: string; timestamp: number }>
+	idle = null as Idle<Index>
 
 	constructor() {
-		makeAutoObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, { update_queue: false, idle: false }, { autoBind: true })
 	}
 
 	async init() {
@@ -67,6 +71,7 @@ export default class Index {
 		window.$app.Event.emit('app/setLoading', { visible: false })
 
 		this.hooks()
+		this.idleQueue()
 	}
 
 	async migrateRxdb() {
@@ -94,19 +99,75 @@ export default class Index {
 		}
 	}
 
-	async updateTimeStamp(id: string) {
+	async updateTimeStamp(id: string, timestamp: number) {
 		const doc = await $db.dirtree_items.findOne(id).exec()
 
-		return doc.updateCRDT({ ifMatch: { $set: { update_at: new Date().valueOf() } } })
+		return doc.updateCRDT({ ifMatch: { $set: { update_at: timestamp } } })
+	}
+
+	idleQueue() {
+		this.idle = new Idle({
+			context: this,
+			async onIdle() {
+				const _this = this as Index
+
+				if (!_this.update_queue.length) return
+
+				const async_update_queue = _this.update_queue.map(item =>
+					_this.updateTimeStamp(item.id, item.timestamp)
+				)
+
+				const removeUpdated = (length: number) => {
+					_this.update_queue = _this.update_queue.slice(length)
+				}
+
+				try {
+					let length = 0
+
+					for await (const _ of async_update_queue) {
+						length++
+
+						if (!_this.idle.idle) {
+							removeUpdated(length)
+
+							throw new Error()
+						}
+					}
+
+					removeUpdated(length)
+				} catch (error) {}
+			}
+		})
+
+		this.idle.start()
 	}
 
 	hooks() {
+		const pushUpdateQueue = (id: string) => {
+			this.update_queue.push({ id, timestamp: new Date().valueOf() })
+			this.update_queue = uniqBy(this.update_queue, 'id')
+		}
+
 		$db.dirtree_items.postInsert(
-			(_, doc) => doc.updateCRDT({ ifMatch: { $set: { create_at: new Date().valueOf() } } }),
-			false
+			debounce((_, doc) => {
+				doc.updateCRDT({ ifMatch: { $set: { create_at: new Date().valueOf() } } })
+			}, 900),
+			true
 		)
 
-		$db.todo.postSave(async data => this.updateTimeStamp(data.id), false)
-		$db.todo_items.postSave(async data => this.updateTimeStamp(data.file_id), false)
+		$db.todo.postSave(
+			debounce(data => pushUpdateQueue(data.id), 900),
+			true
+		)
+
+		$db.todo_items.postSave(
+			debounce(data => pushUpdateQueue(data.file_id), 900),
+			true
+		)
+	}
+
+	off() {
+		this.instance?.destroy?.()
+		this.idle?.stop?.()
 	}
 }

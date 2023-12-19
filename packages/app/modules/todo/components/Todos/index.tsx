@@ -23,6 +23,7 @@ const Index = (props: IPropsTodos) => {
 		relations,
 		drag_disabled,
 		kanban_mode,
+		kanban_index,
 		check,
 		updateRelations,
 		move,
@@ -174,6 +175,7 @@ const Index = (props: IPropsTodos) => {
 										showDetailModal
 									}}
 									kanban_mode={kanban_mode}
+									kanban_index={kanban_index}
 									key={item.id}
 								></TodoItem>
 							) : (

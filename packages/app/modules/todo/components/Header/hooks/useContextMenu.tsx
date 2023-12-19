@@ -43,8 +43,8 @@ export default (args: HookArgs) => {
 	} = args
 	const { t, i18n } = useTranslation()
 
-	const options_mode: MenuProps['items'] = useMemo(
-		() => [
+	const options_mode: MenuProps['items'] = useMemo(() => {
+		const options = [
 			{
 				key: 'list',
 				label: (
@@ -72,9 +72,10 @@ export default (args: HookArgs) => {
 					</div>
 				)
 			}
-		],
-		[i18n.language]
-	)
+		]
+
+		return options.filter(item => item.key !== mode)
+	}, [i18n.language, mode])
 
 	const onModeContextMenu = useMemoizedFn(({ key }) => setMode(key))
 
@@ -158,7 +159,7 @@ export default (args: HookArgs) => {
 				)
 			}
 		],
-		[i18n.language, tags, items_filter_tags]
+		[i18n.language, mode, tags, items_filter_tags]
 	)
 
 	const onOptionsContextMenu = useMemoizedFn(({ key, keyPath }) => {

@@ -279,7 +279,6 @@
 			line-height: var(--height) !important;
 			font-size: 12px;
 			padding: 0 !important;
-			margin-top: -1px !important;
 
 			input {
 				height: 100% !important;

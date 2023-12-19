@@ -8,6 +8,7 @@ import type { IPropsTodoItem } from '../../../types'
 interface HookArgs {
 	item: IPropsTodoItem['item']
 	index: IPropsTodoItem['index']
+	kanban_index?: IPropsTodoItem['kanban_index']
 	visible_detail_modal?: boolean
 	makeLinkLine?: IPropsTodoItem['makeLinkLine']
 	check?: IPropsTodoItem['check']
@@ -17,11 +18,11 @@ interface HookArgs {
 }
 
 export default (args: HookArgs) => {
-	const { item, index, visible_detail_modal, makeLinkLine, check, insert, update, tab } = args
-	const { id, status, open, star, cycle_enabled, cycle, options_width, children } = item
+	const { item, index, kanban_index, visible_detail_modal, makeLinkLine, check, insert, update, tab } = args
+	const { id, status, open, options_width, children } = item
 
 	const setOpen = useMemoizedFn((v: boolean) => {
-		update({ type: 'parent', index, value: { open: v } as Todo.Todo })
+		update({ type: 'parent', index, kanban_index, value: { open: v } as Todo.Todo })
 	})
 
 	const onCheck = useMemoizedFn(() => {
@@ -52,7 +53,7 @@ export default (args: HookArgs) => {
 			children.splice(children_index + 1, 0, target)
 		}
 
-		await update({ type: 'children', index, value: children })
+		await update({ type: 'children', index, kanban_index, value: children })
 
 		setTimeout(
 			() => document.getElementById(`${visible_detail_modal ? 'detail_' : ''}todo_${target.id}`)?.focus(),
@@ -65,7 +66,7 @@ export default (args: HookArgs) => {
 
 		children.splice(children_index, 1)
 
-		await update({ type: 'children', index, value: children })
+		await update({ type: 'children', index, kanban_index, value: children })
 	})
 
 	const onKeyDown = useMemoizedFn(e => {
@@ -85,29 +86,29 @@ export default (args: HookArgs) => {
 	const updateTags = useMemoizedFn(v => {
 		if (v?.length > 3) return
 
-		update({ type: 'parent', index, value: { tag_ids: v } as Todo.Todo })
+		update({ type: 'parent', index, kanban_index, value: { tag_ids: v } as Todo.Todo })
 	})
 
 	const updateTagWidth = useMemoizedFn(v => {
 		if (v === options_width) return
 
-		update({ type: 'parent', index, value: { options_width: v } as Todo.Todo })
+		update({ type: 'parent', index, kanban_index, value: { options_width: v } as Todo.Todo })
 	})
 
 	const updateStar = useMemoizedFn(v => {
-		update({ type: 'parent', index, value: { star: v } as Todo.Todo })
+		update({ type: 'parent', index, kanban_index, value: { star: v } as Todo.Todo })
 	})
 
 	const updateRemind = useMemoizedFn(v => {
-		update({ type: 'parent', index, value: { remind_time: v } as Todo.Todo })
+		update({ type: 'parent', index, kanban_index, value: { remind_time: v } as Todo.Todo })
 	})
 
 	const updateCircle = useMemoizedFn(v => {
-		update({ type: 'parent', index, value: { ...v } as Todo.Todo })
+		update({ type: 'parent', index, kanban_index, value: { ...v } as Todo.Todo })
 	})
 
 	const updateRemark = useMemoizedFn(v => {
-		update({ type: 'parent', index, value: { remark: v } as Todo.Todo })
+		update({ type: 'parent', index, kanban_index, value: { remark: v } as Todo.Todo })
 	})
 
 	return {

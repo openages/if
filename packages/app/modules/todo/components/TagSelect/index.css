@@ -31,7 +31,6 @@
 				padding: 0 4px;
 				margin: 0 1px;
 				font-size: 10px;
-				border-radius: var(--radius_large);
 			}
 		}
 	}
@@ -46,6 +45,7 @@
 		}
 
 		.if-select-selector {
+			border: none !important;
 			background-color: transparent !important;
 		}
 

@@ -21,8 +21,10 @@ export type ArchiveQueryParams = {
 	status?: 'unchecked' | 'closed'
 }
 
+export type Indexes = { index: number; kanban_index?: number }
+
 export type ArgsUpdate =
-	| { type: 'parent'; index: number; value: Partial<Omit<Todo.TodoItem, 'id'>> }
-	| { type: 'children'; index: number; value: Todo.Todo['children'] }
+	| ({ type: 'parent'; value: Partial<Omit<Todo.TodoItem, 'id'>> } & Indexes)
+	| ({ type: 'children'; value: Todo.Todo['children'] } & Indexes)
 
 export type ArgsTab = { type: 'in'; index: number } | { type: 'out'; index: number; children_index: number }

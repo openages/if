@@ -36,8 +36,8 @@
 		min-width: 300px;
 
 		.kanban_item_header {
-			padding-right: 12px;
 			padding-left: 20px;
+			padding-right: 12px;
 			height: 21px;
 			line-height: 1;
 
@@ -52,16 +52,27 @@
 						color: var(--color_text_softlight);
 					}
 				}
+			}
+		}
+	}
 
-				.btn_insert {
-					width: 21px;
-					height: 100%;
-					border-radius: var(--radius);
-					color: var(--color_text);
+	.btn_insert_wrap {
+		height: 36px;
+		padding-left: 20px;
+		padding-right: 12px;
+		margin-top: 12px;
 
-					&:hover {
-						background-color: var(--color_bg_2);
-					}
+		:global {
+			.btn_insert {
+				border-radius: var(--radius_large);
+				background-color: rgba(var(--color_text_rgb), 0.04);
+
+				&:hover {
+					background-color: rgba(var(--color_text_rgb), 0.1);
+				}
+
+				.text {
+					font-size: 12px;
 				}
 			}
 		}

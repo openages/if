@@ -87,6 +87,7 @@ export interface IPropsTodos {
 	relations: Todo.Data['relations']
 	drag_disabled: boolean
 	kanban_mode?: boolean
+	kanban_index?: number
 	check: Model['check']
 	updateRelations: Model['updateRelations']
 	move: Model['move']
@@ -105,6 +106,7 @@ export interface IPropsTodoItem {
 	angles: Model['todo']['angles']
 	drag_disabled: boolean
 	kanban_mode?: boolean
+	kanban_index?: number
 	makeLinkLine: (args: { active_id: string; y: number } | null) => void
 	renderLines: (id: string) => void
 	check: Model['check']

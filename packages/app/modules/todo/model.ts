@@ -293,13 +293,19 @@ export default class Index {
 	}
 
 	async update(args: ArgsUpdate) {
-		const { type, index, value } = args
-		const item = this.items[index]
+		const { type, value, index, kanban_index } = args
+		let id = ''
+
+		if (kanban_index !== undefined) {
+			id = Object.values(this.kanban_items)[kanban_index].items[index].id
+		} else {
+			id = this.items[index].id
+		}
 
 		if (type == 'parent') {
-			await update({ id: item.id, ...value })
+			await update({ id, ...value })
 		} else {
-			await update({ id: item.id, children: value })
+			await update({ id, children: value })
 		}
 	}
 
@@ -482,10 +488,9 @@ export default class Index {
 	}
 
 	setMode(v: Index['mode']) {
-		console.log(v)
 		this.mode = v
-		// this.items_sort_param = null
-		// this.items_filter_tags = []
+		this.items_sort_param = null
+		this.items_filter_tags = []
 	}
 
 	toggleKanbanMode() {

@@ -4,8 +4,6 @@ import { useEffect, useRef, useState } from 'react'
 
 import { todo } from '@/appdata'
 
-import { getCursorPosition, setCursorPosition } from '../utils'
-
 interface HookArgs {
 	value: string
 	max_length?: number
@@ -35,17 +33,11 @@ export default (args: HookArgs) => {
 
 			input.current.blur()
 
-			await update(textContent)
+			update(textContent)
 
 			return textContent
 		} else {
-			const start = getCursorPosition(input.current)
-
-			await update(textContent)
-
-			if (document.activeElement !== input.current) return textContent
-
-			setCursorPosition(input.current, start)
+			update(textContent)
 
 			return textContent
 		}

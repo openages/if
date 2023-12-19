@@ -179,12 +179,12 @@
 				border-radius: var(--radius_large);
 				background-color: rgba(var(--color_text_rgb), 0.04);
 
-				.text {
-					font-size: 12px;
-				}
-
 				&:hover {
 					background-color: rgba(var(--color_text_rgb), 0.1);
+				}
+
+				.text {
+					font-size: 12px;
 				}
 			}
 		}
