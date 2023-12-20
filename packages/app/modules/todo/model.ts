@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { pick } from 'lodash-es'
+import { omit, pick } from 'lodash-es'
 import { makeAutoObservable, toJS } from 'mobx'
 import { injectable } from 'tsyringe'
 
@@ -10,7 +10,7 @@ import { getDocItem, getDocItemsData, id } from '@/utils'
 import { confirm } from '@/utils/antd'
 import { disableWatcher, loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
-import { useInstanceWatch } from '@openages/stk'
+import { IF, useInstanceWatch } from '@openages/stk'
 
 import { getTodo } from './initials'
 import {
@@ -39,7 +39,17 @@ import type { RxDB, Todo } from '@/types'
 import type { Watch } from '@openages/stk'
 import type { ManipulateType } from 'dayjs'
 import type { Subscription } from 'rxjs'
-import type { ArchiveQueryParams, ArgsTab, ArgsUpdate, ItemsSortParams, KanbanItems } from './types/model'
+import type {
+	ArchiveQueryParams,
+	ArgsCheck,
+	ArgsTab,
+	ArgsUpdate,
+	CurrentDetailIndex,
+	CurrentDetailItem,
+	Indexes,
+	ItemsSortParams,
+	KanbanItems
+} from './types/model'
 import type { ArgsArchiveByTime, ArgsUpdateTodoData } from './types/services'
 
 @injectable()
@@ -49,6 +59,7 @@ export default class Index {
 	kanban_mode = 'angle' as 'angle' | 'tag'
 	timer_cycle: NodeJS.Timeout = null
 	timer_archive: NodeJS.Timeout = null
+	disable_watcher = false
 
 	todo = {} as Todo.Data
 	todo_watcher = null as Subscription
@@ -70,14 +81,14 @@ export default class Index {
 	visible_help_modal = false
 
 	current_angle_id = ''
-	current_detail_index = -1
+	current_detail_index = {} as CurrentDetailIndex
 
 	watch = {
 		['current_angle_id|items_sort_param|items_filter_tags']: () => {
 			if (!this.id) return
 
 			this.visible_detail_modal = false
-			this.current_detail_index === -1
+			this.current_detail_index === ({} as CurrentDetailIndex)
 
 			this.queryItems()
 		},
@@ -155,10 +166,19 @@ export default class Index {
 	}
 
 	get current_detail_item() {
-		if (this.current_detail_index === -1) return {} as Todo.Todo
-		if (!this.items.at(this.current_detail_index)) return {} as Todo.Todo
+		if (!this.current_detail_index.id) return {} as CurrentDetailItem
 
-		return this.items[this.current_detail_index] as Todo.Todo
+		const items =
+			this.mode === 'kanban' ? this.kanban_items[this.current_detail_index.dimension_id].items : this.items
+		const target_index = items.findIndex(item => item.id === this.current_detail_index.id)
+
+		if (!items[target_index]) return {} as CurrentDetailItem
+
+		return {
+			item: toJS(items[target_index]),
+			prev_id: target_index - 1 >= 0 ? items.at(target_index - 1)?.id : undefined,
+			next_id: items.at(target_index + 1)?.id
+		} as CurrentDetailItem
 	}
 
 	constructor(public global: GlobalModel, public utils: Utils, public file: File, public loadmore: Loadmore) {
@@ -259,20 +279,25 @@ export default class Index {
 		})
 	}
 
-	async check(args: { id: string; status: Todo.Todo['status'] }) {
-		await this.setActivity('check')
+	async check(args: ArgsCheck) {
+		const { index, dimension_id, status } = args
+
+		const item = this.getItems({ index, dimension_id })
+
+		this.setItem(item, { status })
 
 		await check({
 			file_id: this.id,
 			todo: this.todo,
-			...args
+			id: item.id,
+			status
 		})
 
 		if (this.todo.auto_archiving === '0m') {
 			await archive(this.id)
 		}
 
-		const todo_item = await queryItem(args.id)
+		const todo_item = await queryItem(item.id)
 
 		if (todo_item.remind_time) {
 			await todo_item.updateCRDT({ ifMatch: { $set: { remind_time: undefined } } })
@@ -290,23 +315,21 @@ export default class Index {
 				await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time: undefined } } })
 			}
 		}
+
+		await this.setActivity('check')
 	}
 
 	async update(args: ArgsUpdate) {
-		const { type, value, index, kanban_index } = args
-		let id = ''
+		const { index, dimension_id, type, value } = args
 
-		if (kanban_index !== undefined) {
-			id = Object.values(this.kanban_items)[kanban_index].items[index].id
-		} else {
-			id = this.items[index].id
-		}
+		console.log(args)
+		const item = this.getItems({ index, dimension_id })
 
-		if (type == 'parent') {
-			await update({ id, ...value })
-		} else {
-			await update({ id, children: value })
-		}
+		const data = type === 'parent' ? { id: item.id, ...value } : { id: item.id, children: value }
+
+		this.setItem(item, data)
+
+		await update(data)
 	}
 
 	async updateRelations(active_id: string, over_id: string) {
@@ -374,17 +397,15 @@ export default class Index {
 
 		const { index, data, callback } = args
 		const todo = data ?? (getTodo() as Todo.TodoItem)
-		const items = toJS(this.items)
-
 		const item = await this.create(todo, true)
 
-		items.splice(index + 1, 0, item as Todo.TodoItem)
-
-		await updateTodosSort(items)
-
-		if (callback) await callback()
+		this.items.splice(index + 1, 0, item as Todo.TodoItem)
 
 		if (!data) setTimeout(() => document.getElementById(`todo_${item.id}`)?.focus(), 0)
+
+		await updateTodosSort(toJS(this.items))
+
+		if (callback) await callback()
 	}
 
 	async tab(args: ArgsTab) {
@@ -487,6 +508,23 @@ export default class Index {
 		})
 	}
 
+	getItems(args: Indexes) {
+		const { index, dimension_id } = args
+		const kanban_mode = dimension_id !== undefined
+
+		return IF({
+			condition: kanban_mode,
+			If: () => this.kanban_items[dimension_id].items[index],
+			Else: () => this.items[index]
+		})
+	}
+
+	setItem(item: any, data: any) {
+		Object.keys(omit(data, 'id')).forEach(key => {
+			item[key] = data[key]
+		})
+	}
+
 	setMode(v: Index['mode']) {
 		this.mode = v
 		this.items_sort_param = null
@@ -524,6 +562,7 @@ export default class Index {
 			items_sort_param: this.items_sort_param,
 			items_filter_tags: this.items_filter_tags
 		}).$.subscribe(items => {
+			if (this.disable_watcher) return
 			if (!current_angle_id) return
 
 			this.items = getDocItemsData(items)
@@ -538,6 +577,8 @@ export default class Index {
 					selector: { type: 'todo' },
 					angle_id: item.id
 				}).$.subscribe(items => {
+					if (this.disable_watcher) return
+
 					this.kanban_items[item.id] = {
 						dimension: { type: 'angle', value: item },
 						items: getDocItemsData(items) as Array<Todo.Todo>
@@ -556,6 +597,8 @@ export default class Index {
 					selector: { type: 'todo' },
 					items_filter_tags: [item.id]
 				}).$.subscribe(items => {
+					if (this.disable_watcher) return
+
 					this.kanban_items[item.id] = {
 						dimension: { type: 'tag', value: item },
 						items: getDocItemsData(items) as Array<Todo.Todo>

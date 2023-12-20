@@ -1,3 +1,4 @@
+import type { SortableProps } from '@/components'
 import type { DirTree, RxDB, Todo } from '@/types'
 import type { MenuProps, SelectProps } from 'antd'
 import type Model from '../model'
@@ -88,6 +89,7 @@ export interface IPropsTodos {
 	drag_disabled: boolean
 	kanban_mode?: boolean
 	kanban_index?: number
+	dimension_id?: string
 	check: Model['check']
 	updateRelations: Model['updateRelations']
 	move: Model['move']
@@ -96,10 +98,11 @@ export interface IPropsTodos {
 	tab: Model['tab']
 	moveTo: Model['moveTo']
 	remove: Model['remove']
-	showDetailModal: (index: number) => void
+	showDetailModal: (args: Model['current_detail_index']) => void
 }
 
 export interface IPropsTodoItem {
+	sortable_props?: SortableProps
 	item: Todo.Todo
 	index: number
 	tags: Model['todo']['tags']
@@ -107,6 +110,7 @@ export interface IPropsTodoItem {
 	drag_disabled: boolean
 	kanban_mode?: boolean
 	kanban_index?: number
+	dimension_id?: string
 	makeLinkLine: (args: { active_id: string; y: number } | null) => void
 	renderLines: (id: string) => void
 	check: Model['check']
@@ -126,6 +130,7 @@ export interface IPropsChildren {
 	isDragging: boolean
 	handled: boolean
 	useByDetail?: boolean
+	dimension_id?: string
 	ChildrenContextMenu: MenuProps['items']
 	update: Model['update']
 	tab: Model['tab']
@@ -134,6 +139,7 @@ export interface IPropsChildren {
 }
 
 export interface IPropsChildrenItem {
+	sortable_props?: SortableProps
 	item: Todo.Todo['children'][number]
 	index: number
 	children_index: number
@@ -146,28 +152,16 @@ export interface IPropsChildrenItem {
 }
 
 export interface IPropsGroupTitle {
+	sortable_props?: SortableProps
 	item: Todo.Group
 	index: number
 	update: Model['update']
 	remove: Model['remove']
 }
 
-export interface IPropsKanban {
+export interface IPropsKanban extends Omit<IPropsTodos, 'items' | 'kanban_mode'> {
 	kanban_mode: Model['kanban_mode']
 	kanban_items: Model['kanban_items']
-	tags: Model['todo']['tags']
-	angles: Model['todo']['angles']
-	relations: Todo.Data['relations']
-	drag_disabled: boolean
-	check: Model['check']
-	updateRelations: Model['updateRelations']
-	move: Model['move']
-	insert: Model['insert']
-	update: Model['update']
-	tab: Model['tab']
-	moveTo: Model['moveTo']
-	remove: Model['remove']
-	showDetailModal: (index: number) => void
 }
 
 export interface IPropsSettingsModal {
@@ -206,7 +200,6 @@ export interface IPropsDetail {
 	current_detail_item: Model['current_detail_item']
 	relations: Todo.Data['relations']
 	tags: Model['todo']['tags']
-	next: boolean
 	update: Model['update']
 	tab: Model['tab']
 	setCurrentDetailIndex: (v: Model['current_detail_index']) => void

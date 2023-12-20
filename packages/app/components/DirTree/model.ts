@@ -20,13 +20,17 @@ import type { MoveData } from './types/model'
 export default class Index {
 	module = '' as App.ModuleType
 	actions = {} as IProps['actions']
-	items_watcher = null as Subscription
+
 	focusing_index = [] as Array<number>
 	current_item = {} as DirTree.Item
-	modal_type = 'file' as DirTree.Item['type']
 	current_option = '' as 'rename' | 'add_file' | 'add_dir' | ''
-	open_folder = [] as Array<string>
+
+	modal_type = 'file' as DirTree.Item['type']
 	modal_open = false
+
+	open_folder = [] as Array<string>
+
+	items_watcher = null as Subscription
 	disable_watcher = false
 
 	watch = {

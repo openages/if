@@ -16,6 +16,7 @@ import Remark from './components/Remark'
 
 import styles from './index.css'
 
+import type { Todo } from '@/types'
 import type { IPropsChildren, IPropsDetail } from '../../types'
 
 const Index = (props: IPropsDetail) => {
@@ -26,7 +27,6 @@ const Index = (props: IPropsDetail) => {
 		current_detail_item,
 		relations,
 		tags,
-		next,
 		update,
 		tab,
 		closeDetailModal,
@@ -34,20 +34,26 @@ const Index = (props: IPropsDetail) => {
 		setCurrentDetailIndex
 	} = props
 	const { t } = useTranslation()
-	const { status, text, children, tag_ids, star, remind_time, cycle_enabled, cycle, recycle_time, remark } =
-		current_detail_item
+	const { item = {} as Todo.Todo, prev_id, next_id } = current_detail_item
+	const { status, text, children, tag_ids, star, remind_time, cycle_enabled, cycle, recycle_time, remark } = item
 
 	const { input, onInput } = useInput({
 		value: text,
 		update: useMemoizedFn(textContent =>
-			update({ type: 'parent', index: current_detail_index, value: { text: textContent } })
+			update({
+				type: 'parent',
+				index: current_detail_index.index,
+				dimension_id: current_detail_index.dimension_id,
+				value: { text: textContent }
+			})
 		)
 	})
 
 	const { insertChildren, removeChildren, updateTags, updateStar, updateRemind, updateCircle, updateRemark } =
 		useHandlers({
-			item: current_detail_item,
-			index: current_detail_index,
+			item,
+			index: current_detail_index.index,
+			dimension_id: current_detail_index.dimension_id,
 			visible_detail_modal,
 			update
 		})
@@ -55,18 +61,19 @@ const Index = (props: IPropsDetail) => {
 	const { ChildrenContextMenu } = useContextMenu({})
 
 	const exist_relations = useMemo(() => {
-		if (!current_detail_item.id || !relations.length) return false
+		if (!item.id || !relations.length) return false
 
-		return relations.find(item => item.items.includes(current_detail_item.id))
+		return relations.find(it => it.items.includes(item.id))
 	}, [relations, current_detail_item])
 
 	const props_children: IPropsChildren = {
 		items: children,
-		index: current_detail_index,
+		index: current_detail_index.index,
 		fold: false,
 		isDragging: false,
 		useByDetail: true,
 		handled: status === 'checked' || status === 'closed',
+		dimension_id: current_detail_index.dimension_id,
 		ChildrenContextMenu,
 		update,
 		tab,
@@ -95,23 +102,33 @@ const Index = (props: IPropsDetail) => {
 				<div
 					className={$cx(
 						'btn_toggle flex justify_center align_center clickable mr_6',
-						current_detail_index === 0 && 'disabled'
+						!prev_id && 'disabled'
 					)}
-					onClick={() => setCurrentDetailIndex(current_detail_index - 1)}
+					onClick={() =>
+						setCurrentDetailIndex({
+							id: prev_id,
+							index: current_detail_index.index - 1
+						})
+					}
 				>
 					<CaretUp size={16}></CaretUp>
 				</div>
 				<div
 					className={$cx(
 						'btn_toggle flex justify_center align_center clickable',
-						!next && 'disabled'
+						!current_detail_item.next_id && 'disabled'
 					)}
-					onClick={() => setCurrentDetailIndex(current_detail_index + 1)}
+					onClick={() =>
+						setCurrentDetailIndex({
+							id: next_id,
+							index: current_detail_index.index + 1
+						})
+					}
 				>
 					<CaretDown size={16}></CaretDown>
 				</div>
 			</div>
-			{current_detail_item.id && (
+			{item.id && (
 				<div className='detail_item_wrap w_100 border_box flex flex_column'>
 					<div
 						className='todo_text_wrap w_100 border_box'
@@ -179,10 +196,10 @@ const Index = (props: IPropsDetail) => {
 					<div
 						className={$cx(
 							'detail_children_wrap w_100 border_box flex flex_column relative',
-							current_detail_item?.children?.length && 'has_children'
+							item?.children?.length && 'has_children'
 						)}
 					>
-						{!current_detail_item?.children?.length ? (
+						{!item?.children?.length ? (
 							<div
 								className='btn_insert w_100 border_box flex justify_center align_center clickable'
 								// @ts-ignore

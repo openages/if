@@ -7,7 +7,6 @@ export interface StackContext {
 	id: string
 	width: number
 	container_width: number
-	resizing: boolean
 	breakpoint?: 801 | 390
 }
 

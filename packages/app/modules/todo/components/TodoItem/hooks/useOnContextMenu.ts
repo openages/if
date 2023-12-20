@@ -6,6 +6,9 @@ import type { IPropsTodoItem } from '../../../types'
 interface HookArgs {
 	item: IPropsTodoItem['item']
 	index: IPropsTodoItem['index']
+	kanban_mode: IPropsTodoItem['kanban_mode']
+	kanban_index: IPropsTodoItem['kanban_index']
+	dimension_id: IPropsTodoItem['dimension_id']
 	update: IPropsTodoItem['update']
 	moveTo: IPropsTodoItem['moveTo']
 	insert: IPropsTodoItem['insert']
@@ -16,7 +19,20 @@ interface HookArgs {
 }
 
 export default (args: HookArgs) => {
-	const { item, index, update, moveTo, insert, tab, remove, showDetailModal, insertChildren } = args
+	const {
+		item,
+		index,
+		kanban_mode,
+		kanban_index,
+		dimension_id,
+		update,
+		moveTo,
+		insert,
+		tab,
+		remove,
+		showDetailModal,
+		insertChildren
+	} = args
 	const { id, tag_ids } = item
 
 	const onContextMenu = useMemoizedFn(({ key, keyPath }) => {
@@ -41,6 +57,7 @@ export default (args: HookArgs) => {
 					update({
 						type: 'parent',
 						index,
+						dimension_id,
 						value: { tag_ids: target } as Todo.Todo
 					})
 
@@ -52,7 +69,7 @@ export default (args: HookArgs) => {
 		} else {
 			switch (key) {
 				case 'detail':
-					showDetailModal(index)
+					showDetailModal({ ...{ id, index }, ...(kanban_mode ? { kanban_index } : {}) })
 					break
 				case 'insert':
 					insert({ index })

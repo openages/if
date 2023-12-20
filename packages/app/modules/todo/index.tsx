@@ -84,9 +84,9 @@ const Index = ({ id }: IProps) => {
 		tab: useMemoizedFn(x.tab),
 		moveTo: useMemoizedFn(x.moveTo),
 		remove: useMemoizedFn(x.remove),
-		showDetailModal: useMemoizedFn((index: number) => {
+		showDetailModal: useMemoizedFn((args: Model['current_detail_index']) => {
 			x.visible_detail_modal = true
-			x.current_detail_index = index
+			x.current_detail_index = { ...x.current_detail_index, ...args }
 		})
 	}
 
@@ -128,7 +128,6 @@ const Index = ({ id }: IProps) => {
 		current_detail_item: toJS(x.current_detail_item),
 		relations: toJS(x.todo?.relations || []),
 		tags: toJS(x.todo.tags),
-		next: x.current_detail_index < x.items.length - 1,
 		update: useMemoizedFn(x.update),
 		tab: useMemoizedFn(x.tab),
 		setCurrentDetailIndex: useMemoizedFn(v => (x.current_detail_index = v)),
@@ -136,7 +135,7 @@ const Index = ({ id }: IProps) => {
 		clearCurrentDetail: useMemoizedFn((visible: boolean) => {
 			if (visible) return
 
-			x.current_detail_index = -1
+			x.current_detail_index = {} as Model['current_detail_index']
 		})
 	}
 

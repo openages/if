@@ -1,17 +1,18 @@
 import { useMemoizedFn } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
+import { SortableWrap } from '@/components'
 import { useMounted } from '@/hooks'
 import { Todo } from '@/types'
 import { DndContext } from '@dnd-kit/core'
-import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
+import { SortableContext, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable'
 
-import styles from './index.css'
 import Item from './Item'
+import styles from './index.css'
 
-import type { IPropsChildren } from '../../types'
 import type { DragEndEvent } from '@dnd-kit/core'
+import type { IPropsChildren } from '../../types'
 
 const Index = (props: IPropsChildren) => {
 	const {
@@ -21,6 +22,7 @@ const Index = (props: IPropsChildren) => {
 		isDragging,
 		handled,
 		useByDetail,
+		dimension_id,
 		ChildrenContextMenu,
 		update: updateChildren,
 		tab,
@@ -38,7 +40,9 @@ const Index = (props: IPropsChildren) => {
 
 			children[children_index] = { ...children[children_index], ...value }
 
-			await updateChildren({ type: 'children', index, value: children })
+			setItems(children)
+
+			await updateChildren({ type: 'children', index, dimension_id, value: children })
 		}
 	)
 
@@ -49,7 +53,7 @@ const Index = (props: IPropsChildren) => {
 
 		setItems(value)
 
-		updateChildren({ type: 'children', index, value })
+		updateChildren({ type: 'children', dimension_id, index, value })
 	})
 
 	if (!items || !items.length) return null
@@ -73,20 +77,25 @@ const Index = (props: IPropsChildren) => {
 						<DndContext onDragEnd={onDragEnd}>
 							<SortableContext items={items} strategy={verticalListSortingStrategy}>
 								{items.map((item, children_index) => (
-									<Item
-										{...{
-											item,
-											index,
-											children_index,
-											useByDetail,
-											ChildrenContextMenu,
-											update,
-											tab,
-											insertChildren,
-											removeChildren
-										}}
+									<SortableWrap
+										id={item.id}
+										data={{ index: children_index }}
 										key={item.id}
-									></Item>
+									>
+										<Item
+											{...{
+												item,
+												index,
+												children_index,
+												useByDetail,
+												ChildrenContextMenu,
+												update,
+												tab,
+												insertChildren,
+												removeChildren
+											}}
+										></Item>
+									</SortableWrap>
 								))}
 							</SortableContext>
 						</DndContext>

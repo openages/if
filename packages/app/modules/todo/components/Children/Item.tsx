@@ -2,7 +2,6 @@ import { useMemoizedFn } from 'ahooks'
 import { ConfigProvider, Dropdown } from 'antd'
 import { Case, Switch } from 'react-if'
 
-import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { CheckSquare, DotsSixVertical, Square } from '@phosphor-icons/react'
 
@@ -13,6 +12,7 @@ import type { IPropsChildrenItem } from '../../types'
 
 const Index = (props: IPropsChildrenItem) => {
 	const {
+		sortable_props,
 		item,
 		index,
 		children_index,
@@ -28,10 +28,7 @@ const Index = (props: IPropsChildrenItem) => {
 		value: text,
 		update: useMemoizedFn(textContent => update(children_index, { text: textContent }))
 	})
-	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
-		id,
-		data: { index: children_index }
-	})
+	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = sortable_props
 
 	const onCheck = useMemoizedFn(() => {
 		update(children_index, { status: status === 'unchecked' ? 'checked' : 'unchecked' })

@@ -3,7 +3,6 @@ import { ConfigProvider, Dropdown } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { DotsSixVertical, Trash } from '@phosphor-icons/react'
 
@@ -14,13 +13,10 @@ import type { MenuProps } from 'antd'
 import type { IPropsGroupTitle } from '../../types'
 
 const Index = (props: IPropsGroupTitle) => {
-	const { item, index, update, remove } = props
+	const { sortable_props, item, index, update, remove } = props
 	const { id, text } = item
 	const { t, i18n } = useTranslation()
-	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
-		id,
-		data: { index }
-	})
+	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = sortable_props
 	const { input, onInput } = useInput({
 		value: text,
 		update: useMemoizedFn(textContent => update({ type: 'parent', index, value: { text: textContent } }))

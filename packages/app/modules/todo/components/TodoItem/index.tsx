@@ -3,10 +3,8 @@ import { ConfigProvider, Dropdown } from 'antd'
 import { useRef } from 'react'
 import { Case, Switch } from 'react-if'
 
-import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { CheckSquare, DotsSixVertical, Square, Star } from '@phosphor-icons/react'
-
 import { useInput } from '../../hooks'
 import Children from '../Children'
 import CycleStatus from '../CycleStatus'
@@ -19,6 +17,7 @@ import type { IPropsChildren, IPropsTodoItem } from '../../types'
 
 const Index = (props: IPropsTodoItem) => {
 	const {
+		sortable_props,
 		item,
 		index,
 		tags,
@@ -26,6 +25,7 @@ const Index = (props: IPropsTodoItem) => {
 		drag_disabled,
 		kanban_mode,
 		kanban_index,
+		dimension_id,
 		makeLinkLine,
 		renderLines,
 		check,
@@ -53,9 +53,8 @@ const Index = (props: IPropsTodoItem) => {
 		children
 	} = item
 
-	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } = useSortable(
-		{ id, data: { index } }
-	)
+	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } =
+		sortable_props
 
 	const {
 		setOpen,
@@ -67,7 +66,7 @@ const Index = (props: IPropsTodoItem) => {
 		onKeyDown,
 		updateTags,
 		updateTagWidth
-	} = useHandlers({ item, index, kanban_index, makeLinkLine, check, insert, update, tab })
+	} = useHandlers({ item, index, dimension_id, makeLinkLine, check, insert, update, tab })
 
 	const { linker, dragging, hovering } = useLink({ item, makeLinkLine, updateRelations })
 
@@ -81,6 +80,9 @@ const Index = (props: IPropsTodoItem) => {
 	const { onContextMenu } = useOnContextMenu({
 		item,
 		index,
+		kanban_mode,
+		kanban_index,
+		dimension_id,
 		update,
 		moveTo,
 		insert,
@@ -92,7 +94,7 @@ const Index = (props: IPropsTodoItem) => {
 
 	const options_wrap = useRef<HTMLDivElement>(null)
 	const options_size = useSize(options_wrap)
-	const real_options_size = useDebounce(options_size, { wait: 30 })
+	const real_options_size = useDebounce(options_size, { wait: 60 })
 
 	useUpdateEffect(() => {
 		if (real_options_size?.width === undefined) return
@@ -108,6 +110,7 @@ const Index = (props: IPropsTodoItem) => {
 		fold: !open,
 		isDragging,
 		handled: item.status === 'checked' || item.status === 'closed',
+		dimension_id,
 		ChildrenContextMenu,
 		update,
 		tab,

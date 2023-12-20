@@ -7,6 +7,7 @@ import { points } from '@/utils'
 import { DndContext } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 
+import { SortableWrap } from '@/components'
 import GroupTitle from '../GroupTitle'
 import TodoItem from '../TodoItem'
 import styles from './index.css'
@@ -24,6 +25,7 @@ const Index = (props: IPropsTodos) => {
 		drag_disabled,
 		kanban_mode,
 		kanban_index,
+		dimension_id,
 		check,
 		updateRelations,
 		move,
@@ -156,33 +158,34 @@ const Index = (props: IPropsTodos) => {
 					<SortableContext items={items} strategy={verticalListSortingStrategy}>
 						{items.map((item, index) =>
 							item.type === 'todo' ? (
-								<TodoItem
-									{...{
-										item,
-										index,
-										tags,
-										angles,
-										drag_disabled,
-										makeLinkLine,
-										renderLines,
-										check,
-										updateRelations,
-										insert,
-										update,
-										tab,
-										moveTo,
-										remove,
-										showDetailModal
-									}}
-									kanban_mode={kanban_mode}
-									kanban_index={kanban_index}
-									key={item.id}
-								></TodoItem>
+								<SortableWrap id={item.id} data={{ index, dimension_id }} key={item.id}>
+									<TodoItem
+										{...{
+											item,
+											index,
+											tags,
+											angles,
+											drag_disabled,
+											kanban_mode,
+											kanban_index,
+											dimension_id,
+											makeLinkLine,
+											renderLines,
+											check,
+											updateRelations,
+											insert,
+											update,
+											tab,
+											moveTo,
+											remove,
+											showDetailModal
+										}}
+									></TodoItem>
+								</SortableWrap>
 							) : (
-								<GroupTitle
-									{...{ item, index, update, remove }}
-									key={item.id}
-								></GroupTitle>
+								<SortableWrap id={item.id} data={{ index }} key={item.id}>
+									<GroupTitle {...{ item, index, update, remove }}></GroupTitle>
+								</SortableWrap>
 							)
 						)}
 					</SortableContext>

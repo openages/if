@@ -56,7 +56,7 @@ const Index = (props: IPropsKanban) => {
 							<div className='btn_insert w_100 h_100 border_box flex justify_center align_center clickable'>
 								<Plus size={15}></Plus>
 								<span className='text ml_6'>
-									{t('translation:todo.context_menu.insert_children')}
+									{t('translation:todo.Input.placeholder')}
 								</span>
 							</div>
 						</div>
@@ -80,6 +80,7 @@ const Index = (props: IPropsKanban) => {
 						kanban_mode
 						items={item.items}
 						kanban_index={index}
+						dimension_id={Object.keys(kanban_items)[index]}
 					></Todos>
 				</div>
 			))}

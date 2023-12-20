@@ -8,6 +8,18 @@ export interface KanbanItems {
 	}
 }
 
+export interface CurrentDetailIndex {
+	id: string
+	index: number
+	dimension_id?: string
+}
+
+export interface CurrentDetailItem {
+	item: Todo.Todo
+	prev_id?: string
+	next_id?: string
+}
+
 export type ItemsSortParams = {
 	type: 'importance' | 'alphabetical' | 'create_at'
 	order: 'asc' | 'desc'
@@ -21,10 +33,12 @@ export type ArchiveQueryParams = {
 	status?: 'unchecked' | 'closed'
 }
 
-export type Indexes = { index: number; kanban_index?: number }
+export type Indexes = { index: number; dimension_id?: string }
+
+export type ArgsCheck = Indexes & { status: Todo.Todo['status'] }
 
 export type ArgsUpdate =
-	| ({ type: 'parent'; value: Partial<Omit<Todo.TodoItem, 'id'>> } & Indexes)
-	| ({ type: 'children'; value: Todo.Todo['children'] } & Indexes)
+	| (Indexes & { type: 'parent'; value: Partial<Omit<Todo.TodoItem, 'id'>> })
+	| (Indexes & { type: 'children'; value: Todo.Todo['children'] })
 
 export type ArgsTab = { type: 'in'; index: number } | { type: 'out'; index: number; children_index: number }
