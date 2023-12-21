@@ -15,10 +15,10 @@ export namespace Todo {
 	export interface Data {
 		/** @maxLength 30 */
 		id: string
-		desc?: string
 		angles: Array<Angle>
 		tags: Array<Tag>
 		auto_archiving: '0m' | '3m' | '3h' | '1d' | '3d' | '7d'
+		desc?: string
 		relations?: Relations
 		links?: Array<{
 			type: string
@@ -34,8 +34,8 @@ export namespace Todo {
 		/** @maxLength 30 */
 		angle_id: string
 		text: string
-		create_at: number
 		sort: number
+		create_at: number
 	}
 
 	export type Todo = Common & {

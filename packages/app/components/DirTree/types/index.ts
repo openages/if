@@ -2,21 +2,21 @@ import type { CSSProperties } from 'react'
 
 import type { DirTree } from '@/types'
 
-import type Model from '../model'
 import type { MouseEvent, ReactNode } from 'react'
+import type Model from '../model'
 
 export interface IProps {
 	module: Model['module']
 	height?: CSSProperties['height']
 	actions: {
-		add: (file_id: string, data: Partial<Omit<DirTree.Item, 'id'>>) => Promise<void>
+		add: (file_id: string) => Promise<void>
 		remove: (focusing_item: DirTree.Item) => Promise<void>
 	}
 }
 
 export interface IPropsDirItems {
 	module: Model['module']
-	data: Model['items']
+	data: Model['node_tree']['tree']
 	loading: boolean
 	current_item: DirTree.Item
 	focusing_item: Model['focusing_item']

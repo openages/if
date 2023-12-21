@@ -1,13 +1,44 @@
 export default {
+      "Todo.Angle": {
+            "type": "object",
+            "properties": {
+                  "id": {
+                        "type": "string"
+                  },
+                  "text": {
+                        "type": "string"
+                  }
+            },
+            "required": [
+                  "id",
+                  "text"
+            ]
+      },
+      "Todo.Tag": {
+            "type": "object",
+            "properties": {
+                  "id": {
+                        "type": "string"
+                  },
+                  "color": {
+                        "type": "string"
+                  },
+                  "text": {
+                        "type": "string"
+                  }
+            },
+            "required": [
+                  "id",
+                  "color",
+                  "text"
+            ]
+      },
       "Todo.Data": {
             "type": "object",
             "properties": {
                   "id": {
                         "type": "string",
                         "maxLength": 30
-                  },
-                  "desc": {
-                        "type": "string"
                   },
                   "angles": {
                         "type": "array",
@@ -59,6 +90,9 @@ export default {
                               "3d",
                               "7d"
                         ]
+                  },
+                  "desc": {
+                        "type": "string"
                   },
                   "relations": {
                         "type": "array",
@@ -245,10 +279,10 @@ export default {
                   "text": {
                         "type": "string"
                   },
-                  "create_at": {
+                  "sort": {
                         "type": "number"
                   },
-                  "sort": {
+                  "create_at": {
                         "type": "number"
                   }
             },
@@ -285,10 +319,10 @@ export default {
                   "text": {
                         "type": "string"
                   },
-                  "create_at": {
+                  "sort": {
                         "type": "number"
                   },
-                  "sort": {
+                  "create_at": {
                         "type": "number"
                   }
             },
@@ -443,10 +477,10 @@ export default {
                   "text": {
                         "type": "string"
                   },
-                  "create_at": {
+                  "sort": {
                         "type": "number"
                   },
-                  "sort": {
+                  "create_at": {
                         "type": "number"
                   }
             },

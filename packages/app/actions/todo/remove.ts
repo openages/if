@@ -7,7 +7,6 @@ const Index = async (focusing_item: DirTree.TransformedItem) => {
 
 	await $db.collections.todo.findOne({ selector: { id: focusing_item.id } }).remove()
 	await $db.collections.todo_items.find({ selector: { file_id: focusing_item.id } }).remove()
-	await $db.collections.todo_archives.find({ selector: { file_id: focusing_item.id } }).remove()
 }
 
 export default Index

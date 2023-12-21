@@ -27,9 +27,9 @@ export default class Index {
 			name: 'if_v1',
 			eventReduce: true,
 			allowSlowCount: true,
-			multiInstance: true,
+			multiInstance: false,
 			password: 'I16DKS#hY+Two0O',
-			cleanupPolicy: { waitForLeadership: true },
+			cleanupPolicy: { waitForLeadership: false },
 			ignoreDuplicate: window.$is_dev,
 			storage: wrappedKeyEncryptionCryptoJsStorage({
 				storage: wrappedKeyCompressionStorage({
@@ -147,13 +147,6 @@ export default class Index {
 			this.update_queue.push({ id, timestamp: new Date().valueOf() })
 			this.update_queue = uniqBy(this.update_queue, 'id')
 		}
-
-		$db.dirtree_items.postInsert(
-			debounce((_, doc) => {
-				doc.updateCRDT({ ifMatch: { $set: { create_at: new Date().valueOf() } } })
-			}, 900),
-			true
-		)
 
 		$db.todo.postSave(
 			debounce(data => pushUpdateQueue(data.id), 900),

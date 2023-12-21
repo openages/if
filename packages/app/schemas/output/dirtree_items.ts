@@ -20,6 +20,9 @@ export default {
                   "name": {
                         "type": "string"
                   },
+                  "create_at": {
+                        "type": "number"
+                  },
                   "pid": {
                         "type": "string"
                   },
@@ -33,23 +36,30 @@ export default {
                         "type": "string"
                   },
                   "icon_hue": {
-                        "type": "number"
-                  },
-                  "create_at": {
-                        "type": "number"
+                        "type": [
+                              "number",
+                              "string"
+                        ]
                   },
                   "update_at": {
-                        "type": "number"
+                        "type": [
+                              "number",
+                              "string"
+                        ]
                   },
                   "backup_at": {
-                        "type": "number"
+                        "type": [
+                              "number",
+                              "string"
+                        ]
                   }
             },
             "required": [
                   "module",
                   "type",
                   "id",
-                  "name"
+                  "name",
+                  "create_at"
             ]
       },
       "DirTree.Item": {
@@ -73,6 +83,9 @@ export default {
                   "name": {
                         "type": "string"
                   },
+                  "create_at": {
+                        "type": "number"
+                  },
                   "pid": {
                         "type": "string"
                   },
@@ -86,23 +99,30 @@ export default {
                         "type": "string"
                   },
                   "icon_hue": {
-                        "type": "number"
-                  },
-                  "create_at": {
-                        "type": "number"
+                        "type": [
+                              "number",
+                              "string"
+                        ]
                   },
                   "update_at": {
-                        "type": "number"
+                        "type": [
+                              "number",
+                              "string"
+                        ]
                   },
                   "backup_at": {
-                        "type": "number"
+                        "type": [
+                              "number",
+                              "string"
+                        ]
                   }
             },
             "required": [
                   "module",
                   "type",
                   "id",
-                  "name"
+                  "name",
+                  "create_at"
             ]
       }
 } as const

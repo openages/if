@@ -37,6 +37,7 @@ module.exports = defineConfig({
 			disableTransformByDefault: true
 		}
 	},
+	devtool: is_prod ? false : 'source-map',
 	plugins: [
 		new HtmlRspackPlugin({
 			title: 'IF - GTD for prefessionals.',
@@ -52,7 +53,6 @@ module.exports = defineConfig({
 				use: {
 					loader: 'builtin:swc-loader',
 					options: {
-						sourceMaps: !is_prod,
 						jsc: {
 							parser: {
 								syntax: 'typescript',

@@ -44,7 +44,7 @@ export default class Index {
 	}
 
 	constructor(public utils: Utils, public node_tree: NodeTree) {
-		makeAutoObservable(this, { watch: false }, { autoBind: true })
+		makeAutoObservable(this, { actions: false, watch: false }, { autoBind: true })
 	}
 
 	async init(args: { module: App.ModuleType; actions: IProps['actions'] }) {

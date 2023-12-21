@@ -140,10 +140,10 @@ export default {
                   "text": {
                         "type": "string"
                   },
-                  "create_at": {
+                  "sort": {
                         "type": "number"
                   },
-                  "sort": {
+                  "create_at": {
                         "type": "number"
                   }
             },
@@ -298,10 +298,10 @@ export default {
                   "text": {
                         "type": "string"
                   },
-                  "create_at": {
+                  "sort": {
                         "type": "number"
                   },
-                  "sort": {
+                  "create_at": {
                         "type": "number"
                   }
             },
@@ -453,10 +453,10 @@ export default {
                   "text": {
                         "type": "string"
                   },
-                  "create_at": {
+                  "sort": {
                         "type": "number"
                   },
-                  "sort": {
+                  "create_at": {
                         "type": "number"
                   }
             },
@@ -493,10 +493,10 @@ export default {
                   "text": {
                         "type": "string"
                   },
-                  "create_at": {
+                  "sort": {
                         "type": "number"
                   },
-                  "sort": {
+                  "create_at": {
                         "type": "number"
                   }
             },

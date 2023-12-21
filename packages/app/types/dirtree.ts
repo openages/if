@@ -6,12 +6,12 @@ export namespace DirTree {
 		/** @maxLength 30 */
 		id: string
 		name: string
+		create_at: number
 		pid?: string
 		prev_id?: string
 		next_id?: string
 		icon?: string
 		icon_hue?: number
-		create_at?: number
 		update_at?: number
 		backup_at?: number
 	}
