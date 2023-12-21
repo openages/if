@@ -1,6 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { cloneDeep } from 'lodash-es'
-import { toJS } from 'mobx'
+
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import { container } from 'tsyringe'
@@ -16,10 +15,10 @@ import type { DragEndEvent } from '@dnd-kit/core'
 
 const Index = () => {
 	const [global] = useState(() => container.resolve(GlobalModel))
-	const app_modules = toJS(global.app.app_modules)
+	const app_modules = $copy(global.app.app_modules)
 
 	const changeIsFixed = useMemoizedFn((index: number, v: boolean) => {
-		const _app_modules = cloneDeep(app_modules)
+		const _app_modules = $copy(app_modules)
 
 		_app_modules[index].fixed = v
 

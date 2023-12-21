@@ -3,8 +3,8 @@ import { arrayMove } from '@dnd-kit/sortable'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk'
 import { Decimal } from 'decimal.js'
 import { omit } from 'lodash-es'
-import { debounce, throttle } from 'lodash-es'
-import { makeAutoObservable, toJS } from 'mobx'
+import { debounce } from 'lodash-es'
+import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import type { DirTree, Stack } from '@/types'
@@ -184,7 +184,7 @@ export default class Index {
 		if (!exsit_view?.view) return
 
 		this.columns[exsit_view.column_index].views[exsit_view.view_index].file = {
-			...toJS(this.columns[exsit_view.column_index].views[exsit_view.view_index].file),
+			...$copy(this.columns[exsit_view.column_index].views[exsit_view.view_index].file),
 			...omit(v, 'id')
 		}
 
@@ -209,7 +209,7 @@ export default class Index {
 		if (!this.columns[active_column].views[active_view].fixed) {
 			this.columns[active_column].views[active_view].fixed = true
 
-			this.columns = toJS(this.columns)
+			this.columns = $copy(this.columns)
 		}
 
 		if (active.id === over.id) return
@@ -228,14 +228,14 @@ export default class Index {
 				}
 
 				this.columns[active_column].views = arrayMove(
-					toJS(this.columns[active_column].views),
+					$copy(this.columns[active_column].views),
 					active_view,
 					over_view
 				)
 
 				this.focus.view = over_view
 			} else {
-				const target = toJS(this.columns[active_column].views[active_view])
+				const target = $copy(this.columns[active_column].views[active_view])
 
 				this.columns[over_column].views.push(target)
 
@@ -254,7 +254,7 @@ export default class Index {
 
 			const direction = over.data.current.direction as 'left' | 'right'
 			const target_column = this.columns[active_column]
-			const target_views = [toJS(target_column.views[active_view])]
+			const target_views = [$copy(target_column.views[active_view])]
 
 			const width = new Decimal(Decimal.div(100, this.columns.length + 1).toFixed(2)).toNumber()
 
@@ -282,12 +282,12 @@ export default class Index {
 		this.columns[column].width = percent
 		this.columns[column - 1].width = Decimal.sub(total, percent).toNumber()
 
-		this.columns = toJS(this.columns)
+		this.columns = $copy(this.columns)
 	}
 
 	private updateColumnsFocus() {
-		this.columns = toJS(this.columns)
-		this.focus = toJS(this.focus)
+		this.columns = $copy(this.columns)
+		this.focus = $copy(this.focus)
 	}
 
 	private getObserver() {

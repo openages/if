@@ -1,11 +1,12 @@
 import type { App, RxDB } from '@/types'
+import type { Emittery, handle } from '@openages/stk'
 import type { MessageInstance } from 'antd/es/message/interface'
 import type { ModalStaticFunctions } from 'antd/es/modal/confirm'
 import type { NotificationInstance } from 'antd/es/notification/interface'
+import type { copy } from 'fast-copy'
 import type { TFunction } from 'i18next'
-import type { NavigateFunction } from 'react-router-dom'
 import type { memo } from 'react'
-import type { handle, Emittery } from '@openages/stk'
+import type { NavigateFunction } from 'react-router-dom'
 
 type $CX = (...args: Array<string | boolean | null | undefined>) => string
 
@@ -26,6 +27,7 @@ declare global {
 		$is_dev: boolean
 
 		$t: TFunction<'translation', undefined>
+		$copy: copy
 		$cx: $CX
 		$navigate: NavigateFunction
 
@@ -39,6 +41,7 @@ declare global {
 	let $is_dev: boolean
 
 	let $t: TFunction<'translation', undefined>
+	let $copy: copy
 	let $cx: $CX
 	let $navigate: NavigateFunction
 

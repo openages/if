@@ -107,7 +107,7 @@ const Index = (props: IPropsTodoItem) => {
 	const props_children: IPropsChildren = {
 		items: children,
 		index,
-		fold: !open,
+		open,
 		isDragging,
 		handled: item.status === 'checked' || item.status === 'closed',
 		dimension_id,

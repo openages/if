@@ -2,8 +2,8 @@ import { not_archive, update as updateTodo } from '@/actions/todo'
 import { getArchiveTime, getDocItem } from '@/utils'
 import { confirm } from '@/utils/antd'
 import dayjs from 'dayjs'
-import { cloneDeep, omit, uniq } from 'lodash-es'
-import { toJS } from 'mobx'
+import { omit, uniq } from 'lodash-es'
+
 import { match } from 'ts-pattern'
 
 import type { MangoQueryOperators, MangoQuerySelector, MangoQuerySortPart } from 'rxdb/dist/types/types'
@@ -176,7 +176,7 @@ export const updateTodoData = async (args: ArgsUpdateTodoData) => {
 			...(changed_values.icon_info ?? changed_values)
 		})
 	} else {
-		const target = { ...toJS(todo), ...omit(values, 'icon_info') } as Todo.Data
+		const target = { ...$copy(todo), ...omit(values, 'icon_info') } as Todo.Data
 
 		setTodo(target)
 
@@ -214,7 +214,7 @@ export const check = async (args: ArgsCheck) => {
 	await updateStatus({ id, status, auto_archiving })
 
 	if (todo?.relations?.length && exsit_index !== -1) {
-		const relation_ids = cloneDeep(todo.relations[exsit_index]).items
+		const relation_ids = $copy(todo.relations[exsit_index]).items
 		const target_index = relation_ids.findIndex(item => item === id)
 
 		relation_ids.splice(target_index, 1)
@@ -229,7 +229,7 @@ export const check = async (args: ArgsCheck) => {
 			})
 		)
 
-		const relations = cloneDeep(todo.relations)
+		const relations = $copy(todo.relations)
 
 		relations[exsit_index].checked = status === 'checked'
 
@@ -252,7 +252,7 @@ export const updateRelations = async (args: ArgsUpdateRelations) => {
 	if (!todo.relations) {
 		await updateTodo(file_id, { relations: [{ items: [active_id, over_id], checked: false }] })
 	} else {
-		const relations = cloneDeep(todo.relations)
+		const relations = $copy(todo.relations)
 		const exsit_active_index = relations.findIndex(item => item.items.includes(active_id))
 		const exsit_over_index = relations.findIndex(item => item.items.includes(over_id))
 

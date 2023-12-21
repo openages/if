@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { cloneDeep } from 'lodash-es'
+
 import genColor from 'uniqolor'
 
 import { id } from '@/utils'
@@ -28,7 +28,7 @@ const Index = (props: IProps) => {
 	})
 
 	const onAdd = useMemoizedFn(index => {
-		const items = cloneDeep(value)
+		const items = $copy(value)
 
 		items.splice(index + 1, 0, {
 			id: id(),
@@ -44,7 +44,7 @@ const Index = (props: IProps) => {
 
 		if (!res) return
 
-		const items = cloneDeep(value)
+		const items = $copy(value)
 
 		items.splice(index, 1)
 
@@ -52,7 +52,7 @@ const Index = (props: IProps) => {
 	})
 
 	const onUpdate = useMemoizedFn((key, index, v) => {
-		const items = cloneDeep(value)
+		const items = $copy(value)
 
 		items[index][key] = v
 

@@ -1,4 +1,3 @@
-import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,7 +11,7 @@ import styles from './index.css'
 
 const Index = () => {
 	const [global] = useState(() => container.resolve(GlobalModel))
-	const actives = toJS(global.app.actives)
+	const actives = $copy(global.app.actives)
 	const { t } = useTranslation()
 
 	return (

@@ -1,4 +1,4 @@
-import { makeAutoObservable, toJS } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { Utils } from '@/models'
@@ -100,7 +100,7 @@ export default class Index {
 
 	@disableWatcher
 	async remove() {
-		const focusing_item = toJS(this.focusing_item)
+		const focusing_item = $copy(this.focusing_item)
 		const { remove_items, effect_items } = this.node_tree.remove(this.focusing_index)
 
 		await remove({
@@ -164,7 +164,7 @@ export default class Index {
 		$app.Event.emit('global.stack.add', {
 			id: v.id,
 			module: this.module,
-			file: toJS(v),
+			file: $copy(v),
 			active: true,
 			fixed: false,
 			outlet: null
@@ -180,7 +180,7 @@ export default class Index {
 	}
 
 	addOpenFolder(id: string) {
-		const open_folder = toJS(this.open_folder)
+		const open_folder = $copy(this.open_folder)
 
 		if (!open_folder.includes(id)) {
 			open_folder.push(id)

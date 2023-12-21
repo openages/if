@@ -18,7 +18,7 @@ const Index = (props: IPropsChildren) => {
 	const {
 		items: _items,
 		index,
-		fold,
+		open,
 		isDragging,
 		handled,
 		useByDetail,
@@ -60,7 +60,7 @@ const Index = (props: IPropsChildren) => {
 
 	return (
 		<AnimatePresence mode={isDragging ? 'popLayout' : 'sync'}>
-			{!fold && (
+			{open && (
 				<motion.div
 					className={$cx(
 						'w_100 border_box',

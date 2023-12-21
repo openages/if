@@ -1,12 +1,11 @@
 import { useMemoizedFn } from 'ahooks'
-import { cloneDeep } from 'lodash-es'
 
 import { id } from '@/utils'
 import { DndContext } from '@dnd-kit/core'
-import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
+import { SortableContext, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable'
 
-import styles from './index.css'
 import Item from './Item'
+import styles from './index.css'
 
 import type { IPropsCustomFormItem } from '@/types'
 import type { DragEndEvent } from '@dnd-kit/core'
@@ -26,7 +25,7 @@ const Index = (props: IProps) => {
 	})
 
 	const onAdd = useMemoizedFn(index => {
-		const items = cloneDeep(value)
+		const items = $copy(value)
 
 		items.splice(index + 1, 0, { id: id(), text: '' })
 
@@ -38,7 +37,7 @@ const Index = (props: IProps) => {
 
 		if (!res) return
 
-		const items = cloneDeep(value)
+		const items = $copy(value)
 
 		items.splice(index, 1)
 
@@ -46,7 +45,7 @@ const Index = (props: IProps) => {
 	})
 
 	const onUpdate = useMemoizedFn((index, v) => {
-		const items = cloneDeep(value)
+		const items = $copy(value)
 
 		items[index].text = v
 

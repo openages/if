@@ -1,4 +1,4 @@
-import { makeAutoObservable, toJS } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { modules } from '@/appdata'
@@ -34,7 +34,7 @@ export default class Index {
 	}
 
 	get apps() {
-		return toJS(this.app_modules).filter(item => {
+		return $copy(this.app_modules).filter(item => {
 			if (item.fixed) return true
 			if (this.actives.find(i => i.app === item.title)) return true
 

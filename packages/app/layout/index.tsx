@@ -3,7 +3,7 @@ import '@/global_css'
 import { useMemoizedFn } from 'ahooks'
 import { App, ConfigProvider } from 'antd'
 import { minimatch } from 'minimatch'
-import { toJS } from 'mobx'
+
 import { observer } from 'mobx-react-lite'
 import { useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { IconContext } from 'react-icons'
@@ -31,8 +31,8 @@ const Index = () => {
 	const locale = useAntdLocale(global.locale.lang)
 	const { no_dirtree } = useLayout()
 	const current_module = useCurrentModule()
-	const apps = toJS(global.app.apps)
-	const actives = toJS(global.app.actives)
+	const apps = $copy(global.app.apps)
+	const actives = $copy(global.app.actives)
 
 	useGlobalNavigate()
 	useGlobalTranslate()
@@ -72,15 +72,15 @@ const Index = () => {
 
 	const props_offscreen_pages_outlet: IPropsOffscreenOutlet = {
 		current_module,
-		apps: toJS(global.app.app_modules),
+		apps: $copy(global.app.app_modules),
 		setActives: useMemoizedFn(global.app.setActives)
 	}
 
 	const props_stacks: IPropsStacks = {
 		visible: !is_exclude_router,
 		current_module,
-		columns: toJS(global.stack.columns),
-		focus: toJS(global.stack.focus),
+		columns: $copy(global.stack.columns),
+		focus: $copy(global.stack.focus),
 		container_width: global.stack.container_width,
 		resizing: global.stack.resizing,
 		remove: useMemoizedFn(global.stack.remove),
@@ -95,7 +95,7 @@ const Index = () => {
 
 	const props_app_menu: IPropsAppMenu = {
 		visible: global.app.visible_app_menu,
-		app_modules: toJS(global.app.app_modules),
+		app_modules: $copy(global.app.app_modules),
 		actives,
 		visible_dirtree: global.layout.dirtree_width !== 0,
 		onClose: useMemoizedFn(() => (global.app.visible_app_menu = false))

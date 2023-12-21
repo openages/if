@@ -1,6 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { Select } from 'antd'
-import { cloneDeep } from 'lodash-es'
+
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
@@ -93,7 +93,7 @@ const Index = (props: IPropsInput) => {
 							]}
 							value={input.type}
 							onChange={v => {
-								const target = cloneDeep(input)
+								const target = $copy(input)
 
 								target.type = v
 

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import { omit, pick } from 'lodash-es'
-import { makeAutoObservable, toJS } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { archive, cycle } from '@/actions/todo'
@@ -175,7 +175,7 @@ export default class Index {
 		if (!items[target_index]) return {} as CurrentDetailItem
 
 		return {
-			item: toJS(items[target_index]),
+			item: $copy(items[target_index]),
 			prev_id: target_index - 1 >= 0 ? items.at(target_index - 1)?.id : undefined,
 			next_id: items.at(target_index + 1)?.id
 		} as CurrentDetailItem
@@ -322,7 +322,6 @@ export default class Index {
 	async update(args: ArgsUpdate) {
 		const { index, dimension_id, type, value } = args
 
-		console.log(args)
 		const item = this.getItems({ index, dimension_id })
 
 		const data = type === 'parent' ? { id: item.id, ...value } : { id: item.id, children: value }
@@ -343,7 +342,7 @@ export default class Index {
 	}
 
 	async move(args: { active_index: number; over_index: number }) {
-		this.items = arrayMove(toJS(this.items), args.active_index, args.over_index)
+		this.items = arrayMove($copy(this.items), args.active_index, args.over_index)
 
 		this.stopWatchItems()
 
@@ -403,7 +402,7 @@ export default class Index {
 
 		if (!data) setTimeout(() => document.getElementById(`todo_${item.id}`)?.focus(), 0)
 
-		await updateTodosSort(toJS(this.items))
+		await updateTodosSort($copy(this.items))
 
 		if (callback) await callback()
 	}
@@ -438,7 +437,7 @@ export default class Index {
 		} else {
 			const children_index = args.children_index
 			const data = item.children[children_index]
-			const children = toJS(item.children)
+			const children = $copy(item.children)
 
 			children.splice(children_index, 1)
 

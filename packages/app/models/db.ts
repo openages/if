@@ -2,7 +2,7 @@ import { migration_activity_items, migration_dirtree_items, migration_todo, migr
 import { schema_activity_items, schema_dirtree_items, schema_todo, schema_todo_items } from '@/schemas'
 import { Idle, uniqBy } from '@openages/stk'
 import { debounce } from 'lodash-es'
-import { makeAutoObservable, toJS } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 import { createRxDatabase } from 'rxdb'
 import { wrappedKeyEncryptionCryptoJsStorage } from 'rxdb/plugins/encryption-crypto-js'
 import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'

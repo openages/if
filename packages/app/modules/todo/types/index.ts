@@ -126,7 +126,7 @@ export interface IPropsTodoItem {
 export interface IPropsChildren {
 	items: Todo.Todo['children']
 	index: number
-	fold: boolean
+	open: Todo.Todo['open']
 	isDragging: boolean
 	handled: boolean
 	useByDetail?: boolean

@@ -1,4 +1,4 @@
-import { difference, cloneDeep } from 'lodash-es'
+import { difference } from 'lodash-es'
 
 import { getDocItemsData } from '@/utils'
 
@@ -34,7 +34,7 @@ export default async (file_id: string) => {
 	const info = await $db.todo.findOne({ selector: { id: file_id } }).exec()
 
 	if (info?.relations && info?.relations?.length && archive_items_data.length) {
-		const relations = cloneDeep(info.relations)
+		const relations = $copy(info.relations)
 
 		relations.map((item, index) => {
 			relations[index].items = difference(

@@ -1,6 +1,6 @@
+import { Emittery, handle, memo } from '@openages/stk'
 import cx from 'classix'
-
-import { handle, memo, Emittery } from '@openages/stk'
+import copy from 'fast-copy'
 
 import type { MessageInstance } from 'antd/es/message/interface'
 import type { ModalStaticFunctions } from 'antd/es/modal/confirm'
@@ -15,8 +15,10 @@ window.$app = {
 }
 
 window.$t = (() => {}) as any
+window.$copy = copy
 window.$cx = cx
 window.$navigate = (() => {}) as any
+
 window.$message = {} as MessageInstance
 window.$notification = {} as NotificationInstance
 window.$modal = {} as Omit<ModalStaticFunctions, 'warn'>

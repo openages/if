@@ -3,7 +3,7 @@ import { useStack } from '@/context/stack'
 import { isShowEmpty } from '@/utils'
 import { useMemoizedFn } from 'ahooks'
 import { omit } from 'lodash-es'
-import { toJS } from 'mobx'
+
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useMemo, useState } from 'react'
 import { Case, Else, If, Switch, Then, When } from 'react-if'
@@ -28,7 +28,7 @@ import type {
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
-	const angles = toJS(x.todo.angles || [])
+	const angles = $copy(x.todo.angles || [])
 	const { breakpoint } = useStack()
 
 	useLayoutEffect(() => {
@@ -44,9 +44,9 @@ const Index = ({ id }: IProps) => {
 		icon: x.file.data.icon,
 		icon_hue: x.file.data.icon_hue,
 		desc: x.todo.desc,
-		tags: toJS(x.todo.tags),
-		items_sort_param: toJS(x.items_sort_param),
-		items_filter_tags: toJS(x.items_filter_tags),
+		tags: $copy(x.todo.tags),
+		items_sort_param: $copy(x.items_sort_param),
+		items_filter_tags: $copy(x.items_filter_tags),
 		setMode: useMemoizedFn(x.setMode),
 		toggleKanbanMode: useMemoizedFn(x.toggleKanbanMode),
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true)),
@@ -57,24 +57,24 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_tabs: IPropsTabs = {
-		angles: toJS(x.todo.angles) || [],
+		angles: $copy(x.todo.angles) || [],
 		current_angle_id: x.current_angle_id,
 		setCurrentAngleId: useMemoizedFn(v => (x.current_angle_id = v))
 	}
 
 	const props_input: IPropsInput = {
 		loading: x.utils.loading['create'],
-		tags: toJS(x.todo.tags),
+		tags: $copy(x.todo.tags),
 		create: useMemoizedFn(x.create)
 	}
 
 	const move_to_angles = useMemo(() => angles.filter(item => item.id !== x.current_angle_id), [angles])
 
 	const props_todos: IPropsTodos = {
-		items: toJS(x.items),
-		tags: toJS(x.todo.tags || []),
+		items: $copy(x.items),
+		tags: $copy(x.todo.tags || []),
 		angles: move_to_angles,
-		relations: toJS(x.todo?.relations || []),
+		relations: $copy(x.todo?.relations || []),
 		drag_disabled: x.is_filtered,
 		check: useMemoizedFn(x.check),
 		updateRelations: useMemoizedFn(x.updateRelations),
@@ -92,13 +92,13 @@ const Index = ({ id }: IProps) => {
 
 	const props_kanban: IPropsKanban = {
 		kanban_mode: x.kanban_mode,
-		kanban_items: toJS(x.kanban_items),
+		kanban_items: $copy(x.kanban_items),
 		...omit(props_todos, ['items', 'kanban_mode'])
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
 		visible_settings_modal: x.visible_settings_modal,
-		todo: { ...toJS(x.todo), ...toJS(x.file.data) },
+		todo: { ...$copy(x.todo), ...$copy(x.file.data) },
 		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false)),
 		updateTodo: useMemoizedFn(x.updateTodo),
 		removeAngle: useMemoizedFn(x.removeAngle),
@@ -107,12 +107,12 @@ const Index = ({ id }: IProps) => {
 
 	const props_archive: IPropsArchive = {
 		visible_archive_modal: x.visible_archive_modal,
-		archives: toJS(x.archives),
+		archives: $copy(x.archives),
 		archive_counts: x.archive_counts,
 		end: x.loadmore.end,
-		angles: toJS(x.todo.angles) || [],
-		tags: toJS(x.todo.tags),
-		archive_query_params: toJS(x.archive_query_params),
+		angles: $copy(x.todo.angles) || [],
+		tags: $copy(x.todo.tags),
+		archive_query_params: $copy(x.archive_query_params),
 		loadMore: useMemoizedFn(x.loadmore.loadMore),
 		onClose: useMemoizedFn(() => (x.visible_archive_modal = false)),
 		restoreArchiveItem: useMemoizedFn(x.restoreArchiveItem),
@@ -124,10 +124,10 @@ const Index = ({ id }: IProps) => {
 	const props_detail: IPropsDetail = {
 		breakpoint,
 		visible_detail_modal: x.visible_detail_modal,
-		current_detail_index: toJS(x.current_detail_index),
-		current_detail_item: toJS(x.current_detail_item),
-		relations: toJS(x.todo?.relations || []),
-		tags: toJS(x.todo.tags),
+		current_detail_index: $copy(x.current_detail_index),
+		current_detail_item: $copy(x.current_detail_item),
+		relations: $copy(x.todo?.relations || []),
+		tags: $copy(x.todo.tags),
 		update: useMemoizedFn(x.update),
 		tab: useMemoizedFn(x.tab),
 		setCurrentDetailIndex: useMemoizedFn(v => (x.current_detail_index = v)),

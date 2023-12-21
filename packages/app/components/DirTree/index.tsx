@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { toJS } from 'mobx'
+
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
 import { useContextMenu } from 'react-contexify'
@@ -50,11 +50,11 @@ const Index = (props: IProps) => {
 
 	const props_dir_items: IPropsDirItems = {
 		module: x.module,
-		data: (toJS(x.node_tree.tree) as DirTree.TransformedItems) || [],
+		data: ($copy(x.node_tree.tree) as DirTree.TransformedItems) || [],
 		loading: x.utils.loading['query'],
-		current_item: toJS(x.current_item),
-		focusing_item: toJS(x.focusing_item),
-		open_folder: toJS(x.open_folder),
+		current_item: $copy(x.current_item),
+		focusing_item: $copy(x.focusing_item),
+		open_folder: $copy(x.open_folder),
 		onClick,
 		showDirTreeOptions
 	}
@@ -68,7 +68,7 @@ const Index = (props: IProps) => {
 		modal_open: x.modal_open,
 		modal_type: x.modal_type,
 		current_option: x.current_option,
-		focusing_item: toJS(x.focusing_item),
+		focusing_item: $copy(x.focusing_item),
 		loading_create: x.utils.loading['insert'],
 		loading_updateItem: x.utils.loading['updateItem'],
 		insert: useMemoizedFn(x.insert),
@@ -78,7 +78,7 @@ const Index = (props: IProps) => {
 	}
 
 	const props_options: IPropsOptions = {
-		focusing_item: toJS(x.focusing_item),
+		focusing_item: $copy(x.focusing_item),
 		onOptions: useMemoizedFn(x.onOptions),
 		resetFocusingItem
 	}
