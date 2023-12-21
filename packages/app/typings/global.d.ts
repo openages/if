@@ -3,12 +3,12 @@ import type { Emittery, handle } from '@openages/stk'
 import type { MessageInstance } from 'antd/es/message/interface'
 import type { ModalStaticFunctions } from 'antd/es/modal/confirm'
 import type { NotificationInstance } from 'antd/es/notification/interface'
-import type { copy } from 'fast-copy'
 import type { TFunction } from 'i18next'
 import type { memo } from 'react'
 import type { NavigateFunction } from 'react-router-dom'
 
 type $CX = (...args: Array<string | boolean | null | undefined>) => string
+type $Copy = <T>(v: T) => T
 
 interface $App {
 	memo: typeof memo
@@ -27,7 +27,7 @@ declare global {
 		$is_dev: boolean
 
 		$t: TFunction<'translation', undefined>
-		$copy: copy
+		$copy: $Copy
 		$cx: $CX
 		$navigate: NavigateFunction
 
@@ -41,7 +41,7 @@ declare global {
 	let $is_dev: boolean
 
 	let $t: TFunction<'translation', undefined>
-	let $copy: copy
+	let $copy: $Copy
 	let $cx: $CX
 	let $navigate: NavigateFunction
 

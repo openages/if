@@ -172,7 +172,12 @@ export default class Index {
 			this.mode === 'kanban' ? this.kanban_items[this.current_detail_index.dimension_id].items : this.items
 		const target_index = items.findIndex(item => item.id === this.current_detail_index.id)
 
-		if (!items[target_index]) return {} as CurrentDetailItem
+		if (!items[target_index]) {
+			this.visible_detail_modal = false
+			this.current_detail_index = {} as CurrentDetailIndex
+
+			return {} as CurrentDetailItem
+		}
 
 		return {
 			item: $copy(items[target_index]),
@@ -325,6 +330,18 @@ export default class Index {
 		const item = this.getItems({ index, dimension_id })
 
 		const data = type === 'parent' ? { id: item.id, ...value } : { id: item.id, children: value }
+
+		if (type === 'children') {
+			if (value?.length > 0) {
+				if (!item.open) {
+					data['open'] = true
+				}
+			} else {
+				if (item.open) {
+					data['open'] = false
+				}
+			}
+		}
 
 		this.setItem(item, data)
 

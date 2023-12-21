@@ -59,7 +59,7 @@ const Index = (props: IPropsChildren) => {
 	if (!items || !items.length) return null
 
 	return (
-		<AnimatePresence mode={isDragging ? 'popLayout' : 'sync'}>
+		<AnimatePresence>
 			{open && (
 				<motion.div
 					className={$cx(

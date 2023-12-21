@@ -56,17 +56,8 @@ const Index = (props: IPropsTodoItem) => {
 	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } =
 		sortable_props
 
-	const {
-		setOpen,
-		onCheck,
-		onDrag,
-		toggleChildren,
-		insertChildren,
-		removeChildren,
-		onKeyDown,
-		updateTags,
-		updateTagWidth
-	} = useHandlers({ item, index, dimension_id, makeLinkLine, check, insert, update, tab })
+	const { onCheck, onDrag, toggleChildren, insertChildren, removeChildren, onKeyDown, updateTags, updateTagWidth } =
+		useHandlers({ item, index, dimension_id, makeLinkLine, check, insert, update, tab })
 
 	const { linker, dragging, hovering } = useLink({ item, makeLinkLine, updateRelations })
 
@@ -102,7 +93,7 @@ const Index = (props: IPropsTodoItem) => {
 		updateTagWidth(real_options_size.width)
 	}, [real_options_size])
 
-	useOpen({ item, input, isDragging, renderLines, setOpen })
+	useOpen({ item, input, renderLines })
 
 	const props_children: IPropsChildren = {
 		items: children,
@@ -147,6 +138,8 @@ const Index = (props: IPropsTodoItem) => {
 				styles.todo_item_wrap,
 				kanban_mode && styles.kanban_mode
 			)}
+			ref={setNodeRef}
+			style={{ transform: CSS.Translate.toString(transform), transition }}
 		>
 			{kanban_mode && OptionsWrap}
 			<div
@@ -155,8 +148,6 @@ const Index = (props: IPropsTodoItem) => {
 					styles.todo_item,
 					styles[item.status]
 				)}
-				ref={setNodeRef}
-				style={{ transform: CSS.Translate.toString(transform), transition }}
 			>
 				{!drag_disabled && (
 					<div

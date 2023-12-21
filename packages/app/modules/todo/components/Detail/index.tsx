@@ -69,7 +69,7 @@ const Index = (props: IPropsDetail) => {
 	const props_children: IPropsChildren = {
 		items: children,
 		index: current_detail_index.index,
-		fold: false,
+		open: true,
 		isDragging: false,
 		useByDetail: true,
 		handled: status === 'checked' || status === 'closed',
@@ -144,12 +144,15 @@ const Index = (props: IPropsDetail) => {
 									{t('translation:todo.SettingsModal.tags.label')}
 								</span>
 							</div>
-							<TagSelect
-								options={tags}
-								value={tag_ids}
-								useByDetail
-								onChange={updateTags}
-							></TagSelect>
+							<div className='value_wrap flex'>
+								<TagSelect
+									className='tag_select'
+									options={tags}
+									value={tag_ids}
+									useByDetail
+									onChange={updateTags}
+								></TagSelect>
+							</div>
 						</div>
 						<div className='option_item w_100 border_box flex align_center'>
 							<div className='name_wrap flex align_center'>

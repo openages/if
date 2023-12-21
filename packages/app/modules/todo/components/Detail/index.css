@@ -121,7 +121,7 @@
 				padding-bottom: 12px;
 
 				.option_item {
-					height: 30px;
+					min-height: 30px;
 
 					&.disabled {
 						opacity: 0.3;
@@ -134,6 +134,23 @@
 							margin-left: 6px;
 							font-size: 12px;
 							line-height: 1;
+						}
+					}
+
+					.value_wrap {
+						width: calc(100% - 90px);
+						overflow-x: scroll;
+
+						.if-select-selector {
+							.if-select-selection-overflow {
+								flex-wrap: nowrap;
+								position: relative;
+
+								&-item-suffix {
+									position: absolute;
+									left: 0;
+								}
+							}
 						}
 					}
 				}

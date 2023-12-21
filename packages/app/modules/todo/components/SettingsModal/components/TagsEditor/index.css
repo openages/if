@@ -49,11 +49,10 @@
 				}
 
 				.tag {
-					border-radius: var(--radius_small);
 					font-size: 12px;
 					font-weight: bold;
 					overflow: hidden;
-					border-radius: 30px;
+					border-radius: var(--radius_small);
 				}
 			}
 

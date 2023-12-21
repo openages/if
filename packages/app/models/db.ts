@@ -13,13 +13,13 @@ import type { RxDB } from '@/types'
 import type { RxCollection } from 'rxdb'
 
 export default class Index {
-	instance = null as RxDB.DBContent | null
 	ready = false
+	instance = null as RxDB.DBContent | null
 	update_queue = [] as Array<{ id: string; timestamp: number }>
 	idle = null as Idle<Index>
 
 	constructor() {
-		makeAutoObservable(this, { update_queue: false, idle: false }, { autoBind: true })
+		makeAutoObservable(this, { instance: false, update_queue: false, idle: false }, { autoBind: true })
 	}
 
 	async init() {
