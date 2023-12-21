@@ -1,6 +1,6 @@
 import { useDebounce, useMemoizedFn, useSize, useUpdateEffect } from 'ahooks'
 import { ConfigProvider, Dropdown } from 'antd'
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { Case, Switch } from 'react-if'
 
 import { CSS } from '@dnd-kit/utilities'
@@ -95,6 +95,14 @@ const Index = (props: IPropsTodoItem) => {
 
 	useOpen({ item, input, renderLines })
 
+	const only_tags = useMemo(() => {
+		if (star > 0 || remind_time || cycle_enabled || cycle) {
+			return false
+		}
+
+		return true
+	}, [star, remind_time, cycle_enabled, cycle])
+
 	const props_children: IPropsChildren = {
 		items: children,
 		index,
@@ -110,10 +118,17 @@ const Index = (props: IPropsTodoItem) => {
 	}
 
 	const OptionsWrap = (
-		<div className={$cx('options_container flex absolute z_index_10', !options_width && 'no_options')}>
+		<div className={$cx('options_container flex absolute z_index_10', kanban_mode && 'kanban_mode')}>
 			<div className='options_wrap border_box flex align_center' ref={options_wrap}>
 				{tags?.length > 0 && tag_ids?.length > 0 && (
-					<TagSelect options={tags} value={tag_ids} useByTodo onChange={updateTags}></TagSelect>
+					<TagSelect
+						className='tag_select'
+						options={tags}
+						value={tag_ids}
+						kanban_mode={kanban_mode}
+						useByTodo
+						onChange={updateTags}
+					></TagSelect>
 				)}
 				{star > 0 && (
 					<div

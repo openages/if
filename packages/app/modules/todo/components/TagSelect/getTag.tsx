@@ -5,7 +5,7 @@ import { useMemoizedFn } from 'ahooks'
 import type { CustomTagProps } from 'rc-select/lib/BaseSelect'
 import type { IPropsInput } from '../../types'
 
-const Index = (tags: Required<IPropsInput['tags']>, useByTodo?: boolean) => (props: CustomTagProps) => {
+const Index = (tags: Required<IPropsInput['tags']>, options: { useByTodo?: boolean }) => (props: CustomTagProps) => {
 	const { value, onClose } = props
 	const { text, color: bg_color } = tags.find(item => item.id === value)
 	const color = useTagColor(bg_color)
@@ -24,7 +24,7 @@ const Index = (tags: Required<IPropsInput['tags']>, useByTodo?: boolean) => (pro
 			onMouseDown={onPreventMouseDown}
 		>
 			<span className='text'>{text}</span>
-			{!useByTodo && (
+			{!options?.useByTodo && (
 				<span
 					className='btn_close h_100 border_box flex justify_center align_center cursor_point'
 					onClick={onClose}

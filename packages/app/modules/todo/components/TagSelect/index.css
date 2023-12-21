@@ -35,6 +35,14 @@
 		}
 	}
 
+	&.kanban_mode {
+		:global {
+			.tag {
+				opacity: 0.3;
+			}
+		}
+	}
+
 	:global {
 		.if-empty-image {
 			margin: 0;

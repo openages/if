@@ -15,6 +15,7 @@ export interface IPropsTagSelect {
 	value: Array<string>
 	useByTodo?: boolean
 	useByDetail?: boolean
+	kanban_mode?: Model['kanban_mode']
 	className?: SelectProps['className']
 	placement?: SelectProps['placement']
 	onChange?: (v: Array<string>) => void
@@ -87,7 +88,7 @@ export interface IPropsTodos {
 	angles: Model['todo']['angles']
 	relations: Todo.Data['relations']
 	drag_disabled: boolean
-	kanban_mode?: boolean
+	kanban_mode?: Model['kanban_mode']
 	kanban_index?: number
 	dimension_id?: string
 	check: Model['check']
@@ -108,7 +109,7 @@ export interface IPropsTodoItem {
 	tags: Model['todo']['tags']
 	angles: Model['todo']['angles']
 	drag_disabled: boolean
-	kanban_mode?: boolean
+	kanban_mode?: Model['kanban_mode']
 	kanban_index?: number
 	dimension_id?: string
 	makeLinkLine: (args: { active_id: string; y: number } | null) => void

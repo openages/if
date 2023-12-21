@@ -77,7 +77,7 @@ const Index = (props: IPropsKanban) => {
 							remove,
 							showDetailModal
 						}}
-						kanban_mode
+						kanban_mode={kanban_mode}
 						items={item.items}
 						kanban_index={index}
 						dimension_id={Object.keys(kanban_items)[index]}

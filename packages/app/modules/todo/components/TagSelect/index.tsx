@@ -8,24 +8,24 @@ import styles from './index.css'
 import type { IPropsTagSelect } from '../../types'
 
 const Index = (props: IPropsTagSelect) => {
-	const { options, value, useByTodo, useByDetail, className, placement, onChange } = props
+	const { options, value, useByTodo, useByDetail, kanban_mode, className, placement, onChange } = props
 	const { t } = useTranslation()
 
 	const Tag = useMemo(() => {
 		if (!options || !options?.length) return null
 
-		return getTag(options, useByTodo)
+		return getTag(options, { useByTodo })
 	}, [options, useByTodo])
 
 	return (
-		<div className='flex'>
+		<div className={$cx('flex', className)}>
 			<Select
 				className={$cx(
 					'borderless no_suffix',
 					styles._local,
-					className,
 					useByTodo && styles.useByTodo,
-					useByDetail && styles.useByDetail
+					useByDetail && styles.useByDetail,
+					kanban_mode && styles.kanban_mode
 				)}
 				popupClassName='borderless'
 				size='small'
