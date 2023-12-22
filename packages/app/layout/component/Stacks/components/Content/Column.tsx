@@ -16,8 +16,10 @@ const Index = (props: IPropsStacksContentColumn) => {
 	const ref = useRef<HTMLDivElement>(null)
 
 	useDndMonitor({
-		onDragStart: ({ active }) => active.data.current.type === 'stack' && setVisibleIndicator(true),
-		onDragEnd: ({ active }) => active.data.current.type === 'stack' && setVisibleIndicator(false)
+		onDragStart: useMemoizedFn(
+			({ active }) => active.data.current.type === 'stack' && setVisibleIndicator(true)
+		),
+		onDragEnd: useMemoizedFn(({ active }) => active.data.current.type === 'stack' && setVisibleIndicator(false))
 	})
 
 	const getWidth = useMemoizedFn(() => width * 0.01 * container_width)

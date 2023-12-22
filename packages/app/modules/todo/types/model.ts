@@ -1,6 +1,9 @@
 import type { Todo } from '@/types'
 import type { Dayjs } from 'dayjs'
 
+export type Mode = 'list' | 'kanban' | 'table'
+export type KanbanMode = 'angle' | 'tag'
+
 export interface KanbanItems {
 	[key: string]: {
 		dimension: { type: 'angle'; value: Todo.Angle } | { type: 'tag'; value: Todo.Tag }
@@ -40,5 +43,7 @@ export type ArgsCheck = Indexes & { status: Todo.Todo['status'] }
 export type ArgsUpdate =
 	| (Indexes & { type: 'parent'; value: Partial<Omit<Todo.TodoItem, 'id'>> })
 	| (Indexes & { type: 'children'; value: Todo.Todo['children'] })
+
+export type ArgsMove = { active: Indexes; over: Indexes }
 
 export type ArgsTab = { type: 'in'; index: number } | { type: 'out'; index: number; children_index: number }

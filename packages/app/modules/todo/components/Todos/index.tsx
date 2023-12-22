@@ -1,11 +1,10 @@
+import { useCssVariable } from '@/hooks'
+import { points } from '@/utils'
+import { useDndMonitor } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { useDeepCompareEffect, useMemoizedFn, useSize } from 'ahooks'
 import { useMemo, useRef, useState } from 'react'
 import { Layer, Line, Stage } from 'react-konva'
-
-import { useCssVariable } from '@/hooks'
-import { points } from '@/utils'
-import { DndContext } from '@dnd-kit/core'
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 
 import { SortableWrap } from '@/components'
 import GroupTitle from '../GroupTitle'
@@ -13,7 +12,7 @@ import TodoItem from '../TodoItem'
 import styles from './index.css'
 import { getLinkedItems, getRelativePostion } from './utils'
 
-import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core'
+import type { DragStartEvent } from '@dnd-kit/core'
 import type { IPropsTodos } from '../../types'
 
 const Index = (props: IPropsTodos) => {
@@ -28,7 +27,6 @@ const Index = (props: IPropsTodos) => {
 		dimension_id,
 		check,
 		updateRelations,
-		move,
 		insert,
 		update,
 		tab,
@@ -44,6 +42,21 @@ const Index = (props: IPropsTodos) => {
 	const height = useMemo(() => (size ? size.height : 0), [size])
 	const color_text_line = useCssVariable('--color_text_line')
 	const color_text_softlight = useCssVariable('--color_text_softlight')
+
+	useDndMonitor({
+		onDragStart: useMemoizedFn(({ active }: DragStartEvent) => {
+			const exsit_index = relations?.findIndex(item => item.items.includes(active.id as string))
+
+			if (exsit_index === -1) return
+
+			stoper.current = requestAnimationFrame(frameRenderLines)
+		}),
+		onDragEnd: useMemoizedFn(() => {
+			if (stoper.current) {
+				cancelAnimationFrame(stoper.current)
+			}
+		})
+	})
 
 	const relations_lines = useMemo(() => {
 		const target: Array<{ point: [string, string]; checked: boolean }> = []
@@ -82,22 +95,6 @@ const Index = (props: IPropsTodos) => {
 		const [up, down] = y_1 < y_2 ? [y_1, y_2] : [y_2, y_1]
 
 		setLinkPoints(points([8, up], [1, up], [1, down], [8, down]))
-	})
-
-	const onDragStart = useMemoizedFn(({ active }: DragStartEvent) => {
-		const exsit_index = relations?.findIndex(item => item.items.includes(active.id as string))
-
-		if (exsit_index === -1) return
-
-		stoper.current = requestAnimationFrame(frameRenderLines)
-	})
-
-	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
-		if (!over?.id) return
-
-		move({ active_index: active.data.current.index, over_index: over.data.current.index })
-
-		cancelAnimationFrame(stoper.current)
 	})
 
 	const markLines = useMemoizedFn(() => {
@@ -154,42 +151,45 @@ const Index = (props: IPropsTodos) => {
 				</Stage>
 			)}
 			<div className='todo_items_wrap w_100 flex flex_column' ref={container}>
-				<DndContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
-					<SortableContext items={items} strategy={verticalListSortingStrategy}>
-						{items.map((item, index) =>
-							item.type === 'todo' ? (
-								<SortableWrap id={item.id} data={{ index, dimension_id }} key={item.id}>
-									<TodoItem
-										{...{
-											item,
-											index,
-											tags,
-											angles,
-											drag_disabled,
-											kanban_mode,
-											kanban_index,
-											dimension_id,
-											makeLinkLine,
-											renderLines,
-											check,
-											updateRelations,
-											insert,
-											update,
-											tab,
-											moveTo,
-											remove,
-											showDetailModal
-										}}
-									></TodoItem>
-								</SortableWrap>
-							) : (
-								<SortableWrap id={item.id} data={{ index }} key={item.id}>
-									<GroupTitle {...{ item, index, update, remove }}></GroupTitle>
-								</SortableWrap>
-							)
-						)}
-					</SortableContext>
-				</DndContext>
+				<SortableContext items={items} strategy={verticalListSortingStrategy}>
+					{items.map((item, index) =>
+						item.type === 'todo' ? (
+							<SortableWrap
+								id={item.id}
+								data={{ index, dimension_id }}
+								disabled={kanban_mode === 'tag'}
+								key={item.id}
+							>
+								<TodoItem
+									{...{
+										item,
+										index,
+										tags,
+										angles,
+										drag_disabled,
+										kanban_mode,
+										kanban_index,
+										dimension_id,
+										makeLinkLine,
+										renderLines,
+										check,
+										updateRelations,
+										insert,
+										update,
+										tab,
+										moveTo,
+										remove,
+										showDetailModal
+									}}
+								></TodoItem>
+							</SortableWrap>
+						) : (
+							<SortableWrap id={item.id} data={{ index }} key={item.id}>
+								<GroupTitle {...{ item, index, update, remove }}></GroupTitle>
+							</SortableWrap>
+						)
+					)}
+				</SortableContext>
 			</div>
 		</div>
 	)

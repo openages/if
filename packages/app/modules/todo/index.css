@@ -8,4 +8,26 @@
 	&.visible_detail_modal {
 		padding-right: 342px;
 	}
+
+	:global {
+		.todo_item_drag_overlay {
+			z-index: 1000;
+			background-color: var(--color_bg);
+			outline: 1px dashed var(--color_text);
+			border-radius: var(--radius);
+
+			.drag_wrap {
+				top: 6px;
+				left: -9px;
+				width: 14px;
+				height: 14px;
+				border-radius: var(--radius_small_1);
+				background-color: var(--color_bg_2);
+			}
+
+			.dot_wrap {
+				display: none;
+			}
+		}
+	}
 }

@@ -7,13 +7,15 @@ import { RxDBMigrationPlugin } from 'rxdb/plugins/migration-schema'
 import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder'
 import { RxDBUpdatePlugin } from 'rxdb/plugins/update'
 
-addRxPlugin(RxDBcrdtPlugin)
-addRxPlugin(RxDBCleanupPlugin)
-addRxPlugin(RxDBLeaderElectionPlugin)
-addRxPlugin(RxDBUpdatePlugin)
-addRxPlugin(RxDBQueryBuilderPlugin)
-addRxPlugin(RxDBFlexSearchPlugin)
-addRxPlugin(RxDBMigrationPlugin)
+;[
+	RxDBFlexSearchPlugin,
+	RxDBCleanupPlugin,
+	RxDBcrdtPlugin,
+	RxDBLeaderElectionPlugin,
+	RxDBMigrationPlugin,
+	RxDBQueryBuilderPlugin,
+	RxDBUpdatePlugin
+].forEach(item => addRxPlugin(item))
 
 if (process.env.NODE_ENV !== 'production') {
 	import('rxdb/plugins/dev-mode').then(({ RxDBDevModePlugin }) => addRxPlugin(RxDBDevModePlugin))

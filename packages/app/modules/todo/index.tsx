@@ -1,6 +1,7 @@
 import { DataEmpty } from '@/components'
 import { useStack } from '@/context/stack'
 import { isShowEmpty } from '@/utils'
+import { DndContext, DragOverlay } from '@dnd-kit/core'
 import { useMemoizedFn } from 'ahooks'
 import { omit } from 'lodash-es'
 
@@ -9,10 +10,14 @@ import { useLayoutEffect, useMemo, useState } from 'react'
 import { Case, Else, If, Switch, Then, When } from 'react-if'
 import { container } from 'tsyringe'
 
+import { SortableWrap } from '@/components'
 import { Archive, Detail, Header, Help, Input, Kanban, SettingsModal, Tabs, Todos } from './components'
+import TodoItem from './components/TodoItem'
 import styles from './index.css'
 import Model from './model'
 
+import type { Todo } from '@/types'
+import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core'
 import type {
 	IProps,
 	IPropsArchive,
@@ -23,6 +28,7 @@ import type {
 	IPropsKanban,
 	IPropsSettingsModal,
 	IPropsTabs,
+	IPropsTodoItem,
 	IPropsTodos
 } from './types'
 
@@ -30,6 +36,9 @@ const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const angles = $copy(x.todo.angles || [])
 	const { breakpoint } = useStack()
+	const [drag_todo_item, setDragTodoItem] = useState<{ index: number; dimension_id: string; item: Todo.TodoItem }>(
+		null
+	)
 
 	useLayoutEffect(() => {
 		x.init({ id })
@@ -78,7 +87,6 @@ const Index = ({ id }: IProps) => {
 		drag_disabled: x.is_filtered,
 		check: useMemoizedFn(x.check),
 		updateRelations: useMemoizedFn(x.updateRelations),
-		move: useMemoizedFn(x.move),
 		insert: useMemoizedFn(x.insert),
 		update: useMemoizedFn(x.update),
 		tab: useMemoizedFn(x.tab),
@@ -144,6 +152,58 @@ const Index = ({ id }: IProps) => {
 		closeHelpModal: useMemoizedFn(() => (x.visible_help_modal = false))
 	}
 
+	const props_drag_todo_item: IPropsTodoItem = drag_todo_item && {
+		item: drag_todo_item.item as Todo.Todo,
+		index: 0,
+		tags: props_todos.tags,
+		angles: props_todos.angles,
+		drag_disabled: false,
+		kanban_mode: props_todos.kanban_mode,
+		kanban_index: 0,
+		dimension_id: drag_todo_item.dimension_id,
+		drag_overlay: true,
+		makeLinkLine: () => {},
+		renderLines: () => {},
+		check: props_todos.check,
+		updateRelations: props_todos.updateRelations,
+		insert: props_todos.insert,
+		update: props_todos.update,
+		tab: props_todos.tab,
+		moveTo: props_todos.moveTo,
+		remove: props_todos.remove,
+		showDetailModal: props_todos.showDetailModal
+	}
+
+	const onDragStart = useMemoizedFn(({ active }: DragStartEvent) => {
+		if (x.mode === 'list') return
+
+		const active_index = active.data.current.index
+		const dimension_id = active.data.current.dimension_id
+
+		setDragTodoItem({
+			index: active_index,
+			dimension_id,
+			item: $copy(x.kanban_items[dimension_id].items[active_index])
+		})
+	})
+
+	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
+		setDragTodoItem(null)
+
+		if (!over?.id) return
+
+		x.move({
+			active: { index: active.data.current.index, dimension_id: active.data.current.dimension_id },
+			over: { index: over.data.current.index, dimension_id: over.data.current.dimension_id }
+		})
+	})
+
+	console.log(
+		Object.values(props_kanban.kanban_items)
+			.at(0)
+			?.items?.map(item => ({ text: item.text, sort: item.sort }))
+	)
+
 	return (
 		<div
 			className={$cx(
@@ -156,16 +216,33 @@ const Index = ({ id }: IProps) => {
 			<If condition={x.id && x.file.data.name}>
 				<Then>
 					<Header {...props_header}></Header>
-					<Switch>
-						<Case condition={x.mode === 'list'}>
-							<Tabs {...props_tabs}></Tabs>
-							<Todos {...props_todos}></Todos>
-							<Input {...props_input}></Input>
-						</Case>
-						<Case condition={x.mode === 'kanban'}>
-							<Kanban {...props_kanban}></Kanban>
-						</Case>
-					</Switch>
+					<DndContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+						<Switch>
+							<Case condition={x.mode === 'list'}>
+								<Tabs {...props_tabs}></Tabs>
+								<Todos {...props_todos}></Todos>
+								<Input {...props_input}></Input>
+							</Case>
+							<Case condition={x.mode === 'kanban'}>
+								<Kanban {...props_kanban}></Kanban>
+							</Case>
+						</Switch>
+						{x.kanban_mode === 'angle' && (
+							<DragOverlay dropAnimation={null}>
+								{drag_todo_item && (
+									<SortableWrap
+										id={drag_todo_item.item.id}
+										data={{
+											index: drag_todo_item.index,
+											dimension_id: drag_todo_item.dimension_id
+										}}
+									>
+										<TodoItem {...props_drag_todo_item}></TodoItem>
+									</SortableWrap>
+								)}
+							</DragOverlay>
+						)}
+					</DndContext>
 					<SettingsModal {...props_settings_modal}></SettingsModal>
 					<Archive {...props_archive}></Archive>
 					<Detail {...props_detail}></Detail>

@@ -11,6 +11,7 @@ interface IProps {
 	children: ReactElement
 	id: string
 	data: any
+	disabled?: boolean
 }
 
 export interface SortableProps {
@@ -24,7 +25,7 @@ export interface SortableProps {
 }
 
 const Index = (props: IProps) => {
-	const { children, id, data } = props
+	const { children, id, data, disabled } = props
 
 	const {
 		attributes,
@@ -34,7 +35,7 @@ const Index = (props: IProps) => {
 		listeners,
 		setNodeRef,
 		setActivatorNodeRef
-	} = useSortable({ id, data })
+	} = useSortable({ id, data, disabled })
 
 	const transition = useMemo(() => {
 		if (_transition === 'transform 0ms linear' || !_transition) return

@@ -3,6 +3,7 @@ import { ConfigProvider, Dropdown } from 'antd'
 import { useMemo, useRef } from 'react'
 import { Case, Switch } from 'react-if'
 
+import { useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { CheckSquare, DotsSixVertical, Square, Star } from '@phosphor-icons/react'
 import { useInput } from '../../hooks'
@@ -26,6 +27,7 @@ const Index = (props: IPropsTodoItem) => {
 		kanban_mode,
 		kanban_index,
 		dimension_id,
+		drag_overlay,
 		makeLinkLine,
 		renderLines,
 		check,
@@ -53,8 +55,26 @@ const Index = (props: IPropsTodoItem) => {
 		children
 	} = item
 
-	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } =
-		sortable_props
+	const {
+		attributes,
+		listeners,
+		transform,
+		transition,
+		isDragging,
+		setNodeRef: setSortRef,
+		setActivatorNodeRef
+	} = sortable_props
+
+	const {
+		isOver,
+		active,
+		over,
+		setNodeRef: setDropRef
+	} = useDroppable({
+		id,
+		data: { index, dimension_id },
+		disabled: kanban_mode !== 'angle'
+	})
 
 	const { onCheck, onDrag, toggleChildren, insertChildren, removeChildren, onKeyDown, updateTags, updateTagWidth } =
 		useHandlers({ item, index, dimension_id, makeLinkLine, check, insert, update, tab })
@@ -94,14 +114,6 @@ const Index = (props: IPropsTodoItem) => {
 	}, [real_options_size])
 
 	useOpen({ item, input, renderLines })
-
-	const only_tags = useMemo(() => {
-		if (star > 0 || remind_time || cycle_enabled || cycle) {
-			return false
-		}
-
-		return true
-	}, [star, remind_time, cycle_enabled, cycle])
 
 	const props_children: IPropsChildren = {
 		items: children,
@@ -146,14 +158,28 @@ const Index = (props: IPropsTodoItem) => {
 		</div>
 	)
 
+	const is_dragging = useMemo(() => kanban_mode && isDragging, [kanban_mode, isDragging])
+
+	const is_over = useMemo(
+		() => kanban_mode && isOver && active.data.current.dimension_id !== dimension_id,
+		[kanban_mode, isOver, active, dimension_id]
+	)
+
 	return (
 		<div
 			className={$cx(
 				'w_100 border_box flex flex_column',
 				styles.todo_item_wrap,
-				kanban_mode && styles.kanban_mode
+				kanban_mode && styles.kanban_mode,
+				kanban_mode === 'tag' && styles.tag_mode,
+				is_dragging && styles.is_dragging,
+				is_over && styles.is_over,
+				drag_overlay && 'todo_item_drag_overlay'
 			)}
-			ref={setNodeRef}
+			ref={ref => {
+				setSortRef(ref)
+				setDropRef(ref)
+			}}
 			style={{ transform: CSS.Translate.toString(transform), transition }}
 		>
 			{kanban_mode && OptionsWrap}

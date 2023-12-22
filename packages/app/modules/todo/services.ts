@@ -306,6 +306,8 @@ export const updateTodosSort = async (items: Array<Todo.TodoItem>) => {
 			return update({ id: item.id, sort: index + 1 })
 		})
 	)
+
+	console.log(666)
 }
 
 export const removeTodoItem = async (id: string) => {

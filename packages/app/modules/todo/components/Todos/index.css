@@ -5,8 +5,8 @@
 	padding-bottom: 150px;
 
 	&.kanban_mode {
-		height: calc(100% - 21px);
-		padding: 3px 9px;
+		height: calc(100% - 30px);
+		padding: 0 9px;
 		overflow-y: scroll;
 	}
 

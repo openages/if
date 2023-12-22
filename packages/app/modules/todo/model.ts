@@ -42,21 +42,24 @@ import type { Subscription } from 'rxjs'
 import type {
 	ArchiveQueryParams,
 	ArgsCheck,
+	ArgsMove,
 	ArgsTab,
 	ArgsUpdate,
 	CurrentDetailIndex,
 	CurrentDetailItem,
 	Indexes,
 	ItemsSortParams,
-	KanbanItems
+	KanbanItems,
+	KanbanMode,
+	Mode
 } from './types/model'
 import type { ArgsArchiveByTime, ArgsUpdateTodoData } from './types/services'
 
 @injectable()
 export default class Index {
 	id = ''
-	mode = 'list' as 'list' | 'kanban' | 'table'
-	kanban_mode = 'angle' as 'angle' | 'tag'
+	mode = 'list' as Mode
+	kanban_mode = '' as KanbanMode
 	timer_cycle: NodeJS.Timeout = null
 	timer_archive: NodeJS.Timeout = null
 	disable_watcher = false
@@ -126,7 +129,8 @@ export default class Index {
 			this.queryArchives(true)
 		},
 		['mode']: v => {
-			if (v === 'list') {
+			if (v === 'list' || v === 'table') {
+				this.kanban_mode = '' as KanbanMode
 				this.kanban_items = {}
 
 				this.stopWatchKanbanItems()
@@ -134,17 +138,11 @@ export default class Index {
 			}
 
 			if (v === 'kanban') {
+				this.kanban_mode = 'angle'
 				this.items = []
 
 				this.stopWatchItems()
 				this.watchKanbanItems()
-			}
-
-			if (v === 'table') {
-				this.kanban_items = {}
-
-				this.stopWatchKanbanItems()
-				this.watchItems()
 			}
 		},
 		['kanban_mode']: _ => {
@@ -187,7 +185,19 @@ export default class Index {
 	}
 
 	constructor(public global: GlobalModel, public utils: Utils, public file: File, public loadmore: Loadmore) {
-		makeAutoObservable(this, { watch: false, timer_cycle: false, timer_archive: false }, { autoBind: true })
+		makeAutoObservable(
+			this,
+			{
+				timer_cycle: false,
+				timer_archive: false,
+				disable_watcher: false,
+				todo_watcher: false,
+				items_watcher: false,
+				kanban_items_watcher: false,
+				watch: false
+			},
+			{ autoBind: true }
+		)
 	}
 
 	init(args: { id: string }) {
@@ -358,14 +368,46 @@ export default class Index {
 		})
 	}
 
-	async move(args: { active_index: number; over_index: number }) {
-		this.items = arrayMove($copy(this.items), args.active_index, args.over_index)
+	async move(args: ArgsMove) {
+		const { active, over } = args
+		const { index: active_index, dimension_id: active_dimension_id } = active
+		const { index: over_index, dimension_id: over_dimension_id } = over
 
-		this.stopWatchItems()
+		console.log(args)
 
-		await updateTodosSort(this.items)
+		if (!active_dimension_id) {
+			this.items = arrayMove($copy(this.items), active_index, over_index)
 
-		this.watchItems()
+			this.stopWatchItems()
+
+			await updateTodosSort(this.items)
+
+			this.watchItems()
+		} else {
+			this.stopWatchKanbanItems()
+
+			if (active_dimension_id === over_dimension_id) {
+				this.kanban_items[active_dimension_id].items = arrayMove(
+					$copy(this.kanban_items[active_dimension_id].items),
+					active_index,
+					over_index
+				)
+
+				console.log($copy(this.kanban_items[active_dimension_id].items))
+
+				await updateTodosSort(this.kanban_items[active_dimension_id].items)
+			} else {
+				const [active_item] = this.kanban_items[active_dimension_id].items.splice(active_index, 1)
+
+				this.kanban_items[over_dimension_id].items.splice(over_index, 0, active_item)
+
+				await update({ id: active_item.id, angle_id: over_dimension_id })
+				await updateTodosSort(this.kanban_items[active_dimension_id].items)
+				await updateTodosSort(this.kanban_items[over_dimension_id].items)
+			}
+
+			// this.watchKanbanItems()
+		}
 	}
 
 	async removeAngle(angle_id: string) {
@@ -586,6 +628,7 @@ export default class Index {
 	}
 
 	watchKanbanItems() {
+		console.log('watch')
 		if (this.kanban_mode === 'angle') {
 			this.kanban_items_watcher = this.todo.angles.map(item => {
 				return getQueryItems({
@@ -593,6 +636,7 @@ export default class Index {
 					selector: { type: 'todo' },
 					angle_id: item.id
 				}).$.subscribe(items => {
+					console.log(123)
 					if (this.disable_watcher) return
 
 					this.kanban_items[item.id] = {
@@ -631,6 +675,7 @@ export default class Index {
 	stopWatchKanbanItems() {
 		if (!this.kanban_items_watcher.length) return
 
+		console.log($copy(this.kanban_items_watcher))
 		this.kanban_items_watcher.forEach(item => item.unsubscribe())
 
 		this.kanban_items_watcher = []

@@ -93,7 +93,6 @@ export interface IPropsTodos {
 	dimension_id?: string
 	check: Model['check']
 	updateRelations: Model['updateRelations']
-	move: Model['move']
 	insert: Model['insert']
 	update: Model['update']
 	tab: Model['tab']
@@ -112,6 +111,7 @@ export interface IPropsTodoItem {
 	kanban_mode?: Model['kanban_mode']
 	kanban_index?: number
 	dimension_id?: string
+	drag_overlay?: boolean
 	makeLinkLine: (args: { active_id: string; y: number } | null) => void
 	renderLines: (id: string) => void
 	check: Model['check']
