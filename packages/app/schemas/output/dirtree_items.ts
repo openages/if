@@ -36,22 +36,13 @@ export default {
                         "type": "string"
                   },
                   "icon_hue": {
-                        "type": [
-                              "number",
-                              "string"
-                        ]
+                        "type": "number"
                   },
                   "update_at": {
-                        "type": [
-                              "number",
-                              "string"
-                        ]
+                        "type": "number"
                   },
                   "backup_at": {
-                        "type": [
-                              "number",
-                              "string"
-                        ]
+                        "type": "number"
                   }
             },
             "required": [
@@ -99,22 +90,13 @@ export default {
                         "type": "string"
                   },
                   "icon_hue": {
-                        "type": [
-                              "number",
-                              "string"
-                        ]
+                        "type": "number"
                   },
                   "update_at": {
-                        "type": [
-                              "number",
-                              "string"
-                        ]
+                        "type": "number"
                   },
                   "backup_at": {
-                        "type": [
-                              "number",
-                              "string"
-                        ]
+                        "type": "number"
                   }
             },
             "required": [
