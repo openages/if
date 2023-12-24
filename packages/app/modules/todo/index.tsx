@@ -198,12 +198,6 @@ const Index = ({ id }: IProps) => {
 		})
 	})
 
-	console.log(
-		Object.values(props_kanban.kanban_items)
-			.at(0)
-			?.items?.map(item => ({ text: item.text, sort: item.sort }))
-	)
-
 	return (
 		<div
 			className={$cx(

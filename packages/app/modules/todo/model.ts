@@ -133,22 +133,25 @@ export default class Index {
 				this.kanban_mode = '' as KanbanMode
 				this.kanban_items = {}
 
-				this.stopWatchKanbanItems()
 				this.watchItems()
 			}
 
 			if (v === 'kanban') {
 				this.kanban_mode = 'angle'
 				this.items = []
-
+                        
 				this.stopWatchItems()
-				this.watchKanbanItems()
 			}
 		},
-		['kanban_mode']: _ => {
+		['kanban_mode']: v => {
+                  if(!v){
+                        this.stopWatchKanbanItems()
+
+                        return
+                  }
+
 			this.kanban_items = {}
 
-			this.stopWatchKanbanItems()
 			this.watchKanbanItems()
 		}
 	} as Watch<
@@ -373,8 +376,6 @@ export default class Index {
 		const { index: active_index, dimension_id: active_dimension_id } = active
 		const { index: over_index, dimension_id: over_dimension_id } = over
 
-		console.log(args)
-
 		if (!active_dimension_id) {
 			this.items = arrayMove($copy(this.items), active_index, over_index)
 
@@ -393,8 +394,6 @@ export default class Index {
 					over_index
 				)
 
-				console.log($copy(this.kanban_items[active_dimension_id].items))
-
 				await updateTodosSort(this.kanban_items[active_dimension_id].items)
 			} else {
 				const [active_item] = this.kanban_items[active_dimension_id].items.splice(active_index, 1)
@@ -406,7 +405,7 @@ export default class Index {
 				await updateTodosSort(this.kanban_items[over_dimension_id].items)
 			}
 
-			// this.watchKanbanItems()
+			this.watchKanbanItems()
 		}
 	}
 
@@ -628,7 +627,6 @@ export default class Index {
 	}
 
 	watchKanbanItems() {
-		console.log('watch')
 		if (this.kanban_mode === 'angle') {
 			this.kanban_items_watcher = this.todo.angles.map(item => {
 				return getQueryItems({
@@ -636,7 +634,6 @@ export default class Index {
 					selector: { type: 'todo' },
 					angle_id: item.id
 				}).$.subscribe(items => {
-					console.log(123)
 					if (this.disable_watcher) return
 
 					this.kanban_items[item.id] = {
@@ -675,7 +672,6 @@ export default class Index {
 	stopWatchKanbanItems() {
 		if (!this.kanban_items_watcher.length) return
 
-		console.log($copy(this.kanban_items_watcher))
 		this.kanban_items_watcher.forEach(item => item.unsubscribe())
 
 		this.kanban_items_watcher = []
