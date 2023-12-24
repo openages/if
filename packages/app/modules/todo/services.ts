@@ -300,14 +300,6 @@ export const updateRelations = async (args: ArgsUpdateRelations) => {
 	}
 }
 
-export const updateTodosSort = async (items: Array<Todo.TodoItem>) => {
-	await Promise.all(
-		items.map((item, index) => {
-			return update({ id: item.id, sort: index + 1 })
-		})
-	)
-}
-
 export const removeTodoItem = async (id: string) => {
 	await $db.collections.todo_items.findOne({ selector: { id } }).remove()
 }

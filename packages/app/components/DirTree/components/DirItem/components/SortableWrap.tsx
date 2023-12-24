@@ -17,6 +17,9 @@ const Index = (props: IPropsDirItem_SortableWrap) => {
 			)}
 			ref={setNodeRef}
 		>
+			{isOver && over && over.data.current.item.type === 'file' && (
+				<div className='over_line absolute flex align_center'></div>
+			)}
 			{children}
 		</div>
 	)

@@ -12,9 +12,10 @@
 	:global {
 		.todo_item_drag_overlay {
 			z-index: 1000;
-			background-color: var(--color_bg);
 			outline: 1px dashed var(--color_text);
 			border-radius: var(--radius);
+			background-color: transparent;
+			backdrop-filter: var(--blur);
 
 			.drag_wrap {
 				top: 6px;

@@ -158,7 +158,7 @@ const Index = ({ id }: IProps) => {
 		tags: props_todos.tags,
 		angles: props_todos.angles,
 		drag_disabled: false,
-		kanban_mode: props_todos.kanban_mode,
+		kanban_mode: x.kanban_mode,
 		kanban_index: 0,
 		dimension_id: drag_todo_item.dimension_id,
 		drag_overlay: true,

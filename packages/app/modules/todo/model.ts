@@ -10,8 +10,7 @@ import { getDocItem, getDocItemsData, id } from '@/utils'
 import { confirm } from '@/utils/antd'
 import { disableWatcher, loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
-import { IF, useInstanceWatch } from '@openages/stk'
-
+import { IF, updateSort, useInstanceWatch } from '@openages/stk'
 import { getTodo } from './initials'
 import {
 	archiveByTime,
@@ -31,8 +30,7 @@ import {
 	restoreArchiveItem,
 	update,
 	updateRelations,
-	updateTodoData,
-	updateTodosSort
+	updateTodoData
 } from './services'
 
 import type { RxDB, Todo } from '@/types'
@@ -139,16 +137,16 @@ export default class Index {
 			if (v === 'kanban') {
 				this.kanban_mode = 'angle'
 				this.items = []
-                        
+
 				this.stopWatchItems()
 			}
 		},
 		['kanban_mode']: v => {
-                  if(!v){
-                        this.stopWatchKanbanItems()
+			if (!v) {
+				this.stopWatchKanbanItems()
 
-                        return
-                  }
+				return
+			}
 
 			this.kanban_items = {}
 
@@ -219,20 +217,6 @@ export default class Index {
 	}
 
 	@loading
-	async create(item: Todo.TodoItem, quick?: boolean) {
-		await this.setActivity('insert')
-
-		return await create(
-			{
-				file_id: this.id,
-				angle_id: this.current_angle_id,
-				item
-			},
-			quick
-		)
-	}
-
-	@loading
 	async queryTodo() {
 		const todo = await queryTodo(this.id)
 
@@ -251,12 +235,6 @@ export default class Index {
 		})
 
 		this.items = getDocItemsData(items)
-
-		if (this.items_watcher) {
-			this.items_watcher.unsubscribe()
-
-			this.watchItems()
-		}
 	}
 
 	async queryArchives(reset?: boolean) {
@@ -295,6 +273,20 @@ export default class Index {
 				this.todo = todo
 			}
 		})
+	}
+
+	@loading
+	async create(item: Todo.TodoItem, quick?: boolean) {
+		await this.setActivity('insert')
+
+		return await create(
+			{
+				file_id: this.id,
+				angle_id: this.current_angle_id,
+				item
+			},
+			quick
+		)
 	}
 
 	async check(args: ArgsCheck) {
@@ -377,35 +369,35 @@ export default class Index {
 		const { index: over_index, dimension_id: over_dimension_id } = over
 
 		if (!active_dimension_id) {
-			this.items = arrayMove($copy(this.items), active_index, over_index)
+			const items = arrayMove($copy(this.items), active_index, over_index)
 
-			this.stopWatchItems()
+			const { item, sort } = updateSort(items, over_index)
 
-			await updateTodosSort(this.items)
+			this.items = items
 
-			this.watchItems()
+			await update({ id: item.id, sort })
 		} else {
-			this.stopWatchKanbanItems()
-
 			if (active_dimension_id === over_dimension_id) {
-				this.kanban_items[active_dimension_id].items = arrayMove(
+				const items = arrayMove(
 					$copy(this.kanban_items[active_dimension_id].items),
 					active_index,
 					over_index
 				)
 
-				await updateTodosSort(this.kanban_items[active_dimension_id].items)
+				const { item, sort } = updateSort(items, over_index)
+
+				this.kanban_items[active_dimension_id].items = items
+
+				await update({ id: item.id, sort })
 			} else {
 				const [active_item] = this.kanban_items[active_dimension_id].items.splice(active_index, 1)
 
-				this.kanban_items[over_dimension_id].items.splice(over_index, 0, active_item)
+				this.kanban_items[over_dimension_id].items.splice(over_index + 1, 0, active_item)
 
-				await update({ id: active_item.id, angle_id: over_dimension_id })
-				await updateTodosSort(this.kanban_items[active_dimension_id].items)
-				await updateTodosSort(this.kanban_items[over_dimension_id].items)
+				const { sort } = updateSort(this.kanban_items[over_dimension_id].items, over_index + 1)
+
+				await update({ id: active_item.id, angle_id: over_dimension_id, sort })
 			}
-
-			this.watchKanbanItems()
 		}
 	}
 
@@ -460,7 +452,9 @@ export default class Index {
 
 		if (!data) setTimeout(() => document.getElementById(`todo_${item.id}`)?.focus(), 0)
 
-		await updateTodosSort($copy(this.items))
+		const { sort } = updateSort(this.items, index + 1)
+
+		await update({ id: item.id, sort })
 
 		if (callback) await callback()
 	}

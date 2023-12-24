@@ -8,14 +8,14 @@
 	&.tag_mode {
 		.kanban_item_wrap {
 			.kanban_item_header {
-				padding-left: 33px;
+				padding-left: 30px;
 
 				&::before {
 					content: '';
 					position: absolute;
 					left: 21px;
 					width: 3px;
-					height: 60%;
+					height: 48%;
 					background-color: var(--color_tag);
 					border-radius: var(--radius);
 				}
@@ -36,9 +36,10 @@
 		min-width: 300px;
 
 		.kanban_item_header {
+			padding-top: 4px;
+			padding-bottom: 9px;
 			padding-left: 20px;
-			padding-right: 12px;
-			height: 30px;
+			padding-right: 21px;
 			line-height: 1;
 
 			:global {
@@ -59,7 +60,7 @@
 	.btn_insert_wrap {
 		height: 36px;
 		padding-left: 20px;
-		padding-right: 12px;
+		padding-right: 21px;
 		margin-top: 12px;
 
 		:global {

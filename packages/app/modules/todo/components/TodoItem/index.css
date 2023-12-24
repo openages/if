@@ -7,15 +7,33 @@
 		&.is_over {
 			position: relative;
 
-			&::after {
-				content: '';
-				position: absolute;
-				bottom: 0;
-				left: 12px;
-				z-index: 10;
-				width: calc(100% - 12px);
-				height: 0;
-				border-bottom: 1px dashed var(--color_text);
+			:global {
+				.over_line {
+					width: calc(100% - 12px);
+					height: 1px;
+					left: 12px;
+					bottom: -1px;
+					background-color: var(--color_text);
+
+					&::before,
+					&::after {
+						content: '';
+						position: absolute;
+						width: 4px;
+						height: 4px;
+						border-radius: 50%;
+						box-sizing: border-box;
+						border: 1px solid var(--color_text);
+					}
+
+					&::before {
+						left: -4px;
+					}
+
+					&::after {
+						right: -4px;
+					}
+				}
 			}
 		}
 

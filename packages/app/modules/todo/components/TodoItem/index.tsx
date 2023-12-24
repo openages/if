@@ -182,6 +182,7 @@ const Index = (props: IPropsTodoItem) => {
 			}}
 			style={{ transform: CSS.Translate.toString(transform), transition }}
 		>
+			{is_over && <div className='over_line absolute left_0 flex align_center'></div>}
 			{kanban_mode && OptionsWrap}
 			<div
 				className={$cx(
