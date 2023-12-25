@@ -89,7 +89,6 @@ export interface IPropsTodos {
 	relations: Todo.Data['relations']
 	drag_disabled: boolean
 	kanban_mode?: Model['kanban_mode']
-	kanban_index?: number
 	dimension_id?: string
 	check: Model['check']
 	updateRelations: Model['updateRelations']
@@ -109,7 +108,6 @@ export interface IPropsTodoItem {
 	angles: Model['todo']['angles']
 	drag_disabled: boolean
 	kanban_mode?: Model['kanban_mode']
-	kanban_index?: number
 	dimension_id?: string
 	drag_overlay?: boolean
 	makeLinkLine: (args: { active_id: string; y: number } | null) => void
@@ -146,6 +144,7 @@ export interface IPropsChildrenItem {
 	children_index: number
 	useByDetail: IPropsChildren['useByDetail']
 	ChildrenContextMenu: IPropsChildren['ChildrenContextMenu']
+	dimension_id?: string
 	update: (children_index: number, value: Partial<Omit<Todo.Todo['children'][number], 'id'>>) => Promise<void>
 	tab: Model['tab']
 	insertChildren: (children_index?: number) => Promise<void>

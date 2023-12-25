@@ -11,12 +11,6 @@ export type ArgsQueryItems = {
 	selector?: MangoQuerySelector<Todo.TodoItem>
 }
 
-export type ArgsCreate = {
-	file_id: string
-	angle_id: string
-	item: Todo.TodoItem
-}
-
 export type ArgsQueryArchives = {
 	file_id: string
 	page: number

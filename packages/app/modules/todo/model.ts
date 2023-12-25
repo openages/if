@@ -19,6 +19,7 @@ import {
 	check,
 	create,
 	getAngleTodoCounts,
+	getMaxSort,
 	getQueryItems,
 	getQueryTodo,
 	getTagTodoCounts,
@@ -42,7 +43,9 @@ import type { Subscription } from 'rxjs'
 import type {
 	ArchiveQueryParams,
 	ArgsCheck,
+	ArgsInsert,
 	ArgsMove,
+	ArgsRemove,
 	ArgsTab,
 	ArgsUpdate,
 	CurrentDetailIndex,
@@ -93,7 +96,8 @@ export default class Index {
 			this.visible_detail_modal = false
 			this.current_detail_index === ({} as CurrentDetailIndex)
 
-			this.queryItems()
+			this.stopWatchItems()
+			this.watchItems()
 		},
 		['todo.angles']: v => {
 			if (!this.id) return
@@ -129,6 +133,8 @@ export default class Index {
 			this.queryArchives(true)
 		},
 		['mode']: v => {
+			this.visible_detail_modal = false
+
 			if (v === 'list' || v === 'table') {
 				this.kanban_mode = '' as KanbanMode
 				this.kanban_items = {}
@@ -143,15 +149,10 @@ export default class Index {
 				this.stopWatchItems()
 			}
 		},
-		['kanban_mode']: v => {
-			if (!v) {
-				this.stopWatchKanbanItems()
-
-				return
-			}
-
+		['kanban_mode']: _ => {
 			this.kanban_items = {}
 
+			this.stopWatchKanbanItems()
 			this.watchKanbanItems()
 		}
 	} as Watch<
@@ -170,15 +171,13 @@ export default class Index {
 		if (!this.current_detail_index.id) return {} as CurrentDetailItem
 
 		const items =
-			this.mode === 'kanban' ? this.kanban_items[this.current_detail_index.dimension_id].items : this.items
+			this.mode === 'kanban' ? this.kanban_items[this.current_detail_index.dimension_id]?.items : this.items
+
+		if (!items) return {} as CurrentDetailItem
+
 		const target_index = items.findIndex(item => item.id === this.current_detail_index.id)
 
-		if (!items[target_index]) {
-			this.visible_detail_modal = false
-			this.current_detail_index = {} as CurrentDetailIndex
-
-			return {} as CurrentDetailItem
-		}
+		if (!items[target_index]) return {} as CurrentDetailItem
 
 		return {
 			item: $copy(items[target_index]),
@@ -283,23 +282,31 @@ export default class Index {
 	}
 
 	@loading
-	async create(item: Todo.TodoItem, quick?: boolean) {
+	async create(item: Todo.TodoItem, options?: { quick?: boolean; dimension_id?: string }) {
 		await this.setActivity('insert')
 
-		return await create(
-			{
-				file_id: this.id,
-				angle_id: this.current_angle_id,
-				item
-			},
-			quick
-		)
+		const data = {} as Todo.TodoItem
+
+		if (!this.kanban_mode) {
+			data['angle_id'] = this.current_angle_id
+		}
+
+		if (this.kanban_mode === 'angle') {
+			data['angle_id'] = options?.dimension_id
+		}
+
+		if (this.kanban_mode === 'tag') {
+			data['angle_id'] = this.current_angle_id
+			data['tag_ids'] = [options?.dimension_id]
+		}
+
+		return create({ ...item, ...data, file_id: this.id } as Todo.TodoItem, options?.quick)
 	}
 
 	async check(args: ArgsCheck) {
 		const { index, dimension_id, status } = args
 
-		const item = this.getItems({ index, dimension_id })
+		const { item } = this.getItem({ index, dimension_id })
 
 		this.setItem(item, { status })
 
@@ -339,7 +346,7 @@ export default class Index {
 	async update(args: ArgsUpdate) {
 		const { index, dimension_id, type, value } = args
 
-		const item = this.getItems({ index, dimension_id })
+		const { item } = this.getItem({ index, dimension_id })
 
 		const data = type === 'parent' ? { id: item.id, ...value } : { id: item.id, children: value }
 
@@ -448,32 +455,37 @@ export default class Index {
 	}
 
 	@disableWatcher
-	async insert(args: { index: number; data?: Todo.Todo; callback?: () => Promise<void> }) {
+	async insert(args: ArgsInsert) {
 		if (this.is_filtered) return
 
-		const { index, data, callback } = args
+		const { index, dimension_id, data, callback } = args
 		const todo = data ?? (getTodo() as Todo.TodoItem)
-		const item = await this.create(todo, true)
+		const item = await this.create(todo, { quick: true, dimension_id })
 
-		this.items.splice(index + 1, 0, item as Todo.TodoItem)
+		const { items } = this.getItem({ index, dimension_id })
+
+		items.splice(index + 1, 0, item as Todo.TodoItem)
 
 		if (!data) setTimeout(() => document.getElementById(`todo_${item.id}`)?.focus(), 0)
 
-		const { sort } = updateSort(this.items, index + 1)
+		if (index !== -1) {
+			const { sort } = updateSort(items, index + 1)
 
-		await update({ id: item.id, sort })
+			await update({ id: item.id, sort })
+		}
 
 		if (callback) await callback()
 	}
 
 	async tab(args: ArgsTab) {
 		if (this.is_filtered) return
+		if (this.kanban_mode === 'tag') return
 
-		const { type, index } = args
-		const item = this.items[index] as Todo.Todo
+		const { type, index, dimension_id } = args
+		const { items, item } = this.getItem({ index, dimension_id })
 
 		if (type === 'in') {
-			const prev_item = this.items[index - 1]
+			const prev_item = items[index - 1]
 			const exsit_index = this.todo.relations
 				? this.todo.relations.findIndex(relation => relation.items.includes(item.id))
 				: -1
@@ -482,43 +494,56 @@ export default class Index {
 			if (exsit_index !== -1) return
 			if (item.children?.length) return
 
-			this.stopWatchItems()
-
-			await removeTodoItem(item.id)
+			await this.remove({ index, dimension_id, id: item.id })
 
 			const data = { ...pick(item, ['id', 'text']), status: 'unchecked' } as Todo.Todo['children'][number]
 
 			const children = prev_item.children ? [...prev_item.children, data] : [data]
 
-			await update({ id: prev_item.id, children })
+			prev_item.children = children
+			prev_item.open = true
 
-			this.watchItems()
+			await update({ id: prev_item.id, children, open: true })
 		} else {
 			const children_index = args.children_index
 			const data = item.children[children_index]
-			const children = $copy(item.children)
+			const target_item = {
+				...getTodo(),
+				text: data.text,
+				angle_id: item.angle_id,
+				status: 'unchecked'
+			} as Todo.Todo
 
-			children.splice(children_index, 1)
+			item.children.splice(children_index, 1)
+
+			if (!item.children.length) {
+				item.open = false
+			}
 
 			await this.insert({
 				index,
-				data: {
-					...getTodo(),
-					text: data.text,
-					status: 'unchecked'
-				} as Todo.Todo,
+				dimension_id,
+				data: target_item,
 				callback: async () => {
-					await update({ id: item.id, children })
+					await update({ id: item.id, children: $copy(item.children) })
 				}
 			})
 		}
 	}
 
 	async moveTo(todo_id: string, angle_id: string) {
-		await update({ id: todo_id, angle_id })
+		const sort = await getMaxSort(angle_id)
+
+		await update({ id: todo_id, angle_id, sort: sort + 1 })
 	}
 
-	async remove(id: string) {
+	async remove(args: ArgsRemove) {
+		const { index, dimension_id, id } = args
+
+		const { items } = this.getItem({ index, dimension_id })
+
+		items.splice(index, 1)
+
 		await removeTodoItem(id)
 	}
 
@@ -566,15 +591,17 @@ export default class Index {
 		})
 	}
 
-	getItems(args: Indexes) {
+	getItem(args: Indexes) {
 		const { index, dimension_id } = args
 		const kanban_mode = dimension_id !== undefined
 
-		return IF({
+		const items = IF({
 			condition: kanban_mode,
-			If: () => this.kanban_items[dimension_id].items[index],
-			Else: () => this.items[index]
+			If: () => this.kanban_items[dimension_id].items,
+			Else: () => this.items
 		})
+
+		return { items, item: items[index] }
 	}
 
 	setItem(item: any, data: any) {

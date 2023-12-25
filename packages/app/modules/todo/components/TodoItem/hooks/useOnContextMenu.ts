@@ -7,7 +7,6 @@ interface HookArgs {
 	item: IPropsTodoItem['item']
 	index: IPropsTodoItem['index']
 	kanban_mode: IPropsTodoItem['kanban_mode']
-	kanban_index: IPropsTodoItem['kanban_index']
 	dimension_id: IPropsTodoItem['dimension_id']
 	update: IPropsTodoItem['update']
 	moveTo: IPropsTodoItem['moveTo']
@@ -23,7 +22,6 @@ export default (args: HookArgs) => {
 		item,
 		index,
 		kanban_mode,
-		kanban_index,
 		dimension_id,
 		update,
 		moveTo,
@@ -69,7 +67,7 @@ export default (args: HookArgs) => {
 		} else {
 			switch (key) {
 				case 'detail':
-					showDetailModal({ ...{ id, index }, ...(kanban_mode ? { kanban_index } : {}) })
+					showDetailModal({ ...{ id, index }, ...(kanban_mode ? { dimension_id } : {}) })
 					break
 				case 'insert':
 					insert({ index })
@@ -78,10 +76,10 @@ export default (args: HookArgs) => {
 					insertChildren()
 					break
 				case 'move_into':
-					tab({ type: 'in', index })
+					tab({ type: 'in', index, dimension_id })
 					break
 				case 'remove':
-					remove(id)
+					remove({ index, dimension_id, id })
 					break
 			}
 		}

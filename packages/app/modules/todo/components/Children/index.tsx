@@ -19,7 +19,6 @@ const Index = (props: IPropsChildren) => {
 		items: _items,
 		index,
 		open,
-		isDragging,
 		handled,
 		useByDetail,
 		dimension_id,
@@ -60,7 +59,7 @@ const Index = (props: IPropsChildren) => {
 
 	return (
 		<AnimatePresence>
-			{open && (
+			{open && items.length && (
 				<motion.div
 					className={$cx(
 						'w_100 border_box',
@@ -89,6 +88,7 @@ const Index = (props: IPropsChildren) => {
 												children_index,
 												useByDetail,
 												ChildrenContextMenu,
+												dimension_id,
 												update,
 												tab,
 												insertChildren,

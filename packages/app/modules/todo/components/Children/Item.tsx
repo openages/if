@@ -18,6 +18,7 @@ const Index = (props: IPropsChildrenItem) => {
 		children_index,
 		useByDetail,
 		ChildrenContextMenu,
+		dimension_id,
 		update,
 		tab,
 		insertChildren,
@@ -44,7 +45,7 @@ const Index = (props: IPropsChildrenItem) => {
 		if (e.key === 'Tab') {
 			e.preventDefault()
 
-			tab({ type: 'out', index, children_index })
+			tab({ type: 'out', index, children_index, dimension_id })
 		}
 	})
 
@@ -54,7 +55,7 @@ const Index = (props: IPropsChildrenItem) => {
 				insertChildren(children_index)
 				break
 			case 'move_out':
-				tab({ type: 'out', index, children_index })
+				tab({ type: 'out', index, children_index, dimension_id })
 				break
 			case 'remove':
 				removeChildren(children_index)

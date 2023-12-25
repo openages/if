@@ -37,6 +37,16 @@
 			}
 		}
 
+		&.no_children {
+			.todo_item {
+				:global {
+					.dot_wrap {
+						display: none;
+					}
+				}
+			}
+		}
+
 		.todo_item {
 			flex-direction: column;
 
@@ -46,7 +56,8 @@
 				}
 
 				.dot_wrap {
-					display: none;
+					left: unset;
+					right: -6px;
 				}
 			}
 		}

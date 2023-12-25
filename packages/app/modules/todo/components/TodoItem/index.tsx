@@ -25,7 +25,6 @@ const Index = (props: IPropsTodoItem) => {
 		angles,
 		drag_disabled,
 		kanban_mode,
-		kanban_index,
 		dimension_id,
 		drag_overlay,
 		makeLinkLine,
@@ -68,7 +67,6 @@ const Index = (props: IPropsTodoItem) => {
 	const {
 		isOver,
 		active,
-		over,
 		setNodeRef: setDropRef
 	} = useDroppable({
 		id,
@@ -77,22 +75,23 @@ const Index = (props: IPropsTodoItem) => {
 	})
 
 	const { onCheck, onDrag, toggleChildren, insertChildren, removeChildren, onKeyDown, updateTags, updateTagWidth } =
-		useHandlers({ item, index, dimension_id, makeLinkLine, check, insert, update, tab })
+		useHandlers({ item, index, kanban_mode, dimension_id, makeLinkLine, check, insert, update, tab })
 
 	const { linker, dragging, hovering } = useLink({ item, makeLinkLine, updateRelations })
 
 	const { input, onInput } = useInput({
 		value: text,
-		update: useMemoizedFn(textContent => update({ type: 'parent', index, value: { text: textContent } }))
+		update: useMemoizedFn(textContent =>
+			update({ type: 'parent', index, dimension_id, value: { text: textContent } })
+		)
 	})
 
-	const { TodoContextMenu, ChildrenContextMenu } = useContextMenu({ angles, tags, tag_ids })
+	const { TodoContextMenu, ChildrenContextMenu } = useContextMenu({ kanban_mode, angles, tags, tag_ids })
 
 	const { onContextMenu } = useOnContextMenu({
 		item,
 		index,
 		kanban_mode,
-		kanban_index,
 		dimension_id,
 		update,
 		moveTo,
@@ -174,6 +173,7 @@ const Index = (props: IPropsTodoItem) => {
 				kanban_mode === 'tag' && styles.tag_mode,
 				is_dragging && styles.is_dragging,
 				is_over && styles.is_over,
+				!children?.length && styles.no_children,
 				drag_overlay && 'todo_item_drag_overlay'
 			)}
 			ref={ref => {
@@ -199,7 +199,7 @@ const Index = (props: IPropsTodoItem) => {
 							dragging && 'dragging',
 							hovering && 'hovering'
 						)}
-						ref={linker}
+						ref={dimension_id ? null : linker}
 						onDrag={onDrag}
 						onClick={toggleChildren}
 					></div>
@@ -236,7 +236,10 @@ const Index = (props: IPropsTodoItem) => {
 							destroyPopupOnHide
 							trigger={['contextMenu']}
 							overlayStyle={{ width: 132 }}
-							menu={{ items: TodoContextMenu, onClick: onContextMenu }}
+							menu={{
+								items: TodoContextMenu,
+								onClick: onContextMenu
+							}}
 						>
 							<div
 								id={`todo_${id}`}

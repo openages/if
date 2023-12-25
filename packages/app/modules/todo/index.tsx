@@ -77,7 +77,9 @@ const Index = ({ id }: IProps) => {
 		create: useMemoizedFn(x.create)
 	}
 
-	const move_to_angles = useMemo(() => angles.filter(item => item.id !== x.current_angle_id), [angles])
+	const move_to_angles = useMemo(() => {
+		return x.kanban_mode ? angles : angles.filter(item => item.id !== x.current_angle_id)
+	}, [angles, x.kanban_mode, x.current_angle_id])
 
 	const props_todos: IPropsTodos = {
 		items: $copy(x.items),
@@ -159,7 +161,6 @@ const Index = ({ id }: IProps) => {
 		angles: props_todos.angles,
 		drag_disabled: false,
 		kanban_mode: x.kanban_mode,
-		kanban_index: 0,
 		dimension_id: drag_todo_item.dimension_id,
 		drag_overlay: true,
 		makeLinkLine: () => {},

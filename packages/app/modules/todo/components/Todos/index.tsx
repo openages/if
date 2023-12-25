@@ -19,11 +19,10 @@ const Index = (props: IPropsTodos) => {
 	const {
 		items,
 		tags,
-		angles,
+		angles: _angles,
 		relations,
 		drag_disabled,
 		kanban_mode,
-		kanban_index,
 		dimension_id,
 		check,
 		updateRelations,
@@ -133,6 +132,8 @@ const Index = (props: IPropsTodos) => {
 		return () => clearTimeout(timer)
 	}, [color_text_line, color_text_softlight, relations_lines, items])
 
+	const angles = useMemo(() => _angles.filter(item => item.id !== dimension_id), [_angles, dimension_id])
+
 	return (
 		<div className={$cx('limited_content_wrap relative', styles._local, kanban_mode && styles.kanban_mode)}>
 			{height > 0 && !drag_disabled && (
@@ -168,7 +169,6 @@ const Index = (props: IPropsTodos) => {
 										angles,
 										drag_disabled,
 										kanban_mode,
-										kanban_index,
 										dimension_id,
 										makeLinkLine,
 										renderLines,

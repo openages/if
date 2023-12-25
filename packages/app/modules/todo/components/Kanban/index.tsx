@@ -51,7 +51,12 @@ const Index = (props: IPropsKanban) => {
 						</div>
 					</div>
 					{!item.items.length && (
-						<div className={$cx('border_box', styles.btn_insert_wrap)}>
+						<div
+							className={$cx('border_box', styles.btn_insert_wrap)}
+							onClick={() =>
+								insert({ index: -1, dimension_id: Object.keys(kanban_items)[index] })
+							}
+						>
 							<div className='btn_insert w_100 h_100 border_box flex justify_center align_center clickable'>
 								<Plus size={15}></Plus>
 								<span className='text ml_6'>
@@ -77,7 +82,6 @@ const Index = (props: IPropsKanban) => {
 						}}
 						kanban_mode={kanban_mode}
 						items={item.items}
-						kanban_index={index}
 						dimension_id={Object.keys(kanban_items)[index]}
 					></Todos>
 				</div>

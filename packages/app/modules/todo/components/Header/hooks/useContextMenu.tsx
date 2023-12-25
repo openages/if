@@ -137,7 +137,7 @@ export default (args: HookArgs) => {
 			},
 			{
 				key: 'tags',
-				disabled: !tags?.length,
+				disabled: !tags?.length || mode !== 'list',
 				label: (
 					<div className='menu_item_wrap flex align_center'>
 						<Tag size={16}></Tag>

@@ -15,7 +15,7 @@
 					position: absolute;
 					left: 21px;
 					width: 3px;
-					height: 48%;
+					height: 42%;
 					background-color: var(--color_tag);
 					border-radius: var(--radius);
 				}
@@ -34,6 +34,7 @@
 	.kanban_item_wrap {
 		width: 300px;
 		min-width: 300px;
+		font-family: Georgia, 'kai';
 
 		.kanban_item_header {
 			padding-top: 4px;
@@ -49,8 +50,12 @@
 					}
 
 					.count {
-						font-size: 12px;
-						color: var(--color_text_softlight);
+						padding: 2px 4px;
+						margin-bottom: -2px;
+						background-color: var(--color_bg_1);
+						border-radius: 30px;
+						font-size: 10px;
+						color: var(--color_text_grey);
 					}
 				}
 			}
@@ -61,7 +66,7 @@
 		height: 36px;
 		padding-left: 20px;
 		padding-right: 21px;
-		margin-top: 12px;
+		margin-top: 8px;
 
 		:global {
 			.btn_insert {

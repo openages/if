@@ -6,12 +6,11 @@ import { omit, uniq } from 'lodash-es'
 
 import { match } from 'ts-pattern'
 
-import type { MangoQueryOperators, MangoQuerySelector, MangoQuerySortPart } from 'rxdb/dist/types/types'
+import type { MangoQueryOperators, MangoQuerySelector, MangoQuerySortPart } from 'rxdb'
 import type { ArchiveQueryParams } from './types/model'
 import type {
 	ArgsArchiveByTime,
 	ArgsCheck,
-	ArgsCreate,
 	ArgsQueryArchives,
 	ArgsQueryItems,
 	ArgsUpdate,
@@ -22,9 +21,9 @@ import type {
 
 import type { RxDB, Todo } from '@/types'
 
-const getMaxSort = async () => {
+export const getMaxSort = async (angle_id: string) => {
 	const [max_sort_item] = await $db.collections.todo_items
-		.find({ selector: { $or: not_archive } })
+		.find({ selector: { $or: not_archive, angle_id } })
 		.sort({ sort: 'desc' })
 		.limit(1)
 		.exec()
@@ -76,20 +75,16 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 	return $db.collections.todo_items.find({ selector }).sort(sort) as RxDB.ItemsQuery<Todo.TodoItem>
 }
 
-export const create = async (args: ArgsCreate, quick?: boolean) => {
-	const { file_id, angle_id, item } = args
-
-	const sort = await getMaxSort()
+export const create = async (item: Todo.TodoItem, quick?: boolean) => {
+	const sort = await getMaxSort(item.angle_id)
 
 	const res = await $db.collections.todo_items.insert({
 		...item,
-		file_id,
-		angle_id,
 		sort: sort + 1
 	})
 
 	if (!quick) {
-		const container = document.getElementById(file_id)
+		const container = document.getElementById(item.file_id)
 
 		container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' })
 	}
@@ -307,7 +302,7 @@ export const removeTodoItem = async (id: string) => {
 export const restoreArchiveItem = async (id: string, angles: Todo.Data['angles'], current_angle_id: string) => {
 	const doc = await $db.collections.todo_items.findOne({ selector: { id } }).exec()
 	const angle_exsit = angles.find(item => item.id === doc.angle_id)
-	const sort = await getMaxSort()
+	const sort = await getMaxSort(current_angle_id)
 
 	const target = {
 		archive: false,

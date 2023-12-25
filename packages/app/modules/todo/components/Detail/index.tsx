@@ -90,7 +90,7 @@ const Index = (props: IPropsDetail) => {
 			)}
 			open={visible_detail_modal}
 			title={t('translation:todo.Detail.title')}
-			width={342}
+			width={321}
 			mask={Boolean(breakpoint)}
 			zIndex={100}
 			destroyOnClose
@@ -107,7 +107,8 @@ const Index = (props: IPropsDetail) => {
 					onClick={() =>
 						setCurrentDetailIndex({
 							id: prev_id,
-							index: current_detail_index.index - 1
+							index: current_detail_index.index - 1,
+							dimension_id: current_detail_index.dimension_id
 						})
 					}
 				>
@@ -121,7 +122,8 @@ const Index = (props: IPropsDetail) => {
 					onClick={() =>
 						setCurrentDetailIndex({
 							id: next_id,
-							index: current_detail_index.index + 1
+							index: current_detail_index.index + 1,
+							dimension_id: current_detail_index.dimension_id
 						})
 					}
 				>
