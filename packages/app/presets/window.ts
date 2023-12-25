@@ -1,4 +1,5 @@
-import { Emittery, handle, memo } from '@openages/stk'
+import Emittery from '@openages/stk/emittery'
+import { handle, memo } from '@openages/stk/react'
 import cx from 'classix'
 import copy from 'fast-copy'
 

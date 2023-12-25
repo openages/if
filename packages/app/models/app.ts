@@ -3,10 +3,10 @@ import { injectable } from 'tsyringe'
 
 import { modules } from '@/appdata'
 import Utils from '@/models/utils'
-import { setStorageWhenChange, useInstanceWatch } from '@openages/stk'
+import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
 
 import type { App } from '@/types'
-import type { Watch } from '@openages/stk'
+import type { Watch } from '@openages/stk/mobx'
 
 @injectable()
 export default class Index {

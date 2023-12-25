@@ -3,7 +3,7 @@ import { throttle } from 'lodash-es'
 import { useEffect, useLayoutEffect, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { session } from '@openages/stk'
+import { session } from '@openages/stk/storage'
 
 import type { Stack } from '@/types'
 

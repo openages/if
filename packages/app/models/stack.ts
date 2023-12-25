@@ -1,6 +1,6 @@
 import Utils from '@/models/utils'
 import { arrayMove } from '@dnd-kit/sortable'
-import { setStorageWhenChange, useInstanceWatch } from '@openages/stk'
+import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
 import { Decimal } from 'decimal.js'
 import { omit } from 'lodash-es'
 import { debounce } from 'lodash-es'
@@ -9,7 +9,7 @@ import { injectable } from 'tsyringe'
 
 import type { DirTree, Stack } from '@/types'
 import type { DragEndEvent } from '@dnd-kit/core'
-import type { Watch } from '@openages/stk'
+import type { Watch } from '@openages/stk/mobx'
 
 @injectable()
 export default class Index {

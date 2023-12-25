@@ -5,12 +5,13 @@ import { Emoji, LeftIcon, ModuleIcon, Wave } from '@/components'
 import { useScrollToItem } from '@/hooks'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { useDoubleClick } from '@openages/stk'
+import { useDoubleClick } from '@openages/stk/react'
 import { X } from '@phosphor-icons/react'
 
-import type { IPropsStacksNavBarView } from '@/layout/types'
 import { useMemoizedFn } from 'ahooks'
 import { useMemo } from 'react'
+
+import type { IPropsStacksNavBarView } from '@/layout/types'
 
 const Index = (props: IPropsStacksNavBarView) => {
 	const { column_index, view_index, view, focus, drag_overlay, click, remove, update } = props

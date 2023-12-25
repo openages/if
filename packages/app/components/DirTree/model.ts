@@ -5,13 +5,14 @@ import { Utils } from '@/models'
 import { id } from '@/utils'
 import { disableWatcher, loading } from '@/utils/decorators'
 import { getDocItemsData } from '@/utils/rxdb'
-import { DirTree as NodeTree, setStorageWhenChange, useInstanceWatch } from '@openages/stk'
+import { DirTree as NodeTree } from '@openages/stk/common'
+import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
 
 import { getQuery, insert, query, remove, update, updateItems } from './services'
 
 import type { App, DirTree, Stack } from '@/types'
 import type { Active, Over } from '@dnd-kit/core'
-import type { Watch } from '@openages/stk'
+import type { Watch } from '@openages/stk/mobx'
 import type { Subscription } from 'rxjs'
 import type { IProps } from './types'
 import type { MoveData } from './types/model'
@@ -43,7 +44,10 @@ export default class Index {
 		return (this.node_tree.getItem(this.focusing_index).cloned_item || {}) as DirTree.Item
 	}
 
-	constructor(public utils: Utils, public node_tree: NodeTree) {
+	constructor(
+		public utils: Utils,
+		public node_tree: NodeTree
+	) {
 		makeAutoObservable(this, { actions: false, watch: false }, { autoBind: true })
 	}
 

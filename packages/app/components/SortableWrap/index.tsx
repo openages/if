@@ -1,5 +1,5 @@
 import { useSortable } from '@dnd-kit/sortable'
-import { useDeepMemo } from '@openages/stk'
+import { useDeepMemo } from '@openages/stk/react'
 import { Children, cloneElement, useMemo } from 'react'
 
 import type { DraggableAttributes } from '@dnd-kit/core'

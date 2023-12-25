@@ -1,5 +1,6 @@
 import type { App, RxDB } from '@/types'
-import type { Emittery, handle } from '@openages/stk'
+import type Emittery from '@openages/stk/emittery'
+import type { handle } from '@openages/stk/react'
 import type { MessageInstance } from 'antd/es/message/interface'
 import type { ModalStaticFunctions } from 'antd/es/modal/confirm'
 import type { NotificationInstance } from 'antd/es/notification/interface'

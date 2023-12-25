@@ -1,5 +1,5 @@
 import { Logo } from '@/components'
-import { local } from '@openages/stk'
+import { local } from '@openages/stk/storage'
 
 import styles from './index.css'
 

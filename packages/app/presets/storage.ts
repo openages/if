@@ -1,3 +1,3 @@
-import { setPrefix } from '@openages/stk'
+import { setPrefix } from '@openages/stk/storage'
 
 setPrefix('if')

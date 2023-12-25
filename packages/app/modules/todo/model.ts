@@ -10,7 +10,9 @@ import { getDocItem, getDocItemsData, id } from '@/utils'
 import { confirm } from '@/utils/antd'
 import { disableWatcher, loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
-import { IF, updateSort, useInstanceWatch } from '@openages/stk'
+import { IF } from '@openages/stk/common'
+import { updateSort } from '@openages/stk/dnd'
+import { useInstanceWatch } from '@openages/stk/mobx'
 import { getTodo } from './initials'
 import {
 	archiveByTime,
@@ -34,7 +36,7 @@ import {
 } from './services'
 
 import type { RxDB, Todo } from '@/types'
-import type { Watch } from '@openages/stk'
+import type { Watch } from '@openages/stk/mobx'
 import type { ManipulateType } from 'dayjs'
 import type { Subscription } from 'rxjs'
 import type {
@@ -185,7 +187,12 @@ export default class Index {
 		} as CurrentDetailItem
 	}
 
-	constructor(public global: GlobalModel, public utils: Utils, public file: File, public loadmore: Loadmore) {
+	constructor(
+		public global: GlobalModel,
+		public utils: Utils,
+		public file: File,
+		public loadmore: Loadmore
+	) {
 		makeAutoObservable(
 			this,
 			{

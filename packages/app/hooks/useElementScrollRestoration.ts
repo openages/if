@@ -2,7 +2,7 @@ import { throttle } from 'lodash-es'
 import { MutableRefObject, useLayoutEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { session } from '@openages/stk'
+import { session } from '@openages/stk/storage'
 
 interface IScrollRestorationProps<T extends HTMLDivElement> {
 	ref: MutableRefObject<T | null>

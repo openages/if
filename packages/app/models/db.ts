@@ -1,6 +1,6 @@
 import { migration_activity_items, migration_dirtree_items, migration_todo, migration_todo_items } from '@/migrations'
 import { schema_activity_items, schema_dirtree_items, schema_todo, schema_todo_items } from '@/schemas'
-import { Idle, uniqBy } from '@openages/stk'
+import { Idle, uniqBy } from '@openages/stk/common'
 import { debounce } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import { createRxDatabase } from 'rxdb'

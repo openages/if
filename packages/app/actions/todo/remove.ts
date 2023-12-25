@@ -1,4 +1,4 @@
-import { local } from '@openages/stk'
+import { local } from '@openages/stk/storage'
 
 import type { DirTree } from '@/types'
 

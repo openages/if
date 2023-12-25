@@ -1,11 +1,11 @@
-import { useMemoizedFn, useDeepCompareEffect } from 'ahooks'
+import { useDeepCompareEffect, useMemoizedFn } from 'ahooks'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { DirTree } from '@/types'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
-import { useDeepUpdateEffect } from '@openages/stk'
+import { useDeepUpdateEffect } from '@openages/stk/react'
 
 import DirItem from '../index'
 import Item from './Item'
