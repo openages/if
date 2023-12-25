@@ -1,5 +1,10 @@
-import { migration_activity_items, migration_dirtree_items, migration_todo, migration_todo_items } from '@/migrations'
-import { schema_activity_items, schema_dirtree_items, schema_todo, schema_todo_items } from '@/schemas'
+import {
+	migration_activity_items,
+	migration_dirtree_items,
+	migration_module_setting,
+	migration_todo_items
+} from '@/migrations'
+import { schema_activity_items, schema_dirtree_items, schema_module_setting, schema_todo_items } from '@/schemas'
 import { Idle, uniqBy } from '@openages/stk/common'
 import { debounce } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
@@ -39,6 +44,11 @@ export default class Index {
 		})
 
 		await db.addCollections({
+			module_setting: {
+				autoMigrate: false,
+				schema: schema_module_setting,
+				migrationStrategies: migration_module_setting
+			},
 			activity_items: {
 				autoMigrate: false,
 				schema: schema_activity_items,
@@ -48,11 +58,6 @@ export default class Index {
 				autoMigrate: false,
 				schema: schema_dirtree_items,
 				migrationStrategies: migration_dirtree_items
-			},
-			todo: {
-				autoMigrate: false,
-				schema: schema_todo,
-				migrationStrategies: migration_todo
 			},
 			todo_items: {
 				autoMigrate: false,
@@ -148,8 +153,8 @@ export default class Index {
 			this.update_queue = uniqBy(this.update_queue, 'id')
 		}
 
-		$db.todo.postSave(
-			debounce(data => pushUpdateQueue(data.id), 900),
+		$db.module_setting.postSave(
+			debounce(data => pushUpdateQueue(data.file_id), 900),
 			true
 		)
 

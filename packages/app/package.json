@@ -36,6 +36,7 @@
 		"emoji-mart": "^5.5.2",
 		"fast-copy": "^3.0.1",
 		"fast-equals": "^5.0.1",
+		"fast-json-stringify": "^5.9.1",
 		"flexsearch": "^0.7.31",
 		"framer-motion": "^10.16.16",
 		"hotkeys-js": "^3.13.3",

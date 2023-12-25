@@ -33,13 +33,9 @@ export default {
                   "text"
             ]
       },
-      "Todo.Data": {
+      "Todo.Setting": {
             "type": "object",
             "properties": {
-                  "id": {
-                        "type": "string",
-                        "maxLength": 30
-                  },
                   "angles": {
                         "type": "array",
                         "items": {
@@ -135,7 +131,6 @@ export default {
                   }
             },
             "required": [
-                  "id",
                   "angles",
                   "tags",
                   "auto_archiving"

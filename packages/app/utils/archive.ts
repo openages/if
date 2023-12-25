@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 
 import type { Todo } from '@/types'
 
-export const getArchiveTime = (auto_archiving: Todo.Data['auto_archiving']) => {
+export const getArchiveTime = (auto_archiving: Todo.Setting['auto_archiving']) => {
 	const now = dayjs()
 
 	switch (auto_archiving) {

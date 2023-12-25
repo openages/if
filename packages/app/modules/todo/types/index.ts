@@ -21,7 +21,8 @@ export interface IPropsTagSelect {
 	onChange?: (v: Array<string>) => void
 }
 
-export interface IPropsHeader extends Pick<Todo.Data & DirTree.Item, 'name' | 'icon' | 'icon_hue' | 'desc' | 'tags'> {
+export interface IPropsHeader
+	extends Pick<Todo.Setting & DirTree.Item, 'name' | 'icon' | 'icon_hue' | 'desc' | 'tags'> {
 	mode: Model['mode']
 	kanban_mode: Model['kanban_mode']
 	items_sort_param: Model['items_sort_param']
@@ -86,7 +87,7 @@ export interface IPropsTodos {
 	items: Model['items']
 	tags: Model['todo']['tags']
 	angles: Model['todo']['angles']
-	relations: Todo.Data['relations']
+	relations: Todo.Setting['relations']
 	drag_disabled: boolean
 	kanban_mode?: Model['kanban_mode']
 	dimension_id?: string
@@ -198,7 +199,7 @@ export interface IPropsDetail {
 	visible_detail_modal: Model['visible_detail_modal']
 	current_detail_index: Model['current_detail_index']
 	current_detail_item: Model['current_detail_item']
-	relations: Todo.Data['relations']
+	relations: Todo.Setting['relations']
 	tags: Model['todo']['tags']
 	update: Model['update']
 	tab: Model['tab']

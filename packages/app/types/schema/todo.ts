@@ -12,9 +12,7 @@ export namespace Todo {
 		text: string
 	}
 
-	export interface Data {
-		/** @maxLength 30 */
-		id: string
+	export interface Setting {
 		angles: Array<Angle>
 		tags: Array<Tag>
 		auto_archiving: '0m' | '3m' | '3h' | '1d' | '3d' | '7d'

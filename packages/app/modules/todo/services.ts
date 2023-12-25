@@ -171,7 +171,7 @@ export const updateTodoData = async (args: ArgsUpdateTodoData) => {
 			...(changed_values.icon_info ?? changed_values)
 		})
 	} else {
-		const target = { ...$copy(todo), ...omit(values, 'icon_info') } as Todo.Data
+		const target = { ...$copy(todo), ...omit(values, 'icon_info') } as Todo.Setting
 
 		setTodo(target)
 
@@ -299,7 +299,7 @@ export const removeTodoItem = async (id: string) => {
 	await $db.collections.todo_items.findOne({ selector: { id } }).remove()
 }
 
-export const restoreArchiveItem = async (id: string, angles: Todo.Data['angles'], current_angle_id: string) => {
+export const restoreArchiveItem = async (id: string, angles: Todo.Setting['angles'], current_angle_id: string) => {
 	const doc = await $db.collections.todo_items.findOne({ selector: { id } }).exec()
 	const angle_exsit = angles.find(item => item.id === doc.angle_id)
 	const sort = await getMaxSort(current_angle_id)

@@ -67,7 +67,7 @@ export default class Index {
 	timer_archive: NodeJS.Timeout = null
 	disable_watcher = false
 
-	todo = {} as Todo.Data
+	todo = {} as Todo.Setting
 	todo_watcher = null as Subscription
 	items = [] as Array<Todo.TodoItem>
 	items_watcher = null as Subscription
@@ -158,7 +158,7 @@ export default class Index {
 	} as Watch<
 		Index & {
 			'current_angle_id|items_sort_param|items_filter_tags': any
-			'todo.angles': Todo.Data['angles']
+			'todo.angles': Todo.Setting['angles']
 			'loadmore.page': number
 		}
 	>
