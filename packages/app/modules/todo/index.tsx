@@ -210,6 +210,7 @@ const Index = ({ id }: IProps) => {
 				!breakpoint && x.visible_detail_modal && styles.visible_detail_modal
 			)}
 		>
+			<DataEmpty></DataEmpty>
 			<If condition={x.id && x.file.data.name && Boolean(angles)}>
 				<Then>
 					<Header {...props_header}></Header>
@@ -245,17 +246,6 @@ const Index = ({ id }: IProps) => {
 					<Detail {...props_detail}></Detail>
 					<Help {...props_help}></Help>
 				</Then>
-				<Else>
-					<When
-						condition={isShowEmpty([
-							x.file.loading,
-							x.utils.loading['queryTodo'],
-							x.utils.loading['queryItems']
-						])}
-					>
-						<DataEmpty></DataEmpty>
-					</When>
-				</Else>
 			</If>
 		</div>
 	)

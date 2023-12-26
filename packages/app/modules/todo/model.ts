@@ -8,7 +8,7 @@ import { GlobalModel } from '@/context/app'
 import { File, Loadmore, Utils } from '@/models'
 import { getDocItem, getDocItemsData, id } from '@/utils'
 import { confirm } from '@/utils/antd'
-import { loading } from '@/utils/decorators'
+import { disableWatcher, loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
 import { IF } from '@openages/stk/common'
 import { updateSort } from '@openages/stk/dnd'
@@ -63,6 +63,7 @@ export default class Index {
 	kanban_mode = '' as KanbanMode
 	timer_cycle: NodeJS.Timeout = null
 	timer_archive: NodeJS.Timeout = null
+	disable_watcher = false
 
 	setting = {} as Todo.TodoSetting
 	setting_watcher = null as Subscription
@@ -196,6 +197,7 @@ export default class Index {
 			{
 				timer_cycle: false,
 				timer_archive: false,
+				disable_watcher: false,
 				setting_watcher: false,
 				items_watcher: false,
 				kanban_items_watcher: false,
@@ -215,7 +217,6 @@ export default class Index {
 
 		this.on()
 		this.watchTodo()
-		this.watchItems()
 	}
 
 	async queryArchives(reset?: boolean) {
@@ -429,6 +430,7 @@ export default class Index {
 		return true
 	}
 
+	@disableWatcher
 	async insert(args: ArgsInsert) {
 		if (this.is_filtered) return
 
@@ -451,6 +453,7 @@ export default class Index {
 		if (callback) await callback()
 	}
 
+	@disableWatcher
 	async tab(args: ArgsTab) {
 		if (this.is_filtered) return
 		if (this.kanban_mode === 'tag') return
@@ -623,6 +626,7 @@ export default class Index {
 			items_sort_param: this.items_sort_param,
 			items_filter_tags: this.items_filter_tags
 		}).$.subscribe(items => {
+			if (this.disable_watcher) return
 			if (!current_angle_id) return
 
 			this.items = getDocItemsData(items)

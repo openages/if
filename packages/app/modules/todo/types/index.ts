@@ -68,7 +68,6 @@ export interface IPropsRemind {
 
 export interface IPropsRemindStatus {
 	remind_time: Todo.Todo['remind_time']
-	useByArchive?: boolean
 }
 
 export interface IPropsCircle {

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Case, Switch } from 'react-if'
 
 import { getRelativeTime } from '@/utils'
-import { ArrowCounterClockwise, CheckSquare, HourglassMedium, Square, Trash } from '@phosphor-icons/react'
+import { ArrowCounterClockwise, CheckSquare, Square, Trash } from '@phosphor-icons/react'
 
 import CycleStatus from '../CycleStatus'
 

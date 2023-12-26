@@ -5,7 +5,7 @@ import styles from './index.css'
 import type { IPropsRemindStatus } from '../../types'
 
 const Index = (props: IPropsRemindStatus) => {
-	const { remind_time, useByArchive } = props
+	const { remind_time } = props
 	const [timeout, setTimeout] = useState(false)
 
 	useEffect(() => {
