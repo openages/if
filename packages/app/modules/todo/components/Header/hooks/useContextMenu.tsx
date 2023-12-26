@@ -83,6 +83,7 @@ export default (args: HookArgs) => {
 		() => [
 			{
 				key: 'edit',
+				disabled: mode === 'kanban',
 				label: (
 					<div className='menu_item_wrap flex align_center'>
 						<PencilSimple size={16}></PencilSimple>

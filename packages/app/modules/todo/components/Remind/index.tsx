@@ -64,6 +64,7 @@ const Index = (props: IPropsRemind) => {
 			disabledDate={v => v && v <= dayjs().startOf('day')}
 			getPopupContainer={() => document.body}
 			presets={options}
+			format={v => dayjs().to(v)}
 			value={remind_time ? dayjs(remind_time) : undefined}
 			onChange={onChange}
 		></DatePicker>

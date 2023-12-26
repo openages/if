@@ -22,6 +22,7 @@ import type { IPropsChildren, IPropsDetail } from '../../types'
 const Index = (props: IPropsDetail) => {
 	const {
 		breakpoint,
+		kanban_mode,
 		visible_detail_modal,
 		current_detail_index,
 		current_detail_item,
@@ -53,12 +54,13 @@ const Index = (props: IPropsDetail) => {
 		useHandlers({
 			item,
 			index: current_detail_index.index,
+			kanban_mode,
 			dimension_id: current_detail_index.dimension_id,
 			visible_detail_modal,
 			update
 		})
 
-	const { ChildrenContextMenu } = useContextMenu({})
+	const { ChildrenContextMenu } = useContextMenu({ kanban_mode })
 
 	const exist_relations = useMemo(() => {
 		if (!item.id || !relations.length) return false

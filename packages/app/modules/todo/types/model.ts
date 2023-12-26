@@ -36,7 +36,7 @@ export type ArchiveQueryParams = {
 	status?: 'unchecked' | 'closed'
 }
 
-export type Indexes = { index: number; dimension_id?: string }
+export type Indexes = { index?: number; dimension_id?: string }
 
 export type ArgsCheck = Indexes & { status: Todo.Todo['status'] }
 

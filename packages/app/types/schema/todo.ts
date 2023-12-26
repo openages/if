@@ -65,6 +65,7 @@ export namespace Todo {
 		remark?: string
 		archive?: boolean
 		archive_time?: number
+		schedule?: boolean
 		children?: Array<{
 			id: string
 			text: string

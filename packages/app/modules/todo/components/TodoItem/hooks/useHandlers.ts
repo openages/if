@@ -35,7 +35,7 @@ export default (args: HookArgs) => {
 
 	const onDrag = useMemoizedFn(({ clientY }) => {
 		if (status !== 'unchecked') return
-		if (dimension_id) return
+		if (kanban_mode === 'tag') return
 
 		makeLinkLine({ active_id: id, y: clientY })
 	})

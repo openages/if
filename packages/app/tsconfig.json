@@ -3,6 +3,7 @@
 		"target": "ES2022",
 		"skipLibCheck": true,
 		"lib": ["ESNEXT", "DOM"],
+		"module": "ESNext",
 		"moduleResolution": "Bundler",
 		"strict": false,
 		"jsxImportSource": "react",

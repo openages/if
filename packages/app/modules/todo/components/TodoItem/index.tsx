@@ -77,7 +77,7 @@ const Index = (props: IPropsTodoItem) => {
 	const { onCheck, onDrag, toggleChildren, insertChildren, removeChildren, onKeyDown, updateTags, updateTagWidth } =
 		useHandlers({ item, index, kanban_mode, dimension_id, makeLinkLine, check, insert, update, tab })
 
-	const { linker, dragging, hovering } = useLink({ item, makeLinkLine, updateRelations })
+	const { linker, dragging, hovering } = useLink({ item, dimension_id, makeLinkLine, updateRelations })
 
 	const { input, onInput } = useInput({
 		value: text,
@@ -171,9 +171,9 @@ const Index = (props: IPropsTodoItem) => {
 				styles.todo_item_wrap,
 				kanban_mode && styles.kanban_mode,
 				kanban_mode === 'tag' && styles.tag_mode,
+				!children?.length && styles.no_children,
 				is_dragging && styles.is_dragging,
 				is_over && styles.is_over,
-				!children?.length && styles.no_children,
 				drag_overlay && 'todo_item_drag_overlay'
 			)}
 			ref={ref => {
@@ -199,7 +199,7 @@ const Index = (props: IPropsTodoItem) => {
 							dragging && 'dragging',
 							hovering && 'hovering'
 						)}
-						ref={dimension_id ? null : linker}
+						ref={kanban_mode !== 'tag' ? linker : null}
 						onDrag={onDrag}
 						onClick={toggleChildren}
 					></div>

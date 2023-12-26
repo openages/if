@@ -8,6 +8,25 @@
 		height: calc(100% - 30px);
 		padding: 0 9px;
 		overflow-y: scroll;
+
+		&.isOver {
+			padding: 0 20px;
+
+			:global {
+				.todo_items_wrap {
+					min-height: 100%;
+					background-color: var(--color_bg_1);
+					border-radius: var(--radius);
+				}
+			}
+		}
+
+		:global {
+			.stage_wrap {
+				top: 0;
+				left: 0;
+			}
+		}
 	}
 
 	:global {

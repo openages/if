@@ -37,27 +37,13 @@
 			}
 		}
 
-		&.no_children {
-			.todo_item {
-				:global {
-					.dot_wrap {
-						display: none;
-					}
-				}
-			}
-		}
-
 		.todo_item {
 			flex-direction: column;
 
 			:global {
 				.drag_wrap {
-					left: -9px;
-				}
-
-				.dot_wrap {
 					left: unset;
-					right: -6px;
+					right: 0px;
 				}
 			}
 		}
@@ -73,6 +59,16 @@
 	}
 
 	&.tag_mode {
+		&.no_children {
+			.todo_item {
+				:global {
+					.dot_wrap {
+						display: none;
+					}
+				}
+			}
+		}
+
 		.todo_item {
 			:global {
 				.drag_wrap {

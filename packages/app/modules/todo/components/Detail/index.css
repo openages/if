@@ -1,5 +1,5 @@
 ._local {
-	--padding: 24px;
+	--padding: 18px;
 
 	&.breakpoint {
 		:global {
@@ -14,7 +14,7 @@
 			}
 
 			.toggle_wrap {
-				top: 29px;
+				top: 24px;
 				right: 62px;
 			}
 		}
@@ -74,8 +74,8 @@
 		}
 
 		.toggle_wrap {
-			top: 17px;
-			right: 54px;
+			top: 12px;
+			right: 48px;
 
 			.btn_toggle {
 				width: 21px;
@@ -194,10 +194,10 @@
 				height: 36px;
 				margin-bottom: 12px;
 				border-radius: var(--radius_large);
-				background-color: rgba(var(--color_text_rgb), 0.04);
+				background-color: var(--color_bg_1);
 
 				&:hover {
-					background-color: rgba(var(--color_text_rgb), 0.1);
+					background-color: var(--color_bg_2);
 				}
 
 				.text {

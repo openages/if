@@ -1,20 +1,19 @@
-import 'dayjs/locale/zh-cn'
-
 import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import calendar from 'dayjs/plugin/calendar'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import duration from 'dayjs/plugin/duration'
-import isoWeek from 'dayjs/plugin/isoWeek'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isToday from 'dayjs/plugin/isToday'
+import isoWeek from 'dayjs/plugin/isoWeek'
 import localeData from 'dayjs/plugin/localeData'
 import minMax from 'dayjs/plugin/minMax'
 import objectSupport from 'dayjs/plugin/objectSupport'
 import quarterOfYear from 'dayjs/plugin/quarterOfYear'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import toObject from 'dayjs/plugin/toObject'
+import updateLocale from 'dayjs/plugin/updateLocale'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 
 dayjs.extend(duration)
@@ -32,4 +31,5 @@ dayjs.extend(isSameOrAfter)
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isoWeek)
 dayjs.extend(weekOfYear)
+dayjs.extend(updateLocale)
 dayjs.extend(relativeTime)

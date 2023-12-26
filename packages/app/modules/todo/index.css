@@ -20,7 +20,7 @@
 
 			.drag_wrap {
 				top: 6px;
-				left: -9px;
+				right: 0px;
 				width: 14px;
 				height: 14px;
 				border-radius: var(--radius_small_1);

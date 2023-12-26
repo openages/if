@@ -5,12 +5,13 @@ import type { IPropsTodoItem } from '../../../types'
 
 interface HookArgs {
 	item: IPropsTodoItem['item']
+	dimension_id: IPropsTodoItem['dimension_id']
 	makeLinkLine: IPropsTodoItem['makeLinkLine']
 	updateRelations: IPropsTodoItem['updateRelations']
 }
 
 export default (args: HookArgs) => {
-	const { item, makeLinkLine, updateRelations } = args
+	const { item, dimension_id, makeLinkLine, updateRelations } = args
 	const { id, status } = item
 	const linker = useRef<HTMLDivElement>(null)
 	const [dragging, setDragging] = useState(false)
@@ -37,7 +38,7 @@ export default (args: HookArgs) => {
 
 			if (active_id === over_id) return
 
-			updateRelations(active_id, id)
+			updateRelations(active_id, id, dimension_id)
 			setHovering(false)
 		},
 		onDragEnter: () => {

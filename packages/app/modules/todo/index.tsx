@@ -1,13 +1,12 @@
 import { DataEmpty } from '@/components'
 import { useStack } from '@/context/stack'
-import { isShowEmpty } from '@/utils'
-import { DndContext, DragOverlay } from '@dnd-kit/core'
+import { DndContext, DragOverlay, pointerWithin } from '@dnd-kit/core'
 import { useMemoizedFn } from 'ahooks'
 import { omit } from 'lodash-es'
 
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useMemo, useState } from 'react'
-import { Case, Else, If, Switch, Then, When } from 'react-if'
+import { Case, If, Switch, Then } from 'react-if'
 import { container } from 'tsyringe'
 
 import { SortableWrap } from '@/components'
@@ -135,6 +134,7 @@ const Index = ({ id }: IProps) => {
 
 	const props_detail: IPropsDetail = {
 		breakpoint,
+		kanban_mode: x.kanban_mode,
 		visible_detail_modal: x.visible_detail_modal,
 		current_detail_index: $copy(x.current_detail_index),
 		current_detail_item: $copy(x.current_detail_item),
@@ -214,7 +214,11 @@ const Index = ({ id }: IProps) => {
 			<If condition={x.id && x.file.data.name && Boolean(angles)}>
 				<Then>
 					<Header {...props_header}></Header>
-					<DndContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+					<DndContext
+						collisionDetection={pointerWithin}
+						onDragStart={onDragStart}
+						onDragEnd={onDragEnd}
+					>
 						<Switch>
 							<Case condition={x.mode === 'list'}>
 								<Tabs {...props_tabs}></Tabs>

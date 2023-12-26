@@ -6,7 +6,7 @@
 	overflow: scroll;
 
 	&.breakpoint_390 {
-		--limited_padding: 30px;
+		--limited_padding: 48px;
 	}
 
 	:global {

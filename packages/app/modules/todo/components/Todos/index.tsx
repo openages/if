@@ -1,6 +1,6 @@
 import { useCssVariable } from '@/hooks'
 import { points } from '@/utils'
-import { useDndMonitor } from '@dnd-kit/core'
+import { useDndMonitor, useDroppable } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { useDeepCompareEffect, useMemoizedFn, useSize } from 'ahooks'
 import { useMemo, useRef, useState } from 'react'
@@ -42,6 +42,12 @@ const Index = (props: IPropsTodos) => {
 	const color_text_line = useCssVariable('--color_text_line')
 	const color_text_softlight = useCssVariable('--color_text_softlight')
 
+	const { isOver, active, setNodeRef } = useDroppable({
+		id: `kanban_${dimension_id}`,
+		data: { index: -1, dimension_id },
+		disabled: items.length > 0
+	})
+
 	useDndMonitor({
 		onDragStart: useMemoizedFn(({ active }: DragStartEvent) => {
 			const exsit_index = relations?.findIndex(item => item.items.includes(active.id as string))
@@ -58,10 +64,18 @@ const Index = (props: IPropsTodos) => {
 	})
 
 	const relations_lines = useMemo(() => {
+		if (kanban_mode === 'tag') return []
+
 		const target: Array<{ point: [string, string]; checked: boolean }> = []
 
 		relations.map(item => {
-			const lines = getLinkedItems(item.items)
+			let links = item.items
+
+			if (kanban_mode) {
+				links = item.items.filter(id => items.find(i => i.id === id))
+			}
+
+			const lines = getLinkedItems(links)
 
 			lines.map(point => {
 				target.push({ point, checked: item.checked })
@@ -69,7 +83,7 @@ const Index = (props: IPropsTodos) => {
 		})
 
 		return target
-	}, [relations])
+	}, [items, relations, kanban_mode])
 
 	const getPoints = useMemoizedFn((ids: [string, string]) => {
 		const active = document.getElementById(ids[0]) as HTMLDivElement
@@ -135,8 +149,16 @@ const Index = (props: IPropsTodos) => {
 	const angles = useMemo(() => _angles.filter(item => item.id !== dimension_id), [_angles, dimension_id])
 
 	return (
-		<div className={$cx('limited_content_wrap relative', styles._local, kanban_mode && styles.kanban_mode)}>
-			{height > 0 && !drag_disabled && (
+		<div
+			className={$cx(
+				'limited_content_wrap relative',
+				styles._local,
+				kanban_mode && styles.kanban_mode,
+				!items.length && isOver && active?.data?.current?.dimension_id !== dimension_id && styles.isOver
+			)}
+			ref={ref => kanban_mode && setNodeRef(ref)}
+		>
+			{height > 0 && !drag_disabled && kanban_mode !== 'tag' && (
 				<Stage className='stage_wrap absolute' width={9} height={height}>
 					<Layer>
 						{lines}

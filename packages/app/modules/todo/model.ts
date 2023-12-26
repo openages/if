@@ -99,7 +99,7 @@ export default class Index {
 
 			archive(this.id)
 		},
-		['setting.angles']: v => {
+		['setting.setting.angles']: v => {
 			if (!this.id) return
 			if (!this.setting.file_id) return
 
@@ -158,7 +158,7 @@ export default class Index {
 	} as Watch<
 		Index & {
 			'current_angle_id|items_sort_param|items_filter_tags': any
-			'setting.angles': Todo.Setting['angles']
+			'setting.setting.angles': Todo.Setting['angles']
 			'loadmore.page': number
 		}
 	>
@@ -343,11 +343,11 @@ export default class Index {
 		await update(data)
 	}
 
-	async updateRelations(active_id: string, over_id: string) {
+	async updateRelations(active_id: string, over_id: string, dimension_id?: string) {
 		await updateRelations({
 			file_id: this.id,
 			setting: this.setting,
-			items: this.items as Array<Todo.Todo>,
+			items: this.getItem({ dimension_id }).items as Array<Todo.Todo>,
 			active_id,
 			over_id
 		})
@@ -380,6 +380,8 @@ export default class Index {
 
 				await update({ id: item.id, sort })
 			} else {
+				if (this.isLinked(this.kanban_items[active_dimension_id].items[active_index].id)) return
+
 				const [active_item] = this.kanban_items[active_dimension_id].items.splice(active_index, 1)
 
 				this.kanban_items[over_dimension_id].items.splice(over_index + 1, 0, active_item)
@@ -394,20 +396,18 @@ export default class Index {
 	async removeAngle(angle_id: string) {
 		const counts = await getAngleTodoCounts(this.id, angle_id)
 
-		const res = await confirm({
-			id: this.id,
-			title: $t('translation:common.notice'),
-			// @ts-ignore
-			content: $t('translation:setting.SettingsModal.angles.remove_confirm', { counts })
-		})
+		if (counts > 0) {
+			const res = await confirm({
+				id: this.id,
+				title: $t('translation:common.notice'),
+				// @ts-ignore
+				content: $t('translation:todo.SettingsModal.angles.remove_confirm', { counts })
+			})
 
-		if (!res) return false
-
-		if (this.mode === 'kanban') this.stopWatchKanbanItems()
+			if (!res) return false
+		}
 
 		await removeAngle(this.id, angle_id)
-
-		if (this.mode === 'kanban') this.watchKanbanItems()
 
 		return true
 	}
@@ -419,7 +419,7 @@ export default class Index {
 			$modal.warning({
 				title: $t('translation:common.notice'),
 				// @ts-ignore
-				content: $t('translation:setting.SettingsModal.tags.remove_confirm', { counts }),
+				content: $t('translation:todo.SettingsModal.tags.remove_confirm', { counts }),
 				centered: true,
 				getContainer: () => document.getElementById(this.id)
 			})
@@ -511,6 +511,8 @@ export default class Index {
 	}
 
 	async moveTo(todo_id: string, angle_id: string) {
+		if (this.isLinked(todo_id)) return
+
 		const sort = await getMaxSort(angle_id)
 
 		await update({ id: todo_id, angle_id, sort: sort + 1 })
@@ -570,6 +572,10 @@ export default class Index {
 		})
 	}
 
+	isLinked(id: string) {
+		return this.setting.setting?.relations?.findIndex(item => item.items.includes(id)) !== -1
+	}
+
 	getItem(args: Indexes) {
 		const { index, dimension_id } = args
 		const kanban_mode = dimension_id !== undefined
@@ -580,7 +586,7 @@ export default class Index {
 			Else: () => this.items
 		})
 
-		return { items, item: items[index] }
+		return { items, item: index === undefined ? null : items[index] }
 	}
 
 	setItem(item: any, data: any) {

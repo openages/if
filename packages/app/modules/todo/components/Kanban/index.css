@@ -18,14 +18,6 @@
 					background-color: var(--color_tag);
 					border-radius: var(--radius);
 				}
-
-				:global {
-					.left_wrap {
-						.name {
-							font-weight: normal;
-						}
-					}
-				}
 			}
 		}
 	}
@@ -43,7 +35,7 @@
 			:global {
 				.left_wrap {
 					.name {
-						font-weight: 500;
+						text-transform: capitalize;
 					}
 
 					.count {
