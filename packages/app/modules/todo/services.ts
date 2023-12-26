@@ -1,4 +1,4 @@
-import { not_archive, update as updateTodo } from '@/actions/todo'
+import { not_archive, updateSetting } from '@/actions/todo'
 import { getArchiveTime, getDocItem } from '@/utils'
 import { confirm } from '@/utils/antd'
 import dayjs from 'dayjs'
@@ -22,7 +22,7 @@ import type {
 import type { RxDB, Todo } from '@/types'
 
 export const getMaxSort = async (angle_id: string) => {
-	const [max_sort_item] = await $db.collections.todo_items
+	const [max_sort_item] = await $db.todo_items
 		.find({ selector: { $or: not_archive, angle_id } })
 		.sort({ sort: 'desc' })
 		.limit(1)
@@ -33,8 +33,8 @@ export const getMaxSort = async (angle_id: string) => {
 	return 0
 }
 
-export const getQueryTodo = (file_id: string) => {
-	return $db.todo.findOne({ selector: { id: file_id } })
+export const getQueryTodoSetting = (file_id: string) => {
+	return $db.module_setting.findOne({ selector: { file_id } })
 }
 
 export const getQueryItems = (args: ArgsQueryItems) => {
@@ -72,13 +72,13 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 		if (items_sort_param.type === 'create_at') sort['create_at'] = items_sort_param.order
 	}
 
-	return $db.collections.todo_items.find({ selector }).sort(sort) as RxDB.ItemsQuery<Todo.TodoItem>
+	return $db.todo_items.find({ selector }).sort(sort) as RxDB.ItemsQuery<Todo.TodoItem>
 }
 
 export const create = async (item: Todo.TodoItem, quick?: boolean) => {
 	const sort = await getMaxSort(item.angle_id)
 
-	const res = await $db.collections.todo_items.insert({
+	const res = await $db.todo_items.insert({
 		...item,
 		sort: sort + 1
 	})
@@ -92,16 +92,8 @@ export const create = async (item: Todo.TodoItem, quick?: boolean) => {
 	return getDocItem(res)
 }
 
-export const queryTodo = (file_id: string) => {
-	return getQueryTodo(file_id).exec()
-}
-
 export const queryItem = (id: string) => {
-	return $db.collections.todo_items.findOne(id).exec()
-}
-
-export const queryItems = (args: ArgsQueryItems) => {
-	return getQueryItems(args).exec()
+	return $db.todo_items.findOne(id).exec()
 }
 
 export const queryArchives = (args: ArgsQueryArchives, query_params: ArchiveQueryParams) => {
@@ -144,7 +136,7 @@ export const queryArchives = (args: ArgsQueryArchives, query_params: ArchiveQuer
 		selector['status'] = status
 	}
 
-	return $db.collections.todo_items
+	return $db.todo_items
 		.find({
 			selector: {
 				file_id,
@@ -159,11 +151,11 @@ export const queryArchives = (args: ArgsQueryArchives, query_params: ArchiveQuer
 }
 
 export const queryArchivesCounts = (file_id: string) => {
-	return $db.collections.todo_items.count({ selector: { file_id, archive: true } }).exec()
+	return $db.todo_items.count({ selector: { file_id, archive: true } }).exec()
 }
 
-export const updateTodoData = async (args: ArgsUpdateTodoData) => {
-	const { file_id, todo, changed_values, values, setTodo } = args
+export const updateTodoSetting = async (args: ArgsUpdateTodoData) => {
+	const { file_id, setting, changed_values, values, setTodo } = args
 
 	if (changed_values.name || changed_values.icon_info) {
 		await $app.Event.emit('todo/dirtree/update', {
@@ -171,16 +163,18 @@ export const updateTodoData = async (args: ArgsUpdateTodoData) => {
 			...(changed_values.icon_info ?? changed_values)
 		})
 	} else {
-		const target = { ...$copy(todo), ...omit(values, 'icon_info') } as Todo.Setting
+		const todo_setting = $copy(setting)
 
-		setTodo(target)
+		todo_setting.setting = { ...todo_setting.setting, ...omit(values, 'icon_info') }
 
-		await updateTodo(file_id, omit(target, 'id'))
+		setTodo(todo_setting)
+
+		await updateSetting(file_id, todo_setting.setting)
 	}
 }
 
 export const update = async (data: ArgsUpdate) => {
-	const todo_item = await $db.collections.todo_items.findOne({ selector: { id: data.id } }).exec()
+	const todo_item = await $db.todo_items.findOne({ selector: { id: data.id } }).exec()
 
 	await todo_item.updateCRDT({
 		ifMatch: {
@@ -201,15 +195,15 @@ export const updateStatus = async (args: ArgsUpdateStatus) => {
 }
 
 export const check = async (args: ArgsCheck) => {
-	const { file_id, todo, id, status } = args
-	const { auto_archiving } = todo
+	const { file_id, setting, id, status } = args
+	const { auto_archiving } = setting.setting
 
-	const exsit_index = todo?.relations?.findIndex(item => item.items.includes(id))
+	const exsit_index = setting.setting?.relations?.findIndex(item => item.items.includes(id))
 
 	await updateStatus({ id, status, auto_archiving })
 
-	if (todo?.relations?.length && exsit_index !== -1) {
-		const relation_ids = $copy(todo.relations[exsit_index]).items
+	if (setting.setting?.relations?.length && exsit_index !== -1) {
+		const relation_ids = $copy(setting.setting.relations[exsit_index]).items
 		const target_index = relation_ids.findIndex(item => item === id)
 
 		relation_ids.splice(target_index, 1)
@@ -224,16 +218,16 @@ export const check = async (args: ArgsCheck) => {
 			})
 		)
 
-		const relations = $copy(todo.relations)
+		const relations = $copy(setting.setting.relations)
 
 		relations[exsit_index].checked = status === 'checked'
 
-		await updateTodo(file_id, { relations })
+		await updateSetting(file_id, { relations })
 	}
 }
 
 export const updateRelations = async (args: ArgsUpdateRelations) => {
-	const { file_id, todo, items, active_id, over_id } = args
+	const { file_id, setting, items, active_id, over_id } = args
 
 	if (active_id === over_id) return
 
@@ -244,15 +238,15 @@ export const updateRelations = async (args: ArgsUpdateRelations) => {
 
 	if (active_item.status !== 'unchecked' || over_item.status !== 'unchecked') return
 
-	if (!todo.relations) {
-		await updateTodo(file_id, { relations: [{ items: [active_id, over_id], checked: false }] })
+	if (!setting.setting.relations) {
+		await updateSetting(file_id, { relations: [{ items: [active_id, over_id], checked: false }] })
 	} else {
-		const relations = $copy(todo.relations)
+		const relations = $copy(setting.setting.relations)
 		const exsit_active_index = relations.findIndex(item => item.items.includes(active_id))
 		const exsit_over_index = relations.findIndex(item => item.items.includes(over_id))
 
 		if (exsit_active_index === -1 && exsit_over_index === -1) {
-			return await updateTodo(file_id, {
+			return await updateSetting(file_id, {
 				relations: [...relations, { items: [active_id, over_id], checked: false }]
 			})
 		}
@@ -261,26 +255,26 @@ export const updateRelations = async (args: ArgsUpdateRelations) => {
 			if (relations[exsit_active_index].items.length === 2) {
 				relations.splice(exsit_active_index, 1)
 
-				return await updateTodo(file_id, { relations })
+				return await updateSetting(file_id, { relations })
 			} else {
 				const over_index = relations[exsit_active_index].items.findIndex(item => item === over_id)
 
 				relations[exsit_active_index].items.splice(over_index, 1)
 
-				return await updateTodo(file_id, { relations })
+				return await updateSetting(file_id, { relations })
 			}
 		}
 
 		if (exsit_active_index !== -1 && exsit_over_index === -1) {
 			relations[exsit_active_index].items.push(over_id)
 
-			return await updateTodo(file_id, { relations })
+			return await updateSetting(file_id, { relations })
 		}
 
 		if (exsit_over_index !== -1 && exsit_active_index === -1) {
 			relations[exsit_over_index].items.push(active_id)
 
-			return await updateTodo(file_id, { relations })
+			return await updateSetting(file_id, { relations })
 		}
 
 		if (exsit_active_index !== -1 && exsit_over_index !== -1) {
@@ -290,17 +284,17 @@ export const updateRelations = async (args: ArgsUpdateRelations) => {
 
 			relations.splice(exsit_over_index, 1)
 
-			return await updateTodo(file_id, { relations })
+			return await updateSetting(file_id, { relations })
 		}
 	}
 }
 
 export const removeTodoItem = async (id: string) => {
-	await $db.collections.todo_items.findOne({ selector: { id } }).remove()
+	await $db.todo_items.findOne({ selector: { id } }).remove()
 }
 
 export const restoreArchiveItem = async (id: string, angles: Todo.Setting['angles'], current_angle_id: string) => {
-	const doc = await $db.collections.todo_items.findOne({ selector: { id } }).exec()
+	const doc = await $db.todo_items.findOne({ selector: { id } }).exec()
 	const angle_exsit = angles.find(item => item.id === doc.angle_id)
 	const sort = await getMaxSort(current_angle_id)
 
@@ -336,12 +330,12 @@ export const archiveByTime = async (file_id: string, v: ArgsArchiveByTime) => {
 		id: file_id,
 		title: $t('translation:common.notice'),
 		// @ts-ignore
-		content: $t('translation:todo.Archive.confirm', { date: target_time.format('YYYY-DD-MM') })
+		content: $t('translation:setting.Archive.confirm', { date: target_time.format('YYYY-DD-MM') })
 	})
 
 	if (!res) return
 
-	await $db.collections.todo_items
+	await $db.todo_items
 		.find({
 			selector: {
 				file_id,
@@ -353,15 +347,13 @@ export const archiveByTime = async (file_id: string, v: ArgsArchiveByTime) => {
 }
 
 export const getAngleTodoCounts = async (file_id: string, angle_id: string) => {
-	return $db.collections.todo_items.count({ selector: { file_id, angle_id } }).exec()
+	return $db.todo_items.count({ selector: { file_id, angle_id } }).exec()
 }
 
 export const removeAngle = async (file_id: string, angle_id: string) => {
-	return $db.collections.todo_items.find({ selector: { file_id, angle_id, $or: not_archive } }).remove()
+	return $db.todo_items.find({ selector: { file_id, angle_id, $or: not_archive } }).remove()
 }
 
 export const getTagTodoCounts = async (file_id: string, tag_id: string) => {
-	return $db.collections.todo_items
-		.count({ selector: { file_id, tag_ids: { $elemMatch: { $in: [tag_id] } } } })
-		.exec()
+	return $db.todo_items.count({ selector: { file_id, tag_ids: { $elemMatch: { $in: [tag_id] } } } }).exec()
 }

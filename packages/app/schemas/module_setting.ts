@@ -9,8 +9,9 @@ import type { ExtractDocumentTypeFromTypedRxJsonSchema, RxCollection, RxJsonSche
 const schema = toTypedRxJsonSchema(
 	getCrdtSchema({
 		version: 1,
-		primaryKey: 'module',
+		primaryKey: 'file_id',
 		keyCompression: true,
+		indexes: ['module'],
 		...schema_raw['ModuleSetting.Item']
 	} as const)
 )

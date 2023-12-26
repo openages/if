@@ -1,6 +1,5 @@
-export { default as add } from './add'
+export { default as insertSetting } from './insertSetting'
 export { default as remove } from './remove'
-export { default as update } from './update'
+export { default as updateSetting } from './updateSetting'
 export { default as archive, not_archive } from './archive'
 export { default as cycle, not_cycle } from './cycle'
-export { default as stringify } from './stringify'

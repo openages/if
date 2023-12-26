@@ -8,7 +8,7 @@ import { GlobalModel } from '@/context/app'
 import { File, Loadmore, Utils } from '@/models'
 import { getDocItem, getDocItemsData, id } from '@/utils'
 import { confirm } from '@/utils/antd'
-import { disableWatcher, loading } from '@/utils/decorators'
+import { loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
 import { IF } from '@openages/stk/common'
 import { updateSort } from '@openages/stk/dnd'
@@ -21,19 +21,17 @@ import {
 	getAngleTodoCounts,
 	getMaxSort,
 	getQueryItems,
-	getQueryTodo,
+	getQueryTodoSetting,
 	getTagTodoCounts,
 	queryArchives,
 	queryArchivesCounts,
 	queryItem,
-	queryItems,
-	queryTodo,
 	removeAngle,
 	removeTodoItem,
 	restoreArchiveItem,
 	update,
 	updateRelations,
-	updateTodoData
+	updateTodoSetting
 } from './services'
 
 import type { RxDB, Todo } from '@/types'
@@ -65,10 +63,9 @@ export default class Index {
 	kanban_mode = '' as KanbanMode
 	timer_cycle: NodeJS.Timeout = null
 	timer_archive: NodeJS.Timeout = null
-	disable_watcher = false
 
-	todo = {} as Todo.Setting
-	todo_watcher = null as Subscription
+	setting = {} as Todo.TodoSetting
+	setting_watcher = null as Subscription
 	items = [] as Array<Todo.TodoItem>
 	items_watcher = null as Subscription
 	kanban_items = {} as KanbanItems
@@ -98,10 +95,12 @@ export default class Index {
 
 			this.stopWatchItems()
 			this.watchItems()
+
+			archive(this.id)
 		},
-		['todo.angles']: v => {
+		['setting.angles']: v => {
 			if (!this.id) return
-			if (!this.todo.id) return
+			if (!this.setting.file_id) return
 
 			const exist = v.find(item => item.id === this.current_angle_id)
 
@@ -158,7 +157,7 @@ export default class Index {
 	} as Watch<
 		Index & {
 			'current_angle_id|items_sort_param|items_filter_tags': any
-			'todo.angles': Todo.Setting['angles']
+			'setting.angles': Todo.Setting['angles']
 			'loadmore.page': number
 		}
 	>
@@ -197,8 +196,7 @@ export default class Index {
 			{
 				timer_cycle: false,
 				timer_archive: false,
-				disable_watcher: false,
-				todo_watcher: false,
+				setting_watcher: false,
 				items_watcher: false,
 				kanban_items_watcher: false,
 				watch: false
@@ -215,32 +213,9 @@ export default class Index {
 
 		this.file.init(this.id)
 
-		this.queryTodo()
-
 		this.on()
 		this.watchTodo()
 		this.watchItems()
-	}
-
-	@loading
-	async queryTodo() {
-		const todo = await queryTodo(this.id)
-
-		this.todo = getDocItem(todo)
-	}
-
-	@loading
-	async queryItems() {
-		await archive(this.id)
-
-		const items = await queryItems({
-			file_id: this.id,
-			angle_id: this.current_angle_id,
-			items_sort_param: this.items_sort_param,
-			items_filter_tags: this.items_filter_tags
-		})
-
-		this.items = getDocItemsData(items)
 	}
 
 	async queryArchives(reset?: boolean) {
@@ -269,14 +244,14 @@ export default class Index {
 		this.archive_counts = await queryArchivesCounts(this.id)
 	}
 
-	async updateTodo(changed_values: ArgsUpdateTodoData['changed_values'], values: ArgsUpdateTodoData['values']) {
-		await updateTodoData({
+	async updateSetting(changed_values: ArgsUpdateTodoData['changed_values'], values: ArgsUpdateTodoData['values']) {
+		await updateTodoSetting({
 			file_id: this.id,
-			todo: this.todo,
+			setting: this.setting,
 			changed_values,
 			values,
-			setTodo: todo => {
-				this.todo = todo
+			setTodo: setting => {
+				this.setting = setting
 			}
 		})
 	}
@@ -312,12 +287,12 @@ export default class Index {
 
 		await check({
 			file_id: this.id,
-			todo: this.todo,
+			setting: this.setting,
 			id: item.id,
 			status
 		})
 
-		if (this.todo.auto_archiving === '0m') {
+		if (this.setting.setting.auto_archiving === '0m') {
 			await archive(this.id)
 		}
 
@@ -370,7 +345,7 @@ export default class Index {
 	async updateRelations(active_id: string, over_id: string) {
 		await updateRelations({
 			file_id: this.id,
-			todo: this.todo,
+			setting: this.setting,
 			items: this.items as Array<Todo.Todo>,
 			active_id,
 			over_id
@@ -422,7 +397,7 @@ export default class Index {
 			id: this.id,
 			title: $t('translation:common.notice'),
 			// @ts-ignore
-			content: $t('translation:todo.SettingsModal.angles.remove_confirm', { counts })
+			content: $t('translation:setting.SettingsModal.angles.remove_confirm', { counts })
 		})
 
 		if (!res) return false
@@ -443,7 +418,7 @@ export default class Index {
 			$modal.warning({
 				title: $t('translation:common.notice'),
 				// @ts-ignore
-				content: $t('translation:todo.SettingsModal.tags.remove_confirm', { counts }),
+				content: $t('translation:setting.SettingsModal.tags.remove_confirm', { counts }),
 				centered: true,
 				getContainer: () => document.getElementById(this.id)
 			})
@@ -454,13 +429,12 @@ export default class Index {
 		return true
 	}
 
-	@disableWatcher
 	async insert(args: ArgsInsert) {
 		if (this.is_filtered) return
 
 		const { index, dimension_id, data, callback } = args
-		const todo = data ?? (getTodo() as Todo.TodoItem)
-		const item = await this.create(todo, { quick: true, dimension_id })
+		const setting = data ?? (getTodo() as Todo.TodoItem)
+		const item = await this.create(setting, { quick: true, dimension_id })
 
 		const { items } = this.getItem({ index, dimension_id })
 
@@ -486,8 +460,8 @@ export default class Index {
 
 		if (type === 'in') {
 			const prev_item = items[index - 1]
-			const exsit_index = this.todo.relations
-				? this.todo.relations.findIndex(relation => relation.items.includes(item.id))
+			const exsit_index = this.setting.setting.relations
+				? this.setting.setting.relations.findIndex(relation => relation.items.includes(item.id))
 				: -1
 
 			if (!prev_item || prev_item.type === 'group') return
@@ -554,7 +528,7 @@ export default class Index {
 			await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time: undefined } } })
 		}
 
-		await restoreArchiveItem(id, this.todo.angles, this.current_angle_id)
+		await restoreArchiveItem(id, this.setting.setting.angles, this.current_angle_id)
 
 		this.updateArchiveItems(id)
 	}
@@ -583,7 +557,7 @@ export default class Index {
 	async setActivity(action: 'insert' | 'check') {
 		return $db.activity_items.insert({
 			id: id(),
-			module: 'todo',
+			module: 'setting',
 			file_id: this.id,
 			name: this.file.data.name,
 			timestamp: new Date().valueOf(),
@@ -629,12 +603,14 @@ export default class Index {
 	}
 
 	watchTodo() {
-		this.todo_watcher = getQueryTodo(this.id).$.subscribe(todo => {
-			this.todo = getDocItem(todo)
+		this.setting_watcher = getQueryTodoSetting(this.id).$.subscribe(setting => {
+			const todo_setting = getDocItem(setting)
+
+			this.setting = { ...omit(todo_setting, 'setting'), setting: JSON.parse(todo_setting.setting) }
 
 			if (this.current_angle_id) return
 
-			this.current_angle_id = todo.angles[0].id
+			this.current_angle_id = this.setting.setting.angles[0].id
 		})
 	}
 
@@ -647,7 +623,6 @@ export default class Index {
 			items_sort_param: this.items_sort_param,
 			items_filter_tags: this.items_filter_tags
 		}).$.subscribe(items => {
-			if (this.disable_watcher) return
 			if (!current_angle_id) return
 
 			this.items = getDocItemsData(items)
@@ -656,14 +631,12 @@ export default class Index {
 
 	watchKanbanItems() {
 		if (this.kanban_mode === 'angle') {
-			this.kanban_items_watcher = this.todo.angles.map(item => {
+			this.kanban_items_watcher = this.setting.setting.angles.map(item => {
 				return getQueryItems({
 					file_id: this.id,
 					selector: { type: 'todo' },
 					angle_id: item.id
 				}).$.subscribe(items => {
-					if (this.disable_watcher) return
-
 					this.kanban_items[item.id] = {
 						dimension: { type: 'angle', value: item },
 						items: getDocItemsData(items) as Array<Todo.Todo>
@@ -671,19 +644,17 @@ export default class Index {
 				})
 			})
 		} else {
-			if (!this.todo.tags.length) {
+			if (!this.setting.setting.tags.length) {
 				this.kanban_items = {}
 				this.kanban_items_watcher = []
 			}
 
-			this.kanban_items_watcher = this.todo.tags.map(item => {
+			this.kanban_items_watcher = this.setting.setting.tags.map(item => {
 				return getQueryItems({
 					file_id: this.id,
 					selector: { type: 'todo' },
 					items_filter_tags: [item.id]
 				}).$.subscribe(items => {
-					if (this.disable_watcher) return
-
 					this.kanban_items[item.id] = {
 						dimension: { type: 'tag', value: item },
 						items: getDocItemsData(items) as Array<Todo.Todo>
@@ -709,20 +680,20 @@ export default class Index {
 		this.timer_cycle = setInterval(this.cycleByTime, 30 * 1000)
 		this.timer_archive = setInterval(() => archive(this.id), 60 * 1000)
 
-		window.$app.Event.on('todo/cycleByTime', this.cycleByTime)
+		window.$app.Event.on('setting/cycleByTime', this.cycleByTime)
 	}
 
 	off() {
 		this.utils.off()
 		this.file.off()
 
-		this.todo_watcher?.unsubscribe?.()
+		this.setting_watcher?.unsubscribe?.()
 		this.items_watcher?.unsubscribe?.()
 		this.kanban_items_watcher.forEach(item => item?.unsubscribe?.())
 
 		clearInterval(this.timer_cycle)
 		clearInterval(this.timer_archive)
 
-		window.$app.Event.off('todo/cycleByTime', this.cycleByTime)
+		window.$app.Event.off('setting/cycleByTime', this.cycleByTime)
 	}
 }

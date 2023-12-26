@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { match, P } from 'ts-pattern'
+import { P, match } from 'ts-pattern'
 
 import type { Todo } from '@/types'
 import type { RxDocument } from 'rxdb'
@@ -41,7 +41,7 @@ const recycle = async (item: RxDocument<Todo.Todo>) => {
 }
 
 export default async (file_id: string) => {
-	const cycle_items = await $db.collections.todo_items
+	const cycle_items = await $db.todo_items
 		.find({
 			selector: {
 				file_id,

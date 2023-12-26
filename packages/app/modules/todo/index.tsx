@@ -19,6 +19,7 @@ import Model from './model'
 import type { Todo } from '@/types'
 import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core'
 import type {
+	DragTodoItem,
 	IProps,
 	IPropsArchive,
 	IPropsDetail,
@@ -34,11 +35,12 @@ import type {
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
-	const angles = $copy(x.todo.angles || [])
 	const { breakpoint } = useStack()
-	const [drag_todo_item, setDragTodoItem] = useState<{ index: number; dimension_id: string; item: Todo.TodoItem }>(
-		null
-	)
+	const [drag_todo_item, setDragTodoItem] = useState<DragTodoItem>(null)
+
+	const angles = $copy(x.setting?.setting?.angles || [])
+	const tags = $copy(x.setting?.setting?.tags || [])
+	const relations = $copy(x.setting?.setting?.relations || [])
 
 	useLayoutEffect(() => {
 		x.init({ id })
@@ -52,8 +54,8 @@ const Index = ({ id }: IProps) => {
 		name: x.file.data.name,
 		icon: x.file.data.icon,
 		icon_hue: x.file.data.icon_hue,
-		desc: x.todo.desc,
-		tags: $copy(x.todo.tags),
+		desc: x.setting?.setting?.desc,
+		tags,
 		items_sort_param: $copy(x.items_sort_param),
 		items_filter_tags: $copy(x.items_filter_tags),
 		setMode: useMemoizedFn(x.setMode),
@@ -66,14 +68,14 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_tabs: IPropsTabs = {
-		angles: $copy(x.todo.angles) || [],
+		angles,
 		current_angle_id: x.current_angle_id,
 		setCurrentAngleId: useMemoizedFn(v => (x.current_angle_id = v))
 	}
 
 	const props_input: IPropsInput = {
 		loading: x.utils.loading['create'],
-		tags: $copy(x.todo.tags),
+		tags,
 		create: useMemoizedFn(x.create)
 	}
 
@@ -83,9 +85,9 @@ const Index = ({ id }: IProps) => {
 
 	const props_todos: IPropsTodos = {
 		items: $copy(x.items),
-		tags: $copy(x.todo.tags || []),
+		tags,
 		angles: move_to_angles,
-		relations: $copy(x.todo?.relations || []),
+		relations,
 		drag_disabled: x.is_filtered,
 		check: useMemoizedFn(x.check),
 		updateRelations: useMemoizedFn(x.updateRelations),
@@ -108,9 +110,9 @@ const Index = ({ id }: IProps) => {
 
 	const props_settings_modal: IPropsSettingsModal = {
 		visible_settings_modal: x.visible_settings_modal,
-		todo: { ...$copy(x.todo), ...$copy(x.file.data) },
+		setting: { ...$copy(x.setting?.setting), ...$copy(x.file.data) },
 		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false)),
-		updateTodo: useMemoizedFn(x.updateTodo),
+		updateSetting: useMemoizedFn(x.updateSetting),
 		removeAngle: useMemoizedFn(x.removeAngle),
 		removeTag: useMemoizedFn(x.removeTag)
 	}
@@ -120,8 +122,8 @@ const Index = ({ id }: IProps) => {
 		archives: $copy(x.archives),
 		archive_counts: x.archive_counts,
 		end: x.loadmore.end,
-		angles: $copy(x.todo.angles) || [],
-		tags: $copy(x.todo.tags),
+		angles,
+		tags,
 		archive_query_params: $copy(x.archive_query_params),
 		loadMore: useMemoizedFn(x.loadmore.loadMore),
 		onClose: useMemoizedFn(() => (x.visible_archive_modal = false)),
@@ -136,8 +138,8 @@ const Index = ({ id }: IProps) => {
 		visible_detail_modal: x.visible_detail_modal,
 		current_detail_index: $copy(x.current_detail_index),
 		current_detail_item: $copy(x.current_detail_item),
-		relations: $copy(x.todo?.relations || []),
-		tags: $copy(x.todo.tags),
+		relations,
+		tags,
 		update: useMemoizedFn(x.update),
 		tab: useMemoizedFn(x.tab),
 		setCurrentDetailIndex: useMemoizedFn(v => (x.current_detail_index = v)),
@@ -157,7 +159,7 @@ const Index = ({ id }: IProps) => {
 	const props_drag_todo_item: IPropsTodoItem = drag_todo_item && {
 		item: drag_todo_item.item as Todo.Todo,
 		index: 0,
-		tags: props_todos.tags,
+		tags,
 		angles: props_todos.angles,
 		drag_disabled: false,
 		kanban_mode: x.kanban_mode,
@@ -208,7 +210,7 @@ const Index = ({ id }: IProps) => {
 				!breakpoint && x.visible_detail_modal && styles.visible_detail_modal
 			)}
 		>
-			<If condition={x.id && x.file.data.name}>
+			<If condition={x.id && x.file.data.name && Boolean(angles)}>
 				<Then>
 					<Header {...props_header}></Header>
 					<DndContext onDragStart={onDragStart} onDragEnd={onDragEnd}>

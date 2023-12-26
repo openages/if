@@ -9,30 +9,6 @@
 	}
 
 	:global {
-		.left_wrap {
-			em-emoji {
-				margin-right: 8px;
-
-				.emoji-mart-emoji {
-					margin-bottom: -1px;
-				}
-			}
-
-			.name {
-				font-size: 24px;
-				font-weight: 500;
-				line-height: 1;
-				user-select: none;
-			}
-
-			.desc {
-				margin-top: 12px;
-				color: var(--color_text_grey);
-				user-select: none;
-				font-size: 12px;
-			}
-		}
-
 		.filter_wrap {
 			right: var(--limited_padding);
 
@@ -84,7 +60,35 @@
 			}
 		}
 
+		.left_wrap {
+			width: calc(100% - 180px);
+
+			em-emoji {
+				margin-right: 8px;
+
+				.emoji-mart-emoji {
+					margin-bottom: -1px;
+				}
+			}
+
+			.name {
+				font-size: 24px;
+				font-weight: 500;
+				line-height: 1;
+				user-select: none;
+			}
+
+			.desc {
+				margin-top: 12px;
+				color: var(--color_text_grey);
+				user-select: none;
+				font-size: 12px;
+			}
+		}
+
 		.actions_wrap {
+			width: 180px;
+
 			.icon_wrap {
 				width: 30px;
 				height: 30px;

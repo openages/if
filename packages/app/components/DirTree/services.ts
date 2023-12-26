@@ -13,7 +13,7 @@ export const insert = async (args: ArgsInsert) => {
 	const { actions, item, effect_items } = args
 
 	if (item.type === 'file') {
-		await actions.add(item.id)
+		await actions.insert(item.id)
 	}
 
 	await $db.dirtree_items.insert({ ...item, create_at: new Date().valueOf() })

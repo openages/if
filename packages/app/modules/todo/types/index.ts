@@ -5,13 +5,14 @@ import type Model from '../model'
 
 export type QueryItems = RxDB.ItemsQuery<Todo.TodoItem>
 export type QueryArchives = RxDB.ItemsQuery<Todo.TodoItem>
+export type DragTodoItem = { index: number; dimension_id: string; item: Todo.TodoItem }
 
 export interface IProps {
 	id: string
 }
 
 export interface IPropsTagSelect {
-	options: Model['todo']['tags']
+	options: Model['setting']['setting']['tags']
 	value: Array<string>
 	useByTodo?: boolean
 	useByDetail?: boolean
@@ -37,20 +38,20 @@ export interface IPropsHeader
 }
 
 export interface IPropsTabs {
-	angles: Model['todo']['angles']
+	angles: Model['setting']['setting']['angles']
 	current_angle_id: Model['current_angle_id']
 	setCurrentAngleId: (id: Model['current_angle_id']) => void
 }
 
 export interface IPropsTabsItem {
-	item: Model['todo']['angles'][number]
+	item: Model['setting']['setting']['angles'][number]
 	active: boolean
 	setCurrentAngleId: IPropsTabs['setCurrentAngleId']
 }
 
 export interface IPropsInput {
 	loading: boolean
-	tags?: Model['todo']['tags']
+	tags?: Model['setting']['setting']['tags']
 	create: Model['create']
 }
 
@@ -85,8 +86,8 @@ export interface IPropsCircleStatus {
 
 export interface IPropsTodos {
 	items: Model['items']
-	tags: Model['todo']['tags']
-	angles: Model['todo']['angles']
+	tags: Model['setting']['setting']['tags']
+	angles: Model['setting']['setting']['angles']
 	relations: Todo.Setting['relations']
 	drag_disabled: boolean
 	kanban_mode?: Model['kanban_mode']
@@ -105,8 +106,8 @@ export interface IPropsTodoItem {
 	sortable_props?: SortableProps
 	item: Todo.Todo
 	index: number
-	tags: Model['todo']['tags']
-	angles: Model['todo']['angles']
+	tags: Model['setting']['setting']['tags']
+	angles: Model['setting']['setting']['angles']
 	drag_disabled: boolean
 	kanban_mode?: Model['kanban_mode']
 	dimension_id?: string
@@ -167,9 +168,9 @@ export interface IPropsKanban extends Omit<IPropsTodos, 'items' | 'kanban_mode'>
 
 export interface IPropsSettingsModal {
 	visible_settings_modal: Model['visible_settings_modal']
-	todo: Model['todo'] & Model['file']['data']
+	setting: Model['setting']['setting'] & Model['file']['data']
 	closeSettingsModal: () => void
-	updateTodo: Model['updateTodo']
+	updateSetting: Model['updateSetting']
 	removeAngle: Model['removeAngle']
 	removeTag: Model['removeTag']
 }
@@ -179,8 +180,8 @@ export interface IPropsArchive {
 	archives: Model['archives']
 	archive_counts: Model['archive_counts']
 	end: Model['loadmore']['end']
-	angles: Model['todo']['angles']
-	tags: Model['todo']['tags']
+	angles: Model['setting']['setting']['angles']
+	tags: Model['setting']['setting']['tags']
 	archive_query_params: Model['archive_query_params']
 	loadMore: () => void
 	onClose: () => void
@@ -200,7 +201,7 @@ export interface IPropsDetail {
 	current_detail_index: Model['current_detail_index']
 	current_detail_item: Model['current_detail_item']
 	relations: Todo.Setting['relations']
-	tags: Model['todo']['tags']
+	tags: Model['setting']['setting']['tags']
 	update: Model['update']
 	tab: Model['tab']
 	setCurrentDetailIndex: (v: Model['current_detail_index']) => void

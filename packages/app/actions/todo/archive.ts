@@ -1,5 +1,6 @@
 import { difference } from 'lodash-es'
 
+import type { Todo } from '@/types'
 import { getDocItemsData } from '@/utils'
 
 export const not_archive = [
@@ -9,7 +10,7 @@ export const not_archive = [
 ]
 
 export default async (file_id: string) => {
-	const archive_items = await $db.collections.todo_items
+	const archive_items = await $db.todo_items
 		.find({
 			selector: {
 				file_id: file_id,
@@ -31,7 +32,9 @@ export default async (file_id: string) => {
 
 	await Promise.all(archive_items.map(item => item.updateCRDT({ ifMatch: { $set: { archive: true } } })))
 
-	const info = await $db.todo.findOne({ selector: { id: file_id } }).exec()
+	const module_setting = await $db.module_setting.findOne({ selector: { file_id } }).exec()
+
+	const info = JSON.parse(module_setting.setting) as Todo.Setting
 
 	if (info?.relations && info?.relations?.length && archive_items_data.length) {
 		const relations = $copy(info.relations)
@@ -47,6 +50,6 @@ export default async (file_id: string) => {
 			}
 		})
 
-		await info.updateCRDT({ ifMatch: { $set: { relations } } })
+		await module_setting.updateCRDT({ ifMatch: { $set: { setting: JSON.stringify({ ...info, relations }) } } })
 	}
 }

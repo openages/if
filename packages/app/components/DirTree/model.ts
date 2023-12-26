@@ -48,7 +48,11 @@ export default class Index {
 		public utils: Utils,
 		public node_tree: NodeTree
 	) {
-		makeAutoObservable(this, { actions: false, watch: false }, { autoBind: true })
+		makeAutoObservable(
+			this,
+			{ actions: false, items_watcher: false, disable_watcher: false, watch: false },
+			{ autoBind: true }
+		)
 	}
 
 	async init(args: { module: App.ModuleType; actions: IProps['actions'] }) {

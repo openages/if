@@ -18,12 +18,12 @@ export type ArgsQueryArchives = {
 
 export type ArgsUpdateTodoData = {
 	file_id: string
-	todo: Todo.Setting
+	setting: Model['setting']
 	changed_values: Partial<Todo.Setting & File['data']> & {
 		icon_info: { icon: string; icon_hue?: number }
 	}
 	values: Todo.Setting & File['data']
-	setTodo: (data: Todo.Setting) => void
+	setTodo: (data: Model['setting']) => void
 }
 
 export type ArgsUpdate = Partial<Todo.TodoItem> & { id: string }
@@ -36,14 +36,14 @@ export type ArgsUpdateStatus = {
 
 export type ArgsCheck = {
 	file_id: string
-	todo: Todo.Setting
+	setting: Model['setting']
 	id: string
 	status: Todo.Todo['status']
 }
 
 export type ArgsUpdateRelations = {
 	file_id: string
-	todo: Todo.Setting
+	setting: Model['setting']
 	items: Array<Todo.Todo>
 	active_id: string
 	over_id: string

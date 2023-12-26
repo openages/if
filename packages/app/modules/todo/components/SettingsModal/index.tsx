@@ -14,7 +14,7 @@ const { Item } = Form
 const { TextArea } = Input
 
 const Index = (props: IPropsSettingsModal) => {
-	const { visible_settings_modal, todo, closeSettingsModal, updateTodo, removeAngle, removeTag } = props
+	const { visible_settings_modal, setting, closeSettingsModal, updateSetting, removeAngle, removeTag } = props
 	const limits = useLimits()
 	const { t, i18n } = useTranslation()
 
@@ -33,9 +33,9 @@ const Index = (props: IPropsSettingsModal) => {
 	const props_settings_modal = {
 		className: styles._local,
 		visible: visible_settings_modal,
-		info: todo,
+		info: setting,
 		onClose: closeSettingsModal,
-		onValuesChange: updateTodo
+		onValuesChange: updateSetting
 	}
 
 	return (

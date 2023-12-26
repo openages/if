@@ -59,22 +59,11 @@ const Index = (props: IPropsHeader) => {
 	return (
 		<div
 			className={$cx(
-				'limited_content_wrap border_box flex flex_wrap justify_between align_center transition_normal relative',
+				'limited_content_wrap border_box flex justify_between align_center transition_normal relative',
 				styles._local,
 				mode !== 'list' && styles.other_mode
 			)}
 		>
-			<div className='left_wrap flex flex_column'>
-				<div className='flex align_center'>
-					<When condition={icon}>
-						<Emoji className='icon_emoji' shortcodes={icon} size={21} hue={icon_hue}></Emoji>
-					</When>
-					<div className='name flex justify_between align_center'>{name}</div>
-				</div>
-				<When condition={mode === 'list' && desc}>
-					<span className='desc'>{desc}</span>
-				</When>
-			</div>
 			{(items_filter_tags.length > 0 || items_sort_param) && (
 				<div className='filter_wrap flex absolute top_0'>
 					{items_filter_tags.length > 0 && (
@@ -126,7 +115,18 @@ const Index = (props: IPropsHeader) => {
 					)}
 				</div>
 			)}
-			<div className='actions_wrap flex align_center'>
+			<div className='left_wrap flex flex_column'>
+				<div className='flex align_center'>
+					<When condition={icon}>
+						<Emoji className='icon_emoji' shortcodes={icon} size={21} hue={icon_hue}></Emoji>
+					</When>
+					<div className='name flex justify_between align_center'>{name}</div>
+				</div>
+				<When condition={mode === 'list' && desc}>
+					<span className='desc'>{desc}</span>
+				</When>
+			</div>
+			<div className='actions_wrap flex justify_end align_center'>
 				{mode === 'kanban' && (
 					<div
 						className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'

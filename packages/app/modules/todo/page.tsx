@@ -1,4 +1,4 @@
-import { add, remove } from '@/actions/todo'
+import { insertSetting, remove } from '@/actions/todo'
 import { DirTree } from '@/components'
 
 import type { IPropsDirTree } from '@/components'
@@ -7,7 +7,7 @@ const Index = () => {
 	const props_dir_tree: IPropsDirTree = {
 		module: 'todo',
 		actions: {
-			add,
+			insert: insertSetting,
 			remove
 		}
 	}

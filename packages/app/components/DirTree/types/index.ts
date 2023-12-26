@@ -9,7 +9,7 @@ export interface IProps {
 	module: Model['module']
 	height?: CSSProperties['height']
 	actions: {
-		add: (file_id: string) => Promise<void>
+		insert: (file_id: string) => Promise<any>
 		remove: (focusing_item: DirTree.Item) => Promise<void>
 	}
 }

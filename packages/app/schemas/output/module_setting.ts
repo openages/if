@@ -2,11 +2,11 @@ export default {
       "ModuleSetting.Item": {
             "type": "object",
             "properties": {
-                  "module": {
+                  "file_id": {
                         "type": "string",
                         "maxLength": 30
                   },
-                  "file_id": {
+                  "module": {
                         "type": "string",
                         "maxLength": 30
                   },
@@ -15,8 +15,8 @@ export default {
                   }
             },
             "required": [
-                  "module",
                   "file_id",
+                  "module",
                   "setting"
             ]
       }

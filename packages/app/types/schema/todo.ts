@@ -1,3 +1,5 @@
+import type { ModuleSetting } from '@/types'
+
 export namespace Todo {
 	type Relations = Array<{ items: Array<string>; checked: boolean }>
 
@@ -22,6 +24,10 @@ export namespace Todo {
 			type: string
 			id: string
 		}>
+	}
+
+	export interface TodoSetting extends Pick<ModuleSetting.Item, 'file_id' | 'module'> {
+		setting: Setting
 	}
 
 	type Common = {
