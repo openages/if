@@ -46,7 +46,7 @@ export type ArgsUpdate =
 
 export type ArgsMove = { active: Indexes; over: Indexes }
 
-export type ArgsInsert = Indexes & { data?: Todo.Todo; callback?: () => Promise<void> }
+export type ArgsInsert = Indexes & { data?: Todo.Todo; callback?: () => any }
 
 export type ArgsTab = (Indexes & { type: 'in' }) | (Indexes & { type: 'out'; children_index: number })
 

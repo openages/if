@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import { omit, pick } from 'lodash-es'
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { archive, cycle } from '@/actions/todo'
@@ -440,7 +440,11 @@ export default class Index {
 
 		const { items } = this.getItem({ index, dimension_id })
 
-		items.splice(index + 1, 0, item as Todo.TodoItem)
+		runInAction(() => {
+			items.splice(index + 1, 0, item as Todo.TodoItem)
+
+			if (callback) callback()
+		})
 
 		if (!data) setTimeout(() => document.getElementById(`todo_${item.id}`)?.focus(), 0)
 
@@ -449,8 +453,6 @@ export default class Index {
 
 			await update({ id: item.id, sort })
 		}
-
-		if (callback) await callback()
 	}
 
 	@disableWatcher
@@ -491,20 +493,20 @@ export default class Index {
 				status: 'unchecked'
 			} as Todo.Todo
 
-			item.children.splice(children_index, 1)
-
-			if (!item.children.length) {
-				item.open = false
-			}
-
 			await this.insert({
 				index,
 				dimension_id,
 				data: target_item,
-				callback: async () => {
-					await update({ id: item.id, children: $copy(item.children) })
+				callback() {
+					item.children.splice(children_index, 1)
+
+					if (!item.children.length) {
+						item.open = false
+					}
 				}
 			})
+
+			await update({ id: item.id, children: $copy(item.children) })
 		}
 	}
 
@@ -641,6 +643,8 @@ export default class Index {
 					selector: { type: 'todo' },
 					angle_id: item.id
 				}).$.subscribe(items => {
+					if (this.disable_watcher) return
+
 					this.kanban_items[item.id] = {
 						dimension: { type: 'angle', value: item },
 						items: getDocItemsData(items) as Array<Todo.Todo>
@@ -659,6 +663,8 @@ export default class Index {
 					selector: { type: 'todo' },
 					items_filter_tags: [item.id]
 				}).$.subscribe(items => {
+					if (this.disable_watcher) return
+
 					this.kanban_items[item.id] = {
 						dimension: { type: 'tag', value: item },
 						items: getDocItemsData(items) as Array<Todo.Todo>

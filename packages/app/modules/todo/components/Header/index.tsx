@@ -127,7 +127,7 @@ const Index = (props: IPropsHeader) => {
 				</When>
 			</div>
 			<div className='actions_wrap flex justify_end align_center'>
-				{mode === 'kanban' && (
+				{mode === 'kanban' && tags.length > 0 && (
 					<div
 						className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'
 						onClick={toggleKanbanMode}
