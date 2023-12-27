@@ -4,7 +4,6 @@ export { default as sleep } from './sleep'
 export { default as setFavicon } from './setFavicon'
 export { default as setGlobalAnimation } from './setGlobalAnimation'
 export { default as onWheel } from './onWheel'
-export { default as getRelativeTime } from './getRelativeTime'
 export { default as isShowEmpty } from './isShowEmpty'
 
 export * from './is'

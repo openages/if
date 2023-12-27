@@ -2,7 +2,7 @@
 	:global {
 		.if-drawer-extra {
 			position: absolute;
-			right: 36px;
+			right: 39px;
 
 			.btn {
 				width: 22px;
@@ -16,7 +16,7 @@
 				}
 
 				&_clear {
-					right: 24px;
+					right: 27px;
 				}
 			}
 		}

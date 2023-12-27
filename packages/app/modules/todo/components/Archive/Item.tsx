@@ -1,11 +1,10 @@
+import { ArrowCounterClockwise, CheckSquare, Square, Trash } from '@phosphor-icons/react'
 import { useMemoizedFn } from 'ahooks'
+import dayjs from 'dayjs'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Case, Switch } from 'react-if'
-
-import { getRelativeTime } from '@/utils'
-import { ArrowCounterClockwise, CheckSquare, Square, Trash } from '@phosphor-icons/react'
 
 import CycleStatus from '../CycleStatus'
 
@@ -18,19 +17,7 @@ const Index = (props: IPropsArchiveItem) => {
 	const { t } = useTranslation()
 	const [open, setOpen] = useState(false)
 
-	const relative_time = useMemo(() => {
-		const time = getRelativeTime(create_at)
-
-		// @ts-ignore
-		if (!time.unit) return t(`translation:common.time.${time.x}`)
-
-		// @ts-ignore
-		return t(`translation:common.time.x_unit_ago`, {
-			x: time.x,
-			// @ts-ignore
-			unit: t(`translation:common.time.${time.unit}`)
-		})
-	}, [create_at])
+	const relative_time = useMemo(() => dayjs().to(create_at), [create_at])
 
 	const restore = useMemoizedFn(() => restoreArchiveItem(id))
 	const remove = useMemoizedFn(() => removeArchiveItem(id))
