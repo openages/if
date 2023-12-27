@@ -10,7 +10,7 @@ import { Case, If, Switch, Then } from 'react-if'
 import { container } from 'tsyringe'
 
 import { SortableWrap } from '@/components'
-import { Archive, Detail, Header, Help, Input, Kanban, SettingsModal, Tabs, Todos } from './components'
+import { Archive, Detail, Header, Help, Input, Kanban, SettingsModal, Table, Tabs, Todos } from './components'
 import TodoItem from './components/TodoItem'
 import styles from './index.css'
 import Model from './model'
@@ -27,6 +27,7 @@ import type {
 	IPropsInput,
 	IPropsKanban,
 	IPropsSettingsModal,
+	IPropsTable,
 	IPropsTabs,
 	IPropsTodoItem,
 	IPropsTodos
@@ -37,6 +38,7 @@ const Index = ({ id }: IProps) => {
 	const { breakpoint } = useStack()
 	const [drag_todo_item, setDragTodoItem] = useState<DragTodoItem>(null)
 
+	const items = $copy(x.items)
 	const angles = $copy(x.setting?.setting?.angles || [])
 	const tags = $copy(x.setting?.setting?.tags || [])
 	const relations = $copy(x.setting?.setting?.relations || [])
@@ -85,7 +87,7 @@ const Index = ({ id }: IProps) => {
 	}, [angles, x.kanban_mode, x.current_angle_id])
 
 	const props_todos: IPropsTodos = {
-		items: $copy(x.items),
+		items,
 		tags,
 		angles: move_to_angles,
 		relations,
@@ -108,6 +110,10 @@ const Index = ({ id }: IProps) => {
 		kanban_mode: x.kanban_mode,
 		kanban_items: $copy(x.kanban_items),
 		...omit(props_todos, ['items', 'kanban_mode'])
+	}
+
+	const props_table: IPropsTable = {
+		items
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
@@ -231,6 +237,9 @@ const Index = ({ id }: IProps) => {
 							</Case>
 							<Case condition={x.mode === 'kanban'}>
 								<Kanban {...props_kanban}></Kanban>
+							</Case>
+							<Case condition={x.mode === 'table'}>
+								<Table {...props_table}></Table>
 							</Case>
 						</Switch>
 						{x.kanban_mode === 'angle' && (

@@ -37,6 +37,7 @@ import {
 import type { RxDB, Todo } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
 import type { ManipulateType } from 'dayjs'
+import type { MangoQuerySelector } from 'rxdb'
 import type { Subscription } from 'rxjs'
 import type {
 	ArchiveQueryParams,
@@ -87,6 +88,9 @@ export default class Index {
 
 	current_angle_id = ''
 	current_detail_index = {} as CurrentDetailIndex
+
+	table_pagesize = 15
+	table_selector = {} as MangoQuerySelector<Todo.TodoItem>
 
 	watch = {
 		['current_angle_id|items_sort_param|items_filter_tags']: () => {
@@ -635,19 +639,33 @@ export default class Index {
 	}
 
 	watchItems() {
-		const current_angle_id = this.current_angle_id
+		if (this.mode === 'list') {
+			const current_angle_id = this.current_angle_id
 
-		this.items_watcher = getQueryItems({
-			file_id: this.id,
-			angle_id: this.current_angle_id,
-			items_sort_param: this.items_sort_param,
-			items_filter_tags: this.items_filter_tags
-		}).$.subscribe(items => {
-			if (this.disable_watcher) return
-			if (!current_angle_id) return
+			this.items_watcher = getQueryItems({
+				file_id: this.id,
+				angle_id: this.current_angle_id,
+				items_sort_param: this.items_sort_param,
+				items_filter_tags: this.items_filter_tags
+			}).$.subscribe(items => {
+				if (this.disable_watcher) return
+				if (!current_angle_id) return
 
-			this.items = getDocItemsData(items)
-		})
+				this.items = getDocItemsData(items)
+			})
+		}
+
+		if (this.mode === 'table') {
+			this.items_watcher = getQueryItems({
+				file_id: this.id,
+				items_sort_param: this.items_sort_param,
+				items_filter_tags: this.items_filter_tags,
+				selector: this.table_selector,
+				table_mode: true
+			}).$.subscribe(items => {
+				this.items = getDocItemsData(items)
+			})
+		}
 	}
 
 	watchKanbanItems() {

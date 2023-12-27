@@ -105,13 +105,13 @@ export default (args: HookArgs) => {
 			},
 			{
 				key: 'sort',
+				disabled: mode !== 'list',
 				label: (
 					<div className='menu_item_wrap flex align_center'>
 						<ArrowsDownUp size={16}></ArrowsDownUp>
 						<span className='text ml_6'>{t('translation:todo.Header.options.sort.text')}</span>
 					</div>
 				),
-				disabled: mode !== 'list',
 				children: [
 					{
 						key: 'importance',

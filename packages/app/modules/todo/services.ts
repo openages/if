@@ -38,21 +38,24 @@ export const getQueryTodoSetting = (file_id: string) => {
 }
 
 export const getQueryItems = (args: ArgsQueryItems) => {
-	const { file_id, angle_id, items_sort_param, items_filter_tags, selector: _selector } = args
+	const { file_id, angle_id, items_sort_param, items_filter_tags, selector: _selector, table_mode } = args
 
-	const selector: MangoQuerySelector<Todo.TodoItem> = {
-		file_id,
-		$or: not_archive,
-		..._selector
-	}
-	const sort: MangoQuerySortPart<Todo.Todo> = { sort: 'asc', create_at: 'asc' }
+	const selector: MangoQuerySelector<Todo.TodoItem> = { file_id, ..._selector }
 
-	if (angle_id) {
-		selector['angle_id'] = angle_id
-	}
+	const sort: MangoQuerySortPart<Todo.Todo> = {}
 
-	if (items_filter_tags?.length || items_sort_param) {
+	if (!table_mode) {
+		selector['$or'] = not_archive
+
+		if (angle_id) selector['angle_id'] = angle_id
+		if (items_filter_tags?.length || items_sort_param) selector['type'] = 'todo'
+
+		sort['sort'] = 'asc'
+		sort['create_at'] = 'asc'
+	} else {
 		selector['type'] = 'todo'
+
+		sort['create_at'] = 'desc'
 	}
 
 	if (items_filter_tags?.length) {
@@ -64,8 +67,8 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 	}
 
 	if (items_sort_param) {
-		delete sort['sort']
-		delete sort['create_at']
+		if (sort['sort']) delete sort['sort']
+		if (sort['create_at']) delete sort['create_at']
 
 		if (items_sort_param.type === 'importance') sort['star'] = items_sort_param.order
 		if (items_sort_param.type === 'alphabetical') sort['text'] = items_sort_param.order

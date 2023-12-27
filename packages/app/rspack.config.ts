@@ -34,6 +34,7 @@ module.exports = defineConfig({
 		rspackFuture: {
 			newResolver: true,
 			// newTreeshaking: true,
+			// disableApplyEntryLazily: true,
 			disableTransformByDefault: true
 		}
 	},

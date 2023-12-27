@@ -172,6 +172,10 @@ export interface IPropsKanban extends Omit<IPropsTodos, 'items'> {
 	kanban_items: Model['kanban_items']
 }
 
+export interface IPropsTable {
+	items: Model['items']
+}
+
 export interface IPropsSettingsModal {
 	visible_settings_modal: Model['visible_settings_modal']
 	setting: Model['setting']['setting'] & Model['file']['data']

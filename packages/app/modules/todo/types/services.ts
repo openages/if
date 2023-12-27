@@ -9,6 +9,7 @@ export type ArgsQueryItems = {
 	items_sort_param?: Model['items_sort_param']
 	items_filter_tags?: Model['items_filter_tags']
 	selector?: MangoQuerySelector<Todo.TodoItem>
+	table_mode?: boolean
 }
 
 export type ArgsQueryArchives = {

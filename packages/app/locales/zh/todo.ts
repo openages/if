@@ -45,6 +45,11 @@ export default {
 			help: '帮助'
 		}
 	},
+	Table: {
+		columns: {
+			text: '文本'
+		}
+	},
 	SettingsModal: {
 		desc: {
 			label: '简介',
