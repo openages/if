@@ -25,11 +25,13 @@ export interface IPropsTagSelect {
 export interface IPropsHeader
 	extends Pick<Todo.Setting & DirTree.Item, 'name' | 'icon' | 'icon_hue' | 'desc' | 'tags'> {
 	mode: Model['mode']
+	zen_mode: Model['zen_mode']
 	kanban_mode: Model['kanban_mode']
 	items_sort_param: Model['items_sort_param']
 	items_filter_tags: Model['items_filter_tags']
 	setMode: Model['setMode']
-	toggleKanbanMode: Model['toggleKanbanMode']
+	toggleZenMode: () => void
+	toggleKanbanMode: () => void
 	showSettingsModal: () => void
 	showArchiveModal: () => void
 	showHelpModal: () => void
@@ -89,6 +91,7 @@ export interface IPropsTodos {
 	angles: Model['setting']['setting']['angles']
 	relations: Todo.Setting['relations']
 	drag_disabled: boolean
+	zen_mode: Model['zen_mode']
 	kanban_mode?: Model['kanban_mode']
 	dimension_id?: string
 	check: Model['check']
@@ -108,6 +111,7 @@ export interface IPropsTodoItem {
 	tags: Model['setting']['setting']['tags']
 	angles: Model['setting']['setting']['angles']
 	drag_disabled: boolean
+	zen_mode: Model['zen_mode']
 	kanban_mode?: Model['kanban_mode']
 	dimension_id?: string
 	drag_overlay?: boolean
@@ -160,8 +164,7 @@ export interface IPropsGroupTitle {
 	remove: Model['remove']
 }
 
-export interface IPropsKanban extends Omit<IPropsTodos, 'items' | 'kanban_mode'> {
-	kanban_mode: Model['kanban_mode']
+export interface IPropsKanban extends Omit<IPropsTodos, 'items'> {
 	kanban_items: Model['kanban_items']
 }
 

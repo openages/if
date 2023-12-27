@@ -20,10 +20,6 @@ export namespace Todo {
 		auto_archiving: '0m' | '3m' | '3h' | '1d' | '3d' | '7d'
 		desc?: string
 		relations?: Relations
-		links?: Array<{
-			type: string
-			id: string
-		}>
 	}
 
 	export interface TodoSetting extends Pick<ModuleSetting.Item, 'file_id' | 'module'> {
@@ -58,10 +54,6 @@ export namespace Todo {
 			exclude?: Array<number>
 		}
 		recycle_time?: number
-		links?: Array<{
-			type: string
-			id: string
-		}>
 		remark?: string
 		archive?: boolean
 		archive_time?: number

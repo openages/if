@@ -5,7 +5,6 @@ import {
 	migration_todo_items
 } from '@/migrations'
 import { schema_activity_items, schema_dirtree_items, schema_module_setting, schema_todo_items } from '@/schemas'
-import { Idle, uniqBy } from '@openages/stk/common'
 import { debounce } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import { createRxDatabase } from 'rxdb'
@@ -20,11 +19,9 @@ import type { RxCollection } from 'rxdb'
 export default class Index {
 	ready = false
 	instance = null as RxDB.DBContent | null
-	update_queue = [] as Array<{ id: string; timestamp: number }>
-	idle = null as Idle<Index>
 
 	constructor() {
-		makeAutoObservable(this, { instance: false, update_queue: false, idle: false }, { autoBind: true })
+		makeAutoObservable(this, { instance: false }, { autoBind: true })
 	}
 
 	async init() {
@@ -76,10 +73,9 @@ export default class Index {
 		window.$app.Event.emit('app/setLoading', { visible: false })
 
 		this.hooks()
-		this.idleQueue()
 	}
 
-	async migrateRxdb() {
+	private async migrateRxdb() {
 		window.$app.Event.emit('app/setLoading', { visible: true, desc: $t('translation:app.migrating') })
 
 		await migrateStorage({
@@ -91,7 +87,7 @@ export default class Index {
 		})
 	}
 
-	async migrateSchema() {
+	private async migrateSchema() {
 		const collections = Object.values($db.collections)
 		const check_migrations = collections.map(async item => ((await item.migrationNeeded()) ? item : false))
 		const should_migrations = (await Promise.all(check_migrations)).filter(item => item)
@@ -104,68 +100,27 @@ export default class Index {
 		}
 	}
 
-	async updateTimeStamp(id: string, timestamp: number) {
+	private async updateTimeStamp(id: string, timestamp: number) {
 		const doc = await $db.dirtree_items.findOne(id).exec()
+
+		if (!doc) return
 
 		return doc.updateCRDT({ ifMatch: { $set: { update_at: timestamp } } })
 	}
 
-	idleQueue() {
-		this.idle = new Idle({
-			context: this,
-			async onIdle() {
-				const _this = this as Index
-
-				if (!_this.update_queue.length) return
-
-				const async_update_queue = _this.update_queue.map(item =>
-					_this.updateTimeStamp(item.id, item.timestamp)
-				)
-
-				const removeUpdated = (length: number) => {
-					_this.update_queue = _this.update_queue.slice(length)
-				}
-
-				try {
-					let length = 0
-
-					for await (const _ of async_update_queue) {
-						length++
-
-						if (!_this.idle.idle) {
-							removeUpdated(length)
-
-							throw new Error()
-						}
-					}
-
-					removeUpdated(length)
-				} catch (error) {}
-			}
-		})
-
-		this.idle.start()
-	}
-
-	hooks() {
-		const pushUpdateQueue = (id: string) => {
-			this.update_queue.push({ id, timestamp: new Date().valueOf() })
-			this.update_queue = uniqBy(this.update_queue, 'id')
-		}
-
+	private hooks() {
 		$db.module_setting.postSave(
-			debounce(data => pushUpdateQueue(data.file_id), 900),
+			debounce(data => this.updateTimeStamp(data.file_id, new Date().valueOf()), 900),
 			true
 		)
 
 		$db.todo_items.postSave(
-			debounce(data => pushUpdateQueue(data.file_id), 900),
+			debounce(data => this.updateTimeStamp(data.file_id, new Date().valueOf()), 900),
 			true
 		)
 	}
 
 	off() {
 		this.instance?.destroy?.()
-		this.idle?.stop?.()
 	}
 }

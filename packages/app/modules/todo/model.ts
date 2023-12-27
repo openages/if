@@ -60,6 +60,7 @@ import type { ArgsArchiveByTime, ArgsUpdateTodoData } from './types/services'
 export default class Index {
 	id = ''
 	mode = 'list' as Mode
+	zen_mode = false
 	kanban_mode = '' as KanbanMode
 	timer_cycle: NodeJS.Timeout = null
 	timer_archive: NodeJS.Timeout = null
@@ -136,6 +137,7 @@ export default class Index {
 			this.visible_detail_modal = false
 
 			if (v === 'list' || v === 'table') {
+				this.zen_mode = false
 				this.kanban_mode = '' as KanbanMode
 				this.kanban_items = {}
 
@@ -143,6 +145,7 @@ export default class Index {
 			}
 
 			if (v === 'kanban') {
+				this.zen_mode = true
 				this.kanban_mode = 'angle'
 				this.items = []
 
@@ -609,10 +612,6 @@ export default class Index {
 		this.mode = v
 		this.items_sort_param = null
 		this.items_filter_tags = []
-	}
-
-	toggleKanbanMode() {
-		this.kanban_mode = this.kanban_mode === 'angle' ? 'tag' : 'angle'
 	}
 
 	updateArchiveItems(id: string) {

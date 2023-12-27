@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
+	ArchiveBox,
 	ArrowsDownUp,
 	CalendarPlus,
 	Kanban,
@@ -25,6 +26,7 @@ interface HookArgs {
 	items_filter_tags: IPropsHeader['items_filter_tags']
 	setMode: IPropsHeader['setMode']
 	showSettingsModal: IPropsHeader['showSettingsModal']
+	showArchiveModal: IPropsHeader['showArchiveModal']
 	showHelpModal: IPropsHeader['showHelpModal']
 	setItemsSortParam: IPropsHeader['setItemsSortParam']
 	setItemsFilterTags: IPropsHeader['setItemsFilterTags']
@@ -37,6 +39,7 @@ export default (args: HookArgs) => {
 		items_filter_tags,
 		setMode,
 		showSettingsModal,
+		showArchiveModal,
 		showHelpModal,
 		setItemsSortParam,
 		setItemsFilterTags
@@ -88,6 +91,15 @@ export default (args: HookArgs) => {
 					<div className='menu_item_wrap flex align_center'>
 						<PencilSimple size={16}></PencilSimple>
 						<span className='text ml_6'>{t('translation:todo.Header.options.edit')}</span>
+					</div>
+				)
+			},
+			{
+				key: 'archive',
+				label: (
+					<div className='menu_item_wrap flex align_center'>
+						<ArchiveBox size={16}></ArchiveBox>
+						<span className='text ml_6'>{t('translation:todo.Header.options.archive')}</span>
 					</div>
 				)
 			},
@@ -189,6 +201,9 @@ export default (args: HookArgs) => {
 			switch (key) {
 				case 'edit':
 					showSettingsModal()
+					break
+				case 'archive':
+					showArchiveModal()
 					break
 				case 'help':
 					showHelpModal()

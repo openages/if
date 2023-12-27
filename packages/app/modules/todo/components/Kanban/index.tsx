@@ -6,6 +6,7 @@ import type { IPropsKanban } from '../../types'
 
 const Index = (props: IPropsKanban) => {
 	const {
+		zen_mode,
 		kanban_mode,
 		kanban_items,
 		tags,
@@ -67,6 +68,7 @@ const Index = (props: IPropsKanban) => {
 							angles,
 							relations,
 							drag_disabled,
+							zen_mode,
 							check,
 							updateRelations,
 							insert,

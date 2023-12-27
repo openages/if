@@ -19,14 +19,22 @@ export default {
 	},
 	default_angles: ['此刻', '计划', '想法', '等待', '循环', '垃圾箱'],
 	Header: {
+		kanban_mode: {
+			angle: '分类模式',
+			tag: '标签模式'
+		},
+		visible_mode: {
+			zen: '禅意模式',
+			normal: '常规模式'
+		},
 		mode: {
 			list: '列表',
 			kanban: '看板',
 			table: '表格'
 		},
-		archive: '归档',
 		options: {
 			edit: '编辑',
+			archive: '归档',
 			sort: {
 				text: '排序',
 				importance: '重要性',

@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next'
 import { Else, If, Then, When } from 'react-if'
 
 import { Emoji } from '@/components'
-import { ArchiveBox, CaretDown, CaretUp, CubeTransparent, DotsThreeCircleVertical, Tag, X } from '@phosphor-icons/react'
-import { Shapes } from 'lucide-react'
+import { CaretDown, CaretUp, CheckFat, CubeTransparent, DotsThreeCircleVertical, Tag, X } from '@phosphor-icons/react'
+import { ListTodo, Shapes } from 'lucide-react'
 
 import TagSelect from '../TagSelect'
 import { useContextMenu } from './hooks'
@@ -16,6 +16,7 @@ import type { IPropsHeader } from '../../types'
 const Index = (props: IPropsHeader) => {
 	const {
 		mode,
+		zen_mode,
 		kanban_mode,
 		name,
 		icon,
@@ -25,6 +26,7 @@ const Index = (props: IPropsHeader) => {
 		items_sort_param,
 		items_filter_tags,
 		setMode,
+		toggleZenMode,
 		toggleKanbanMode,
 		showSettingsModal,
 		showArchiveModal,
@@ -39,6 +41,7 @@ const Index = (props: IPropsHeader) => {
 		items_filter_tags,
 		setMode,
 		showSettingsModal,
+		showArchiveModal,
 		showHelpModal,
 		setItemsSortParam,
 		setItemsFilterTags
@@ -123,18 +126,48 @@ const Index = (props: IPropsHeader) => {
 					</When>
 					<div className='name flex justify_between align_center'>{name}</div>
 				</div>
-				<When condition={mode === 'list' && desc}>
+				<When condition={desc}>
 					<span className='desc'>{desc}</span>
 				</When>
 			</div>
 			<div className='actions_wrap flex justify_end align_center'>
 				{mode === 'kanban' && tags.length > 0 && (
-					<div
-						className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'
-						onClick={toggleKanbanMode}
+					<Tooltip
+						title={t(
+							`translation:todo.Header.kanban_mode.${
+								kanban_mode === 'angle' ? 'tag' : 'angle'
+							}`
+						)}
 					>
-						{kanban_mode === 'angle' ? <Tag size={18}></Tag> : <Shapes size={15}></Shapes>}
-					</div>
+						<div className='mr_8'>
+							<div
+								className='icon_wrap border_box flex justify_center align_center cursor_point clickable'
+								onClick={toggleKanbanMode}
+							>
+								{kanban_mode === 'angle' ? (
+									<Tag size={18}></Tag>
+								) : (
+									<Shapes size={15}></Shapes>
+								)}
+							</div>
+						</div>
+					</Tooltip>
+				)}
+				{mode !== 'table' && (
+					<Tooltip title={t(`translation:todo.Header.visible_mode.${zen_mode ? 'normal' : 'zen'}`)}>
+						<div className='mr_8'>
+							<div
+								className='icon_wrap border_box flex justify_center align_center cursor_point clickable'
+								onClick={toggleZenMode}
+							>
+								{zen_mode ? (
+									<ListTodo size={18} strokeWidth={1.5}></ListTodo>
+								) : (
+									<CheckFat size={18}></CheckFat>
+								)}
+							</div>
+						</div>
+					</Tooltip>
 				)}
 				<ConfigProvider getPopupContainer={() => document.body}>
 					<Dropdown
@@ -150,16 +183,6 @@ const Index = (props: IPropsHeader) => {
 						</div>
 					</Dropdown>
 				</ConfigProvider>
-				<Tooltip title={t('translation:todo.Header.archive')}>
-					<div>
-						<div
-							className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'
-							onClick={showArchiveModal}
-						>
-							<ArchiveBox size={18}></ArchiveBox>
-						</div>
-					</div>
-				</Tooltip>
 				<ConfigProvider getPopupContainer={() => document.body}>
 					<Dropdown
 						destroyPopupOnHide

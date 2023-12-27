@@ -19,14 +19,22 @@ export default {
 	},
 	default_angles: ['Now', 'Plan', 'Idea', 'Wait', 'Circle', 'Trashbox'],
 	Header: {
+		kanban_mode: {
+			angle: 'Angle',
+			tag: 'Tag'
+		},
+		visible_mode: {
+			zen: 'Zen',
+			normal: 'Normal'
+		},
 		mode: {
 			list: '列表',
 			kanban: '看板',
 			table: '表格'
 		},
-		archive: 'Archive',
 		options: {
 			edit: 'Edit',
+			archive: 'Archive',
 			sort: {
 				text: 'Sort',
 				importance: 'Importance',

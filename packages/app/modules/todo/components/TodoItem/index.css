@@ -1,7 +1,22 @@
 .todo_item_wrap {
+	&.zen_mode {
+		.todo_item {
+			flex-direction: column;
+		}
+
+		:global {
+			.options_container {
+				height: 0;
+				padding: 0;
+				margin: 0;
+				overflow: hidden;
+			}
+		}
+	}
+
 	&.kanban_mode {
 		&.is_dragging {
-			opacity: 0;
+			opacity: 1;
 		}
 
 		&.is_over {
@@ -38,22 +53,11 @@
 		}
 
 		.todo_item {
-			flex-direction: column;
-
 			:global {
 				.drag_wrap {
 					left: unset;
 					right: 0px;
 				}
-			}
-		}
-
-		:global {
-			.options_container {
-				height: 0;
-				padding: 0;
-				margin: 0;
-				overflow: hidden;
 			}
 		}
 	}

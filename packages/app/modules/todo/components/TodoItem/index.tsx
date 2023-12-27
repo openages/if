@@ -24,6 +24,7 @@ const Index = (props: IPropsTodoItem) => {
 		tags,
 		angles,
 		drag_disabled,
+		zen_mode,
 		kanban_mode,
 		dimension_id,
 		drag_overlay,
@@ -169,6 +170,7 @@ const Index = (props: IPropsTodoItem) => {
 			className={$cx(
 				'w_100 border_box flex flex_column',
 				styles.todo_item_wrap,
+				zen_mode && styles.zen_mode,
 				kanban_mode && styles.kanban_mode,
 				kanban_mode === 'tag' && styles.tag_mode,
 				!children?.length && styles.no_children,
@@ -183,7 +185,7 @@ const Index = (props: IPropsTodoItem) => {
 			style={{ transform: CSS.Translate.toString(transform), transition }}
 		>
 			{is_over && <div className='over_line absolute left_0 flex align_center'></div>}
-			{kanban_mode && OptionsWrap}
+			{zen_mode && OptionsWrap}
 			<div
 				className={$cx(
 					'w_100 border_box flex align_start relative',
@@ -230,7 +232,7 @@ const Index = (props: IPropsTodoItem) => {
 							</Case>
 						</Switch>
 					</div>
-					{!kanban_mode && OptionsWrap}
+					{!zen_mode && OptionsWrap}
 					<ConfigProvider getPopupContainer={() => document.body}>
 						<Dropdown
 							destroyPopupOnHide
@@ -250,8 +252,7 @@ const Index = (props: IPropsTodoItem) => {
 								contentEditable='plaintext-only'
 								ref={input}
 								style={{
-									textIndent:
-										!kanban_mode && options_width ? options_width : 'unset'
+									textIndent: !zen_mode && options_width ? options_width : 'unset'
 								}}
 								onInput={onInput}
 								onKeyDown={onKeyDown}

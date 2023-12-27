@@ -1,6 +1,6 @@
 import { DataEmpty } from '@/components'
 import { useStack } from '@/context/stack'
-import { DndContext, DragOverlay, pointerWithin } from '@dnd-kit/core'
+import { DndContext, DragOverlay, pointerWithin, rectIntersection } from '@dnd-kit/core'
 import { useMemoizedFn } from 'ahooks'
 import { omit } from 'lodash-es'
 
@@ -49,6 +49,7 @@ const Index = ({ id }: IProps) => {
 
 	const props_header: IPropsHeader = {
 		mode: x.mode,
+		zen_mode: x.zen_mode,
 		kanban_mode: x.kanban_mode,
 		name: x.file.data.name,
 		icon: x.file.data.icon,
@@ -58,7 +59,8 @@ const Index = ({ id }: IProps) => {
 		items_sort_param: $copy(x.items_sort_param),
 		items_filter_tags: $copy(x.items_filter_tags),
 		setMode: useMemoizedFn(x.setMode),
-		toggleKanbanMode: useMemoizedFn(x.toggleKanbanMode),
+		toggleZenMode: useMemoizedFn(() => (x.zen_mode = !x.zen_mode)),
+		toggleKanbanMode: useMemoizedFn(() => (x.kanban_mode = x.kanban_mode === 'angle' ? 'tag' : 'angle')),
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true)),
 		showArchiveModal: useMemoizedFn(() => (x.visible_archive_modal = true)),
 		showHelpModal: useMemoizedFn(() => (x.visible_help_modal = true)),
@@ -88,6 +90,7 @@ const Index = ({ id }: IProps) => {
 		angles: move_to_angles,
 		relations,
 		drag_disabled: x.is_filtered,
+		zen_mode: x.zen_mode,
 		check: useMemoizedFn(x.check),
 		updateRelations: useMemoizedFn(x.updateRelations),
 		insert: useMemoizedFn(x.insert),
@@ -162,6 +165,7 @@ const Index = ({ id }: IProps) => {
 		tags,
 		angles: props_todos.angles,
 		drag_disabled: false,
+		zen_mode: x.zen_mode,
 		kanban_mode: x.kanban_mode,
 		dimension_id: drag_todo_item.dimension_id,
 		drag_overlay: true,
@@ -215,7 +219,7 @@ const Index = ({ id }: IProps) => {
 				<Then>
 					<Header {...props_header}></Header>
 					<DndContext
-						collisionDetection={pointerWithin}
+						collisionDetection={x.mode === 'kanban' ? pointerWithin : rectIntersection}
 						onDragStart={onDragStart}
 						onDragEnd={onDragEnd}
 					>
