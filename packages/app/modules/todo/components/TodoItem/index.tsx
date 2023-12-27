@@ -5,11 +5,12 @@ import { Case, Switch } from 'react-if'
 
 import { useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
-import { CheckSquare, DotsSixVertical, Square, Star } from '@phosphor-icons/react'
+import { CheckSquare, DotsSixVertical, Square } from '@phosphor-icons/react'
 import { useInput } from '../../hooks'
 import Children from '../Children'
 import CycleStatus from '../CycleStatus'
 import RemindStatus from '../RemindStatus'
+import StarStatus from '../StarStatus'
 import TagSelect from '../TagSelect'
 import { useContextMenu, useHandlers, useLink, useOnContextMenu, useOpen } from './hooks'
 import styles from './index.css'
@@ -142,14 +143,7 @@ const Index = (props: IPropsTodoItem) => {
 						onChange={updateTags}
 					></TagSelect>
 				)}
-				{star > 0 && (
-					<div
-						className='other_wrap white flex justify_center align_center'
-						style={{ color: `rgba(var(--color_main_rgb),${(star / 6).toFixed(2)})` }}
-					>
-						<Star className='icon' size={10} weight='duotone'></Star>
-					</div>
-				)}
+				{star > 0 && <StarStatus star={star}></StarStatus>}
 				{remind_time && <RemindStatus remind_time={remind_time}></RemindStatus>}
 				{cycle_enabled && cycle && (
 					<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>

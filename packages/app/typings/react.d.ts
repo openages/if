@@ -13,4 +13,8 @@ declare module 'react' {
 		offsetX: number
 		offsetY: number
 	}
+
+	interface CSSProperties {
+		[key: string]: any
+	}
 }

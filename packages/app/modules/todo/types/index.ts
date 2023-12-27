@@ -62,6 +62,10 @@ export interface IPropsStar {
 	onChangeStar: (v: Todo.Todo['star']) => void
 }
 
+export interface IPropsStarStatus {
+	star: Todo.Todo['star']
+}
+
 export interface IPropsRemind {
 	remind_time: Todo.Todo['remind_time']
 	useByDetail?: boolean

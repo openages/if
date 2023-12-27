@@ -8,5 +8,6 @@ export * from './theme'
 export * from './modules'
 export * from './layout'
 export * from './values'
+export * from './colors'
 
 export type { ShortcutEventPaths } from './shortcuts'

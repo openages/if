@@ -1,6 +1,6 @@
 ._local {
-	padding: 18px 0;
-	padding-top: 6px;
+	height: 96px;
+	padding-bottom: 18px;
 	background-color: var(--color_bg);
 
 	:global {

@@ -248,6 +248,11 @@
 					&:last-child {
 						margin-right: 0;
 					}
+
+					&.star_wrap {
+						font-size: 9px;
+						line-height: 1;
+					}
 				}
 			}
 		}
