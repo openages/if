@@ -50,4 +50,4 @@ export type ArgsInsert = Indexes & { data?: Todo.Todo; callback?: () => any }
 
 export type ArgsTab = (Indexes & { type: 'in' }) | (Indexes & { type: 'out'; children_index: number })
 
-export type ArgsRemove = Indexes & { id: string }
+export type ArgsRemove = Indexes & { id: string; callback?: () => any }

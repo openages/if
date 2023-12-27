@@ -8,6 +8,7 @@
 					padding: 12px;
 
 					.if-drawer-content {
+						border: none;
 						border-radius: var(--radius);
 					}
 				}
@@ -15,7 +16,7 @@
 
 			.toggle_wrap {
 				top: 24px;
-				right: 62px;
+				right: 57px;
 			}
 		}
 	}
@@ -28,6 +29,7 @@
 					box-sizing: border-box !important;
 
 					.if-drawer-content {
+						border: none;
 						width: 100% !important;
 					}
 				}

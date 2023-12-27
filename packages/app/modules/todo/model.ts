@@ -436,6 +436,7 @@ export default class Index {
 
 		const { index, dimension_id, data, callback } = args
 		const setting = data ?? (getTodo() as Todo.TodoItem)
+
 		const item = await this.create(setting, { quick: true, dimension_id })
 
 		const { items } = this.getItem({ index, dimension_id })
@@ -473,16 +474,21 @@ export default class Index {
 			if (exsit_index !== -1) return
 			if (item.children?.length) return
 
-			await this.remove({ index, dimension_id, id: item.id })
-
 			const data = { ...pick(item, ['id', 'text']), status: 'unchecked' } as Todo.Todo['children'][number]
 
 			const children = prev_item.children ? [...prev_item.children, data] : [data]
 
-			prev_item.children = children
-			prev_item.open = true
+			await this.remove({
+				index,
+				dimension_id,
+				id: item.id,
+				callback() {
+					prev_item.children = children
+					prev_item.open = true
+				}
+			})
 
-			await update({ id: prev_item.id, children, open: true })
+			await update({ id: prev_item.id, children: $copy(children), open: true })
 		} else {
 			const children_index = args.children_index
 			const data = item.children[children_index]
@@ -519,11 +525,15 @@ export default class Index {
 	}
 
 	async remove(args: ArgsRemove) {
-		const { index, dimension_id, id } = args
+		const { index, dimension_id, id, callback } = args
 
 		const { items } = this.getItem({ index, dimension_id })
 
-		items.splice(index, 1)
+		runInAction(() => {
+			items.splice(index, 1)
+
+			if (callback) callback()
+		})
 
 		await removeTodoItem(id)
 	}
