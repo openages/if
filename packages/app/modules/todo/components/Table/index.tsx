@@ -1,4 +1,6 @@
+import { useMemoizedFn } from 'ahooks'
 import { Table } from 'antd'
+import dayjs from 'dayjs'
 import styles from './index.css'
 
 import type { Todo } from '@/types'
@@ -11,7 +13,9 @@ const Index = (props: IPropsTable) => {
 	const columns = [
 		{
 			title: 'text',
-			dataIndex: 'text'
+			dataIndex: 'text',
+			width: 270,
+			ellipsis: true
 		},
 		{
 			title: 'status',
@@ -31,10 +35,11 @@ const Index = (props: IPropsTable) => {
 		},
 		{
 			title: 'tag_ids',
-			dataIndex: 'tag_ids'
+			dataIndex: 'tag_ids',
+			ellipsis: true
 		},
 		{
-			title: 'remind_time',
+			title: 'remind',
 			dataIndex: 'remind_time'
 		},
 		{
@@ -47,13 +52,25 @@ const Index = (props: IPropsTable) => {
 		},
 		{
 			title: 'create_at',
-			dataIndex: 'create_at'
+			dataIndex: 'create_at',
+			align: 'right',
+			render: v => dayjs().to(dayjs(v))
 		}
 	] as TableColumnsType<Todo.Todo>
 
 	return (
-		<div className={$cx('w_100', styles._local)}>
-			<Table columns={columns} dataSource={items} rowKey={item => item.id}></Table>
+		<div className={$cx('w_100 border_box', styles._local)}>
+			<Table
+				size='small'
+				columns={columns}
+				dataSource={items}
+				rowKey={item => item.id}
+				components={{
+					body: {
+						cell: useMemoizedFn(({ onMouseEnter, onMouseLeave, ...rest }) => <td {...rest} />)
+					}
+				}}
+			></Table>
 		</div>
 	)
 }

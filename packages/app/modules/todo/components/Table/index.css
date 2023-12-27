@@ -1,4 +1,53 @@
 ._local {
+	height: calc(100% - 72px);
+	overflow-y: scroll;
+	padding: 0 36px;
+
 	:global {
+		.if-table {
+			table {
+				border-collapse: collapse;
+
+				thead {
+					tr {
+						th {
+							color: var(--color_text_grey);
+							padding: 3px 6px !important;
+							background-color: transparent;
+							text-transform: capitalize;
+
+							&:first-child {
+								padding-left: 0 !important;
+							}
+
+							&:last-child {
+								padding-right: 0 !important;
+							}
+
+							&::before {
+								display: none;
+							}
+						}
+					}
+				}
+
+				tbody {
+					tr {
+						td {
+							height: 39px;
+							padding: 0 6px !important;
+
+							&:first-child {
+								padding-left: 0 !important;
+							}
+
+							&:last-child {
+								padding-right: 0 !important;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }

@@ -224,40 +224,41 @@ const Index = ({ id }: IProps) => {
 			<If condition={x.id && x.file.data.name && Boolean(angles)}>
 				<Then>
 					<Header {...props_header}></Header>
-					<DndContext
-						collisionDetection={x.mode === 'kanban' ? pointerWithin : rectIntersection}
-						onDragStart={onDragStart}
-						onDragEnd={onDragEnd}
-					>
-						<Switch>
-							<Case condition={x.mode === 'list'}>
-								<Tabs {...props_tabs}></Tabs>
-								<Todos {...props_todos}></Todos>
-								<Input {...props_input}></Input>
-							</Case>
-							<Case condition={x.mode === 'kanban'}>
-								<Kanban {...props_kanban}></Kanban>
-							</Case>
-							<Case condition={x.mode === 'table'}>
-								<Table {...props_table}></Table>
-							</Case>
-						</Switch>
-						{x.kanban_mode === 'angle' && (
-							<DragOverlay dropAnimation={null}>
-								{drag_todo_item && (
-									<SortableWrap
-										id={drag_todo_item.item.id}
-										data={{
-											index: drag_todo_item.index,
-											dimension_id: drag_todo_item.dimension_id
-										}}
-									>
-										<TodoItem {...props_drag_todo_item}></TodoItem>
-									</SortableWrap>
-								)}
-							</DragOverlay>
-						)}
-					</DndContext>
+					{x.mode !== 'table' ? (
+						<DndContext
+							collisionDetection={x.mode === 'kanban' ? pointerWithin : rectIntersection}
+							onDragStart={onDragStart}
+							onDragEnd={onDragEnd}
+						>
+							<Switch>
+								<Case condition={x.mode === 'list'}>
+									<Tabs {...props_tabs}></Tabs>
+									<Todos {...props_todos}></Todos>
+									<Input {...props_input}></Input>
+								</Case>
+								<Case condition={x.mode === 'kanban'}>
+									<Kanban {...props_kanban}></Kanban>
+								</Case>
+							</Switch>
+							{x.kanban_mode === 'angle' && (
+								<DragOverlay dropAnimation={null}>
+									{drag_todo_item && (
+										<SortableWrap
+											id={drag_todo_item.item.id}
+											data={{
+												index: drag_todo_item.index,
+												dimension_id: drag_todo_item.dimension_id
+											}}
+										>
+											<TodoItem {...props_drag_todo_item}></TodoItem>
+										</SortableWrap>
+									)}
+								</DragOverlay>
+							)}
+						</DndContext>
+					) : (
+						<Table {...props_table}></Table>
+					)}
 					<SettingsModal {...props_settings_modal}></SettingsModal>
 					<Archive {...props_archive}></Archive>
 					<Detail {...props_detail}></Detail>

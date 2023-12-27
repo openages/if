@@ -342,6 +342,8 @@ export default class Index {
 				if (item.open) {
 					data['open'] = false
 				}
+
+				data['children'] = undefined
 			}
 		}
 
@@ -515,6 +517,7 @@ export default class Index {
 
 					if (!item.children.length) {
 						item.open = false
+						item.children = undefined
 					}
 				}
 			})
