@@ -7,6 +7,16 @@
 
 		:global {
 			.if-select-selector {
+				.if-select-selection-overflow {
+					flex-wrap: nowrap;
+					position: relative;
+
+					&-item-suffix {
+						position: absolute;
+						left: 0;
+					}
+				}
+
 				.if-select-selection-placeholder {
 					inset-inline: 0 !important;
 					padding-left: 2px;
@@ -26,6 +36,20 @@
 
 		min-width: unset;
 		margin-left: 0;
+
+		:global {
+			.tag {
+				padding: 0 4px;
+				margin: 0 1px;
+				font-size: 10px;
+			}
+		}
+	}
+
+	&.useByTable {
+		--height: 14px;
+
+		margin-left: 1px;
 
 		:global {
 			.tag {
@@ -66,7 +90,7 @@
 			padding-right: 4px;
 			border-radius: var(--radius_small);
 			font-size: 12px;
-			font-weight: bold;
+			font-weight: 500;
 			margin: 0 2px;
 			background-color: var(--color_bg);
 

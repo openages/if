@@ -1,11 +1,11 @@
 import { useMemoizedFn } from 'ahooks'
 import { ConfigProvider, Dropdown, Tooltip } from 'antd'
+import { ListTodo, Shapes } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Else, If, Then, When } from 'react-if'
 
 import { Emoji } from '@/components'
 import { CaretDown, CaretUp, CheckFat, CubeTransparent, DotsThreeCircleVertical, Tag, X } from '@phosphor-icons/react'
-import { ListTodo, Shapes } from 'lucide-react'
 
 import TagSelect from '../TagSelect'
 import { useContextMenu } from './hooks'
@@ -74,6 +74,7 @@ const Index = (props: IPropsHeader) => {
 						<div className='filter_item filter_tags border_box flex align_center'>
 							<TagSelect
 								className='select_tags'
+								unlimit
 								options={tags}
 								value={items_filter_tags}
 								placement='bottomRight'

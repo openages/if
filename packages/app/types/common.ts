@@ -10,3 +10,8 @@ export type Mutable<T> = {
 		  ? Mutable<T[K]>
 		  : T[K]
 }
+
+export type CustomFormItem<T> = {
+	value?: T
+	onChange?: (...args: any) => any
+}

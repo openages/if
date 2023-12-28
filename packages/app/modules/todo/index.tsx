@@ -1,15 +1,14 @@
-import { DataEmpty } from '@/components'
-import { useStack } from '@/context/stack'
-import { DndContext, DragOverlay, pointerWithin, rectIntersection } from '@dnd-kit/core'
 import { useMemoizedFn } from 'ahooks'
 import { omit } from 'lodash-es'
-
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useMemo, useState } from 'react'
 import { Case, If, Switch, Then } from 'react-if'
 import { container } from 'tsyringe'
 
-import { SortableWrap } from '@/components'
+import { DataEmpty, SortableWrap } from '@/components'
+import { useStack } from '@/context/stack'
+import { pointerWithin, rectIntersection, DndContext, DragOverlay } from '@dnd-kit/core'
+
 import { Archive, Detail, Header, Help, Input, Kanban, SettingsModal, Table, Tabs, Todos } from './components'
 import TodoItem from './components/TodoItem'
 import styles from './index.css'
@@ -113,7 +112,8 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_table: IPropsTable = {
-		items
+		items,
+		tags
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {

@@ -16,9 +16,11 @@ export interface IPropsTagSelect {
 	value: Array<string>
 	useByTodo?: boolean
 	useByDetail?: boolean
+	useByTable?: boolean
 	kanban_mode?: Model['kanban_mode']
 	className?: SelectProps['className']
 	placement?: SelectProps['placement']
+	unlimit?: boolean
 	onChange?: (v: Array<string>) => void
 }
 
@@ -174,6 +176,7 @@ export interface IPropsKanban extends Omit<IPropsTodos, 'items'> {
 
 export interface IPropsTable {
 	items: Model['items']
+	tags: Model['setting']['setting']['tags']
 }
 
 export interface IPropsSettingsModal {

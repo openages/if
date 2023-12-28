@@ -1,9 +1,10 @@
+import { ColorPicker, Input } from 'antd'
+import { useTranslation } from 'react-i18next'
+
 import { useTagColor } from '@/hooks'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { DotsSixVertical, Plus, Trash } from '@phosphor-icons/react'
-import { ColorPicker, Input } from 'antd'
-import { useTranslation } from 'react-i18next'
 
 interface IProps {
 	item: { id: string; color: string; text: string }
@@ -30,9 +31,10 @@ const Index = (props: IProps) => {
 			style={{ transform: CSS.Transform.toString(transform), transition }}
 		>
 			<ColorPicker
-				className='color_picker clickable mr_6'
+				className='color_picker mr_6'
 				disabledAlpha
 				placement='topLeft'
+				getPopupContainer={() => document.body}
 				value={item.color}
 				onChange={(_, v) => onUpdate('color', index, v)}
 			></ColorPicker>

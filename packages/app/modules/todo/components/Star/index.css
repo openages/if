@@ -7,6 +7,10 @@
 			font-size: 15px;
 			height: 15px;
 
+			&:not(:last-child) {
+				margin-inline-end: 6px;
+			}
+
 			div[role='radio'] {
 				height: 15px;
 			}

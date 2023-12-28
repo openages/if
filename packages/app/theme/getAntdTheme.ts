@@ -32,11 +32,10 @@ export default (theme: Theme, color_main: string) => {
 		},
 		components: {
 			Switch: {
-				controlHeight: 34,
-				controlHeightSM: 24,
+				controlHeight: 24,
+				controlHeightSM: 22,
 				controlHeightXS: 20,
-				colorPrimaryHover: color_main,
-				colorTextQuaternary: vars.color_bg_2
+				colorPrimary: vars.color_text
 			},
 			DatePicker: {
 				controlHeight: 30,
@@ -61,6 +60,7 @@ export default (theme: Theme, color_main: string) => {
 				handleSizeHover: 10
 			},
 			Radio: {
+				dotSize: 9,
 				radioSize: 12
 			}
 		}

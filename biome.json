@@ -9,9 +9,6 @@
 		"indentWidth": 6,
 		"formatWithErrors": true
 	},
-	"organizeImports": {
-		"enabled": true
-	},
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "single",

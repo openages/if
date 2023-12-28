@@ -11,18 +11,28 @@
 				thead {
 					tr {
 						th {
-							color: var(--color_text_grey);
 							padding: 3px 6px !important;
 							background-color: transparent;
 							text-transform: capitalize;
-
-							&:first-child {
-								padding-left: 0 !important;
-							}
+							font-weight: normal;
+							font-size: 12px;
+							white-space: nowrap;
 
 							&:last-child {
 								padding-right: 0 !important;
 							}
+
+							&:nth-of-type(2) {
+								padding-left: 7px !important;
+							}
+
+							&::before {
+								display: none;
+							}
+						}
+
+						td {
+							background-color: transparent;
 
 							&::before {
 								display: none;
@@ -34,11 +44,13 @@
 				tbody {
 					tr {
 						td {
-							height: 39px;
-							padding: 0 6px !important;
+							height: 36px;
+							padding: 0px 6px !important;
+							font-size: 12px;
 
 							&:first-child {
 								padding-left: 0 !important;
+								padding-right: 0 !important;
 							}
 
 							&:last-child {
@@ -48,6 +60,52 @@
 					}
 				}
 			}
+		}
+
+		.table_item {
+			margin: 0 auto;
+		}
+
+		.create_at {
+			color: var(--color_text_light);
+		}
+	}
+}
+
+.RenderText {
+	padding: 0;
+	text-overflow: ellipsis;
+	font-size: 12px;
+}
+
+.RenderStatus {
+	width: 21px;
+	height: 21px;
+	border-radius: var(--radius_small);
+	margin-left: -5px;
+
+	&:hover {
+		background-color: var(--color_bg_2);
+	}
+}
+
+.RenderArchive {
+	line-height: 1;
+
+	:global {
+		.btn_active {
+			width: 21px;
+			height: 21px;
+			border-radius: var(--radius_small);
+			margin-left: -4px;
+
+			&:hover {
+				background-color: var(--color_bg_2);
+			}
+		}
+
+		.archive_time {
+			white-space: nowrap;
 		}
 	}
 }

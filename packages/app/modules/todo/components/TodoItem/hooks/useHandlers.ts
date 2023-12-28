@@ -89,8 +89,6 @@ export default (args: HookArgs) => {
 	})
 
 	const updateTags = useMemoizedFn(v => {
-		if (v?.length > 3) return
-
 		update({ type: 'parent', index, dimension_id, value: { tag_ids: v } as Todo.Todo })
 	})
 

@@ -17,19 +17,10 @@
 					border-color: var(--color_text_grey);
 				}
 
-				.ant-color-picker-color-block {
+				.if-color-picker-color-block {
 					height: 20px;
 					border-radius: 50%;
 				}
-			}
-
-			.ant-color-picker-slider-container {
-				padding: 0 12px;
-				margin-bottom: 0 !important;
-			}
-
-			.ant-color-picker-input-container {
-				padding: 12px;
 			}
 
 			.input {

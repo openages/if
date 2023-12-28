@@ -199,7 +199,6 @@
 				margin-right: 3px;
 				border-radius: 3px;
 				color: var(--color_text_sub);
-				transition: color ease 0.3s;
 
 				&:hover {
 					background-color: var(--color_bg_2);

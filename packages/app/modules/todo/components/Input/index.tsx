@@ -1,6 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
 import { Select } from 'antd'
-
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
@@ -105,8 +104,6 @@ const Index = (props: IPropsInput) => {
 								options={tags}
 								value={(input as Todo.Todo).tag_ids}
 								onChange={v => {
-									if (v?.length > 3) return
-
 									setInput(input => ({ ...input, tag_ids: v }))
 								}}
 							></TagSelect>

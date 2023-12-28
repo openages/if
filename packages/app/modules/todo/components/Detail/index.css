@@ -142,18 +142,6 @@
 					.value_wrap {
 						width: calc(100% - 90px);
 						overflow-x: scroll;
-
-						.if-select-selector {
-							.if-select-selection-overflow {
-								flex-wrap: nowrap;
-								position: relative;
-
-								&-item-suffix {
-									position: absolute;
-									left: 0;
-								}
-							}
-						}
 					}
 				}
 			}
