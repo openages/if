@@ -13,6 +13,7 @@ import { arrayMove } from '@dnd-kit/sortable'
 import { IF } from '@openages/stk/common'
 import { updateSort } from '@openages/stk/dnd'
 import { useInstanceWatch } from '@openages/stk/mobx'
+
 import { getTodo } from './initials'
 import {
 	archiveByTime,
@@ -140,6 +141,8 @@ export default class Index {
 		['mode']: v => {
 			this.visible_detail_modal = false
 
+			this.stopWatchItems()
+
 			if (v === 'list' || v === 'table') {
 				this.zen_mode = false
 				this.kanban_mode = '' as KanbanMode
@@ -152,8 +155,6 @@ export default class Index {
 				this.zen_mode = true
 				this.kanban_mode = 'angle'
 				this.items = []
-
-				this.stopWatchItems()
 			}
 		},
 		['kanban_mode']: _ => {
@@ -590,6 +591,27 @@ export default class Index {
 			timestamp: new Date().valueOf(),
 			action
 		})
+	}
+
+	onTableRowChange(index: number, values: Partial<Todo.Todo>) {
+		const { item } = this.getItem({ index })
+
+		const key = Object.keys(values)[0] as keyof Partial<Todo.Todo>
+		const value = values[key]
+
+		if (key === 'status') {
+			return this.check({ index, status: value as Todo.Todo['status'] })
+		}
+
+		if (key === 'cycle') {
+			return this.update({ type: 'parent', index, value: { ...(value as Partial<Todo.Todo>) } })
+		}
+
+		if (key === 'archive') {
+			return this.restoreArchiveItem(item.id)
+		}
+
+		this.update({ type: 'parent', index, value: values })
 	}
 
 	isLinked(id: string) {

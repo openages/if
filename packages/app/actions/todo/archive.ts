@@ -1,13 +1,10 @@
 import { difference } from 'lodash-es'
 
-import type { Todo } from '@/types'
 import { getDocItemsData } from '@/utils'
 
-export const not_archive = [
-	{ archive: { $exists: false } },
-	{ archive: { $eq: false } },
-	{ archive: { $eq: undefined } }
-]
+import type { Todo } from '@/types'
+
+export const not_archive = [{ archive: { $eq: false } }]
 
 export default async (file_id: string) => {
 	const archive_items = await $db.todo_items

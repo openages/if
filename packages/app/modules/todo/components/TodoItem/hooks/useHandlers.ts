@@ -33,17 +33,38 @@ export default (args: HookArgs) => {
 		check({ index, dimension_id, status: status === 'unchecked' ? 'checked' : 'unchecked' })
 	})
 
+	const updateTags = useMemoizedFn(v => {
+		update({ type: 'parent', index, dimension_id, value: { tag_ids: v } as Todo.Todo })
+	})
+
+	const updateTagWidth = useMemoizedFn(v => {
+		if (v === 0 && !options_width) return
+		if (v === options_width) return
+
+		update({ type: 'parent', index, dimension_id, value: { options_width: v } as Todo.Todo })
+	})
+
+	const updateStar = useMemoizedFn(v => {
+		update({ type: 'parent', index, dimension_id, value: { star: v } as Todo.Todo })
+	})
+
+	const updateRemind = useMemoizedFn(v => {
+		update({ type: 'parent', index, dimension_id, value: { remind_time: v } as Todo.Todo })
+	})
+
+	const updateCircle = useMemoizedFn(v => {
+		update({ type: 'parent', index, dimension_id, value: { ...v } as Todo.Todo })
+	})
+
+	const updateRemark = useMemoizedFn(v => {
+		update({ type: 'parent', index, dimension_id, value: { remark: v } as Todo.Todo })
+	})
+
 	const onDrag = useMemoizedFn(({ clientY }) => {
 		if (status !== 'unchecked') return
 		if (kanban_mode === 'tag') return
 
 		makeLinkLine({ active_id: id, y: clientY })
-	})
-
-	const toggleChildren = useMemoizedFn(() => {
-		if (!children?.length) return
-
-		setOpen(!open)
 	})
 
 	const insertChildren = useMemoizedFn(async (children_index?: number) => {
@@ -72,6 +93,12 @@ export default (args: HookArgs) => {
 		await update({ type: 'children', index, dimension_id, value: children })
 	})
 
+	const toggleChildren = useMemoizedFn(() => {
+		if (!children?.length) return
+
+		setOpen(!open)
+	})
+
 	const onKeyDown = useMemoizedFn(e => {
 		if (e.key === 'Enter') {
 			e.preventDefault()
@@ -88,46 +115,19 @@ export default (args: HookArgs) => {
 		}
 	})
 
-	const updateTags = useMemoizedFn(v => {
-		update({ type: 'parent', index, dimension_id, value: { tag_ids: v } as Todo.Todo })
-	})
-
-	const updateTagWidth = useMemoizedFn(v => {
-		if (v === 0 && !options_width) return
-		if (v === options_width) return
-
-		update({ type: 'parent', index, dimension_id, value: { options_width: v } as Todo.Todo })
-	})
-
-	const updateStar = useMemoizedFn(v => {
-		update({ type: 'parent', index, dimension_id, value: { star: v } as Todo.Todo })
-	})
-
-	const updateRemind = useMemoizedFn(v => {
-		update({ type: 'parent', index, dimension_id, value: { remind_time: v } as Todo.Todo })
-	})
-
-	const updateCircle = useMemoizedFn(v => {
-		update({ type: 'parent', index, dimension_id, value: { ...v } as Todo.Todo })
-	})
-
-	const updateRemark = useMemoizedFn(v => {
-		update({ type: 'parent', index, dimension_id, value: { remark: v } as Todo.Todo })
-	})
-
 	return {
 		setOpen,
 		onCheck,
-		onDrag,
-		toggleChildren,
-		insertChildren,
-		removeChildren,
-		onKeyDown,
 		updateTags,
 		updateTagWidth,
 		updateStar,
 		updateRemind,
 		updateCircle,
-		updateRemark
+		updateRemark,
+		onDrag,
+		toggleChildren,
+		insertChildren,
+		removeChildren,
+		onKeyDown
 	}
 }

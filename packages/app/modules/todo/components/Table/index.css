@@ -17,6 +17,7 @@
 							font-weight: normal;
 							font-size: 12px;
 							white-space: nowrap;
+							color: var(--color_text_light);
 
 							&:last-child {
 								padding-right: 0 !important;
@@ -61,14 +62,15 @@
 				}
 			}
 		}
+	}
+}
 
-		.table_item {
-			margin: 0 auto;
-		}
+.archive {
+	color: var(--color_text_light);
+	pointer-events: none;
 
-		.create_at {
-			color: var(--color_text_light);
-		}
+	.RenderText {
+		color: var(--color_text_light);
 	}
 }
 
@@ -89,6 +91,16 @@
 	}
 }
 
+.RenderRemind {
+	:global {
+		.if-picker-input {
+			input {
+				text-align: center;
+			}
+		}
+	}
+}
+
 .RenderArchive {
 	line-height: 1;
 
@@ -98,15 +110,57 @@
 			height: 21px;
 			border-radius: var(--radius_small);
 			margin-left: -1px;
-			color: var(--color_text_light);
+			color: var(--color_text);
 
 			&:hover {
 				background-color: var(--color_bg_2);
 			}
 		}
 
+		.icon_doing {
+			color: var(--color_text_light);
+		}
+
 		.archive_time {
 			white-space: nowrap;
 		}
 	}
+}
+
+.RenderRemark {
+	&.has_value {
+		:global {
+			.btn_remark {
+				color: var(--color_text);
+			}
+		}
+	}
+
+	:global {
+		.btn_remark {
+			width: 21px;
+			height: 21px;
+			border-radius: var(--radius_small);
+			color: var(--color_text_light);
+
+			&:hover {
+				background-color: var(--color_bg_2);
+			}
+		}
+	}
+}
+
+.RenderRemarkPopover {
+	:global {
+		.if-popover-inner {
+			width: 300px;
+			height: 150px;
+			padding: 18px;
+			overflow-y: scroll;
+		}
+	}
+}
+
+.RenderCreateAt {
+	color: var(--color_text_light);
 }

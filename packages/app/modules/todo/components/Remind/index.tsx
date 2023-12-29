@@ -58,7 +58,6 @@ const Index = (props: IPropsRemind) => {
 			className={$cx(styles._local, !useByDetail && styles.useByInput)}
 			placeholder={t('translation:common.unset')}
 			showTime
-			size='small'
 			suffixIcon={useByDetail ? false : Trigger}
 			bordered={false}
 			disabledDate={v => v && v <= dayjs().startOf('day')}

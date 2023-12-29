@@ -18,6 +18,9 @@ export default {
                         ],
                         "maxLength": 12
                   },
+                  "archive": {
+                        "type": "boolean"
+                  },
                   "open": {
                         "type": "boolean"
                   },
@@ -72,32 +75,14 @@ export default {
                   "recycle_time": {
                         "type": "number"
                   },
-                  "links": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "type": {
-                                          "type": "string"
-                                    },
-                                    "id": {
-                                          "type": "string"
-                                    }
-                              },
-                              "required": [
-                                    "type",
-                                    "id"
-                              ]
-                        }
-                  },
                   "remark": {
                         "type": "string"
                   },
-                  "archive": {
-                        "type": "boolean"
-                  },
                   "archive_time": {
                         "type": "number"
+                  },
+                  "schedule": {
+                        "type": "boolean"
                   },
                   "children": {
                         "type": "array",
@@ -176,6 +161,9 @@ export default {
                         ],
                         "maxLength": 12
                   },
+                  "archive": {
+                        "type": "boolean"
+                  },
                   "open": {
                         "type": "boolean"
                   },
@@ -230,32 +218,14 @@ export default {
                   "recycle_time": {
                         "type": "number"
                   },
-                  "links": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "type": {
-                                          "type": "string"
-                                    },
-                                    "id": {
-                                          "type": "string"
-                                    }
-                              },
-                              "required": [
-                                    "type",
-                                    "id"
-                              ]
-                        }
-                  },
                   "remark": {
                         "type": "string"
                   },
-                  "archive": {
-                        "type": "boolean"
-                  },
                   "archive_time": {
                         "type": "number"
+                  },
+                  "schedule": {
+                        "type": "boolean"
                   },
                   "children": {
                         "type": "array",
@@ -331,6 +301,9 @@ export default {
                         ],
                         "maxLength": 12
                   },
+                  "archive": {
+                        "type": "boolean"
+                  },
                   "open": {
                         "type": "boolean"
                   },
@@ -385,32 +358,14 @@ export default {
                   "recycle_time": {
                         "type": "number"
                   },
-                  "links": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "type": {
-                                          "type": "string"
-                                    },
-                                    "id": {
-                                          "type": "string"
-                                    }
-                              },
-                              "required": [
-                                    "type",
-                                    "id"
-                              ]
-                        }
-                  },
                   "remark": {
                         "type": "string"
                   },
-                  "archive": {
-                        "type": "boolean"
-                  },
                   "archive_time": {
                         "type": "number"
+                  },
+                  "schedule": {
+                        "type": "boolean"
                   },
                   "children": {
                         "type": "array",
@@ -462,6 +417,7 @@ export default {
             },
             "required": [
                   "angle_id",
+                  "archive",
                   "create_at",
                   "file_id",
                   "id",

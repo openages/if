@@ -113,7 +113,8 @@ const Index = ({ id }: IProps) => {
 
 	const props_table: IPropsTable = {
 		items,
-		tags
+		tags,
+		onTableRowChange: useMemoizedFn(x.onTableRowChange)
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {

@@ -20,7 +20,7 @@ module.exports = defineConfig({
 		tsConfigPath: resolve(__dirname, 'tsconfig.json')
 	},
 	devServer: {
-		compress: true
+		compress: false
 	},
 	optimization: {
 		splitChunks: {

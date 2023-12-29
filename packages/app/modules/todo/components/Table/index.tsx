@@ -1,12 +1,15 @@
 import { useMemoizedFn } from 'ahooks'
 import { Table } from 'antd'
-import dayjs from 'dayjs'
 import { useMemo } from 'react'
+
+import { deepEqual } from '@openages/stk/react'
 
 import {
 	Cell,
 	RenderArchive,
+	RenderCreateAt,
 	RenderCycle,
+	RenderRemark,
 	RenderRemind,
 	RenderSchedule,
 	RenderStar,
@@ -23,7 +26,7 @@ import type { TdHTMLAttributes } from 'react'
 import type { IPropsTable } from '../../types'
 
 const Index = (props: IPropsTable) => {
-	const { items, tags } = props
+	const { items, tags, onTableRowChange } = props
 
 	const raw_columns = [
 		{
@@ -42,25 +45,29 @@ const Index = (props: IPropsTable) => {
 		{
 			title: 'tags',
 			dataIndex: 'tag_ids',
-			width: 102,
+			width: 96,
+			align: 'center',
 			render: () => <RenderTags options={tags}></RenderTags>
 		},
 		{
 			title: 'star',
 			dataIndex: 'star',
 			width: 96,
+			align: 'center',
 			render: () => <RenderStar></RenderStar>
 		},
 		{
 			title: 'remind',
 			dataIndex: 'remind_time',
 			width: 96,
+			align: 'center',
 			render: () => <RenderRemind></RenderRemind>
 		},
 		{
 			title: 'cycle',
 			dataIndex: 'cycle',
 			width: 96,
+			align: 'center',
 			deps: ['cycle_enabled'],
 			render: (_, item) => <RenderCycle cycle_enabled={item.cycle_enabled}></RenderCycle>
 		},
@@ -74,33 +81,50 @@ const Index = (props: IPropsTable) => {
 		{
 			title: 'remark',
 			dataIndex: 'remark',
-			align: 'center'
+			width: 60,
+			align: 'center',
+			render: () => <RenderRemark></RenderRemark>
 		},
 		{
 			title: 'archive',
 			dataIndex: 'archive',
-			width: 96,
+			width: 81,
 			align: 'center',
 			ellipsis: true,
+			ignoreArchive: true,
 			deps: ['archive_time'],
 			render: (_, item) => <RenderArchive archive_time={item.archive_time}></RenderArchive>
 		},
 		{
 			title: 'create_at',
 			dataIndex: 'create_at',
-			width: 120,
 			align: 'right',
-			render: v => <span className='create_at'>{dayjs(v).format('YYYY-MM-DD HH:mm:ss')}</span>
+			ellipsis: true,
+			ignoreArchive: true,
+			render: () => <RenderCreateAt></RenderCreateAt>
 		}
-	] as Array<TableColumnType<Todo.Todo> & { deps?: Array<Partial<keyof Todo.Todo>> }>
+	] as Array<TableColumnType<Todo.Todo> & { ignoreArchive?: boolean; deps?: Array<Partial<keyof Todo.Todo>> }>
 
 	const target_columns = useMemo(() => {
 		return raw_columns.map(column => {
-			column.onCell = () => {
-				return { name: (column as TableColumnType<Todo.Todo>).dataIndex } as TdHTMLAttributes<any>
+			column.onCell = item => {
+				return {
+					name: (column as TableColumnType<Todo.Todo>).dataIndex,
+					archive: column.ignoreArchive ? false : item.archive
+				} as TdHTMLAttributes<any>
 			}
 
-			// column.shouldCellUpdate
+			column.shouldCellUpdate = (curr, prev) => {
+				const deps = (column.ignoreArchive ? [] : ['archive']) as Array<Partial<keyof Todo.Todo>>
+
+				if (!column.deps?.length) {
+					deps.push(column.dataIndex as Partial<keyof Todo.Todo>)
+				} else {
+					deps.push(...column.deps)
+				}
+
+				return !deps.map(key => deepEqual(curr[key], prev[key])).every(equal => equal)
+			}
 
 			return column
 		})
@@ -108,7 +132,7 @@ const Index = (props: IPropsTable) => {
 
 	const components = useMemo(() => ({ body: { row: Row, cell: Cell } }), [])
 
-	const onRow = useMemoizedFn(item => ({ item }) as TdHTMLAttributes<any>)
+	const onRow = useMemoizedFn((item, index) => ({ item, index, onTableRowChange }) as TdHTMLAttributes<any>)
 
 	return (
 		<div className={$cx('w_100 border_box', styles._local)}>

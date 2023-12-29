@@ -1,42 +1,58 @@
+import { useMemoizedFn } from 'ahooks'
 import { Form } from 'antd'
 import { motion, AnimatePresence } from 'framer-motion'
+import { debounce } from 'lodash-es'
 import { useState } from 'react'
 
 import { useDeepEffect } from '@/hooks'
+import { deepEqual } from '@openages/stk/react'
 
-import type { ReactNode, DOMAttributes } from 'react'
+import type { ReactElement, DOMAttributes } from 'react'
 import type { Todo } from '@/types'
+import type { FormProps } from 'antd'
+import type { IPropsTable } from '../../../types'
 
 const { useForm } = Form
 
 interface IProps {
 	item: Todo.Todo
-	children: ReactNode
+	index: number
+	children: ReactElement
 	onClick: DOMAttributes<HTMLTableCellElement>['onClick']
+	onTableRowChange: IPropsTable['onTableRowChange']
 }
 
 const Index = (props: IProps) => {
-	const { item, onClick, ...rest } = props
-	const [form] = useForm()
+	const { item, index, children, onClick, onTableRowChange, ...rest } = props
+	const [form] = useForm<Todo.Todo>()
 	const [loaded, setLoaded] = useState(false)
-	const { setFieldsValue } = form
+	const { setFieldsValue, getFieldsValue } = form
 
 	useDeepEffect(() => {
-		setFieldsValue(item)
+		const form_item = getFieldsValue()
 
+		if (deepEqual(item, form_item)) return
+
+		setFieldsValue(item)
 		setLoaded(true)
 	}, [item])
 
+	const onValuesChange: FormProps<Todo.Todo>['onValuesChange'] = useMemoizedFn(changedValues => {
+		onTableRowChange(index, changedValues)
+	})
+
 	return (
-		<Form form={form} component={false}>
+		<Form form={form} component={false} onValuesChange={debounce(onValuesChange, 450)}>
 			<AnimatePresence>
 				{loaded && (
 					<motion.tr
+						{...rest}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ duration: 0.9 }}
-						{...rest}
-					/>
+					>
+						{children}
+					</motion.tr>
 				)}
 			</AnimatePresence>
 		</Form>

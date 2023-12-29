@@ -1,10 +1,10 @@
+import dayjs from 'dayjs'
+import { omit, uniq } from 'lodash-es'
+import { match } from 'ts-pattern'
+
 import { not_archive, updateSetting } from '@/actions/todo'
 import { getArchiveTime, getDocItem } from '@/utils'
 import { confirm } from '@/utils/antd'
-import dayjs from 'dayjs'
-import { omit, uniq } from 'lodash-es'
-
-import { match } from 'ts-pattern'
 
 import type { MangoQueryOperators, MangoQuerySelector, MangoQuerySortPart } from 'rxdb'
 import type { ArchiveQueryParams } from './types/model'
@@ -55,6 +55,7 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 	} else {
 		selector['type'] = 'todo'
 
+		sort['archive'] = 'asc'
 		sort['create_at'] = 'desc'
 	}
 

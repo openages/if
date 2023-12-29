@@ -10,7 +10,7 @@ const Index = (props: IProps) => {
 	const { options, value, onChange } = props
 
 	return (
-		<div className='flex' style={{ overflow: 'scroll' }}>
+		<div className={$cx('flex justify_center')} style={{ overflow: 'scroll' }}>
 			<TagSelect useByTable options={options} value={value} onChange={onChange}></TagSelect>
 		</div>
 	)

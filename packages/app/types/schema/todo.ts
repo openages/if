@@ -1,5 +1,3 @@
-import type { ModuleSetting } from '@/types'
-
 export namespace Todo {
 	type Relations = Array<{ items: Array<string>; checked: boolean }>
 
@@ -22,7 +20,9 @@ export namespace Todo {
 		relations?: Relations
 	}
 
-	export interface TodoSetting extends Pick<ModuleSetting.Item, 'file_id' | 'module'> {
+	export interface TodoSetting {
+		file_id: string
+		module: string
 		setting: Setting
 	}
 
@@ -42,6 +42,7 @@ export namespace Todo {
 		type: 'todo'
 		/** @maxLength 12 */
 		status: 'checked' | 'unchecked' | 'closed'
+		archive: boolean
 		open?: boolean
 		star?: number
 		tag_ids?: Array<string>
@@ -55,7 +56,6 @@ export namespace Todo {
 		}
 		recycle_time?: number
 		remark?: string
-		archive?: boolean
 		archive_time?: number
 		schedule?: boolean
 		children?: Array<{

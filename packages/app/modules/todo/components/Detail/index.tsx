@@ -8,12 +8,11 @@ import { Bell, CaretDown, CaretUp, HourglassMedium, Plus, Star as StarIcon, Tag 
 import { useInput } from '../../hooks'
 import Children from '../Children'
 import Cycle from '../Cycle'
+import Remark from '../Remark'
 import Remind from '../Remind'
 import Star from '../Star'
 import TagSelect from '../TagSelect'
 import { useContextMenu, useHandlers } from '../TodoItem/hooks'
-import Remark from './components/Remark'
-
 import styles from './index.css'
 
 import type { Todo } from '@/types'

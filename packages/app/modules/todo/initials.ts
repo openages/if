@@ -7,6 +7,7 @@ export const getTodo = (): Omit<Todo.Todo, 'file_id' | 'angle_id' | 'sort'> => (
 	type: 'todo',
 	status: 'unchecked',
 	text: '',
+	archive: false,
 	create_at: new Date().valueOf()
 })
 

@@ -110,30 +110,113 @@ export default {
                                     "checked"
                               ]
                         }
-                  },
-                  "links": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "type": {
-                                          "type": "string"
-                                    },
-                                    "id": {
-                                          "type": "string"
-                                    }
-                              },
-                              "required": [
-                                    "type",
-                                    "id"
-                              ]
-                        }
                   }
             },
             "required": [
                   "angles",
                   "tags",
                   "auto_archiving"
+            ]
+      },
+      "Todo.TodoSetting": {
+            "type": "object",
+            "properties": {
+                  "file_id": {
+                        "type": "string"
+                  },
+                  "module": {
+                        "type": "string"
+                  },
+                  "setting": {
+                        "type": "object",
+                        "properties": {
+                              "angles": {
+                                    "type": "array",
+                                    "items": {
+                                          "type": "object",
+                                          "properties": {
+                                                "id": {
+                                                      "type": "string"
+                                                },
+                                                "text": {
+                                                      "type": "string"
+                                                }
+                                          },
+                                          "required": [
+                                                "id",
+                                                "text"
+                                          ]
+                                    }
+                              },
+                              "tags": {
+                                    "type": "array",
+                                    "items": {
+                                          "type": "object",
+                                          "properties": {
+                                                "id": {
+                                                      "type": "string"
+                                                },
+                                                "color": {
+                                                      "type": "string"
+                                                },
+                                                "text": {
+                                                      "type": "string"
+                                                }
+                                          },
+                                          "required": [
+                                                "id",
+                                                "color",
+                                                "text"
+                                          ]
+                                    }
+                              },
+                              "auto_archiving": {
+                                    "type": "string",
+                                    "enum": [
+                                          "0m",
+                                          "3m",
+                                          "3h",
+                                          "1d",
+                                          "3d",
+                                          "7d"
+                                    ]
+                              },
+                              "desc": {
+                                    "type": "string"
+                              },
+                              "relations": {
+                                    "type": "array",
+                                    "items": {
+                                          "type": "object",
+                                          "properties": {
+                                                "items": {
+                                                      "type": "array",
+                                                      "items": {
+                                                            "type": "string"
+                                                      }
+                                                },
+                                                "checked": {
+                                                      "type": "boolean"
+                                                }
+                                          },
+                                          "required": [
+                                                "items",
+                                                "checked"
+                                          ]
+                                    }
+                              }
+                        },
+                        "required": [
+                              "angles",
+                              "tags",
+                              "auto_archiving"
+                        ]
+                  }
+            },
+            "required": [
+                  "file_id",
+                  "module",
+                  "setting"
             ]
       },
       "Todo.Todo": {
@@ -151,6 +234,9 @@ export default {
                               "closed"
                         ],
                         "maxLength": 12
+                  },
+                  "archive": {
+                        "type": "boolean"
                   },
                   "open": {
                         "type": "boolean"
@@ -206,32 +292,14 @@ export default {
                   "recycle_time": {
                         "type": "number"
                   },
-                  "links": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "type": {
-                                          "type": "string"
-                                    },
-                                    "id": {
-                                          "type": "string"
-                                    }
-                              },
-                              "required": [
-                                    "type",
-                                    "id"
-                              ]
-                        }
-                  },
                   "remark": {
                         "type": "string"
                   },
-                  "archive": {
-                        "type": "boolean"
-                  },
                   "archive_time": {
                         "type": "number"
+                  },
+                  "schedule": {
+                        "type": "boolean"
                   },
                   "children": {
                         "type": "array",
@@ -283,6 +351,7 @@ export default {
             },
             "required": [
                   "angle_id",
+                  "archive",
                   "create_at",
                   "file_id",
                   "id",
@@ -350,6 +419,9 @@ export default {
                         ],
                         "maxLength": 12
                   },
+                  "archive": {
+                        "type": "boolean"
+                  },
                   "open": {
                         "type": "boolean"
                   },
@@ -404,32 +476,14 @@ export default {
                   "recycle_time": {
                         "type": "number"
                   },
-                  "links": {
-                        "type": "array",
-                        "items": {
-                              "type": "object",
-                              "properties": {
-                                    "type": {
-                                          "type": "string"
-                                    },
-                                    "id": {
-                                          "type": "string"
-                                    }
-                              },
-                              "required": [
-                                    "type",
-                                    "id"
-                              ]
-                        }
-                  },
                   "remark": {
                         "type": "string"
                   },
-                  "archive": {
-                        "type": "boolean"
-                  },
                   "archive_time": {
                         "type": "number"
+                  },
+                  "schedule": {
+                        "type": "boolean"
                   },
                   "children": {
                         "type": "array",

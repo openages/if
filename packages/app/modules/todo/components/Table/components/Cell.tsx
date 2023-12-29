@@ -1,9 +1,13 @@
 import { Form } from 'antd'
 
+import styles from '../index.css'
+
 import type { DOMAttributes, ReactNode } from 'react'
 
 interface IProps {
 	name: string
+	archive: boolean
+	className: string
 	children: ReactNode
 	onMouseEnter: DOMAttributes<HTMLTableCellElement>['onMouseEnter']
 	onMouseLeave: DOMAttributes<HTMLTableCellElement>['onMouseEnter']
@@ -12,10 +16,10 @@ interface IProps {
 const { Item } = Form
 
 const Index = (props: IProps) => {
-	const { name, children, onMouseEnter, onMouseLeave, ...rest } = props
+	const { name, archive, className, children, onMouseEnter, onMouseLeave, ...rest } = props
 
 	return (
-		<td {...rest}>
+		<td {...rest} className={$cx(className, archive && styles.archive)}>
 			<Item name={name} noStyle>
 				{children}
 			</Item>

@@ -32,16 +32,21 @@ export default (theme: Theme, color_main: string) => {
 		},
 		components: {
 			Switch: {
+				colorPrimary: vars.color_text,
 				controlHeight: 24,
 				controlHeightSM: 22,
-				controlHeightXS: 20,
-				colorPrimary: vars.color_text
+				controlHeightXS: 20
 			},
 			DatePicker: {
-				controlHeight: 30,
-				controlHeightSM: 28,
-				cellHeight: 22,
-				cellWidth: 32
+				colorPrimary: vars.color_text,
+				controlHeight: 24,
+				cellHeight: 24,
+				cellWidth: 24,
+				timeCellHeight: 24,
+				timeColumnWidth: 36,
+				textHeight: 30,
+				fontSize: 12,
+				colorBorder: vars.color_border_soft
 			},
 			Dropdown: {
 				controlItemBgHover: vars.color_bg_2

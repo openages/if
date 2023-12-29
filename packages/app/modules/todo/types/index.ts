@@ -177,6 +177,7 @@ export interface IPropsKanban extends Omit<IPropsTodos, 'items'> {
 export interface IPropsTable {
 	items: Model['items']
 	tags: Model['setting']['setting']['tags']
+	onTableRowChange: Model['onTableRowChange']
 }
 
 export interface IPropsSettingsModal {

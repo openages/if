@@ -52,6 +52,12 @@
 		margin-left: 1px;
 
 		:global {
+			.if-select-selector {
+				.if-select-selection-overflow {
+					justify-content: center;
+				}
+			}
+
 			.tag {
 				padding: 0 4px;
 				margin: 0 1px;

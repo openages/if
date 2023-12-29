@@ -17,7 +17,7 @@ const Index = (props: IProps) => {
 	const ref = useRef(null)
 	const hover = useHover(ref)
 
-	const onToggleValue = useMemoizedFn(() => onChange(!value))
+	const archive = useMemoizedFn(() => onChange(false))
 
 	return (
 		<div className={$cx('flex flex_column justify_center align_center', styles.RenderArchive)}>
@@ -25,16 +25,16 @@ const Index = (props: IProps) => {
 				<div
 					className='btn_active flex justify_center align_center cursor_point clickable'
 					ref={ref}
-					onClick={onToggleValue}
+					onClick={archive}
 				>
 					{hover ? (
-						<UploadSimple className='icon_inactive icon' size={16}></UploadSimple>
+						<UploadSimple className='icon_inactive icon' size={14}></UploadSimple>
 					) : (
-						<ArchiveBox className='icon_active icon' size={16}></ArchiveBox>
+						<ArchiveBox className='icon_active icon' size={14}></ArchiveBox>
 					)}
 				</div>
 			)}
-			{!value && !archive_time && <Spinner className='icon_none' size={14}></Spinner>}
+			{!value && !archive_time && <Spinner className='icon_doing' size={14} weight='bold'></Spinner>}
 			{!value && archive_time && <span className='archive_time'>{dayjs().to(dayjs(archive_time))}</span>}
 		</div>
 	)
