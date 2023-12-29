@@ -20,15 +20,12 @@ export default class Index {
 
 	init() {
 		if (this.dirtree_width === 0 && this.dirtree_prev === 0) {
-			this.setDirTreeWidth(
-				getComputedStyleValue(document.documentElement, '--dirtree_width'),
-				this.dirtree_width === 0
-			)
+			this.setDirTreeWidth(getComputedStyleValue(document.documentElement, '--dirtree_width'))
 
 			return
 		}
 
-		this.setDirTreeWidth(this.dirtree_width, this.dirtree_width === 0)
+		this.setDirTreeWidth(this.dirtree_width)
 	}
 
 	toggleDirTreeVisible() {
@@ -36,12 +33,10 @@ export default class Index {
 
 		this.dirtree_prev = this.dirtree_width
 
-		this.setDirTreeWidth(0, true)
+		this.setDirTreeWidth(0)
 	}
 
-	setDirTreeWidth(v: number, hide?: boolean) {
-		if (!hide) if (v < 180 || v > 360) return
-
+	setDirTreeWidth(v: number) {
 		this.dirtree_width = v
 
 		document.documentElement.style.setProperty('--dirtree_width', v + 'px')

@@ -1,5 +1,4 @@
 import { useMemoizedFn } from 'ahooks'
-
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
 import { useContextMenu } from 'react-contexify'
@@ -90,7 +89,7 @@ const Index = (props: IProps) => {
 				styles._local,
 				global.layout.dirtree_width === 0 && styles.hide
 			)}
-			style={{ height }}
+			style={{ width: global.layout.dirtree_width, height }}
 		>
 			<When condition={global.layout.dirtree_width !== 0}>
 				<Search></Search>

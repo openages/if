@@ -1,5 +1,4 @@
 import { useEventListener, useMemoizedFn } from 'ahooks'
-import { Decimal } from 'decimal.js'
 import { useState } from 'react'
 
 import type { MouseEvent, RefObject } from 'react'
@@ -7,6 +6,8 @@ import type { MouseEvent, RefObject } from 'react'
 interface Args {
 	ref: RefObject<HTMLDivElement>
 	left?: boolean
+	min?: number
+	max?: number
 	getWidth: () => number
 	setWidth: (v: number) => void
 	onResizeStart?: () => void
@@ -14,34 +15,48 @@ interface Args {
 }
 
 export default (args: Args) => {
-	const { ref, left, getWidth, setWidth, onResizeStart, onResizeEnd } = args
+	const { ref, left, min, max, getWidth, setWidth, onResizeStart, onResizeEnd } = args
 	const [draging, setDraging] = useState(false)
+
+	const start = useMemoizedFn(() => {
+		onResizeStart?.()
+		setDraging(true)
+
+		document.body.style.cursor = 'col-resize'
+	})
+
+	const stop = useMemoizedFn(() => {
+		onResizeEnd?.()
+		setDraging(false)
+
+		document.body.style.cursor = 'unset'
+	})
+
+	const overflow = useMemoizedFn((v: number) => {
+		if (min || max) {
+			if (v <= min || v >= max) {
+				stop()
+
+				return true
+			}
+		}
+
+		return false
+	})
 
 	const setDirTreeWidth = useMemoizedFn((e: MouseEvent) => {
 		if (!draging) return
 
-		setWidth(getWidth() + (left ? -1 : 1) * new Decimal(new Decimal(e.movementX).toFixed(2)).toNumber())
+		let width = getWidth() + (left ? -1 : 1) * e.movementX
+
+		if (overflow(width)) return
+
+		setWidth(width)
 	})
 
-	useEventListener(
-		'mousedown',
-		() => {
-			onResizeStart?.()
-			setDraging(true)
-		},
-		{ target: ref }
-	)
-
-	useEventListener(
-		'mouseup',
-		() => {
-			onResizeEnd?.()
-			setDraging(false)
-		},
-		{ target: document }
-	)
-
+	useEventListener('mousedown', start, { target: ref })
 	useEventListener('mousemove', setDirTreeWidth, { target: document })
+	useEventListener('mouseup', stop, { target: document })
 
 	return draging
 }

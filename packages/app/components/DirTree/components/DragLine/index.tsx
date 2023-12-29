@@ -1,13 +1,13 @@
-import { getComputedStyleValue } from '@/utils'
+import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { useRef } from 'react'
 import { Else, If, Then } from 'react-if'
 
 import { useGlobal } from '@/context/app'
 import { useDragWidth } from '@/hooks'
+import { getComputedStyleValue } from '@/utils'
 import { CaretLeft, CaretRight } from '@phosphor-icons/react'
 
-import { useMemoizedFn } from 'ahooks'
 import styles from './index.css'
 
 const Index = () => {
@@ -17,7 +17,7 @@ const Index = () => {
 	const getWidth = useMemoizedFn(() => getComputedStyleValue(document.documentElement, '--dirtree_width'))
 	const setWidth = useMemoizedFn(global.layout.setDirTreeWidth)
 
-	const draging = useDragWidth({ ref, getWidth, setWidth })
+	const draging = useDragWidth({ ref, min: 180, max: 360, getWidth, setWidth })
 
 	return (
 		<div

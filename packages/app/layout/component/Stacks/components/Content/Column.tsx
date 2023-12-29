@@ -1,12 +1,12 @@
-import { useDndMonitor } from '@dnd-kit/core'
-import { Fragment, useState } from 'react'
-import { useRef } from 'react'
-import Drop from './Drop'
-import View from './View'
-import styles from './index.css'
+import { useMemoizedFn } from 'ahooks'
+import { useRef, useState, Fragment } from 'react'
 
 import { useDragWidth } from '@/hooks'
-import { useMemoizedFn } from 'ahooks'
+import { useDndMonitor } from '@dnd-kit/core'
+
+import Drop from './Drop'
+import styles from './index.css'
+import View from './View'
 
 import type { IPropsStacksContentColumn } from '../../../../types'
 
