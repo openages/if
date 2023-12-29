@@ -65,13 +65,11 @@ const Index = (props: IPropsTable) => {
 			render: (_, item) => <RenderCycle cycle_enabled={item.cycle_enabled}></RenderCycle>
 		},
 		{
-			title: 'archive',
-			dataIndex: 'archive',
-			width: 96,
+			title: 'schedule',
+			dataIndex: 'schedule',
+			width: 60,
 			align: 'center',
-			ellipsis: true,
-			deps: ['archive_time'],
-			render: (_, item) => <RenderArchive archive_time={item.archive_time}></RenderArchive>
+			render: () => <RenderSchedule></RenderSchedule>
 		},
 		{
 			title: 'remark',
@@ -79,11 +77,13 @@ const Index = (props: IPropsTable) => {
 			align: 'center'
 		},
 		{
-			title: 'schedule',
-			dataIndex: 'schedule',
-			width: 60,
+			title: 'archive',
+			dataIndex: 'archive',
+			width: 96,
 			align: 'center',
-			render: () => <RenderSchedule></RenderSchedule>
+			ellipsis: true,
+			deps: ['archive_time'],
+			render: (_, item) => <RenderArchive archive_time={item.archive_time}></RenderArchive>
 		},
 		{
 			title: 'create_at',

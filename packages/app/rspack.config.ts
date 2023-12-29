@@ -30,7 +30,7 @@ module.exports = defineConfig({
 	},
 	experiments: {
 		topLevelAwait: true,
-		// outputModule: !is_prod,
+		outputModule: !is_prod,
 		rspackFuture: {
 			newResolver: true,
 			// newTreeshaking: true,
@@ -42,7 +42,8 @@ module.exports = defineConfig({
 	plugins: [
 		new HtmlRspackPlugin({
 			title: 'IF - GTD for prefessionals.',
-			template: './public/index.html'
+			template: './public/index.html',
+			scriptLoading: is_prod ? 'defer' : 'module'
 		}),
 		!is_prod && new ReactRefreshPlugin()
 	],

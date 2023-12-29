@@ -2,7 +2,7 @@ import { useHover, useMemoizedFn } from 'ahooks'
 import dayjs from 'dayjs'
 import { useRef } from 'react'
 
-import { ArchiveBox, Minus, UploadSimple } from '@phosphor-icons/react'
+import { ArchiveBox, Spinner, UploadSimple } from '@phosphor-icons/react'
 
 import styles from '../index.css'
 
@@ -34,7 +34,7 @@ const Index = (props: IProps) => {
 					)}
 				</div>
 			)}
-			{!value && !archive_time && <Minus size={14}></Minus>}
+			{!value && !archive_time && <Spinner className='icon_none' size={14}></Spinner>}
 			{!value && archive_time && <span className='archive_time'>{dayjs().to(dayjs(archive_time))}</span>}
 		</div>
 	)
