@@ -1,3 +1,26 @@
 ._local {
-	z-index: -1;
+	padding: 1px;
+	overflow: hidden;
+
+	:global {
+		.bg_progress {
+			border-radius: 7px;
+			transition: width ease 0.18s;
+			background-color: rgba(var(--color_text_rgb), 0.09);
+
+			&.no_right_radius {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+		}
+
+		.repeat_content {
+			padding: 0 3px;
+			border-radius: 6px;
+			line-height: 1;
+			font-size: 10px;
+			color: var(--color_text_grey);
+			white-space: nowrap;
+		}
+	}
 }

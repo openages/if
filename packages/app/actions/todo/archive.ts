@@ -4,14 +4,13 @@ import { getDocItemsData } from '@/utils'
 
 import type { Todo } from '@/types'
 
-export const not_archive = [{ archive: { $eq: false } }]
-
 export default async (file_id: string) => {
 	const archive_items = await $db.todo_items
 		.find({
 			selector: {
 				file_id: file_id,
 				type: 'todo',
+				archive: false,
 				status: {
 					$ne: 'unchecked'
 				},
@@ -19,8 +18,7 @@ export default async (file_id: string) => {
 					$exists: true,
 					$ne: undefined,
 					$lte: new Date().valueOf()
-				},
-				$or: not_archive
+				}
 			}
 		})
 		.exec()

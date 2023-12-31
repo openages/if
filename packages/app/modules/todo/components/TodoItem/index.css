@@ -1,19 +1,4 @@
 .todo_item_wrap {
-	&.zen_mode {
-		.todo_item {
-			flex-direction: column;
-		}
-
-		:global {
-			.options_container {
-				height: 0;
-				padding: 0;
-				margin: 0;
-				overflow: hidden;
-			}
-		}
-	}
-
 	&.kanban_mode {
 		&.is_dragging {
 			opacity: 1;
@@ -77,7 +62,6 @@
 			:global {
 				.drag_wrap {
 					display: none;
-					background-color: red !important;
 				}
 			}
 		}
@@ -223,7 +207,7 @@
 						background-color: var(--color_bg_1);
 						border-radius: 8px;
 						border: var(--border);
-						vertical-align: 1px;
+						vertical-align: 1.6px;
 					}
 				}
 			}
@@ -231,27 +215,26 @@
 	}
 
 	:global {
-		.options_container {
-			top: 6px;
-			left: 27px;
+		.options_wrap {
+			padding-top: 3px;
+			padding-bottom: 9px;
+			padding-left: 30px;
+			transition: padding ease 0.3s;
+			font-family: 'RedditSans';
 
-			.options_wrap {
-				.other_wrap {
-					width: 14px;
-					height: 14px;
-					margin-right: 2px;
-					background-color: var(--color_bg_2);
-					border-radius: 50%;
-					z-index: 1;
+			&.open {
+				padding-left: 10px;
+			}
 
-					&:last-child {
-						margin-right: 0;
-					}
+			.other_wrap {
+				height: 14px;
+				margin-right: 3px;
+				background-color: var(--color_bg_2);
+				border-radius: 7px;
+				z-index: 1;
 
-					&.star_wrap {
-						font-size: 9px;
-						line-height: 1;
-					}
+				&:last-child {
+					margin-right: 0;
 				}
 			}
 		}

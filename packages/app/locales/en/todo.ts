@@ -100,17 +100,17 @@ export default {
 			title: 'Repeat',
 			cycle: 'Cycle',
 			disabled: 'Disabled',
-			every: 'Every',
+			every: 'every',
 			exclude: 'exclude',
 			options: {
-				minute: 'Minite',
-				hour: 'Hour',
-				day: 'Day',
-				week: 'Week',
-				month: 'Month',
-				quarter: 'Quarter',
-				year: 'Year',
-				reset: 'Reset'
+				minute: 'minite',
+				hour: 'hour',
+				day: 'day',
+				week: 'week',
+				month: 'month',
+				quarter: 'quarter',
+				year: 'year',
+				reset: 'reset'
 			}
 		}
 	},

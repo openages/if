@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import { omit, pick } from 'lodash-es'
 import { makeAutoObservable, runInAction } from 'mobx'
+import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
 import { archive, cycle } from '@/actions/todo'
@@ -10,7 +11,6 @@ import { getDocItem, getDocItemsData, id } from '@/utils'
 import { confirm } from '@/utils/antd'
 import { disableWatcher, loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
-import { IF } from '@openages/stk/common'
 import { updateSort } from '@openages/stk/dnd'
 import { useInstanceWatch } from '@openages/stk/mobx'
 
@@ -316,7 +316,10 @@ export default class Index {
 				const now = dayjs()
 				const scale = todo_item.cycle.scale as ManipulateType
 
-				const recycle_time = now.startOf(scale).add(todo_item.cycle.interval, scale).valueOf()
+				const recycle_time =
+					scale === 'minute' || scale === 'hour'
+						? now.add(todo_item.cycle.interval, scale).valueOf()
+						: now.startOf(scale).add(todo_item.cycle.interval, scale).valueOf()
 
 				await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time } } })
 			} else {
@@ -622,13 +625,11 @@ export default class Index {
 		const { index, dimension_id } = args
 		const kanban_mode = dimension_id !== undefined
 
-		const items = IF({
-			condition: kanban_mode,
-			If: () => this.kanban_items[dimension_id].items,
-			Else: () => this.items
-		})
+		const items = match(kanban_mode)
+			.with(true, () => this.kanban_items[dimension_id].items)
+			.otherwise(() => this.items)
 
-		return { items, item: index === undefined ? null : items[index] }
+		return { items, item: index === undefined ? null : (items[index] as Todo.Todo) }
 	}
 
 	setItem(item: any, data: any) {
@@ -748,7 +749,7 @@ export default class Index {
 		this.timer_cycle = setInterval(this.cycleByTime, 30 * 1000)
 		this.timer_archive = setInterval(() => archive(this.id), 60 * 1000)
 
-		window.$app.Event.on('setting/cycleByTime', this.cycleByTime)
+		window.$app.Event.on('todo/cycleByTime', this.cycleByTime)
 	}
 
 	off() {
@@ -762,6 +763,6 @@ export default class Index {
 		clearInterval(this.timer_cycle)
 		clearInterval(this.timer_archive)
 
-		window.$app.Event.off('setting/cycleByTime', this.cycleByTime)
+		window.$app.Event.off('todo/cycleByTime', this.cycleByTime)
 	}
 }

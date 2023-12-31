@@ -315,7 +315,6 @@
 			height: var(--height) !important;
 			line-height: var(--height) !important;
 			font-size: 12px;
-			padding: 0 !important;
 
 			input {
 				height: 100% !important;
@@ -598,6 +597,10 @@
 						border-radius: 0;
 						border-bottom: 1px solid transparent;
 						box-sizing: border-box !important;
+
+						&:hover {
+							border-radius: var(--radius_small);
+						}
 					}
 				}
 			}

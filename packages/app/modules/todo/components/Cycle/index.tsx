@@ -126,7 +126,7 @@ const Index = (props: IPropsCircle) => {
 				<div
 					className={$cx(
 						'btn_cycle flex justify_center align_center clickable',
-						cycle_enabled && 'cycle_enabled'
+						cycle_enabled && cycle && 'cycle_enabled'
 					)}
 				>
 					<HourglassMedium size={15}></HourglassMedium>

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Else, If, Then, When } from 'react-if'
 
 import { Emoji } from '@/components'
-import { CaretDown, CaretUp, CheckFat, CubeTransparent, DotsThreeCircleVertical, Tag, X } from '@phosphor-icons/react'
+import { CaretDown, CaretUp, DotsThreeCircleVertical, Faders, FlowerLotus, Tag, X } from '@phosphor-icons/react'
 
 import TagSelect from '../TagSelect'
 import { useContextMenu } from './hooks'
@@ -146,7 +146,7 @@ const Index = (props: IPropsHeader) => {
 								onClick={toggleKanbanMode}
 							>
 								{kanban_mode === 'angle' ? (
-									<Tag size={18}></Tag>
+									<Tag size={16}></Tag>
 								) : (
 									<Shapes size={15}></Shapes>
 								)}
@@ -154,7 +154,7 @@ const Index = (props: IPropsHeader) => {
 						</div>
 					</Tooltip>
 				)}
-				{mode !== 'table' && (
+				{mode !== 'table' && !kanban_mode && (
 					<Tooltip title={t(`translation:todo.Header.visible_mode.${zen_mode ? 'normal' : 'zen'}`)}>
 						<div className='mr_8'>
 							<div
@@ -164,7 +164,11 @@ const Index = (props: IPropsHeader) => {
 								{zen_mode ? (
 									<ListTodo size={18} strokeWidth={1.5}></ListTodo>
 								) : (
-									<CheckFat size={18}></CheckFat>
+									<FlowerLotus
+										className='icon_lotus'
+										size={19}
+										weight='light'
+									></FlowerLotus>
 								)}
 							</div>
 						</div>
@@ -179,7 +183,7 @@ const Index = (props: IPropsHeader) => {
 					>
 						<div>
 							<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'>
-								<CubeTransparent size={18}></CubeTransparent>
+								<Faders size={18}></Faders>
 							</div>
 						</div>
 					</Dropdown>

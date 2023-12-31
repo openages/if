@@ -1,5 +1,8 @@
-import { Bell } from '@phosphor-icons/react'
+import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
+
+import { Bell } from '@phosphor-icons/react'
+
 import styles from './index.css'
 
 import type { IPropsRemindStatus } from '../../types'
@@ -29,6 +32,7 @@ const Index = (props: IPropsRemindStatus) => {
 				size={10}
 				weight={timeout ? 'duotone' : 'regular'}
 			></Bell>
+			{!timeout && <span className='text ml_2'>{dayjs().to(remind_time)}</span>}
 		</div>
 	)
 }

@@ -46,6 +46,13 @@ const Index = (props: IPropsRemind) => {
 		[remind_time]
 	)
 
+	const format = useMemoizedFn((v: Dayjs) => {
+		if (!v) return undefined
+		if (v.valueOf() <= dayjs().valueOf()) return ''
+
+		return v ? dayjs().to(v) : undefined
+	})
+
 	const onChange = useMemoizedFn((v: Dayjs) => {
 		if (!v) return onChangeRemind(undefined)
 		if (v.valueOf() <= dayjs().valueOf()) return
@@ -63,7 +70,7 @@ const Index = (props: IPropsRemind) => {
 			disabledDate={v => v && v <= dayjs().startOf('day')}
 			getPopupContainer={() => document.body}
 			presets={options}
-			format={v => dayjs().to(v)}
+			format={format}
 			value={remind_time ? dayjs(remind_time) : undefined}
 			onChange={onChange}
 		></DatePicker>

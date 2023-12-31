@@ -17,7 +17,6 @@ export interface IPropsTagSelect {
 	useByTodo?: boolean
 	useByDetail?: boolean
 	useByTable?: boolean
-	kanban_mode?: Model['kanban_mode']
 	className?: SelectProps['className']
 	placement?: SelectProps['placement']
 	unlimit?: boolean
@@ -88,7 +87,6 @@ export interface IPropsCircle {
 export interface IPropsCircleStatus {
 	cycle: Todo.Todo['cycle']
 	recycle_time: Todo.Todo['recycle_time']
-	useByArchive?: boolean
 }
 
 export interface IPropsTodos {

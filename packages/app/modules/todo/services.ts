@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import { omit, uniq } from 'lodash-es'
 import { match } from 'ts-pattern'
 
-import { not_archive, updateSetting } from '@/actions/todo'
+import { updateSetting } from '@/actions/todo'
 import { getArchiveTime, getDocItem } from '@/utils'
 import { confirm } from '@/utils/antd'
 
@@ -23,7 +23,7 @@ import type { RxDB, Todo } from '@/types'
 
 export const getMaxSort = async (angle_id: string) => {
 	const [max_sort_item] = await $db.todo_items
-		.find({ selector: { $or: not_archive, angle_id } })
+		.find({ selector: { angle_id, archive: false } })
 		.sort({ sort: 'desc' })
 		.limit(1)
 		.exec()
@@ -45,7 +45,7 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 	const sort: MangoQuerySortPart<Todo.Todo> = {}
 
 	if (!table_mode) {
-		selector['$or'] = not_archive
+		selector['archive'] = false
 
 		if (angle_id) selector['angle_id'] = angle_id
 		if (items_filter_tags?.length || items_sort_param) selector['type'] = 'todo'
@@ -355,7 +355,7 @@ export const getAngleTodoCounts = async (file_id: string, angle_id: string) => {
 }
 
 export const removeAngle = async (file_id: string, angle_id: string) => {
-	return $db.todo_items.find({ selector: { file_id, angle_id, $or: not_archive } }).remove()
+	return $db.todo_items.find({ selector: { file_id, angle_id, archive: false } }).remove()
 }
 
 export const getTagTodoCounts = async (file_id: string, tag_id: string) => {

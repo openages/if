@@ -111,7 +111,7 @@ const Index = (props: IPropsInput) => {
 					</div>
 					<When condition={input.type === 'todo'}>
 						<div className='flex align_center'>
-							<div className='star_wrap flex align_center mr_8 relative'>
+							<div className='star_wrap flex align_center mr_6 relative'>
 								<Star
 									value={(input as Todo.Todo).star}
 									onChangeStar={v => setInput(input => ({ ...input, star: v }))}

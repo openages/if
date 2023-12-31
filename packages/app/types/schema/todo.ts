@@ -42,11 +42,9 @@ export namespace Todo {
 		type: 'todo'
 		/** @maxLength 12 */
 		status: 'checked' | 'unchecked' | 'closed'
-		archive: boolean
 		open?: boolean
 		star?: number
 		tag_ids?: Array<string>
-		options_width?: number
 		remind_time?: number
 		cycle_enabled?: boolean
 		cycle?: {
@@ -56,8 +54,14 @@ export namespace Todo {
 		}
 		recycle_time?: number
 		remark?: string
+		archive: boolean
 		archive_time?: number
+		deadline?: number
 		schedule?: boolean
+		schedule_range?: {
+			start: number
+			end: number
+		}
 		children?: Array<{
 			id: string
 			text: string

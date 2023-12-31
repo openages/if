@@ -8,18 +8,7 @@ import styles from './index.css'
 import type { IPropsTagSelect } from '../../types'
 
 const Index = (props: IPropsTagSelect) => {
-	const {
-		options,
-		value,
-		useByTodo,
-		useByDetail,
-		useByTable,
-		kanban_mode,
-		className,
-		placement,
-		unlimit,
-		onChange
-	} = props
+	const { options, value, useByTodo, useByDetail, useByTable, className, placement, unlimit, onChange } = props
 	const { t } = useTranslation()
 
 	const Tag = useMemo(() => {
@@ -36,8 +25,7 @@ const Index = (props: IPropsTagSelect) => {
 					styles._local,
 					useByTodo && styles.useByTodo,
 					(useByDetail || useByTable) && styles.useByDetail,
-					useByTable && styles.useByTable,
-					kanban_mode && styles.kanban_mode
+					useByTable && styles.useByTable
 				)}
 				popupClassName='borderless'
 				size='small'

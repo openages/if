@@ -1,7 +1,7 @@
-import { getColorByLevel } from '@/appdata'
 import { Rate } from 'antd'
 
-import { Star } from '@phosphor-icons/react'
+import { getColorByLevel } from '@/appdata'
+import { FireSimple } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -15,7 +15,9 @@ const Index = (props: IPropsStar) => {
 		<Rate
 			rootClassName={styles._local}
 			count={4}
-			character={({ index, value }) => <Star size={15} weight={value >= index + 1 ? 'fill' : 'regular'} />}
+			character={({ index, value }) => (
+				<FireSimple size={15} weight={value >= index + 1 ? 'duotone' : 'regular'} />
+			)}
 			style={{ '--color_star': color || 'var(--color_text)' }}
 			value={value}
 			onChange={onChangeStar}

@@ -21,7 +21,7 @@ interface HookArgs {
 export default (args: HookArgs) => {
 	const { item, index, kanban_mode, dimension_id, visible_detail_modal, makeLinkLine, check, insert, update, tab } =
 		args
-	const { id, status, open, options_width, children } = item
+	const { id, status, open, children } = item
 
 	const setOpen = useMemoizedFn((v: boolean) => {
 		update({ type: 'parent', index, dimension_id, value: { open: v } as Todo.Todo })
@@ -35,13 +35,6 @@ export default (args: HookArgs) => {
 
 	const updateTags = useMemoizedFn(v => {
 		update({ type: 'parent', index, dimension_id, value: { tag_ids: v } as Todo.Todo })
-	})
-
-	const updateTagWidth = useMemoizedFn(v => {
-		if (v === 0 && !options_width) return
-		if (v === options_width) return
-
-		update({ type: 'parent', index, dimension_id, value: { options_width: v } as Todo.Todo })
 	})
 
 	const updateStar = useMemoizedFn(v => {
@@ -119,7 +112,6 @@ export default (args: HookArgs) => {
 		setOpen,
 		onCheck,
 		updateTags,
-		updateTagWidth,
 		updateStar,
 		updateRemind,
 		updateCircle,

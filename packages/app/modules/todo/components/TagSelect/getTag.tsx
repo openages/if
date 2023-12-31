@@ -1,6 +1,7 @@
+import { useMemoizedFn } from 'ahooks'
+
 import { useTagColor } from '@/hooks'
 import { X } from '@phosphor-icons/react'
-import { useMemoizedFn } from 'ahooks'
 
 import type { CustomTagProps } from 'rc-select/lib/BaseSelect'
 import type { IPropsInput } from '../../types'

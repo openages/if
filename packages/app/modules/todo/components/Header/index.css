@@ -121,6 +121,10 @@
 				&:hover {
 					background-color: var(--color_bg_2);
 				}
+
+				.icon_lotus {
+					margin-bottom: -2px;
+				}
 			}
 		}
 	}

@@ -235,9 +235,6 @@ export default {
                         ],
                         "maxLength": 12
                   },
-                  "archive": {
-                        "type": "boolean"
-                  },
                   "open": {
                         "type": "boolean"
                   },
@@ -249,9 +246,6 @@ export default {
                         "items": {
                               "type": "string"
                         }
-                  },
-                  "options_width": {
-                        "type": "number"
                   },
                   "remind_time": {
                         "type": "number"
@@ -295,11 +289,32 @@ export default {
                   "remark": {
                         "type": "string"
                   },
+                  "archive": {
+                        "type": "boolean"
+                  },
                   "archive_time": {
+                        "type": "number"
+                  },
+                  "deadline": {
                         "type": "number"
                   },
                   "schedule": {
                         "type": "boolean"
+                  },
+                  "schedule_range": {
+                        "type": "object",
+                        "properties": {
+                              "start": {
+                                    "type": "number"
+                              },
+                              "end": {
+                                    "type": "number"
+                              }
+                        },
+                        "required": [
+                              "start",
+                              "end"
+                        ]
                   },
                   "children": {
                         "type": "array",
@@ -419,9 +434,6 @@ export default {
                         ],
                         "maxLength": 12
                   },
-                  "archive": {
-                        "type": "boolean"
-                  },
                   "open": {
                         "type": "boolean"
                   },
@@ -433,9 +445,6 @@ export default {
                         "items": {
                               "type": "string"
                         }
-                  },
-                  "options_width": {
-                        "type": "number"
                   },
                   "remind_time": {
                         "type": "number"
@@ -479,11 +488,32 @@ export default {
                   "remark": {
                         "type": "string"
                   },
+                  "archive": {
+                        "type": "boolean"
+                  },
                   "archive_time": {
+                        "type": "number"
+                  },
+                  "deadline": {
                         "type": "number"
                   },
                   "schedule": {
                         "type": "boolean"
+                  },
+                  "schedule_range": {
+                        "type": "object",
+                        "properties": {
+                              "start": {
+                                    "type": "number"
+                              },
+                              "end": {
+                                    "type": "number"
+                              }
+                        },
+                        "required": [
+                              "start",
+                              "end"
+                        ]
                   },
                   "children": {
                         "type": "array",

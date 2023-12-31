@@ -6,6 +6,7 @@ import { Case, Switch } from 'react-if'
 import { useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { CheckSquare, DotsSixVertical, Square } from '@phosphor-icons/react'
+
 import { useInput } from '../../hooks'
 import Children from '../Children'
 import CycleStatus from '../CycleStatus'
@@ -41,20 +42,7 @@ const Index = (props: IPropsTodoItem) => {
 		showDetailModal
 	} = props
 
-	const {
-		id,
-		status,
-		text,
-		open,
-		tag_ids,
-		star,
-		remind_time,
-		cycle_enabled,
-		cycle,
-		recycle_time,
-		options_width,
-		children
-	} = item
+	const { id, status, text, open, tag_ids, star, remind_time, cycle_enabled, cycle, recycle_time, children } = item
 
 	const {
 		attributes,
@@ -76,8 +64,17 @@ const Index = (props: IPropsTodoItem) => {
 		disabled: kanban_mode !== 'angle'
 	})
 
-	const { onCheck, onDrag, toggleChildren, insertChildren, removeChildren, onKeyDown, updateTags, updateTagWidth } =
-		useHandlers({ item, index, kanban_mode, dimension_id, makeLinkLine, check, insert, update, tab })
+	const { onCheck, onDrag, toggleChildren, insertChildren, removeChildren, onKeyDown, updateTags } = useHandlers({
+		item,
+		index,
+		kanban_mode,
+		dimension_id,
+		makeLinkLine,
+		check,
+		insert,
+		update,
+		tab
+	})
 
 	const { linker, dragging, hovering } = useLink({ item, dimension_id, makeLinkLine, updateRelations })
 
@@ -104,16 +101,6 @@ const Index = (props: IPropsTodoItem) => {
 		insertChildren
 	})
 
-	const options_wrap = useRef<HTMLDivElement>(null)
-	const options_size = useSize(options_wrap)
-	const real_options_size = useDebounce(options_size, { wait: 60 })
-
-	useUpdateEffect(() => {
-		if (real_options_size?.width === undefined) return
-
-		updateTagWidth(real_options_size.width)
-	}, [real_options_size])
-
 	useOpen({ item, input, renderLines })
 
 	const props_children: IPropsChildren = {
@@ -130,20 +117,24 @@ const Index = (props: IPropsTodoItem) => {
 		removeChildren
 	}
 
+	const has_options = useMemo(
+		() => star || tag_ids?.length || remind_time || (cycle_enabled && cycle),
+		[star, tag_ids, remind_time, cycle_enabled, cycle]
+	)
+
 	const OptionsWrap = (
-		<div className={$cx('options_container flex absolute z_index_10', kanban_mode && 'kanban_mode')}>
-			<div className='options_wrap border_box flex align_center' ref={options_wrap}>
+		<div className={$cx('options_wrap w_100 border_box flex align_center', open && 'open')}>
+			<div className='flex align_center'>
+				{star > 0 && <StarStatus star={star}></StarStatus>}
 				{tags?.length > 0 && tag_ids?.length > 0 && (
 					<TagSelect
 						className='tag_select'
 						options={tags}
 						value={tag_ids}
-						kanban_mode={kanban_mode}
 						useByTodo
 						onChange={updateTags}
 					></TagSelect>
 				)}
-				{star > 0 && <StarStatus star={star}></StarStatus>}
 				{remind_time && <RemindStatus remind_time={remind_time}></RemindStatus>}
 				{cycle_enabled && cycle && (
 					<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
@@ -179,7 +170,6 @@ const Index = (props: IPropsTodoItem) => {
 			style={{ transform: CSS.Translate.toString(transform), transition }}
 		>
 			{is_over && <div className='over_line absolute left_0 flex align_center'></div>}
-			{zen_mode && OptionsWrap}
 			<div
 				className={$cx(
 					'w_100 border_box flex align_start relative',
@@ -226,7 +216,6 @@ const Index = (props: IPropsTodoItem) => {
 							</Case>
 						</Switch>
 					</div>
-					{!zen_mode && OptionsWrap}
 					<ConfigProvider getPopupContainer={() => document.body}>
 						<Dropdown
 							destroyPopupOnHide
@@ -245,9 +234,6 @@ const Index = (props: IPropsTodoItem) => {
 								)}
 								contentEditable='plaintext-only'
 								ref={input}
-								style={{
-									textIndent: !zen_mode && options_width ? options_width : 'unset'
-								}}
 								onInput={onInput}
 								onKeyDown={onKeyDown}
 							></div>
@@ -256,6 +242,7 @@ const Index = (props: IPropsTodoItem) => {
 				</div>
 			</div>
 			<Children {...props_children}></Children>
+			{!zen_mode && !kanban_mode && has_options && OptionsWrap}
 		</div>
 	)
 }
