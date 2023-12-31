@@ -11,5 +11,6 @@ export default {
 		x_unit_ago: '{{x}} {{unit}} ago'
 	},
 	notice: 'Notice',
-	unset: 'Unset'
+	unset: 'Unset',
+	outdate: 'outdate'
 }

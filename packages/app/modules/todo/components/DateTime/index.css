@@ -4,12 +4,14 @@
 	&.useByInput {
 		:global {
 			.if-picker-input {
+				width: unset;
+
 				&:hover {
 					border-radius: var(--radius);
 					color: rgba(var(--color_text_rgb), 1);
 					background-color: var(--color_bg_2);
 
-					.btn_remind {
+					.btn_clock {
 						color: rgba(var(--color_text_rgb), 1);
 					}
 				}
@@ -30,6 +32,8 @@
 
 	:global {
 		.if-picker-input {
+			width: 180px;
+
 			input {
 				font-size: 12px;
 				line-height: 1;
@@ -40,13 +44,13 @@
 			margin: 0;
 		}
 
-		.btn_remind {
+		.btn_clock {
 			width: 24px;
 			height: 24px;
 			border-radius: var(--radius);
 			color: rgba(var(--color_text_rgb), 0.24);
 
-			&.remind_time {
+			&.has_value {
 				color: rgba(var(--color_text_rgb), 1);
 			}
 		}

@@ -46,7 +46,7 @@ export default (theme: Theme, color_main: string) => {
 				timeColumnWidth: 36,
 				textHeight: 30,
 				fontSize: 12,
-				colorBorder: vars.color_border_soft
+				colorSplit: 'transparent'
 			},
 			Dropdown: {
 				controlItemBgHover: vars.color_bg_2

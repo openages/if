@@ -4,15 +4,16 @@ import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { format } from '@/utils/date'
 import { Bell } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
 import type { Dayjs } from 'dayjs'
-import type { IPropsRemind } from '../../types'
+import type { IPropsDateTime } from '../../types'
 
-const Index = (props: IPropsRemind) => {
-	const { remind_time, useByDetail, onChangeRemind } = props
+const Index = (props: IPropsDateTime) => {
+	const { value, useByDetail, Icon, onChange } = props
 	const { t, i18n } = useTranslation()
 
 	const options = useMemo(() => {
@@ -34,35 +35,23 @@ const Index = (props: IPropsRemind) => {
 
 	const Trigger = useMemo(
 		() => (
-			<div
-				className={$cx(
-					'btn_remind flex justify_center align_center clickable',
-					remind_time && 'remind_time'
-				)}
-			>
-				<Bell size={15}></Bell>
+			<div className={$cx('btn_clock flex justify_center align_center clickable', value && 'has_value')}>
+				{Icon ? <Icon size={16}></Icon> : <Bell size={15}></Bell>}
 			</div>
 		),
-		[remind_time]
+		[value]
 	)
 
-	const format = useMemoizedFn((v: Dayjs) => {
-		if (!v) return undefined
-		if (v.valueOf() <= dayjs().valueOf()) return ''
-
-		return v ? dayjs().to(v) : undefined
-	})
-
-	const onChange = useMemoizedFn((v: Dayjs) => {
-		if (!v) return onChangeRemind(undefined)
+	const onChangeTime = useMemoizedFn((v: Dayjs) => {
+		if (!v) return onChange(undefined)
 		if (v.valueOf() <= dayjs().valueOf()) return
 
-		onChangeRemind(v.valueOf())
+		onChange(v.valueOf())
 	})
 
 	return (
 		<DatePicker
-			className={$cx(styles._local, !useByDetail && styles.useByInput)}
+			rootClassName={$cx('disable_second', styles._local, !useByDetail && styles.useByInput)}
 			placeholder={t('translation:common.unset')}
 			showTime
 			suffixIcon={useByDetail ? false : Trigger}
@@ -71,8 +60,8 @@ const Index = (props: IPropsRemind) => {
 			getPopupContainer={() => document.body}
 			presets={options}
 			format={format}
-			value={remind_time ? dayjs(remind_time) : undefined}
-			onChange={onChange}
+			value={value ? dayjs(value) : undefined}
+			onChange={onChangeTime}
 		></DatePicker>
 	)
 }

@@ -5,7 +5,7 @@ export default {
 			checked: 'Checked',
 			closed: 'Closed'
 		},
-		star: 'Star'
+		level: 'Level'
 	},
 	context_menu: {
 		detail: 'Detail',
@@ -84,17 +84,20 @@ export default {
 		Remind: {
 			title: 'Remind',
 			options: {
-				two_hour: 'Two hours later',
-				half_day: 'Half day later',
-				day: 'Tomorrow',
-				after_tomorrow: 'Day after tomorrow',
-				three_day: 'Three days later',
-				week: 'A week later',
-				half_month: 'Half month later',
-				month: 'A month later',
-				half_year: 'Six months later',
-				year: 'A year later'
+				two_hour: 'after two hours',
+				half_day: 'after half day',
+				day: 'tomorrow',
+				after_tomorrow: 'day after tomorrow',
+				three_day: 'after three days',
+				week: 'after a week',
+				half_month: 'after half month',
+				month: 'after a month',
+				half_year: 'after six months',
+				year: 'after a year'
 			}
+		},
+		Deadline: {
+			title: 'Deadline'
 		},
 		Cycle: {
 			title: 'Repeat',

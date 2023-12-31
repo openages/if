@@ -62,7 +62,7 @@ import type { ArgsArchiveByTime, ArgsUpdateTodoData } from './types/services'
 export default class Index {
 	id = ''
 	mode = 'list' as Mode
-	zen_mode = false
+	zen_mode = true
 	kanban_mode = '' as KanbanMode
 	timer_cycle: NodeJS.Timeout = null
 	timer_archive: NodeJS.Timeout = null

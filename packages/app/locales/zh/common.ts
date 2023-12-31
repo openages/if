@@ -11,5 +11,6 @@ export default {
 		x_unit_ago: '{{x}}{{unit}}前'
 	},
 	notice: '注意',
-	unset: '未设置'
+	unset: '未设置',
+	outdate: '已过期'
 }

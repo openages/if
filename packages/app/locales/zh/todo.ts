@@ -5,7 +5,7 @@ export default {
 			checked: '已完成',
 			closed: '已关闭'
 		},
-		star: '重要性'
+		level: '优先级'
 	},
 	context_menu: {
 		detail: '查看详情',
@@ -115,6 +115,9 @@ export default {
 				year: '年',
 				reset: '重置'
 			}
+		},
+		Deadline: {
+			title: '截止时间'
 		}
 	},
 	Archive: {

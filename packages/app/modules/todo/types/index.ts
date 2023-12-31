@@ -2,6 +2,7 @@ import type { SortableProps } from '@/components'
 import type { DirTree, RxDB, Todo } from '@/types'
 import type { MenuProps, SelectProps } from 'antd'
 import type Model from '../model'
+import type { Icon } from '@phosphor-icons/react'
 
 export type QueryItems = RxDB.ItemsQuery<Todo.TodoItem>
 export type QueryArchives = RxDB.ItemsQuery<Todo.TodoItem>
@@ -58,23 +59,28 @@ export interface IPropsInput {
 	create: Model['create']
 }
 
-export interface IPropsStar {
-	value: Todo.Todo['star']
-	onChangeStar: (v: Todo.Todo['star']) => void
+export interface IPropsLevel {
+	value: Todo.Todo['level']
+	onChangeLevel: (v: Todo.Todo['level']) => void
 }
 
-export interface IPropsStarStatus {
-	star: Todo.Todo['star']
+export interface IPropsLevelStatus {
+	level: Todo.Todo['level']
 }
 
-export interface IPropsRemind {
-	remind_time: Todo.Todo['remind_time']
+export interface IPropsDateTime {
+	value: number
 	useByDetail?: boolean
-	onChangeRemind: (v: Todo.Todo['remind_time']) => void
+	Icon?: Icon
+	onChange: (v: number) => void
 }
 
 export interface IPropsRemindStatus {
 	remind_time: Todo.Todo['remind_time']
+}
+
+export interface IPropsDeadlineStatus {
+	end_time: Todo.Todo['end_time']
 }
 
 export interface IPropsCircle {

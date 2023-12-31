@@ -142,8 +142,12 @@ const Index = (props: IPropsCircle) => {
 			return <span className='not_enabled cursor_point'>{t('translation:common.unset')}</span>
 		}
 
+		if (!scale_text) {
+			return <span className='not_enabled cursor_point'>{t('translation:todo.Input.Cycle.disabled')}</span>
+		}
+
 		return (
-			<span className='cursor_point'>
+			<span className='cycle_desc cursor_point'>
 				{`${t('translation:todo.Input.Cycle.every')} ${cycle?.interval} ${scale_text}`}
 				{cycle?.exclude?.length > 0 &&
 					`, ${t('translation:todo.Input.Cycle.exclude')} ${scale_text} ${cycle.exclude.join(',')}`}
@@ -152,16 +156,16 @@ const Index = (props: IPropsCircle) => {
 	}, [i18n.language, cycle_enabled, cycle, useByDetail])
 
 	return (
-		<div className={$cx(styles._local)}>
-			<Popover
-				trigger='click'
-				placement={useByDetail ? 'bottomLeft' : 'topRight'}
-				content={Content}
-				align={!useByDetail ? { offset: [8, -8] } : {}}
-			>
-				<div>{Trigger}</div>
-			</Popover>
-		</div>
+		<Popover
+			rootClassName={styles._local}
+			trigger='click'
+			placement={useByDetail ? 'bottomLeft' : 'topRight'}
+			content={Content}
+			align={!useByDetail ? { offset: [8, -8] } : {}}
+			getPopupContainer={() => document.body}
+		>
+			<div className={styles.trigger_wrap}>{Trigger}</div>
+		</Popover>
 	)
 }
 

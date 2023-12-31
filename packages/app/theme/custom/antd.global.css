@@ -198,6 +198,7 @@
 
 			.if-drawer-body {
 				padding: 18px;
+				outline: none;
 			}
 
 			.if-drawer-footer {
@@ -437,8 +438,21 @@
 
 /* DatePicker */
 .if-picker-dropdown {
+	&.disable_second {
+		.if-picker-time-panel {
+			.if-picker-content {
+				.if-picker-time-panel-column {
+					&:last-child {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+
 	.if-picker-panel-container {
-		border: var(--border);
+		padding: 6px;
+		border-radius: var(--radius);
 		box-shadow: var(--shadow);
 	}
 
@@ -465,6 +479,10 @@
 						td {
 							padding: 1px 0;
 
+							&::after {
+								height: 24px !important;
+							}
+
 							.if-picker-cell-inner {
 								display: flex;
 								justify-content: center;
@@ -474,7 +492,7 @@
 							}
 
 							&.if-picker-cell-disabled {
-								opacity: 0.6;
+								opacity: 0.3;
 
 								&::before {
 									display: none;
@@ -499,6 +517,33 @@
 									font-weight: bold;
 								}
 							}
+
+							&.if-picker-cell-range-hover {
+								&::before {
+									background-color: rgba(var(--color_text_rgb), 0.12) !important;
+								}
+							}
+
+							&.if-picker-cell-range-hover-end {
+								&::before {
+									background-color: rgba(var(--color_text_rgb), 0.18) !important;
+								}
+
+								.if-picker-cell-inner {
+									background-color: transparent;
+
+									&::after {
+										display: none;
+									}
+								}
+							}
+
+							&.if-picker-cell-range-end {
+								.if-picker-cell-inner {
+									border-left: none;
+									background-color: var(--color_bg_2);
+								}
+							}
 						}
 					}
 				}
@@ -507,7 +552,8 @@
 	}
 
 	.if-picker-month-panel,
-	.if-picker-year-panel {
+	.if-picker-year-panel,
+	.if-picker-decade-panel {
 		width: 150px;
 
 		.if-picker-body {
@@ -527,7 +573,7 @@
 							}
 
 							&.if-picker-cell-disabled {
-								opacity: 0.6;
+								opacity: 0.3;
 							}
 
 							&.if-picker-cell-selected {
@@ -552,7 +598,12 @@
 		}
 	}
 
+	.if-picker-decade-panel {
+		width: 240px;
+	}
+
 	.if-picker-time-panel {
+		min-width: 80px;
 		height: unset !important;
 
 		.if-picker-content {
@@ -593,13 +644,15 @@
 						width: 24px;
 						height: 24px;
 						padding: 0;
+						margin: 0 auto;
 						text-align: center;
 						border-radius: 0;
 						border-bottom: 1px solid transparent;
 						box-sizing: border-box !important;
 
 						&:hover {
-							border-radius: var(--radius_small);
+							background-color: transparent;
+							border-bottom-color: var(--color_text_grey);
 						}
 					}
 				}
@@ -629,7 +682,7 @@
 					align-items: center;
 					line-height: 1;
 					font-size: 12px;
-					height: 20px;
+					height: 18px;
 					border: 1px solid var(--color_text);
 					background-color: transparent;
 					color: var(--color_text);

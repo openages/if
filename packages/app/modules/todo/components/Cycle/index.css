@@ -1,4 +1,4 @@
-._local {
+.trigger_wrap {
 	font-size: 12px;
 	line-height: 1;
 
@@ -23,6 +23,18 @@
 			color: var(--color_text_light);
 		}
 
+		.cycle_desc {
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+	}
+}
+
+._local {
+	font-size: 12px;
+	line-height: 1;
+
+	:global {
 		.cycle_input_wrap {
 			.radio_group {
 				.if-radio-wrapper {

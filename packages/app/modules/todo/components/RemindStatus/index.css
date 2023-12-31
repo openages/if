@@ -15,7 +15,6 @@
 }
 
 ._local {
-	padding: 0 3px;
 	color: var(--color_text_grey);
 
 	:global {
@@ -27,12 +26,6 @@
 					animation: shaking 1.2s ease-in-out infinite;
 				}
 			}
-		}
-
-		.text {
-			font-size: 10px;
-			line-height: 1;
-			white-space: nowrap;
 		}
 	}
 }

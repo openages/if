@@ -50,8 +50,8 @@ const Index = (props: IPropsTable) => {
 			render: () => <RenderTags options={tags}></RenderTags>
 		},
 		{
-			title: 'star',
-			dataIndex: 'star',
+			title: 'level',
+			dataIndex: 'level',
 			width: 96,
 			align: 'center',
 			render: () => <RenderStar></RenderStar>
@@ -138,6 +138,7 @@ const Index = (props: IPropsTable) => {
 		<div className={$cx('w_100 border_box', styles._local)}>
 			<Table
 				size='small'
+				expandable={{ childrenColumnName: '_none_' }}
 				rowKey={item => item.id}
 				components={components}
 				columns={target_columns}

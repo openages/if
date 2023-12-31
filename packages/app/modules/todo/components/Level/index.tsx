@@ -5,10 +5,10 @@ import { FireSimple } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
-import type { IPropsStar } from '../../types'
+import type { IPropsLevel } from '../../types'
 
-const Index = (props: IPropsStar) => {
-	const { value, onChangeStar } = props
+const Index = (props: IPropsLevel) => {
+	const { value, onChangeLevel } = props
 	const color = getColorByLevel(value)
 
 	return (
@@ -20,7 +20,7 @@ const Index = (props: IPropsStar) => {
 			)}
 			style={{ '--color_star': color || 'var(--color_text)' }}
 			value={value}
-			onChange={onChangeStar}
+			onChange={onChangeLevel}
 		></Rate>
 	)
 }

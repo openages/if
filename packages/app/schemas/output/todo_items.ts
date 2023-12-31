@@ -21,7 +21,7 @@ export default {
                   "open": {
                         "type": "boolean"
                   },
-                  "star": {
+                  "level": {
                         "type": "number"
                   },
                   "tag_ids": {
@@ -84,20 +84,11 @@ export default {
                   "schedule": {
                         "type": "boolean"
                   },
-                  "schedule_range": {
-                        "type": "object",
-                        "properties": {
-                              "start": {
-                                    "type": "number"
-                              },
-                              "end": {
-                                    "type": "number"
-                              }
-                        },
-                        "required": [
-                              "start",
-                              "end"
-                        ]
+                  "start_time": {
+                        "type": "number"
+                  },
+                  "end_time": {
+                        "type": "number"
                   },
                   "children": {
                         "type": "array",
@@ -179,7 +170,7 @@ export default {
                   "open": {
                         "type": "boolean"
                   },
-                  "star": {
+                  "level": {
                         "type": "number"
                   },
                   "tag_ids": {
@@ -242,20 +233,11 @@ export default {
                   "schedule": {
                         "type": "boolean"
                   },
-                  "schedule_range": {
-                        "type": "object",
-                        "properties": {
-                              "start": {
-                                    "type": "number"
-                              },
-                              "end": {
-                                    "type": "number"
-                              }
-                        },
-                        "required": [
-                              "start",
-                              "end"
-                        ]
+                  "start_time": {
+                        "type": "number"
+                  },
+                  "end_time": {
+                        "type": "number"
                   },
                   "children": {
                         "type": "array",
@@ -334,7 +316,7 @@ export default {
                   "open": {
                         "type": "boolean"
                   },
-                  "star": {
+                  "level": {
                         "type": "number"
                   },
                   "tag_ids": {
@@ -397,20 +379,11 @@ export default {
                   "schedule": {
                         "type": "boolean"
                   },
-                  "schedule_range": {
-                        "type": "object",
-                        "properties": {
-                              "start": {
-                                    "type": "number"
-                              },
-                              "end": {
-                                    "type": "number"
-                              }
-                        },
-                        "required": [
-                              "start",
-                              "end"
-                        ]
+                  "start_time": {
+                        "type": "number"
+                  },
+                  "end_time": {
+                        "type": "number"
                   },
                   "children": {
                         "type": "array",

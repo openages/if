@@ -23,6 +23,10 @@ export default (args: HookArgs) => {
 		args
 	const { id, status, open, children } = item
 
+	const updateValues = useMemoizedFn(v => {
+		update({ type: 'parent', index, dimension_id, value: { ...v } as Todo.Todo })
+	})
+
 	const setOpen = useMemoizedFn((v: boolean) => {
 		update({ type: 'parent', index, dimension_id, value: { open: v } as Todo.Todo })
 	})
@@ -37,16 +41,16 @@ export default (args: HookArgs) => {
 		update({ type: 'parent', index, dimension_id, value: { tag_ids: v } as Todo.Todo })
 	})
 
-	const updateStar = useMemoizedFn(v => {
-		update({ type: 'parent', index, dimension_id, value: { star: v } as Todo.Todo })
+	const updateLevel = useMemoizedFn(v => {
+		update({ type: 'parent', index, dimension_id, value: { level: v } as Todo.Todo })
 	})
 
 	const updateRemind = useMemoizedFn(v => {
 		update({ type: 'parent', index, dimension_id, value: { remind_time: v } as Todo.Todo })
 	})
 
-	const updateCircle = useMemoizedFn(v => {
-		update({ type: 'parent', index, dimension_id, value: { ...v } as Todo.Todo })
+	const updateDeadline = useMemoizedFn(v => {
+		update({ type: 'parent', index, dimension_id, value: { end_time: v } as Todo.Todo })
 	})
 
 	const updateRemark = useMemoizedFn(v => {
@@ -111,10 +115,11 @@ export default (args: HookArgs) => {
 	return {
 		setOpen,
 		onCheck,
+		updateValues,
 		updateTags,
-		updateStar,
+		updateLevel,
 		updateRemind,
-		updateCircle,
+		updateDeadline,
 		updateRemark,
 		onDrag,
 		toggleChildren,

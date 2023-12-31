@@ -1,5 +1,5 @@
 ._local {
-	padding: 1px;
+	padding: 1px !important;
 	overflow: hidden;
 
 	:global {
@@ -17,10 +17,6 @@
 		.repeat_content {
 			padding: 0 3px;
 			border-radius: 6px;
-			line-height: 1;
-			font-size: 10px;
-			color: var(--color_text_grey);
-			white-space: nowrap;
 		}
 	}
 }

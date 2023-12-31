@@ -71,7 +71,7 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 		if (sort['sort']) delete sort['sort']
 		if (sort['create_at']) delete sort['create_at']
 
-		if (items_sort_param.type === 'importance') sort['star'] = items_sort_param.order
+		if (items_sort_param.type === 'importance') sort['level'] = items_sort_param.order
 		if (items_sort_param.type === 'alphabetical') sort['text'] = items_sort_param.order
 		if (items_sort_param.type === 'create_at') sort['create_at'] = items_sort_param.order
 	}

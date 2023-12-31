@@ -57,14 +57,8 @@ const Index = (props: IPropsCircleStatus) => {
 				></div>
 			)}
 			<div className='repeat_content w_100 h_100 flex align_center relative'>
-				<HourglassMedium className='icon' size={10} weight='fill'></HourglassMedium>
-				<span className='text ml_2'>
-					{`${t('translation:todo.Input.Cycle.every')} ${cycle?.interval} ${scale_text}`}
-					{cycle?.exclude?.length > 0 &&
-						`, ${t('translation:todo.Input.Cycle.exclude')} ${scale_text} ${cycle.exclude.join(
-							','
-						)}`}
-				</span>
+				<HourglassMedium className='icon' size={10}></HourglassMedium>
+				<span className='text ml_2'>{`${cycle?.interval} ${scale_text}`}</span>
 			</div>
 		</div>
 	)

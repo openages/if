@@ -5,18 +5,18 @@ import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
 
 import { useInput } from '@/modules/todo/hooks'
-import { id } from '@/utils'
+import { Calendar } from '@phosphor-icons/react'
 
 import { getGroup, getTodo } from '../../initials'
 import Cycle from '../Cycle'
-import Remind from '../Remind'
-import Star from '../Star'
+import DateTime from '../DateTime'
+import Level from '../Level'
 import TagSelect from '../TagSelect'
 import styles from './index.css'
 
 import type { Todo } from '@/types'
 import type { KeyboardEvent } from 'react'
-import type { IPropsCircle, IPropsInput, IPropsRemind } from '../../types'
+import type { IPropsCircle, IPropsInput, IPropsDateTime } from '../../types'
 
 const Index = (props: IPropsInput) => {
 	const { loading, tags, create } = props
@@ -42,19 +42,18 @@ const Index = (props: IPropsInput) => {
 	useEffect(() => {
 		if (loading) return
 
-		setInput(v => ({
-			...v,
-			id: id(),
-			text: '',
-			remind_time: undefined,
-			cycle_enabled: false,
-			cycle: undefined
-		}))
+		setInput(getTodo())
 	}, [loading])
 
-	const props_remind: IPropsRemind = {
-		remind_time: (input as Todo.Todo).remind_time,
-		onChangeRemind: useMemoizedFn(v => setInput(input => ({ ...input, remind_time: v })))
+	const props_remind: IPropsDateTime = {
+		value: (input as Todo.Todo).remind_time,
+		onChange: useMemoizedFn(v => setInput(input => ({ ...input, remind_time: v })))
+	}
+
+	const props_deadline: IPropsDateTime = {
+		value: (input as Todo.Todo).end_time,
+		Icon: Calendar,
+		onChange: useMemoizedFn(v => setInput(input => ({ ...input, end_time: v })))
 	}
 
 	const props_circle: IPropsCircle = {
@@ -112,14 +111,13 @@ const Index = (props: IPropsInput) => {
 					<When condition={input.type === 'todo'}>
 						<div className='flex align_center'>
 							<div className='star_wrap flex align_center mr_6 relative'>
-								<Star
-									value={(input as Todo.Todo).star}
-									onChangeStar={v => setInput(input => ({ ...input, star: v }))}
-								></Star>
+								<Level
+									value={(input as Todo.Todo).level}
+									onChangeLevel={v => setInput(input => ({ ...input, level: v }))}
+								></Level>
 							</div>
-							<div className='divide_line'></div>
-							<Remind {...props_remind}></Remind>
-							<div className='divide_line'></div>
+							<DateTime {...props_remind}></DateTime>
+							<DateTime {...props_deadline}></DateTime>
 							<Cycle {...props_circle}></Cycle>
 						</div>
 					</When>

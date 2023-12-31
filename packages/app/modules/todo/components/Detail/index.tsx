@@ -3,14 +3,14 @@ import { Drawer } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Bell, CaretDown, CaretUp, HourglassMedium, Plus, Star as StarIcon, Tag } from '@phosphor-icons/react'
+import { Bell, Calendar, CaretDown, CaretUp, FireSimple, HourglassMedium, Plus, Tag } from '@phosphor-icons/react'
 
 import { useInput } from '../../hooks'
 import Children from '../Children'
 import Cycle from '../Cycle'
+import DateTime from '../DateTime'
+import Level from '../Level'
 import Remark from '../Remark'
-import Remind from '../Remind'
-import Star from '../Star'
 import TagSelect from '../TagSelect'
 import { useContextMenu, useHandlers } from '../TodoItem/hooks'
 import styles from './index.css'
@@ -35,7 +35,20 @@ const Index = (props: IPropsDetail) => {
 	} = props
 	const { t } = useTranslation()
 	const { item = {} as Todo.Todo, prev_id, next_id } = current_detail_item
-	const { status, text, children, tag_ids, star, remind_time, cycle_enabled, cycle, recycle_time, remark } = item
+	const {
+		status,
+		text,
+		children,
+		tag_ids,
+		level,
+		remind_time,
+		cycle_enabled,
+		cycle,
+		recycle_time,
+		start_time,
+		end_time,
+		remark
+	} = item
 
 	const { input, onInput } = useInput({
 		value: text,
@@ -49,15 +62,23 @@ const Index = (props: IPropsDetail) => {
 		)
 	})
 
-	const { insertChildren, removeChildren, updateTags, updateStar, updateRemind, updateCircle, updateRemark } =
-		useHandlers({
-			item,
-			index: current_detail_index.index,
-			kanban_mode,
-			dimension_id: current_detail_index.dimension_id,
-			visible_detail_modal,
-			update
-		})
+	const {
+		updateValues,
+		updateTags,
+		updateLevel,
+		updateRemind,
+		updateDeadline,
+		updateRemark,
+		insertChildren,
+		removeChildren
+	} = useHandlers({
+		item,
+		index: current_detail_index.index,
+		kanban_mode,
+		dimension_id: current_detail_index.dimension_id,
+		visible_detail_modal,
+		update
+	})
 
 	const { ChildrenContextMenu } = useContextMenu({ kanban_mode })
 
@@ -159,10 +180,12 @@ const Index = (props: IPropsDetail) => {
 						</div>
 						<div className='option_item w_100 border_box flex align_center'>
 							<div className='name_wrap flex align_center'>
-								<StarIcon size={16}></StarIcon>
-								<span className='name'>{t('translation:todo.common.star')}</span>
+								<FireSimple size={16}></FireSimple>
+								<span className='name'>{t('translation:todo.common.level')}</span>
 							</div>
-							<Star value={star} onChangeStar={updateStar}></Star>
+							<div className='value_wrap flex'>
+								<Level value={level} onChangeLevel={updateLevel}></Level>
+							</div>
 						</div>
 						<div
 							className={$cx(
@@ -174,11 +197,33 @@ const Index = (props: IPropsDetail) => {
 								<Bell size={16}></Bell>
 								<span className='name'>{t('translation:todo.Input.Remind.title')}</span>
 							</div>
-							<Remind
-								remind_time={remind_time}
-								useByDetail
-								onChangeRemind={updateRemind}
-							></Remind>
+							<div className='value_wrap flex'>
+								<DateTime
+									useByDetail
+									value={remind_time}
+									onChange={updateRemind}
+								></DateTime>
+							</div>
+						</div>
+						<div
+							className={$cx(
+								'option_item w_100 border_box flex align_center',
+								status === 'checked' && 'disabled'
+							)}
+						>
+							<div className='name_wrap flex align_center'>
+								<Calendar size={16}></Calendar>
+								<span className='name'>
+									{t('translation:todo.Input.Deadline.title')}
+								</span>
+							</div>
+							<div className='value_wrap flex'>
+								<DateTime
+									useByDetail
+									value={end_time}
+									onChange={updateDeadline}
+								></DateTime>
+							</div>
 						</div>
 						<div
 							className={$cx(
@@ -191,12 +236,14 @@ const Index = (props: IPropsDetail) => {
 								<HourglassMedium size={16}></HourglassMedium>
 								<span className='name'>{t('translation:todo.Input.Cycle.title')}</span>
 							</div>
-							<Cycle
-								cycle_enabled={cycle_enabled}
-								cycle={cycle}
-								useByDetail
-								onChangeCircle={updateCircle}
-							></Cycle>
+							<div className='value_wrap flex'>
+								<Cycle
+									cycle_enabled={cycle_enabled}
+									cycle={cycle}
+									useByDetail
+									onChangeCircle={updateValues}
+								></Cycle>
+							</div>
 						</div>
 					</div>
 					<div

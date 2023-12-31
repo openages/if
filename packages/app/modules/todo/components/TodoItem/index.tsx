@@ -1,6 +1,6 @@
-import { useDebounce, useMemoizedFn, useSize, useUpdateEffect } from 'ahooks'
+import { useMemoizedFn } from 'ahooks'
 import { ConfigProvider, Dropdown } from 'antd'
-import { useMemo, useRef } from 'react'
+import { useMemo } from 'react'
 import { Case, Switch } from 'react-if'
 
 import { useDroppable } from '@dnd-kit/core'
@@ -10,8 +10,9 @@ import { CheckSquare, DotsSixVertical, Square } from '@phosphor-icons/react'
 import { useInput } from '../../hooks'
 import Children from '../Children'
 import CycleStatus from '../CycleStatus'
+import DeadlineStatus from '../DeadlineStatus'
+import LevelStatus from '../LevelStatus'
 import RemindStatus from '../RemindStatus'
-import StarStatus from '../StarStatus'
 import TagSelect from '../TagSelect'
 import { useContextMenu, useHandlers, useLink, useOnContextMenu, useOpen } from './hooks'
 import styles from './index.css'
@@ -42,7 +43,20 @@ const Index = (props: IPropsTodoItem) => {
 		showDetailModal
 	} = props
 
-	const { id, status, text, open, tag_ids, star, remind_time, cycle_enabled, cycle, recycle_time, children } = item
+	const {
+		id,
+		status,
+		text,
+		open,
+		tag_ids,
+		level,
+		remind_time,
+		end_time,
+		cycle_enabled,
+		cycle,
+		recycle_time,
+		children
+	} = item
 
 	const {
 		attributes,
@@ -118,14 +132,13 @@ const Index = (props: IPropsTodoItem) => {
 	}
 
 	const has_options = useMemo(
-		() => star || tag_ids?.length || remind_time || (cycle_enabled && cycle),
-		[star, tag_ids, remind_time, cycle_enabled, cycle]
+		() => level || tag_ids?.length || remind_time || (cycle_enabled && cycle),
+		[level, tag_ids, remind_time, cycle_enabled, cycle]
 	)
 
 	const OptionsWrap = (
 		<div className={$cx('options_wrap w_100 border_box flex align_center', open && 'open')}>
 			<div className='flex align_center'>
-				{star > 0 && <StarStatus star={star}></StarStatus>}
 				{tags?.length > 0 && tag_ids?.length > 0 && (
 					<TagSelect
 						className='tag_select'
@@ -136,9 +149,11 @@ const Index = (props: IPropsTodoItem) => {
 					></TagSelect>
 				)}
 				{remind_time && <RemindStatus remind_time={remind_time}></RemindStatus>}
+				{end_time && <DeadlineStatus end_time={end_time}></DeadlineStatus>}
 				{cycle_enabled && cycle && (
 					<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
 				)}
+				{level > 0 && <LevelStatus level={level}></LevelStatus>}
 			</div>
 		</div>
 	)

@@ -69,11 +69,5 @@
 		.star_wrap {
 			border-radius: var(--radius);
 		}
-
-		.divide_line {
-			width: 1px;
-			height: 8px;
-			margin: 0 1px;
-		}
 	}
 }
