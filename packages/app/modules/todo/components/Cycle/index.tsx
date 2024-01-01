@@ -150,7 +150,7 @@ const Index = (props: IPropsCircle) => {
 			<span className='cycle_desc cursor_point'>
 				{`${t('translation:todo.Input.Cycle.every')} ${cycle?.interval} ${scale_text}`}
 				{cycle?.exclude?.length > 0 &&
-					`, ${t('translation:todo.Input.Cycle.exclude')} ${scale_text} ${cycle.exclude.join(',')}`}
+					`, ${t('translation:todo.Input.Cycle.exclude')} ${cycle.exclude.join(',')}`}
 			</span>
 		)
 	}, [i18n.language, cycle_enabled, cycle, useByDetail])

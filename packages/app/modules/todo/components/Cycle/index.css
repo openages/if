@@ -81,12 +81,8 @@
 							width: 18px;
 							height: 18px;
 							border: var(--border);
-							background: linear-gradient(
-								150deg,
-								rgba(var(--color_main_rgb), 0.48),
-								rgba(var(--color_main_rgb), 1)
-							);
-							color: white;
+							background: var(--color_text);
+							color: var(--color_bg);
 							border-radius: 50%;
 
 							&.quarter {

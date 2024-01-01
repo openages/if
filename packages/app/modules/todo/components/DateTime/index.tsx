@@ -46,14 +46,14 @@ const Index = (props: IPropsDateTime) => {
 		if (!v) return onChange(undefined)
 		if (v.valueOf() <= dayjs().valueOf()) return
 
-		onChange(v.valueOf())
+		onChange(v.startOf('minute').valueOf())
 	})
 
 	return (
 		<DatePicker
 			rootClassName={$cx('disable_second', styles._local, !useByDetail && styles.useByInput)}
 			placeholder={t('translation:common.unset')}
-			showTime
+			showTime={{ defaultValue: dayjs().startOf('minute') }}
 			suffixIcon={useByDetail ? false : Trigger}
 			bordered={false}
 			disabledDate={v => v && v <= dayjs().startOf('day')}

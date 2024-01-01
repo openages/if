@@ -65,6 +65,7 @@ export default (theme: Theme, color_main: string) => {
 				handleSizeHover: 10
 			},
 			Radio: {
+				colorPrimary: vars.color_text,
 				dotSize: 9,
 				radioSize: 12
 			}
