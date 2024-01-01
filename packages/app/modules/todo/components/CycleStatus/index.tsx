@@ -46,7 +46,13 @@ const Index = (props: IPropsCircleStatus) => {
 	}, [cycle, recycle_time])
 
 	return (
-		<div className={$cx('other_wrap border_box flex align_center relative', styles._local)}>
+		<div
+			className={$cx(
+				'other_wrap border_box flex align_center relative',
+				styles._local,
+				percent > 0 && styles.percent
+			)}
+		>
 			{percent > 0 && (
 				<div
 					className={$cx(

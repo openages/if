@@ -29,6 +29,7 @@ const Index = (props: IPropsTodoItem) => {
 		angles,
 		drag_disabled,
 		zen_mode,
+		open_items,
 		kanban_mode,
 		dimension_id,
 		drag_overlay,
@@ -41,6 +42,7 @@ const Index = (props: IPropsTodoItem) => {
 		tab,
 		moveTo,
 		remove,
+		handleOpenItem,
 		showDetailModal
 	} = props
 
@@ -48,7 +50,6 @@ const Index = (props: IPropsTodoItem) => {
 		id,
 		status,
 		text,
-		open,
 		tag_ids,
 		level,
 		remind_time,
@@ -80,17 +81,19 @@ const Index = (props: IPropsTodoItem) => {
 		disabled: kanban_mode !== 'angle'
 	})
 
-	const { onCheck, onDrag, toggleChildren, insertChildren, removeChildren, onKeyDown, updateTags } = useHandlers({
-		item,
-		index,
-		kanban_mode,
-		dimension_id,
-		makeLinkLine,
-		check,
-		insert,
-		update,
-		tab
-	})
+	const { open, onCheck, onDrag, setOpen, toggleChildren, insertChildren, removeChildren, onKeyDown, updateTags } =
+		useHandlers({
+			item,
+			index,
+			kanban_mode,
+			dimension_id,
+			makeLinkLine,
+			check,
+			insert,
+			update,
+			tab,
+			handleOpenItem
+		})
 
 	const { linker, dragging, hovering } = useLink({ item, dimension_id, makeLinkLine, updateRelations })
 
@@ -117,7 +120,7 @@ const Index = (props: IPropsTodoItem) => {
 		insertChildren
 	})
 
-	useOpen({ item, zen_mode, input, renderLines })
+	useOpen({ item, zen_mode, open, open_items, input, renderLines, setOpen })
 
 	const props_children: IPropsChildren = {
 		items: children,
@@ -134,8 +137,8 @@ const Index = (props: IPropsTodoItem) => {
 	}
 
 	const has_options = useMemo(
-		() => level || tag_ids?.length || remind_time || (cycle_enabled && cycle),
-		[level, tag_ids, remind_time, cycle_enabled, cycle]
+		() => level || tag_ids?.length || remind_time || (cycle_enabled && cycle) || schedule,
+		[level, tag_ids, remind_time, cycle_enabled, cycle, schedule]
 	)
 
 	const OptionsWrap = useMemo(

@@ -18,9 +18,6 @@ export default {
                         ],
                         "maxLength": 12
                   },
-                  "open": {
-                        "type": "boolean"
-                  },
                   "level": {
                         "type": "number"
                   },
@@ -66,6 +63,25 @@ export default {
                               "interval"
                         ]
                   },
+                  "recycle_spec": {
+                        "type": "object",
+                        "properties": {
+                              "type": {
+                                    "type": "string",
+                                    "enum": [
+                                          "day",
+                                          "hour"
+                                    ]
+                              },
+                              "value": {
+                                    "type": "number"
+                              }
+                        },
+                        "required": [
+                              "type",
+                              "value"
+                        ]
+                  },
                   "recycle_time": {
                         "type": "number"
                   },
@@ -76,9 +92,6 @@ export default {
                         "type": "boolean"
                   },
                   "archive_time": {
-                        "type": "number"
-                  },
-                  "deadline": {
                         "type": "number"
                   },
                   "schedule": {
@@ -167,9 +180,6 @@ export default {
                         ],
                         "maxLength": 12
                   },
-                  "open": {
-                        "type": "boolean"
-                  },
                   "level": {
                         "type": "number"
                   },
@@ -215,6 +225,25 @@ export default {
                               "interval"
                         ]
                   },
+                  "recycle_spec": {
+                        "type": "object",
+                        "properties": {
+                              "type": {
+                                    "type": "string",
+                                    "enum": [
+                                          "day",
+                                          "hour"
+                                    ]
+                              },
+                              "value": {
+                                    "type": "number"
+                              }
+                        },
+                        "required": [
+                              "type",
+                              "value"
+                        ]
+                  },
                   "recycle_time": {
                         "type": "number"
                   },
@@ -225,9 +254,6 @@ export default {
                         "type": "boolean"
                   },
                   "archive_time": {
-                        "type": "number"
-                  },
-                  "deadline": {
                         "type": "number"
                   },
                   "schedule": {
@@ -313,9 +339,6 @@ export default {
                         ],
                         "maxLength": 12
                   },
-                  "open": {
-                        "type": "boolean"
-                  },
                   "level": {
                         "type": "number"
                   },
@@ -361,6 +384,25 @@ export default {
                               "interval"
                         ]
                   },
+                  "recycle_spec": {
+                        "type": "object",
+                        "properties": {
+                              "type": {
+                                    "type": "string",
+                                    "enum": [
+                                          "day",
+                                          "hour"
+                                    ]
+                              },
+                              "value": {
+                                    "type": "number"
+                              }
+                        },
+                        "required": [
+                              "type",
+                              "value"
+                        ]
+                  },
                   "recycle_time": {
                         "type": "number"
                   },
@@ -371,9 +413,6 @@ export default {
                         "type": "boolean"
                   },
                   "archive_time": {
-                        "type": "number"
-                  },
-                  "deadline": {
                         "type": "number"
                   },
                   "schedule": {

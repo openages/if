@@ -1,12 +1,13 @@
-import { useCssVariable } from '@/hooks'
-import { points } from '@/utils'
-import { useDndMonitor, useDroppable } from '@dnd-kit/core'
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { useDeepCompareEffect, useMemoizedFn, useSize } from 'ahooks'
 import { useMemo, useRef, useState } from 'react'
 import { Layer, Line, Stage } from 'react-konva'
 
 import { SortableWrap } from '@/components'
+import { useCssVariable } from '@/hooks'
+import { points } from '@/utils'
+import { useDndMonitor, useDroppable } from '@dnd-kit/core'
+import { verticalListSortingStrategy, SortableContext } from '@dnd-kit/sortable'
+
 import GroupTitle from '../GroupTitle'
 import TodoItem from '../TodoItem'
 import styles from './index.css'
@@ -23,6 +24,7 @@ const Index = (props: IPropsTodos) => {
 		relations,
 		drag_disabled,
 		zen_mode,
+		open_items,
 		kanban_mode,
 		dimension_id,
 		check,
@@ -32,6 +34,7 @@ const Index = (props: IPropsTodos) => {
 		tab,
 		moveTo,
 		remove,
+		handleOpenItem,
 		showDetailModal
 	} = props
 	const container = useRef<HTMLDivElement>(null)
@@ -192,6 +195,7 @@ const Index = (props: IPropsTodos) => {
 										angles,
 										drag_disabled,
 										zen_mode,
+										open_items,
 										kanban_mode,
 										dimension_id,
 										makeLinkLine,
@@ -203,6 +207,7 @@ const Index = (props: IPropsTodos) => {
 										tab,
 										moveTo,
 										remove,
+										handleOpenItem,
 										showDetailModal
 									}}
 								></TodoItem>

@@ -12,7 +12,7 @@ import { confirm } from '@/utils/antd'
 import { disableWatcher, loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
 import { updateSort } from '@openages/stk/dnd'
-import { useInstanceWatch } from '@openages/stk/mobx'
+import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
 
 import { getTodo } from './initials'
 import {
@@ -67,6 +67,7 @@ export default class Index {
 	timer_cycle: NodeJS.Timeout = null
 	timer_archive: NodeJS.Timeout = null
 	disable_watcher = false
+	open_items = [] as Array<string>
 
 	setting = {} as Todo.TodoSetting
 	setting_watcher = null as Subscription
@@ -221,10 +222,14 @@ export default class Index {
 		this.utils.acts = [...useInstanceWatch(this)]
 		this.id = id
 
+		const disposer = setStorageWhenChange([{ [`${id}_open_items`]: 'open_items' }], this, { useSession: true })
+
 		this.file.init(this.id)
 
 		this.on()
 		this.watchTodo()
+
+		this.utils.acts.push(disposer)
 	}
 
 	async queryArchives(reset?: boolean) {
@@ -337,18 +342,8 @@ export default class Index {
 
 		const data = type === 'parent' ? { id: item.id, ...value } : { id: item.id, children: value }
 
-		if (type === 'children') {
-			if (value?.length > 0) {
-				if (!item.open) {
-					data['open'] = true
-				}
-			} else {
-				if (item.open) {
-					data['open'] = false
-				}
-
-				data['children'] = undefined
-			}
+		if (type === 'children' && !(value?.length > 0)) {
+			data['children'] = undefined
 		}
 
 		this.setItem(item, data)
@@ -497,11 +492,10 @@ export default class Index {
 				id: item.id,
 				callback() {
 					prev_item.children = children
-					prev_item.open = true
 				}
 			})
 
-			await update({ id: prev_item.id, children: $copy(children), open: true })
+			await update({ id: prev_item.id, children: $copy(children) })
 		} else {
 			const children_index = args.children_index
 			const data = item.children[children_index]
@@ -520,7 +514,6 @@ export default class Index {
 					item.children.splice(children_index, 1)
 
 					if (!item.children.length) {
-						item.open = false
 						item.children = undefined
 					}
 				}
@@ -594,6 +587,20 @@ export default class Index {
 			timestamp: new Date().valueOf(),
 			action
 		})
+	}
+
+	handleOpenItem(id: string, v: boolean) {
+		if (v) {
+			if (this.open_items.includes(id)) return
+
+			this.open_items.push(id)
+
+			this.open_items = $copy(this.open_items)
+		} else {
+			if (!this.open_items.includes(id)) return
+
+			this.open_items = $copy(this.open_items.filter(item => item !== id))
+		}
 	}
 
 	onTableRowChange(index: number, values: Partial<Todo.Todo>) {

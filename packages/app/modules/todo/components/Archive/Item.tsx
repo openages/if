@@ -19,6 +19,7 @@ const Index = (props: IPropsArchiveItem) => {
 	const [open, setOpen] = useState(false)
 
 	const relative_time = useMemo(() => dayjs().to(create_at), [create_at])
+	const recycle = cycle_enabled && cycle && recycle_time
 
 	const restore = useMemoizedFn(() => restoreArchiveItem(id))
 	const remove = useMemoizedFn(() => removeArchiveItem(id))
@@ -33,7 +34,6 @@ const Index = (props: IPropsArchiveItem) => {
 
 	const getTextItem = useMemoizedFn((id: string, status: Todo.Todo['status'], text, is_parent: boolean) => {
 		const icon_size = is_parent ? 16 : 14
-		const recycle = is_parent && cycle_enabled && cycle && recycle_time
 
 		return (
 			<div className={$cx('text_wrap w_100 relative', is_parent ? 'parent' : 'child')} key={id}>
@@ -47,13 +47,8 @@ const Index = (props: IPropsArchiveItem) => {
 						</Case>
 					</Switch>
 				</div>
-				{recycle && <CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>}
 				<span
-					className={$cx(
-						'text block',
-						is_parent && data_children && 'has_children',
-						recycle && 'recycle'
-					)}
+					className={$cx('text block', is_parent && data_children && 'has_children')}
 					data-children={is_parent ? data_children : ''}
 					onClick={is_parent ? () => setOpen(!open) : undefined}
 				>
@@ -79,8 +74,12 @@ const Index = (props: IPropsArchiveItem) => {
 					</motion.div>
 				)}
 			</AnimatePresence>
+
 			<div className='bottom_wrap flex justify_between align_center'>
-				<span className='create_at'>{relative_time}</span>
+				<div className='create_at flex align_center'>
+					{relative_time}
+					{recycle && <CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>}
+				</div>
 				<div className='actions_wrap flex align_center'>
 					<div
 						className='btn_action flex align_center cursor_point clickable mr_4'

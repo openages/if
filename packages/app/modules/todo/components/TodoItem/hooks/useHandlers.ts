@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import { useState } from 'react'
 
 import { id as genID } from '@/utils'
 
@@ -16,19 +17,33 @@ interface HookArgs {
 	insert?: IPropsTodoItem['insert']
 	update: IPropsTodoItem['update']
 	tab?: IPropsTodoItem['tab']
+	handleOpenItem?: IPropsTodoItem['handleOpenItem']
 }
 
 export default (args: HookArgs) => {
-	const { item, index, kanban_mode, dimension_id, visible_detail_modal, makeLinkLine, check, insert, update, tab } =
-		args
-	const { id, status, open, schedule, children } = item
+	const {
+		item,
+		index,
+		kanban_mode,
+		dimension_id,
+		visible_detail_modal,
+		makeLinkLine,
+		check,
+		insert,
+		update,
+		tab,
+		handleOpenItem
+	} = args
+	const { id, status, schedule, children } = item
+	const [open, _setOpen] = useState(false)
 
 	const updateValues = useMemoizedFn(v => {
 		update({ type: 'parent', index, dimension_id, value: { ...v } as Todo.Todo })
 	})
 
 	const setOpen = useMemoizedFn((v: boolean) => {
-		update({ type: 'parent', index, dimension_id, value: { open: v } as Todo.Todo })
+		_setOpen(v)
+		handleOpenItem(id, v)
 	})
 
 	const onCheck = useMemoizedFn(() => {
@@ -117,6 +132,7 @@ export default (args: HookArgs) => {
 	})
 
 	return {
+		open,
 		setOpen,
 		onCheck,
 		updateValues,

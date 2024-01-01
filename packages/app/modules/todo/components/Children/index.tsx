@@ -1,22 +1,21 @@
 import { useMemoizedFn } from 'ahooks'
-import { AnimatePresence, motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 import { SortableWrap } from '@/components'
 import { useMounted } from '@/hooks'
 import { Todo } from '@/types'
 import { DndContext } from '@dnd-kit/core'
-import { SortableContext, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { arrayMove, verticalListSortingStrategy, SortableContext } from '@dnd-kit/sortable'
 
-import Item from './Item'
 import styles from './index.css'
+import Item from './Item'
 
 import type { DragEndEvent } from '@dnd-kit/core'
 import type { IPropsChildren } from '../../types'
 
 const Index = (props: IPropsChildren) => {
 	const {
-		items: _items,
+		items,
 		index,
 		open,
 		handled,
@@ -28,18 +27,13 @@ const Index = (props: IPropsChildren) => {
 		insertChildren,
 		removeChildren
 	} = props
-	const [items, setItems] = useState(_items)
-	const mounted = useMounted()
-
-	useEffect(() => setItems(_items), [_items])
+	const mounted = useMounted(300)
 
 	const update = useMemoizedFn(
 		async (children_index: number, value: Partial<Omit<Todo.Todo['children'][number], 'id'>>) => {
-			const children = [...items]
+			const children = items.slice()
 
 			children[children_index] = { ...children[children_index], ...value }
-
-			setItems(children)
 
 			await updateChildren({ type: 'children', index, dimension_id, value: children })
 		}
@@ -48,18 +42,16 @@ const Index = (props: IPropsChildren) => {
 	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
 		if (!over?.id) return
 
-		const value = arrayMove(items, active.data.current.index, over.data.current.index)
+		const children = arrayMove(items, active.data.current.index, over.data.current.index)
 
-		setItems(value)
-
-		updateChildren({ type: 'children', dimension_id, index, value })
+		updateChildren({ type: 'children', dimension_id, index, value: children })
 	})
 
 	if (!items || !items.length) return null
 
 	return (
-		<AnimatePresence>
-			{open && items.length && (
+		<AnimatePresence initial={false}>
+			{open && (
 				<motion.div
 					className={$cx(
 						'w_100 border_box',
@@ -67,7 +59,7 @@ const Index = (props: IPropsChildren) => {
 						handled && styles.handled,
 						useByDetail && styles.useByDetail
 					)}
-					initial={mounted ? { opacity: 0, height: 0 } : { opacity: 1, height: 'auto' }}
+					initial={mounted ? { opacity: 0, height: 0 } : false}
 					animate={{ opacity: 1, height: 'auto' }}
 					exit={{ opacity: 0, height: 0 }}
 					transition={{ duration: 0.18 }}

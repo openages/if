@@ -112,12 +112,12 @@ export default class Index {
 	private hooks() {
 		$db.module_setting.postSave(
 			debounce(data => this.updateTimeStamp(data.file_id, new Date().valueOf()), 900),
-			true
+			false
 		)
 
 		$db.todo_items.postSave(
 			debounce(data => this.updateTimeStamp(data.file_id, new Date().valueOf()), 900),
-			true
+			false
 		)
 	}
 

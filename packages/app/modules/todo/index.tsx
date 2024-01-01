@@ -92,6 +92,7 @@ const Index = ({ id }: IProps) => {
 		relations,
 		drag_disabled: x.is_filtered,
 		zen_mode: x.zen_mode,
+		open_items: $copy(x.open_items),
 		check: useMemoizedFn(x.check),
 		updateRelations: useMemoizedFn(x.updateRelations),
 		insert: useMemoizedFn(x.insert),
@@ -99,6 +100,7 @@ const Index = ({ id }: IProps) => {
 		tab: useMemoizedFn(x.tab),
 		moveTo: useMemoizedFn(x.moveTo),
 		remove: useMemoizedFn(x.remove),
+		handleOpenItem: useMemoizedFn(x.handleOpenItem),
 		showDetailModal: useMemoizedFn((args: Model['current_detail_index']) => {
 			x.visible_detail_modal = true
 			x.current_detail_index = { ...x.current_detail_index, ...args }
@@ -172,8 +174,9 @@ const Index = ({ id }: IProps) => {
 		tags,
 		angles: props_todos.angles,
 		drag_disabled: false,
-		zen_mode: x.zen_mode,
-		kanban_mode: x.kanban_mode,
+		zen_mode: props_todos.zen_mode,
+		open_items: props_todos.open_items,
+		kanban_mode: props_todos.kanban_mode,
 		dimension_id: drag_todo_item.dimension_id,
 		drag_overlay: true,
 		makeLinkLine: () => {},
@@ -185,6 +188,7 @@ const Index = ({ id }: IProps) => {
 		tab: props_todos.tab,
 		moveTo: props_todos.moveTo,
 		remove: props_todos.remove,
+		handleOpenItem: props_todos.handleOpenItem,
 		showDetailModal: props_todos.showDetailModal
 	}
 

@@ -103,6 +103,7 @@ export interface IPropsTodos {
 	relations: Todo.Setting['relations']
 	drag_disabled: boolean
 	zen_mode: Model['zen_mode']
+	open_items: Model['open_items']
 	kanban_mode?: Model['kanban_mode']
 	dimension_id?: string
 	check: Model['check']
@@ -112,6 +113,7 @@ export interface IPropsTodos {
 	tab: Model['tab']
 	moveTo: Model['moveTo']
 	remove: Model['remove']
+	handleOpenItem: Model['handleOpenItem']
 	showDetailModal: (args: Model['current_detail_index']) => void
 }
 
@@ -123,6 +125,7 @@ export interface IPropsTodoItem {
 	angles: Model['setting']['setting']['angles']
 	drag_disabled: boolean
 	zen_mode: Model['zen_mode']
+	open_items: Model['open_items']
 	kanban_mode?: Model['kanban_mode']
 	dimension_id?: string
 	drag_overlay?: boolean
@@ -135,13 +138,14 @@ export interface IPropsTodoItem {
 	tab: Model['tab']
 	moveTo: Model['moveTo']
 	remove: Model['remove']
+	handleOpenItem: Model['handleOpenItem']
 	showDetailModal: IPropsTodos['showDetailModal']
 }
 
 export interface IPropsChildren {
 	items: Todo.Todo['children']
 	index: number
-	open: Todo.Todo['open']
+	open: boolean
 	isDragging: boolean
 	handled: boolean
 	useByDetail?: boolean

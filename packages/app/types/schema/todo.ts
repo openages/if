@@ -42,7 +42,6 @@ export namespace Todo {
 		type: 'todo'
 		/** @maxLength 12 */
 		status: 'checked' | 'unchecked' | 'closed'
-		open?: boolean
 		level?: number
 		tag_ids?: Array<string>
 		remind_time?: number

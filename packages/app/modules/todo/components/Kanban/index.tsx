@@ -1,4 +1,5 @@
 import { Plus } from '@phosphor-icons/react'
+
 import Todos from '../Todos'
 import styles from './index.css'
 
@@ -20,6 +21,7 @@ const Index = (props: IPropsKanban) => {
 		tab,
 		moveTo,
 		remove,
+		handleOpenItem,
 		showDetailModal
 	} = props
 
@@ -76,6 +78,7 @@ const Index = (props: IPropsKanban) => {
 							tab,
 							moveTo,
 							remove,
+							handleOpenItem,
 							showDetailModal
 						}}
 						kanban_mode={kanban_mode}

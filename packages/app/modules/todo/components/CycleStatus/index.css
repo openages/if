@@ -2,6 +2,16 @@
 	padding: 1px !important;
 	overflow: hidden;
 
+	&.percent {
+		background-color: var(--color_bg_2);
+
+		:global {
+			.repeat_content {
+				padding: 0 3px;
+			}
+		}
+	}
+
 	:global {
 		.bg_progress {
 			border-radius: 7px;
@@ -15,7 +25,6 @@
 		}
 
 		.repeat_content {
-			padding: 0 3px;
 			border-radius: 6px;
 		}
 	}
