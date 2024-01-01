@@ -31,7 +31,7 @@ const Index = (props: IPropsRemindStatus) => {
 			<Bell
 				className={$cx('icon', timeout && 'timeout')}
 				size={10}
-				weight={timeout ? 'duotone' : 'regular'}
+				weight={timeout ? 'fill' : 'regular'}
 			></Bell>
 			{!timeout && <span className='text ml_2'>{format(dayjs(remind_time), true)}</span>}
 		</div>

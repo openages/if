@@ -1,9 +1,9 @@
 import { useMemoizedFn } from 'ahooks'
-import { Drawer } from 'antd'
+import { Drawer, Switch } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Bell, Calendar, CaretDown, CaretUp, FireSimple, HourglassMedium, Plus, Tag } from '@phosphor-icons/react'
+import { Bell, Calendar, CaretDown, CaretUp, FireSimple, HourglassMedium, Plus, Sun, Tag } from '@phosphor-icons/react'
 
 import { useInput } from '../../hooks'
 import Children from '../Children'
@@ -45,8 +45,8 @@ const Index = (props: IPropsDetail) => {
 		cycle_enabled,
 		cycle,
 		recycle_time,
-		start_time,
 		end_time,
+		schedule,
 		remark
 	} = item
 
@@ -68,6 +68,7 @@ const Index = (props: IPropsDetail) => {
 		updateLevel,
 		updateRemind,
 		updateDeadline,
+		updateSchedule,
 		updateRemark,
 		insertChildren,
 		removeChildren
@@ -168,7 +169,7 @@ const Index = (props: IPropsDetail) => {
 									{t('translation:todo.SettingsModal.tags.label')}
 								</span>
 							</div>
-							<div className='value_wrap flex'>
+							<div className='value_wrap flex align_center'>
 								<TagSelect
 									className='tag_select'
 									options={tags}
@@ -183,7 +184,7 @@ const Index = (props: IPropsDetail) => {
 								<FireSimple size={16}></FireSimple>
 								<span className='name'>{t('translation:todo.common.level')}</span>
 							</div>
-							<div className='value_wrap flex'>
+							<div className='value_wrap flex align_center'>
 								<Level value={level} onChangeLevel={updateLevel}></Level>
 							</div>
 						</div>
@@ -197,7 +198,7 @@ const Index = (props: IPropsDetail) => {
 								<Bell size={16}></Bell>
 								<span className='name'>{t('translation:todo.Input.Remind.title')}</span>
 							</div>
-							<div className='value_wrap flex'>
+							<div className='value_wrap flex align_center'>
 								<DateTime
 									useByDetail
 									value={remind_time}
@@ -217,7 +218,7 @@ const Index = (props: IPropsDetail) => {
 									{t('translation:todo.Input.Deadline.title')}
 								</span>
 							</div>
-							<div className='value_wrap flex'>
+							<div className='value_wrap flex align_center'>
 								<DateTime
 									useByDetail
 									value={end_time}
@@ -236,13 +237,31 @@ const Index = (props: IPropsDetail) => {
 								<HourglassMedium size={16}></HourglassMedium>
 								<span className='name'>{t('translation:todo.Input.Cycle.title')}</span>
 							</div>
-							<div className='value_wrap flex'>
+							<div className='value_wrap flex align_center'>
 								<Cycle
 									cycle_enabled={cycle_enabled}
 									cycle={cycle}
 									useByDetail
 									onChangeCircle={updateValues}
 								></Cycle>
+							</div>
+						</div>
+						<div
+							className={$cx(
+								'option_item schedule_wrap w_100 border_box flex align_center',
+								(exist_relations || status === 'checked') && 'disabled'
+							)}
+						>
+							<div className='name_wrap flex align_center'>
+								<Sun size={16}></Sun>
+								<span className='name'>{t('translation:common.schedule')}</span>
+							</div>
+							<div className='value_wrap border_box flex align_center'>
+								<Switch
+									size='small'
+									checked={schedule}
+									onChange={updateSchedule}
+								></Switch>
 							</div>
 						</div>
 					</div>

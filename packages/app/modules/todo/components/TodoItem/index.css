@@ -96,10 +96,6 @@
 					opacity: 0.3;
 				}
 
-				.options_wrap {
-					opacity: 0.3;
-				}
-
 				.children_wrap {
 					.action_wrap {
 						opacity: 0.3 !important;
@@ -226,10 +222,16 @@
 				padding-left: 9.6px;
 			}
 
+			&.checked,
+			&.closed {
+				opacity: 0.6;
+			}
+
 			.other_wrap {
 				height: 14px;
 				padding: 0 3px;
 				margin-right: 3px;
+				margin-bottom: -1px;
 				border-radius: 7px;
 				z-index: 1;
 				line-height: 1;

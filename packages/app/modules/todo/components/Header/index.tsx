@@ -1,11 +1,11 @@
 import { useMemoizedFn } from 'ahooks'
 import { ConfigProvider, Dropdown, Tooltip } from 'antd'
-import { ListTodo, Shapes } from 'lucide-react'
+import { Shapes } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Else, If, Then, When } from 'react-if'
 
 import { Emoji } from '@/components'
-import { CaretDown, CaretUp, DotsThreeCircleVertical, Faders, FlowerLotus, Tag, X } from '@phosphor-icons/react'
+import { CaretDown, CaretUp, DotsThreeCircleVertical, Eye, Faders, FlowerLotus, Tag, X } from '@phosphor-icons/react'
 
 import TagSelect from '../TagSelect'
 import { useContextMenu } from './hooks'
@@ -162,7 +162,7 @@ const Index = (props: IPropsHeader) => {
 								onClick={toggleZenMode}
 							>
 								{zen_mode ? (
-									<ListTodo size={18} strokeWidth={1.5}></ListTodo>
+									<Eye size={18}></Eye>
 								) : (
 									<FlowerLotus
 										className='icon_lotus'

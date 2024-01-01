@@ -13,6 +13,7 @@ import CycleStatus from '../CycleStatus'
 import DeadlineStatus from '../DeadlineStatus'
 import LevelStatus from '../LevelStatus'
 import RemindStatus from '../RemindStatus'
+import ScheduleStatus from '../ScheduleStatus'
 import TagSelect from '../TagSelect'
 import { useContextMenu, useHandlers, useLink, useOnContextMenu, useOpen } from './hooks'
 import styles from './index.css'
@@ -55,6 +56,7 @@ const Index = (props: IPropsTodoItem) => {
 		cycle_enabled,
 		cycle,
 		recycle_time,
+		schedule,
 		children
 	} = item
 
@@ -136,26 +138,32 @@ const Index = (props: IPropsTodoItem) => {
 		[level, tag_ids, remind_time, cycle_enabled, cycle]
 	)
 
-	const OptionsWrap = (
-		<div className={$cx('options_wrap w_100 border_box flex align_center', open && 'open')}>
-			<div className='flex align_center'>
-				{tags?.length > 0 && tag_ids?.length > 0 && (
-					<TagSelect
-						className='tag_select'
-						options={tags}
-						value={tag_ids}
-						useByTodo
-						onChange={updateTags}
-					></TagSelect>
-				)}
-				{remind_time && <RemindStatus remind_time={remind_time}></RemindStatus>}
-				{end_time && <DeadlineStatus end_time={end_time}></DeadlineStatus>}
-				{cycle_enabled && cycle && (
-					<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
-				)}
-				{level > 0 && <LevelStatus level={level}></LevelStatus>}
+	const OptionsWrap = useMemo(
+		() => (
+			<div className={$cx('options_wrap w_100 border_box flex align_center', open && 'open', status)}>
+				<div className='flex align_center'>
+					{tags?.length > 0 && tag_ids?.length > 0 && (
+						<TagSelect
+							className='tag_select'
+							options={tags}
+							value={tag_ids}
+							useByTodo
+							onChange={updateTags}
+						></TagSelect>
+					)}
+					{schedule && <ScheduleStatus></ScheduleStatus>}
+					{remind_time && <RemindStatus remind_time={remind_time}></RemindStatus>}
+					{status === 'unchecked' && end_time && (
+						<DeadlineStatus end_time={end_time}></DeadlineStatus>
+					)}
+					{cycle_enabled && cycle && (
+						<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
+					)}
+					{level > 0 && <LevelStatus level={level}></LevelStatus>}
+				</div>
 			</div>
-		</div>
+		),
+		[open, status, tags, tag_ids, schedule, remind_time, end_time, cycle_enabled, cycle, level]
 	)
 
 	const is_dragging = useMemo(() => kanban_mode && isDragging, [kanban_mode, isDragging])

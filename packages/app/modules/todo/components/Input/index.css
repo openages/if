@@ -69,5 +69,21 @@
 		.star_wrap {
 			border-radius: var(--radius);
 		}
+
+		.schedule_wrap {
+			width: 24px;
+			height: 24px;
+			border-radius: var(--radius);
+			color: rgba(var(--color_text_rgb), 0.24);
+
+			&:hover {
+				background-color: var(--color_bg_2);
+				color: var(--color_text);
+			}
+
+			&.active {
+				color: var(--color_text);
+			}
+		}
 	}
 }

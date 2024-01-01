@@ -129,6 +129,13 @@
 						opacity: 0.3;
 					}
 
+					&.schedule_wrap {
+						.value_wrap {
+							padding-left: 1px;
+							overflow: unset;
+						}
+					}
+
 					.name_wrap {
 						width: 90px;
 
@@ -136,11 +143,13 @@
 							margin-left: 6px;
 							font-size: 12px;
 							line-height: 1;
+							text-transform: capitalize;
 						}
 					}
 
 					.value_wrap {
 						width: calc(100% - 90px);
+						min-height: 30px;
 						overflow-x: scroll;
 					}
 				}

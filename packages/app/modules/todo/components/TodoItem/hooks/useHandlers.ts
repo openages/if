@@ -53,6 +53,10 @@ export default (args: HookArgs) => {
 		update({ type: 'parent', index, dimension_id, value: { end_time: v } as Todo.Todo })
 	})
 
+	const updateSchedule = useMemoizedFn(v => {
+		update({ type: 'parent', index, dimension_id, value: { schedule: v } as Todo.Todo })
+	})
+
 	const updateRemark = useMemoizedFn(v => {
 		update({ type: 'parent', index, dimension_id, value: { remark: v } as Todo.Todo })
 	})
@@ -120,6 +124,7 @@ export default (args: HookArgs) => {
 		updateLevel,
 		updateRemind,
 		updateDeadline,
+		updateSchedule,
 		updateRemark,
 		onDrag,
 		toggleChildren,

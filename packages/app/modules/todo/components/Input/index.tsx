@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
 
 import { useInput } from '@/modules/todo/hooks'
-import { Calendar } from '@phosphor-icons/react'
+import { id } from '@/utils'
+import { Calendar, Sun } from '@phosphor-icons/react'
 
 import { getGroup, getTodo } from '../../initials'
 import Cycle from '../Cycle'
@@ -42,7 +43,7 @@ const Index = (props: IPropsInput) => {
 	useEffect(() => {
 		if (loading) return
 
-		setInput(getTodo())
+		setInput({ ...input, id: id(), text: '' } as Todo.Todo)
 	}, [loading])
 
 	const props_remind: IPropsDateTime = {
@@ -115,6 +116,20 @@ const Index = (props: IPropsInput) => {
 									value={(input as Todo.Todo).level}
 									onChangeLevel={v => setInput(input => ({ ...input, level: v }))}
 								></Level>
+							</div>
+							<div
+								className={$cx(
+									'schedule_wrap flex justify_center align_center clickable',
+									(input as Todo.Todo).schedule && 'active'
+								)}
+								onClick={() =>
+									setInput(input => ({
+										...input,
+										schedule: !(input as Todo.Todo).schedule
+									}))
+								}
+							>
+								<Sun size={15}></Sun>
 							</div>
 							<DateTime {...props_remind}></DateTime>
 							<DateTime {...props_deadline}></DateTime>
