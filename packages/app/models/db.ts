@@ -1,10 +1,3 @@
-import {
-	migration_activity_items,
-	migration_dirtree_items,
-	migration_module_setting,
-	migration_todo_items
-} from '@/migrations'
-import { schema_activity_items, schema_dirtree_items, schema_module_setting, schema_todo_items } from '@/schemas'
 import { debounce } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import { createRxDatabase } from 'rxdb'
@@ -12,6 +5,14 @@ import { wrappedKeyEncryptionCryptoJsStorage } from 'rxdb/plugins/encryption-cry
 import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
 import { migrateStorage } from 'rxdb/plugins/migration-storage'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
+
+import {
+	migration_activity_items,
+	migration_dirtree_items,
+	migration_module_setting,
+	migration_todo_items
+} from '@/migrations'
+import { schema_activity_items, schema_dirtree_items, schema_module_setting, schema_todo_items } from '@/schemas'
 
 import type { RxDB } from '@/types'
 import type { RxCollection } from 'rxdb'

@@ -1,13 +1,14 @@
-import { en, zh } from '@/locales'
-import Utils from '@/models/utils'
-import { getLang } from '@/utils'
-import { setStorageWhenChange } from '@openages/stk/mobx'
-import { local } from '@openages/stk/storage'
 import dayjs from 'dayjs'
 import i18next from 'i18next'
 import { makeAutoObservable } from 'mobx'
 import { initReactI18next } from 'react-i18next'
 import { injectable } from 'tsyringe'
+
+import { en, zh } from '@/locales'
+import Utils from '@/models/utils'
+import { getLang } from '@/utils'
+import { setStorageWhenChange } from '@openages/stk/mobx'
+import { local } from '@openages/stk/storage'
 
 import type { Lang } from '@/appdata'
 
@@ -31,10 +32,8 @@ export default class Index {
 		i18next.use(initReactI18next).init({
 			lng: this.lang,
 			fallbackLng: 'en',
-			resources: {
-				en,
-				zh
-			}
+			returnObjects: true,
+			resources: { en, zh }
 		})
 	}
 

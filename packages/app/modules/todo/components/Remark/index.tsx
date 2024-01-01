@@ -1,5 +1,7 @@
-import { useInput } from '@/modules/todo/hooks'
 import { useTranslation } from 'react-i18next'
+
+import { useInput } from '@/modules/todo/hooks'
+
 import styles from './index.css'
 
 import type { IPropsDetailRemark } from '@/modules/todo/types'

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import { locale_options, themes } from '@/appdata'
 import { useGlobal } from '@/context/app'
-import { Translate, Palette, TextAa, Layout } from '@phosphor-icons/react'
+import { Layout, Palette, TextAa, Translate } from '@phosphor-icons/react'
 
 const { Group: RadioGroup } = Radio
 

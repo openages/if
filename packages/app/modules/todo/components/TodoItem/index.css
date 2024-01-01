@@ -218,12 +218,12 @@
 		.options_wrap {
 			padding-top: 3px;
 			padding-bottom: 9px;
-			padding-left: 30px;
+			padding-left: 27px;
 			transition: padding ease 0.3s;
 			font-family: 'RedditSans';
 
 			&.open {
-				padding-left: 10px;
+				padding-left: 9.6px;
 			}
 
 			.other_wrap {

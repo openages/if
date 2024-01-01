@@ -1,8 +1,7 @@
 import { id } from '@/utils'
 
 export default async (file_id: string) => {
-	// @ts-ignore
-	const angles = $t('translation:todo.default_angles', { returnObjects: true }) as Array<string>
+	const angles = $t('translation:todo.default_angles') as Array<string>
 
 	return $db.module_setting.insert({
 		module: 'todo',

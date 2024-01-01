@@ -1,5 +1,7 @@
-import { Modal } from '@/components'
 import { useTranslation } from 'react-i18next'
+
+import { Modal } from '@/components'
+
 import { Form } from './components'
 import styles from './index.css'
 

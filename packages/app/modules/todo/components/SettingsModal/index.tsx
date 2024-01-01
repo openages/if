@@ -19,10 +19,7 @@ const Index = (props: IPropsSettingsModal) => {
 	const { t, i18n } = useTranslation()
 
 	const auto_archiving_options = useMemo(() => {
-		// @ts-ignore
-		const locale_options = t('translation:todo.SettingsModal.auto_archiving.options', {
-			returnObjects: true
-		}) as Record<string, string>
+		const locale_options = t('translation:todo.SettingsModal.auto_archiving.options') as Record<string, string>
 
 		return Object.keys(locale_options).map(key => ({
 			label: locale_options[key],

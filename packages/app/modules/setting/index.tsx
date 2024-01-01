@@ -1,6 +1,6 @@
 import { Button, Tabs } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { Fragment, useState } from 'react'
+import { useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 

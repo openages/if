@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { Plus, Trash, DotsSixVertical } from '@phosphor-icons/react'
+import { DotsSixVertical, Plus, Trash } from '@phosphor-icons/react'
 
 interface IProps {
 	item: { id: string; text: string }

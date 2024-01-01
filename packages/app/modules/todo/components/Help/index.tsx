@@ -8,8 +8,7 @@ import type { IPropsHelp } from '../../types'
 const Index = (props: IPropsHelp) => {
 	const { visible_help_modal, closeHelpModal } = props
 	const { t } = useTranslation()
-	// @ts-ignore
-	const help = t('translation:todo.Help', { returnObjects: true }) as Array<{ title: string; desc: string }>
+	const help = t('translation:todo.Help') as Array<{ title: string; desc: string }>
 
 	return (
 		<Drawer

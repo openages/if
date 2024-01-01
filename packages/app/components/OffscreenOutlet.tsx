@@ -1,7 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { omit, pullAt } from 'lodash-es'
-import { useEffect, useState, unstable_Activity as Activity, Fragment } from 'react'
-import { useOutlet, useLocation } from 'react-router-dom'
+import { unstable_Activity as Activity, useEffect, useState, Fragment } from 'react'
+import { useLocation, useOutlet } from 'react-router-dom'
 
 import type { GlobalModel } from '@/context/app'
 

@@ -1,10 +1,11 @@
-import { ArrowCounterClockwise, CheckSquare, Square, Trash } from '@phosphor-icons/react'
 import { useMemoizedFn } from 'ahooks'
 import dayjs from 'dayjs'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Case, Switch } from 'react-if'
+
+import { ArrowCounterClockwise, CheckSquare, Square, Trash } from '@phosphor-icons/react'
 
 import CycleStatus from '../CycleStatus'
 
