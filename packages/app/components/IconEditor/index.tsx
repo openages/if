@@ -20,11 +20,11 @@ const Index = (props: IProps) => {
 	return (
 		<Popover
 			rootClassName={styles.icon_picker}
-			placement='left'
+			placement='leftBottom'
 			trigger='click'
 			destroyTooltipOnHide
 			getPopupContainer={() => document.body}
-			align={{ offset: [-30, 0] }}
+			align={{ offset: [-30, -57] }}
 			zIndex={100000}
 			content={
 				<div className='flex flex_column'>

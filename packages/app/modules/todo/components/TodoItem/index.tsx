@@ -115,7 +115,7 @@ const Index = (props: IPropsTodoItem) => {
 		insertChildren
 	})
 
-	useOpen({ item, input, renderLines })
+	useOpen({ item, zen_mode, input, renderLines })
 
 	const props_children: IPropsChildren = {
 		items: children,

@@ -9,19 +9,23 @@
 		border-color: var(--color_text_grey);
 	}
 
-      :global{
-            em-emoji {
-                  .emoji-mart-emoji {
-                        span {
-                              margin-bottom: -5px;
-                        }
-                  }
-            }
-      }
+	:global {
+		em-emoji {
+			.emoji-mart-emoji {
+				span {
+					margin-bottom: -5px;
+				}
+			}
+		}
+	}
 }
 
 .icon_picker {
 	:global {
+		.if-popover-arrow {
+			top: 67px;
+		}
+
 		.if-popover-content {
 			.if-popover-inner {
 				background-color: transparent;
@@ -31,20 +35,21 @@
 	}
 }
 
-.hue_wrap{
-      margin-top: 12px;
-      border-radius: var(--radius);
-      background-color: var(--color_bg);
-      padding:4px 12px;
-      line-height: 1;
+.hue_wrap {
+	margin-top: 12px;
+	border-radius: var(--radius);
+	background-color: var(--color_bg);
+	padding: 4px 12px;
+	line-height: 1;
+	box-shadow: var(--shadow);
 
-      :global{
-            .hue_label{
-                  width: 40px;
-            }
+	:global {
+		.hue_label {
+			width: 40px;
+		}
 
-            .hue_slider{
-                  width: calc(100% - 40px);
-            }
-      }
+		.hue_slider {
+			width: calc(100% - 40px);
+		}
+	}
 }

@@ -1,7 +1,7 @@
 em-emoji-picker {
 	width: 321px;
 	height: 390px;
-	box-shadow: none;
+	box-shadow: 0 0 30px rgba(var(--color_text_rgb), 0.072);
 
 	--rgb-accent: 0, 0, 0;
 	--border-radius: 6px;

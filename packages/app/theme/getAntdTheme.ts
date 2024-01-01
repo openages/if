@@ -28,7 +28,8 @@ export default (theme: Theme, color_main: string) => {
 			controlItemBgActive: vars.color_bg_2,
 			colorPrimaryHover: vars.color_text_grey,
 			colorPrimaryTextHover: vars.color_text_grey,
-			switchHeight: 34
+			switchHeight: 34,
+			boxShadow: vars.shadow
 		},
 		components: {
 			Switch: {
@@ -52,7 +53,10 @@ export default (theme: Theme, color_main: string) => {
 				controlItemBgHover: vars.color_bg_2
 			},
 			Select: {
-				optionActiveBg: vars.color_bg_2
+				colorPrimary: vars.color_text,
+				optionActiveBg: vars.color_bg_2,
+				colorBorder: 'transparent',
+				borderRadius: 17
 			},
 			Segmented: {
 				borderRadiusSM: 20,
