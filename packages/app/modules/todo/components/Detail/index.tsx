@@ -3,7 +3,18 @@ import { Drawer, Switch } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Bell, Calendar, CaretDown, CaretUp, FireSimple, HourglassMedium, Plus, Sun, Tag } from '@phosphor-icons/react'
+import {
+	Bell,
+	Calendar,
+	CaretDown,
+	CaretUp,
+	FireSimple,
+	HourglassMedium,
+	Plus,
+	Sun,
+	Tag,
+	X
+} from '@phosphor-icons/react'
 
 import { useInput } from '../../hooks'
 import Children from '../Children'
@@ -257,11 +268,25 @@ const Index = (props: IPropsDetail) => {
 								<span className='name'>{t('translation:common.schedule')}</span>
 							</div>
 							<div className='value_wrap border_box flex align_center'>
-								<Switch
-									size='small'
-									checked={schedule}
-									onChange={updateSchedule}
-								></Switch>
+								<span
+									className={$cx(
+										'text cursor_point clickable',
+										schedule && 'active'
+									)}
+									onClick={updateSchedule}
+								>
+									{schedule
+										? t('translation:common.added')
+										: t('translation:todo.Detail.add_to_shcedule')}
+								</span>
+								{schedule && (
+									<span
+										className='btn_remove none justify_center align_center clickable ml_12'
+										onClick={updateSchedule}
+									>
+										<X size={7}></X>
+									</span>
+								)}
 							</div>
 						</div>
 					</div>

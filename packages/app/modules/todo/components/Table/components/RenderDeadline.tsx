@@ -3,7 +3,7 @@ import styles from '../index.css'
 
 import type { CustomFormItem, Todo } from '@/types'
 
-const Index = (props: CustomFormItem<Todo.Todo['remind_time']>) => {
+const Index = (props: CustomFormItem<Todo.Todo['end_time']>) => {
 	const { value, onChange } = props
 
 	return (

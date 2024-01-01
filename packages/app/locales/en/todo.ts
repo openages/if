@@ -150,7 +150,8 @@ export default {
 		title: 'Detail',
 		remark: {
 			placeholder: 'Add Remark'
-		}
+		},
+		add_to_shcedule: 'Add To Schedule'
 	},
 	Help: [
 		{

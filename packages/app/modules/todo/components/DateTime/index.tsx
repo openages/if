@@ -13,7 +13,7 @@ import type { Dayjs } from 'dayjs'
 import type { IPropsDateTime } from '../../types'
 
 const Index = (props: IPropsDateTime) => {
-	const { value, useByDetail, Icon, onChange } = props
+	const { value, useByDetail, ignoreDetail, Icon, onChange } = props
 	const { t, i18n } = useTranslation()
 
 	const options = useMemo(() => {
@@ -49,9 +49,16 @@ const Index = (props: IPropsDateTime) => {
 		onChange(v.startOf('minute').valueOf())
 	})
 
+	const formatIgnoreDetail = useMemoizedFn(v => format(v, true))
+
 	return (
 		<DatePicker
-			rootClassName={$cx('disable_second', styles._local, !useByDetail && styles.useByInput)}
+			rootClassName={$cx(
+				'disable_second',
+				styles._local,
+				!useByDetail && styles.useByInput,
+				ignoreDetail && styles.ignoreDetail
+			)}
 			placeholder={t('translation:common.unset')}
 			showTime={{ defaultValue: dayjs().startOf('minute') }}
 			suffixIcon={useByDetail ? false : Trigger}
@@ -59,7 +66,7 @@ const Index = (props: IPropsDateTime) => {
 			disabledDate={v => v && v <= dayjs().startOf('day')}
 			getPopupContainer={() => document.body}
 			presets={options}
-			format={format}
+			format={ignoreDetail ? formatIgnoreDetail : format}
 			value={value ? dayjs(value) : undefined}
 			onChange={onChangeTime}
 		></DatePicker>

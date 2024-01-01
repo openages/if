@@ -70,8 +70,9 @@ export interface IPropsLevelStatus {
 
 export interface IPropsDateTime {
 	value: number
-	useByDetail?: boolean
 	Icon?: Icon
+	useByDetail?: boolean
+	ignoreDetail?: boolean
 	onChange: (v: number) => void
 }
 

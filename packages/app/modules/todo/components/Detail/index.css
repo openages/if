@@ -133,6 +133,35 @@
 						.value_wrap {
 							padding-left: 1px;
 							overflow: unset;
+							font-size: 12px;
+							line-height: 1;
+
+							&:hover {
+								.btn_remove {
+									display: flex;
+								}
+							}
+
+							.text {
+								color: var(--color_text_light);
+
+								&:hover,
+								&.active {
+									color: var(--color_text);
+								}
+							}
+
+							.btn_remove {
+								width: 12px;
+								height: 12px;
+								border-radius: 50%;
+								background-color: rgba(var(--color_text_rgb), 0.24);
+								color: var(--color_bg);
+
+								&:hover {
+									background-color: rgba(var(--color_text_rgb), 0.45);
+								}
+							}
 						}
 					}
 

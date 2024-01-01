@@ -9,10 +9,11 @@ import {
 	RenderArchive,
 	RenderCreateAt,
 	RenderCycle,
+	RenderDeadline,
+	RenderLevel,
 	RenderRemark,
 	RenderRemind,
 	RenderSchedule,
-	RenderStar,
 	RenderStatus,
 	RenderTags,
 	RenderText,
@@ -54,7 +55,7 @@ const Index = (props: IPropsTable) => {
 			dataIndex: 'level',
 			width: 96,
 			align: 'center',
-			render: () => <RenderStar></RenderStar>
+			render: () => <RenderLevel></RenderLevel>
 		},
 		{
 			title: 'remind',
@@ -64,10 +65,18 @@ const Index = (props: IPropsTable) => {
 			render: () => <RenderRemind></RenderRemind>
 		},
 		{
+			title: 'deadline',
+			dataIndex: 'end_time',
+			width: 96,
+			align: 'center',
+			render: () => <RenderDeadline></RenderDeadline>
+		},
+		{
 			title: 'cycle',
 			dataIndex: 'cycle',
 			width: 96,
 			align: 'center',
+			ellipsis: true,
 			deps: ['cycle_enabled'],
 			render: (_, item) => <RenderCycle cycle_enabled={item.cycle_enabled}></RenderCycle>
 		},

@@ -57,7 +57,6 @@ export namespace Todo {
 		remark?: string
 		archive: boolean
 		archive_time?: number
-		deadline?: number
 		schedule?: boolean
 		start_time?: number
 		end_time?: number

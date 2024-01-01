@@ -54,9 +54,7 @@ export default (theme: Theme, color_main: string) => {
 			},
 			Select: {
 				colorPrimary: vars.color_text,
-				optionActiveBg: vars.color_bg_2,
-				colorBorder: 'transparent',
-				borderRadius: 17
+				optionActiveBg: vars.color_bg_2
 			},
 			Segmented: {
 				borderRadiusSM: 20,

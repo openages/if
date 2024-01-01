@@ -21,7 +21,7 @@ interface HookArgs {
 export default (args: HookArgs) => {
 	const { item, index, kanban_mode, dimension_id, visible_detail_modal, makeLinkLine, check, insert, update, tab } =
 		args
-	const { id, status, open, children } = item
+	const { id, status, open, schedule, children } = item
 
 	const updateValues = useMemoizedFn(v => {
 		update({ type: 'parent', index, dimension_id, value: { ...v } as Todo.Todo })
@@ -54,7 +54,7 @@ export default (args: HookArgs) => {
 	})
 
 	const updateSchedule = useMemoizedFn(v => {
-		update({ type: 'parent', index, dimension_id, value: { schedule: v } as Todo.Todo })
+		update({ type: 'parent', index, dimension_id, value: { schedule: !schedule } as Todo.Todo })
 	})
 
 	const updateRemark = useMemoizedFn(v => {

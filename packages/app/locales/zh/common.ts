@@ -13,5 +13,6 @@ export default {
 	notice: '注意',
 	unset: '未设置',
 	outdate: '已过期',
-	schedule: '日程'
+	schedule: '日程',
+	added: '已添加'
 }

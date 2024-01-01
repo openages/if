@@ -153,7 +153,8 @@ export default {
 		title: '任务详情',
 		remark: {
 			placeholder: '添加备注'
-		}
+		},
+		add_to_shcedule: '添加到日程'
 	},
 	Help: [
 		{

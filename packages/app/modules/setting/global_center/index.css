@@ -38,6 +38,11 @@
 
 				.select {
 					min-width: 120px;
+
+					.if-select-selector {
+						border: none;
+						border-radius: 17px;
+					}
 				}
 
 				.radio_wrap {

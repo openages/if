@@ -72,6 +72,20 @@
 	.RenderText {
 		color: var(--color_text_light);
 	}
+
+	.RenderLevel {
+		opacity: 0.48;
+	}
+
+	.DateTime {
+		:global {
+			.if-picker-input {
+				input {
+					color: var(--color_text_light);
+				}
+			}
+		}
+	}
 }
 
 .RenderText {
@@ -91,7 +105,7 @@
 	}
 }
 
-.RenderRemind {
+.DateTime {
 	:global {
 		.if-picker-input {
 			input {
