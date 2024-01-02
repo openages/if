@@ -13,6 +13,7 @@ import {
 	migration_todo_items
 } from '@/migrations'
 import { schema_activity_items, schema_dirtree_items, schema_module_setting, schema_todo_items } from '@/schemas'
+import { local } from '@openages/stk/storage'
 
 import type { RxDB } from '@/types'
 import type { RxCollection } from 'rxdb'
@@ -68,12 +69,37 @@ export default class Index {
 		this.instance = db
 
 		await this.migrateSchema()
+		await this.updateDBTimeStamps()
 
 		this.ready = true
 
 		window.$app.Event.emit('app/setLoading', { visible: false })
 
 		this.hooks()
+	}
+
+	async updateDBTimeStamps() {
+		if (!local.update_timestamps) local.update_timestamps = {}
+
+		const keys = Object.keys(local.update_timestamps)
+
+		if (!keys.length) return
+
+		const sync_actions = keys.map(async (id: string) => {
+			const file = await $db.dirtree_items.findOne(id).exec()
+
+			if (!file) {
+				return delete local.update_timestamps[id]
+			}
+
+			await file.updateCRDT({ ifMatch: { $set: { update_at: local.update_timestamps[id] } } })
+
+			delete local.update_timestamps[id]
+
+			return
+		})
+
+		return Promise.all(sync_actions)
 	}
 
 	private async migrateRxdb() {
@@ -101,24 +127,15 @@ export default class Index {
 		}
 	}
 
-	private async updateTimeStamp(id: string, timestamp: number) {
-		const doc = await $db.dirtree_items.findOne(id).exec()
-
-		if (!doc) return
-
-		return doc.updateCRDT({ ifMatch: { $set: { update_at: timestamp } } })
+	private async updateLocalTimeStamps(id: string) {
+		local.update_timestamps[id] = new Date().valueOf()
 	}
 
 	private hooks() {
-		$db.module_setting.postSave(
-			debounce(data => this.updateTimeStamp(data.file_id, new Date().valueOf()), 900),
-			false
-		)
+		const debounceUpdateLocalTimeStamps = debounce(this.updateLocalTimeStamps, 900)
 
-		$db.todo_items.postSave(
-			debounce(data => this.updateTimeStamp(data.file_id, new Date().valueOf()), 900),
-			false
-		)
+		$db.module_setting.postSave(data => debounceUpdateLocalTimeStamps(data.file_id), false)
+		$db.todo_items.postSave(data => debounceUpdateLocalTimeStamps(data.file_id), false)
 	}
 
 	off() {

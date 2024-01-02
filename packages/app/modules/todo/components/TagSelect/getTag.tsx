@@ -3,8 +3,16 @@ import { useMemoizedFn } from 'ahooks'
 import { useTagColor } from '@/hooks'
 import { X } from '@phosphor-icons/react'
 
-import type { CustomTagProps } from 'rc-select/lib/BaseSelect'
 import type { IPropsInput } from '../../types'
+import type { ReactNode, MouseEvent } from 'react'
+
+type CustomTagProps = {
+	label: ReactNode
+	value: any
+	disabled: boolean
+	closable: boolean
+	onClose: (event?: MouseEvent<HTMLSpanElement>) => void
+}
 
 const Index = (tags: Required<IPropsInput['tags']>, options: { useByTodo?: boolean }) => (props: CustomTagProps) => {
 	const { value, onClose } = props

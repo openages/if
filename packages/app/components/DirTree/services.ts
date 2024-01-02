@@ -16,7 +16,7 @@ export const insert = async (args: ArgsInsert) => {
 		await actions.insert(item.id)
 	}
 
-	await $db.dirtree_items.insert({ ...item, create_at: new Date().valueOf() })
+	await $db.dirtree_items.insertCRDT({ ifMatch: { $set: { ...item, create_at: new Date().valueOf() } } })
 
 	await updateItems(effect_items)
 }

@@ -60,7 +60,7 @@
 		"react-nice-avatar": "^1.5.0",
 		"react-router": "^6.21.1",
 		"react-router-dom": "^6.21.1",
-		"rxdb": "15.0.0-beta.42",
+		"rxdb": "15.0.0",
 		"rxdb-flexsearch": "^0.1.1",
 		"rxjs": "^7.8.1",
 		"smooth-scroll-into-view-if-needed": "^2.0.2",
@@ -87,12 +87,9 @@
 		"globby": "^14.0.0",
 		"postcss-loader": "^7.3.4",
 		"postcss-nested": "^6.0.1",
-		"rc-select": "^14.10.0",
 		"ts-json-schema-generator": "^1.5.0",
 		"ts-node": "^10.9.2",
-		"type-fest": "^4.9.0",
-		"typescript": "^5.3.3",
-		"utility-types": "^3.10.0"
+		"typescript": "^5.3.3"
 	},
 	"browser": {
 		"crypto": false

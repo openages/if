@@ -82,9 +82,13 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 export const create = async (item: Todo.TodoItem, quick?: boolean) => {
 	const sort = await getMaxSort(item.angle_id)
 
-	const res = await $db.todo_items.insert({
-		...item,
-		sort: sort + 1
+	const res = await $db.todo_items.insertCRDT({
+		ifMatch: {
+			$set: {
+				...item,
+				sort: sort + 1
+			}
+		}
 	})
 
 	if (!quick) {
