@@ -6,7 +6,7 @@ import { Case, If, Switch, Then } from 'react-if'
 import { container } from 'tsyringe'
 
 import { DataEmpty, SortableWrap } from '@/components'
-import { useStack } from '@/context/stack'
+import { useStackSelector } from '@/context/stack'
 import { pointerWithin, rectIntersection, DndContext, DragOverlay } from '@dnd-kit/core'
 
 import { Archive, Detail, Header, Help, Input, Kanban, SettingsModal, Table, Tabs, Todos } from './components'
@@ -34,7 +34,7 @@ import type {
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
-	const { breakpoint } = useStack()
+	const breakpoint = useStackSelector(v => v.breakpoint)
 	const [drag_todo_item, setDragTodoItem] = useState<DragTodoItem>(null)
 
 	const items = $copy(x.items)

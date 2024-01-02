@@ -107,7 +107,12 @@ const Index = (props: IPropsModal) => {
 			afterClose={afterClose}
 		>
 			<div className='w_100 flex align_center justify_between'>
-				<IconEditor value={icon} onChange={onSelectIcon} left_icon_item={left_icon_item}></IconEditor>
+				<IconEditor
+					value={icon}
+					left_icon_item={left_icon_item}
+					useByDirtree
+					onChange={onSelectIcon}
+				></IconEditor>
 				<Input
 					placeholder={t('translation:dirtree.input_placeholder')}
 					showCount

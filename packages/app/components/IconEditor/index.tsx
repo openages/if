@@ -11,20 +11,21 @@ import type { DirTree } from '@/types'
 
 interface IProps extends IPropsCustomFormItem<{ icon: string; icon_hue?: number }> {
 	left_icon_item?: DirTree.Item
+	useByDirtree?: boolean
 }
 
 const Index = (props: IProps) => {
-	const { value = { icon: '', icon_hue: undefined }, left_icon_item, onChange } = props
+	const { value = { icon: '', icon_hue: undefined }, left_icon_item, useByDirtree, onChange } = props
 	const { t } = useTranslation()
 
 	return (
 		<Popover
 			rootClassName={styles.icon_picker}
-			placement='leftBottom'
+			placement={useByDirtree ? 'left' : 'leftBottom'}
 			trigger='click'
 			destroyTooltipOnHide
 			getPopupContainer={() => document.body}
-			align={{ offset: [-30, -57] }}
+			align={{ offset: [-30, useByDirtree ? 0 : -58] }}
 			zIndex={100000}
 			content={
 				<div className='flex flex_column'>

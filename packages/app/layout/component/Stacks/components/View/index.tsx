@@ -1,7 +1,9 @@
-import { LazyElement } from '@/components'
-import { StackContext } from '@/context/stack'
 import { useMemoizedFn } from 'ahooks'
 import { useMemo } from 'react'
+
+import { LazyElement } from '@/components'
+import { StackContext } from '@/context/stack'
+
 import styles from './index.css'
 
 import type { IPropsStacksView } from '../../../../types'
@@ -10,6 +12,8 @@ const Index = (props: IPropsStacksView) => {
 	const { column_index, view_index, module, id, width, container_width, click } = props
 
 	const breakpoint = useMemo(() => {
+		if (!container_width) return
+
 		const target_width = width * 0.01 * container_width
 
 		if (target_width <= 390) return 390
