@@ -186,7 +186,9 @@ export interface IPropsKanban extends Omit<IPropsTodos, 'items'> {
 export interface IPropsTable extends Pick<IPropsTodos, 'showDetailModal' | 'remove'> {
 	items: Model['items']
 	tags: Model['setting']['setting']['tags']
+	table_pagination: Model['table_pagination']
 	onTableRowChange: Model['onTableRowChange']
+	onTablePageChange: Model['onTablePageChange']
 }
 
 export interface IPropsSettingsModal {

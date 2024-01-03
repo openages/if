@@ -6,10 +6,6 @@
 
 	:global {
 		.if-table {
-			.if-table-content {
-				outline: none;
-			}
-
 			table {
 				border-collapse: collapse;
 
@@ -39,6 +35,7 @@
 
 						td {
 							background-color: var(--color_bg);
+							border-start-start-radius: 0 !important;
 
 							&::before {
 								display: none;
@@ -71,7 +68,20 @@
 				}
 			}
 
+			.if-table-content,
+			.if-table-body {
+				outline: none !important;
+			}
+
 			.if-empty-description {
+				display: none;
+			}
+
+			.if-table-header {
+				border-radius: 0 !important;
+			}
+
+			.if-table-sticky-scroll {
 				display: none;
 			}
 		}

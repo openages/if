@@ -116,7 +116,9 @@ const Index = ({ id }: IProps) => {
 	const props_table: IPropsTable = {
 		items,
 		tags,
+		table_pagination: $copy(x.table_pagination),
 		onTableRowChange: useMemoizedFn(x.onTableRowChange),
+		onTablePageChange: useMemoizedFn(x.onTablePageChange),
 		...pick(props_todos, ['showDetailModal', 'remove'])
 	}
 

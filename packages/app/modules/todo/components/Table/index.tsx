@@ -30,7 +30,7 @@ import type { TdHTMLAttributes } from 'react'
 import type { IPropsTable } from '../../types'
 
 const Index = (props: IPropsTable) => {
-	const { items, tags, onTableRowChange, showDetailModal, remove } = props
+	const { items, tags, table_pagination, onTableRowChange, onTablePageChange, showDetailModal, remove } = props
 	const { t } = useTranslation()
 
 	const raw_columns = [
@@ -171,9 +171,11 @@ const Index = (props: IPropsTable) => {
 			<Table
 				size='small'
 				expandable={{ childrenColumnName: '_none_' }}
+				sticky={{ offsetHeader: 0 }}
 				rowKey={item => item.id}
 				components={components}
 				scroll={{ x: 1080 }}
+				pagination={{ ...table_pagination, pageSize: 15, onChange: onTablePageChange }}
 				columns={target_columns}
 				dataSource={items}
 				onRow={onRow}

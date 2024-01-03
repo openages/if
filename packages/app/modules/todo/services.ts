@@ -33,12 +33,24 @@ export const getMaxSort = async (angle_id: string) => {
 	return 0
 }
 
+export const getTotalCounts = async (file_id: string) => {
+	return $db.todo_items.count({ selector: { file_id } }).exec()
+}
+
 export const getQueryTodoSetting = (file_id: string) => {
 	return $db.module_setting.findOne({ selector: { file_id } })
 }
 
 export const getQueryItems = (args: ArgsQueryItems) => {
-	const { file_id, angle_id, items_sort_param, items_filter_tags, selector: _selector, table_mode } = args
+	const {
+		file_id,
+		angle_id,
+		items_sort_param,
+		items_filter_tags,
+		selector: _selector,
+		table_mode,
+		table_page
+	} = args
 
 	const selector: MangoQuerySelector<Todo.TodoItem> = { file_id, ..._selector }
 
@@ -76,7 +88,15 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 		if (items_sort_param.type === 'create_at') sort['create_at'] = items_sort_param.order
 	}
 
-	return $db.todo_items.find({ selector }).sort(sort) as RxDB.ItemsQuery<Todo.TodoItem>
+	if (!table_mode) {
+		return $db.todo_items.find({ selector }).sort(sort) as RxDB.ItemsQuery<Todo.TodoItem>
+	} else {
+		return $db.todo_items
+			.find({ selector })
+			.limit(15)
+			.skip(table_page - 1)
+			.sort(sort) as RxDB.ItemsQuery<Todo.TodoItem>
+	}
 }
 
 export const create = async (item: Todo.TodoItem, quick?: boolean) => {

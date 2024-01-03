@@ -24,6 +24,7 @@ import {
 	getQueryItems,
 	getQueryTodoSetting,
 	getTagTodoCounts,
+	getTotalCounts,
 	queryArchives,
 	queryArchivesCounts,
 	queryItem,
@@ -91,7 +92,7 @@ export default class Index {
 	current_angle_id = ''
 	current_detail_index = {} as CurrentDetailIndex
 
-	table_pagesize = 15
+	table_pagination = { current: 1, total: 0 }
 	table_selector = {} as MangoQuerySelector<Todo.TodoItem>
 
 	watch = {
@@ -101,8 +102,10 @@ export default class Index {
 			this.visible_detail_modal = false
 			this.current_detail_index === ({} as CurrentDetailIndex)
 
-			this.stopWatchItems()
-			this.watchItems()
+			if (this.mode === 'list') {
+				this.stopWatchItems()
+				this.watchItems()
+			}
 
 			archive(this.id)
 		},
@@ -144,8 +147,7 @@ export default class Index {
 
 			this.stopWatchItems()
 
-			if (v === 'list' || v === 'table') {
-				this.zen_mode = false
+			if (v === 'table') {
 				this.kanban_mode = '' as KanbanMode
 				this.kanban_items = {}
 
@@ -153,9 +155,12 @@ export default class Index {
 			}
 
 			if (v === 'kanban') {
-				this.zen_mode = true
 				this.kanban_mode = 'angle'
 				this.items = []
+			}
+
+			if (v !== 'table') {
+				this.table_pagination = { current: 1, total: 0 }
 			}
 		},
 		['kanban_mode']: _ => {
@@ -628,6 +633,13 @@ export default class Index {
 		this.update({ type: 'parent', index, value: values })
 	}
 
+	onTablePageChange(page: number) {
+		this.table_pagination.current = page
+
+		this.stopWatchItems()
+		this.watchItems()
+	}
+
 	isLinked(id: string) {
 		return this.setting.setting?.relations?.findIndex(item => item.items.includes(id)) !== -1
 	}
@@ -693,12 +705,15 @@ export default class Index {
 		}
 
 		if (this.mode === 'table') {
+			getTotalCounts(this.id).then(res => (this.table_pagination.total = res))
+
 			this.items_watcher = getQueryItems({
 				file_id: this.id,
 				items_sort_param: this.items_sort_param,
 				items_filter_tags: this.items_filter_tags,
 				selector: this.table_selector,
-				table_mode: true
+				table_mode: true,
+				table_page: this.table_pagination.current
 			}).$.subscribe(items => {
 				this.items = getDocItemsData(items)
 			})

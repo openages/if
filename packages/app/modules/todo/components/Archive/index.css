@@ -186,6 +186,14 @@
 			border-radius: 0;
 		}
 
+		.if-picker {
+			.if-picker-input {
+				input {
+					font-size: 14px;
+				}
+			}
+		}
+
 		.filter_wrap {
 			width: 321px;
 			padding: 18px 15px;
