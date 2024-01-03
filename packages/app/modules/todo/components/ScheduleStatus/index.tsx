@@ -9,7 +9,7 @@ const Index = () => {
 		<div className='other_wrap flex justify_center align_center'>
 			<Sun size={11}></Sun>
 			<span className='text' style={{ marginLeft: 3 }}>
-				{t('translation:common.schedule')}
+				{t('translation:modules.schedule')}
 			</span>
 		</div>
 	)

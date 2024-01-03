@@ -18,7 +18,10 @@ const Index = (props: CustomFormItem<Todo.Todo['status']>) => {
 
 	return (
 		<div
-			className={$cx('flex justify_center align_center cursor_point clickable', styles.RenderStatus)}
+			className={$cx(
+				'flex border_box justify_center align_center cursor_point clickable',
+				styles.RenderStatus
+			)}
 			onClick={onCheck}
 		>
 			<Switch>

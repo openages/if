@@ -708,6 +708,11 @@ export default class Index {
 	watchKanbanItems() {
 		if (this.kanban_mode === 'angle') {
 			this.kanban_items_watcher = this.setting.setting.angles.map(item => {
+				this.kanban_items[item.id] = {
+					dimension: { type: 'angle', value: item },
+					items: [] as Array<Todo.Todo>
+				}
+
 				return getQueryItems({
 					file_id: this.id,
 					selector: { type: 'todo' },
@@ -715,10 +720,7 @@ export default class Index {
 				}).$.subscribe(items => {
 					if (this.disable_watcher) return
 
-					this.kanban_items[item.id] = {
-						dimension: { type: 'angle', value: item },
-						items: getDocItemsData(items) as Array<Todo.Todo>
-					}
+					this.kanban_items[item.id].items = getDocItemsData(items) as Array<Todo.Todo>
 				})
 			})
 		} else {
@@ -728,6 +730,11 @@ export default class Index {
 			}
 
 			this.kanban_items_watcher = this.setting.setting.tags.map(item => {
+				this.kanban_items[item.id] = {
+					dimension: { type: 'tag', value: item },
+					items: [] as Array<Todo.Todo>
+				}
+
 				return getQueryItems({
 					file_id: this.id,
 					selector: { type: 'todo' },
@@ -735,10 +742,7 @@ export default class Index {
 				}).$.subscribe(items => {
 					if (this.disable_watcher) return
 
-					this.kanban_items[item.id] = {
-						dimension: { type: 'tag', value: item },
-						items: getDocItemsData(items) as Array<Todo.Todo>
-					}
+					this.kanban_items[item.id].items = getDocItemsData(items) as Array<Todo.Todo>
 				})
 			})
 		}

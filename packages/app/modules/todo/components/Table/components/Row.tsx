@@ -37,7 +37,7 @@ const Index = (props: IProps) => {
 		setLoaded(true)
 	}, [item])
 
-	const onDebounceChange = useMemoizedFn(debounce(onTableRowChange, 450))
+	const onDebounceChange = onTableRowChange && useMemoizedFn(debounce(onTableRowChange, 450))
 
 	const onValuesChange: FormProps<Todo.Todo>['onValuesChange'] = useMemoizedFn(changedValues => {
 		const key = Object.keys(changedValues)[0] as keyof Partial<Todo.Todo>

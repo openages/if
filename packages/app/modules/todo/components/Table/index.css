@@ -2,9 +2,14 @@
 	height: calc(100% - 72px);
 	overflow-y: scroll;
 	padding: 0 36px;
+	outline: none;
 
 	:global {
 		.if-table {
+			.if-table-content {
+				outline: none;
+			}
+
 			table {
 				border-collapse: collapse;
 
@@ -12,19 +17,19 @@
 					tr {
 						th {
 							padding: 3px 6px !important;
-							background-color: transparent;
 							text-transform: capitalize;
 							font-weight: normal;
 							font-size: 12px;
 							white-space: nowrap;
 							color: var(--color_text_light);
+							background-color: var(--color_bg);
+
+							&:nth-of-type(1) {
+								padding-left: 3px !important;
+							}
 
 							&:last-child {
 								padding-right: 0 !important;
-							}
-
-							&:nth-of-type(2) {
-								padding-left: 7px !important;
 							}
 
 							&::before {
@@ -33,7 +38,7 @@
 						}
 
 						td {
-							background-color: transparent;
+							background-color: var(--color_bg);
 
 							&::before {
 								display: none;
@@ -54,12 +59,20 @@
 								padding-right: 0 !important;
 							}
 
+							&:nth-of-type(2) {
+								padding-left: 3px !important;
+							}
+
 							&:last-child {
 								padding-right: 0 !important;
 							}
 						}
 					}
 				}
+			}
+
+			.if-empty-description {
+				display: none;
 			}
 		}
 	}
@@ -86,23 +99,24 @@
 			}
 		}
 	}
-}
 
-.RenderText {
-	padding: 0;
-	text-overflow: ellipsis;
-	font-size: 12px;
+	.RenderChildren {
+		color: var(--color_text_light);
+	}
 }
 
 .RenderStatus {
-	width: 21px;
-	height: 21px;
 	border-radius: var(--radius_small);
-	margin-left: -5px;
 
 	&:hover {
 		background-color: var(--color_bg_2);
 	}
+}
+
+.RenderText {
+	padding: 0;
+	font-size: 12px;
+	text-overflow: ellipsis;
 }
 
 .DateTime {
@@ -138,6 +152,12 @@
 		.archive_time {
 			white-space: nowrap;
 		}
+	}
+}
+
+.RenderChildren {
+	&.no_children {
+		color: var(--color_text_light);
 	}
 }
 
@@ -177,4 +197,19 @@
 
 .RenderCreateAt {
 	color: var(--color_text_light);
+	white-space: nowrap;
+}
+
+.RenderOptions {
+	:global {
+		.btn_action {
+			width: 21px;
+			height: 21px;
+			border-radius: var(--radius_small);
+
+			&:hover {
+				background-color: var(--color_bg_2);
+			}
+		}
+	}
 }

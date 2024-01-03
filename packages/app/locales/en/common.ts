@@ -13,6 +13,5 @@ export default {
 	notice: 'Notice',
 	unset: 'Unset',
 	outdate: 'outdate',
-	schedule: 'schedule',
 	added: 'added'
 }

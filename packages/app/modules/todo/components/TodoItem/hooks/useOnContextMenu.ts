@@ -67,7 +67,7 @@ export default (args: HookArgs) => {
 		} else {
 			switch (key) {
 				case 'detail':
-					showDetailModal({ ...{ id, index }, ...(kanban_mode ? { dimension_id } : {}) })
+					showDetailModal({ id, ...(kanban_mode ? { dimension_id } : {}) })
 					break
 				case 'insert':
 					insert({ index })

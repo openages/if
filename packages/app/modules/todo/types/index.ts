@@ -183,7 +183,7 @@ export interface IPropsKanban extends Omit<IPropsTodos, 'items'> {
 	kanban_items: Model['kanban_items']
 }
 
-export interface IPropsTable {
+export interface IPropsTable extends Pick<IPropsTodos, 'showDetailModal' | 'remove'> {
 	items: Model['items']
 	tags: Model['setting']['setting']['tags']
 	onTableRowChange: Model['onTableRowChange']

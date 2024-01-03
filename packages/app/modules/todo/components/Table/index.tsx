@@ -1,16 +1,19 @@
 import { useMemoizedFn } from 'ahooks'
 import { Table } from 'antd'
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { deepEqual } from '@openages/stk/react'
 
 import {
 	Cell,
 	RenderArchive,
+	RenderChildren,
 	RenderCreateAt,
 	RenderCycle,
 	RenderDeadline,
 	RenderLevel,
+	RenderOptions,
 	RenderRemark,
 	RenderRemind,
 	RenderSchedule,
@@ -27,52 +30,53 @@ import type { TdHTMLAttributes } from 'react'
 import type { IPropsTable } from '../../types'
 
 const Index = (props: IPropsTable) => {
-	const { items, tags, onTableRowChange } = props
+	const { items, tags, onTableRowChange, showDetailModal, remove } = props
+	const { t } = useTranslation()
 
 	const raw_columns = [
 		{
 			dataIndex: 'status',
-			width: 12,
-			align: 'right',
+			width: 15,
+			fixed: 'left',
 			render: () => <RenderStatus></RenderStatus>
 		},
 		{
-			title: 'text',
+			title: t('translation:todo.common.text'),
 			dataIndex: 'text',
-			width: 180,
-			ellipsis: true,
+			width: 150,
+			fixed: 'left',
 			render: () => <RenderText></RenderText>
 		},
 		{
-			title: 'tags',
+			title: t('translation:todo.Header.options.tags'),
 			dataIndex: 'tag_ids',
 			width: 96,
 			align: 'center',
 			render: () => <RenderTags options={tags}></RenderTags>
 		},
 		{
-			title: 'level',
+			title: t('translation:todo.common.level'),
 			dataIndex: 'level',
 			width: 96,
 			align: 'center',
 			render: () => <RenderLevel></RenderLevel>
 		},
 		{
-			title: 'remind',
+			title: t('translation:todo.Input.Remind.title'),
 			dataIndex: 'remind_time',
 			width: 96,
 			align: 'center',
 			render: () => <RenderRemind></RenderRemind>
 		},
 		{
-			title: 'deadline',
+			title: t('translation:todo.Input.Deadline.title'),
 			dataIndex: 'end_time',
 			width: 96,
 			align: 'center',
 			render: () => <RenderDeadline></RenderDeadline>
 		},
 		{
-			title: 'cycle',
+			title: t('translation:todo.Input.Cycle.title'),
 			dataIndex: 'cycle',
 			width: 96,
 			align: 'center',
@@ -81,21 +85,28 @@ const Index = (props: IPropsTable) => {
 			render: (_, item) => <RenderCycle cycle_enabled={item.cycle_enabled}></RenderCycle>
 		},
 		{
-			title: 'schedule',
+			title: t('translation:modules.schedule'),
 			dataIndex: 'schedule',
 			width: 60,
 			align: 'center',
 			render: () => <RenderSchedule></RenderSchedule>
 		},
 		{
-			title: 'remark',
+			title: t('translation:todo.common.children'),
+			dataIndex: 'children',
+			width: 60,
+			align: 'center',
+			render: () => <RenderChildren></RenderChildren>
+		},
+		{
+			title: t('translation:todo.Detail.remark.title'),
 			dataIndex: 'remark',
 			width: 60,
 			align: 'center',
 			render: () => <RenderRemark></RenderRemark>
 		},
 		{
-			title: 'archive',
+			title: t('translation:todo.Archive.title'),
 			dataIndex: 'archive',
 			width: 81,
 			align: 'center',
@@ -105,12 +116,24 @@ const Index = (props: IPropsTable) => {
 			render: (_, item) => <RenderArchive archive_time={item.archive_time}></RenderArchive>
 		},
 		{
-			title: 'create_at',
+			title: t('translation:todo.Header.options.sort.create_at'),
 			dataIndex: 'create_at',
 			align: 'right',
-			ellipsis: true,
 			ignoreArchive: true,
 			render: () => <RenderCreateAt></RenderCreateAt>
+		},
+		{
+			title: t('translation:todo.common.options'),
+			width: 60,
+			align: 'center',
+			fixed: 'right',
+			ignoreArchive: true,
+			render: (_, item, index) => (
+				<RenderOptions
+					showDetailModal={() => showDetailModal({ id: item.id, index })}
+					remove={() => remove({ id: item.id })}
+				></RenderOptions>
+			)
 		}
 	] as Array<TableColumnType<Todo.Todo> & { ignoreArchive?: boolean; deps?: Array<Partial<keyof Todo.Todo>> }>
 
@@ -150,6 +173,7 @@ const Index = (props: IPropsTable) => {
 				expandable={{ childrenColumnName: '_none_' }}
 				rowKey={item => item.id}
 				components={components}
+				scroll={{ x: 1080 }}
 				columns={target_columns}
 				dataSource={items}
 				onRow={onRow}

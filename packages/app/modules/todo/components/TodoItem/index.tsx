@@ -137,8 +137,8 @@ const Index = (props: IPropsTodoItem) => {
 	}
 
 	const has_options = useMemo(
-		() => level || tag_ids?.length || remind_time || (cycle_enabled && cycle) || schedule,
-		[level, tag_ids, remind_time, cycle_enabled, cycle, schedule]
+		() => level || tag_ids?.length || remind_time || end_time || (cycle_enabled && cycle) || schedule,
+		[level, tag_ids, remind_time, end_time, cycle_enabled, cycle, schedule]
 	)
 
 	const OptionsWrap = useMemo(

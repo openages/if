@@ -240,8 +240,7 @@ const Index = (props: IPropsDetail) => {
 						<div
 							className={$cx(
 								'option_item w_100 border_box flex align_center',
-								(exist_relations || (recycle_time && status === 'checked')) &&
-									'disabled'
+								(exist_relations || status === 'checked') && 'disabled'
 							)}
 						>
 							<div className='name_wrap flex align_center'>
@@ -265,7 +264,7 @@ const Index = (props: IPropsDetail) => {
 						>
 							<div className='name_wrap flex align_center'>
 								<Sun size={16}></Sun>
-								<span className='name'>{t('translation:common.schedule')}</span>
+								<span className='name'>{t('translation:modules.schedule')}</span>
 							</div>
 							<div className='value_wrap border_box flex align_center'>
 								<span

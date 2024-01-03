@@ -1,11 +1,15 @@
 export default {
 	common: {
 		status: {
+			label: '状态',
 			unchecked: '未完成',
 			checked: '已完成',
 			closed: '已关闭'
 		},
-		level: '优先级'
+		level: '优先级',
+		text: '文本',
+		children: '子任务',
+		options: '操作'
 	},
 	context_menu: {
 		detail: '查看详情',
@@ -43,11 +47,6 @@ export default {
 			},
 			tags: '标签',
 			help: '帮助'
-		}
-	},
-	Table: {
-		columns: {
-			text: '文本'
 		}
 	},
 	SettingsModal: {
@@ -152,6 +151,7 @@ export default {
 	Detail: {
 		title: '任务详情',
 		remark: {
+			title: '备注',
 			placeholder: '添加备注'
 		},
 		add_to_shcedule: '添加到日程'

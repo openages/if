@@ -257,6 +257,14 @@
 			padding-inline-start: 6px;
 			padding-inline-end: 0;
 		}
+
+		.if-radio-inner {
+			background-color: unset;
+
+			&::after {
+				background-color: unset;
+			}
+		}
 	}
 }
 
@@ -712,6 +720,7 @@
 	}
 }
 
+/* ColorPicker */
 .if-color-picker {
 	.if-color-picker-slider-container {
 		padding: 0 12px;
@@ -725,5 +734,24 @@
 	.if-color-picker-palette {
 		border-bottom-left-radius: 0 !important;
 		border-bottom-right-radius: 0 !important;
+	}
+}
+
+/* Table */
+[data-theme='dark'] {
+	.if-table-wrapper {
+		.if-table-ping-left {
+			.if-table-cell-fix-left-last {
+				&::after {
+					box-shadow: inset 10px 0 8px -8px rgba(var(--color_std_rgb), 0.36) !important;
+				}
+			}
+		}
+
+		.if-table-ping-right:not(.if-table-has-fix-right) {
+			.if-table-container::after {
+				box-shadow: inset -10px 0 8px -8px rgba(var(--color_std_rgb), 0.36) !important;
+			}
+		}
 	}
 }

@@ -1,11 +1,15 @@
 export default {
 	common: {
 		status: {
+			label: 'Status',
 			unchecked: 'Unchecked',
 			checked: 'Checked',
 			closed: 'Closed'
 		},
-		level: 'Level'
+		level: 'Level',
+		text: 'Text',
+		children: 'Children',
+		options: 'Options'
 	},
 	context_menu: {
 		detail: 'Detail',
@@ -149,6 +153,7 @@ export default {
 	Detail: {
 		title: 'Detail',
 		remark: {
+			title: 'Remark',
 			placeholder: 'Add Remark'
 		},
 		add_to_shcedule: 'Add To Schedule'

@@ -31,14 +31,18 @@
 	color: var(--color_main);
 }
 
+.color_danger {
+	color: var(--color_danger);
+}
+
 [data-theme='dark'] {
-      .module_icon{
-            svg {
-                  path:first-child {
-                        fill: inherit;
-                  }
-            }
-      }
+	.module_icon {
+		svg {
+			path:first-child {
+				fill: inherit;
+			}
+		}
+	}
 }
 
 .module_icon {

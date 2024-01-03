@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { omit } from 'lodash-es'
+import { omit, pick } from 'lodash-es'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useMemo, useState } from 'react'
 import { Case, If, Switch, Then } from 'react-if'
@@ -116,7 +116,8 @@ const Index = ({ id }: IProps) => {
 	const props_table: IPropsTable = {
 		items,
 		tags,
-		onTableRowChange: useMemoizedFn(x.onTableRowChange)
+		onTableRowChange: useMemoizedFn(x.onTableRowChange),
+		...pick(props_todos, ['showDetailModal', 'remove'])
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
