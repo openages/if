@@ -1,12 +1,13 @@
 import { makeAutoObservable } from 'mobx'
 import { singleton } from 'tsyringe'
 
-import { App, DB, Layout, Locale, Setting, Shortcuts, Stack } from '@/models'
+import { App, Auth, DB, Layout, Locale, Setting, Shortcuts, Stack } from '@/models'
 
 @singleton()
 export default class GlobalModel {
 	constructor(
 		public db: DB,
+		public auth: Auth,
 		public locale: Locale,
 		public layout: Layout,
 		public setting: Setting,

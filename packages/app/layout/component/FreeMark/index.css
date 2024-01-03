@@ -1,0 +1,21 @@
+._local {
+	top: 12px;
+	right: 12px;
+	z-index: 2147483647;
+	font-family: 'OutFit' !important;
+	line-height: 1;
+	user-select: none;
+	color: rgba(var(--color_text_rgb), 0.3);
+	transition: color ease 0.3s;
+	font-weight: 600;
+
+	&:hover {
+		color: var(--color_main);
+	}
+
+	.title {
+		font-size: 21px;
+		margin-bottom: 6px;
+		text-align: right;
+	}
+}

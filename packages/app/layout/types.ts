@@ -1,6 +1,10 @@
 import type { GlobalModel } from '@/context/app'
-import type { App } from '@/types'
+import type { App, Auth } from '@/types'
 import type { IconProps } from '@phosphor-icons/react'
+
+export interface IPropsFreeMark {
+	user_type: Auth.UserType
+}
 
 export interface IPropsSidebar {
 	current_module: App.ModuleType

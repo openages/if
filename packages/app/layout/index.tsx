@@ -3,7 +3,6 @@ import '@/global_css'
 import { useMemoizedFn } from 'ahooks'
 import { App, ConfigProvider } from 'antd'
 import { minimatch } from 'minimatch'
-
 import { observer } from 'mobx-react-lite'
 import { useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { IconContext } from 'react-icons'
@@ -15,14 +14,14 @@ import { GlobalLoading, OffscreenOutlet } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
 
-import { AppMenu, AppSwitch, Sidebar, Stacks } from './component'
+import { AppMenu, AppSwitch, FreeMark, Sidebar, Stacks } from './component'
 import { useGlobalNavigate, useGlobalTranslate, useLayout } from './hooks'
 import styles from './index.css'
 
 import type { IPropsOffscreenOutlet } from '@/components/OffscreenOutlet'
 import type { AppProps } from 'antd'
 import type { ConfigProviderProps } from 'antd/es/config-provider'
-import type { IPropsAppMenu, IPropsAppSwitch, IPropsSidebar, IPropsStacks } from './types'
+import type { IPropsAppMenu, IPropsAppSwitch, IPropsSidebar, IPropsStacks, IPropsFreeMark } from './types'
 
 const Index = () => {
 	const { pathname } = useLocation()
@@ -110,6 +109,10 @@ const Index = () => {
 		handleAppSwitch: useMemoizedFn(global.app.handleAppSwitch)
 	}
 
+	const props_free_mark: IPropsFreeMark = {
+		user_type: global.auth.user_type
+	}
+
 	if (!global.db.ready) return <GlobalLoading visible></GlobalLoading>
 
 	return (
@@ -133,6 +136,7 @@ const Index = () => {
 						</div>
 						<AppMenu {...props_app_menu}></AppMenu>
 						<AppSwitch {...props_app_switch}></AppSwitch>
+						<FreeMark {...props_free_mark}></FreeMark>
 					</IconContext.Provider>
 				</App>
 			</ConfigProvider>
