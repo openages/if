@@ -1,5 +1,6 @@
 import { toTypedRxJsonSchema } from 'rxdb'
 
+import { keyCompression } from '@/config'
 import { getCrdtSchema } from '@/utils'
 
 import schema_raw from './output/dirtree_items'
@@ -10,7 +11,7 @@ const schema = toTypedRxJsonSchema(
 	getCrdtSchema({
 		version: 1,
 		primaryKey: 'id',
-		keyCompression: true,
+		keyCompression,
 		indexes: ['module'],
 		...schema_raw['DirTreeItems.Item']
 	} as const)

@@ -147,7 +147,6 @@
 			width: 21px;
 			height: 21px;
 			border-radius: var(--radius_small);
-			margin-left: -1px;
 			color: var(--color_text);
 
 			&:hover {

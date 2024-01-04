@@ -1,5 +1,6 @@
 import { toTypedRxJsonSchema } from 'rxdb'
 
+import { keyCompression } from '@/config'
 import { getCrdtSchema } from '@/utils'
 
 import schema_raw from './output/module_setting'
@@ -10,7 +11,7 @@ const schema = toTypedRxJsonSchema(
 	getCrdtSchema({
 		version: 1,
 		primaryKey: 'file_id',
-		keyCompression: true,
+		keyCompression,
 		indexes: ['module'],
 		...schema_raw['ModuleSetting.Item']
 	} as const)

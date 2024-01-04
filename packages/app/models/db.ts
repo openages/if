@@ -6,6 +6,7 @@ import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
 import { migrateStorage } from 'rxdb/plugins/migration-storage'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 
+import { keyCompression } from '@/config'
 import {
 	migration_activity_items,
 	migration_dirtree_items,
@@ -36,9 +37,11 @@ export default class Index {
 			cleanupPolicy: { waitForLeadership: false },
 			ignoreDuplicate: window.$is_dev,
 			storage: wrappedKeyEncryptionCryptoJsStorage({
-				storage: wrappedKeyCompressionStorage({
-					storage: getRxStorageDexie()
-				})
+				storage: keyCompression
+					? wrappedKeyCompressionStorage({
+							storage: getRxStorageDexie()
+					  })
+					: getRxStorageDexie()
 			})
 		})
 
