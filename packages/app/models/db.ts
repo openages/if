@@ -14,6 +14,7 @@ import {
 	migration_todo_items
 } from '@/migrations'
 import { schema_activity_items, schema_dirtree_items, schema_module_setting, schema_todo_items } from '@/schemas'
+import { statics } from '@/utils/rxdb'
 import { local } from '@openages/stk/storage'
 
 import type { RxDB } from '@/types'
@@ -64,7 +65,8 @@ export default class Index {
 			todo_items: {
 				autoMigrate: false,
 				schema: schema_todo_items,
-				migrationStrategies: migration_todo_items
+				migrationStrategies: migration_todo_items,
+				statics
 			}
 		})
 
@@ -91,15 +93,11 @@ export default class Index {
 		const sync_actions = keys.map(async (id: string) => {
 			const file = await $db.dirtree_items.findOne(id).exec()
 
-			if (!file) {
-				return delete local.update_timestamps[id]
-			}
+			if (!file) return delete local.update_timestamps[id]
 
 			await file.updateCRDT({ ifMatch: { $set: { update_at: local.update_timestamps[id] } } })
 
 			delete local.update_timestamps[id]
-
-			return
 		})
 
 		return Promise.all(sync_actions)

@@ -18,6 +18,8 @@ import { getTodo } from './initials'
 import {
 	archiveByTime,
 	check,
+	cleanTodoItem,
+	cleanTodoItems,
 	create,
 	getAngleTodoCounts,
 	getMaxSort,
@@ -548,6 +550,10 @@ export default class Index {
 		})
 
 		await removeTodoItem(id)
+	}
+
+	async clean(id: string) {
+		cleanTodoItem(id)
 	}
 
 	async restoreArchiveItem(id: string) {

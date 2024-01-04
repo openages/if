@@ -30,7 +30,8 @@ import type { TdHTMLAttributes } from 'react'
 import type { IPropsTable } from '../../types'
 
 const Index = (props: IPropsTable) => {
-	const { items, tags, table_pagination, onTableRowChange, onTablePageChange, showDetailModal, remove } = props
+	const { items, tags, table_pagination, onTableRowChange, onTablePageChange, clean, showDetailModal, remove } =
+		props
 	const { t } = useTranslation()
 
 	const raw_columns = [
@@ -124,7 +125,7 @@ const Index = (props: IPropsTable) => {
 		},
 		{
 			title: t('translation:todo.common.options'),
-			width: 60,
+			width: 72,
 			align: 'center',
 			fixed: 'right',
 			ignoreArchive: true,
@@ -132,6 +133,7 @@ const Index = (props: IPropsTable) => {
 				<RenderOptions
 					showDetailModal={() => showDetailModal({ id: item.id, index })}
 					remove={() => remove({ id: item.id })}
+					clean={() => clean(item.id)}
 				></RenderOptions>
 			)
 		}

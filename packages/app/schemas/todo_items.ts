@@ -5,7 +5,8 @@ import { getCrdtSchema } from '@/utils'
 
 import schema_raw from './output/todo_items'
 
-import type { ExtractDocumentTypeFromTypedRxJsonSchema, RxCollection, RxJsonSchema } from 'rxdb'
+import type { ExtractDocumentTypeFromTypedRxJsonSchema, RxJsonSchema } from 'rxdb'
+import type { RxDB } from '@/types'
 
 const schema = toTypedRxJsonSchema(
 	getCrdtSchema({
@@ -18,6 +19,6 @@ const schema = toTypedRxJsonSchema(
 )
 
 export type DocTodoItems = ExtractDocumentTypeFromTypedRxJsonSchema<typeof schema>
-export type DBTodoItems = RxCollection<DocTodoItems>
+export type DBTodoItems = RxDB.RxCollectionWithFunctions<DocTodoItems>
 
 export const schema_todo_items: RxJsonSchema<DocTodoItems> = schema

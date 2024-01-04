@@ -321,6 +321,14 @@ export const removeTodoItem = async (id: string) => {
 	await $db.todo_items.findOne({ selector: { id } }).remove()
 }
 
+export const cleanTodoItem = async (id: string) => {
+	return $db.todo_items.clean(id)
+}
+
+export const cleanTodoItems = async () => {
+	return $db.todo_items.bulkClean()
+}
+
 export const restoreArchiveItem = async (id: string, angles: Todo.Setting['angles'], current_angle_id: string) => {
 	const doc = await $db.todo_items.findOne({ selector: { id } }).exec()
 	const angle_exsit = angles.find(item => item.id === doc.angle_id)

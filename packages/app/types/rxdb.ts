@@ -1,8 +1,21 @@
 import type { DBActivityItems, DBDirtreeItems, DBModuleSetting, DBTodoItems } from '@/schemas'
 import type { RxDatabase } from 'rxdb'
-import type { RxDocument, RxQuery } from 'rxdb'
+import type { RxDocument, RxQuery, CRDTDocumentField, RxCollection } from 'rxdb'
 
 export namespace RxDB {
+	export type WithCRDTs<RxDocType> = RxDocType & {
+		crdts?: CRDTDocumentField<RxDocType>
+	}
+
+	export type RxCollectionWithFunctions<T> = RxCollection<
+		T,
+		{},
+		{
+			clean(primary_value: string | number): Promise<void>
+			bulkClean(primary_values?: Array<string | number>): Promise<void>
+		}
+	>
+
 	export type DBContent = RxDatabase<{
 		module_setting: DBModuleSetting
 		activity_items: DBActivityItems

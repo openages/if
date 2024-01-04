@@ -5,7 +5,8 @@ import { getCrdtSchema } from '@/utils'
 
 import schema_raw from './output/dirtree_items'
 
-import type { RxCollection, ExtractDocumentTypeFromTypedRxJsonSchema, RxJsonSchema } from 'rxdb'
+import type { ExtractDocumentTypeFromTypedRxJsonSchema, RxJsonSchema } from 'rxdb'
+import type { RxDB } from '@/types'
 
 const schema = toTypedRxJsonSchema(
 	getCrdtSchema({
@@ -18,6 +19,6 @@ const schema = toTypedRxJsonSchema(
 )
 
 export type DocDirtreeItems = ExtractDocumentTypeFromTypedRxJsonSchema<typeof schema>
-export type DBDirtreeItems = RxCollection<DocDirtreeItems>
+export type DBDirtreeItems = RxDB.RxCollectionWithFunctions<DocDirtreeItems>
 
 export const schema_dirtree_items: RxJsonSchema<DocDirtreeItems> = schema

@@ -189,6 +189,7 @@ export interface IPropsTable extends Pick<IPropsTodos, 'showDetailModal' | 'remo
 	table_pagination: Model['table_pagination']
 	onTableRowChange: Model['onTableRowChange']
 	onTablePageChange: Model['onTablePageChange']
+	clean: Model['clean']
 }
 
 export interface IPropsSettingsModal {

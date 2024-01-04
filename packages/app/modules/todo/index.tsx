@@ -119,6 +119,7 @@ const Index = ({ id }: IProps) => {
 		table_pagination: $copy(x.table_pagination),
 		onTableRowChange: useMemoizedFn(x.onTableRowChange),
 		onTablePageChange: useMemoizedFn(x.onTablePageChange),
+		clean: useMemoizedFn(x.clean),
 		...pick(props_todos, ['showDetailModal', 'remove'])
 	}
 
