@@ -358,7 +358,7 @@ export const archiveByTime = async (file_id: string, v: ArgsArchiveByTime) => {
 		id: file_id,
 		title: $t('translation:common.notice'),
 		// @ts-ignore
-		content: $t('translation:setting.Archive.confirm', { date: target_time.format('YYYY-DD-MM') })
+		content: $t('translation:todo.Archive.confirm', { date: target_time.format('YYYY-DD-MM') })
 	})
 
 	if (!res) return

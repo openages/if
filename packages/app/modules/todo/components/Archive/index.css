@@ -166,10 +166,16 @@
 
 			.footer_wrap {
 				font-size: 12px;
+				line-height: 1;
 				color: var(--color_text_grey);
 
 				.select {
 					height: 22px;
+
+					.if-select-selector {
+						margin-top: -1px;
+						padding: 0;
+					}
 
 					.if-select-dropdown {
 						min-width: 90px !important;
