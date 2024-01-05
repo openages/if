@@ -83,7 +83,10 @@ export default {
                         ]
                   },
                   "recycle_time": {
-                        "type": "number"
+                        "type": "number",
+                        "multipleOf": 1,
+                        "minimum": 1,
+                        "maximum": 9007199254740991
                   },
                   "remark": {
                         "type": "string"
@@ -92,13 +95,19 @@ export default {
                         "type": "boolean"
                   },
                   "archive_time": {
-                        "type": "number"
+                        "type": "number",
+                        "multipleOf": 1,
+                        "minimum": 1,
+                        "maximum": 9007199254740991
                   },
                   "schedule": {
                         "type": "boolean"
                   },
                   "start_time": {
-                        "type": "number"
+                        "type": "number",
+                        "multipleOf": 1,
+                        "minimum": 1,
+                        "maximum": 9007199254740991
                   },
                   "end_time": {
                         "type": "number"
@@ -245,7 +254,10 @@ export default {
                         ]
                   },
                   "recycle_time": {
-                        "type": "number"
+                        "type": "number",
+                        "multipleOf": 1,
+                        "minimum": 1,
+                        "maximum": 9007199254740991
                   },
                   "remark": {
                         "type": "string"
@@ -254,13 +266,19 @@ export default {
                         "type": "boolean"
                   },
                   "archive_time": {
-                        "type": "number"
+                        "type": "number",
+                        "multipleOf": 1,
+                        "minimum": 1,
+                        "maximum": 9007199254740991
                   },
                   "schedule": {
                         "type": "boolean"
                   },
                   "start_time": {
-                        "type": "number"
+                        "type": "number",
+                        "multipleOf": 1,
+                        "minimum": 1,
+                        "maximum": 9007199254740991
                   },
                   "end_time": {
                         "type": "number"
@@ -404,7 +422,10 @@ export default {
                         ]
                   },
                   "recycle_time": {
-                        "type": "number"
+                        "type": "number",
+                        "multipleOf": 1,
+                        "minimum": 1,
+                        "maximum": 9007199254740991
                   },
                   "remark": {
                         "type": "string"
@@ -413,13 +434,19 @@ export default {
                         "type": "boolean"
                   },
                   "archive_time": {
-                        "type": "number"
+                        "type": "number",
+                        "multipleOf": 1,
+                        "minimum": 1,
+                        "maximum": 9007199254740991
                   },
                   "schedule": {
                         "type": "boolean"
                   },
                   "start_time": {
-                        "type": "number"
+                        "type": "number",
+                        "multipleOf": 1,
+                        "minimum": 1,
+                        "maximum": 9007199254740991
                   },
                   "end_time": {
                         "type": "number"

@@ -13,7 +13,7 @@ const schema = toTypedRxJsonSchema(
 		version: 1,
 		primaryKey: 'id',
 		keyCompression,
-		indexes: ['module'],
+		indexes: ['module', 'file_id'],
 		...schema_raw['ActivityItems.Item']
 	} as const)
 )

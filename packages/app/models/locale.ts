@@ -1,14 +1,12 @@
 import dayjs from 'dayjs'
 import i18next from 'i18next'
-import detector from 'i18next-browser-languagedetector'
-import backend from 'i18next-http-backend'
 import { makeAutoObservable } from 'mobx'
 import { initReactI18next } from 'react-i18next'
 import { injectable } from 'tsyringe'
 
-import { en } from '@/locales'
 import Utils from '@/models/utils'
 import { getLang } from '@/utils'
+import { resourcesToBackend } from '@/utils/i18n'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 import { local } from '@openages/stk/storage'
 
@@ -32,15 +30,14 @@ export default class Index {
 		this.getLocale(this.lang)
 
 		i18next
-			.use(detector)
-			.use(backend)
+			.use(resourcesToBackend)
 			.use(initReactI18next)
 			.init({
 				lng: this.lang,
 				fallbackLng: 'en',
+				load: 'languageOnly',
 				returnObjects: true,
-				interpolation: { escapeValue: false },
-				resources: { en }
+				interpolation: { escapeValue: false }
 			})
 	}
 

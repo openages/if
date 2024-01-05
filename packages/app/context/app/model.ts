@@ -6,12 +6,12 @@ import { App, Auth, DB, Layout, Locale, Setting, Shortcuts, Stack } from '@/mode
 @singleton()
 export default class GlobalModel {
 	constructor(
+		public locale: Locale,
+		public stack: Stack,
 		public db: DB,
 		public auth: Auth,
-		public locale: Locale,
 		public layout: Layout,
 		public setting: Setting,
-		public stack: Stack,
 		public app: App,
 		public shortcuts: Shortcuts
 	) {

@@ -7,7 +7,8 @@ export default {
                         "maxLength": 30
                   },
                   "module": {
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 15
                   },
                   "file_id": {
                         "type": "string",
@@ -44,7 +45,8 @@ export default {
                         "maxLength": 30
                   },
                   "module": {
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 15
                   },
                   "file_id": {
                         "type": "string",
