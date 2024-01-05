@@ -25,21 +25,21 @@
 		"ahooks": "^3.7.8",
 		"antd": "^5.12.7",
 		"await-to-js": "^3.0.0",
-		"axios": "^1.6.3",
+		"axios": "^1.6.4",
 		"classix": "^2.1.35",
 		"color": "^4.2.3",
 		"console-ban": "^5.0.0",
 		"dayjs": "^1.11.10",
 		"decimal.js": "^10.4.3",
-		"dompurify": "^3.0.6",
+		"dompurify": "^3.0.7",
 		"echarts": "^5.4.3",
 		"emoji-mart": "^5.5.2",
 		"fast-copy": "^3.0.1",
 		"fast-equals": "^5.0.1",
 		"flexsearch": "^0.7.31",
-		"framer-motion": "^10.17.0",
+		"framer-motion": "^10.17.6",
 		"hotkeys-js": "^3.13.3",
-		"i18next": "^23.7.15",
+		"i18next": "^23.7.16",
 		"konva": "^9.3.0",
 		"lodash-es": "^4.17.21",
 		"lucide-react": "^0.293.0",
@@ -92,8 +92,5 @@
 		"ts-json-schema-generator": "^1.5.0",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.3.3"
-	},
-	"browser": {
-		"crypto": false
 	}
 }

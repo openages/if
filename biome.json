@@ -3,6 +3,10 @@
 	"linter": {
 		"enabled": false
 	},
+	"files": {
+		"ignore": ["node_modules/**", "**/dist/**"],
+		"ignoreUnknown": true
+	},
 	"formatter": {
 		"enabled": true,
 		"lineWidth": 120,

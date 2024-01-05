@@ -22,18 +22,15 @@
 		"*.{css,md}": [
 			"prettier --write"
 		],
-		"*.{js,jsx,json}": [
-			"biome format --write --changed ./packages"
-		],
-		"*.ts?(x)": [
+		"*.(j|t)s?(x)": [
 			"biome format --write --changed ./packages"
 		]
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.4.1-nightly.22dd4e1",
+		"@biomejs/biome": "1.4.1-nightly.d869a33",
 		"lint-staged": "^13.3.0",
 		"prettier": "^3.1.1",
-		"turbo": "^1.11.2",
+		"turbo": "^1.11.3",
 		"yorkie": "^2.0.0"
 	}
 }
