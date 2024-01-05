@@ -3,7 +3,7 @@ import { omit, uniq } from 'lodash-es'
 import { match } from 'ts-pattern'
 
 import { updateSetting } from '@/actions/todo'
-import { getArchiveTime, getDocItem } from '@/utils'
+import { getArchiveTime, getDocItem, getDocItemsData } from '@/utils'
 import { confirm } from '@/utils/antd'
 
 import type { MangoQueryOperators, MangoQuerySelector, MangoQuerySortPart } from 'rxdb'
@@ -362,24 +362,31 @@ export const archiveByTime = async (file_id: string, v: ArgsArchiveByTime) => {
 		.with('1week', () => now.subtract(1, 'week'))
 		.exhaustive()
 
+	const query = $db.todo_items.find({
+		selector: {
+			file_id,
+			archive: true,
+			create_at: { $lte: now.subtract(3, 'second').valueOf() }
+		}
+	})
+
+	const remove_items = await query.exec()
+
 	const res = await confirm({
 		id: file_id,
 		title: $t('translation:common.notice'),
 		// @ts-ignore
-		content: $t('translation:todo.Archive.confirm', { date: target_time.format('YYYY-DD-MM') })
+		content: $t('translation:todo.Archive.confirm', {
+			date: target_time.format('YYYY-MM-DD'),
+			counts: remove_items.length
+		})
 	})
 
-	if (!res) return
+	if (!res || !remove_items.length) return
 
-	await $db.todo_items
-		.find({
-			selector: {
-				file_id,
-				archive: true,
-				create_at: { $lte: now.subtract(3, 'second').valueOf() }
-			}
-		})
-		.remove()
+	await query.remove()
+
+	await $db.todo_items.bulkClean(getDocItemsData(remove_items).map(item => item.id))
 }
 
 export const getAngleTodoCounts = async (file_id: string, angle_id: string) => {

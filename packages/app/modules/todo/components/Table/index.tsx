@@ -177,7 +177,11 @@ const Index = (props: IPropsTable) => {
 				rowKey={item => item.id}
 				components={components}
 				scroll={{ x: 1080 }}
-				pagination={{ ...table_pagination, pageSize: 15, onChange: onTablePageChange }}
+				pagination={
+					table_pagination.total
+						? { ...table_pagination, pageSize: 15, onChange: onTablePageChange }
+						: false
+				}
 				columns={target_columns}
 				dataSource={items}
 				onRow={onRow}

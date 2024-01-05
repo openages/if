@@ -58,7 +58,7 @@ export default {
 			label: 'Angles',
 			placeholder: 'Categories within the todo list.',
 			remove_confirm:
-				'This will remove {{counts}} items under this category. Please confirm if you want to proceed with the deletion.'
+				'This will remove {{counts}} items under this category({{counts}} items). Please confirm if you want to proceed with the deletion.'
 		},
 		tags: {
 			label: 'Tags',
@@ -183,5 +183,13 @@ export default {
 			title: 'Expand Subtasks',
 			desc: 'Click the small dot to expand subtasks.'
 		}
-	]
+	],
+	Table: {
+		options: {
+			erase: {
+				title: 'Erase',
+				confirm: 'Confirm complete deletion of this task, it cannot be recovered from the trash after complete deletion?'
+			}
+		}
+	}
 }

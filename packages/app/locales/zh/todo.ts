@@ -137,7 +137,7 @@ export default {
 			},
 			total: '共{{counts}}条记录'
 		},
-		confirm: '你将删除{{date}}前的所有归档，请确认是否删除？',
+		confirm: '你将删除{{date}}前的所有归档（{{counts}}条），请确认是否删除？',
 		filter: {
 			select: '选择',
 			angle: '分类',
@@ -181,5 +181,13 @@ export default {
 			title: '展开子任务',
 			desc: '点击小圆点即可展开子任务。'
 		}
-	]
+	],
+	Table: {
+		options: {
+			erase: {
+				title: '彻底删除',
+				confirm: '确认彻底删除该任务，彻底删除后将无法从垃圾箱恢复？'
+			}
+		}
+	}
 }
