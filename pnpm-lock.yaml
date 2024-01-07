@@ -60,14 +60,14 @@ importers:
         specifier: ^3.7.8
         version: 3.7.8(react@0.0.0-experimental-c5b937576-20231219)
       antd:
-        specifier: ^5.12.7
-        version: 5.12.7(react-dom@0.0.0-experimental-c5b937576-20231219)(react@0.0.0-experimental-c5b937576-20231219)
+        specifier: ^5.12.8
+        version: 5.12.8(react-dom@0.0.0-experimental-c5b937576-20231219)(react@0.0.0-experimental-c5b937576-20231219)
       await-to-js:
         specifier: ^3.0.0
         version: 3.0.0
       axios:
-        specifier: ^1.6.4
-        version: 1.6.4
+        specifier: ^1.6.5
+        version: 1.6.5
       classix:
         specifier: ^2.1.35
         version: 2.1.35
@@ -84,8 +84,8 @@ importers:
         specifier: ^10.4.3
         version: 10.4.3
       dompurify:
-        specifier: ^3.0.7
-        version: 3.0.7
+        specifier: ^3.0.8
+        version: 3.0.8
       echarts:
         specifier: ^5.4.3
         version: 5.4.3
@@ -99,11 +99,11 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1
       flexsearch:
-        specifier: ^0.7.31
-        version: 0.7.31
+        specifier: ^0.7.34
+        version: 0.7.34
       framer-motion:
-        specifier: ^10.17.6
-        version: 10.17.6(react-dom@0.0.0-experimental-c5b937576-20231219)(react@0.0.0-experimental-c5b937576-20231219)
+        specifier: ^10.17.9
+        version: 10.17.9(react-dom@0.0.0-experimental-c5b937576-20231219)(react@0.0.0-experimental-c5b937576-20231219)
       hotkeys-js:
         specifier: ^3.13.3
         version: 3.13.3
@@ -175,7 +175,7 @@ importers:
         version: 15.1.0(rxjs@7.8.1)
       rxdb-flexsearch:
         specifier: ^0.1.1
-        version: 0.1.1(flexsearch@0.7.31)(rxdb@15.1.0)
+        version: 0.1.1(flexsearch@0.7.34)(rxdb@15.1.0)
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
@@ -232,8 +232,8 @@ importers:
         specifier: ^20.10.6
         version: 20.10.6
       '@types/react':
-        specifier: ^18.2.46
-        version: 18.2.46
+        specifier: ^18.2.47
+        version: 18.2.47
       '@types/react-dom':
         specifier: ^18.2.18
         version: 18.2.18
@@ -3344,7 +3344,7 @@ packages:
   /@types/react-reconciler@0.28.8:
     resolution: {integrity: sha512-SN9c4kxXZonFhbX4hJrZy37yw9e7EIxcpHCxQv5JUS18wDE5ovkQKlqQEkufdJCCMfuI9BnjUJvhYeJ9x5Ra7g==}
     dependencies:
-      '@types/react': 18.2.46
+      '@types/react': 18.2.47
     dev: false
 
   /@types/react@18.2.42:
@@ -3363,8 +3363,8 @@ packages:
       csstype: 3.1.3
     dev: true
 
-  /@types/react@18.2.46:
-    resolution: {integrity: sha512-nNCvVBcZlvX4NU1nRRNV/mFl1nNRuTuslAJglQsq+8ldXe5Xv0Wd2f7WTE3jOxhLH2BFfiZGC6GCp+kHQbgG+w==}
+  /@types/react@18.2.47:
+    resolution: {integrity: sha512-xquNkkOirwyCgoClNk85BjP+aqnIS+ckAJ8i37gAbDs14jfW/J23f2GItAf33oiUPQnqNMALiFeoM9Y5mbjpVQ==}
     dependencies:
       '@types/prop-types': 15.7.11
       '@types/scheduler': 0.16.8
@@ -3794,8 +3794,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /antd@5.12.7(react-dom@0.0.0-experimental-c5b937576-20231219)(react@0.0.0-experimental-c5b937576-20231219):
-    resolution: {integrity: sha512-+SnWLO0kwXFnP15PAzvczZG3/yGu1PoYJa1mcYajqi248gaFA6HjY0s/kXVyXEIzY8dO3MT+RenYweU+s47Fwg==}
+  /antd@5.12.8(react-dom@0.0.0-experimental-c5b937576-20231219)(react@0.0.0-experimental-c5b937576-20231219):
+    resolution: {integrity: sha512-R2CRcB+aaVZurb3J0IKpBRWq5kW4CLcSqDF58/QBsqYdzK7XjSvM8+eF3rWVRUDbSJfGmyW7I80ywNRYpW1+vA==}
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
@@ -3909,8 +3909,8 @@ packages:
     engines: {node: '>=6.0.0'}
     dev: false
 
-  /axios@1.6.4:
-    resolution: {integrity: sha512-heJnIs6N4aa1eSthhN9M5ioILu8Wi8vmQW9iHQ9NUvfkJb0lEEDUiIdQNAuBtfUt3FxReaKdpQA5DbmMOqzF/A==}
+  /axios@1.6.5:
+    resolution: {integrity: sha512-Ii012v05KEVuUoFWmMW/UQv9aRIc3ZwkWDcM+h5Il8izZCtRVpDUfwpoFf7eOtajT3QiGR4yDUx7lPqHJULgbg==}
     dependencies:
       follow-redirects: 1.15.4
       form-data: 4.0.0
@@ -4597,8 +4597,8 @@ packages:
       domelementtype: 2.3.0
     dev: true
 
-  /dompurify@3.0.7:
-    resolution: {integrity: sha512-BViYTZoqP3ak/ULKOc101y+CtHDUvBsVgSxIF1ku0HmK6BRf+C03MC+tArMvOPtVtZp83DDh5puywKDu4sbVjQ==}
+  /dompurify@3.0.8:
+    resolution: {integrity: sha512-b7uwreMYL2eZhrSCRC4ahLTeZcPZxSmYfmcQGXGkXiZSNW1X85v+SDM5KsWcpivIiUBH47Ji7NtyUdpLeF5JZQ==}
     dev: false
 
   /domutils@3.1.0:
@@ -4943,8 +4943,8 @@ packages:
       - '@react-native-async-storage/async-storage'
     dev: false
 
-  /flexsearch@0.7.31:
-    resolution: {integrity: sha512-XGozTsMPYkm+6b5QL3Z9wQcJjNYxp0CYn3U1gO7dwD6PAqU1SVWZxI9CCg3z+ml3YfqdPnrBehaBrnH2AGKbNA==}
+  /flexsearch@0.7.34:
+    resolution: {integrity: sha512-Z9jISJn78gHxU0wgI+v3a0hbbSQnJq0zJ7B7HnWFlKx6436HHO6zwa2D/UKfWEB8C7yI5z1lNhmalGtfh2mC4A==}
     dev: false
 
   /follow-redirects@1.15.3:
@@ -4987,8 +4987,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
-  /framer-motion@10.17.6(react-dom@0.0.0-experimental-c5b937576-20231219)(react@0.0.0-experimental-c5b937576-20231219):
-    resolution: {integrity: sha512-WPPm0vLGTbhLOsD7v1fEv3yjX1RrmzsVI3CZ6dpBJvVb7wKMA6mpZsQzTYiSUDz/YIlvTUHHY0Jum7iEHnLHDA==}
+  /framer-motion@10.17.9(react-dom@0.0.0-experimental-c5b937576-20231219)(react@0.0.0-experimental-c5b937576-20231219):
+    resolution: {integrity: sha512-z2NpP8r+XuALoPA7ZVZHm/OoTnwkQNJFBu91sC86o/FYvJ4x7ar3eQnixgwYWFK7kEqOtQ6whtNM37tn1KrOOA==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
@@ -7189,7 +7189,7 @@ packages:
       queue-microtask: 1.2.3
     dev: true
 
-  /rxdb-flexsearch@0.1.1(flexsearch@0.7.31)(rxdb@15.1.0):
+  /rxdb-flexsearch@0.1.1(flexsearch@0.7.34)(rxdb@15.1.0):
     resolution: {integrity: sha512-cKBPdJKQ+1zSvtgxtuORTZrn1/YQH2NE7iwaUWxPfgA2Fh+BSQWZjdSQHJw41yxrWDqmEcsHKU+V0emOwkQMHw==}
     engines: {node: '>= 16'}
     peerDependencies:
@@ -7198,7 +7198,7 @@ packages:
     dependencies:
       '@types/flexsearch': 0.7.6
       D: 1.0.0
-      flexsearch: 0.7.31
+      flexsearch: 0.7.34
       rxdb: 15.1.0(rxjs@7.8.1)
     dev: false
 
