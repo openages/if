@@ -31,6 +31,9 @@ export default {
 			zen: '禅意模式',
 			normal: '常规模式'
 		},
+		table_mode: {
+			filter: '过滤器'
+		},
 		mode: {
 			list: '列表',
 			kanban: '看板',
@@ -188,6 +191,7 @@ export default {
 				title: '彻底删除',
 				confirm: '确认彻底删除该任务，彻底删除后将无法从垃圾箱恢复？'
 			}
-		}
+		},
+		total: '共有{{counts}}条记录'
 	}
 }

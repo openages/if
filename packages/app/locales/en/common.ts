@@ -13,5 +13,11 @@ export default {
 	notice: 'Notice',
 	unset: 'Unset',
 	outdate: 'outdate',
-	added: 'added'
+	added: 'added',
+	reset: 'Reset',
+	search: 'Search',
+	enabled: 'Enabled',
+	disabled: 'Disabled',
+	yes: 'Yes',
+	no: 'No'
 }

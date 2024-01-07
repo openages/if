@@ -40,8 +40,8 @@ import {
 
 import type { RxDB, Todo } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
-import type { ManipulateType } from 'dayjs'
-import type { MangoQuerySelector } from 'rxdb'
+import type { ManipulateType, Dayjs } from 'dayjs'
+import type { MangoQuerySelector, MangoQuerySortPart } from 'rxdb'
 import type { Subscription } from 'rxjs'
 import type {
 	ArchiveQueryParams,
@@ -90,12 +90,14 @@ export default class Index {
 	visible_archive_modal = false
 	visible_detail_modal = false
 	visible_help_modal = false
+	visible_table_filter = true
 
 	current_angle_id = ''
 	current_detail_index = {} as CurrentDetailIndex
 
 	table_pagination = { current: 1, total: 0 }
 	table_selector = {} as MangoQuerySelector<Todo.TodoItem>
+	table_sort = {} as MangoQuerySortPart<Todo.TodoItem>
 
 	watch = {
 		['current_angle_id|items_sort_param|items_filter_tags']: () => {
@@ -146,19 +148,19 @@ export default class Index {
 		},
 		['mode']: v => {
 			this.visible_detail_modal = false
+			this.items = []
+			this.kanban_items = {}
 
 			this.stopWatchItems()
 
 			if (v === 'table') {
 				this.kanban_mode = '' as KanbanMode
-				this.kanban_items = {}
 
 				this.watchItems()
 			}
 
 			if (v === 'kanban') {
 				this.kanban_mode = 'angle'
-				this.items = []
 			}
 
 			if (v !== 'table') {
@@ -646,6 +648,61 @@ export default class Index {
 		this.watchItems()
 	}
 
+	onTableSearch(values: any) {
+		const selector = {} as MangoQuerySelector<Todo.TodoItem>
+
+		if (values.status) {
+			selector['status'] = values.status
+		}
+
+		if (values.tag_id) {
+			selector['tag_ids'] = { $elemMatch: { $in: [values['tag_id']] } }
+		}
+
+		if (values.level) {
+			selector['level'] = values.level
+		}
+
+		if (values.remind_time) {
+			selector['remind_time'] = {
+				$exists: true,
+				$ne: undefined,
+				$lte: (values.remind_time as Dayjs).valueOf()
+			}
+		}
+
+		if (values.end_time) {
+			selector['end_time'] = {
+				$exists: true,
+				$ne: undefined,
+				$lte: (values.end_time as Dayjs).valueOf()
+			}
+		}
+
+		if (values.cycle_enabled && values.cycle_enabled === 'enabled') {
+			selector['cycle_enabled'] = true
+		}
+
+		if (values.schedule && values.schedule === 'yes') {
+			selector['schedule'] = true
+		}
+
+		if (values.archive && values.archive === 'yes') {
+			selector['archive'] = true
+		}
+
+		if (values.create_at) {
+			selector['create_at'] = {
+				$lte: (values.create_at as Dayjs).valueOf()
+			}
+		}
+
+		this.table_selector = selector
+
+		this.stopWatchItems()
+		this.watchItems()
+	}
+
 	isLinked(id: string) {
 		return this.setting.setting?.relations?.findIndex(item => item.items.includes(id)) !== -1
 	}
@@ -711,13 +768,14 @@ export default class Index {
 		}
 
 		if (this.mode === 'table') {
-			getTotalCounts(this.id).then(res => (this.table_pagination.total = res))
+			getTotalCounts({ file_id: this.id, ...$copy(this.table_selector) }).then(
+				res => (this.table_pagination.total = res)
+			)
 
 			this.items_watcher = getQueryItems({
 				file_id: this.id,
-				items_sort_param: this.items_sort_param,
-				items_filter_tags: this.items_filter_tags,
 				selector: this.table_selector,
+				sort: this.table_sort,
 				table_mode: true,
 				table_page: this.table_pagination.current
 			}).$.subscribe(items => {

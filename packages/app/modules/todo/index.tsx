@@ -66,7 +66,8 @@ const Index = ({ id }: IProps) => {
 		showArchiveModal: useMemoizedFn(() => (x.visible_archive_modal = true)),
 		showHelpModal: useMemoizedFn(() => (x.visible_help_modal = true)),
 		setItemsSortParam: useMemoizedFn(v => (x.items_sort_param = v)),
-		setItemsFilterTags: useMemoizedFn(v => (x.items_filter_tags = v))
+		setItemsFilterTags: useMemoizedFn(v => (x.items_filter_tags = v)),
+		toggleTableFilter: useMemoizedFn(() => (x.visible_table_filter = !x.visible_table_filter))
 	}
 
 	const props_tabs: IPropsTabs = {
@@ -117,9 +118,11 @@ const Index = ({ id }: IProps) => {
 		items,
 		tags,
 		table_pagination: $copy(x.table_pagination),
+		visible_table_filter: x.visible_table_filter,
+		clean: useMemoizedFn(x.clean),
 		onTableRowChange: useMemoizedFn(x.onTableRowChange),
 		onTablePageChange: useMemoizedFn(x.onTablePageChange),
-		clean: useMemoizedFn(x.clean),
+		onTableSearch: useMemoizedFn(x.onTableSearch),
 		...pick(props_todos, ['showDetailModal', 'remove'])
 	}
 

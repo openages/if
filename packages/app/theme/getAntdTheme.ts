@@ -23,13 +23,16 @@ export default (theme: Theme, color_main: string) => {
 			colorBgContainer: vars.color_bg,
 			colorBgElevated: vars.color_bg,
 			colorBgLayout: vars.color_bg_1,
-			colorBorder: vars.color_border,
+			colorBorder: vars.color_border_light,
 			colorBorderSecondary: vars.color_border_light,
 			controlItemBgActive: vars.color_bg_2,
 			colorPrimaryHover: vars.color_text_grey,
 			colorPrimaryTextHover: vars.color_text_grey,
 			switchHeight: 34,
-			boxShadow: vars.shadow
+			boxShadow: vars.shadow,
+			borderRadius: 6,
+			borderRadiusSM: 6,
+			borderRadiusXS: 6
 		},
 		components: {
 			Switch: {

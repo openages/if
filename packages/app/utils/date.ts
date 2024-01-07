@@ -1,10 +1,19 @@
 import dayjs from 'dayjs'
+import { match } from 'ts-pattern'
 
 import type { Dayjs } from 'dayjs'
 
 export const format = (v: Dayjs, ignoreDetail?: boolean) => {
 	if (!v) return undefined
-	if (v.valueOf() <= dayjs().valueOf()) return `${$t('translation:common.outdate')} ${v.format('YYYY-MM-DD')}`
+
+	if (v.valueOf() <= dayjs().valueOf()) {
+		const diff = dayjs().diff(v, 'day')
+		const unit = match(diff > 1)
+			.with(true, () => $t('translation:common.time.days'))
+			.otherwise(() => $t('translation:common.time.day'))
+
+		return `${$t('translation:common.outdate')} ${diff} ${unit}`
+	}
 
 	let detail_time = v.format('HH:mm')
 

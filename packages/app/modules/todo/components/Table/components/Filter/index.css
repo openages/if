@@ -1,0 +1,29 @@
+._local {
+	padding-top: 6px;
+
+	:global {
+		.if-form-item {
+			margin-right: 12px;
+			margin-bottom: 12px;
+			font-size: 12px;
+		}
+
+		.select,
+		.datepicker {
+			width: 90px;
+		}
+
+		.select {
+			.if-select-selector {
+				font-size: 12px;
+				border-radius: var(--radius);
+			}
+		}
+
+		.btn_action {
+			width: 60px;
+			font-size: 12px;
+			outline: none;
+		}
+	}
+}

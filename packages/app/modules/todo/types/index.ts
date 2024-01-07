@@ -39,6 +39,7 @@ export interface IPropsHeader
 	showHelpModal: () => void
 	setItemsSortParam: (v: Model['items_sort_param']) => void
 	setItemsFilterTags: (v: Model['items_filter_tags']) => void
+	toggleTableFilter: () => void
 }
 
 export interface IPropsTabs {
@@ -187,9 +188,17 @@ export interface IPropsTable extends Pick<IPropsTodos, 'showDetailModal' | 'remo
 	items: Model['items']
 	tags: Model['setting']['setting']['tags']
 	table_pagination: Model['table_pagination']
+	visible_table_filter: Model['visible_table_filter']
+	clean: Model['clean']
 	onTableRowChange: Model['onTableRowChange']
 	onTablePageChange: Model['onTablePageChange']
-	clean: Model['clean']
+	onTableSearch: Model['onTableSearch']
+}
+
+export interface IPropsTableFilter {
+	visible_table_filter: Model['visible_table_filter']
+	tags: Model['setting']['setting']['tags']
+	onTableSearch: Model['onTableSearch']
 }
 
 export interface IPropsSettingsModal {

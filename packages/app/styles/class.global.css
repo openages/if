@@ -52,3 +52,24 @@
 		}
 	}
 }
+
+.btn_main {
+	outline: none;
+	border-style: solid;
+	border-color: var(--color_text) !important;
+	background-color: var(--color_text);
+	color: var(--color_bg);
+
+	&.if-btn-default {
+		&:hover {
+			color: var(--color_bg) !important;
+			border-color: var(--color_text) !important;
+			outline: 3px solid var(--color_border);
+		}
+	}
+
+	&:hover {
+		background-color: var(--color_text);
+		outline: 3px solid var(--color_border);
+	}
+}

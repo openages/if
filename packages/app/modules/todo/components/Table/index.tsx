@@ -7,6 +7,7 @@ import { deepEqual } from '@openages/stk/react'
 
 import {
 	Cell,
+	Filter,
 	RenderArchive,
 	RenderChildren,
 	RenderCreateAt,
@@ -25,14 +26,30 @@ import {
 import styles from './index.css'
 
 import type { Todo } from '@/types'
-import type { TableColumnType } from 'antd'
+import type { TableColumnType, PaginationProps } from 'antd'
 import type { TdHTMLAttributes } from 'react'
-import type { IPropsTable } from '../../types'
+import type { IPropsTable, IPropsTableFilter } from '../../types'
 
 const Index = (props: IPropsTable) => {
-	const { items, tags, table_pagination, onTableRowChange, onTablePageChange, clean, showDetailModal, remove } =
-		props
+	const {
+		items,
+		tags,
+		table_pagination,
+		visible_table_filter,
+		onTableRowChange,
+		onTablePageChange,
+		clean,
+		showDetailModal,
+		remove,
+		onTableSearch
+	} = props
 	const { t } = useTranslation()
+
+	const props_filter: IPropsTableFilter = {
+		visible_table_filter,
+		tags,
+		onTableSearch
+	}
 
 	const raw_columns = [
 		{
@@ -125,7 +142,7 @@ const Index = (props: IPropsTable) => {
 		},
 		{
 			title: t('translation:todo.common.options'),
-			width: 72,
+			width: 81,
 			align: 'center',
 			fixed: 'right',
 			ignoreArchive: true,
@@ -166,10 +183,23 @@ const Index = (props: IPropsTable) => {
 
 	const components = useMemo(() => ({ body: { row: Row, cell: Cell } }), [])
 
+	const pagination: PaginationProps | false = useMemo(() => {
+		if (!table_pagination.total) return false
+
+		return {
+			...table_pagination,
+			pageSize: 15,
+			// @ts-ignore
+			showTotal: total => t('translation:todo.Table.total', { counts: total }),
+			onChange: onTablePageChange
+		}
+	}, [table_pagination])
+
 	const onRow = useMemoizedFn((item, index) => ({ item, index, onTableRowChange }) as TdHTMLAttributes<any>)
 
 	return (
 		<div className={$cx('w_100 border_box', styles._local)}>
+			<Filter {...props_filter}></Filter>
 			<Table
 				size='small'
 				expandable={{ childrenColumnName: '_none_' }}
@@ -177,11 +207,7 @@ const Index = (props: IPropsTable) => {
 				rowKey={item => item.id}
 				components={components}
 				scroll={{ x: 1080 }}
-				pagination={
-					table_pagination.total
-						? { ...table_pagination, pageSize: 15, onChange: onTablePageChange }
-						: false
-				}
+				pagination={pagination}
 				columns={target_columns}
 				dataSource={items}
 				onRow={onRow}

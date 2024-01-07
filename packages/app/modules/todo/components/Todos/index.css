@@ -7,6 +7,7 @@
 	&.kanban_mode {
 		height: calc(100% - 30px);
 		padding: 0 9px;
+		padding-bottom: 150px;
 		overflow-y: scroll;
 
 		&.isOver {

@@ -5,7 +5,17 @@ import { useTranslation } from 'react-i18next'
 import { Else, If, Then, When } from 'react-if'
 
 import { Emoji } from '@/components'
-import { CaretDown, CaretUp, DotsThreeCircleVertical, Eye, Faders, FlowerLotus, Tag, X } from '@phosphor-icons/react'
+import {
+	CaretDown,
+	CaretUp,
+	DotsThreeCircleVertical,
+	Eye,
+	Faders,
+	FlowerLotus,
+	Funnel,
+	Tag,
+	X
+} from '@phosphor-icons/react'
 
 import TagSelect from '../TagSelect'
 import { useContextMenu } from './hooks'
@@ -32,9 +42,12 @@ const Index = (props: IPropsHeader) => {
 		showArchiveModal,
 		showHelpModal,
 		setItemsSortParam,
-		setItemsFilterTags
+		setItemsFilterTags,
+		toggleTableFilter
 	} = props
+
 	const { t } = useTranslation()
+
 	const { options_mode, options_menu, onModeContextMenu, onOptionsContextMenu } = useContextMenu({
 		tags,
 		mode,
@@ -132,6 +145,18 @@ const Index = (props: IPropsHeader) => {
 				</When>
 			</div>
 			<div className='actions_wrap flex justify_end align_center'>
+				{mode === 'table' && (
+					<Tooltip title={t('translation:todo.Header.table_mode.filter')}>
+						<div className='mr_8'>
+							<div
+								className='icon_wrap border_box flex justify_center align_center cursor_point clickable'
+								onClick={toggleTableFilter}
+							>
+								<Funnel size={18}></Funnel>
+							</div>
+						</div>
+					</Tooltip>
+				)}
 				{mode === 'kanban' && tags.length > 0 && (
 					<Tooltip
 						title={t(

@@ -16,6 +16,12 @@ const Index = (props: IPropsDateTime) => {
 	const { value, useByDetail, ignoreDetail, Icon, onChange } = props
 	const { t, i18n } = useTranslation()
 
+	const status = useMemo(() => {
+		if (!value) return
+		if (dayjs(value).valueOf() < new Date().valueOf()) return 'outdate'
+		if (dayjs(value).diff(dayjs(), 'hour') <= 6) return 'close'
+	}, [value])
+
 	const options = useMemo(() => {
 		const now = dayjs()
 
@@ -57,7 +63,9 @@ const Index = (props: IPropsDateTime) => {
 				'disable_second',
 				styles._local,
 				!useByDetail && styles.useByInput,
-				ignoreDetail && styles.ignoreDetail
+				ignoreDetail && styles.ignoreDetail,
+				status === 'outdate' && styles.outdate,
+				status === 'close' && styles.close
 			)}
 			placeholder={t('translation:common.unset')}
 			showTime={{ defaultValue: dayjs().startOf('minute') }}

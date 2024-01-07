@@ -38,6 +38,26 @@
 		}
 	}
 
+	&.outdate {
+		:global {
+			.if-picker-input {
+				input {
+					color: var(--color_danger);
+				}
+			}
+		}
+	}
+
+	&.close {
+		:global {
+			.if-picker-input {
+				input {
+					color: var(--color_warning);
+				}
+			}
+		}
+	}
+
 	:global {
 		.if-picker-input {
 			width: 180px;

@@ -42,17 +42,37 @@ export default class Index {
 	}
 
 	async getLocale(lang: Lang) {
-		await import(`dayjs/locale/${lang}`)
+		const locale = (await import(`dayjs/locale/${lang}`)).default
 
-		dayjs.locale(lang)
+		dayjs.locale(lang, locale)
+
+		if (lang === 'en') {
+			dayjs.updateLocale('en', {
+				relativeTime: {
+					future: 'after %s',
+					past: '%s ago',
+					s: 'a few seconds',
+					m: 'a minute',
+					mm: '%d minutes',
+					h: 'an hour',
+					hh: '%d hours',
+					d: 'a day',
+					dd: '%d days',
+					M: 'a month',
+					MM: '%d months',
+					y: 'a year',
+					yy: '%d years'
+				}
+			})
+		}
 	}
 
-	setLang(lang: Lang) {
+	async setLang(lang: Lang) {
 		this.lang = lang
 
-		local.lang = lang
+		await this.getLocale(lang)
 
-		this.getLocale(lang)
+		window.location.reload()
 	}
 
 	off() {

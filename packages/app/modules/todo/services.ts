@@ -33,8 +33,8 @@ export const getMaxSort = async (angle_id: string) => {
 	return 0
 }
 
-export const getTotalCounts = async (file_id: string) => {
-	return $db.todo_items.count({ selector: { file_id } }).exec()
+export const getTotalCounts = async (selector: MangoQuerySelector<Todo.TodoItem>) => {
+	return $db.todo_items.count({ selector: { ...selector, type: 'todo' } }).exec()
 }
 
 export const getQueryTodoSetting = (file_id: string) => {
@@ -48,13 +48,13 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 		items_sort_param,
 		items_filter_tags,
 		selector: _selector,
+		sort: _sort,
 		table_mode,
 		table_page
 	} = args
 
 	const selector: MangoQuerySelector<Todo.TodoItem> = { file_id, ..._selector }
-
-	const sort: MangoQuerySortPart<Todo.Todo> = {}
+	const sort: MangoQuerySortPart<Todo.Todo> = { ..._sort }
 
 	if (!table_mode) {
 		selector['archive'] = false
@@ -64,6 +64,23 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 
 		sort['sort'] = 'asc'
 		sort['create_at'] = 'asc'
+
+		if (items_filter_tags?.length) {
+			selector['tag_ids'] = {
+				$elemMatch: {
+					$in: items_filter_tags
+				}
+			} as MangoQueryOperators<Array<string>>
+		}
+
+		if (items_sort_param) {
+			if (sort['sort']) delete sort['sort']
+			if (sort['create_at']) delete sort['create_at']
+
+			if (items_sort_param.type === 'importance') sort['level'] = items_sort_param.order
+			if (items_sort_param.type === 'alphabetical') sort['text'] = items_sort_param.order
+			if (items_sort_param.type === 'create_at') sort['create_at'] = items_sort_param.order
+		}
 	} else {
 		selector['type'] = 'todo'
 
@@ -71,30 +88,13 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 		sort['create_at'] = 'desc'
 	}
 
-	if (items_filter_tags?.length) {
-		selector['tag_ids'] = {
-			$elemMatch: {
-				$in: items_filter_tags
-			}
-		} as MangoQueryOperators<Array<string>>
-	}
-
-	if (items_sort_param) {
-		if (sort['sort']) delete sort['sort']
-		if (sort['create_at']) delete sort['create_at']
-
-		if (items_sort_param.type === 'importance') sort['level'] = items_sort_param.order
-		if (items_sort_param.type === 'alphabetical') sort['text'] = items_sort_param.order
-		if (items_sort_param.type === 'create_at') sort['create_at'] = items_sort_param.order
-	}
-
 	if (!table_mode) {
 		return $db.todo_items.find({ selector }).sort(sort) as RxDB.ItemsQuery<Todo.TodoItem>
 	} else {
 		return $db.todo_items
 			.find({ selector })
+			.skip((table_page - 1) * 15)
 			.limit(15)
-			.skip(table_page - 1)
 			.sort(sort) as RxDB.ItemsQuery<Todo.TodoItem>
 	}
 }
@@ -127,7 +127,7 @@ export const queryItem = (id: string) => {
 export const queryArchives = (args: ArgsQueryArchives, query_params: ArchiveQueryParams) => {
 	const { file_id, page } = args
 	const { angle_id, tags, begin_date, end_date, status } = query_params
-	const selector: MangoQuerySelector<Todo.Todo> = {}
+	const selector: MangoQuerySelector<Todo.TodoItem> = {}
 
 	if (angle_id) {
 		selector['angle_id'] = angle_id

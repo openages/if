@@ -9,5 +9,6 @@ export * from './modules'
 export * from './layout'
 export * from './values'
 export * from './colors'
+export * from './options'
 
 export type { ShortcutEventPaths } from './shortcuts'

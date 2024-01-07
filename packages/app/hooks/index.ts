@@ -14,5 +14,6 @@ export { default as useCssVariable } from './useCssVariable'
 export { default as useScrollToBottom } from './useScrollToBottom'
 export { default as useTagColor } from './useTagColor'
 export { default as useChanging } from './useChanging'
+export { default as useOptions } from './useOptions'
 
 export * from './useAntdApp'

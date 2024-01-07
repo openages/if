@@ -13,5 +13,11 @@ export default {
 	notice: '注意',
 	unset: '未设置',
 	outdate: '已过期',
-	added: '已添加'
+	added: '已添加',
+	reset: '重置',
+	search: '查询',
+	enabled: '启用',
+	disabled: '禁用',
+	yes: '是',
+	no: '否'
 }

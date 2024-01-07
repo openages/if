@@ -31,6 +31,9 @@ export default {
 			zen: 'Zen',
 			normal: 'Normal'
 		},
+		table_mode: {
+			filter: 'Filter'
+		},
 		mode: {
 			list: '列表',
 			kanban: '看板',
@@ -190,6 +193,7 @@ export default {
 				title: 'Erase',
 				confirm: 'Confirm complete deletion of this task, it cannot be recovered from the trash after complete deletion?'
 			}
-		}
+		},
+		total: '{{counts}} records in total'
 	}
 }
