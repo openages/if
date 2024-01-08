@@ -253,6 +253,13 @@ export default {
                   "cycle": {
                         "type": "object",
                         "properties": {
+                              "type": {
+                                    "type": "string",
+                                    "enum": [
+                                          "interval",
+                                          "specific"
+                                    ]
+                              },
                               "scale": {
                                     "type": "string",
                                     "enum": [
@@ -262,7 +269,9 @@ export default {
                                           "week",
                                           "month",
                                           "quarter",
-                                          "year"
+                                          "year",
+                                          "day",
+                                          "hour"
                                     ]
                               },
                               "interval": {
@@ -273,22 +282,6 @@ export default {
                                     "items": {
                                           "type": "number"
                                     }
-                              }
-                        },
-                        "required": [
-                              "scale",
-                              "interval"
-                        ]
-                  },
-                  "recycle_spec": {
-                        "type": "object",
-                        "properties": {
-                              "type": {
-                                    "type": "string",
-                                    "enum": [
-                                          "day",
-                                          "hour"
-                                    ]
                               },
                               "value": {
                                     "type": "number"
@@ -296,7 +289,7 @@ export default {
                         },
                         "required": [
                               "type",
-                              "value"
+                              "scale"
                         ]
                   },
                   "recycle_time": {
@@ -465,6 +458,13 @@ export default {
                   "cycle": {
                         "type": "object",
                         "properties": {
+                              "type": {
+                                    "type": "string",
+                                    "enum": [
+                                          "interval",
+                                          "specific"
+                                    ]
+                              },
                               "scale": {
                                     "type": "string",
                                     "enum": [
@@ -474,7 +474,9 @@ export default {
                                           "week",
                                           "month",
                                           "quarter",
-                                          "year"
+                                          "year",
+                                          "day",
+                                          "hour"
                                     ]
                               },
                               "interval": {
@@ -485,22 +487,6 @@ export default {
                                     "items": {
                                           "type": "number"
                                     }
-                              }
-                        },
-                        "required": [
-                              "scale",
-                              "interval"
-                        ]
-                  },
-                  "recycle_spec": {
-                        "type": "object",
-                        "properties": {
-                              "type": {
-                                    "type": "string",
-                                    "enum": [
-                                          "day",
-                                          "hour"
-                                    ]
                               },
                               "value": {
                                     "type": "number"
@@ -508,7 +494,7 @@ export default {
                         },
                         "required": [
                               "type",
-                              "value"
+                              "scale"
                         ]
                   },
                   "recycle_time": {
