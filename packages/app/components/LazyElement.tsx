@@ -1,4 +1,4 @@
-import { Suspense, lazy, useMemo } from 'react'
+import { lazy, useMemo, Suspense } from 'react'
 import { match } from 'ts-pattern'
 
 interface IProps {

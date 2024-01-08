@@ -1,4 +1,5 @@
 export * from './build'
+export * from './dayjs'
 export * from './auth'
 export * from './app'
 export * from './stack'
