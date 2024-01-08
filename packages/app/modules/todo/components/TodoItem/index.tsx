@@ -1,5 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { ConfigProvider, Dropdown } from 'antd'
+import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import { Case, Switch } from 'react-if'
 
@@ -15,7 +16,7 @@ import LevelStatus from '../LevelStatus'
 import RemindStatus from '../RemindStatus'
 import ScheduleStatus from '../ScheduleStatus'
 import TagSelect from '../TagSelect'
-import { useContextMenu, useHandlers, useLink, useOnContextMenu, useOpen } from './hooks'
+import { useContextMenu, useHandlers, useLink, useOnContextMenu, useOpen, useOptions } from './hooks'
 import styles from './index.css'
 
 import type { IPropsChildren, IPropsTodoItem } from '../../types'
@@ -120,7 +121,9 @@ const Index = (props: IPropsTodoItem) => {
 		insertChildren
 	})
 
-	useOpen({ item, zen_mode, open, open_items, input, renderLines, setOpen })
+	useOpen({ item, zen_mode, open, open_items, renderLines, setOpen })
+
+	const { remind } = useOptions({ item, input, zen_mode })
 
 	const props_children: IPropsChildren = {
 		items: children,
@@ -175,6 +178,8 @@ const Index = (props: IPropsTodoItem) => {
 		() => kanban_mode && isOver && active.data.current.dimension_id !== dimension_id,
 		[kanban_mode, isOver, active, dimension_id]
 	)
+
+	const outdate = useMemo(() => zen_mode && dayjs(end_time).valueOf() < new Date().valueOf(), [zen_mode, end_time])
 
 	return (
 		<div
@@ -256,7 +261,9 @@ const Index = (props: IPropsTodoItem) => {
 								id={`todo_${id}`}
 								className={$cx(
 									'text_wrap',
-									children && children?.length && !open && 'has_children'
+									children && children?.length && !open && 'has_children',
+									outdate && 'outdate',
+									remind && 'remind'
 								)}
 								contentEditable='plaintext-only'
 								ref={input}

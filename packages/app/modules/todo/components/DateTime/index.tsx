@@ -19,7 +19,7 @@ const Index = (props: IPropsDateTime) => {
 	const status = useMemo(() => {
 		if (!value) return
 		if (dayjs(value).valueOf() < new Date().valueOf()) return 'outdate'
-		if (dayjs(value).diff(dayjs(), 'hour') <= 6) return 'close'
+		if (dayjs(value).diff(dayjs(), 'hour') <= 12) return 'close'
 	}, [value])
 
 	const options = useMemo(() => {
@@ -50,7 +50,7 @@ const Index = (props: IPropsDateTime) => {
 
 	const onChangeTime = useMemoizedFn((v: Dayjs) => {
 		if (!v) return onChange(undefined)
-		if (v.valueOf() <= dayjs().valueOf()) return
+		// if (v.valueOf() <= dayjs().valueOf()) return
 
 		onChange(v.startOf('minute').valueOf())
 	})
@@ -71,7 +71,7 @@ const Index = (props: IPropsDateTime) => {
 			showTime={{ defaultValue: dayjs().startOf('minute') }}
 			suffixIcon={useByDetail ? false : Trigger}
 			bordered={false}
-			disabledDate={v => v && v <= dayjs().startOf('day')}
+			// disabledDate={v => v && v <= dayjs().startOf('day')}
 			getPopupContainer={() => document.body}
 			presets={options}
 			format={ignoreDetail ? formatIgnoreDetail : format}

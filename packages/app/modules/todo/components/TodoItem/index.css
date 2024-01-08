@@ -197,12 +197,33 @@
 						box-sizing: border-box;
 						height: 14px;
 						padding: 0 3px;
-						margin-left: 6px;
+						margin-left: 3px;
 						line-height: 12px;
 						font-size: 10px;
 						background-color: var(--color_bg_1);
 						border-radius: 8px;
 						border: var(--border);
+						vertical-align: 1.6px;
+					}
+				}
+
+				&.outdate {
+					color: var(--color_danger);
+				}
+
+				&.remind {
+					&::before {
+						content: attr(data-remind);
+						box-sizing: border-box;
+						height: 14px;
+						padding: 0 3px;
+						margin-right: 3px;
+						line-height: 12px;
+						font-size: 10px;
+						color: var(--color_warning);
+						border-radius: 8px;
+						border: var(--border);
+						border: 1px solid var(--color_warning);
 						vertical-align: 1.6px;
 					}
 				}

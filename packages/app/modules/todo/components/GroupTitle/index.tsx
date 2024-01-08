@@ -41,7 +41,7 @@ const Index = (props: IPropsGroupTitle) => {
 	const onContextMenu = useMemoizedFn(({ key }) => {
 		switch (key) {
 			case 'remove':
-				remove(id)
+				remove({ id })
 				break
 		}
 	})

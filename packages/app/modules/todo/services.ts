@@ -57,7 +57,11 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 	const sort: MangoQuerySortPart<Todo.Todo> = { ..._sort }
 
 	if (!table_mode) {
-		selector['archive'] = false
+		selector['$or'] = [
+			{ archive: { $exists: false } },
+			{ archive: { $eq: undefined } },
+			{ archive: { $eq: false } }
+		]
 
 		if (angle_id) selector['angle_id'] = angle_id
 		if (items_filter_tags?.length || items_sort_param) selector['type'] = 'todo'
