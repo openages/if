@@ -34,8 +34,8 @@ import type {
 } from 'rxdb'
 
 const config = {
-	trigger_counts: 12,
-	reduce_counts: 6,
+	trigger_counts: 120,
+	reduce_counts: 60,
 	auto_clean: true
 }
 

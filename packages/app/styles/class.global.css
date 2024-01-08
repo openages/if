@@ -35,6 +35,10 @@
 	color: var(--color_danger);
 }
 
+.color_warning {
+	color: var(--color_warning);
+}
+
 [data-theme='dark'] {
 	.module_icon {
 		svg {

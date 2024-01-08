@@ -1,22 +1,23 @@
 ._local {
 	height: calc(100% - 72px);
-	overflow-x: scroll;
 	outline: none;
 	padding: 0 18px;
+	overflow-x: scroll;
+	scroll-behavior: smooth;
 
 	&.tag_mode {
 		.kanban_item_wrap {
 			.kanban_item_header {
-				padding-left: 30px;
+				padding-left: 36px;
 
 				&::before {
 					content: '';
 					position: absolute;
-					left: 21px;
-					width: 3px;
-					height: 42%;
+					left: 20px;
+					width: 9px;
+					height: 9px;
+					border-radius: 50%;
 					background-color: var(--color_tag);
-					border-radius: var(--radius);
 				}
 			}
 		}

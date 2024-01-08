@@ -50,7 +50,7 @@ const Index = (props: IPropsDateTime) => {
 
 	const onChangeTime = useMemoizedFn((v: Dayjs) => {
 		if (!v) return onChange(undefined)
-		// if (v.valueOf() <= dayjs().valueOf()) return
+		if (v.valueOf() <= dayjs().valueOf()) return
 
 		onChange(v.startOf('minute').valueOf())
 	})
@@ -71,7 +71,7 @@ const Index = (props: IPropsDateTime) => {
 			showTime={{ defaultValue: dayjs().startOf('minute') }}
 			suffixIcon={useByDetail ? false : Trigger}
 			bordered={false}
-			// disabledDate={v => v && v <= dayjs().startOf('day')}
+			disabledDate={v => v && v <= dayjs().startOf('day')}
 			getPopupContainer={() => document.body}
 			presets={options}
 			format={ignoreDetail ? formatIgnoreDetail : format}

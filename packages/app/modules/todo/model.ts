@@ -727,7 +727,9 @@ export default class Index {
 	}
 
 	isLinked(id: string) {
-		return this.setting.setting?.relations?.findIndex(item => item.items.includes(id)) !== -1
+		const relations = this.setting.setting?.relations || []
+
+		return relations.findIndex(item => item.items.includes(id)) !== -1
 	}
 
 	getItem(args: Indexes) {
