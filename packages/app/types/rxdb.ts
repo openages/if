@@ -12,6 +12,7 @@ export namespace RxDB {
 		{},
 		{
 			clean(primary_value: string | number): Promise<void>
+			getRemovedItems<T = any>(): Promise<T[]>
 			bulkClean(primary_values?: Array<string | number>): Promise<void>
 		}
 	>

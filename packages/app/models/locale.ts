@@ -48,6 +48,8 @@ export default class Index {
 	}
 
 	async setLang(lang: Lang) {
+		if (lang === this.lang) return
+
 		this.lang = lang
 
 		await this.getLocale(lang)

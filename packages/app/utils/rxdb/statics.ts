@@ -9,6 +9,11 @@ export default {
 		await target.remove()
 		await storage.dexieTable.delete(primary_value)
 	},
+	async getRemovedItems<T = any>() {
+		const storage = await (this.internalStorageInstance.internals as Promise<DexieStorageInternals>)
+
+		return storage.dexieTable.where('_deleted').equals('1').toArray() as Promise<Array<T>>
+	},
 	async bulkClean(primary_values?: Array<string | number>) {
 		const storage = await (this.internalStorageInstance.internals as Promise<DexieStorageInternals>)
 

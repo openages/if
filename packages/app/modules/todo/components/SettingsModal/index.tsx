@@ -1,20 +1,21 @@
-import { Form, Input, Select } from 'antd'
+import { useMemoizedFn } from 'ahooks'
+import { Button, Form, Input, Select } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { SettingsModal } from '@/components'
 import { useLimits } from '@/hooks'
+import { cleanTodoItems } from '@/modules/todo/services'
 
 import { AnglesEditor, TagsEditor } from './components'
 import styles from './index.css'
 
 import type { IPropsSettingsModal } from '../../types'
-
 const { Item } = Form
 const { TextArea } = Input
 
 const Index = (props: IPropsSettingsModal) => {
-	const { visible_settings_modal, setting, closeSettingsModal, updateSetting, removeAngle, removeTag } = props
+	const { id, visible_settings_modal, setting, closeSettingsModal, updateSetting, removeAngle, removeTag } = props
 	const limits = useLimits()
 	const { t, i18n } = useTranslation()
 
@@ -34,6 +35,8 @@ const Index = (props: IPropsSettingsModal) => {
 		onClose: closeSettingsModal,
 		onValuesChange: updateSetting
 	}
+
+	const onClean = useMemoizedFn(() => cleanTodoItems(id))
 
 	return (
 		<SettingsModal {...props_settings_modal}>
@@ -56,6 +59,9 @@ const Index = (props: IPropsSettingsModal) => {
 				<Item name='auto_archiving' label={t('translation:todo.SettingsModal.auto_archiving.label')}>
 					<Select options={auto_archiving_options}></Select>
 				</Item>
+				<Button className='clickable' type='primary' danger onClick={onClean}>
+					{t('translation:common.clean.title')}
+				</Button>
 			</div>
 		</SettingsModal>
 	)

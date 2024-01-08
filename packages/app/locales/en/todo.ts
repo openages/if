@@ -186,14 +186,5 @@ export default {
 			title: 'Expand Subtasks',
 			desc: 'Click the small dot to expand subtasks.'
 		}
-	],
-	Table: {
-		options: {
-			erase: {
-				title: 'Erase',
-				confirm: 'Confirm complete deletion of this task, it cannot be recovered from the trash after complete deletion?'
-			}
-		},
-		total: '{{counts}} records in total'
-	}
+	]
 }

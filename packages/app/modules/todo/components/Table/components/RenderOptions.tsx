@@ -20,7 +20,7 @@ const Index = (props: IProps) => {
 	const confirmClean = useMemoizedFn(() => {
 		$modal.confirm({
 			title: t('translation:common.notice'),
-			content: t('translation:todo.Table.options.erase.confirm'),
+			content: t('translation:common.erase.confirm'),
 			centered: true,
 			onOk() {
 				clean()
@@ -50,10 +50,7 @@ const Index = (props: IProps) => {
 					</div>
 				</div>
 			</Tooltip>
-			<Tooltip
-				title={t('translation:todo.Table.options.erase.title')}
-				getTooltipContainer={() => document.body}
-			>
+			<Tooltip title={t('translation:common.erase.title')} getTooltipContainer={() => document.body}>
 				<div>
 					<div
 						className='btn_action flex justify_center align_center cursor_point clickable'

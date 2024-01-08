@@ -19,5 +19,19 @@ export default {
 	enabled: '启用',
 	disabled: '禁用',
 	yes: '是',
-	no: '否'
+	no: '否',
+	not_found: {
+		confirm: '未查找到相关记录，请确认存在相关记录，再进行操作'
+	},
+	clean: {
+		title: '清理已删除的记录',
+		confirm: '确认彻底删除{{counts}}条记录，彻底删除后将无法恢复？'
+	},
+	erase: {
+		title: '彻底删除',
+		confirm: '确认彻底删除该记录，彻底删除后将无法恢复？'
+	},
+	table: {
+		total: '共有{{counts}}条记录'
+	}
 }

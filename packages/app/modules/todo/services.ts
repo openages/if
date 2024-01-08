@@ -4,7 +4,7 @@ import { match } from 'ts-pattern'
 
 import { updateSetting } from '@/actions/todo'
 import { getArchiveTime, getDocItem, getDocItemsData } from '@/utils'
-import { confirm } from '@/utils/antd'
+import { confirm, info } from '@/utils/antd'
 
 import type { MangoQueryOperators, MangoQuerySelector, MangoQuerySortPart } from 'rxdb'
 import type { ArchiveQueryParams } from './types/model'
@@ -325,7 +325,26 @@ export const cleanTodoItem = async (id: string) => {
 	return $db.todo_items.clean(id)
 }
 
-export const cleanTodoItems = async () => {
+export const cleanTodoItems = async (id: string) => {
+	const removed_items = await $db.todo_items.getRemovedItems<Todo.Todo>()
+
+	if (!removed_items.length) {
+		return info({
+			id,
+			title: $t('translation:common.notice'),
+			content: $t('translation:common.not_found.confirm')
+		})
+	}
+
+	const res = await confirm({
+		id,
+		title: $t('translation:common.notice'),
+		// @ts-ignore
+		content: $t('translation:common.clean.confirm', { counts: removed_items.length })
+	})
+
+	if (!res) return
+
 	return $db.todo_items.bulkClean()
 }
 

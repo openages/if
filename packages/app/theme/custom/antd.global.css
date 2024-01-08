@@ -3,6 +3,30 @@
 	color: var(--color_text);
 }
 
+/* Button */
+.if-btn {
+	&-default {
+		&:active,
+		&:hover {
+			border-color: var(--color_text_grey) !important;
+			color: var(--color_text) !important;
+		}
+	}
+
+	&-primary {
+		&.if-btn-dangerous {
+			&:hover {
+				background-color: var(--color_danger) !important;
+				outline: 3px solid var(--color_border);
+			}
+		}
+
+		&:hover {
+			background-color: var(--color_main) !important;
+		}
+	}
+}
+
 /* Input */
 .if-input {
 	font-family: 'RedditSans';
@@ -119,7 +143,6 @@
 				}
 
 				.if-modal-confirm-content {
-					width: 90%;
 					max-width: unset;
 					margin: 0;
 					text-align: center;
@@ -221,23 +244,6 @@
 		&-content {
 			padding: 6px 9px !important;
 			border: 1px solid var(--color_border) !important;
-		}
-	}
-}
-
-/* Button */
-.if-btn {
-	&-default {
-		&:active,
-		&:hover {
-			border-color: var(--color_text_grey) !important;
-			color: var(--color_text) !important;
-		}
-	}
-
-	&-primary {
-		&:hover {
-			background-color: var(--color_main) !important;
 		}
 	}
 }
@@ -825,7 +831,125 @@
 	}
 }
 
-/* Table */
+.if-table-wrapper {
+	.if-table {
+		&.if-table-empty {
+			table {
+				thead {
+					tr {
+						th {
+							border-bottom: none;
+						}
+
+						td {
+							border-bottom: none;
+						}
+					}
+				}
+
+				tbody {
+					tr {
+						td {
+							border-bottom: none;
+						}
+					}
+				}
+			}
+
+			.if-empty {
+				margin-bottom: 48px;
+			}
+		}
+
+		table {
+			border-collapse: collapse;
+
+			thead {
+				tr {
+					th {
+						padding: 3px 6px !important;
+						text-transform: capitalize;
+						font-weight: normal;
+						font-size: 12px;
+						white-space: nowrap;
+						color: var(--color_text_light);
+						background-color: var(--color_bg);
+
+						&:nth-of-type(1) {
+							padding-left: 3px !important;
+						}
+
+						&:last-child {
+							padding-right: 0 !important;
+						}
+
+						&::before {
+							display: none;
+						}
+					}
+
+					td {
+						background-color: var(--color_bg);
+						border-start-start-radius: 0 !important;
+
+						&::before {
+							display: none;
+						}
+					}
+				}
+			}
+
+			tbody {
+				tr {
+					td {
+						height: 36px;
+						padding: 0px 6px !important;
+						font-size: 12px;
+
+						&:first-child {
+							padding-left: 0 !important;
+							padding-right: 0 !important;
+						}
+
+						&:nth-of-type(2) {
+							padding-left: 3px !important;
+						}
+
+						&:last-child {
+							padding-right: 0 !important;
+						}
+					}
+				}
+			}
+		}
+
+		.if-table-content,
+		.if-table-body {
+			outline: none !important;
+		}
+
+		.if-empty-description {
+			display: none;
+		}
+
+		.if-table-header {
+			border-radius: 0 !important;
+		}
+
+		.if-table-sticky-scroll {
+			display: none;
+		}
+	}
+
+	.if-spin-nested-loading {
+		.if-spin {
+			padding: 90px 0;
+			background-color: var(--color_bg);
+		}
+	}
+}
+
+/* Pagination */
 .if-pagination {
 	position: relative;
 

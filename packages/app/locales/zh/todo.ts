@@ -184,14 +184,5 @@ export default {
 			title: '展开子任务',
 			desc: '点击小圆点即可展开子任务。'
 		}
-	],
-	Table: {
-		options: {
-			erase: {
-				title: '彻底删除',
-				confirm: '确认彻底删除该任务，彻底删除后将无法从垃圾箱恢复？'
-			}
-		},
-		total: '共有{{counts}}条记录'
-	}
+	]
 }

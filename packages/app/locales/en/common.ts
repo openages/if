@@ -19,5 +19,19 @@ export default {
 	enabled: 'Enabled',
 	disabled: 'Disabled',
 	yes: 'Yes',
-	no: 'No'
+	no: 'No',
+	not_found: {
+		confirm: 'No relevant records found. Please verify the existence of related records before proceeding.'
+	},
+	clean: {
+		title: 'Clean Removed Records',
+		confirm: 'Confirm permanent erase {{counts}} items? It can`t be recovered after erased.'
+	},
+	erase: {
+		title: 'Erase',
+		confirm: 'Confirm permanent erase this record? It can`t be recovered after erased.'
+	},
+	table: {
+		total: '{{counts}} records in total'
+	}
 }

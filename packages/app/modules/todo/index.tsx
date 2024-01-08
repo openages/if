@@ -128,6 +128,7 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
+		id: x.id,
 		visible_settings_modal: x.visible_settings_modal,
 		setting: { ...$copy(x.setting?.setting), ...$copy(x.file.data) },
 		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false)),
