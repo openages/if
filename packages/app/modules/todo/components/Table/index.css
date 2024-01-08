@@ -6,6 +6,35 @@
 
 	:global {
 		.if-table {
+			&.if-table-empty {
+				table {
+					thead {
+						tr {
+							th {
+								opacity: 0;
+								border-bottom: none;
+							}
+
+							td {
+								border-bottom: none;
+							}
+						}
+					}
+
+					tbody {
+						tr {
+							td {
+								border-bottom: none;
+							}
+						}
+					}
+				}
+
+				.if-empty {
+					margin-bottom: 48px;
+				}
+			}
+
 			table {
 				border-collapse: collapse;
 
@@ -85,6 +114,13 @@
 				display: none;
 			}
 		}
+
+		.if-spin-nested-loading {
+			.if-spin {
+				padding: 90px 0;
+				background-color: var(--color_bg);
+			}
+		}
 	}
 }
 
@@ -96,7 +132,9 @@
 		color: var(--color_text_light);
 	}
 
-	.RenderLevel {
+	.RenderTags,
+	.RenderLevel,
+	.RenderSchedule {
 		opacity: 0.48;
 	}
 

@@ -1,8 +1,9 @@
-import { useMemoizedFn } from 'ahooks'
+import { useMemoizedFn, useSize } from 'ahooks'
 import { Table } from 'antd'
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { LoadingOutlined } from '@ant-design/icons'
 import { deepEqual } from '@openages/stk/react'
 
 import {
@@ -26,13 +27,14 @@ import {
 import styles from './index.css'
 
 import type { Todo } from '@/types'
-import type { TableColumnType, PaginationProps } from 'antd'
+import type { TableColumnType, PaginationProps, SpinProps } from 'antd'
 import type { TdHTMLAttributes } from 'react'
 import type { IPropsTable, IPropsTableFilter } from '../../types'
 
 const Index = (props: IPropsTable) => {
 	const {
 		items,
+		loading,
 		tags,
 		table_pagination,
 		visible_table_filter,
@@ -44,6 +46,10 @@ const Index = (props: IPropsTable) => {
 		onTableSearch
 	} = props
 	const { t } = useTranslation()
+	const ref = useRef()
+	const size = useSize(ref)
+
+	const relaxed = useMemo(() => size?.width >= 1200, [size?.width])
 
 	const props_filter: IPropsTableFilter = {
 		visible_table_filter,
@@ -51,110 +57,116 @@ const Index = (props: IPropsTable) => {
 		onTableSearch
 	}
 
-	const raw_columns = [
-		{
-			dataIndex: 'status',
-			width: 15,
-			fixed: 'left',
-			render: () => <RenderStatus></RenderStatus>
-		},
-		{
-			title: t('translation:todo.common.text'),
-			dataIndex: 'text',
-			width: 150,
-			fixed: 'left',
-			render: () => <RenderText></RenderText>
-		},
-		{
-			title: t('translation:todo.Header.options.tags'),
-			dataIndex: 'tag_ids',
-			width: 96,
-			align: 'center',
-			render: () => <RenderTags options={tags}></RenderTags>
-		},
-		{
-			title: t('translation:todo.common.level'),
-			dataIndex: 'level',
-			width: 96,
-			align: 'center',
-			render: () => <RenderLevel></RenderLevel>
-		},
-		{
-			title: t('translation:todo.Input.Remind.title'),
-			dataIndex: 'remind_time',
-			width: 96,
-			align: 'center',
-			render: () => <RenderRemind></RenderRemind>
-		},
-		{
-			title: t('translation:todo.Input.Deadline.title'),
-			dataIndex: 'end_time',
-			width: 96,
-			align: 'center',
-			render: () => <RenderDeadline></RenderDeadline>
-		},
-		{
-			title: t('translation:todo.Input.Cycle.title'),
-			dataIndex: 'cycle',
-			width: 96,
-			align: 'center',
-			ellipsis: true,
-			deps: ['cycle_enabled'],
-			render: (_, item) => <RenderCycle cycle_enabled={item.cycle_enabled}></RenderCycle>
-		},
-		{
-			title: t('translation:modules.schedule'),
-			dataIndex: 'schedule',
-			width: 60,
-			align: 'center',
-			render: () => <RenderSchedule></RenderSchedule>
-		},
-		{
-			title: t('translation:todo.common.children'),
-			dataIndex: 'children',
-			width: 60,
-			align: 'center',
-			render: () => <RenderChildren></RenderChildren>
-		},
-		{
-			title: t('translation:todo.Detail.remark.title'),
-			dataIndex: 'remark',
-			width: 60,
-			align: 'center',
-			render: () => <RenderRemark></RenderRemark>
-		},
-		{
-			title: t('translation:todo.Archive.title'),
-			dataIndex: 'archive',
-			width: 81,
-			align: 'center',
-			ellipsis: true,
-			ignoreArchive: true,
-			deps: ['archive_time'],
-			render: (_, item) => <RenderArchive archive_time={item.archive_time}></RenderArchive>
-		},
-		{
-			title: t('translation:todo.Header.options.sort.create_at'),
-			dataIndex: 'create_at',
-			align: 'right',
-			ignoreArchive: true,
-			render: () => <RenderCreateAt></RenderCreateAt>
-		},
-		{
-			title: t('translation:todo.common.options'),
-			width: 81,
-			align: 'center',
-			fixed: 'right',
-			ignoreArchive: true,
-			render: (_, item, index) => (
-				<RenderOptions
-					showDetailModal={() => showDetailModal({ id: item.id, index })}
-					remove={() => remove({ id: item.id })}
-					clean={() => clean(item.id)}
-				></RenderOptions>
-			)
-		}
-	] as Array<TableColumnType<Todo.Todo> & { ignoreArchive?: boolean; deps?: Array<Partial<keyof Todo.Todo>> }>
+	const raw_columns = useMemo(
+		() =>
+			[
+				{
+					dataIndex: 'status',
+					width: 15,
+					fixed: 'left',
+					render: () => <RenderStatus></RenderStatus>
+				},
+				{
+					title: t('translation:todo.common.text'),
+					dataIndex: 'text',
+					width: 150,
+					fixed: 'left',
+					render: () => <RenderText></RenderText>
+				},
+				{
+					title: t('translation:todo.Header.options.tags'),
+					dataIndex: 'tag_ids',
+					width: relaxed ? 'auto' : 96,
+					align: 'center',
+					render: () => <RenderTags options={tags}></RenderTags>
+				},
+				{
+					title: t('translation:todo.common.level'),
+					dataIndex: 'level',
+					width: relaxed ? 'auto' : 96,
+					align: 'center',
+					render: () => <RenderLevel></RenderLevel>
+				},
+				{
+					title: t('translation:todo.Input.Remind.title'),
+					dataIndex: 'remind_time',
+					width: relaxed ? 'auto' : 96,
+					align: 'center',
+					render: () => <RenderRemind></RenderRemind>
+				},
+				{
+					title: t('translation:todo.Input.Deadline.title'),
+					dataIndex: 'end_time',
+					width: relaxed ? 'auto' : 96,
+					align: 'center',
+					render: () => <RenderDeadline></RenderDeadline>
+				},
+				{
+					title: t('translation:todo.Input.Cycle.title'),
+					dataIndex: 'cycle',
+					width: relaxed ? 'auto' : 96,
+					align: 'center',
+					ellipsis: true,
+					deps: ['cycle_enabled'],
+					render: (_, item) => <RenderCycle cycle_enabled={item.cycle_enabled}></RenderCycle>
+				},
+				{
+					title: t('translation:modules.schedule'),
+					dataIndex: 'schedule',
+					width: relaxed ? 'auto' : 60,
+					align: 'center',
+					render: () => <RenderSchedule></RenderSchedule>
+				},
+				{
+					title: t('translation:todo.common.children'),
+					dataIndex: 'children',
+					width: relaxed ? 'auto' : 60,
+					align: 'center',
+					render: () => <RenderChildren></RenderChildren>
+				},
+				{
+					title: t('translation:todo.Detail.remark.title'),
+					dataIndex: 'remark',
+					width: relaxed ? 'auto' : 60,
+					align: 'center',
+					render: () => <RenderRemark></RenderRemark>
+				},
+				{
+					title: t('translation:todo.Archive.title'),
+					dataIndex: 'archive',
+					width: relaxed ? 'auto' : 81,
+					align: 'center',
+					ellipsis: true,
+					ignoreArchive: true,
+					deps: ['archive_time'],
+					render: (_, item) => <RenderArchive archive_time={item.archive_time}></RenderArchive>
+				},
+				{
+					title: t('translation:todo.Header.options.sort.create_at'),
+					dataIndex: 'create_at',
+					align: 'right',
+					ignoreArchive: true,
+					render: () => <RenderCreateAt></RenderCreateAt>
+				},
+				{
+					title: t('translation:todo.common.options'),
+					width: 81,
+					align: 'center',
+					fixed: 'right',
+					ignoreArchive: true,
+					render: (_, item, index) => (
+						<RenderOptions
+							showDetailModal={() => showDetailModal({ id: item.id, index })}
+							remove={() => remove({ id: item.id })}
+							clean={() => clean(item.id)}
+						></RenderOptions>
+					)
+				}
+			] as Array<
+				TableColumnType<Todo.Todo> & { ignoreArchive?: boolean; deps?: Array<Partial<keyof Todo.Todo>> }
+			>,
+		[relaxed]
+	)
 
 	const target_columns = useMemo(() => {
 		return raw_columns.map(column => {
@@ -195,10 +207,21 @@ const Index = (props: IPropsTable) => {
 		}
 	}, [table_pagination])
 
+	const spinner = useMemo(
+		() =>
+			({
+				spinning: loading,
+				indicator: (
+					<LoadingOutlined style={{ color: 'var(--color_text)', fontSize: 24 }}></LoadingOutlined>
+				)
+			}) as SpinProps,
+		[loading]
+	)
+
 	const onRow = useMemoizedFn((item, index) => ({ item, index, onTableRowChange }) as TdHTMLAttributes<any>)
 
 	return (
-		<div className={$cx('w_100 border_box', styles._local)}>
+		<div className={$cx('w_100 border_box', styles._local)} ref={ref}>
 			<Filter {...props_filter}></Filter>
 			<Table
 				size='small'
@@ -208,6 +231,7 @@ const Index = (props: IPropsTable) => {
 				components={components}
 				scroll={{ x: 1080 }}
 				pagination={pagination}
+				loading={spinner}
 				columns={target_columns}
 				dataSource={items}
 				onRow={onRow}

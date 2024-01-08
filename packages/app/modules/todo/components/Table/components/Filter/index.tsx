@@ -1,3 +1,4 @@
+import { useMemoizedFn } from 'ahooks'
 import { Button, DatePicker, Form, Select } from 'antd'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
@@ -19,12 +20,14 @@ const Index = (props: IPropsTableFilter) => {
 	const abled_options = useOptions(options_abled, true)
 	const yes_no_options = useOptions(options_yes_no, true)
 
+	const onReset = useMemoizedFn(() => onTableSearch({}))
+
 	return (
 		<AnimatePresence>
 			{visible_table_filter && (
 				<motion.div
 					className={$cx(styles._local)}
-					// initial={{ opacity: 0, height: 0 }}
+					initial={{ opacity: 0, height: 0 }}
 					animate={{ opacity: 1, height: 'auto' }}
 					exit={{ opacity: 0, height: 0 }}
 					transition={{ duration: 0.18 }}
@@ -34,6 +37,7 @@ const Index = (props: IPropsTableFilter) => {
 						className='form flex justify_between flex_wrap'
 						size='small'
 						onFinish={onTableSearch}
+						onReset={onReset}
 					>
 						<div className='flex flex_wrap'>
 							<Item name='status'>

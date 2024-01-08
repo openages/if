@@ -1,6 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
 import { Form } from 'antd'
-import { motion, AnimatePresence } from 'framer-motion'
 import { debounce } from 'lodash-es'
 import { useState } from 'react'
 
@@ -25,7 +24,6 @@ interface IProps {
 const Index = (props: IProps) => {
 	const { item, index, children, onClick, onTableRowChange, ...rest } = props
 	const [form] = useForm<Todo.Todo>()
-	const [loaded, setLoaded] = useState(false)
 	const { setFieldsValue, getFieldsValue } = form
 
 	useDeepEffect(() => {
@@ -34,7 +32,6 @@ const Index = (props: IProps) => {
 		if (deepEqual(item, form_item)) return
 
 		setFieldsValue(item)
-		setLoaded(true)
 	}, [item])
 
 	const onDebounceChange = onTableRowChange && useMemoizedFn(debounce(onTableRowChange, 450))
@@ -51,18 +48,7 @@ const Index = (props: IProps) => {
 
 	return (
 		<Form form={form} component={false} onValuesChange={onValuesChange}>
-			<AnimatePresence>
-				{loaded && (
-					<motion.tr
-						{...rest}
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						transition={{ duration: 0.9 }}
-					>
-						{children}
-					</motion.tr>
-				)}
-			</AnimatePresence>
+			<tr {...rest}>{children}</tr>
 		</Form>
 	)
 }

@@ -13,6 +13,7 @@
 	"author": "1yasa",
 	"dependencies": {
 		"@abraham/reflection": "^0.12.0",
+		"@ant-design/icons": "^5.2.6",
 		"@check-light-or-dark/color": "^1.0.3",
 		"@dnd-kit/core": "^6.1.0",
 		"@dnd-kit/modifiers": "^7.0.0",

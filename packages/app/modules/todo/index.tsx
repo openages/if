@@ -116,6 +116,7 @@ const Index = ({ id }: IProps) => {
 
 	const props_table: IPropsTable = {
 		items,
+		loading: x.utils.loading['table'],
 		tags,
 		table_pagination: $copy(x.table_pagination),
 		visible_table_filter: x.visible_table_filter,

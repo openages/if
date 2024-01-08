@@ -29,6 +29,9 @@ importers:
       '@abraham/reflection':
         specifier: ^0.12.0
         version: 0.12.0
+      '@ant-design/icons':
+        specifier: ^5.2.6
+        version: 5.2.6(react-dom@0.0.0-experimental-c5b937576-20231219)(react@0.0.0-experimental-c5b937576-20231219)
       '@check-light-or-dark/color':
         specifier: ^1.0.3
         version: 1.0.3

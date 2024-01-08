@@ -19,7 +19,6 @@ import {
 	archiveByTime,
 	check,
 	cleanTodoItem,
-	cleanTodoItems,
 	create,
 	getAngleTodoCounts,
 	getMaxSort,
@@ -90,7 +89,7 @@ export default class Index {
 	visible_archive_modal = false
 	visible_detail_modal = false
 	visible_help_modal = false
-	visible_table_filter = true
+	visible_table_filter = false
 
 	current_angle_id = ''
 	current_detail_index = {} as CurrentDetailIndex
@@ -679,16 +678,40 @@ export default class Index {
 			}
 		}
 
-		if (values.cycle_enabled && values.cycle_enabled === 'enabled') {
-			selector['cycle_enabled'] = true
+		if (values.cycle_enabled) {
+			if (values.cycle_enabled === 'enabled') {
+				selector['cycle_enabled'] = true
+			} else {
+				selector['$or'] = [
+					{ cycle_enabled: { $exists: false } },
+					{ cycle_enabled: { $eq: undefined } },
+					{ cycle_enabled: { $eq: false } }
+				]
+			}
 		}
 
-		if (values.schedule && values.schedule === 'yes') {
-			selector['schedule'] = true
+		if (values.schedule) {
+			if (values.schedule === 'yes') {
+				selector['schedule'] = true
+			} else {
+				selector['$or'] = [
+					{ schedule: { $exists: false } },
+					{ schedule: { $eq: undefined } },
+					{ schedule: { $eq: false } }
+				]
+			}
 		}
 
-		if (values.archive && values.archive === 'yes') {
-			selector['archive'] = true
+		if (values.archive) {
+			if (values.archive === 'yes') {
+				selector['archive'] = true
+			} else {
+				selector['$or'] = [
+					{ archive: { $exists: false } },
+					{ archive: { $eq: undefined } },
+					{ archive: { $eq: false } }
+				]
+			}
 		}
 
 		if (values.create_at) {
@@ -768,6 +791,8 @@ export default class Index {
 		}
 
 		if (this.mode === 'table') {
+			this.utils.loading['table'] = true
+
 			getTotalCounts({ file_id: this.id, ...$copy(this.table_selector) }).then(
 				res => (this.table_pagination.total = res)
 			)
@@ -779,6 +804,8 @@ export default class Index {
 				table_mode: true,
 				table_page: this.table_pagination.current
 			}).$.subscribe(items => {
+				this.utils.loading['table'] = false
+
 				this.items = getDocItemsData(items)
 			})
 		}
