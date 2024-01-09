@@ -3,6 +3,7 @@ import { Table } from 'antd'
 import { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { getDisabledStatus } from '@/utils/modules/todo'
 import { LoadingOutlined } from '@ant-design/icons'
 import { deepEqual } from '@openages/stk/react'
 
@@ -27,12 +28,13 @@ import {
 import styles from './index.css'
 
 import type { Todo } from '@/types'
-import type { TableColumnType, PaginationProps, SpinProps } from 'antd'
+import type { TableColumnType, PaginationProps } from 'antd'
 import type { TdHTMLAttributes } from 'react'
 import type { IPropsTable, IPropsTableFilter } from '../../types'
 
 const Index = (props: IPropsTable) => {
 	const {
+		relations,
 		items,
 		loading,
 		tags,
@@ -173,7 +175,8 @@ const Index = (props: IPropsTable) => {
 			column.onCell = item => {
 				return {
 					name: (column as TableColumnType<Todo.Todo>).dataIndex,
-					archive: column.ignoreArchive ? false : item.archive
+					archive: column.ignoreArchive ? false : item.archive,
+					disabled: getDisabledStatus({ relations, id: item.id, status: item.status })
 				} as TdHTMLAttributes<any>
 			}
 
@@ -191,7 +194,7 @@ const Index = (props: IPropsTable) => {
 
 			return column
 		})
-	}, [raw_columns])
+	}, [raw_columns, relations])
 
 	const components = useMemo(() => ({ body: { row: Row, cell: Cell } }), [])
 
@@ -207,18 +210,13 @@ const Index = (props: IPropsTable) => {
 		}
 	}, [table_pagination])
 
-	const spinner = useMemo(
-		() =>
-			({
-				spinning: loading,
-				indicator: (
-					<LoadingOutlined style={{ color: 'var(--color_text)', fontSize: 24 }}></LoadingOutlined>
-				)
-			}) as SpinProps,
-		[loading]
-	)
-
-	const onRow = useMemoizedFn((item, index) => ({ item, index, onTableRowChange }) as TdHTMLAttributes<any>)
+	const onRow = useMemoizedFn((item, index) => {
+		return {
+			item,
+			index,
+			onTableRowChange
+		} as TdHTMLAttributes<any>
+	})
 
 	return (
 		<div className={$cx('w_100 border_box', styles._local)} ref={ref}>
@@ -231,7 +229,14 @@ const Index = (props: IPropsTable) => {
 				components={components}
 				scroll={{ x: 1080 }}
 				pagination={pagination}
-				loading={spinner}
+				loading={{
+					spinning: loading,
+					indicator: (
+						<LoadingOutlined
+							style={{ color: 'var(--color_text)', fontSize: 24 }}
+						></LoadingOutlined>
+					)
+				}}
 				columns={target_columns}
 				dataSource={items}
 				onRow={onRow}

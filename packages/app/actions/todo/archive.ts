@@ -1,3 +1,4 @@
+import stringify from 'json-stable-stringify'
 import { difference } from 'lodash-es'
 
 import { getDocItemsData } from '@/utils'
@@ -45,6 +46,6 @@ export default async (file_id: string) => {
 			}
 		})
 
-		await module_setting.updateCRDT({ ifMatch: { $set: { setting: JSON.stringify({ ...info, relations }) } } })
+		await module_setting.updateCRDT({ ifMatch: { $set: { setting: stringify({ ...info, relations }) } } })
 	}
 }

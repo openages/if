@@ -8,7 +8,7 @@ const Index = (props: IPropsFreeMark) => {
 	if (user_type !== 'free') return null
 
 	return (
-		<div className={$cx('fixed flex flex_column', styles._local)}>
+		<div className={$cx('fixed flex flex_column cursor_point', styles._local)}>
 			<span className={styles.title}>FREE VERSION</span>
 			<span className={styles.desc}>Go to subscribe for professionals</span>
 		</div>

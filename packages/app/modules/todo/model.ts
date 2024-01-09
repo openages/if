@@ -327,7 +327,9 @@ export default class Index {
 		if (args.status === 'checked') {
 			this.recycle(todo_item)
 		} else {
-			await todo_item.updateCRDT({ ifMatch: { $unset: { recycle_time: '' } } })
+			if (todo_item.cycle_enabled && todo_item.cycle) {
+				await todo_item.updateCRDT({ ifMatch: { $unset: { recycle_time: '' } } })
+			}
 		}
 
 		await this.setActivity('check')

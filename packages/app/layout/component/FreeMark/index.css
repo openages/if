@@ -1,3 +1,13 @@
+@keyframes light {
+	from {
+		color: rgba(var(--color_text_rgb), 0.18);
+	}
+
+	to {
+		color: rgba(var(--color_text_rgb), 0.72);
+	}
+}
+
 ._local {
 	top: 12px;
 	right: 12px;
@@ -5,12 +15,16 @@
 	font-family: 'OutFit' !important;
 	line-height: 1;
 	user-select: none;
-	color: rgba(var(--color_text_rgb), 0.3);
+	color: rgba(var(--color_text_rgb), 0.72);
 	transition: color ease 0.3s;
 	font-weight: 600;
 
+	:local {
+		animation: light ease 30s infinite;
+	}
+
 	&:hover {
-		color: var(--color_main);
+		color: var(--color_main) !important;
 	}
 
 	.title {

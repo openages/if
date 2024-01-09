@@ -15,8 +15,10 @@
 
 	.RenderTags,
 	.RenderLevel,
-	.RenderSchedule {
-		opacity: 0.48;
+	.RenderSchedule,
+	.RenderChildren,
+	.RenderRemark {
+		opacity: 0.3;
 	}
 
 	.DateTime {
@@ -31,6 +33,32 @@
 
 	.RenderChildren {
 		color: var(--color_text_light);
+	}
+}
+
+.disabled {
+	.DateTime,
+	.RenderCycle,
+	.RenderSchedule {
+		color: var(--color_text_light);
+		pointer-events: none;
+		opacity: 0.3;
+	}
+
+	.DateTime {
+		:global {
+			.if-picker-input {
+				input {
+					color: var(--color_text_light);
+				}
+			}
+		}
+	}
+}
+
+.linked {
+	.RenderStatus {
+		color: var(--color_relation_group);
 	}
 }
 

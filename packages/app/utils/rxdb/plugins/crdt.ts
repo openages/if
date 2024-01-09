@@ -1,3 +1,5 @@
+import stringify from 'json-stable-stringify'
+import { omit } from 'lodash-es'
 import {
 	clone,
 	deepEqual,
@@ -34,16 +36,40 @@ import type {
 } from 'rxdb'
 
 const config = {
-	trigger_counts: 120,
-	reduce_counts: 60,
+	trigger_counts: 12,
+	reduce_counts: 6,
 	auto_clean: true
 }
 
-const cleanOperations = <RxDocType>(operations: Array<Array<CRDTOperation<RxDocType>>>) => {
-	if (!config.auto_clean) return operations
-	if (operations.length < config.trigger_counts) return operations
+const cleanOperations = async <RxDocType>(args: {
+	crdtDocField: CRDTDocumentField<RxDocType>
+	docData: WithDeleted<RxDocType>
+	storageToken: string
+	hashFunction: HashFunction
+}) => {
+	const { crdtDocField, docData, storageToken, hashFunction } = args
 
-	return operations.slice(config.reduce_counts)
+	if (!config.auto_clean) return crdtDocField.operations
+	if (crdtDocField.operations.length < config.trigger_counts) return crdtDocField.operations
+
+	const target_operations = crdtDocField.operations.slice(config.reduce_counts)
+
+	target_operations.push([
+		{
+			body: [
+				{
+					ifMatch: {
+						$set: omit(docData, 'crdts', '_meta', '_rev', '_attachments', '_deleted')
+					}
+				}
+			],
+			creator: storageToken,
+			time: now()
+		}
+	] as Array<CRDTOperation<RxDocType>>)
+
+	crdtDocField.operations = target_operations
+	crdtDocField.hash = await hashCRDTOperations(hashFunction, crdtDocField)
 }
 
 export async function updateCRDT<RxDocType>(
@@ -74,11 +100,17 @@ export async function updateCRDT<RxDocType>(
 		const lastAr: CRDTOperation<RxDocType>[] = [operation]
 
 		crdtDocField.operations.push(lastAr)
-		crdtDocField.operations = cleanOperations(crdtDocField.operations)
 
 		crdtDocField.hash = await hashCRDTOperations(this.collection.database.hashFunction, crdtDocField)
 
 		docData = runOperationOnDocument(this.collection.schema.jsonSchema, docData, operation)
+
+		await cleanOperations({
+			crdtDocField,
+			docData,
+			storageToken,
+			hashFunction: this.collection.database.hashFunction
+		})
 
 		setProperty(docData, crdtOptions.field, crdtDocField)
 
@@ -178,7 +210,7 @@ export async function hashCRDTOperations(hashFunction: HashFunction, crdts: CRDT
 	const hashObj = crdts.operations.map(operations => {
 		return operations.map(op => op.creator)
 	})
-	const hash = await hashFunction(JSON.stringify(hashObj))
+	const hash = await hashFunction(stringify(hashObj))
 	return hash
 }
 

@@ -46,6 +46,12 @@ const Index = (props: IPropsGroupTitle) => {
 		}
 	})
 
+	const onKeyDown = useMemoizedFn(e => {
+		if (e.key === 'Enter') {
+			e.preventDefault()
+		}
+	})
+
 	return (
 		<div
 			className={$cx('flex flex_column relative', styles._local)}
@@ -74,6 +80,7 @@ const Index = (props: IPropsGroupTitle) => {
 						contentEditable='plaintext-only'
 						ref={input}
 						onInput={onInput}
+						onKeyDown={onKeyDown}
 					></div>
 				</Dropdown>
 			</ConfigProvider>

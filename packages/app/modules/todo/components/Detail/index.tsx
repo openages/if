@@ -1,8 +1,9 @@
 import { useMemoizedFn } from 'ahooks'
-import { Drawer, Switch } from 'antd'
+import { Drawer } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { getDisabledStatus } from '@/utils/modules/todo'
 import {
 	Bell,
 	Calendar,
@@ -47,6 +48,7 @@ const Index = (props: IPropsDetail) => {
 	const { t } = useTranslation()
 	const { item = {} as Todo.Todo, prev_id, next_id } = current_detail_item
 	const {
+		id,
 		status,
 		text,
 		children,
@@ -55,7 +57,6 @@ const Index = (props: IPropsDetail) => {
 		remind_time,
 		cycle_enabled,
 		cycle,
-		recycle_time,
 		end_time,
 		schedule,
 		remark
@@ -94,11 +95,7 @@ const Index = (props: IPropsDetail) => {
 
 	const { ChildrenContextMenu } = useContextMenu({ kanban_mode })
 
-	const exist_relations = useMemo(() => {
-		if (!item.id || !relations.length) return false
-
-		return relations.find(it => it.items.includes(item.id))
-	}, [relations, current_detail_item])
+	const disabled = useMemo(() => getDisabledStatus({ relations, id, status }), [relations, id, status])
 
 	const props_children: IPropsChildren = {
 		items: children,
@@ -202,7 +199,7 @@ const Index = (props: IPropsDetail) => {
 						<div
 							className={$cx(
 								'option_item w_100 border_box flex align_center',
-								status === 'checked' && 'disabled'
+								disabled && 'disabled'
 							)}
 						>
 							<div className='name_wrap flex align_center'>
@@ -220,7 +217,7 @@ const Index = (props: IPropsDetail) => {
 						<div
 							className={$cx(
 								'option_item w_100 border_box flex align_center',
-								status === 'checked' && 'disabled'
+								disabled && 'disabled'
 							)}
 						>
 							<div className='name_wrap flex align_center'>
@@ -240,7 +237,7 @@ const Index = (props: IPropsDetail) => {
 						<div
 							className={$cx(
 								'option_item w_100 border_box flex align_center',
-								(exist_relations || status === 'checked') && 'disabled'
+								disabled && 'disabled'
 							)}
 						>
 							<div className='name_wrap flex align_center'>
@@ -259,7 +256,7 @@ const Index = (props: IPropsDetail) => {
 						<div
 							className={$cx(
 								'option_item schedule_wrap w_100 border_box flex align_center',
-								(exist_relations || status === 'checked') && 'disabled'
+								disabled && 'disabled'
 							)}
 						>
 							<div className='name_wrap flex align_center'>

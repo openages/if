@@ -124,7 +124,7 @@ const Index = ({ id }: IProps) => {
 		onTableRowChange: useMemoizedFn(x.onTableRowChange),
 		onTablePageChange: useMemoizedFn(x.onTablePageChange),
 		onTableSearch: useMemoizedFn(x.onTableSearch),
-		...pick(props_todos, ['showDetailModal', 'remove'])
+		...pick(props_todos, ['relations', 'showDetailModal', 'remove'])
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {

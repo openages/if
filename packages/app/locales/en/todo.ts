@@ -130,7 +130,7 @@ export default {
 			specific: {
 				day: '{{value}}th of each month',
 				hour: 'daily at {{value}}',
-				special: '{{month}}/{{date}} each year'
+				special: '{{month}}-{{date}} each year'
 			}
 		}
 	},

@@ -1,3 +1,5 @@
+import stringify from 'json-stable-stringify'
+
 import { id } from '@/utils'
 
 export default async (file_id: string) => {
@@ -8,7 +10,7 @@ export default async (file_id: string) => {
 			$set: {
 				module: 'todo',
 				file_id,
-				setting: JSON.stringify({
+				setting: stringify({
 					angles: angles.map(item => ({ id: id(), text: item })),
 					tags: [],
 					auto_archiving: '3m'

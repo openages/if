@@ -1,3 +1,5 @@
+import stringify from 'json-stable-stringify'
+
 import type { Todo } from '@/types'
 
 export default async (file_id: string, data: Partial<Todo.Setting>) => {
@@ -7,7 +9,7 @@ export default async (file_id: string, data: Partial<Todo.Setting>) => {
 
 	await module_setting.updateCRDT({
 		ifMatch: {
-			$set: { setting: JSON.stringify({ ...setting, ...data }) }
+			$set: { setting: stringify({ ...setting, ...data }) }
 		}
 	})
 }
