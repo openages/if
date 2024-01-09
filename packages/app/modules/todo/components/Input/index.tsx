@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { Select } from 'antd'
+import { Select, Tooltip } from 'antd'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
@@ -117,23 +117,53 @@ const Index = (props: IPropsInput) => {
 									onChangeLevel={v => setInput(input => ({ ...input, level: v }))}
 								></Level>
 							</div>
-							<div
-								className={$cx(
-									'schedule_wrap flex justify_center align_center clickable',
-									(input as Todo.Todo).schedule && 'active'
-								)}
-								onClick={() =>
-									setInput(input => ({
-										...input,
-										schedule: !(input as Todo.Todo).schedule
-									}))
-								}
+							<Tooltip
+								title={t('translation:modules.schedule')}
+								destroyTooltipOnHide
+								placement='bottom'
 							>
-								<Sun size={15}></Sun>
-							</div>
-							<DateTime {...props_remind}></DateTime>
-							<DateTime {...props_deadline}></DateTime>
-							<Cycle {...props_circle}></Cycle>
+								<div
+									className={$cx(
+										'schedule_wrap flex justify_center align_center clickable',
+										(input as Todo.Todo).schedule && 'active'
+									)}
+									onClick={() =>
+										setInput(input => ({
+											...input,
+											schedule: !(input as Todo.Todo).schedule
+										}))
+									}
+								>
+									<Sun size={15}></Sun>
+								</div>
+							</Tooltip>
+							<Tooltip
+								title={t('translation:todo.Input.Remind.title')}
+								destroyTooltipOnHide
+								placement='bottom'
+							>
+								<div>
+									<DateTime {...props_remind}></DateTime>
+								</div>
+							</Tooltip>
+							<Tooltip
+								title={t('translation:todo.Input.Deadline.title')}
+								destroyTooltipOnHide
+								placement='bottom'
+							>
+								<div>
+									<DateTime {...props_deadline}></DateTime>
+								</div>
+							</Tooltip>
+							<Tooltip
+								title={t('translation:todo.Input.Cycle.title')}
+								destroyTooltipOnHide
+								placement='bottom'
+							>
+								<div>
+									<Cycle {...props_circle}></Cycle>
+								</div>
+							</Tooltip>
 						</div>
 					</When>
 				</div>

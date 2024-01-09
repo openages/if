@@ -46,18 +46,12 @@ export namespace Todo {
 		tag_ids?: Array<string>
 		remind_time?: number
 		cycle_enabled?: boolean
-		cycle?:
-			| {
-					type: 'interval'
-					scale: 'minute' | 'hour' | 'day' | 'week' | 'month' | 'quarter' | 'year'
-					interval: number
-					exclude?: Array<number>
-			  }
-			| {
-					type: 'specific'
-					scale: 'day' | 'hour'
-					value: number
-			  }
+		cycle?: {
+			type: 'interval' | 'specific'
+			scale: 'minute' | 'hour' | 'day' | 'week' | 'month' | 'quarter' | 'year'
+			value: number
+			exclude?: Array<number>
+		}
 		/**
 		 * @multipleOf 1
 		 * @minimum 1

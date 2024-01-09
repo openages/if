@@ -51,11 +51,11 @@ const Index = (props: IPropsCircle) => {
 
 	const onChangeScale = useMemoizedFn(({ target: { value } }) => {
 		onChangeCircle({
-			cycle: value === 'reset' ? undefined : { ...cycle, scale: value, interval: 1, exclude: [] }
+			cycle: value === 'reset' ? undefined : { ...cycle, scale: value, value: 1, exclude: [] }
 		})
 	})
 
-	const onChangeInterval = useMemoizedFn(v => onChangeCircle({ cycle: { ...cycle, interval: v } }))
+	const onChangeInterval = useMemoizedFn(v => onChangeCircle({ cycle: { ...cycle, value: v } }))
 
 	const Exclude = useMemo(
 		() =>
@@ -111,7 +111,7 @@ const Index = (props: IPropsCircle) => {
 						parser={value =>
 							Number(value.replace(every_text, '').replace(scale_text, '').trim())
 						}
-						value={cycle?.interval || 1}
+						value={cycle?.value || 1}
 						onChange={onChangeInterval}
 					></InputNumber>
 					{Exclude}
@@ -148,7 +148,7 @@ const Index = (props: IPropsCircle) => {
 
 		return (
 			<span className='cycle_desc cursor_point'>
-				{`${t('translation:todo.Input.Cycle.every')} ${cycle?.interval} ${scale_text}`}
+				{`${t('translation:todo.Input.Cycle.every')} ${cycle?.value} ${scale_text}`}
 				{cycle?.exclude?.length > 0 &&
 					`, ${t('translation:todo.Input.Cycle.exclude')} ${cycle.exclude.join(',')}`}
 			</span>

@@ -1,7 +1,6 @@
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { match } from 'ts-pattern'
 
 import { HourglassMedium } from '@phosphor-icons/react'
 
@@ -18,31 +17,20 @@ const Index = (props: IPropsCircleStatus) => {
 	useEffect(() => {
 		if (!recycle_time) return setPercent(0)
 
+		const now = new Date().valueOf()
+
 		const duration =
 			(cycle.scale === 'quarter'
-				? dayjs.duration(cycle.interval, 'month').asSeconds() * 3
-				: dayjs.duration(cycle.interval, cycle.scale).asSeconds()) * 1000
+				? dayjs.duration(cycle.value, 'month').asSeconds() * 3
+				: dayjs.duration(cycle.value, cycle.scale).asSeconds()) * 1000
 
-		const interval = match(cycle.scale)
-			.with('minute', () => 1000)
-			.with('hour', () => 60 * 1000)
-			.otherwise(() => 180 * 1000)
+		if (now >= recycle_time) {
+			setPercent(100)
 
-		const timer = setInterval(() => {
-			const now = new Date().valueOf()
-
-			if (now >= recycle_time) {
-				setPercent(100)
-
-				clearInterval(timer)
-
-				window.$app.Event.emit('todo/cycleByTime')
-			} else {
-				setPercent(100 + Number((((now - recycle_time) * 100) / duration).toFixed(0)))
-			}
-		}, interval)
-
-		return () => clearInterval(timer)
+			window.$app.Event.emit('todo/cycleByTime')
+		} else {
+			setPercent(100 + Number((((now - recycle_time) * 100) / duration).toFixed(0)))
+		}
 	}, [cycle, recycle_time])
 
 	return (
@@ -64,7 +52,7 @@ const Index = (props: IPropsCircleStatus) => {
 			)}
 			<div className='repeat_content w_100 h_100 flex align_center relative'>
 				<HourglassMedium className='icon' size={10}></HourglassMedium>
-				<span className='text ml_2'>{`${cycle?.interval} ${scale_text}`}</span>
+				<span className='text ml_2'>{`${cycle?.value} ${scale_text}`}</span>
 			</div>
 		</div>
 	)

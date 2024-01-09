@@ -37,20 +37,27 @@
 	.if-tooltip {
 		--antd-arrow-background-color: var(--color_bg_2);
 
-		&-inner {
+		.if-tooltip-inner {
 			background-color: var(--color_bg_2);
 		}
 	}
 }
 
 .if-tooltip {
-	&-inner {
-		min-width: unset !important;
+	.if-tooltip-inner {
+		min-width: unset;
 		display: flex;
 		align-items: center;
 		padding: 3px 6px !important;
-		min-height: unset !important;
+		min-height: unset;
 		font-size: 12px;
+	}
+
+	.if-tooltip-arrow {
+		&::after {
+			border-radius: 2px;
+			background: var(--antd-arrow-background-color);
+		}
 	}
 }
 

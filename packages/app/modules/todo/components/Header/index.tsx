@@ -212,8 +212,6 @@ const Index = (props: IPropsHeader) => {
 							</div>
 						</div>
 					</Dropdown>
-				</ConfigProvider>
-				<ConfigProvider getPopupContainer={() => document.body}>
 					<Dropdown
 						destroyPopupOnHide
 						trigger={['click']}

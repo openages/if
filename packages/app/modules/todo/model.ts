@@ -328,15 +328,32 @@ export default class Index {
 			if (args.status === 'checked') {
 				const now = dayjs()
 				const scale = todo_item.cycle.scale as ManipulateType
+				const value = todo_item.cycle.value
 
-				const recycle_time =
-					scale === 'minute' || scale === 'hour'
-						? now.add(todo_item.cycle.interval, scale).valueOf()
-						: now.startOf(scale).add(todo_item.cycle.interval, scale).valueOf()
+				const recycle_time = match(todo_item.cycle.type)
+					.with('interval', () => {
+						return scale === 'minute' || scale === 'hour'
+							? now.add(value, scale).valueOf()
+							: now.startOf(scale).add(value, scale).valueOf()
+					})
+					.with('specific', () => {
+						if (scale === 'day') {
+							return now.date() <= value
+								? now.date(value).valueOf()
+								: now.add(1, 'month').date(value).valueOf()
+						}
+
+						if (scale === 'hour') {
+							return now.hour() <= value
+								? now.hour(value).valueOf()
+								: now.add(1, 'day').hour(value).valueOf()
+						}
+					})
+					.exhaustive()
 
 				await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time } } })
 			} else {
-				await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time: undefined } } })
+				await todo_item.updateCRDT({ ifMatch: { $unset: { recycle_time: '' } } })
 			}
 		}
 

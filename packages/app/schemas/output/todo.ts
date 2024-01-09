@@ -269,12 +269,10 @@ export default {
                                           "week",
                                           "month",
                                           "quarter",
-                                          "year",
-                                          "day",
-                                          "hour"
+                                          "year"
                                     ]
                               },
-                              "interval": {
+                              "value": {
                                     "type": "number"
                               },
                               "exclude": {
@@ -282,14 +280,12 @@ export default {
                                     "items": {
                                           "type": "number"
                                     }
-                              },
-                              "value": {
-                                    "type": "number"
                               }
                         },
                         "required": [
                               "type",
-                              "scale"
+                              "scale",
+                              "value"
                         ]
                   },
                   "recycle_time": {
@@ -474,12 +470,10 @@ export default {
                                           "week",
                                           "month",
                                           "quarter",
-                                          "year",
-                                          "day",
-                                          "hour"
+                                          "year"
                                     ]
                               },
-                              "interval": {
+                              "value": {
                                     "type": "number"
                               },
                               "exclude": {
@@ -487,14 +481,12 @@ export default {
                                     "items": {
                                           "type": "number"
                                     }
-                              },
-                              "value": {
-                                    "type": "number"
                               }
                         },
                         "required": [
                               "type",
-                              "scale"
+                              "scale",
+                              "value"
                         ]
                   },
                   "recycle_time": {
