@@ -269,7 +269,8 @@ export default {
                                           "week",
                                           "month",
                                           "quarter",
-                                          "year"
+                                          "year",
+                                          "special"
                                     ]
                               },
                               "value": {
@@ -470,7 +471,8 @@ export default {
                                           "week",
                                           "month",
                                           "quarter",
-                                          "year"
+                                          "year",
+                                          "special"
                                     ]
                               },
                               "value": {

@@ -107,6 +107,10 @@ export default {
 			title: 'Deadline'
 		},
 		Cycle: {
+			type: {
+				interval: 'cycle',
+				specific: 'regular'
+			},
 			title: 'Repeat',
 			cycle: 'Cycle',
 			disabled: 'Disabled',
@@ -120,7 +124,13 @@ export default {
 				month: 'month',
 				quarter: 'quarter',
 				year: 'year',
+				special: 'special',
 				reset: 'reset'
+			},
+			specific: {
+				day: '{{value}}th of each month',
+				hour: 'daily at {{value}}',
+				special: '{{month}}/{{date}} each year'
 			}
 		}
 	},
@@ -144,9 +154,9 @@ export default {
 		},
 		confirm: 'Do you want to delete all archives before {{date}}? Please confirm.',
 		filter: {
-			select: 'select\t',
-			angle: 'Angle',
-			tags: 'Tags',
+			select: 'Select\t',
+			angle: 'angle',
+			tags: 'tags',
 			date: '\tDate',
 			begin: 'Begin',
 			end: 'End',

@@ -1,7 +1,8 @@
 import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { getCycleSpecificDesc } from '@/utils/modules/todo'
 import { HourglassMedium } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -15,12 +16,13 @@ const Index = (props: IPropsCircleStatus) => {
 	const scale_text = cycle?.scale ? t(`translation:todo.Input.Cycle.options.${cycle.scale}`) : ''
 
 	useEffect(() => {
+		if (cycle.type === 'specific') return setPercent(0)
 		if (!recycle_time) return setPercent(0)
 
 		const now = new Date().valueOf()
 
 		const duration =
-			(cycle.scale === 'quarter'
+			(cycle.scale === 'quarter' || cycle.scale === 'special'
 				? dayjs.duration(cycle.value, 'month').asSeconds() * 3
 				: dayjs.duration(cycle.value, cycle.scale).asSeconds()) * 1000
 
@@ -32,6 +34,12 @@ const Index = (props: IPropsCircleStatus) => {
 			setPercent(100 + Number((((now - recycle_time) * 100) / duration).toFixed(0)))
 		}
 	}, [cycle, recycle_time])
+
+	const desc = useMemo(() => {
+		if (cycle.type === 'interval') return `${cycle?.value} ${scale_text}`
+
+		return getCycleSpecificDesc(cycle)
+	}, [cycle])
 
 	return (
 		<div
@@ -52,7 +60,7 @@ const Index = (props: IPropsCircleStatus) => {
 			)}
 			<div className='repeat_content w_100 h_100 flex align_center relative'>
 				<HourglassMedium className='icon' size={10}></HourglassMedium>
-				<span className='text ml_2'>{`${cycle?.value} ${scale_text}`}</span>
+				<span className='text ml_2'>{desc}</span>
 			</div>
 		</div>
 	)

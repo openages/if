@@ -59,13 +59,40 @@
 			}
 
 			.head_wrap {
-				padding: 6px 12px;
+				height: 30px;
 				border-bottom: var(--border);
 
 				.title_wrap {
+					left: 12px;
 					font-size: 12px;
 					font-weight: 500;
 					line-height: 1;
+				}
+
+				.type_wrap {
+					padding: 3px;
+					font-size: 10px;
+					background-color: var(--color_bg_1);
+					border-radius: var(--radius_large);
+					color: var(--color_text_light);
+
+					.type_item {
+						padding: 2px 4px;
+						border-radius: var(--radius);
+
+						&.active {
+							color: var(--color_text);
+							background-color: var(--color_bg);
+						}
+
+						&:hover {
+							background-color: var(--color_bg);
+						}
+					}
+				}
+
+				.switch {
+					right: 12px;
 				}
 			}
 
@@ -95,6 +122,18 @@
 								color: var(--color_text);
 							}
 						}
+					}
+				}
+
+				.if-picker {
+					height: 30px;
+				}
+
+				.if-picker-dropdown {
+					width: calc(100% - 24px);
+
+					.if-picker-panel {
+						width: 100%;
 					}
 				}
 

@@ -48,7 +48,7 @@ export namespace Todo {
 		cycle_enabled?: boolean
 		cycle?: {
 			type: 'interval' | 'specific'
-			scale: 'minute' | 'hour' | 'day' | 'week' | 'month' | 'quarter' | 'year'
+			scale: 'minute' | 'hour' | 'day' | 'week' | 'month' | 'quarter' | 'year' | 'special'
 			value: number
 			exclude?: Array<number>
 		}

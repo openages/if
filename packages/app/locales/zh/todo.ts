@@ -102,6 +102,10 @@ export default {
 			}
 		},
 		Cycle: {
+			type: {
+				interval: '周期',
+				specific: '定期'
+			},
 			title: '重复',
 			cycle: '周期',
 			disabled: '未开启',
@@ -115,7 +119,13 @@ export default {
 				month: '月',
 				quarter: '季度',
 				year: '年',
+				special: '特殊日期',
 				reset: '重置'
+			},
+			specific: {
+				day: '每月{{value}}号',
+				hour: '每天{{value}}点',
+				special: '每年{{month}}月{{date}}号'
 			}
 		},
 		Deadline: {

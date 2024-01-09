@@ -40,7 +40,7 @@ import {
 import type { RxDB, Todo } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
 import type { ManipulateType, Dayjs } from 'dayjs'
-import type { MangoQuerySelector, MangoQuerySortPart } from 'rxdb'
+import type { MangoQuerySelector, MangoQuerySortPart, RxDocument } from 'rxdb'
 import type { Subscription } from 'rxjs'
 import type {
 	ArchiveQueryParams,
@@ -318,46 +318,80 @@ export default class Index {
 			await archive(this.id)
 		}
 
-		const todo_item = await queryItem(item.id)
+		const todo_item = (await queryItem(item.id)) as RxDocument<Todo.Todo>
 
 		if (todo_item.remind_time) {
 			await todo_item.updateCRDT({ ifMatch: { $set: { remind_time: undefined } } })
 		}
 
-		if (todo_item.cycle_enabled && todo_item.cycle) {
-			if (args.status === 'checked') {
-				const now = dayjs()
-				const scale = todo_item.cycle.scale as ManipulateType
-				const value = todo_item.cycle.value
-
-				const recycle_time = match(todo_item.cycle.type)
-					.with('interval', () => {
-						return scale === 'minute' || scale === 'hour'
-							? now.add(value, scale).valueOf()
-							: now.startOf(scale).add(value, scale).valueOf()
-					})
-					.with('specific', () => {
-						if (scale === 'day') {
-							return now.date() <= value
-								? now.date(value).valueOf()
-								: now.add(1, 'month').date(value).valueOf()
-						}
-
-						if (scale === 'hour') {
-							return now.hour() <= value
-								? now.hour(value).valueOf()
-								: now.add(1, 'day').hour(value).valueOf()
-						}
-					})
-					.exhaustive()
-
-				await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time } } })
-			} else {
-				await todo_item.updateCRDT({ ifMatch: { $unset: { recycle_time: '' } } })
-			}
+		if (args.status === 'checked') {
+			this.recycle(todo_item)
+		} else {
+			await todo_item.updateCRDT({ ifMatch: { $unset: { recycle_time: '' } } })
 		}
 
 		await this.setActivity('check')
+	}
+
+	async recycle(todo_item: RxDocument<Todo.Todo>) {
+		if (todo_item.cycle_enabled && todo_item.cycle) {
+			const scale = todo_item.cycle.scale
+			const value = todo_item.cycle.value
+			const now = dayjs()
+
+			const recycle_time = match(todo_item.cycle.type)
+				.with('interval', () => {
+					const now = dayjs()
+
+					return scale === 'minute' || scale === 'hour'
+						? now.add(value, scale).valueOf()
+						: now
+								.startOf(scale as ManipulateType)
+								.add(value, scale as ManipulateType)
+								.valueOf()
+				})
+				.with('specific', () => {
+					if (scale === 'day') {
+						const _now = now.hour(0).minute(0).second(0)
+
+						return now.date() < value
+							? _now.date(value).valueOf()
+							: _now.add(1, 'month').date(value).valueOf()
+					}
+
+					if (scale === 'hour') {
+						const _now = now.minute(0).second(0)
+
+						return now.hour() < value
+							? _now.hour(value).valueOf()
+							: _now.add(1, 'day').hour(value).valueOf()
+					}
+
+					if (scale === 'special') {
+						const _now = now.hour(0).minute(0).second(0)
+						const target_value = dayjs(value)
+						const month = target_value.month()
+						const date = target_value.date()
+
+						if (_now.month() < month) {
+							return _now.month(month).date(date).valueOf()
+						}
+
+						if (_now.month() === month) {
+							if (_now.date() <= date) {
+								return _now.month(month).date(date).valueOf()
+							} else {
+								return _now.add(1, 'year').month(month).date(date).valueOf()
+							}
+						}
+
+						return _now.add(1, 'year').month(month).date(date).valueOf()
+					}
+				})
+				.exhaustive()
+
+			await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time } } })
+		}
 	}
 
 	async update(args: ArgsUpdate) {

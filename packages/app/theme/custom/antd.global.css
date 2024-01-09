@@ -477,13 +477,15 @@
 
 /* DatePicker */
 .if-picker {
-	&.if-picker-focused {
-		.if-picker-input {
-			overflow: visible;
+	&.if-picker-borderless {
+		&.if-picker-focused {
+			.if-picker-input {
+				overflow: visible;
 
-			input {
-				text-decoration: underline;
-				text-underline-offset: 2px;
+				input {
+					text-decoration: underline;
+					text-underline-offset: 2px;
+				}
 			}
 		}
 	}
