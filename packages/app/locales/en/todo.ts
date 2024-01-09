@@ -149,8 +149,7 @@ export default {
 				'1month': '1 month ago',
 				'15days': '15 days ago',
 				'1week': '1 week ago'
-			},
-			total: 'Total of {{counts}} items'
+			}
 		},
 		confirm: 'Do you want to delete all archives before {{date}}? Please confirm.',
 		filter: {

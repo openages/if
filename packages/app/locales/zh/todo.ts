@@ -147,8 +147,7 @@ export default {
 				'1month': '一个月前',
 				'15days': '十五天前',
 				'1week': '一周前'
-			},
-			total: '共{{counts}}条记录'
+			}
 		},
 		confirm: '你将删除{{date}}前的所有归档（{{counts}}条），请确认是否删除？',
 		filter: {

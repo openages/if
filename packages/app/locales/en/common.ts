@@ -20,6 +20,7 @@ export default {
 	disabled: 'Disabled',
 	yes: 'Yes',
 	no: 'No',
+	total: '{{counts}} records in total',
 	not_found: {
 		confirm: 'No relevant records found. Please verify the existence of related records before proceeding.'
 	},
@@ -30,8 +31,5 @@ export default {
 	erase: {
 		title: 'Erase',
 		confirm: 'Confirm permanent erase this record? It can`t be recovered after erased.'
-	},
-	table: {
-		total: '{{counts}} records in total'
 	}
 }

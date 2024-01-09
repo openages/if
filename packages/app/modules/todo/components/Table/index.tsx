@@ -205,7 +205,7 @@ const Index = (props: IPropsTable) => {
 			...table_pagination,
 			pageSize: 15,
 			// @ts-ignore
-			showTotal: total => t('translation:todo.Table.total', { counts: total }),
+			showTotal: total => t('translation:common.total', { counts: total }),
 			onChange: onTablePageChange
 		}
 	}, [table_pagination])

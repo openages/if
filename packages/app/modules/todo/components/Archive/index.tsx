@@ -169,7 +169,7 @@ const Index = (props: IPropsArchive) => {
 			</div>
 			<span className='counts'>
 				{/* @ts-ignore   */}
-				{t('translation:todo.Archive.clean.total', { counts: archive_counts })}
+				{t('translation:common.total', { counts: archive_counts })}
 			</span>
 		</div>
 	)
