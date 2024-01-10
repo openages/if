@@ -3,7 +3,7 @@ import { Drawer } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { getDisabledStatus } from '@/utils/modules/todo'
+import { getItemStatus } from '@/utils/modules/todo'
 import {
 	Bell,
 	Calendar,
@@ -95,7 +95,7 @@ const Index = (props: IPropsDetail) => {
 
 	const { ChildrenContextMenu } = useContextMenu({ kanban_mode })
 
-	const disabled = useMemo(() => getDisabledStatus({ relations, id, status }), [relations, id, status])
+	const item_status = useMemo(() => getItemStatus({ relations, id, status }), [relations, id, status])
 
 	const props_children: IPropsChildren = {
 		items: children,
@@ -199,7 +199,7 @@ const Index = (props: IPropsDetail) => {
 						<div
 							className={$cx(
 								'option_item w_100 border_box flex align_center',
-								disabled && 'disabled'
+								item_status && 'disabled'
 							)}
 						>
 							<div className='name_wrap flex align_center'>
@@ -217,7 +217,7 @@ const Index = (props: IPropsDetail) => {
 						<div
 							className={$cx(
 								'option_item w_100 border_box flex align_center',
-								disabled && 'disabled'
+								item_status && 'disabled'
 							)}
 						>
 							<div className='name_wrap flex align_center'>
@@ -237,7 +237,7 @@ const Index = (props: IPropsDetail) => {
 						<div
 							className={$cx(
 								'option_item w_100 border_box flex align_center',
-								disabled && 'disabled'
+								item_status && 'disabled'
 							)}
 						>
 							<div className='name_wrap flex align_center'>
@@ -256,7 +256,7 @@ const Index = (props: IPropsDetail) => {
 						<div
 							className={$cx(
 								'option_item schedule_wrap w_100 border_box flex align_center',
-								disabled && 'disabled'
+								item_status && 'disabled'
 							)}
 						>
 							<div className='name_wrap flex align_center'>

@@ -967,7 +967,7 @@
 	position: relative;
 
 	.if-pagination-item {
-		outline: none;
+		outline: none !important;
 		border: none;
 		border-radius: 50%;
 

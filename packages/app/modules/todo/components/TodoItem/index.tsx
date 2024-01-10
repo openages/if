@@ -185,7 +185,10 @@ const Index = (props: IPropsTodoItem) => {
 		[kanban_mode, isOver, active, dimension_id]
 	)
 
-	const outdate = useMemo(() => zen_mode && dayjs(end_time).valueOf() < new Date().valueOf(), [zen_mode, end_time])
+	const outdate = useMemo(
+		() => zen_mode && end_time && dayjs(end_time).valueOf() < new Date().valueOf(),
+		[zen_mode, end_time]
+	)
 
 	return (
 		<div

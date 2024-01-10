@@ -3,7 +3,7 @@ import { match } from 'ts-pattern'
 
 import type { Todo } from '@/types'
 
-export const getDisabledStatus = (args: {
+export const getItemStatus = (args: {
 	relations: Todo.Setting['relations']
 	id: string
 	status: Todo.Todo['status']
@@ -13,10 +13,13 @@ export const getDisabledStatus = (args: {
 	if (!id) return false
 
 	const relation_index = (relations || []).findIndex(it => it.items.includes(id))
+	const done = status === 'checked' || status === 'closed'
 
-	if (relation_index !== -1) return `linked_${relation_index}`
+	if (relation_index !== -1) return { linked: `linked_${relation_index}`, done }
 
-	return status === 'checked' || status === 'closed'
+	if (!done) return false
+
+	return { linked: undefined, done }
 }
 
 export const getCycleSpecificDesc = (cycle: Todo.Todo['cycle']) => {

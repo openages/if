@@ -36,7 +36,18 @@
 	}
 }
 
-.disabled {
+.done {
+	.RenderStatus {
+		opacity: 0.3;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
+	.RenderText,
+	.RenderTags,
+	.RenderLevel,
 	.DateTime,
 	.RenderCycle,
 	.RenderSchedule {
@@ -58,7 +69,32 @@
 
 .linked {
 	.RenderStatus {
-		color: var(--color_relation_group);
+		width: 15px;
+		height: 15px;
+		border-radius: 50%;
+		background-color: var(--color_relation_group);
+		color: white;
+
+		&:hover {
+			opacity: 1;
+			background-color: var(--color_relation_group);
+			color: white;
+		}
+
+		:global {
+			svg {
+				width: 12px;
+				height: 12px;
+			}
+		}
+	}
+
+	.DateTime,
+	.RenderCycle,
+	.RenderSchedule {
+		color: var(--color_text_light);
+		pointer-events: none;
+		opacity: 0.3;
 	}
 }
 

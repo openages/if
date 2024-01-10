@@ -10,7 +10,7 @@ import type { DOMAttributes, ReactNode, CSSProperties } from 'react'
 interface IProps {
 	name: string
 	archive: boolean
-	disabled: boolean | string
+	status: false | { linked: string | undefined; done: boolean }
 	className: string
 	children: ReactNode
 	style: CSSProperties
@@ -21,20 +21,20 @@ interface IProps {
 const { Item } = Form
 
 const Index = (props: IProps) => {
-	const { name, archive, disabled, className, children, style, onMouseEnter, onMouseLeave, ...rest } = props
+	const { name, archive, status, className, children, style, onMouseEnter, onMouseLeave, ...rest } = props
 
 	const target_style = useMemo(
 		() =>
-			typeof disabled === 'string'
+			status && status.linked
 				? {
-						'--color_relation_group': genColor(xxHash32(disabled).toString(16), {
+						'--color_relation_group': genColor(xxHash32(status.linked).toString(3), {
 							saturation: 72,
-							lightness: [48, 100]
+							lightness: [30, 72]
 						}).color,
 						...style
 				  }
 				: style,
-		[disabled, style]
+		[status, style]
 	)
 
 	return (
@@ -43,8 +43,8 @@ const Index = (props: IProps) => {
 			className={$cx(
 				className,
 				archive && styles.archive,
-				disabled && styles.disabled,
-				Object.keys(style).length && styles.linked
+				status && status.done && styles.done,
+				target_style['--color_relation_group'] && styles.linked
 			)}
 			style={target_style}
 		>

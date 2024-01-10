@@ -158,19 +158,26 @@ export default class Index {
 				this.watchItems()
 			}
 
+			if (v !== 'table') {
+				this.table_pagination = { current: 1, total: 0 }
+			}
+
 			if (v === 'kanban') {
 				this.kanban_mode = 'angle'
 			}
 
-			if (v !== 'table') {
-				this.table_pagination = { current: 1, total: 0 }
+			if (v !== 'kanban') {
+				this.kanban_mode = '' as KanbanMode
 			}
 		},
-		['kanban_mode']: _ => {
+		['kanban_mode']: v => {
 			this.kanban_items = {}
 
 			this.stopWatchKanbanItems()
-			this.watchKanbanItems()
+
+			if (v) {
+				this.watchKanbanItems()
+			}
 		}
 	} as Watch<
 		Index & {
@@ -930,8 +937,7 @@ export default class Index {
 	}
 
 	on() {
-		this.timer_cycle = setInterval(this.cycleByTime, 1000)
-		// this.timer_cycle = setInterval(this.cycleByTime, 30 * 1000)
+		this.timer_cycle = setInterval(this.cycleByTime, 30 * 1000)
 		this.timer_archive = setInterval(() => archive(this.id), 60 * 1000)
 
 		window.$app.Event.on('todo/cycleByTime', this.cycleByTime)

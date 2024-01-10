@@ -3,7 +3,7 @@ import { Table } from 'antd'
 import { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { getDisabledStatus } from '@/utils/modules/todo'
+import { getItemStatus } from '@/utils/modules/todo'
 import { LoadingOutlined } from '@ant-design/icons'
 import { deepEqual } from '@openages/stk/react'
 
@@ -176,7 +176,7 @@ const Index = (props: IPropsTable) => {
 				return {
 					name: (column as TableColumnType<Todo.Todo>).dataIndex,
 					archive: column.ignoreArchive ? false : item.archive,
-					disabled: getDisabledStatus({ relations, id: item.id, status: item.status })
+					status: getItemStatus({ relations, id: item.id, status: item.status })
 				} as TdHTMLAttributes<any>
 			}
 
