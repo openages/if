@@ -17,6 +17,7 @@ module.exports = defineConfig({
 		ignored: /node_modules/
 	},
 	resolve: {
+		extensions: ['.tsx', '.ts', '.js'],
 		tsConfigPath: resolve(__dirname, 'tsconfig.json')
 	},
 	devServer: {
@@ -30,20 +31,17 @@ module.exports = defineConfig({
 	},
 	experiments: {
 		topLevelAwait: true,
-		// outputModule: !is_prod,
+		outputModule: !is_prod,
 		rspackFuture: {
-			newResolver: true,
 			// newTreeshaking: true,
-			// disableApplyEntryLazily: true,
-			disableTransformByDefault: true
+			disableApplyEntryLazily: true
 		}
 	},
-	devtool: is_prod ? false : 'source-map',
 	plugins: [
 		new HtmlRspackPlugin({
 			title: 'IF - GTD for prefessionals.',
-			template: './public/index.html'
-			// scriptLoading: is_prod ? 'defer' : 'module'
+			template: './public/index.html',
+			scriptLoading: is_prod ? 'defer' : 'module'
 		}),
 		!is_prod && new ReactRefreshPlugin()
 	],
@@ -55,6 +53,8 @@ module.exports = defineConfig({
 				use: {
 					loader: 'builtin:swc-loader',
 					options: {
+						sourceMap: !is_prod,
+						isModule: !is_prod,
 						jsc: {
 							parser: {
 								syntax: 'typescript',

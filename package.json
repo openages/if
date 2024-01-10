@@ -2,9 +2,7 @@
 	"name": "monorepo",
 	"private": true,
 	"homepage": "https://if.openages.com",
-	"workspaces": [
-		"packages/*"
-	],
+	"workspaces": ["packages/*"],
 	"scripts": {
 		"dev": "turbo run dev",
 		"build": "turbo run build",
@@ -19,16 +17,12 @@
 		"pre-commit": "lint-staged --allow-empty"
 	},
 	"lint-staged": {
-		"*.{css,md}": [
-			"prettier --write"
-		],
-		"*.(j|t)s?(x)": [
-			"biome format --write --changed ./packages"
-		]
+		"*.{css,md}": ["prettier --write"],
+		"*.(j|t)s?(x)": ["biome format --write --changed ./packages"]
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.4.1-nightly.d869a33",
-		"lint-staged": "^13.3.0",
+		"@biomejs/biome": "1.5.0",
+		"lint-staged": "^15.2.0",
 		"prettier": "^3.1.1",
 		"turbo": "^1.11.3",
 		"yorkie": "^2.0.0"
