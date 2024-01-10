@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { P, match } from 'ts-pattern'
+import { match, P } from 'ts-pattern'
 
 import type { Todo } from '@/types'
 import type { RxDocument } from 'rxdb'
@@ -10,32 +10,61 @@ export const not_cycle = [
 	{ cycle_enabled: { $eq: undefined } }
 ]
 
-const recycle = async (item: RxDocument<Todo.Todo>) => {
-	const uncycle = () => {
-		return item.updateCRDT({
-			ifMatch: {
-				$set: {
-					status: 'unchecked',
-					archive: false,
-					archive_time: undefined,
-					recycle_time: undefined
-				}
+type ScheduleArgs = Pick<Todo.Todo, 'start_time' | 'end_time'>
+
+const uncycle = async (item: RxDocument<Todo.Todo>, schedule_args?: ScheduleArgs) => {
+	const todo_schedule_args = schedule_args ? schedule_args : {}
+
+	return item.updateCRDT({
+		ifMatch: {
+			$set: {
+				status: 'unchecked',
+				archive: false,
+				archive_time: undefined,
+				recycle_time: undefined,
+				...todo_schedule_args
 			}
-		})
+		}
+	})
+}
+
+const recycle = async (item: RxDocument<Todo.Todo>) => {
+	let schedule_args = undefined as ScheduleArgs
+
+	if (item.cycle.type === 'specific' && item.schedule && item.start_time && item.end_time) {
+		const recycle_time = dayjs(item.recycle_time)
+
+		schedule_args = match(item.cycle.scale)
+			.with(P.union('clock', 'weekday'), () => ({
+				start_time: dayjs(item.start_time).date(recycle_time.date()).valueOf(),
+				end_time: dayjs(item.start_time).date(recycle_time.date()).valueOf()
+			}))
+			.with('date', () => ({
+				start_time: dayjs(item.start_time).month(recycle_time.month()).valueOf(),
+				end_time: dayjs(item.start_time).month(recycle_time.month()).valueOf()
+			}))
+			.with('special', () => ({
+				start_time: dayjs(item.start_time).year(recycle_time.year()).valueOf(),
+				end_time: dayjs(item.start_time).year(recycle_time.year()).valueOf()
+			}))
+			.exhaustive()
 	}
 
 	return match(item.cycle)
-		.with({ scale: P.union('minute', 'hour', 'day', 'month', 'year') }, async () => {
-			return uncycle()
+		.with({ type: 'interval', scale: P.union('minute', 'hour', 'day', 'month', 'year') }, async () => {
+			return uncycle(item)
 		})
-		.with({ scale: P.union('week', 'quarter') }, async ({ scale }) => {
+		.with({ type: 'interval', scale: P.union('week', 'quarter') }, async ({ scale }) => {
 			const target = scale == 'week' ? dayjs().isoWeekday() : dayjs().quarter()
 
 			if (item.cycle?.exclude?.length) {
 				if (!item.cycle.exclude.includes(target)) {
-					return uncycle()
+					return uncycle(item)
 				}
 			}
+		})
+		.with({ type: 'specific', scale: P.union('clock', 'weekday', 'date', 'special') }, async () => {
+			return uncycle(item, schedule_args)
 		})
 		.exhaustive()
 }

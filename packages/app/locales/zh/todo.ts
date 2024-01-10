@@ -123,9 +123,16 @@ export default {
 				reset: '重置'
 			},
 			specific: {
-				day: '每月{{value}}号',
-				hour: '每天{{value}}点',
-				special: '每年{{month}}月{{date}}号'
+				clock: '每天{{value}}点',
+				weekday: '{{value}}',
+				date: '每月{{value}}号',
+				special: '每年{{month}}月{{date}}号',
+				options: {
+					clock: '每天几点',
+					weekday: '每周几',
+					date: '每月几号',
+					special: '每年几月几号'
+				}
 			}
 		},
 		Deadline: {

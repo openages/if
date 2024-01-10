@@ -389,6 +389,10 @@
 	}
 
 	&.if-select-sm {
+		.if-select-selector {
+			font-size: 12px;
+		}
+
 		.if-select-dropdown {
 			.if-select-item {
 				min-height: unset;

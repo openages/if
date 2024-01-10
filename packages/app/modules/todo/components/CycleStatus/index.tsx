@@ -13,16 +13,17 @@ const Index = (props: IPropsCircleStatus) => {
 	const { cycle, recycle_time } = props
 	const [percent, setPercent] = useState(0)
 	const { t } = useTranslation()
-	const scale_text = cycle?.scale ? t(`translation:todo.Input.Cycle.options.${cycle.scale}`) : ''
+	const scale_text =
+		cycle?.type === 'interval' && cycle?.scale ? t(`translation:todo.Input.Cycle.options.${cycle.scale}`) : ''
 
 	useEffect(() => {
-		if (cycle.type === 'specific') return setPercent(0)
+		if (cycle?.type === 'specific') return setPercent(0)
 		if (!recycle_time) return setPercent(0)
 
 		const now = new Date().valueOf()
 
 		const duration =
-			(cycle.scale === 'quarter' || cycle.scale === 'special'
+			(cycle.scale === 'quarter'
 				? dayjs.duration(cycle.value, 'month').asSeconds() * 3
 				: dayjs.duration(cycle.value, cycle.scale).asSeconds()) * 1000
 

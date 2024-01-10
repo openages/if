@@ -142,7 +142,7 @@ const Index = (props: IPropsInput) => {
 								destroyTooltipOnHide
 								placement='bottom'
 							>
-								<div>
+								<div className='cursor_point'>
 									<DateTime {...props_remind}></DateTime>
 								</div>
 							</Tooltip>
@@ -151,7 +151,7 @@ const Index = (props: IPropsInput) => {
 								destroyTooltipOnHide
 								placement='bottom'
 							>
-								<div>
+								<div className='cursor_point'>
 									<DateTime {...props_deadline}></DateTime>
 								</div>
 							</Tooltip>

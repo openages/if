@@ -10,9 +10,9 @@ export const getDisabledStatus = (args: {
 }) => {
 	const { relations, id, status } = args
 
-	if (!id || !relations.length) return false
+	if (!id) return false
 
-	const relation_index = relations.findIndex(it => it.items.includes(id))
+	const relation_index = (relations || []).findIndex(it => it.items.includes(id))
 
 	if (relation_index !== -1) return `linked_${relation_index}`
 
@@ -21,13 +21,22 @@ export const getDisabledStatus = (args: {
 
 export const getCycleSpecificDesc = (cycle: Todo.Todo['cycle']) => {
 	return match(cycle.scale)
-		.with('day', () =>
+		.with('clock', () =>
 			// @ts-ignore
-			$t('translation:todo.Input.Cycle.specific.day', { value: cycle.value })
+			$t('translation:todo.Input.Cycle.specific.clock', { value: cycle.value })
 		)
-		.with('hour', () =>
+		.with('weekday', () =>
 			// @ts-ignore
-			$t('translation:todo.Input.Cycle.specific.hour', { value: cycle.value })
+			$t('translation:todo.Input.Cycle.specific.weekday', {
+				value:
+					cycle.value !== undefined
+						? dayjs().day(cycle.value).format('dddd')
+						: $t('translation:common.unset')
+			})
+		)
+		.with('date', () =>
+			// @ts-ignore
+			$t('translation:todo.Input.Cycle.specific.date', { value: cycle.value })
 		)
 		.with('special', () =>
 			// @ts-ignore

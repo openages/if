@@ -270,6 +270,9 @@ export default {
                                           "month",
                                           "quarter",
                                           "year",
+                                          "clock",
+                                          "weekday",
+                                          "date",
                                           "special"
                                     ]
                               },
@@ -319,6 +322,9 @@ export default {
                   "end_time": {
                         "type": "number"
                   },
+                  "color": {
+                        "type": "string"
+                  },
                   "children": {
                         "type": "array",
                         "items": {
@@ -342,6 +348,15 @@ export default {
                                     "id",
                                     "text",
                                     "status"
+                              ]
+                        }
+                  },
+                  "collaborators": {
+                        "type": "array",
+                        "items": {
+                              "type": [
+                                    "string",
+                                    "number"
                               ]
                         }
                   },
@@ -472,6 +487,9 @@ export default {
                                           "month",
                                           "quarter",
                                           "year",
+                                          "clock",
+                                          "weekday",
+                                          "date",
                                           "special"
                                     ]
                               },
@@ -521,6 +539,9 @@ export default {
                   "end_time": {
                         "type": "number"
                   },
+                  "color": {
+                        "type": "string"
+                  },
                   "children": {
                         "type": "array",
                         "items": {
@@ -544,6 +565,15 @@ export default {
                                     "id",
                                     "text",
                                     "status"
+                              ]
+                        }
+                  },
+                  "collaborators": {
+                        "type": "array",
+                        "items": {
+                              "type": [
+                                    "string",
+                                    "number"
                               ]
                         }
                   },

@@ -140,7 +140,13 @@ const Index = (props: IPropsTodoItem) => {
 	}
 
 	const has_options = useMemo(
-		() => level || tag_ids?.length || remind_time || end_time || (cycle_enabled && cycle) || schedule,
+		() =>
+			level ||
+			tag_ids?.length ||
+			remind_time ||
+			end_time ||
+			(cycle_enabled && cycle && cycle?.value !== undefined) ||
+			schedule,
 		[level, tag_ids, remind_time, end_time, cycle_enabled, cycle, schedule]
 	)
 
@@ -162,7 +168,7 @@ const Index = (props: IPropsTodoItem) => {
 					{status === 'unchecked' && end_time && (
 						<DeadlineStatus end_time={end_time}></DeadlineStatus>
 					)}
-					{cycle_enabled && cycle && (
+					{cycle_enabled && cycle && cycle.value !== undefined && (
 						<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
 					)}
 					{level > 0 && <LevelStatus level={level}></LevelStatus>}

@@ -327,7 +327,7 @@ export default class Index {
 		if (args.status === 'checked') {
 			this.recycle(todo_item)
 		} else {
-			if (todo_item.cycle_enabled && todo_item.cycle) {
+			if (todo_item.cycle_enabled && todo_item.cycle && todo_item.cycle.value !== undefined) {
 				await todo_item.updateCRDT({ ifMatch: { $unset: { recycle_time: '' } } })
 			}
 		}
@@ -336,7 +336,7 @@ export default class Index {
 	}
 
 	async recycle(todo_item: RxDocument<Todo.Todo>) {
-		if (todo_item.cycle_enabled && todo_item.cycle) {
+		if (todo_item.cycle_enabled && todo_item.cycle && todo_item.cycle.value !== undefined) {
 			const scale = todo_item.cycle.scale
 			const value = todo_item.cycle.value
 			const now = dayjs()
@@ -353,20 +353,28 @@ export default class Index {
 								.valueOf()
 				})
 				.with('specific', () => {
-					if (scale === 'day') {
-						const _now = now.hour(0).minute(0).second(0)
-
-						return now.date() < value
-							? _now.date(value).valueOf()
-							: _now.add(1, 'month').date(value).valueOf()
-					}
-
-					if (scale === 'hour') {
+					if (scale === 'clock') {
 						const _now = now.minute(0).second(0)
 
 						return now.hour() < value
 							? _now.hour(value).valueOf()
 							: _now.add(1, 'day').hour(value).valueOf()
+					}
+
+					if (scale === 'weekday') {
+						const _now = now.hour(0).minute(0).second(0)
+
+						return now.day() < value
+							? _now.day(value).valueOf()
+							: _now.add(1, 'week').day(value).valueOf()
+					}
+
+					if (scale === 'date') {
+						const _now = now.hour(0).minute(0).second(0)
+
+						return now.date() < value
+							? _now.date(value).valueOf()
+							: _now.add(1, 'month').date(value).valueOf()
 					}
 
 					if (scale === 'special') {
@@ -380,7 +388,7 @@ export default class Index {
 						}
 
 						if (_now.month() === month) {
-							if (_now.date() <= date) {
+							if (_now.date() < date) {
 								return _now.month(month).date(date).valueOf()
 							} else {
 								return _now.add(1, 'year').month(month).date(date).valueOf()
@@ -922,7 +930,8 @@ export default class Index {
 	}
 
 	on() {
-		this.timer_cycle = setInterval(this.cycleByTime, 30 * 1000)
+		this.timer_cycle = setInterval(this.cycleByTime, 1000)
+		// this.timer_cycle = setInterval(this.cycleByTime, 30 * 1000)
 		this.timer_archive = setInterval(() => archive(this.id), 60 * 1000)
 
 		window.$app.Event.on('todo/cycleByTime', this.cycleByTime)

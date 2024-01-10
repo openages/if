@@ -37,6 +37,12 @@
 	:global {
 		.cycle_input_wrap {
 			.radio_group {
+				&.specific {
+					.if-radio-wrapper {
+						width: 100%;
+					}
+				}
+
 				.if-radio-wrapper {
 					width: calc(50% - 1px);
 					padding: 6px 12px;

@@ -38,6 +38,20 @@ export namespace Todo {
 		create_at: number
 	}
 
+	type Cycle =
+		| {
+				type: 'interval'
+				scale: 'minute' | 'hour' | 'day' | 'week' | 'month' | 'quarter' | 'year'
+				value: number
+				exclude?: Array<number>
+		  }
+		| {
+				type: 'specific'
+				scale: 'clock' | 'weekday' | 'date' | 'special'
+				value: number
+				exclude?: Array<number>
+		  }
+
 	export type Todo = Common & {
 		type: 'todo'
 		/** @maxLength 12 */
@@ -46,12 +60,7 @@ export namespace Todo {
 		tag_ids?: Array<string>
 		remind_time?: number
 		cycle_enabled?: boolean
-		cycle?: {
-			type: 'interval' | 'specific'
-			scale: 'minute' | 'hour' | 'day' | 'week' | 'month' | 'quarter' | 'year' | 'special'
-			value: number
-			exclude?: Array<number>
-		}
+		cycle?: Cycle
 		/**
 		 * @multipleOf 1
 		 * @minimum 1
@@ -74,11 +83,13 @@ export namespace Todo {
 		 * */
 		start_time?: number
 		end_time?: number
+		color?: string
 		children?: Array<{
 			id: string
 			text: string
 			status: 'checked' | 'unchecked'
 		}>
+		collaborators?: Array<string | number>
 	}
 
 	export type Group = Common & {

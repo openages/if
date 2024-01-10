@@ -128,9 +128,16 @@ export default {
 				reset: 'reset'
 			},
 			specific: {
-				day: '{{value}}th of each month',
-				hour: 'daily at {{value}}',
-				special: '{{month}}-{{date}} each year'
+				clock: `{{value}} o'clock of each day`,
+				weekday: '{{value}}',
+				date: '{{value}}th of each month',
+				special: '{{month}}-{{date}} each year',
+				options: {
+					clock: 'x of each day',
+					weekday: 'x of each week',
+					date: 'x of each month',
+					special: 'x-x each year'
+				}
 			}
 		}
 	},
