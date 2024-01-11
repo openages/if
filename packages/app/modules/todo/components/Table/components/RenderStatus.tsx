@@ -1,14 +1,14 @@
 import { useMemoizedFn } from 'ahooks'
 import { Case, Switch } from 'react-if'
 
-import { CheckSquare, Square } from '@phosphor-icons/react'
+import { CheckCircle, CheckSquare, Circle, Square } from '@phosphor-icons/react'
 
 import styles from '../index.css'
 
 import type { CustomFormItem, Todo } from '@/types'
 
-const Index = (props: CustomFormItem<Todo.Todo['status']>) => {
-	const { value, onChange } = props
+const Index = (props: CustomFormItem<Todo.Todo['status']> & { linked?: string }) => {
+	const { value, linked, onChange } = props
 
 	const onCheck = useMemoizedFn(() => {
 		if (value === 'closed') return
@@ -26,10 +26,10 @@ const Index = (props: CustomFormItem<Todo.Todo['status']>) => {
 		>
 			<Switch>
 				<Case condition={value === 'unchecked' || value === 'closed'}>
-					<Square size={16} />
+					{linked ? <Circle size={16} weight='duotone' /> : <Square size={16} weight='regular' />}
 				</Case>
 				<Case condition={value === 'checked'}>
-					<CheckSquare size={16} />
+					{linked ? <CheckCircle size={16} weight='duotone' /> : <CheckSquare size={16} />}
 				</Case>
 			</Switch>
 		</div>

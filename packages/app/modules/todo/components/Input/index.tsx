@@ -71,7 +71,7 @@ const Index = (props: IPropsInput) => {
 
 		const textContent = await updateValue(input_ref.current.textContent)
 
-		create({ ...input, text: textContent, create_at: new Date().valueOf() } as Todo.TodoItem)
+		create({ ...input, text: textContent, create_at: new Date().valueOf() } as Todo.TodoItem, { top: true })
 	})
 
 	return (

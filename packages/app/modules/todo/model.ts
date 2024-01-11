@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 import { omit, pick } from 'lodash-es'
 import { makeAutoObservable, runInAction } from 'mobx'
 import { match } from 'ts-pattern'
@@ -21,7 +20,7 @@ import {
 	cleanTodoItem,
 	create,
 	getAngleTodoCounts,
-	getMaxSort,
+	getMaxMinSort,
 	getQueryItems,
 	getQueryTodoSetting,
 	getTagTodoCounts,
@@ -29,6 +28,7 @@ import {
 	queryArchives,
 	queryArchivesCounts,
 	queryItem,
+	recycle,
 	removeAngle,
 	removeTodoItem,
 	restoreArchiveItem,
@@ -39,7 +39,7 @@ import {
 
 import type { RxDB, Todo } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
-import type { ManipulateType, Dayjs } from 'dayjs'
+import type { Dayjs } from 'dayjs'
 import type { MangoQuerySelector, MangoQuerySortPart, RxDocument } from 'rxdb'
 import type { Subscription } from 'rxjs'
 import type {
@@ -286,7 +286,7 @@ export default class Index {
 	}
 
 	@loading
-	async create(item: Todo.TodoItem, options?: { quick?: boolean; dimension_id?: string }) {
+	async create(item: Todo.TodoItem, options?: { quick?: boolean; dimension_id?: string; top?: boolean }) {
 		await this.setActivity('insert')
 
 		const data = {} as Todo.TodoItem
@@ -304,7 +304,10 @@ export default class Index {
 			data['tag_ids'] = [options?.dimension_id]
 		}
 
-		return create({ ...item, ...data, file_id: this.id } as Todo.TodoItem, options?.quick)
+		return create({ ...item, ...data, file_id: this.id } as Todo.TodoItem, {
+			quick: options?.quick,
+			top: options?.top
+		})
 	}
 
 	async check(args: ArgsCheck) {
@@ -332,7 +335,7 @@ export default class Index {
 		}
 
 		if (args.status === 'checked') {
-			this.recycle(todo_item)
+			recycle(todo_item)
 		} else {
 			if (todo_item.cycle_enabled && todo_item.cycle && todo_item.cycle.value !== undefined) {
 				await todo_item.updateCRDT({ ifMatch: { $unset: { recycle_time: '' } } })
@@ -340,75 +343,6 @@ export default class Index {
 		}
 
 		await this.setActivity('check')
-	}
-
-	async recycle(todo_item: RxDocument<Todo.Todo>) {
-		if (todo_item.cycle_enabled && todo_item.cycle && todo_item.cycle.value !== undefined) {
-			const scale = todo_item.cycle.scale
-			const value = todo_item.cycle.value
-			const now = dayjs()
-
-			const recycle_time = match(todo_item.cycle.type)
-				.with('interval', () => {
-					const now = dayjs()
-
-					return scale === 'minute' || scale === 'hour'
-						? now.add(value, scale).valueOf()
-						: now
-								.startOf(scale as ManipulateType)
-								.add(value, scale as ManipulateType)
-								.valueOf()
-				})
-				.with('specific', () => {
-					if (scale === 'clock') {
-						const _now = now.minute(0).second(0)
-
-						return now.hour() < value
-							? _now.hour(value).valueOf()
-							: _now.add(1, 'day').hour(value).valueOf()
-					}
-
-					if (scale === 'weekday') {
-						const _now = now.hour(0).minute(0).second(0)
-
-						return now.day() < value
-							? _now.day(value).valueOf()
-							: _now.add(1, 'week').day(value).valueOf()
-					}
-
-					if (scale === 'date') {
-						const _now = now.hour(0).minute(0).second(0)
-
-						return now.date() < value
-							? _now.date(value).valueOf()
-							: _now.add(1, 'month').date(value).valueOf()
-					}
-
-					if (scale === 'special') {
-						const _now = now.hour(0).minute(0).second(0)
-						const target_value = dayjs(value)
-						const month = target_value.month()
-						const date = target_value.date()
-
-						if (_now.month() < month) {
-							return _now.month(month).date(date).valueOf()
-						}
-
-						if (_now.month() === month) {
-							if (_now.date() < date) {
-								return _now.month(month).date(date).valueOf()
-							} else {
-								return _now.add(1, 'year').month(month).date(date).valueOf()
-							}
-						}
-
-						return _now.add(1, 'year').month(month).date(date).valueOf()
-					}
-				})
-				.exhaustive()
-
-			await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time } } })
-		}
 	}
 
 	async update(args: ArgsUpdate) {
@@ -602,7 +536,7 @@ export default class Index {
 	async moveTo(todo_id: string, angle_id: string) {
 		if (this.isLinked(todo_id)) return
 
-		const sort = await getMaxSort(angle_id)
+		const sort = await getMaxMinSort(angle_id)
 
 		await update({ id: todo_id, angle_id, sort: sort + 1 })
 	}

@@ -6,7 +6,7 @@ import { updateSetting } from '@/actions/todo'
 import { getArchiveTime, getDocItem, getDocItemsData } from '@/utils'
 import { confirm, info } from '@/utils/antd'
 
-import type { MangoQueryOperators, MangoQuerySelector, MangoQuerySortPart } from 'rxdb'
+import type { MangoQueryOperators, MangoQuerySelector, MangoQuerySortPart, RxDocument } from 'rxdb'
 import type { ArchiveQueryParams } from './types/model'
 import type {
 	ArgsArchiveByTime,
@@ -20,11 +20,12 @@ import type {
 } from './types/services'
 
 import type { RxDB, Todo } from '@/types'
+import type { ManipulateType } from 'dayjs'
 
-export const getMaxSort = async (angle_id: string) => {
+export const getMaxMinSort = async (angle_id: string, min?: boolean) => {
 	const [max_sort_item] = await $db.todo_items
 		.find({ selector: { angle_id, archive: false } })
-		.sort({ sort: 'desc' })
+		.sort({ sort: min ? 'asc' : 'desc' })
 		.limit(1)
 		.exec()
 
@@ -103,19 +104,19 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 	}
 }
 
-export const create = async (item: Todo.TodoItem, quick?: boolean) => {
-	const sort = await getMaxSort(item.angle_id)
+export const create = async (item: Todo.TodoItem, options?: { quick?: boolean; top?: boolean }) => {
+	const sort = await getMaxMinSort(item.angle_id, options?.top)
 
 	const res = await $db.todo_items.insertCRDT({
 		ifMatch: {
 			$set: {
 				...item,
-				sort: sort + 1
+				sort: options?.top ? sort - 0.01 : sort + 1
 			}
 		}
 	})
 
-	if (!quick) {
+	if (!options?.quick) {
 		const container = document.getElementById(item.file_id)
 
 		container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' })
@@ -355,7 +356,7 @@ export const cleanTodoItems = async (id: string) => {
 export const restoreArchiveItem = async (id: string, angles: Todo.Setting['angles'], current_angle_id: string) => {
 	const doc = await $db.todo_items.findOne({ selector: { id } }).exec()
 	const angle_exsit = angles.find(item => item.id === doc.angle_id)
-	const sort = await getMaxSort(current_angle_id)
+	const sort = await getMaxMinSort(current_angle_id)
 
 	const target = {
 		archive: false,
@@ -422,4 +423,73 @@ export const removeAngle = async (file_id: string, angle_id: string) => {
 
 export const getTagTodoCounts = async (file_id: string, tag_id: string) => {
 	return $db.todo_items.count({ selector: { file_id, tag_ids: { $elemMatch: { $in: [tag_id] } } } }).exec()
+}
+
+export const recycle = async (todo_item: RxDocument<Todo.Todo>) => {
+	if (todo_item.cycle_enabled && todo_item.cycle && todo_item.cycle.value !== undefined) {
+		const scale = todo_item.cycle.scale
+		const value = todo_item.cycle.value
+		const now = dayjs()
+
+		const recycle_time = match(todo_item.cycle.type)
+			.with('interval', () => {
+				const now = dayjs()
+
+				return scale === 'minute' || scale === 'hour'
+					? now.add(value, scale).valueOf()
+					: now
+							.startOf(scale as ManipulateType)
+							.add(value, scale as ManipulateType)
+							.valueOf()
+			})
+			.with('specific', () => {
+				if (scale === 'clock') {
+					const _now = now.minute(0).second(0)
+
+					return now.hour() < value
+						? _now.hour(value).valueOf()
+						: _now.add(1, 'day').hour(value).valueOf()
+				}
+
+				if (scale === 'weekday') {
+					const _now = now.hour(0).minute(0).second(0)
+
+					return now.day() < value
+						? _now.day(value).valueOf()
+						: _now.add(1, 'week').day(value).valueOf()
+				}
+
+				if (scale === 'date') {
+					const _now = now.hour(0).minute(0).second(0)
+
+					return now.date() < value
+						? _now.date(value).valueOf()
+						: _now.add(1, 'month').date(value).valueOf()
+				}
+
+				if (scale === 'special') {
+					const _now = now.hour(0).minute(0).second(0)
+					const target_value = dayjs(value)
+					const month = target_value.month()
+					const date = target_value.date()
+
+					if (_now.month() < month) {
+						return _now.month(month).date(date).valueOf()
+					}
+
+					if (_now.month() === month) {
+						if (_now.date() < date) {
+							return _now.month(month).date(date).valueOf()
+						} else {
+							return _now.add(1, 'year').month(month).date(date).valueOf()
+						}
+					}
+
+					return _now.add(1, 'year').month(month).date(date).valueOf()
+				}
+			})
+			.exhaustive()
+
+		await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time } } })
+	}
 }

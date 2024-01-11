@@ -146,6 +146,7 @@ const Index = (props: IPropsTable) => {
 				{
 					title: t('translation:todo.Header.options.sort.create_at'),
 					dataIndex: 'create_at',
+					width: relaxed ? 'auto' : 102,
 					align: 'right',
 					ignoreArchive: true,
 					render: () => <RenderCreateAt></RenderCreateAt>

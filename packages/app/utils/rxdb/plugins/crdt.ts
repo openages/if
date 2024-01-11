@@ -36,8 +36,8 @@ import type {
 } from 'rxdb'
 
 const config = {
-	trigger_counts: 12,
-	reduce_counts: 6,
+	trigger_counts: 120,
+	reduce_counts: 60,
 	auto_clean: true
 }
 
@@ -49,8 +49,8 @@ const cleanOperations = async <RxDocType>(args: {
 }) => {
 	const { crdtDocField, docData, storageToken, hashFunction } = args
 
-	if (!config.auto_clean) return crdtDocField.operations
-	if (crdtDocField.operations.length < config.trigger_counts) return crdtDocField.operations
+	if (!config.auto_clean) return
+	if (crdtDocField.operations.length < config.trigger_counts) return
 
 	const target_operations = crdtDocField.operations.slice(config.reduce_counts)
 
