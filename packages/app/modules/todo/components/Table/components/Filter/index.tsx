@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { Button, DatePicker, Form, Select } from 'antd'
+import { Button, DatePicker, Form, Input, Select } from 'antd'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 
@@ -40,6 +40,14 @@ const Index = (props: IPropsTableFilter) => {
 						onReset={onReset}
 					>
 						<div className='flex flex_wrap'>
+							<Item name='text'>
+								<Input
+									className='input'
+									allowClear
+									placeholder={t('translation:todo.common.text')}
+									maxLength={15}
+								></Input>
+							</Item>
 							<Item name='status'>
 								<Select
 									className='select'

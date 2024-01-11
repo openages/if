@@ -8,16 +8,11 @@
 			font-size: 12px;
 		}
 
+		.input,
 		.select,
 		.datepicker {
 			width: 90px;
-		}
-
-		.select {
-			.if-select-selector {
-				font-size: 12px;
-				border-radius: var(--radius);
-			}
+			font-size: 12px;
 		}
 
 		.btn_action {

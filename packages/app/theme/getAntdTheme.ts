@@ -55,6 +55,9 @@ export default (theme: Theme, color_main: string) => {
 			Dropdown: {
 				controlItemBgHover: vars.color_bg_2
 			},
+			Input: {
+				colorPrimary: vars.color_text
+			},
 			Select: {
 				colorPrimary: vars.color_text,
 				optionActiveBg: vars.color_bg_2

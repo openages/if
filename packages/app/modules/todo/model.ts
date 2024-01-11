@@ -455,8 +455,9 @@ export default class Index {
 
 		const { index, dimension_id, data, callback } = args
 		const setting = data ?? (getTodo() as Todo.TodoItem)
+		const is_tag_mode = this.mode === 'kanban' && this.kanban_mode === 'tag'
 
-		const item = await this.create(setting, { quick: true, dimension_id })
+		const item = await this.create(setting, { quick: true, dimension_id, top: is_tag_mode })
 
 		const { items } = this.getItem({ index, dimension_id })
 
@@ -662,6 +663,10 @@ export default class Index {
 
 		if (values.status) {
 			selector['status'] = values.status
+		}
+
+		if (values.text) {
+			selector['text'] = { $regex: `.*${values.text}.*`, $options: 'i' }
 		}
 
 		if (values.tag_id) {

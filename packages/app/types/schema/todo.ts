@@ -33,6 +33,7 @@ export namespace Todo {
 		file_id: string
 		/** @maxLength 30 */
 		angle_id: string
+		/** @maxLength 150 */
 		text: string
 		sort: number
 		create_at: number

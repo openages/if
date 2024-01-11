@@ -985,9 +985,25 @@
 	}
 
 	.if-spin-nested-loading {
+		position: relative;
+
 		.if-spin {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: 360px;
+			max-height: unset;
 			padding: 90px 0;
 			background-color: var(--color_bg);
+
+			.if-spin-dot {
+				position: unset;
+				margin: unset;
+				inset-inline-start: unset;
+				display: flex;
+				width: unset;
+				height: unset;
+			}
 		}
 	}
 }

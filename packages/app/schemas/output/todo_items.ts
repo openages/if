@@ -156,7 +156,8 @@ export default {
                         "maxLength": 30
                   },
                   "text": {
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 150
                   },
                   "sort": {
                         "type": "number"
@@ -332,7 +333,8 @@ export default {
                         "maxLength": 30
                   },
                   "text": {
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 150
                   },
                   "sort": {
                         "type": "number"
@@ -505,7 +507,8 @@ export default {
                         "maxLength": 30
                   },
                   "text": {
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 150
                   },
                   "sort": {
                         "type": "number"
@@ -546,7 +549,8 @@ export default {
                         "maxLength": 30
                   },
                   "text": {
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 150
                   },
                   "sort": {
                         "type": "number"

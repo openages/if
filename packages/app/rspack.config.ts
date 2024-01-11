@@ -34,7 +34,7 @@ module.exports = defineConfig({
 	},
 	experiments: {
 		topLevelAwait: true,
-		outputModule: true,
+		// outputModule: true,
 		rspackFuture: {
 			// newTreeshaking: true,
 			disableApplyEntryLazily: true
@@ -43,8 +43,8 @@ module.exports = defineConfig({
 	plugins: [
 		new HtmlRspackPlugin({
 			title: 'IF - GTD for prefessionals.',
-			template: './public/index.html',
-			scriptLoading: 'module'
+			template: './public/index.html'
+			// scriptLoading: 'module'
 		}),
 		!is_prod && new ReactRefreshPlugin()
 	],
@@ -57,7 +57,6 @@ module.exports = defineConfig({
 					loader: 'builtin:swc-loader',
 					options: {
 						sourceMap: !is_prod,
-						isModule: true,
 						jsc: {
 							parser: {
 								syntax: 'typescript',

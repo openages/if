@@ -1,10 +1,10 @@
 @keyframes light {
 	from {
-		clip: rect(96px 96px 96px 0);
+		clip: rect(var(--loading_size) var(--loading_size) var(--loading_size) 0);
 	}
 
 	to {
-		clip: rect(0 96px 96px 0);
+		clip: rect(0 var(--loading_size) var(--loading_size) 0);
 	}
 }
 
@@ -25,10 +25,32 @@
 		}
 	}
 
+	&.useByComponent {
+		&.dark {
+			background-color: #232326;
+
+			:global {
+				.loading_wrap {
+					fill: #555;
+				}
+
+				.desc {
+					color: white;
+				}
+			}
+		}
+
+		:global {
+			.loading_wrap {
+				fill: var(--color_text_softlight);
+			}
+		}
+	}
+
 	:global {
 		.loading_wrap {
-			width: 96px;
-			height: 96px;
+			width: var(--loading_size);
+			height: var(--loading_size);
 			fill: var(--color_main);
 
 			.loading_icon {

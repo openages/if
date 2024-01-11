@@ -4,8 +4,8 @@ import { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { getSort } from '@/appdata/const'
+import { LoadingCircle } from '@/components'
 import { getItemStatus } from '@/utils/modules/todo'
-import { LoadingOutlined } from '@ant-design/icons'
 import { deepEqual } from '@openages/stk/react'
 
 import {
@@ -160,7 +160,7 @@ const Index = (props: IPropsTable) => {
 					title: t('translation:todo.Header.options.sort.create_at'),
 					dataIndex: 'create_at',
 					width: relaxed ? 'auto' : 102,
-					align: 'right',
+					align: 'center',
 					ignoreArchive: true,
 					sorter: true,
 					sortOrder: getSort(table_sort['create_at']),
@@ -227,6 +227,11 @@ const Index = (props: IPropsTable) => {
 		}
 	}, [table_pagination])
 
+	const table_loading = useMemo(
+		() => ({ spinning: loading, indicator: <LoadingCircle className='icon_loading' /> }),
+		[loading]
+	)
+
 	const onRow: TableProps<Todo.Todo>['onRow'] = useMemoizedFn((item, index) => {
 		return {
 			item,
@@ -253,14 +258,7 @@ const Index = (props: IPropsTable) => {
 				components={components}
 				scroll={{ x: 1080 }}
 				pagination={pagination}
-				loading={{
-					spinning: loading,
-					indicator: (
-						<LoadingOutlined
-							style={{ color: 'var(--color_text)', fontSize: 24 }}
-						></LoadingOutlined>
-					)
-				}}
+				loading={table_loading}
 				sortDirections={['ascend', 'descend', null]}
 				columns={target_columns}
 				dataSource={items}

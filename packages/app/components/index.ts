@@ -1,6 +1,7 @@
 export { default as Loading } from './Loading'
 export { default as LazyElement } from './LazyElement'
 export { default as OffscreenOutlet } from './OffscreenOutlet'
+export { default as LoadingCircle } from './LoadingCircle'
 export { default as GlobalLoading } from './GlobalLoading'
 export { default as Logo } from './Logo'
 export { default as LogoWithBg } from './LogoWithBg'
