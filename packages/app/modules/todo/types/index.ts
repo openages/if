@@ -189,10 +189,12 @@ export interface IPropsTable extends Pick<IPropsTodos, 'relations' | 'showDetail
 	loading: boolean
 	tags: Model['setting']['setting']['tags']
 	table_pagination: Model['table_pagination']
+	table_sort: Model['table_sort']
 	visible_table_filter: Model['visible_table_filter']
 	clean: Model['clean']
 	onTableRowChange: Model['onTableRowChange']
 	onTablePageChange: Model['onTablePageChange']
+	onTableSorterChange: Model['onTableSorterChange']
 	onTableSearch: Model['onTableSearch']
 }
 

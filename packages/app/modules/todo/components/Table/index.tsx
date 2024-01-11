@@ -3,6 +3,7 @@ import { Table } from 'antd'
 import { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { getSort } from '@/appdata/const'
 import { getItemStatus } from '@/utils/modules/todo'
 import { LoadingOutlined } from '@ant-design/icons'
 import { deepEqual } from '@openages/stk/react'
@@ -28,9 +29,10 @@ import {
 import styles from './index.css'
 
 import type { Todo } from '@/types'
-import type { TableColumnType, PaginationProps } from 'antd'
+import type { TableColumnType, PaginationProps, TableProps } from 'antd'
 import type { TdHTMLAttributes } from 'react'
 import type { IPropsTable, IPropsTableFilter } from '../../types'
+import type { SorterResult } from 'antd/es/table/interface'
 
 const Index = (props: IPropsTable) => {
 	const {
@@ -39,8 +41,10 @@ const Index = (props: IPropsTable) => {
 		loading,
 		tags,
 		table_pagination,
+		table_sort,
 		visible_table_filter,
 		onTableRowChange,
+		onTableSorterChange,
 		onTablePageChange,
 		clean,
 		showDetailModal,
@@ -87,6 +91,9 @@ const Index = (props: IPropsTable) => {
 					dataIndex: 'level',
 					width: relaxed ? 'auto' : 96,
 					align: 'center',
+					sorter: true,
+					sortOrder: getSort(table_sort['level']),
+					showSorterTooltip: false,
 					render: () => <RenderLevel></RenderLevel>
 				},
 				{
@@ -94,6 +101,9 @@ const Index = (props: IPropsTable) => {
 					dataIndex: 'remind_time',
 					width: relaxed ? 'auto' : 96,
 					align: 'center',
+					sorter: true,
+					sortOrder: getSort(table_sort['remind_time']),
+					showSorterTooltip: false,
 					render: () => <RenderRemind></RenderRemind>
 				},
 				{
@@ -101,6 +111,9 @@ const Index = (props: IPropsTable) => {
 					dataIndex: 'end_time',
 					width: relaxed ? 'auto' : 96,
 					align: 'center',
+					sorter: true,
+					sortOrder: getSort(table_sort['end_time']),
+					showSorterTooltip: false,
 					render: () => <RenderDeadline></RenderDeadline>
 				},
 				{
@@ -149,6 +162,9 @@ const Index = (props: IPropsTable) => {
 					width: relaxed ? 'auto' : 102,
 					align: 'right',
 					ignoreArchive: true,
+					sorter: true,
+					sortOrder: getSort(table_sort['create_at']),
+					showSorterTooltip: false,
 					render: () => <RenderCreateAt></RenderCreateAt>
 				},
 				{
@@ -168,7 +184,7 @@ const Index = (props: IPropsTable) => {
 			] as Array<
 				TableColumnType<Todo.Todo> & { ignoreArchive?: boolean; deps?: Array<Partial<keyof Todo.Todo>> }
 			>,
-		[relaxed]
+		[relaxed, table_sort]
 	)
 
 	const target_columns = useMemo(() => {
@@ -211,12 +227,19 @@ const Index = (props: IPropsTable) => {
 		}
 	}, [table_pagination])
 
-	const onRow = useMemoizedFn((item, index) => {
+	const onRow: TableProps<Todo.Todo>['onRow'] = useMemoizedFn((item, index) => {
 		return {
 			item,
 			index,
 			onTableRowChange
 		} as TdHTMLAttributes<any>
+	})
+
+	const onChange: TableProps<Todo.Todo>['onChange'] = useMemoizedFn((_pagination, _filter, sorter) => {
+		onTableSorterChange(
+			(sorter as SorterResult<Todo.Todo>).field as string,
+			getSort((sorter as SorterResult<Todo.Todo>).order) as 'asc' | 'desc'
+		)
 	})
 
 	return (
@@ -238,9 +261,11 @@ const Index = (props: IPropsTable) => {
 						></LoadingOutlined>
 					)
 				}}
+				sortDirections={['ascend', 'descend', null]}
 				columns={target_columns}
 				dataSource={items}
 				onRow={onRow}
+				onChange={onChange}
 			></Table>
 		</div>
 	)

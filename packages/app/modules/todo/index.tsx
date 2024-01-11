@@ -1,8 +1,8 @@
 import { useMemoizedFn } from 'ahooks'
 import { omit, pick } from 'lodash-es'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useMemo, useState } from 'react'
-import { Case, If, Switch, Then } from 'react-if'
+import { useLayoutEffect, useMemo, useState, Fragment } from 'react'
+import { match } from 'ts-pattern'
 import { container } from 'tsyringe'
 
 import { DataEmpty, SortableWrap } from '@/components'
@@ -119,10 +119,12 @@ const Index = ({ id }: IProps) => {
 		loading: x.utils.loading['table'],
 		tags,
 		table_pagination: $copy(x.table_pagination),
+		table_sort: $copy(x.table_sort),
 		visible_table_filter: x.visible_table_filter,
 		clean: useMemoizedFn(x.clean),
 		onTableRowChange: useMemoizedFn(x.onTableRowChange),
 		onTablePageChange: useMemoizedFn(x.onTablePageChange),
+		onTableSorterChange: useMemoizedFn(x.onTableSorterChange),
 		onTableSearch: useMemoizedFn(x.onTableSearch),
 		...pick(props_todos, ['relations', 'showDetailModal', 'remove'])
 	}
@@ -235,50 +237,54 @@ const Index = ({ id }: IProps) => {
 			)}
 		>
 			<DataEmpty></DataEmpty>
-			<If condition={x.id && x.file.data.name && Boolean(angles)}>
-				<Then>
-					<Header {...props_header}></Header>
-					{x.mode !== 'table' ? (
-						<DndContext
-							collisionDetection={x.mode === 'kanban' ? pointerWithin : rectIntersection}
-							onDragStart={onDragStart}
-							onDragEnd={onDragEnd}
-						>
-							<Switch>
-								<Case condition={x.mode === 'list'}>
-									<Tabs {...props_tabs}></Tabs>
-									<Todos {...props_todos}></Todos>
-									<Input {...props_input}></Input>
-								</Case>
-								<Case condition={x.mode === 'kanban'}>
-									<Kanban {...props_kanban}></Kanban>
-								</Case>
-							</Switch>
-							{x.kanban_mode === 'angle' && (
-								<DragOverlay dropAnimation={null}>
-									{drag_todo_item && (
-										<SortableWrap
-											id={drag_todo_item.item.id}
-											data={{
-												index: drag_todo_item.index,
-												dimension_id: drag_todo_item.dimension_id
-											}}
-										>
-											<TodoItem {...props_drag_todo_item}></TodoItem>
-										</SortableWrap>
-									)}
-								</DragOverlay>
-							)}
-						</DndContext>
-					) : (
-						<Table {...props_table}></Table>
-					)}
-					<SettingsModal {...props_settings_modal}></SettingsModal>
-					<Archive {...props_archive}></Archive>
-					<Detail {...props_detail}></Detail>
-					<Help {...props_help}></Help>
-				</Then>
-			</If>
+			{match(x.id && x.file.data.name && Boolean(angles))
+				.with(true, () => (
+					<Fragment>
+						<Header {...props_header}></Header>
+						{x.mode !== 'table' ? (
+							<DndContext
+								collisionDetection={
+									x.mode === 'kanban' ? pointerWithin : rectIntersection
+								}
+								onDragStart={onDragStart}
+								onDragEnd={onDragEnd}
+							>
+								{match(x.mode)
+									.with('list', () => (
+										<Fragment>
+											<Tabs {...props_tabs}></Tabs>
+											<Todos {...props_todos}></Todos>
+											<Input {...props_input}></Input>
+										</Fragment>
+									))
+									.with('kanban', () => <Kanban {...props_kanban}></Kanban>)
+									.otherwise(() => null)}
+								{x.kanban_mode === 'angle' && (
+									<DragOverlay dropAnimation={null}>
+										{drag_todo_item && (
+											<SortableWrap
+												id={drag_todo_item.item.id}
+												data={{
+													index: drag_todo_item.index,
+													dimension_id: drag_todo_item.dimension_id
+												}}
+											>
+												<TodoItem {...props_drag_todo_item}></TodoItem>
+											</SortableWrap>
+										)}
+									</DragOverlay>
+								)}
+							</DndContext>
+						) : (
+							<Table {...props_table}></Table>
+						)}
+						<SettingsModal {...props_settings_modal}></SettingsModal>
+						<Archive {...props_archive}></Archive>
+						<Detail {...props_detail}></Detail>
+						<Help {...props_help}></Help>
+					</Fragment>
+				))
+				.otherwise(() => null)}
 		</div>
 	)
 }

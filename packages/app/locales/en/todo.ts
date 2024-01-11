@@ -35,9 +35,9 @@ export default {
 			filter: 'Filter'
 		},
 		mode: {
-			list: '列表',
-			kanban: '看板',
-			table: '表格'
+			list: 'List',
+			kanban: 'Kanban',
+			table: 'Table'
 		},
 		options: {
 			edit: 'Edit',

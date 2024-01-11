@@ -899,6 +899,10 @@
 						&::before {
 							display: none;
 						}
+
+						&.if-table-column-sort {
+							background-color: var(--color_bg_1);
+						}
 					}
 
 					td {
@@ -907,6 +911,28 @@
 
 						&::before {
 							display: none;
+						}
+					}
+
+					.if-table-column-sorters {
+						justify-content: center;
+
+						.if-table-column-title {
+							flex: unset;
+						}
+
+						.if-table-column-sorter {
+							color: var(--color_border);
+
+							.if-table-column-sorter-inner {
+								.if-icon {
+									font-size: 9px;
+
+									&.active {
+										color: var(--color_text);
+									}
+								}
+							}
 						}
 					}
 				}
@@ -930,6 +956,10 @@
 
 						&:last-child {
 							padding-right: 0 !important;
+						}
+
+						&.if-table-column-sort {
+							background-color: var(--color_bg_1);
 						}
 					}
 				}

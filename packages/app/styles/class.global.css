@@ -31,6 +31,10 @@
 	color: var(--color_main);
 }
 
+.color_text_light {
+	color: var(--color_text_light);
+}
+
 .color_danger {
 	color: var(--color_danger);
 }

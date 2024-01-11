@@ -50,7 +50,11 @@
 	.RenderLevel,
 	.DateTime,
 	.RenderCycle,
-	.RenderSchedule {
+	.RenderSchedule,
+	.RenderChildren,
+	.RenderRemark,
+	.RenderArchive,
+	.RenderCreateAt {
 		color: var(--color_text_light);
 		pointer-events: none;
 		opacity: 0.3;

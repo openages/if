@@ -35,7 +35,9 @@ const Index = (props: IProps) => {
 				</div>
 			)}
 			{!value && !archive_time && <Spinner className='icon_doing' size={14} weight='bold'></Spinner>}
-			{!value && archive_time && <span className='archive_time'>{dayjs().to(dayjs(archive_time))}</span>}
+			{!value && archive_time && (
+				<span className='archive_time color_text_light'>{dayjs().to(dayjs(archive_time))}</span>
+			)}
 		</div>
 	)
 }

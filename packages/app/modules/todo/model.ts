@@ -160,6 +160,7 @@ export default class Index {
 
 			if (v !== 'table') {
 				this.table_pagination = { current: 1, total: 0 }
+				this.table_sort = {}
 			}
 
 			if (v === 'kanban') {
@@ -640,6 +641,13 @@ export default class Index {
 		}
 
 		this.update({ type: 'parent', index, value: values })
+	}
+
+	onTableSorterChange(key: string, order: 'asc' | 'desc' | null) {
+		this.table_sort = order ? { [key]: order } : {}
+
+		this.stopWatchItems()
+		this.watchItems()
 	}
 
 	onTablePageChange(page: number) {

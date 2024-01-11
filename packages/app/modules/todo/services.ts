@@ -90,7 +90,8 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 		selector['type'] = 'todo'
 
 		sort['archive'] = 'asc'
-		sort['create_at'] = 'desc'
+
+		if (!sort['create_at']) sort['create_at'] = 'desc'
 	}
 
 	if (!table_mode) {
