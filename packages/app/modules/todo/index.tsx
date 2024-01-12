@@ -1,7 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { omit, pick } from 'lodash-es'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useMemo, useState, Fragment } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useState, Fragment } from 'react'
 import { match } from 'ts-pattern'
 import { container } from 'tsyringe'
 
@@ -41,12 +41,19 @@ const Index = ({ id }: IProps) => {
 	const angles = $copy(x.setting?.setting?.angles || [])
 	const tags = $copy(x.setting?.setting?.tags || [])
 	const relations = $copy(x.setting?.setting?.relations || [])
+	const current_detail_item = $copy(x.current_detail_item)
 
 	useLayoutEffect(() => {
 		x.init({ id })
 
 		return () => x.off()
 	}, [id])
+
+	useEffect(() => {
+		if (!Object.keys(current_detail_item).length) {
+			x.visible_detail_modal = false
+		}
+	}, [current_detail_item])
 
 	const props_header: IPropsHeader = {
 		mode: x.mode,
@@ -160,7 +167,7 @@ const Index = ({ id }: IProps) => {
 		kanban_mode: x.kanban_mode,
 		visible_detail_modal: x.visible_detail_modal,
 		current_detail_index: $copy(x.current_detail_index),
-		current_detail_item: $copy(x.current_detail_item),
+		current_detail_item,
 		relations,
 		tags,
 		update: useMemoizedFn(x.update),

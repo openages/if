@@ -990,15 +990,16 @@
 	}
 
 	.if-spin-nested-loading {
-		position: relative;
+		position: unset;
 
 		.if-spin {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			min-height: 360px;
+			min-height: unset;
 			max-height: unset;
-			padding: 90px 0;
+			padding: 0;
+			z-index: 10000;
 			background-color: var(--color_bg);
 
 			.if-spin-dot {
@@ -1008,6 +1009,7 @@
 				display: flex;
 				width: unset;
 				height: unset;
+				margin-top: -36px;
 			}
 		}
 	}

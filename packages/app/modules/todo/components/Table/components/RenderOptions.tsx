@@ -7,14 +7,13 @@ import { Eraser, Notepad, Trash } from '@phosphor-icons/react'
 import styles from '../index.css'
 
 interface IProps {
-	deleted?: boolean
 	showDetailModal: () => void
 	remove: () => void
 	clean: () => void
 }
 
 const Index = (props: IProps) => {
-	const { deleted, showDetailModal, remove, clean } = props
+	const { showDetailModal, remove, clean } = props
 	const { t } = useTranslation()
 
 	const confirmClean = useMemoizedFn(() => {

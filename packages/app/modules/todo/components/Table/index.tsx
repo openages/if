@@ -34,6 +34,8 @@ import type { TdHTMLAttributes } from 'react'
 import type { IPropsTable, IPropsTableFilter } from '../../types'
 import type { SorterResult } from 'antd/es/table/interface'
 
+type Column = TableColumnType<Todo.Todo> & { ignoreArchive?: boolean; deps?: Array<Partial<keyof Todo.Todo>> }
+
 const Index = (props: IPropsTable) => {
 	const {
 		relations,
@@ -166,25 +168,32 @@ const Index = (props: IPropsTable) => {
 					sortOrder: getSort(table_sort['create_at']),
 					showSorterTooltip: false,
 					render: () => <RenderCreateAt></RenderCreateAt>
-				},
+				}
+			] as Array<Column>,
+		[relaxed, table_sort]
+	)
+
+	const column_options = useMemo(
+		() =>
+			[
 				{
 					title: t('translation:todo.common.options'),
 					width: 81,
 					align: 'center',
 					fixed: 'right',
 					ignoreArchive: true,
-					render: (_, item, index) => (
-						<RenderOptions
-							showDetailModal={() => showDetailModal({ id: item.id, index })}
-							remove={() => remove({ id: item.id })}
-							clean={() => clean(item.id)}
-						></RenderOptions>
-					)
+					render: (_, item, index) => {
+						return (
+							<RenderOptions
+								showDetailModal={() => showDetailModal({ id: item.id, index })}
+								remove={() => remove({ id: item.id })}
+								clean={() => clean(item.id)}
+							></RenderOptions>
+						)
+					}
 				}
-			] as Array<
-				TableColumnType<Todo.Todo> & { ignoreArchive?: boolean; deps?: Array<Partial<keyof Todo.Todo>> }
-			>,
-		[relaxed, table_sort]
+			] as Array<Column>,
+		[items]
 	)
 
 	const target_columns = useMemo(() => {
@@ -231,18 +240,14 @@ const Index = (props: IPropsTable) => {
 		() =>
 			({
 				spinning: loading,
-				delay: 30,
+				delay: 15,
 				indicator: <LoadingCircle className='icon_loading' />
 			}) as SpinProps,
 		[loading]
 	)
 
 	const onRow: TableProps<Todo.Todo>['onRow'] = useMemoizedFn((item, index) => {
-		return {
-			item,
-			index,
-			onTableRowChange
-		} as TdHTMLAttributes<any>
+		return { item, index, onTableRowChange } as TdHTMLAttributes<any>
 	})
 
 	const onChange: TableProps<Todo.Todo>['onChange'] = useMemoizedFn((_pagination, _filter, sorter) => {
@@ -265,7 +270,7 @@ const Index = (props: IPropsTable) => {
 				pagination={pagination}
 				loading={table_loading}
 				sortDirections={['descend', 'ascend', null]}
-				columns={target_columns}
+				columns={target_columns.concat(column_options)}
 				dataSource={items}
 				onRow={onRow}
 				onChange={onChange}

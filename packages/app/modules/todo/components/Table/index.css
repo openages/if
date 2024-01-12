@@ -3,6 +3,7 @@
 	overflow-y: scroll;
 	padding: 0 36px;
 	outline: none;
+	position: relative;
 }
 
 .archive {

@@ -778,6 +778,17 @@ export default class Index {
 		this.archive_counts = this.archive_counts - 1
 	}
 
+	checkCurrentDetailIndex() {
+		if (!this.visible_detail_modal) return
+		if (!this.current_detail_index.id) return
+
+		const target_index = this.items.findIndex(item => item.id === this.current_detail_index.id)
+
+		if (this.current_detail_index.index !== target_index) {
+			this.current_detail_index.index = target_index
+		}
+	}
+
 	watchTodo() {
 		this.setting_watcher = getQueryTodoSetting(this.id).$.subscribe(setting => {
 			const todo_setting = getDocItem(setting)
@@ -804,6 +815,8 @@ export default class Index {
 				if (!current_angle_id) return
 
 				this.items = getDocItemsData(items)
+
+				this.checkCurrentDetailIndex()
 			})
 		}
 
@@ -824,6 +837,8 @@ export default class Index {
 				this.utils.loading['table'] = false
 
 				this.items = getDocItemsData(items)
+
+				this.checkCurrentDetailIndex()
 			})
 		}
 	}
