@@ -677,8 +677,13 @@
 	}
 
 	.if-picker-time-panel {
-		min-width: 80px;
+		min-width: 60px;
 		height: unset !important;
+		margin-left: 6px;
+
+		.if-picker-header {
+			padding: 0;
+		}
 
 		.if-picker-content {
 			height: 182px;

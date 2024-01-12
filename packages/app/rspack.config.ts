@@ -47,7 +47,7 @@ module.exports = defineConfig({
 			template: './public/index.html',
 			scriptLoading: 'module'
 		}),
-		!is_prod && new ReactRefreshPlugin(),
+		!is_prod && new ReactRefreshPlugin({ exclude: [/node_modules/] }),
 		is_prod &&
 			new CopyRspackPlugin({
 				patterns: [{ from: './public', to: './', globOptions: { ignore: ['**/index.html'] } }]
