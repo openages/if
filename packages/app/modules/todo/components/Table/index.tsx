@@ -259,7 +259,7 @@ const Index = (props: IPropsTable) => {
 				scroll={{ x: 1080 }}
 				pagination={pagination}
 				loading={table_loading}
-				sortDirections={['ascend', 'descend', null]}
+				sortDirections={['descend', 'ascend', null]}
 				columns={target_columns}
 				dataSource={items}
 				onRow={onRow}
