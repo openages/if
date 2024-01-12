@@ -659,6 +659,8 @@ export default class Index {
 	}
 
 	onTableSearch(values: any) {
+		this.table_pagination = { current: 1, total: 0 }
+
 		const selector = {} as MangoQuerySelector<Todo.TodoItem>
 
 		if (values.status) {
