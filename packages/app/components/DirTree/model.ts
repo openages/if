@@ -46,7 +46,7 @@ export default class Index {
 
 	constructor(
 		public utils: Utils,
-		public node_tree: NodeTree
+		public node_tree: NodeTree<DirTree.Item>
 	) {
 		makeAutoObservable(
 			this,
@@ -92,7 +92,7 @@ export default class Index {
 	@loading
 	async insert(item: Partial<DirTree.Item>) {
 		const { item: target, effect_items } = this.node_tree.insert(
-			{ ...item, id: id(), module: this.module },
+			{ ...item, id: id(), module: this.module } as DirTree.Item,
 			this.focusing_index
 		)
 
