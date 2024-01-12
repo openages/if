@@ -1,7 +1,7 @@
 import { resolve } from 'path'
 
 import { defineConfig } from '@rspack/cli'
-import { HtmlRspackPlugin } from '@rspack/core'
+import { CopyRspackPlugin, HtmlRspackPlugin } from '@rspack/core'
 import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
 
 const is_prod = process.env.NODE_ENV === 'production'
@@ -14,7 +14,8 @@ module.exports = defineConfig({
 		main: './runtime/index.tsx'
 	},
 	output: {
-		clean: is_prod
+		clean: is_prod,
+		publicPath: ''
 	},
 	watchOptions: {
 		ignored: /node_modules/
@@ -46,7 +47,11 @@ module.exports = defineConfig({
 			template: './public/index.html',
 			scriptLoading: 'module'
 		}),
-		!is_prod && new ReactRefreshPlugin()
+		!is_prod && new ReactRefreshPlugin(),
+		is_prod &&
+			new CopyRspackPlugin({
+				patterns: [{ from: './public', to: './', globOptions: { ignore: ['**/index.html'] } }]
+			})
 	],
 	module: {
 		rules: [

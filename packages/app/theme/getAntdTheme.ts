@@ -23,7 +23,7 @@ export default (theme: Theme, color_main: string) => {
 			colorBgContainer: vars.color_bg,
 			colorBgElevated: vars.color_bg,
 			colorBgLayout: vars.color_bg_1,
-			colorBorder: vars.color_border_light,
+			colorBorder: theme === 'dark' ? vars.color_border : vars.color_border_light,
 			colorBorderSecondary: vars.color_border_light,
 			controlItemBgActive: vars.color_bg_2,
 			colorPrimaryHover: vars.color_text_grey,
