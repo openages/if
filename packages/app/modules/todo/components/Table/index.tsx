@@ -29,7 +29,7 @@ import {
 import styles from './index.css'
 
 import type { Todo } from '@/types'
-import type { TableColumnType, PaginationProps, TableProps } from 'antd'
+import type { TableColumnType, PaginationProps, TableProps, SpinProps } from 'antd'
 import type { TdHTMLAttributes } from 'react'
 import type { IPropsTable, IPropsTableFilter } from '../../types'
 import type { SorterResult } from 'antd/es/table/interface'
@@ -228,7 +228,12 @@ const Index = (props: IPropsTable) => {
 	}, [table_pagination])
 
 	const table_loading = useMemo(
-		() => ({ spinning: loading, indicator: <LoadingCircle className='icon_loading' /> }),
+		() =>
+			({
+				spinning: loading,
+				delay: 30,
+				indicator: <LoadingCircle className='icon_loading' />
+			}) as SpinProps,
 		[loading]
 	)
 
