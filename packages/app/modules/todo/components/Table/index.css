@@ -139,6 +139,23 @@
 	&.no_children {
 		color: var(--color_text_light);
 	}
+
+	:global {
+		.progress {
+			.if-progress-steps-outer {
+				.if-progress-steps-item {
+					width: 3px !important;
+					height: 9px !important;
+					border-radius: 3px;
+					background-color: var(--color_bg_2);
+
+					&.if-progress-steps-item-active {
+						background-color: var(--color_main);
+					}
+				}
+			}
+		}
+	}
 }
 
 .RenderRemark {

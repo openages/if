@@ -1,3 +1,6 @@
+import { Progress } from 'antd'
+import { match, P } from 'ts-pattern'
+
 import { Minus } from '@phosphor-icons/react'
 
 import styles from '../index.css'
@@ -17,7 +20,21 @@ const Index = (props: CustomFormItem<Todo.Todo['children']>) => {
 				!value?.length && styles.no_children
 			)}
 		>
-			{value?.length ? `${checked_children?.length}/${value.length}` : <Minus size={14}></Minus>}
+			{match(value)
+				.with(P.nullish, () => <Minus size={14}></Minus>)
+				.with(
+					P.when(v => v.length <= 6),
+					() => (
+						<Progress
+							className='progress'
+							size='small'
+							showInfo={false}
+							steps={value.length}
+							percent={(checked_children.length * 100) / value.length}
+						></Progress>
+					)
+				)
+				.otherwise(() => `${checked_children?.length}/${value.length}`)}
 		</div>
 	)
 }
