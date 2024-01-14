@@ -8,7 +8,7 @@ export namespace Activity {
 		file_id: string
 		name: string
 		action: Action
-		timestamp: number
+		update_at?: number
 	}
 
 	export type TodoAction = 'insert' | 'check'

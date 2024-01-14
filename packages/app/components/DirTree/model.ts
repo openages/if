@@ -210,6 +210,7 @@ export default class Index {
 	}
 
 	on() {
+		$app.Event.on(`${this.module}/dirtree/insert`, this.insert)
 		$app.Event.on(`${this.module}/dirtree/move`, this.move)
 		$app.Event.on(`${this.module}/dirtree/removeCurrentItem`, this.removeCurrentItem)
 		$app.Event.on(`${this.module}/dirtree/setCurrentItem`, this.setCurrentItem)
@@ -222,6 +223,7 @@ export default class Index {
 		this.utils.off()
 		this.items_watcher?.unsubscribe?.()
 
+		$app.Event.off(`${this.module}/dirtree/insert`, this.insert)
 		$app.Event.off(`${this.module}/dirtree/move`, this.move)
 		$app.Event.off(`${this.module}/dirtree/removeCurrentItem`, this.removeCurrentItem)
 		$app.Event.off(`${this.module}/dirtree/setCurrentItem`, this.setCurrentItem)

@@ -224,16 +224,17 @@ const Index = (props: IPropsTable) => {
 
 	const components = useMemo(() => ({ body: { row: Row, cell: Cell } }), [])
 
-	const pagination: PaginationProps | false = useMemo(() => {
+	const pagination = useMemo(() => {
 		if (!table_pagination.total) return false
 
 		return {
 			...table_pagination,
 			pageSize: 15,
+			showSizeChanger: false,
 			// @ts-ignore
 			showTotal: total => t('translation:common.total', { counts: total }),
 			onChange: onTablePageChange
-		}
+		} as PaginationProps
 	}, [table_pagination])
 
 	const table_loading = useMemo(

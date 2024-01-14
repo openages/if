@@ -2,7 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import { Button } from 'antd'
 import { Else, If, Then, When } from 'react-if'
 
-import { Wave, Emoji } from '@/components'
+import { Emoji, Wave } from '@/components'
 import { CaretRight } from '@phosphor-icons/react'
 
 import LeftIcon from '../../../../LeftIcon'
@@ -62,7 +62,7 @@ const Index = (props: IPropsDirItem_Item) => {
 						className={$cx(
 							'right_icon_wrap flex align_center justify_end',
 							type === 'dir' &&
-								(item as DirTree.TransformedItem)?.children?.length === 0 &&
+								!(item as DirTree.TransformedItem)?.children?.length &&
 								'no_children'
 						)}
 					>

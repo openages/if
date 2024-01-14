@@ -5,7 +5,7 @@ export default {
 	dir: 'Folder',
 	input_placeholder: 'Please input name',
 	options: {
-		rename: 'Rename',
+		rename: 'Rename ',
 		delete: 'Delete'
 	}
 }

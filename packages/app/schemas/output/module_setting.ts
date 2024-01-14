@@ -12,12 +12,19 @@ export default {
                   },
                   "setting": {
                         "type": "string"
+                  },
+                  "create_at": {
+                        "type": "number"
+                  },
+                  "update_at": {
+                        "type": "number"
                   }
             },
             "required": [
                   "file_id",
                   "module",
-                  "setting"
+                  "setting",
+                  "create_at"
             ]
       }
 } as const

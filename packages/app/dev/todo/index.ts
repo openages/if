@@ -1,2 +1,2 @@
 export { todos_cn, todos_en } from './data'
-export { default as insertItems } from './insertItems'
+export { default as Todo_insertItems } from './insertItems'

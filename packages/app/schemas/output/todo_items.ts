@@ -164,6 +164,9 @@ export default {
                   },
                   "create_at": {
                         "type": "number"
+                  },
+                  "update_at": {
+                        "type": "number"
                   }
             },
             "required": [
@@ -341,6 +344,9 @@ export default {
                   },
                   "create_at": {
                         "type": "number"
+                  },
+                  "update_at": {
+                        "type": "number"
                   }
             },
             "required": [
@@ -515,6 +521,9 @@ export default {
                   },
                   "create_at": {
                         "type": "number"
+                  },
+                  "update_at": {
+                        "type": "number"
                   }
             },
             "required": [
@@ -556,6 +565,9 @@ export default {
                         "type": "number"
                   },
                   "create_at": {
+                        "type": "number"
+                  },
+                  "update_at": {
                         "type": "number"
                   }
             },

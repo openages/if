@@ -37,6 +37,7 @@ export namespace Todo {
 		text: string
 		sort: number
 		create_at: number
+		update_at?: number
 	}
 
 	type Cycle =

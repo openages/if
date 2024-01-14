@@ -89,6 +89,9 @@ export async function updateCRDT<RxDocType>(
 	const storageToken = await this.collection.database.storageToken
 
 	return this.incrementalModify(async docData => {
+		// @ts-ignore
+		docData.update_at = new Date().valueOf()
+
 		const crdtDocField: CRDTDocumentField<RxDocType> = clone(getProperty(docData as any, crdtOptions.field))
 
 		const operation: CRDTOperation<RxDocType> = {

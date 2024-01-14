@@ -76,6 +76,9 @@ export default (theme: Theme, color_main: string) => {
 				colorPrimary: vars.color_text,
 				dotSize: 9,
 				radioSize: 12
+			},
+			Tabs: {
+				colorPrimary: vars.color_text
 			}
 		}
 	} as ThemeConfig

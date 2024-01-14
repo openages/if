@@ -12,6 +12,7 @@ import { container } from 'tsyringe'
 import { exclude_paths } from '@/appdata'
 import { GlobalLoading, OffscreenOutlet } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
+import Panel from '@/dev/__Panel__'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
 
 import { AppMenu, AppSwitch, FreeMark, Sidebar, Stacks } from './component'
@@ -137,6 +138,7 @@ const Index = () => {
 						<AppMenu {...props_app_menu}></AppMenu>
 						<AppSwitch {...props_app_switch}></AppSwitch>
 						<FreeMark {...props_free_mark}></FreeMark>
+						<Panel></Panel>
 					</IconContext.Provider>
 				</App>
 			</ConfigProvider>

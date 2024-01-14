@@ -602,7 +602,6 @@ export default class Index {
 					module: 'setting',
 					file_id: this.id,
 					name: this.file.data.name,
-					timestamp: new Date().valueOf(),
 					action
 				}
 			}

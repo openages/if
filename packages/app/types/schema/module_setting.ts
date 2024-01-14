@@ -5,5 +5,7 @@ export namespace ModuleSetting {
 		/** @maxLength 30 */
 		module: string
 		setting: string
+		create_at: number
+		update_at?: number
 	}
 }

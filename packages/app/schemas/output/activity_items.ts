@@ -24,7 +24,7 @@ export default {
                               "check"
                         ]
                   },
-                  "timestamp": {
+                  "update_at": {
                         "type": "number"
                   }
             },
@@ -33,8 +33,7 @@ export default {
                   "module",
                   "file_id",
                   "name",
-                  "action",
-                  "timestamp"
+                  "action"
             ]
       },
       "Activity.Item": {
@@ -62,7 +61,7 @@ export default {
                               "check"
                         ]
                   },
-                  "timestamp": {
+                  "update_at": {
                         "type": "number"
                   }
             },
@@ -71,8 +70,7 @@ export default {
                   "module",
                   "file_id",
                   "name",
-                  "action",
-                  "timestamp"
+                  "action"
             ]
       },
       "Activity.Action": {

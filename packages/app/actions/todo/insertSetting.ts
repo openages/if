@@ -14,7 +14,8 @@ export default async (file_id: string) => {
 					angles: angles.map(item => ({ id: id(), text: item })),
 					tags: [],
 					auto_archiving: '3m'
-				})
+				}),
+				create_at: new Date().valueOf()
 			}
 		}
 	})
