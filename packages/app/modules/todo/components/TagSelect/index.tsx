@@ -32,7 +32,7 @@ const Index = (props: IPropsTagSelect) => {
 				mode='tags'
 				placement={placement || 'topLeft'}
 				fieldNames={{ label: 'text', value: 'id' }}
-				bordered={false}
+				variant='borderless'
 				virtual={false}
 				suffixIcon={null}
 				getPopupContainer={() => document.body}

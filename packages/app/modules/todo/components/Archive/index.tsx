@@ -159,7 +159,7 @@ const Index = (props: IPropsArchive) => {
 					className='select borderless'
 					popupClassName='borderless'
 					placeholder={t('translation:todo.Archive.clean.placeholder')}
-					bordered={false}
+					variant='borderless'
 					suffixIcon={false}
 					popupMatchSelectWidth={false}
 					size='small'

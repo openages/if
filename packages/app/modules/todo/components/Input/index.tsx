@@ -83,7 +83,7 @@ const Index = (props: IPropsInput) => {
 							className='select_type select'
 							size='small'
 							placement='topLeft'
-							bordered={false}
+							variant='borderless'
 							virtual={false}
 							suffixIcon={null}
 							options={[

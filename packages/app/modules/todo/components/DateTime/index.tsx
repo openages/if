@@ -67,10 +67,11 @@ const Index = (props: IPropsDateTime) => {
 				status === 'outdate' && styles.outdate,
 				status === 'close' && styles.close
 			)}
+			placement={useByDetail ? 'bottomLeft' : 'topRight'}
 			placeholder={t('translation:common.unset')}
 			showTime={{ defaultValue: dayjs().startOf('minute') }}
 			suffixIcon={useByDetail ? false : Trigger}
-			bordered={false}
+			variant='borderless'
 			disabledDate={v => v && v <= dayjs().startOf('day')}
 			getPopupContainer={() => document.body}
 			presets={options}
