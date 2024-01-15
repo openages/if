@@ -26,7 +26,7 @@
 	.kanban_item_wrap {
 		width: 300px;
 		min-width: 300px;
-		font-family: Georgia, '简宋';
+		font-family: Georgia, 'SimSong';
 
 		.kanban_item_header {
 			height: 30px;
