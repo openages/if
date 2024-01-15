@@ -15,14 +15,14 @@ import { GlobalContext, GlobalModel } from '@/context/app'
 import Panel from '@/dev/__Panel__'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
 
-import { AppMenu, AppSwitch, FreeMark, Sidebar, Stacks } from './component'
+import { AppMenu, AppSwitch, FreeMark, Search, Sidebar, Stacks } from './component'
 import { useGlobalNavigate, useGlobalTranslate, useLayout } from './hooks'
 import styles from './index.css'
 
 import type { IPropsOffscreenOutlet } from '@/components/OffscreenOutlet'
 import type { AppProps } from 'antd'
 import type { ConfigProviderProps } from 'antd/es/config-provider'
-import type { IPropsAppMenu, IPropsAppSwitch, IPropsSidebar, IPropsStacks, IPropsFreeMark } from './types'
+import type { IPropsAppMenu, IPropsAppSwitch, IPropsSidebar, IPropsStacks, IPropsFreeMark, IPropsSearch } from './types'
 
 const Index = () => {
 	const { pathname } = useLocation()
@@ -114,6 +114,14 @@ const Index = () => {
 		user_type: global.auth.user_type
 	}
 
+	const props_search: IPropsSearch = {
+		search: $copy(global.app.search),
+		searchByInput: useMemoizedFn(global.app.searchByInput),
+		onClose: useMemoizedFn(global.app.closeSearch),
+		find: useMemoizedFn(global.stack.find),
+		add: useMemoizedFn(global.stack.add)
+	}
+
 	if (!global.db.ready) return <GlobalLoading visible></GlobalLoading>
 
 	return (
@@ -138,6 +146,7 @@ const Index = () => {
 						<AppMenu {...props_app_menu}></AppMenu>
 						<AppSwitch {...props_app_switch}></AppSwitch>
 						<FreeMark {...props_free_mark}></FreeMark>
+						<Search {...props_search}></Search>
 						<Panel></Panel>
 					</IconContext.Provider>
 				</App>

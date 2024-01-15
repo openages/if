@@ -3,6 +3,7 @@ import { injectable } from 'tsyringe'
 
 import { modules } from '@/appdata'
 import Utils from '@/models/utils'
+import { getDocItemsData } from '@/utils'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
 
 import type { App } from '@/types'
@@ -15,6 +16,12 @@ export default class Index {
 	visible_app_menu = false
 	visible_app_switch = false
 	switch_index = 0
+
+	search = {
+		open: false,
+		module: '' as App.ModuleType,
+		items: [] as Array<{ file_id: string; id: string; text: string }>
+	}
 
 	get visibles() {
 		return [this.visible_app_menu, this.visible_app_switch]
@@ -90,10 +97,38 @@ export default class Index {
 		}
 	}
 
+	showSearch(module: App.ModuleType) {
+		this.search.open = true
+		this.search.module = module
+	}
+
+	closeSearch() {
+		this.search = { open: false, module: '' as App.ModuleType, items: [] }
+	}
+
+	async searchByInput(text: string) {
+		if (!text) return (this.search.items = [])
+
+		if (this.search.module === 'todo') {
+			const docs = await $db.todo_items
+				.find({
+					selector: {
+						text: { $regex: `.*${text}.*`, $options: 'i' },
+						type: 'todo'
+					},
+					index: 'file_id'
+				})
+				.exec()
+
+			this.search.items = getDocItemsData(docs)
+		}
+	}
+
 	on() {
 		$app.Event.on('global.app.toggleAppMenu', this.toggleAppMenu)
 		$app.Event.on('global.app.appSwitch', this.appSwitch)
 		$app.Event.on('global.app.handleAppSwitch', this.handleAppSwitch)
+		$app.Event.on('global.app.showSearch', this.showSearch)
 
 		window.addEventListener('blur', this.handleAppSwitch)
 	}
@@ -104,6 +139,7 @@ export default class Index {
 		$app.Event.off('global.app.toggleAppMenu', this.toggleAppMenu)
 		$app.Event.off('global.app.appSwitch', this.appSwitch)
 		$app.Event.off('global.app.handleAppSwitch', this.handleAppSwitch)
+		$app.Event.off('global.app.showSearch', this.showSearch)
 
 		window.removeEventListener('blur', this.handleAppSwitch)
 	}

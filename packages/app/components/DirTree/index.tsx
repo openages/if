@@ -13,7 +13,7 @@ import styles from './index.css'
 import Model from './model'
 
 import type { DirTree } from '@/types'
-import type { IProps, IPropsActions, IPropsDirItems, IPropsModal, IPropsOptions } from './types'
+import type { IProps, IPropsSearch, IPropsActions, IPropsDirItems, IPropsModal, IPropsOptions } from './types'
 
 const Index = (props: IProps) => {
 	const { module, height = '100vh', actions } = props
@@ -46,6 +46,10 @@ const Index = (props: IProps) => {
 		x.current_option = ''
 		x.focusing_index = []
 	})
+
+	const props_search: IPropsSearch = {
+		showSearch: useMemoizedFn(() => $app.Event.emit('global.app.showSearch', x.module))
+	}
 
 	const props_dir_items: IPropsDirItems = {
 		module: x.module,
@@ -92,7 +96,7 @@ const Index = (props: IProps) => {
 			style={{ width: global.layout.dirtree_width, height }}
 		>
 			<When condition={global.layout.dirtree_width !== 0}>
-				<Search></Search>
+				<Search {...props_search}></Search>
 			</When>
 			<DragLine></DragLine>
 			<DirItems {...props_dir_items}></DirItems>

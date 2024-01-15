@@ -6,7 +6,7 @@ import { Else, If, Then, When } from 'react-if'
 import { SimpleEmpty } from '@/components'
 import { useElementScrollRestoration } from '@/hooks'
 import { DirTree } from '@/types'
-import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
+import { useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
 
 import DirItem from '../DirItem'
 

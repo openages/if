@@ -51,7 +51,8 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 		selector: _selector,
 		sort: _sort,
 		table_mode,
-		table_page
+		table_page,
+		table_pagesize
 	} = args
 
 	const selector: MangoQuerySelector<Todo.TodoItem> = { file_id, ..._selector }
@@ -99,8 +100,8 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 	} else {
 		return $db.todo_items
 			.find({ selector })
-			.skip((table_page - 1) * 15)
-			.limit(15)
+			.skip((table_page - 1) * table_pagesize)
+			.limit(table_pagesize)
 			.sort(sort) as RxDB.ItemsQuery<Todo.TodoItem>
 	}
 }

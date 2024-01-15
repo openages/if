@@ -31,6 +31,7 @@ export interface IPropsHeader
 	kanban_mode: Model['kanban_mode']
 	items_sort_param: Model['items_sort_param']
 	items_filter_tags: Model['items_filter_tags']
+	search_mode: boolean
 	setMode: Model['setMode']
 	toggleZenMode: () => void
 	toggleKanbanMode: () => void
@@ -40,6 +41,7 @@ export interface IPropsHeader
 	setItemsSortParam: (v: Model['items_sort_param']) => void
 	setItemsFilterTags: (v: Model['items_filter_tags']) => void
 	toggleTableFilter: () => void
+	resetSearchMode: Model['resetSearchMode']
 }
 
 export interface IPropsTabs {
@@ -191,6 +193,7 @@ export interface IPropsTable extends Pick<IPropsTodos, 'relations' | 'showDetail
 	table_pagination: Model['table_pagination']
 	table_sort: Model['table_sort']
 	visible_table_filter: Model['visible_table_filter']
+	search_mode: boolean
 	clean: Model['clean']
 	onTableRowChange: Model['onTableRowChange']
 	onTablePageChange: Model['onTablePageChange']

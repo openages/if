@@ -1,5 +1,5 @@
 export default {
-	search_placeholder: 'Search',
+	search_placeholder: 'Search ',
 	add: 'New ',
 	file: 'File',
 	dir: 'Folder',

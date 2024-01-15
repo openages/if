@@ -1018,6 +1018,7 @@
 /* Pagination */
 .if-pagination {
 	position: relative;
+	justify-content: center !important;
 
 	.if-pagination-item {
 		outline: none !important;
@@ -1047,6 +1048,7 @@
 		align-items: center;
 
 		.if-icon {
+			color: var(--color_text_grey);
 			vertical-align: middle;
 		}
 	}
@@ -1056,6 +1058,36 @@
 		left: 0;
 		color: var(--color_text_softlight);
 		font-size: 12px;
+	}
+
+	.if-pagination-options {
+		position: absolute;
+		right: 0;
+
+		.if-select {
+			.if-select-selector {
+				border: none;
+
+				&::after {
+					display: none;
+				}
+
+				.if-select-selection-search {
+					input {
+						display: none;
+					}
+				}
+
+				.if-select-selection-item {
+					padding-inline-end: 0;
+					color: var(--color_text_softlight);
+				}
+			}
+
+			.if-select-arrow {
+				display: none;
+			}
+		}
 	}
 }
 

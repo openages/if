@@ -29,8 +29,6 @@ const Index = (props: IPropsCircleStatus) => {
 
 		if (now >= recycle_time) {
 			setPercent(100)
-
-			window.$app.Event.emit('todo/cycleByTime')
 		} else {
 			setPercent(100 + Number((((now - recycle_time) * 100) / duration).toFixed(0)))
 		}

@@ -14,6 +14,10 @@ export interface IProps {
 	}
 }
 
+export interface IPropsSearch {
+	showSearch: () => void
+}
+
 export interface IPropsDirItems {
 	module: Model['module']
 	data: Model['node_tree']['tree']

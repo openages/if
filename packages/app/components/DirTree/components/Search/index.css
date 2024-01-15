@@ -4,21 +4,22 @@
 	border-bottom: var(--border);
 	color: var(--color_text_light);
 
+	&:hover {
+		color: var(--color_text);
+	}
+
+	&:active {
+		background-color: var(--color_bg_2);
+	}
+
 	:global {
 		.icon_search {
 			left: 18px;
 		}
 
-		.input_search {
-			border: none;
-			box-shadow: none;
-			outline: none;
+		.search {
 			padding-left: 24px;
 			line-height: 1;
-
-			&:disabled {
-				background-color: transparent;
-			}
 		}
 	}
 }

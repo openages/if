@@ -12,6 +12,7 @@ export type ArgsQueryItems = {
 	sort?: MangoQuerySortPart<Todo.Todo>
 	table_mode?: boolean
 	table_page?: number
+	table_pagesize?: number
 }
 
 export type ArgsQueryArchives = {

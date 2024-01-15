@@ -13,6 +13,7 @@ import {
 	Faders,
 	FlowerLotus,
 	Funnel,
+	MagnifyingGlass,
 	Tag,
 	X
 } from '@phosphor-icons/react'
@@ -35,6 +36,7 @@ const Index = (props: IPropsHeader) => {
 		tags,
 		items_sort_param,
 		items_filter_tags,
+		search_mode,
 		setMode,
 		toggleZenMode,
 		toggleKanbanMode,
@@ -43,7 +45,8 @@ const Index = (props: IPropsHeader) => {
 		showHelpModal,
 		setItemsSortParam,
 		setItemsFilterTags,
-		toggleTableFilter
+		toggleTableFilter,
+		resetSearchMode
 	} = props
 
 	const { t } = useTranslation()
@@ -145,6 +148,16 @@ const Index = (props: IPropsHeader) => {
 				</When>
 			</div>
 			<div className='actions_wrap flex justify_end align_center'>
+				{search_mode && (
+					<div className='mr_8'>
+						<div
+							className='icon_wrap color_main border_box flex justify_center align_center cursor_point clickable'
+							onClick={resetSearchMode}
+						>
+							<MagnifyingGlass size={18}></MagnifyingGlass>
+						</div>
+					</div>
+				)}
 				{mode === 'table' && (
 					<Tooltip title={t('translation:todo.Header.table_mode.filter')}>
 						<div className='mr_8'>

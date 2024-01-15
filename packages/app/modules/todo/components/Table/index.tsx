@@ -45,6 +45,7 @@ const Index = (props: IPropsTable) => {
 		table_pagination,
 		table_sort,
 		visible_table_filter,
+		search_mode,
 		onTableRowChange,
 		onTableSorterChange,
 		onTablePageChange,
@@ -229,8 +230,8 @@ const Index = (props: IPropsTable) => {
 
 		return {
 			...table_pagination,
-			pageSize: 15,
-			showSizeChanger: false,
+			showSizeChanger: true,
+			pageSizeOptions: [15, 30, 60, 120, 180, 300],
 			// @ts-ignore
 			showTotal: total => t('translation:common.total', { counts: total }),
 			onChange: onTablePageChange
@@ -269,7 +270,7 @@ const Index = (props: IPropsTable) => {
 				components={components}
 				scroll={{ x: 1080 }}
 				pagination={pagination}
-				loading={table_loading}
+				loading={search_mode ? false : table_loading}
 				sortDirections={['descend', 'ascend', null]}
 				columns={target_columns.concat(column_options)}
 				dataSource={items}

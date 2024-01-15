@@ -42,6 +42,7 @@ const Index = ({ id }: IProps) => {
 	const tags = $copy(x.setting?.setting?.tags || [])
 	const relations = $copy(x.setting?.setting?.relations || [])
 	const current_detail_item = $copy(x.current_detail_item)
+	const search_mode = Boolean(x.table_selector.id)
 
 	useLayoutEffect(() => {
 		x.init({ id })
@@ -66,6 +67,7 @@ const Index = ({ id }: IProps) => {
 		tags,
 		items_sort_param: $copy(x.items_sort_param),
 		items_filter_tags: $copy(x.items_filter_tags),
+		search_mode,
 		setMode: useMemoizedFn(x.setMode),
 		toggleZenMode: useMemoizedFn(() => (x.zen_mode = !x.zen_mode)),
 		toggleKanbanMode: useMemoizedFn(() => (x.kanban_mode = x.kanban_mode === 'angle' ? 'tag' : 'angle')),
@@ -74,7 +76,8 @@ const Index = ({ id }: IProps) => {
 		showHelpModal: useMemoizedFn(() => (x.visible_help_modal = true)),
 		setItemsSortParam: useMemoizedFn(v => (x.items_sort_param = v)),
 		setItemsFilterTags: useMemoizedFn(v => (x.items_filter_tags = v)),
-		toggleTableFilter: useMemoizedFn(() => (x.visible_table_filter = !x.visible_table_filter))
+		toggleTableFilter: useMemoizedFn(() => (x.visible_table_filter = !x.visible_table_filter)),
+		resetSearchMode: useMemoizedFn(x.resetSearchMode)
 	}
 
 	const props_tabs: IPropsTabs = {
@@ -128,6 +131,7 @@ const Index = ({ id }: IProps) => {
 		table_pagination: $copy(x.table_pagination),
 		table_sort: $copy(x.table_sort),
 		visible_table_filter: x.visible_table_filter,
+		search_mode,
 		clean: useMemoizedFn(x.clean),
 		onTableRowChange: useMemoizedFn(x.onTableRowChange),
 		onTablePageChange: useMemoizedFn(x.onTablePageChange),

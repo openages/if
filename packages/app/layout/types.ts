@@ -123,3 +123,11 @@ export interface IPropsAppSwitch {
 	handleAppSwitch: GlobalModel['app']['handleAppSwitch']
 	onClose: () => void
 }
+
+export interface IPropsSearch {
+	search: GlobalModel['app']['search']
+	searchByInput: GlobalModel['app']['searchByInput']
+	onClose: GlobalModel['app']['closeSearch']
+	find: GlobalModel['stack']['find']
+	add: GlobalModel['stack']['add']
+}

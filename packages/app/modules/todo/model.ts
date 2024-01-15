@@ -1,5 +1,6 @@
 import { omit, pick } from 'lodash-es'
 import { makeAutoObservable, runInAction } from 'mobx'
+import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
@@ -94,9 +95,11 @@ export default class Index {
 	current_angle_id = ''
 	current_detail_index = {} as CurrentDetailIndex
 
-	table_pagination = { current: 1, total: 0 }
+	table_pagination = { current: 1, pageSize: 15, total: 0 }
 	table_selector = {} as MangoQuerySelector<Todo.TodoItem>
 	table_sort = {} as MangoQuerySortPart<Todo.TodoItem>
+
+	search_id = ''
 
 	watch = {
 		['current_angle_id|items_sort_param|items_filter_tags']: () => {
@@ -159,7 +162,8 @@ export default class Index {
 			}
 
 			if (v !== 'table') {
-				this.table_pagination = { current: 1, total: 0 }
+				this.table_pagination = { current: 1, pageSize: 15, total: 0 }
+				this.table_selector = {}
 				this.table_sort = {}
 			}
 
@@ -608,6 +612,27 @@ export default class Index {
 		})
 	}
 
+	async redirect(id: string) {
+		const target = await $db.todo_items.findOne(id).exec()
+
+		if (target.archive) {
+			this.table_selector = { id }
+			this.mode = 'table'
+		} else {
+			this.mode = 'list'
+			this.current_angle_id = target.angle_id
+
+			setTimeout(() => {
+				const target_dom = document.getElementById(target.id)
+				const target_todo = document.getElementById(`todo_${target.id}`)
+
+				scrollIntoView(target_dom, { block: 'center', behavior: 'smooth' })
+
+				target_todo.style.color = 'var(--color_danger)'
+			}, 300)
+		}
+	}
+
 	handleOpenItem(id: string, v: boolean) {
 		if (v) {
 			if (this.open_items.includes(id)) return
@@ -650,15 +675,21 @@ export default class Index {
 		this.watchItems()
 	}
 
-	onTablePageChange(page: number) {
-		this.table_pagination.current = page
+	onTablePageChange(page: number, pageSize: number) {
+		if (pageSize !== this.table_pagination.pageSize) {
+			this.table_pagination.current = 1
+		} else {
+			this.table_pagination.current = page
+		}
+
+		this.table_pagination.pageSize = pageSize
 
 		this.stopWatchItems()
 		this.watchItems()
 	}
 
 	onTableSearch(values: any) {
-		this.table_pagination = { current: 1, total: 0 }
+		this.table_pagination = { current: 1, pageSize: this.table_pagination.pageSize, total: 0 }
 
 		const selector = {} as MangoQuerySelector<Todo.TodoItem>
 
@@ -737,6 +768,13 @@ export default class Index {
 		}
 
 		this.table_selector = selector
+
+		this.stopWatchItems()
+		this.watchItems()
+	}
+
+	resetSearchMode() {
+		this.table_selector = {}
 
 		this.stopWatchItems()
 		this.watchItems()
@@ -833,7 +871,8 @@ export default class Index {
 				selector: this.table_selector,
 				sort: this.table_sort,
 				table_mode: true,
-				table_page: this.table_pagination.current
+				table_page: this.table_pagination.current,
+				table_pagesize: this.table_pagination.pageSize
 			}).$.subscribe(items => {
 				this.utils.loading['table'] = false
 
@@ -903,7 +942,7 @@ export default class Index {
 		this.timer_cycle = setInterval(this.cycleByTime, 30 * 1000)
 		this.timer_archive = setInterval(() => archive(this.id), 60 * 1000)
 
-		window.$app.Event.on('todo/cycleByTime', this.cycleByTime)
+		window.$app.Event.on(`todo/${this.id}/redirect`, this.redirect)
 	}
 
 	off() {
@@ -917,6 +956,6 @@ export default class Index {
 		clearInterval(this.timer_cycle)
 		clearInterval(this.timer_archive)
 
-		window.$app.Event.off('todo/cycleByTime', this.cycleByTime)
+		window.$app.Event.off(`todo/${this.id}/redirect`, this.redirect)
 	}
 }
