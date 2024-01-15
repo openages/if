@@ -108,8 +108,8 @@ importers:
         specifier: ^10.18.0
         version: 10.18.0(react-dom@0.0.0-experimental-31603f19d-20240109)(react@0.0.0-experimental-31603f19d-20240109)
       hotkeys-js:
-        specifier: ^3.13.4
-        version: 3.13.4
+        specifier: ^3.13.5
+        version: 3.13.5
       i18next:
         specifier: ^23.7.16
         version: 23.7.16
@@ -3377,7 +3377,7 @@ packages:
   /@types/react-dom@18.2.18:
     resolution: {integrity: sha512-TJxDm6OfAX2KJWJdMEVTwWke5Sc/E/RlnPGvGfS0W7+6ocy2xhDVQVh/KvC2Uf7kACs+gDytdusDSdWfWkaNzw==}
     dependencies:
-      '@types/react': 18.2.42
+      '@types/react': 18.2.47
     dev: true
 
   /@types/react-reconciler@0.28.8:
@@ -5250,8 +5250,8 @@ packages:
     dependencies:
       function-bind: 1.1.2
 
-  /hotkeys-js@3.13.4:
-    resolution: {integrity: sha512-eFxNBzNHJR02efz/UwBmH8jO1HHeo+PunbCqx27pg9l+dvkTbtU8ABvg9awDnkROCmCL4tBaO16REyvZYReDoA==}
+  /hotkeys-js@3.13.5:
+    resolution: {integrity: sha512-xqPBCCC9QtLUpNZhlncfPhY/KMMiiA5+YsLDCTbwDfVBvCM+IQJPZwqB8iURZI9GQYcsmqpSlARZ238puVEs3Q==}
     dev: false
 
   /hpack.js@2.1.6:
