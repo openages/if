@@ -1,21 +1,21 @@
 import { useEventListener, useFocusWithin, useMemoizedFn } from 'ahooks'
 import { debounce } from 'lodash-es'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Modal, SimpleEmpty } from '@/components'
 import { sleep } from '@/utils'
-import { ArrowBendDownLeft, ArrowDown, ArrowUp, MagnifyingGlass, X } from '@phosphor-icons/react'
+import { ArrowBendDownLeft, ArrowDown, ArrowUp, MagnifyingGlass, Trash, X } from '@phosphor-icons/react'
 
 import { Todo } from './components'
 import styles from './index.css'
 
 import type { IPropsSearch } from '@/layout/types'
 import type { DirTree } from '@/types'
-import type { KeyboardEvent } from 'react'
+import type { KeyboardEvent, MouseEvent } from 'react'
 
 const Index = (props: IPropsSearch) => {
-	const { search, searchByInput, onClose, find, add, changeSearchIndex } = props
+	const { search, search_history, searchByInput, onClose, find, add, changeSearchIndex, clearSearchHistory } = props
 	const { open, module, items, index } = search
 	const { t } = useTranslation()
 	const ref = useRef(null)
@@ -112,8 +112,20 @@ const Index = (props: IPropsSearch) => {
 	const clear = useMemoizedFn(() => {
 		ref.current!.value = ''
 
-		setText('')
 		searchByInput('')
+		setText('')
+	})
+
+	const onSearchItem = useMemoizedFn((e: MouseEvent<HTMLDivElement>) => {
+		const target = e.target as HTMLDivElement
+		const text = target.getAttribute('data-text')
+
+		if (!text) return
+
+		ref.current!.value = text
+
+		searchByInput(text)
+		setText(text)
 	})
 
 	return (
@@ -161,7 +173,35 @@ const Index = (props: IPropsSearch) => {
 							></Todo>
 						))
 					) : (
-						<SimpleEmpty style={{ height: 300 }}></SimpleEmpty>
+						<Fragment>
+							{search_history.length > 0 && (
+								<div className='search_history w_100 flex flex_column'>
+									<div className='search_history_header flex justify_between align_center'>
+										<span className='title'>
+											{t('translation:app.search.history')}
+										</span>
+										<div
+											className='btn_clear flex justify_center align_center clickable'
+											onClick={clearSearchHistory}
+										>
+											<Trash size={14}></Trash>
+										</div>
+									</div>
+									<div className='flex flex_wrap' onClick={onSearchItem}>
+										{search_history.map((item, index) => (
+											<span
+												className='search_history_item mr_4 cursor_point clickable'
+												data-text={item}
+												key={index}
+											>
+												{item}
+											</span>
+										))}
+									</div>
+								</div>
+							)}
+							<SimpleEmpty style={{ height: 300 }}></SimpleEmpty>
+						</Fragment>
 					)}
 				</div>
 				<div className='hotkey_wrap w_100 border_box flex justify_between align_center'>

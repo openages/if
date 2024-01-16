@@ -224,9 +224,14 @@ export default class Index {
 			if (active_column === over_column) {
 				const target_views = this.columns[active_column].views
 				const active_item = target_views[active_view]
+				const over_item = target_views[over_view]
 
 				if (!active_item.fixed) {
 					active_item.fixed = true
+				}
+
+				if (!over_item.fixed) {
+					over_item.fixed = true
 				}
 
 				this.columns[active_column].views = arrayMove(

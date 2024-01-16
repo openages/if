@@ -7,6 +7,7 @@ export default {
 	search: {
 		to_navigate: 'to navigate',
 		to_select: 'to select',
-		to_close: 'to close'
+		to_close: 'to close',
+		history: 'Search history'
 	}
 }

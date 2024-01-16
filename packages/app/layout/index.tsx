@@ -10,7 +10,7 @@ import { useLocation } from 'react-router-dom'
 import { container } from 'tsyringe'
 
 import { exclude_paths } from '@/appdata'
-import { GlobalLoading, OffscreenOutlet } from '@/components'
+import { GlobalLoading, LazyElement, OffscreenOutlet } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import Panel from '@/dev/__Panel__'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
@@ -121,6 +121,7 @@ const Index = () => {
 	const props_search: IPropsSearch = {
 		current_module,
 		search: $copy(global.app.search),
+		search_history: $copy(global.app.search_history),
 		searchByInput: useMemoizedFn(global.app.searchByInput),
 		onClose: useMemoizedFn(global.app.closeSearch),
 		find: useMemoizedFn(global.stack.find),
@@ -129,7 +130,8 @@ const Index = () => {
 			if (index < 0 || index > global.app.search.items.length - 1) return
 
 			global.app.search.index = index
-		})
+		}),
+		clearSearchHistory: useMemoizedFn(() => (global.app.search_history = []))
 	}
 
 	if (!global.db.ready) return <GlobalLoading visible></GlobalLoading>
@@ -157,7 +159,9 @@ const Index = () => {
 						<AppSwitch {...props_app_switch}></AppSwitch>
 						<FreeMark {...props_free_mark}></FreeMark>
 						<Search {...props_search}></Search>
-						<Panel></Panel>
+						{process.env.NODE_ENV === 'development' && (
+							<LazyElement type='dev' path=''></LazyElement>
+						)}
 					</IconContext.Provider>
 				</App>
 			</ConfigProvider>

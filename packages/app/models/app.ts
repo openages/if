@@ -23,6 +23,7 @@ export default class Index {
 		items: [] as Array<{ item: any; file: DirTree.Item; setting: any }>,
 		index: 0
 	}
+	search_history = [] as Array<string>
 
 	get visibles() {
 		return [this.visible_app_menu, this.visible_app_switch]
@@ -38,7 +39,7 @@ export default class Index {
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { watch: false }, { autoBind: true })
 
-		this.utils.acts = [setStorageWhenChange(['app_modules'], this)]
+		this.utils.acts = [setStorageWhenChange(['app_modules', 'search_history'], this)]
 	}
 
 	get apps() {
@@ -99,6 +100,8 @@ export default class Index {
 	}
 
 	showSearch() {
+		if (this.search.module === 'setting' || !this.search.module) return
+
 		this.search.open = true
 	}
 
@@ -131,6 +134,22 @@ export default class Index {
 				setting: JSON.parse(getDocItem(settings.get(docs[index].file_id)).setting)
 			}))
 		}
+
+		if (this.search.items.length) {
+			this.addSearchHistory(text)
+		}
+	}
+
+	addSearchHistory(text: string) {
+		if (this.search_history.includes(text)) return
+
+		this.search_history.unshift(text)
+
+		if (this.search_history.length > 15) {
+			this.search_history.pop()
+		}
+
+		this.search_history = $copy(this.search_history)
 	}
 
 	on() {

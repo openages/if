@@ -1,3 +1,4 @@
+import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,6 +14,14 @@ const Index = () => {
 	const keys = $copy(global.shortcuts.keys)
 	const { t } = useTranslation()
 
+	const getKeyMap = useMemoizedFn((item: GlobalModel['shortcuts']['keys'][number]) => {
+		const key = item.special_key || item.key_bindings
+
+		if (key.indexOf(',') !== -1) return key.split(',')
+
+		return key.split('+')
+	})
+
 	return (
 		<div className={$cx('w_100 flex flex_column', styles._local)}>
 			{keys.map((item, index) => (
@@ -26,7 +35,7 @@ const Index = () => {
 									: t('translation:shortcuts.keydown')}
 							</span>
 							<div className='key_bindings flex justify_end'>
-								{(item.special_key || item.key_bindings).split('+').map(key => {
+								{getKeyMap(item).map(key => {
 									const Icon = icons[key]
 
 									return (

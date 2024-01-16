@@ -7,6 +7,7 @@ export default {
 	search: {
 		to_navigate: '切换',
 		to_select: '选择',
-		to_close: '关闭'
+		to_close: '关闭',
+		history: '搜索历史'
 	}
 }
