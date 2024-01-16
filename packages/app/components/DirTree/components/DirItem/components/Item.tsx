@@ -2,10 +2,8 @@ import { useMemoizedFn } from 'ahooks'
 import { Button } from 'antd'
 import { Else, If, Then, When } from 'react-if'
 
-import { Emoji, Wave } from '@/components'
+import { Emoji, LeftIcon, Wave } from '@/components'
 import { CaretRight } from '@phosphor-icons/react'
-
-import LeftIcon from '../../../../LeftIcon'
 
 import type { IPropsDirItem_Item } from '../../../types'
 import type { DirTree } from '@/types'

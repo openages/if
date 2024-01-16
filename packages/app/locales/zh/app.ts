@@ -3,5 +3,10 @@ export default {
 	free_mark: {
 		title: '免费版',
 		desc: '专业者前往订阅'
+	},
+	search: {
+		to_navigate: '切换',
+		to_select: '选择',
+		to_close: '关闭'
 	}
 }

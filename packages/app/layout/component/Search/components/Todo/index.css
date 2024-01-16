@@ -1,0 +1,20 @@
+._local {
+	:global {
+		.detail_wrap {
+			font-size: 10px;
+			color: var(--color_text_light);
+			line-height: 1;
+
+			.tags {
+				.tag {
+					.dot {
+						width: 2px;
+						height: 2px;
+						border-radius: 50%;
+						background-color: var(--color_text_light);
+					}
+				}
+			}
+		}
+	}
+}

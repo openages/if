@@ -1,6 +1,6 @@
 import type { Shortcuts } from '@/models'
 
-export default ([
+export default [
 	{
 		key_bindings: 'shift+a',
 		event_path: 'global.app.toggleAppMenu',
@@ -18,7 +18,20 @@ export default ([
 		event_path: 'global.app.handleAppSwitch',
 		readonly: true,
 		options: { keydown: false, keyup: true }
+	},
+	{
+		key_bindings: 'ctrl+k, command+k',
+		event_path: 'global.app.showSearch',
+		readonly: true,
+		options: { keydown: true, keyup: false }
+	},
+	{
+		key_bindings: '*',
+		special_key: 'escape',
+		event_path: 'global.app.closeSearch',
+		readonly: true,
+		options: { keydown: false, keyup: true }
 	}
-] as Shortcuts['keys'])
+] as Shortcuts['keys']
 
 export type ShortcutEventPaths = 'global.app.toggleAppMenu' | 'global.app.appSwitch' | 'global.app.handleAppSwitch'

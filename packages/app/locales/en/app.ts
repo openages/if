@@ -3,5 +3,10 @@ export default {
 	free_mark: {
 		title: 'FREE VERSION',
 		desc: 'Go to subscribe for professionals'
+	},
+	search: {
+		to_navigate: 'to navigate',
+		to_select: 'to select',
+		to_close: 'to close'
 	}
 }

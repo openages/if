@@ -32,13 +32,15 @@ export default class Index {
 	on() {
 		this.keys.map(item => {
 			hotkeys(item.key_bindings, item.options || {}, e => {
-				e.preventDefault()
-
 				if (item.special_key) {
 					if (e.key.toLowerCase() === item.special_key) {
+						e.preventDefault()
+
 						$app.Event.emit(item.event_path)
 					}
 				} else {
+					e.preventDefault()
+
 					$app.Event.emit(item.event_path)
 				}
 			})

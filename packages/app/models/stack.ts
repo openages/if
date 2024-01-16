@@ -1,11 +1,11 @@
+import { Decimal } from 'decimal.js'
+import { debounce, omit } from 'lodash-es'
+import { makeAutoObservable } from 'mobx'
+import { injectable } from 'tsyringe'
+
 import Utils from '@/models/utils'
 import { arrayMove } from '@dnd-kit/sortable'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
-import { Decimal } from 'decimal.js'
-import { omit } from 'lodash-es'
-import { debounce } from 'lodash-es'
-import { makeAutoObservable } from 'mobx'
-import { injectable } from 'tsyringe'
 
 import type { DirTree, Stack } from '@/types'
 import type { DragEndEvent } from '@dnd-kit/core'
@@ -57,11 +57,13 @@ export default class Index {
 		const exsit_view = this.find(view.id)
 
 		if (exsit_view?.view) {
+			this.columns[exsit_view.column_index].views.forEach(item => (item.active = false))
+
 			exsit_view.view.active = true
 
 			this.focus = { column: exsit_view.column_index, view: exsit_view.view_index }
 
-			return
+			return this.updateColumnsFocus()
 		}
 
 		if (this.focus.column === -1) {

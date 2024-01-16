@@ -9,7 +9,8 @@ export default {
 		level: '优先级',
 		text: '文本',
 		children: '子任务',
-		options: '操作'
+		options: '操作',
+		archived: '已归档'
 	},
 	context_menu: {
 		detail: '查看详情',

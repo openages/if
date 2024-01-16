@@ -27,6 +27,10 @@
 	&.on_body {
 		position: fixed;
 	}
+
+	&.disableOverflow {
+		padding: 0 60px;
+	}
 }
 
 .content {
@@ -64,5 +68,10 @@
 		padding: 18px;
 		max-height: calc(100% - 40px);
 		overflow-y: scroll;
+
+		&.disableOverflow {
+			max-height: unset;
+			overflow-y: unset;
+		}
 	}
 }

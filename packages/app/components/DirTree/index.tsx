@@ -48,7 +48,7 @@ const Index = (props: IProps) => {
 	})
 
 	const props_search: IPropsSearch = {
-		showSearch: useMemoizedFn(() => $app.Event.emit('global.app.showSearch', x.module))
+		showSearch: useMemoizedFn(() => $app.Event.emit('global.app.showSearch'))
 	}
 
 	const props_dir_items: IPropsDirItems = {

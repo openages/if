@@ -1,8 +1,10 @@
-import { X } from '@phosphor-icons/react'
 import { useClickAway } from 'ahooks'
-import { AnimatePresence, motion } from 'framer-motion'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useRef, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
+
+import { X } from '@phosphor-icons/react'
+
 import styles from './index.css'
 
 import type { MouseEvent, ReactNode } from 'react'
@@ -14,12 +16,13 @@ interface IProps {
 	title?: string | number
 	width?: number
 	maskClosable?: boolean
+	disableOverflow?: boolean
 	onCancel: (e: MouseEvent<HTMLDivElement>) => void
 	getContainer?: () => Element
 }
 
 const Index = (props: IProps) => {
-	const { children, open, className, title, width, maskClosable, onCancel, getContainer } = props
+	const { children, open, className, title, width, maskClosable, disableOverflow, onCancel, getContainer } = props
 	const ref_content_wrap = useRef<HTMLDivElement>(null)
 	const ref_content = useRef<HTMLDivElement>(null)
 	const [on_body, setOnbody] = useState(false)
@@ -59,6 +62,7 @@ const Index = (props: IProps) => {
 						className={$cx(
 							styles.content_wrap,
 							on_body && styles.on_body,
+							disableOverflow && styles.disableOverflow,
 							'if_modal_wrap w_100 h_100 border_box flex align_center'
 						)}
 						ref={ref_content_wrap}
@@ -92,6 +96,7 @@ const Index = (props: IProps) => {
 								className={$cx(
 									styles.body,
 									className,
+									disableOverflow && styles.disableOverflow,
 									'if_modal_body border_box flex flex_column'
 								)}
 							>

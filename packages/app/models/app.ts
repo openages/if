@@ -3,10 +3,10 @@ import { injectable } from 'tsyringe'
 
 import { modules } from '@/appdata'
 import Utils from '@/models/utils'
-import { getDocItemsData } from '@/utils'
+import { getDocItem } from '@/utils'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
 
-import type { App } from '@/types'
+import type { App, DirTree } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
 
 @injectable()
@@ -20,7 +20,8 @@ export default class Index {
 	search = {
 		open: false,
 		module: '' as App.ModuleType,
-		items: [] as Array<{ file_id: string; id: string; text: string }>
+		items: [] as Array<{ item: any; file: DirTree.Item; setting: any }>,
+		index: 0
 	}
 
 	get visibles() {
@@ -97,13 +98,12 @@ export default class Index {
 		}
 	}
 
-	showSearch(module: App.ModuleType) {
+	showSearch() {
 		this.search.open = true
-		this.search.module = module
 	}
 
 	closeSearch() {
-		this.search = { open: false, module: '' as App.ModuleType, items: [] }
+		this.search = { open: false, module: this.search.module, items: [], index: 0 }
 	}
 
 	async searchByInput(text: string) {
@@ -120,7 +120,16 @@ export default class Index {
 				})
 				.exec()
 
-			this.search.items = getDocItemsData(docs)
+			const file_ids = docs.map(item => item.file_id)
+
+			const files = await $db.dirtree_items.findByIds(file_ids).exec()
+			const settings = await $db.module_setting.findByIds(file_ids).exec()
+
+			this.search.items = file_ids.map((_, index) => ({
+				item: getDocItem(docs[index]),
+				file: getDocItem(files.get(docs[index].file_id)),
+				setting: JSON.parse(getDocItem(settings.get(docs[index].file_id)).setting)
+			}))
 		}
 	}
 
@@ -129,6 +138,7 @@ export default class Index {
 		$app.Event.on('global.app.appSwitch', this.appSwitch)
 		$app.Event.on('global.app.handleAppSwitch', this.handleAppSwitch)
 		$app.Event.on('global.app.showSearch', this.showSearch)
+		$app.Event.on('global.app.closeSearch', this.closeSearch)
 
 		window.addEventListener('blur', this.handleAppSwitch)
 	}
@@ -140,6 +150,7 @@ export default class Index {
 		$app.Event.off('global.app.appSwitch', this.appSwitch)
 		$app.Event.off('global.app.handleAppSwitch', this.handleAppSwitch)
 		$app.Event.off('global.app.showSearch', this.showSearch)
+		$app.Event.off('global.app.closeSearch', this.closeSearch)
 
 		window.removeEventListener('blur', this.handleAppSwitch)
 	}

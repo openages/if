@@ -9,7 +9,8 @@ export default {
 		level: 'Level',
 		text: 'Text',
 		children: 'Children',
-		options: 'Options'
+		options: 'Options',
+		archived: 'Archived'
 	},
 	context_menu: {
 		detail: 'Detail',

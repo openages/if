@@ -47,6 +47,10 @@ const Index = () => {
 		global.app.switch_index = global.app.actives.findIndex(item => item.app === current_module)
 	}, [current_module, global.app.actives])
 
+	useEffect(() => {
+		global.app.search.module = current_module
+	}, [current_module])
+
 	const is_exclude_router = useMemo(() => exclude_paths.some(item => minimatch(pathname, item)), [pathname])
 
 	const props_sidebar: IPropsSidebar = {
@@ -115,11 +119,17 @@ const Index = () => {
 	}
 
 	const props_search: IPropsSearch = {
+		current_module,
 		search: $copy(global.app.search),
 		searchByInput: useMemoizedFn(global.app.searchByInput),
 		onClose: useMemoizedFn(global.app.closeSearch),
 		find: useMemoizedFn(global.stack.find),
-		add: useMemoizedFn(global.stack.add)
+		add: useMemoizedFn(global.stack.add),
+		changeSearchIndex: useMemoizedFn(index => {
+			if (index < 0 || index > global.app.search.items.length - 1) return
+
+			global.app.search.index = index
+		})
 	}
 
 	if (!global.db.ready) return <GlobalLoading visible></GlobalLoading>
