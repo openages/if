@@ -20,10 +20,6 @@
 				outline: 3px solid var(--color_border);
 			}
 		}
-
-		&:hover {
-			background-color: var(--color_main) !important;
-		}
 	}
 }
 
@@ -101,9 +97,12 @@
 			}
 		}
 
+		.if-modal-body {
+			padding: 6px 0;
+		}
+
 		.if-modal-close {
-			top: 19px;
-			height: unset;
+			top: 14.5px;
 
 			.if-modal-close-x {
 				font-size: 14px;

@@ -7,12 +7,12 @@ import { container } from 'tsyringe'
 import { Wave } from '@/components'
 import { Activity, Command, Layout, Sliders } from '@phosphor-icons/react'
 
-import AppCenter from './app_center'
-import GlobalCenter from './global_center'
+import Global from './Global'
 import styles from './index.css'
+import Menu from './Menu'
 import Model from './model'
-import ShortcutCenter from './shortcut_center'
-import TaskCenter from './task_center'
+import Shortcuts from './Shortcuts'
+import Tasks from './Tasks'
 
 const Index = () => {
 	const [x] = useState(() => container.resolve(Model))
@@ -20,28 +20,28 @@ const Index = () => {
 
 	const nav_items = [
 		{
-			label: t('translation:setting.nav.titles.setting'),
+			label: t('translation:setting.nav.titles.Global'),
 			icon: <Sliders size={16}></Sliders>,
 			key: '0',
-			children: <GlobalCenter></GlobalCenter>
+			children: <Global></Global>
 		},
 		{
-			label: t('translation:setting.nav.titles.app_center'),
+			label: t('translation:setting.nav.titles.Menu'),
 			icon: <Layout size={16}></Layout>,
 			key: '1',
-			children: <AppCenter></AppCenter>
+			children: <Menu></Menu>
 		},
 		{
-			label: t('translation:setting.nav.titles.task_center'),
+			label: t('translation:setting.nav.titles.Tasks'),
 			icon: <Activity size={16}></Activity>,
 			key: '2',
-			children: <TaskCenter></TaskCenter>
+			children: <Tasks></Tasks>
 		},
 		{
-			label: t('translation:setting.nav.titles.shortcut_center'),
+			label: t('translation:setting.nav.titles.Shortcuts'),
 			icon: <Command size={16}></Command>,
 			key: '3',
-			children: <ShortcutCenter></ShortcutCenter>
+			children: <Shortcuts></Shortcuts>
 		}
 	]
 

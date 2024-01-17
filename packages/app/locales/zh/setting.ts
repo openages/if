@@ -1,10 +1,10 @@
 export default {
 	nav: {
 		titles: {
-			setting: '全局设置',
-			app_center: '菜单设置',
-			task_center: '任务管理器',
-			shortcut_center: '快捷键'
+			Global: '全局设置',
+			Menu: '菜单设置',
+			Tasks: '任务管理器',
+			Shortcuts: '快捷键'
 		}
 	},
 	Normal: {
@@ -46,5 +46,16 @@ export default {
 	},
 	Menu: {
 		fixed: '固定'
+	},
+	Screenlock: {
+		title: '锁屏',
+		password: {
+			title: '密码',
+			desc: '设定应用锁屏密码'
+		},
+		autolock: {
+			title: '自动锁屏',
+			desc: '不活跃时锁定屏幕'
+		}
 	}
 }

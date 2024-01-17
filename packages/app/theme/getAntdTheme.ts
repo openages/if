@@ -26,8 +26,6 @@ export default (theme: Theme, color_main: string) => {
 			colorBorder: theme === 'dark' ? vars.color_border : vars.color_border_light,
 			colorBorderSecondary: vars.color_border_light,
 			controlItemBgActive: vars.color_bg_2,
-			colorPrimaryHover: vars.color_text_grey,
-			colorPrimaryTextHover: vars.color_text_grey,
 			switchHeight: 34,
 			boxShadow: vars.shadow,
 			borderRadius: 6,

@@ -1,7 +1,8 @@
-import Emittery from '@openages/stk/emittery'
-import { handle, memo } from '@openages/stk/react'
 import cx from 'classix'
 import copy from 'fast-copy'
+
+import Emittery from '@openages/stk/emittery'
+import { handle, memo } from '@openages/stk/react'
 
 import type { MessageInstance } from 'antd/es/message/interface'
 import type { ModalStaticFunctions } from 'antd/es/modal/confirm'
@@ -23,3 +24,5 @@ window.$navigate = (() => {}) as any
 window.$message = {} as MessageInstance
 window.$notification = {} as NotificationInstance
 window.$modal = {} as Omit<ModalStaticFunctions, 'warn'>
+
+window.__key__ = () => 'I16DKS#hY+Two0O'

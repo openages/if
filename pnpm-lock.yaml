@@ -80,6 +80,9 @@ importers:
       console-ban:
         specifier: ^5.0.0
         version: 5.0.0
+      crypto-js:
+        specifier: ^4.2.0
+        version: 4.2.0
       dayjs:
         specifier: ^1.11.10
         version: 1.11.10
@@ -143,6 +146,9 @@ importers:
       nice-try:
         specifier: ^3.0.1
         version: 3.0.1
+      openpgp:
+        specifier: ^5.11.0
+        version: 5.11.0
       react:
         specifier: 0.0.0-experimental-31603f19d-20240109
         version: 0.0.0-experimental-31603f19d-20240109
@@ -180,11 +186,8 @@ importers:
         specifier: ^6.21.2
         version: 6.21.2(react-dom@0.0.0-experimental-31603f19d-20240109)(react@0.0.0-experimental-31603f19d-20240109)
       rxdb:
-        specifier: 15.2.0
-        version: 15.2.0(rxjs@7.8.1)
-      rxdb-flexsearch:
-        specifier: ^0.1.1
-        version: 0.1.1(flexsearch@0.7.34)(rxdb@15.2.0)
+        specifier: 15.3.0
+        version: 15.3.0(rxjs@7.8.1)
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
@@ -225,6 +228,9 @@ importers:
       '@types/color':
         specifier: ^3.0.6
         version: 3.0.6
+      '@types/crypto-js':
+        specifier: ^4.2.1
+        version: 4.2.1
       '@types/dompurify':
         specifier: ^3.0.5
         version: 3.0.5
@@ -1701,13 +1707,6 @@ packages:
 
   /@babel/runtime@7.23.4:
     resolution: {integrity: sha512-2Yv65nlWnWlSpe3fXEyX5i7fx5kIKo4Qbcj+hMO0odwaneFjfXw5fdum+4yL20O0QiaHpia0cYQ9xpNMqrBwHg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      regenerator-runtime: 0.14.1
-    dev: false
-
-  /@babel/runtime@7.23.7:
-    resolution: {integrity: sha512-w06OXVOFso7LcbzMiDGt+3X7Rh7Ho8MmgPoWU3rarH+8upf+wSU/grlGbWzQyr3DkdN6ZeuMFjpdwW0Q+HxobA==}
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.1
@@ -3290,6 +3289,10 @@ packages:
       '@types/node': 20.11.4
     dev: false
 
+  /@types/crypto-js@4.2.1:
+    resolution: {integrity: sha512-FSPGd9+OcSok3RsM0UZ/9fcvMOXJ1ENE/ZbLfOPlBWj7BgXtEAM8VYfTtT760GiLbQIMoVozwVuisjvsVwqYWw==}
+    dev: true
+
   /@types/dompurify@3.0.5:
     resolution: {integrity: sha512-1Wg0g3BtQF7sSb27fJQAKck1HECM6zV1EB66j8JH9i3LCjYabJa0FSdiSgsD5K/RbrsR0SiraKacLB+T8ZVYAg==}
     dependencies:
@@ -3333,10 +3336,6 @@ packages:
       '@types/express-serve-static-core': 4.17.41
       '@types/qs': 6.9.11
       '@types/serve-static': 1.15.5
-
-  /@types/flexsearch@0.7.6:
-    resolution: {integrity: sha512-H5IXcRn96/gaDmo+rDl2aJuIJsob8dgOXDqf8K0t8rWZd1AFNaaspmRsElESiU+EWE33qfbFPgI0OC/B1g9FCA==}
-    dev: false
 
   /@types/fs-extra@11.0.4:
     resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
@@ -3739,11 +3738,6 @@ packages:
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
     dev: true
 
-  /D@1.0.0:
-    resolution: {integrity: sha512-nQvrCBu7K2pSSEtIM0EEF03FVjcczCXInMt3moLNFbjlWx6bZrX72uT6/1uAXDbnzGUAx9gTyDiQ+vrFi663oA==}
-    deprecated: Package no longer supported. Contact support@npmjs.com for more info.
-    dev: false
-
   /accepts@1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
     engines: {node: '>= 0.6'}
@@ -3983,6 +3977,15 @@ packages:
     resolution: {integrity: sha512-94ezeKlKB97OJUyMaU7dQUAB+Cmjlgr4T9/cxCoKaLM4F2HAmuIHm3Q5ClGCsX5PvRwCQehCzAa/6foRFXRbqA==}
     dev: false
 
+  /asn1.js@5.4.1:
+    resolution: {integrity: sha512-+I//4cYPccV8LdmBLiX8CYvf9Sp3vQsrqu2QNXRcrbiWvcx/UdlFiqUJJzxRQxgsZmvhXhn4cSKeSmoFjVdupA==}
+    dependencies:
+      bn.js: 4.12.0
+      inherits: 2.0.4
+      minimalistic-assert: 1.0.1
+      safer-buffer: 2.1.2
+    dev: false
+
   /async-validator@4.2.5:
     resolution: {integrity: sha512-7HhHjtERjqlNbZtqNqy2rckN/SpOOlmDliet+lP7k+eKZEjPk3DgyeU9lIXLdeLz0uBbbVp+9Qdow9wJWgwwfg==}
     dev: false
@@ -4067,6 +4070,10 @@ packages:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
     engines: {node: '>=8'}
     dev: true
+
+  /bn.js@4.12.0:
+    resolution: {integrity: sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==}
+    dev: false
 
   /body-parser@1.20.0:
     resolution: {integrity: sha512-DfJ+q6EPcGKZD1QWUjSpqp+Q7bDQTsQIF4zfUAtZ6qk+H/3/QRhg9CEp39ss+/T2vw0+HaidC0ecJj/DRLIaKg==}
@@ -4663,9 +4670,8 @@ packages:
     resolution: {integrity: sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==}
     dev: true
 
-  /dexie@4.0.0-alpha.4:
-    resolution: {integrity: sha512-xYABeT5ctG7WAJtyr/6gKhWXD6NY8ydZieQlvLQkFV6KXY33I+ShE39pToGzQw+3/xs760rW+opxhoVZ/yzVxQ==}
-    engines: {node: '>=6.0'}
+  /dexie@4.0.1-beta.6:
+    resolution: {integrity: sha512-NOexH4Rn8mrdSg/bn3YNFdPzQ1vPNxgPYLGWGU46z26NYGW1XmC0hhjjttwx9jYwba1K9Ypo1ZbZLNKtK6INSg==}
     dev: false
 
   /diff@4.0.2:
@@ -5988,7 +5994,6 @@ packages:
 
   /minimalistic-assert@1.0.1:
     resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}
-    dev: true
 
   /minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
@@ -6260,6 +6265,13 @@ packages:
     resolution: {integrity: sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==}
     hasBin: true
     dev: true
+
+  /openpgp@5.11.0:
+    resolution: {integrity: sha512-hytHsxIPtRhuh6uAmoBUThHSwHSX3imLu7x4453T+xkVqIw49rl22MRD4KQIAQdCDoVdouejzYgcuLmMA/2OAA==}
+    engines: {node: '>= 8.0.0'}
+    dependencies:
+      asn1.js: 5.4.1
+    dev: false
 
   /p-finally@1.0.0:
     resolution: {integrity: sha512-LICb2p9CB7FS+0eR1oqWnHhp0FljGLZCWBE9aix0Uye9W8LTQPwMTYVGWQWIw9RdQiDg4+epXQODwIYJtSJaow==}
@@ -7333,27 +7345,14 @@ packages:
       queue-microtask: 1.2.3
     dev: true
 
-  /rxdb-flexsearch@0.1.1(flexsearch@0.7.34)(rxdb@15.2.0):
-    resolution: {integrity: sha512-cKBPdJKQ+1zSvtgxtuORTZrn1/YQH2NE7iwaUWxPfgA2Fh+BSQWZjdSQHJw41yxrWDqmEcsHKU+V0emOwkQMHw==}
-    engines: {node: '>= 16'}
-    peerDependencies:
-      flexsearch: 0.7.21
-      rxdb: ^14.0.0
-    dependencies:
-      '@types/flexsearch': 0.7.6
-      D: 1.0.0
-      flexsearch: 0.7.34
-      rxdb: 15.2.0(rxjs@7.8.1)
-    dev: false
-
-  /rxdb@15.2.0(rxjs@7.8.1):
-    resolution: {integrity: sha512-/mUBvcA763oRWIxQHm+8tdwedMzG7JhOoEJ2VnxL3GvMzL/Gqdsn0aEhyFt/lB7FlSA7VU5lkmtFBoT85JzipQ==}
+  /rxdb@15.3.0(rxjs@7.8.1):
+    resolution: {integrity: sha512-T8Q5i5KsX5ovQ+ti+RwX8JN3l3aGYVLNB4tKTUtKaX167POgKgt4mm+liBH6lIwRckBlKcIWdBuTPp6/q/L+IQ==}
     engines: {node: '>=18'}
     requiresBuild: true
     peerDependencies:
       rxjs: ^7.8.0
     dependencies:
-      '@babel/runtime': 7.23.7
+      '@babel/runtime': 7.23.8
       '@types/clone': 2.1.4
       '@types/cors': 2.8.17
       '@types/express': 4.17.21
@@ -7365,7 +7364,7 @@ packages:
       broadcast-channel: 7.0.0
       crypto-js: 4.2.0
       custom-idle-queue: 3.0.1
-      dexie: 4.0.0-alpha.4
+      dexie: 4.0.1-beta.6
       event-reduce-js: 5.2.7
       firebase: 10.7.1
       get-graphql-from-jsonschema: 8.1.0
@@ -7422,7 +7421,6 @@ packages:
 
   /safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
-    dev: true
 
   /scheduler@0.0.0-experimental-31603f19d-20240109:
     resolution: {integrity: sha512-ZQpb5P69aX+3rH/wUkrDXYzRr0mTsaXy8IZJ8X/grXBxKWGy4Wrolsag7Hh+JOHsd18NuglKmaTlP5XboseOfg==}
@@ -7928,7 +7926,7 @@ packages:
       uglify-js:
         optional: true
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.21
+      '@jridgewell/trace-mapping': 0.3.20
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2

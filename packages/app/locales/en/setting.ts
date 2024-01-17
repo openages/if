@@ -1,10 +1,10 @@
 export default {
 	nav: {
 		titles: {
-			setting: 'Global',
-			app_center: 'Menu',
-			task_center: 'Tasks',
-			shortcut_center: 'Shortcuts'
+			Global: 'Global',
+			Menu: 'Menu',
+			Tasks: 'Tasks',
+			Shortcuts: 'Shortcuts'
 		}
 	},
 	Normal: {
@@ -46,5 +46,16 @@ export default {
 	},
 	Menu: {
 		fixed: 'Fixed'
+	},
+	Screenlock: {
+		title: 'Screen Lock',
+		password: {
+			title: 'Password',
+			desc: 'Set app screen lock password'
+		},
+		autolock: {
+			title: 'Autolock',
+			desc: 'Lock the screen when inactive'
+		}
 	}
 }

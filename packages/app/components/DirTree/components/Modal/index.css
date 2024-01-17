@@ -4,10 +4,6 @@
 			background-color: var(--color_bg);
 		}
 
-		.if-modal-body {
-			padding: 6px 0;
-		}
-
 		.if-input-affix-wrapper {
 			width: calc(100% - 38px - 12px);
 		}

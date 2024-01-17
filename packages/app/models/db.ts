@@ -10,10 +10,17 @@ import { keyCompression } from '@/config'
 import {
 	migration_activity_items,
 	migration_dirtree_items,
+	migration_kv,
 	migration_module_setting,
 	migration_todo_items
 } from '@/migrations'
-import { schema_activity_items, schema_dirtree_items, schema_module_setting, schema_todo_items } from '@/schemas'
+import {
+	schema_activity_items,
+	schema_dirtree_items,
+	schema_kv,
+	schema_module_setting,
+	schema_todo_items
+} from '@/schemas'
 import { statics } from '@/utils/rxdb'
 import { local } from '@openages/stk/storage'
 
@@ -34,7 +41,7 @@ export default class Index {
 			eventReduce: true,
 			allowSlowCount: true,
 			multiInstance: false,
-			password: 'I16DKS#hY+Two0O',
+			password: window.__key__(),
 			cleanupPolicy: { waitForLeadership: false },
 			ignoreDuplicate: window.$is_dev,
 			storage: wrappedKeyEncryptionCryptoJsStorage({
@@ -47,6 +54,11 @@ export default class Index {
 		})
 
 		await db.addCollections({
+			kv: {
+				autoMigrate: false,
+				schema: schema_kv,
+				migrationStrategies: migration_kv
+			},
 			module_setting: {
 				autoMigrate: false,
 				schema: schema_module_setting,

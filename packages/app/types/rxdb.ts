@@ -1,4 +1,4 @@
-import type { DBActivityItems, DBDirtreeItems, DBModuleSetting, DBTodoItems } from '@/schemas'
+import type { DBActivityItems, DBDirtreeItems, DBModuleSetting, DBTodoItems, DBKV } from '@/schemas'
 import type { RxDatabase } from 'rxdb'
 import type { RxDocument, RxQuery, CRDTDocumentField, RxCollection } from 'rxdb'
 
@@ -18,6 +18,7 @@ export namespace RxDB {
 	>
 
 	export type DBContent = RxDatabase<{
+		kv: DBKV
 		module_setting: DBModuleSetting
 		activity_items: DBActivityItems
 		dirtree_items: DBDirtreeItems

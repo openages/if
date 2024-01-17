@@ -37,6 +37,8 @@ declare global {
 		$message: MessageInstance
 		$notification: NotificationInstance
 		$modal: Omit<ModalStaticFunctions, 'warn'>
+
+		__key__: () => string
 	}
 
 	let $is_dev: boolean
@@ -51,6 +53,8 @@ declare global {
 	let $message: MessageInstance
 	let $notification: NotificationInstance
 	let $modal: Omit<ModalStaticFunctions, 'warn'>
+
+	let __key__: () => string
 }
 
 export {}
