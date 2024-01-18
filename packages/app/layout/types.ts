@@ -126,10 +126,13 @@ export interface IPropsAppSwitch {
 
 export interface IPropsSearch {
 	current_module: App.ModuleType
-	search: GlobalModel['app']['search']
-	search_history: GlobalModel['app']['search_history']
-	searchByInput: GlobalModel['app']['searchByInput']
-	onClose: GlobalModel['app']['closeSearch']
+	open: GlobalModel['search']['open']
+	module: GlobalModel['search']['module']
+	items: GlobalModel['search']['items']
+	index: GlobalModel['search']['index']
+	search_history: GlobalModel['search']['search_history']
+	searchByInput: GlobalModel['search']['searchByInput']
+	onClose: GlobalModel['search']['closeSearch']
 	find: GlobalModel['stack']['find']
 	add: GlobalModel['stack']['add']
 	changeSearchIndex: (index: number) => void

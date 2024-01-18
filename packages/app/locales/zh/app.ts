@@ -9,5 +9,15 @@ export default {
 		to_select: '选择',
 		to_close: '关闭',
 		history: '搜索历史'
+	},
+	screenlock: {
+		set_password: `$t(common.set)$t(common.password)`,
+		reset_password: `$t(common.reset)$t(common.password)`,
+		copied: '$t(common.secret_key)$t(common.copied)',
+		password_placeholder: '$t(common.input)$t(common.screenlock)$t(common.password)',
+		generate_secret_key: '$t(common.generate)$t(common.secret_key)',
+		secret_key_placeholder: '请输入生成的密钥',
+		desc: '密钥可用来解锁和重置密码，请务必妥善保存',
+		use_x_reset: '$t(common.use){{mode}}$t(common.reset)'
 	}
 }

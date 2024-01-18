@@ -1,5 +1,7 @@
 import { match } from 'ts-pattern'
 
+export const passphrase = window.__key__() + '123654zxy' + window.__key__()
+
 export const getSort = (v: 'asc' | 'desc' | 'ascend' | 'descend') => {
 	if (!v) return null
 
@@ -25,3 +27,5 @@ export const autolock_map = {
 	'3h': { value: 3, unit: 'hour' },
 	never: {}
 }
+
+export const autolock_options = Object.keys(autolock_map).map(item => ({ label: item, value: item }))

@@ -12,7 +12,6 @@ import { container } from 'tsyringe'
 import { exclude_paths } from '@/appdata'
 import { GlobalLoading, LazyElement, OffscreenOutlet } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
-import Panel from '@/dev/__Panel__'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
 
 import { AppMenu, AppSwitch, FreeMark, Search, Sidebar, Stacks } from './component'
@@ -48,7 +47,7 @@ const Index = () => {
 	}, [current_module, global.app.actives])
 
 	useEffect(() => {
-		global.app.search.module = current_module
+		global.search.module = current_module
 	}, [current_module])
 
 	const is_exclude_router = useMemo(() => exclude_paths.some(item => minimatch(pathname, item)), [pathname])
@@ -67,6 +66,7 @@ const Index = () => {
 		iconPrefixCls: 'if-icon',
 		theme,
 		locale,
+		virtual: false,
 		getPopupContainer: n => n?.parentElement!
 	}
 
@@ -120,18 +120,21 @@ const Index = () => {
 
 	const props_search: IPropsSearch = {
 		current_module,
-		search: $copy(global.app.search),
-		search_history: $copy(global.app.search_history),
-		searchByInput: useMemoizedFn(global.app.searchByInput),
-		onClose: useMemoizedFn(global.app.closeSearch),
+		open: $copy(global.search.open),
+		module: $copy(global.search.module),
+		items: $copy(global.search.items),
+		index: $copy(global.search.index),
+		search_history: $copy(global.search.search_history),
+		searchByInput: useMemoizedFn(global.search.searchByInput),
+		onClose: useMemoizedFn(global.search.closeSearch),
 		find: useMemoizedFn(global.stack.find),
 		add: useMemoizedFn(global.stack.add),
 		changeSearchIndex: useMemoizedFn(index => {
-			if (index < 0 || index > global.app.search.items.length - 1) return
+			if (index < 0 || index > global.search.items.length - 1) return
 
-			global.app.search.index = index
+			global.search.index = index
 		}),
-		clearSearchHistory: useMemoizedFn(() => (global.app.search_history = []))
+		clearSearchHistory: useMemoizedFn(() => (global.search.search_history = []))
 	}
 
 	if (!global.db.ready) return <GlobalLoading visible></GlobalLoading>

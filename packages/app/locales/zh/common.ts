@@ -21,6 +21,18 @@ export default {
 	yes: '是',
 	no: '否',
 	total: '共{{counts}}条记录',
+	input: '输入',
+	generate: '生成',
+	set: '设置',
+	screenlock: '锁屏',
+	password: '密码',
+	secret_key: '密钥',
+	clipboard: '剪贴板',
+	saved: '保存的',
+	please: '请',
+	use: '使用',
+	has: '已',
+	copied: `$t(common.has)复制到$t(common.clipboard)`,
 	not_found: {
 		confirm: '未查找到相关记录，请确认存在相关记录，再进行操作'
 	},

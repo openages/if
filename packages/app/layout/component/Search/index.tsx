@@ -15,8 +15,19 @@ import type { DirTree } from '@/types'
 import type { KeyboardEvent, MouseEvent } from 'react'
 
 const Index = (props: IPropsSearch) => {
-	const { search, search_history, searchByInput, onClose, find, add, changeSearchIndex, clearSearchHistory } = props
-	const { open, module, items, index } = search
+	const {
+		open,
+		module,
+		items,
+		index,
+		search_history,
+		searchByInput,
+		onClose,
+		find,
+		add,
+		changeSearchIndex,
+		clearSearchHistory
+	} = props
 	const { t } = useTranslation()
 	const ref = useRef(null)
 	const focusing = useFocusWithin(ref)

@@ -1,97 +1,186 @@
-import { useMemoizedFn, useReactive, useToggle } from 'ahooks'
+import { useMemoizedFn } from 'ahooks'
 import { Button, Input, Modal, Select } from 'antd'
 import { motion, AnimatePresence } from 'framer-motion'
 import { observer } from 'mobx-react-lite'
-import { useMemo, useState, Fragment } from 'react'
+import { useMemo, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { autolock_options } from '@/appdata'
 import { useGlobal } from '@/context/app'
 import { Copy, Lock, ShieldStar } from '@phosphor-icons/react'
 
 import styles from '../index.css'
 
 import type { ChangeEvent } from 'react'
-import type { App } from '@/types'
 
 const { Password, TextArea } = Input
 
 const Index = () => {
 	const global = useGlobal()
 	const { t } = useTranslation()
-	const [input_password, setInputPassword] = useState('')
-	const [input_private_key, setInputPrivateKey] = useState('')
-	const [loading, setLoading] = useState(false)
-	const [verified, seVerified] = useState(true)
-	const [visible, { toggle: toggleInput, setLeft: setVisibleFalse }] = useToggle(false)
-	const [use_password, { toggle: toggleUse, setLeft: setUsePasswordTrue }] = useToggle(true)
-	const keypair = useReactive<Omit<App.Screenlock, 'autolock'>>({ private_key: '', public_key: '', password: '' })
 
-	const reset_mode = useMemo(() => global.app.screenlock.public_key !== '', [global.app.screenlock.public_key])
-	const title = useMemo(() => (reset_mode ? '重置' : '设置') + '密码', [reset_mode])
+	const reset_mode = useMemo(() => global.screenlock.data.public_key !== '', [global.screenlock.data.public_key])
+	const title = useMemo(() => t(`translation:app.screenlock.${reset_mode ? 're' : ''}set_password`), [reset_mode])
+
+	const toggleModalOpen = useMemoizedFn(
+		(v?: boolean | any) =>
+			(global.screenlock.modal_open = typeof v === 'boolean' ? v : !global.screenlock.modal_open)
+	)
+	const togglePasswordMode = useMemoizedFn(
+		(v?: boolean | any) =>
+			(global.screenlock.password_mode = typeof v === 'boolean' ? v : !global.screenlock.password_mode)
+	)
 
 	const onChangePassword = useMemoizedFn((e: ChangeEvent<HTMLInputElement>) => {
-		if (!verified) seVerified(true)
+		if (!global.screenlock.verified) global.screenlock.verified = true
 
-		setInputPassword(e.target.value)
+		global.screenlock.input_password = e.target.value
 	})
 	const onChangePrivateKey = useMemoizedFn((e: ChangeEvent<HTMLTextAreaElement>) => {
-		if (!verified) seVerified(true)
+		if (!global.screenlock.verified) global.screenlock.verified = true
 
-		setInputPrivateKey(e.target.value)
+		global.screenlock.input_private_key = e.target.value
 	})
 
 	const genKeyPair = useMemoizedFn(async () => {
-		const { private_key, public_key, password: pwd } = await global.app.genKeyPair(input_password)
-
-		keypair.private_key = private_key
-		keypair.public_key = public_key
-		keypair.password = pwd
+		await global.screenlock.genKeyPair(global.screenlock.input_password)
 	})
 
 	const copy = useMemoizedFn(async () => {
-		await navigator.clipboard.writeText(keypair.private_key)
+		await navigator.clipboard.writeText(global.screenlock.keypair.private_key)
 
-		$message.success('密钥已复制到粘贴板')
+		$message.success(t('translation:app.screenlock.copied'))
 	})
 
 	const reset = useMemoizedFn(() => {
-		setInputPassword('')
-		setInputPrivateKey('')
-		setUsePasswordTrue()
-
-		keypair.private_key = ''
-		keypair.public_key = ''
-		keypair.password = ''
+		global.screenlock.input_password = ''
+		global.screenlock.input_private_key = ''
+		global.screenlock.password_mode = true
+		global.screenlock.keypair = { private_key: '', public_key: '', password: '' }
 	})
 
 	const onOk = useMemoizedFn(async () => {
 		if (!reset_mode) {
-			setVisibleFalse()
+			toggleModalOpen(false)
 
-			await global.app.saveKeyPair($copy(keypair))
+			await global.screenlock.saveKeyPair($copy(global.screenlock.keypair))
 		} else {
-			setLoading(true)
+			global.screenlock.loading = true
 
-			const value = use_password ? input_password : input_private_key
+			const value = global.screenlock.password_mode
+				? global.screenlock.input_password
+				: global.screenlock.input_private_key
 
-			const ok = await global.app.verify(value, use_password)
+			const ok = await global.screenlock.verify(value, global.screenlock.password_mode)
 
-			setLoading(false)
-			seVerified(ok)
+			global.screenlock.loading = false
+			global.screenlock.verified = ok
 
 			if (!ok) return
 
-			await global.app.resetPassword()
+			await global.screenlock.resetPassword()
 
 			reset()
 		}
 	})
 
-	const ungenerated = useMemo(() => {
-		if (reset_mode) return use_password ? input_password.length < 6 : !input_private_key.length
+	const setAutoLock = useMemoizedFn(v => global.screenlock.setAutoLock(v))
 
-		return input_password.length < 6 || !keypair.private_key.length
-	}, [reset_mode, use_password, keypair.private_key, input_password, input_private_key])
+	const ungenerated = useMemo(() => {
+		if (reset_mode)
+			return global.screenlock.password_mode
+				? global.screenlock.input_password.length < 6
+				: !global.screenlock.input_private_key.length
+
+		return global.screenlock.input_password.length < 6 || !global.screenlock.keypair.private_key.length
+	}, [
+		reset_mode,
+		global.screenlock.password_mode,
+		global.screenlock.keypair.private_key,
+		global.screenlock.input_password,
+		global.screenlock.input_private_key
+	])
+
+	const ModalContent = (
+		<Fragment>
+			{global.screenlock.password_mode && (
+				<Password
+					className={$cx('password_input', !global.screenlock.verified && 'unverified')}
+					placeholder={t('translation:app.screenlock.password_placeholder')}
+					maxLength={18}
+					autoFocus
+					status={!global.screenlock.verified && 'error'}
+					value={global.screenlock.input_password}
+					onChange={onChangePassword}
+				></Password>
+			)}
+			{!reset_mode && (
+				<Button
+					className='w_100 mt_12'
+					type='primary'
+					disabled={global.screenlock.input_password.length < 6}
+					onClick={genKeyPair}
+				>
+					{t('translation:app.screenlock.generate_secret_key')}
+				</Button>
+			)}
+			<AnimatePresence>
+				{(global.screenlock.keypair.private_key || !global.screenlock.password_mode) && (
+					<motion.div
+						className={$cx('key_wrap w_100 border_box', reset_mode && 'reset_mode')}
+						initial={{ opacity: 0, height: 0 }}
+						animate={{ opacity: 1, height: 'auto' }}
+						exit={{ opacity: 0, height: 0 }}
+						transition={{ duration: 0.18 }}
+					>
+						<div className='padding_wrap w_100 border_box flex flex_column align_center relative'>
+							<div
+								className='btn_copy flex justify_center align_center absolute clickable'
+								onClick={copy}
+							>
+								<Copy></Copy>
+							</div>
+							<TextArea
+								className={$cx(
+									'password_key',
+									!global.screenlock.verified && 'unverified'
+								)}
+								placeholder={t('translation:app.screenlock.secret_key_placeholder')}
+								autoFocus={reset_mode}
+								readOnly={global.screenlock.password_mode}
+								status={!global.screenlock.verified && 'error'}
+								value={
+									!reset_mode && global.screenlock.password_mode
+										? global.screenlock.keypair.private_key
+										: global.screenlock.input_private_key
+								}
+								onChange={
+									reset_mode &&
+									!global.screenlock.password_mode &&
+									onChangePrivateKey
+								}
+							></TextArea>
+							{!reset_mode && (
+								<span className='desc text_center'>
+									{t('translation:app.screenlock.desc')}
+								</span>
+							)}
+						</div>
+					</motion.div>
+				)}
+			</AnimatePresence>
+			{reset_mode && (
+				<Button className='btn_toggle_use w_100 mt_12' type='text' onClick={togglePasswordMode}>
+					{/* @ts-ignore */}
+					{t('translation:app.screenlock.use_x_reset', {
+						mode: global.screenlock.password_mode
+							? t('translation:common.secret_key')
+							: t('translation:common.password')
+					})}
+				</Button>
+			)}
+		</Fragment>
+	)
 
 	return (
 		<Fragment>
@@ -113,7 +202,7 @@ const Index = () => {
 						<div className='value_wrap flex align_center'>
 							<button
 								className='btn flex justify_center align_center clickable'
-								onClick={toggleInput}
+								onClick={toggleModalOpen}
 							>
 								{title}
 							</button>
@@ -135,94 +224,27 @@ const Index = () => {
 					<div className='value_wrap flex align_center'>
 						<Select
 							className='select'
-							// value={global.locale.lang}
-							// options={locale_options}
-							// onSelect={v => {
-							// 	global.locale.setLang(v)
-
-							// 	changeLanguage(v)
-							// }}
+							value={global.screenlock.data.autolock}
+							options={autolock_options}
+							onSelect={setAutoLock}
 						></Select>
 					</div>
 				</div>
 			</div>
 			<Modal
 				className={$cx(styles.password_modal, ungenerated && styles.ungenerated)}
-				{...(reset_mode ? { okText: '重置密码' } : {})}
-				open={visible}
+				{...(reset_mode ? { okText: t('translation:app.screenlock.reset_password') } : {})}
+				open={global.screenlock.modal_open}
 				title={title}
 				width={300}
-				confirmLoading={loading}
+				confirmLoading={global.screenlock.loading}
 				centered
 				destroyOnClose
-				onCancel={setVisibleFalse}
+				onCancel={toggleModalOpen}
 				onOk={onOk}
 				afterClose={reset}
 			>
-				{use_password && (
-					<Password
-						className='password_input'
-						placeholder='输入锁屏密码'
-						maxLength={18}
-						autoFocus
-						status={!verified && 'error'}
-						value={input_password}
-						onChange={onChangePassword}
-					></Password>
-				)}
-				{!reset_mode && (
-					<Button
-						className='w_100 mt_12'
-						type='primary'
-						disabled={input_password.length < 6}
-						onClick={genKeyPair}
-					>
-						生成密钥
-					</Button>
-				)}
-				<AnimatePresence>
-					{(keypair.private_key || !use_password) && (
-						<motion.div
-							className={$cx('key_wrap w_100 border_box', reset_mode && 'reset_mode')}
-							initial={{ opacity: 0, height: 0 }}
-							animate={{ opacity: 1, height: 'auto' }}
-							exit={{ opacity: 0, height: 0 }}
-							transition={{ duration: 0.18 }}
-						>
-							<div className='padding_wrap w_100 border_box flex flex_column align_center relative'>
-								<div
-									className='btn_copy flex justify_center align_center absolute clickable'
-									onClick={copy}
-								>
-									<Copy></Copy>
-								</div>
-								<TextArea
-									className='password_key'
-									placeholder='请输入保存的密钥'
-									autoFocus={reset_mode}
-									readOnly={use_password}
-									status={!verified && 'error'}
-									value={
-										!reset_mode && use_password
-											? keypair.private_key
-											: input_private_key
-									}
-									onChange={reset_mode && !use_password && onChangePrivateKey}
-								></TextArea>
-								{!reset_mode && (
-									<span className='desc text_center'>
-										密钥可用来重置密码，请务必妥善保存
-									</span>
-								)}
-							</div>
-						</motion.div>
-					)}
-				</AnimatePresence>
-				{reset_mode && (
-					<Button className='btn_toggle_use w_100 mt_12' type='text' onClick={toggleUse}>
-						使用{use_password ? '密钥' : '密码'}重置
-					</Button>
-				)}
+				{ModalContent}
 			</Modal>
 		</Fragment>
 	)

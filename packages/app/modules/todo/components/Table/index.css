@@ -1,4 +1,12 @@
+[data-theme='dark'] {
+	._local {
+		--disable_opacity: 0.72;
+	}
+}
+
 ._local {
+	--disable_opacity: 0.3;
+
 	height: calc(100% - 72px);
 	overflow-y: scroll;
 	padding: 0 36px;
@@ -19,7 +27,7 @@
 	.RenderSchedule,
 	.RenderChildren,
 	.RenderRemark {
-		opacity: 0.3;
+		opacity: var(--disable_opacity);
 	}
 
 	.DateTime {
@@ -39,7 +47,7 @@
 
 .done {
 	.RenderStatus {
-		opacity: 0.3;
+		opacity: var(--disable_opacity);
 
 		&:hover {
 			opacity: 1;
@@ -57,7 +65,7 @@
 	.RenderCreateAt {
 		color: var(--color_text_light);
 		pointer-events: none;
-		opacity: 0.3;
+		opacity: var(--disable_opacity);
 	}
 
 	.DateTime {
@@ -82,7 +90,7 @@
 	.RenderSchedule {
 		color: var(--color_text_light);
 		pointer-events: none;
-		opacity: 0.3;
+		opacity: var(--disable_opacity);
 	}
 }
 

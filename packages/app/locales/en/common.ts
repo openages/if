@@ -21,6 +21,18 @@ export default {
 	yes: 'Yes',
 	no: 'No',
 	total: '{{counts}} records in total',
+	input: 'Input',
+	generate: 'Generate',
+	set: 'Set',
+	screenlock: 'screenlock',
+	password: 'password',
+	secret_key: 'secret key',
+	clipboard: 'clipboard',
+	saved: 'saved',
+	please: 'please',
+	use: 'Use',
+	has: 'has',
+	copied: `$t(common.has) copied to $t(common.clipboard)`,
 	not_found: {
 		confirm: 'No relevant records found. Please verify the existence of related records before proceeding.'
 	},
