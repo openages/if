@@ -101,9 +101,9 @@
 			.if-modal-footer {
 				.if-btn-primary {
 					cursor: not-allowed;
-					border-color: rgba(0, 0, 0, 0.06);
-					color: rgba(0, 0, 0, 0.25);
-					background: rgba(0, 0, 0, 0.04);
+					border: 1px dashed var(--color_border_light);
+					color: var(--color_text_light);
+					background: var(--color_bg_1);
 					box-shadow: none;
 				}
 			}

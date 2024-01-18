@@ -62,3 +62,10 @@ a:hover {
 input {
 	font-family: 'RedditSans';
 }
+
+button {
+	outline: none;
+	border: none;
+	box-shadow: none;
+	color: var(--color_text);
+}
