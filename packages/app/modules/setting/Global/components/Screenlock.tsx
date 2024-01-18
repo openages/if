@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { useMemo, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { autolock_options } from '@/appdata'
+import { getAutolockOptions } from '@/appdata'
 import { useGlobal } from '@/context/app'
 import { Copy, Lock, ShieldStar } from '@phosphor-icons/react'
 
@@ -21,6 +21,7 @@ const Index = () => {
 
 	const reset_mode = useMemo(() => global.screenlock.data.public_key !== '', [global.screenlock.data.public_key])
 	const title = useMemo(() => t(`translation:app.screenlock.${reset_mode ? 're' : ''}set_password`), [reset_mode])
+	const autolock_options = useMemo(() => getAutolockOptions(), [])
 
 	const toggleModalOpen = useMemoizedFn(
 		(v?: boolean | any) =>

@@ -1,6 +1,7 @@
 export default {
 	time: {
 		just_now: '刚刚',
+		minute: '分钟',
 		minutes: '分钟',
 		hour: '小时',
 		hours: '小时',
@@ -8,8 +9,11 @@ export default {
 		days: '天',
 		week: '周',
 		weeks: '周',
-		x_unit_ago: '{{x}}{{unit}}前'
+		x_unit_ago: '{{x}}{{unit}}前',
+		x_unit: '{{x}}{{unit}}'
 	},
+	never: '永不',
+	x_y: '{{x}} {{y}}',
 	notice: '注意',
 	unset: '未设置',
 	outdate: '已过期',

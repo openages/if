@@ -1,6 +1,7 @@
 export default {
 	time: {
 		just_now: 'Just now',
+		minute: 'minute',
 		minutes: 'minutes',
 		hour: 'hour',
 		hours: 'hours',
@@ -8,8 +9,11 @@ export default {
 		days: 'days',
 		week: 'week',
 		weeks: 'weeks',
-		x_unit_ago: '{{x}} {{unit}} ago'
+		x_unit_ago: '{{x}} {{unit}} ago',
+		x_unit: '{{x}} {{unit}}'
 	},
+	never: 'Never',
+	x_y: '{{x}} {{y}}',
 	notice: 'Notice',
 	unset: 'Unset',
 	outdate: 'outdate',
