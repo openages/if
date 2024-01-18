@@ -1,18 +1,32 @@
 import { makeAutoObservable } from 'mobx'
+import { injectable } from 'tsyringe'
 
+import Utils from '@/models/utils'
 import { getDocItem } from '@/utils'
+import { setStorageWhenChange } from '@openages/stk/mobx'
 
 import type { App, DirTree } from '@/types'
 
+@injectable()
 export default class Index {
 	open = false
 	module = '' as App.ModuleType
 	items = [] as Array<{ item: any; file: DirTree.Item; setting: any }>
 	index = 0
-	search_history = [] as Array<string>
+	search_history = {} as Record<App.ModuleType, Array<string>>
 
-	constructor() {
+	get history() {
+		return this.module ? this.search_history[this.module] || [] : []
+	}
+
+	set history(v: Array<string>) {
+		this.search_history[this.module] = v
+	}
+
+	constructor(public utils: Utils) {
 		makeAutoObservable(this, {}, { autoBind: true })
+
+		this.utils.acts = [setStorageWhenChange(['search_history'], this)]
 	}
 
 	init() {
@@ -51,15 +65,19 @@ export default class Index {
 	}
 
 	addSearchHistory(text: string) {
-		if (this.search_history.includes(text)) return
+		const history = this.search_history[this.module] || []
 
-		this.search_history.unshift(text)
+		if (history.includes(text)) return
 
-		if (this.search_history.length > 15) {
-			this.search_history.pop()
+		history.unshift(text)
+
+		if (history.length > 15) {
+			history.pop()
 		}
 
-		this.search_history = $copy(this.search_history)
+		this.search_history[this.module] = history
+
+		this.sync()
 	}
 
 	showSearch() {
@@ -74,12 +92,18 @@ export default class Index {
 		this.index = 0
 	}
 
+	sync() {
+		this.search_history = $copy(this.search_history)
+	}
+
 	on() {
 		$app.Event.on('global.app.showSearch', this.showSearch)
 		$app.Event.on('global.app.closeSearch', this.closeSearch)
 	}
 
 	off() {
+		this.utils.off()
+
 		$app.Event.off('global.app.showSearch', this.showSearch)
 		$app.Event.off('global.app.closeSearch', this.closeSearch)
 	}

@@ -5,7 +5,7 @@ import { modules } from '@/appdata'
 import Utils from '@/models/utils'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
 
-import type { App, DirTree } from '@/types'
+import type { App } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
 
 @injectable()
@@ -30,7 +30,7 @@ export default class Index {
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { watch: false }, { autoBind: true })
 
-		this.utils.acts = [setStorageWhenChange(['app_modules', 'screenlock', 'search_history'], this)]
+		this.utils.acts = [setStorageWhenChange(['app_modules'], this)]
 	}
 
 	get apps() {

@@ -20,7 +20,7 @@ const Index = (props: IPropsSearch) => {
 		module,
 		items,
 		index,
-		search_history,
+		history,
 		searchByInput,
 		onClose,
 		find,
@@ -185,7 +185,7 @@ const Index = (props: IPropsSearch) => {
 						))
 					) : (
 						<Fragment>
-							{search_history.length > 0 && (
+							{history.length > 0 && (
 								<div className='search_history w_100 flex flex_column'>
 									<div className='search_history_header flex justify_between align_center'>
 										<span className='title'>
@@ -199,7 +199,7 @@ const Index = (props: IPropsSearch) => {
 										</div>
 									</div>
 									<div className='flex flex_wrap' onClick={onSearchItem}>
-										{search_history.map((item, index) => (
+										{history.map((item, index) => (
 											<span
 												className='search_history_item mr_4 cursor_point clickable'
 												data-text={item}

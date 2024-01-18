@@ -130,7 +130,7 @@ export interface IPropsSearch {
 	module: GlobalModel['search']['module']
 	items: GlobalModel['search']['items']
 	index: GlobalModel['search']['index']
-	search_history: GlobalModel['search']['search_history']
+	history: GlobalModel['search']['history']
 	searchByInput: GlobalModel['search']['searchByInput']
 	onClose: GlobalModel['search']['closeSearch']
 	find: GlobalModel['stack']['find']

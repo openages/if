@@ -124,7 +124,7 @@ const Index = () => {
 		module: $copy(global.search.module),
 		items: $copy(global.search.items),
 		index: $copy(global.search.index),
-		search_history: $copy(global.search.search_history),
+		history: $copy(global.search.history),
 		searchByInput: useMemoizedFn(global.search.searchByInput),
 		onClose: useMemoizedFn(global.search.closeSearch),
 		find: useMemoizedFn(global.stack.find),
@@ -134,7 +134,11 @@ const Index = () => {
 
 			global.search.index = index
 		}),
-		clearSearchHistory: useMemoizedFn(() => (global.search.search_history = []))
+		clearSearchHistory: useMemoizedFn(() => {
+			global.search.history = []
+
+			global.search.sync()
+		})
 	}
 
 	if (!global.db.ready) return <GlobalLoading visible></GlobalLoading>

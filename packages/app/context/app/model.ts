@@ -47,6 +47,7 @@ export default class GlobalModel {
 		this.stack.off()
 		this.app.off()
 		this.shortcuts.off()
+		this.search.off()
 
 		$app.Event.off('global.stack.add', this.stack.add)
 		$app.Event.off('global.stack.updateFile', this.stack.updateFile)
