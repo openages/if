@@ -180,10 +180,27 @@ export default class Index {
 		return true
 	}
 
-	async saveKeyPair(keypair: Omit<App.Screenlock, 'autolock'>) {
-		this.screenlock = { ...keypair, autolock: this.screenlock.autolock }
+	async saveKeyPair(keypair?: Omit<App.Screenlock, 'autolock'>) {
+		if (keypair) this.screenlock = { ...keypair, autolock: this.screenlock.autolock }
 
-		await $db.kv.insert({ key: 'screenlock', value: stringify($copy(this.screenlock)) })
+		const data = { key: 'screenlock', value: stringify($copy(this.screenlock)) }
+		const screenlock = await $db.kv.findOne('screenlock').exec()
+
+		if (keypair) {
+			if (screenlock) {
+				await screenlock.updateCRDT({ ifMatch: { $set: { value: data.value } } })
+			} else {
+				await $db.kv.insert(data)
+			}
+		} else {
+			await screenlock.updateCRDT({ ifMatch: { $set: { value: data.value } } })
+		}
+	}
+
+	async resetPassword() {
+		this.screenlock = { private_key: '', public_key: '', password: '', autolock: this.screenlock.autolock }
+
+		await this.saveKeyPair()
 	}
 
 	update(v: App.Modules) {

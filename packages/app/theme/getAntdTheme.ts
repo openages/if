@@ -54,7 +54,8 @@ export default (theme: Theme, color_main: string) => {
 				controlItemBgHover: vars.color_bg_2
 			},
 			Input: {
-				colorPrimary: vars.color_text
+				colorPrimary: vars.color_text,
+				colorPrimaryHover: vars.color_text_grey
 			},
 			Select: {
 				colorPrimary: vars.color_text,

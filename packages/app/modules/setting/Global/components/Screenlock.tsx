@@ -5,7 +5,6 @@ import { observer } from 'mobx-react-lite'
 import { useMemo, useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { autolock_map } from '@/appdata'
 import { useGlobal } from '@/context/app'
 import { Copy, Lock, ShieldStar } from '@phosphor-icons/react'
 
@@ -19,22 +18,30 @@ const { Password, TextArea } = Input
 const Index = () => {
 	const global = useGlobal()
 	const { t } = useTranslation()
-	const [password, setPassword] = useState('')
-	const [private_key, setPrivateKey] = useState('')
-	const [verified, setVerified] = useState(false)
+	const [input_password, setInputPassword] = useState('')
+	const [input_private_key, setInputPrivateKey] = useState('')
 	const [loading, setLoading] = useState(false)
+	const [verified, seVerified] = useState(true)
 	const [visible, { toggle: toggleInput, setLeft: setVisibleFalse }] = useToggle(false)
 	const [use_password, { toggle: toggleUse, setLeft: setUsePasswordTrue }] = useToggle(true)
 	const keypair = useReactive<Omit<App.Screenlock, 'autolock'>>({ private_key: '', public_key: '', password: '' })
 
-	const set_mode = useMemo(() => global.app.screenlock.public_key !== '', [global.app.screenlock.public_key])
-	const title = useMemo(() => (set_mode ? '修改' : '设置') + '密码', [set_mode])
+	const reset_mode = useMemo(() => global.app.screenlock.public_key !== '', [global.app.screenlock.public_key])
+	const title = useMemo(() => (reset_mode ? '重置' : '设置') + '密码', [reset_mode])
 
-	const onChangePassword = useMemoizedFn((e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value))
-	const onChangePrivateKey = useMemoizedFn((e: ChangeEvent<HTMLTextAreaElement>) => setPrivateKey(e.target.value))
+	const onChangePassword = useMemoizedFn((e: ChangeEvent<HTMLInputElement>) => {
+		if (!verified) seVerified(true)
+
+		setInputPassword(e.target.value)
+	})
+	const onChangePrivateKey = useMemoizedFn((e: ChangeEvent<HTMLTextAreaElement>) => {
+		if (!verified) seVerified(true)
+
+		setInputPrivateKey(e.target.value)
+	})
 
 	const genKeyPair = useMemoizedFn(async () => {
-		const { private_key, public_key, password: pwd } = await global.app.genKeyPair(password)
+		const { private_key, public_key, password: pwd } = await global.app.genKeyPair(input_password)
 
 		keypair.private_key = private_key
 		keypair.public_key = public_key
@@ -47,33 +54,44 @@ const Index = () => {
 		$message.success('密钥已复制到粘贴板')
 	})
 
-	const verify = useMemoizedFn(async () => {
-		setLoading(true)
-
-		const value = use_password ? password : private_key
-
-		const ok = await global.app.verify(value, use_password)
-
-		setVerified(ok)
-		setLoading(false)
-	})
-
-	const onOk = useMemoizedFn(async () => {
-		await global.app.saveKeyPair($copy(keypair))
-
-		setVisibleFalse()
-	})
-
 	const reset = useMemoizedFn(() => {
-		setPassword('')
-		setPrivateKey('')
-		setVerified(false)
+		setInputPassword('')
+		setInputPrivateKey('')
 		setUsePasswordTrue()
 
 		keypair.private_key = ''
 		keypair.public_key = ''
 		keypair.password = ''
 	})
+
+	const onOk = useMemoizedFn(async () => {
+		if (!reset_mode) {
+			setVisibleFalse()
+
+			await global.app.saveKeyPair($copy(keypair))
+		} else {
+			setLoading(true)
+
+			const value = use_password ? input_password : input_private_key
+
+			const ok = await global.app.verify(value, use_password)
+
+			setLoading(false)
+			seVerified(ok)
+
+			if (!ok) return
+
+			await global.app.resetPassword()
+
+			reset()
+		}
+	})
+
+	const ungenerated = useMemo(() => {
+		if (reset_mode) return use_password ? input_password.length < 6 : !input_private_key.length
+
+		return input_password.length < 6 || !keypair.private_key.length
+	}, [reset_mode, use_password, keypair.private_key, input_password, input_private_key])
 
 	return (
 		<Fragment>
@@ -129,10 +147,12 @@ const Index = () => {
 				</div>
 			</div>
 			<Modal
-				className={$cx(styles.password_modal, !keypair.private_key && styles.ungenerated)}
+				className={$cx(styles.password_modal, ungenerated && styles.ungenerated)}
+				{...(reset_mode ? { okText: '重置密码' } : {})}
 				open={visible}
 				title={title}
 				width={300}
+				confirmLoading={loading}
 				centered
 				destroyOnClose
 				onCancel={setVisibleFalse}
@@ -145,15 +165,16 @@ const Index = () => {
 						placeholder='输入锁屏密码'
 						maxLength={18}
 						autoFocus
-						value={password}
+						status={!verified && 'error'}
+						value={input_password}
 						onChange={onChangePassword}
 					></Password>
 				)}
-				{!set_mode && (
+				{!reset_mode && (
 					<Button
 						className='w_100 mt_12'
 						type='primary'
-						disabled={password.length < 6}
+						disabled={input_password.length < 6}
 						onClick={genKeyPair}
 					>
 						生成密钥
@@ -162,7 +183,7 @@ const Index = () => {
 				<AnimatePresence>
 					{(keypair.private_key || !use_password) && (
 						<motion.div
-							className={$cx('key_wrap w_100 border_box', set_mode && 'set_mode')}
+							className={$cx('key_wrap w_100 border_box', reset_mode && 'reset_mode')}
 							initial={{ opacity: 0, height: 0 }}
 							animate={{ opacity: 1, height: 'auto' }}
 							exit={{ opacity: 0, height: 0 }}
@@ -178,38 +199,29 @@ const Index = () => {
 								<TextArea
 									className='password_key'
 									placeholder='请输入保存的密钥'
-									value={
-										!set_mode && use_password
-											? keypair.private_key
-											: private_key
-									}
+									autoFocus={reset_mode}
 									readOnly={use_password}
-									onChange={set_mode && !use_password && onChangePrivateKey}
+									status={!verified && 'error'}
+									value={
+										!reset_mode && use_password
+											? keypair.private_key
+											: input_private_key
+									}
+									onChange={reset_mode && !use_password && onChangePrivateKey}
 								></TextArea>
-								{!set_mode && (
+								{!reset_mode && (
 									<span className='desc text_center'>
-										密钥可用来修改密码和重置密码，请务必妥善保存
+										密钥可用来重置密码，请务必妥善保存
 									</span>
 								)}
 							</div>
 						</motion.div>
 					)}
 				</AnimatePresence>
-				{set_mode && (
-					<Fragment>
-						<Button className='btn_toggle_use w_100 mt_12' type='text' onClick={toggleUse}>
-							使用{use_password ? '密钥' : '密码'}修改
-						</Button>
-						<Button
-							className='w_100 mt_12'
-							type='primary'
-							disabled={use_password ? password.length < 6 : !private_key.length}
-							loading={loading}
-							onClick={verify}
-						>
-							验证
-						</Button>
-					</Fragment>
+				{reset_mode && (
+					<Button className='btn_toggle_use w_100 mt_12' type='text' onClick={toggleUse}>
+						使用{use_password ? '密钥' : '密码'}重置
+					</Button>
 				)}
 			</Modal>
 		</Fragment>

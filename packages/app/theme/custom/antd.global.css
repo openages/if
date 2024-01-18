@@ -14,6 +14,11 @@
 	}
 
 	&-primary {
+		&:disabled {
+			color: var(--color_text_light);
+			background-color: var(--color_bg_1);
+		}
+
 		&.if-btn-dangerous {
 			&:hover {
 				background-color: var(--color_danger) !important;

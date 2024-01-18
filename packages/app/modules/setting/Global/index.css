@@ -105,6 +105,7 @@
 					color: var(--color_text_light);
 					background: var(--color_bg_1);
 					box-shadow: none;
+					pointer-events: none;
 				}
 			}
 		}
@@ -112,7 +113,7 @@
 
 	:global {
 		.key_wrap {
-			&.set_mode {
+			&.reset_mode {
 				.padding_wrap {
 					padding-top: 0;
 
@@ -120,11 +121,6 @@
 						height: 150px;
 						overflow: scroll;
 						cursor: initial;
-
-						&:hover,
-						&:focus {
-							border-color: var(--color_text);
-						}
 					}
 
 					.btn_copy {
@@ -142,11 +138,6 @@
 					font-size: 12px;
 					overflow: hidden;
 					cursor: pointer;
-
-					&:hover,
-					&:focus {
-						border-color: var(--color_border_light);
-					}
 				}
 
 				.btn_copy {
