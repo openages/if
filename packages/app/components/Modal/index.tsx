@@ -17,12 +17,24 @@ interface IProps {
 	width?: number
 	maskClosable?: boolean
 	disableOverflow?: boolean
-	onCancel: (e: MouseEvent<HTMLDivElement>) => void
+	hideClose?: boolean
+	onCancel?: (e: MouseEvent<HTMLDivElement>) => void
 	getContainer?: () => Element
 }
 
 const Index = (props: IProps) => {
-	const { children, open, className, title, width, maskClosable, disableOverflow, onCancel, getContainer } = props
+	const {
+		children,
+		open,
+		className,
+		title,
+		width,
+		maskClosable,
+		disableOverflow,
+		hideClose,
+		onCancel,
+		getContainer
+	} = props
 	const ref_content_wrap = useRef<HTMLDivElement>(null)
 	const ref_content = useRef<HTMLDivElement>(null)
 	const [on_body, setOnbody] = useState(false)
@@ -32,7 +44,7 @@ const Index = (props: IProps) => {
 		if (!maskClosable) return
 		if (e.target !== ref_content_wrap.current) return
 
-		onCancel(e as unknown as MouseEvent<HTMLDivElement>)
+		onCancel?.(e as unknown as MouseEvent<HTMLDivElement>)
 	}, ref_content)
 
 	useEffect(() => {
@@ -84,12 +96,14 @@ const Index = (props: IProps) => {
 									)}
 								>
 									<span className='title'>{title}</span>
-									<span
-										className='btn_close flex justify_center align_center clickable'
-										onClick={onCancel}
-									>
-										<X size={14}></X>
-									</span>
+									{!hideClose && (
+										<span
+											className='btn_close flex justify_center align_center clickable'
+											onClick={onCancel}
+										>
+											<X size={14}></X>
+										</span>
+									)}
 								</div>
 							)}
 							<div

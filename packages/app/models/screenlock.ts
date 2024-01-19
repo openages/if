@@ -13,14 +13,18 @@ import {
 	sign,
 	verify
 } from 'openpgp/lightweight'
+import { injectable } from 'tsyringe'
 
-import { passphrase } from '@/appdata'
+import { autolock_value, passphrase } from '@/appdata'
 import { getDocItem, sleep } from '@/utils'
+import { Idle } from '@openages/stk/common'
 
 import type { App } from '@/types'
 
+@injectable()
 export default class Index {
 	modal_open = false
+	screenlock_open = true
 	password_mode = true
 	input_password = ''
 	input_private_key = ''
@@ -29,15 +33,22 @@ export default class Index {
 	keypair = { private_key: '', public_key: '', password: '' } as Omit<App.Screenlock, 'autolock'>
 	data = { private_key: '', public_key: '', password: '', autolock: '30m' } as App.Screenlock
 
-	constructor() {
+	constructor(public idle: Idle) {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
-	init() {
-		this.getPublicKey()
+	async init() {
+		await this.getScreenlock()
+
+		this.screenlock_open = this.data.password ? true : false
+
+		this.idle.init(this.data.password ? autolock_value[this.data.autolock] : 0, {
+			context: this,
+			onIdle: this.onIdle
+		})
 	}
 
-	async getPublicKey() {
+	async getScreenlock() {
 		const key = await $db.kv.findOne('screenlock').exec()
 
 		if (!key) return
@@ -117,7 +128,18 @@ export default class Index {
 
 	async setAutoLock(v: App.Screenlock['autolock']) {
 		this.data.autolock = v
+		this.idle.time = autolock_value[v]
 
 		await this.saveKeyPair()
+	}
+
+	onIdle() {
+		this.screenlock_open = true
+
+		$app.Event.emit('global.app.lock')
+	}
+
+	off() {
+		this.idle.off()
 	}
 }

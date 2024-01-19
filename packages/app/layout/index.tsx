@@ -14,14 +14,22 @@ import { GlobalLoading, LazyElement, OffscreenOutlet } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
 
-import { AppMenu, AppSwitch, FreeMark, Search, Sidebar, Stacks } from './component'
+import { AppMenu, AppSwitch, FreeMark, Screenlock, Search, Sidebar, Stacks } from './component'
 import { useGlobalNavigate, useGlobalTranslate, useLayout } from './hooks'
 import styles from './index.css'
 
 import type { IPropsOffscreenOutlet } from '@/components/OffscreenOutlet'
 import type { AppProps } from 'antd'
 import type { ConfigProviderProps } from 'antd/es/config-provider'
-import type { IPropsAppMenu, IPropsAppSwitch, IPropsSidebar, IPropsStacks, IPropsFreeMark, IPropsSearch } from './types'
+import type {
+	IPropsAppMenu,
+	IPropsAppSwitch,
+	IPropsSidebar,
+	IPropsStacks,
+	IPropsFreeMark,
+	IPropsSearch,
+	IPropsScreenlock
+} from './types'
 
 const Index = () => {
 	const { pathname } = useLocation()
@@ -141,6 +149,13 @@ const Index = () => {
 		})
 	}
 
+	const props_screenlock: IPropsScreenlock = {
+		open: global.screenlock.screenlock_open,
+		close: useMemoizedFn(() => (global.screenlock.screenlock_open = false)),
+		verify: useMemoizedFn(global.screenlock.verify)
+	}
+
+	if (global.screenlock.screenlock_open) return <Screenlock {...props_screenlock}></Screenlock>
 	if (!global.db.ready) return <GlobalLoading visible></GlobalLoading>
 
 	return (

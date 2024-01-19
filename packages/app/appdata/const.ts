@@ -28,8 +28,8 @@ export const autolock_map = {
 	never: {}
 }
 
-export const getAutolockOptions = () =>
-	Object.keys(autolock_map).map(key => {
+export const getAutolockOptions = () => {
+	return Object.keys(autolock_map).map(key => {
 		let label = ''
 		const target = autolock_map[key]
 		// @ts-ignore
@@ -58,3 +58,27 @@ export const getAutolockOptions = () =>
 
 		return { label, value: key }
 	})
+}
+
+export const autolock_value = Object.keys(autolock_map).reduce(
+	(target, key) => {
+		const item = autolock_map[key]
+
+		if (key === 'never') return (target[key] = 0)
+
+		if (item.other) {
+			target[key] = item.value * 60 * 60 * 1000 + item.other.value * 60 * 1000
+		} else {
+			if (item.unit.indexOf('minute') !== -1) {
+				target[key] = item.value * 60 * 1000
+			}
+
+			if (item.unit.indexOf('hour') !== -1) {
+				target[key] = item.value * 60 * 60 * 1000
+			}
+		}
+
+		return target
+	},
+	{} as Record<keyof typeof autolock_map, number>
+)

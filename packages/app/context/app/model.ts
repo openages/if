@@ -21,16 +21,28 @@ export default class GlobalModel {
 	}
 
 	async init() {
+		$app.Event.on('global.app.lock', this.lock)
+
 		this.stack.init()
 
 		await this.db.init()
 
-		this.screenlock.init()
+		await this.screenlock.init()
+
+		if (this.screenlock.screenlock_open) {
+			return this.lock()
+		}
+
 		this.app.init()
 		this.shortcuts.init()
 		this.search.init()
 
 		this.on()
+	}
+
+	lock() {
+		this.stack.off()
+		this.db.off()
 	}
 
 	on() {
@@ -45,10 +57,12 @@ export default class GlobalModel {
 		this.layout.off()
 		this.setting.off()
 		this.stack.off()
+		this.screenlock.off()
 		this.app.off()
 		this.shortcuts.off()
 		this.search.off()
 
+		$app.Event.off('global.app.lock', this.lock)
 		$app.Event.off('global.stack.add', this.stack.add)
 		$app.Event.off('global.stack.updateFile', this.stack.updateFile)
 		$app.Event.off('global.stack.removeFile', this.stack.removeFile)
