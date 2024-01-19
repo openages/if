@@ -168,6 +168,7 @@ const Index = ({ id }: IProps) => {
 
 	const props_detail: IPropsDetail = {
 		breakpoint,
+		mode: x.mode,
 		kanban_mode: x.kanban_mode,
 		visible_detail_modal: x.visible_detail_modal,
 		current_detail_index: $copy(x.current_detail_index),

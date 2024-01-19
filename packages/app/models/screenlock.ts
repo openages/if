@@ -104,17 +104,9 @@ export default class Index {
 		if (keypair) this.data = { ...keypair, autolock: this.data.autolock }
 
 		const data = { key: 'screenlock', value: stringify($copy(this.data)) }
-		const screenlock = await $db.kv.findOne('screenlock').exec()
+		const screenlock = (await $db.kv.findOne('screenlock').exec()) ?? (await $db.kv.insert(data))
 
-		if (keypair) {
-			if (screenlock) {
-				await screenlock.updateCRDT({ ifMatch: { $set: { value: data.value } } })
-			} else {
-				await $db.kv.insert(data)
-			}
-		} else {
-			await screenlock.updateCRDT({ ifMatch: { $set: { value: data.value } } })
-		}
+		await screenlock.updateCRDT({ ifMatch: { $set: { value: data.value } } })
 	}
 
 	async resetPassword() {

@@ -14,17 +14,18 @@ import {
 } from '@phosphor-icons/react'
 
 import type { MenuProps } from 'antd'
-import type { IPropsTodoItem } from '../../../types'
+import type { IPropsTodoItem, IPropsDetail } from '../../../types'
 
 type HookArgs = {
 	kanban_mode: IPropsTodoItem['kanban_mode']
+	mode?: IPropsDetail['mode']
 	angles?: IPropsTodoItem['angles']
 	tags?: IPropsTodoItem['tags']
 	tag_ids?: IPropsTodoItem['item']['tag_ids']
 }
 
 export default (args: HookArgs) => {
-	const { kanban_mode, angles, tags, tag_ids } = args
+	const { kanban_mode, mode, angles, tags, tag_ids } = args
 	const { t, i18n } = useTranslation()
 
 	const TodoContextMenu = useMemo(
@@ -150,7 +151,7 @@ export default (args: HookArgs) => {
 				},
 				{
 					key: 'move_out',
-					disabled: kanban_mode === 'tag',
+					disabled: mode === 'table' || kanban_mode === 'tag',
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<TextOutdent size={16}></TextOutdent>
@@ -173,7 +174,7 @@ export default (args: HookArgs) => {
 					)
 				}
 			] as MenuProps['items'],
-		[i18n.language, kanban_mode]
+		[i18n.language, mode, kanban_mode]
 	)
 
 	return { TodoContextMenu, ChildrenContextMenu }

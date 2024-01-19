@@ -33,6 +33,7 @@ import type { IPropsChildren, IPropsDetail } from '../../types'
 const Index = (props: IPropsDetail) => {
 	const {
 		breakpoint,
+		mode,
 		kanban_mode,
 		visible_detail_modal,
 		current_detail_index,
@@ -93,7 +94,7 @@ const Index = (props: IPropsDetail) => {
 		update
 	})
 
-	const { ChildrenContextMenu } = useContextMenu({ kanban_mode })
+	const { ChildrenContextMenu } = useContextMenu({ kanban_mode, mode })
 
 	const item_status = useMemo(() => getItemStatus({ relations, id, status }), [relations, id, status])
 

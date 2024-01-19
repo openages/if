@@ -1051,6 +1051,10 @@
 		justify-content: center;
 		align-items: center;
 
+		&:disabled {
+			opacity: 0.3;
+		}
+
 		.if-icon {
 			color: var(--color_text_grey);
 			vertical-align: middle;
