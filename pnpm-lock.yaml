@@ -180,11 +180,11 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0(react@0.0.0-experimental-31603f19d-20240109)
       react-router:
-        specifier: ^6.21.2
-        version: 6.21.2(react@0.0.0-experimental-31603f19d-20240109)
+        specifier: ^6.21.3
+        version: 6.21.3(react@0.0.0-experimental-31603f19d-20240109)
       react-router-dom:
-        specifier: ^6.21.2
-        version: 6.21.2(react-dom@0.0.0-experimental-31603f19d-20240109)(react@0.0.0-experimental-31603f19d-20240109)
+        specifier: ^6.21.3
+        version: 6.21.3(react-dom@0.0.0-experimental-31603f19d-20240109)(react@0.0.0-experimental-31603f19d-20240109)
       rxdb:
         specifier: 15.3.0
         version: 15.3.0(rxjs@7.8.1)
@@ -578,6 +578,21 @@ packages:
 
   /@babel/helper-define-polyfill-provider@0.4.4(@babel/core@7.23.7):
     resolution: {integrity: sha512-QcJMILQCu2jm5TFPGA3lCpJJTeEP+mqeXooG/NZbg/h5FTFi6V0+99ahlRsW8/kRLyb24LZVCCiclDedhLKcBA==}
+    peerDependencies:
+      '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
+    dependencies:
+      '@babel/core': 7.23.7
+      '@babel/helper-compilation-targets': 7.23.6
+      '@babel/helper-plugin-utils': 7.22.5
+      debug: 4.3.4
+      lodash.debounce: 4.0.8
+      resolve: 1.22.8
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@babel/helper-define-polyfill-provider@0.5.0(@babel/core@7.23.7):
+    resolution: {integrity: sha512-NovQquuQLAQ5HuyjCz7WQP9MjRj7dx++yspwiyUiGl9ZyadHRSql1HZh5ogRd8W8w6YM6EQ/NTB8rgjLt5W65Q==}
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
     dependencies:
@@ -1661,9 +1676,9 @@ packages:
       '@babel/plugin-transform-unicode-regex': 7.23.3(@babel/core@7.23.7)
       '@babel/plugin-transform-unicode-sets-regex': 7.23.3(@babel/core@7.23.7)
       '@babel/preset-modules': 0.1.6-no-external-plugins(@babel/core@7.23.7)
-      babel-plugin-polyfill-corejs2: 0.4.7(@babel/core@7.23.7)
+      babel-plugin-polyfill-corejs2: 0.4.8(@babel/core@7.23.7)
       babel-plugin-polyfill-corejs3: 0.8.7(@babel/core@7.23.7)
-      babel-plugin-polyfill-regenerator: 0.5.4(@babel/core@7.23.7)
+      babel-plugin-polyfill-regenerator: 0.5.5(@babel/core@7.23.7)
       core-js-compat: 3.35.0
       semver: 6.3.1
     transitivePeerDependencies:
@@ -3248,7 +3263,7 @@ packages:
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 20.10.5
+      '@types/node': 20.11.0
 
   /@types/bonjour@3.5.13:
     resolution: {integrity: sha512-z9fJ5Im06zvUL548KvYNecEVlA7cVDkGUi6kZusb04mpyEFKCIZJvloCcmpmLaIahDpOQGHaHmG6imtPMmPXGQ==}
@@ -3284,13 +3299,13 @@ packages:
     resolution: {integrity: sha512-n6Cr2xS1h4uAulPRdlw6Jl6s1oG8KrVilPN2yUITEs+K48EzMJJ3W1xy8K5eWuFvjp3R74AOIGSmp2UfBJ8HFw==}
     dependencies:
       '@types/express-serve-static-core': 4.17.41
-      '@types/node': 20.10.5
+      '@types/node': 20.11.0
     dev: true
 
   /@types/connect@3.4.38:
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
     dependencies:
-      '@types/node': 20.10.5
+      '@types/node': 20.11.0
 
   /@types/cors@2.8.17:
     resolution: {integrity: sha512-8CGDvrBj1zgo2qE+oS3pOCyYNqCPryMWY2bGfwA0dcfopWGgxs+78df0Rs3rc9THP4JkOhLsAa+15VdpAqkcUA==}
@@ -3333,7 +3348,7 @@ packages:
   /@types/express-serve-static-core@4.17.41:
     resolution: {integrity: sha512-OaJ7XLaelTgrvlZD8/aa0vvvxZdUmlCn6MtWeB7TkiKW70BQLc9XEPpDLPdbo52ZhXUCrznlWdCHWxJWtdyajA==}
     dependencies:
-      '@types/node': 20.10.5
+      '@types/node': 20.11.0
       '@types/qs': 6.9.11
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
@@ -3350,7 +3365,7 @@ packages:
     resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 20.11.0
+      '@types/node': 20.11.5
     dev: true
 
   /@types/http-errors@2.0.4:
@@ -3419,7 +3434,6 @@ packages:
     resolution: {integrity: sha512-o9bjXmDNcF7GbM4CNQpmi+TutCgap/K3w1JyKgxAjqx41zp9qlIAVFi0IhCNsJcXolEqLWhbFbEeL0PvYm4pcQ==}
     dependencies:
       undici-types: 5.26.5
-    dev: true
 
   /@types/node@20.11.5:
     resolution: {integrity: sha512-g557vgQjUUfN76MZAN/dt1z3dzcUsimuysco0KeluHgrPdJXkP/XdAURgyO2W9fZWHRtRBiVKzKn8vyOAwlG+w==}
@@ -3481,7 +3495,7 @@ packages:
     resolution: {integrity: sha512-x2EM6TJOybec7c52BX0ZspPodMsQUd5L6PRwOunVyVUhXiBSKf3AezDL8Dgvgt5o0UfKNfuA0eMLr2wLT4AiBA==}
     dependencies:
       '@types/mime': 1.3.5
-      '@types/node': 20.10.5
+      '@types/node': 20.11.0
 
   /@types/serve-index@1.9.4:
     resolution: {integrity: sha512-qLpGZ/c2fhSs5gnYsQxtDEq3Oy8SXPClIXkW5ghvAvsNuVSA8k+gCONcUCS/UjLEYvYps+e8uBtfgXgvhwfNug==}
@@ -3494,7 +3508,7 @@ packages:
     dependencies:
       '@types/http-errors': 2.0.4
       '@types/mime': 3.0.4
-      '@types/node': 20.10.5
+      '@types/node': 20.11.5
 
   /@types/simple-peer@9.11.8:
     resolution: {integrity: sha512-rvqefdp2rvIA6wiomMgKWd2UZNPe6LM2EV5AuY3CPQJF+8TbdrL5TjYdMf0VAjGczzlkH4l1NjDkihwbj3Xodw==}
@@ -4023,14 +4037,14 @@ packages:
       - debug
     dev: false
 
-  /babel-plugin-polyfill-corejs2@0.4.7(@babel/core@7.23.7):
-    resolution: {integrity: sha512-LidDk/tEGDfuHW2DWh/Hgo4rmnw3cduK6ZkOI1NPFceSK3n/yAGeOsNT7FLnSGHkXj3RHGSEVkN3FsCTY6w2CQ==}
+  /babel-plugin-polyfill-corejs2@0.4.8(@babel/core@7.23.7):
+    resolution: {integrity: sha512-OtIuQfafSzpo/LhnJaykc0R/MMnuLSSVjVYy9mHArIZ9qTCSZ6TpWCuEKZYVoN//t8HqBNScHrOtCrIK5IaGLg==}
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
     dependencies:
       '@babel/compat-data': 7.23.5
       '@babel/core': 7.23.7
-      '@babel/helper-define-polyfill-provider': 0.4.4(@babel/core@7.23.7)
+      '@babel/helper-define-polyfill-provider': 0.5.0(@babel/core@7.23.7)
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
@@ -4048,13 +4062,13 @@ packages:
       - supports-color
     dev: true
 
-  /babel-plugin-polyfill-regenerator@0.5.4(@babel/core@7.23.7):
-    resolution: {integrity: sha512-S/x2iOCvDaCASLYsOOgWOq4bCfKYVqvO/uxjkaYyZ3rVsVE3CeAI/c84NpyuBBymEgNvHgjEot3a9/Z/kXvqsg==}
+  /babel-plugin-polyfill-regenerator@0.5.5(@babel/core@7.23.7):
+    resolution: {integrity: sha512-OJGYZlhLqBh2DDHeqAxWB1XIvr49CxiJ2gIt61/PU55CQK4Z58OzMqjDe1zwQdQk+rBYsRc+1rJmdajM3gimHg==}
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
     dependencies:
       '@babel/core': 7.23.7
-      '@babel/helper-define-polyfill-provider': 0.4.4(@babel/core@7.23.7)
+      '@babel/helper-define-polyfill-provider': 0.5.0(@babel/core@7.23.7)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -4109,6 +4123,13 @@ packages:
     dependencies:
       array-flatten: 2.1.2
       dns-equal: 1.0.0
+      fast-deep-equal: 3.1.3
+      multicast-dns: 7.2.5
+    dev: true
+
+  /bonjour-service@1.2.1:
+    resolution: {integrity: sha512-oSzCS2zV14bh2kji6vNe7vrpJYCHGvcZnlffFQ1MEoX/WOeQ/teD8SYWKR942OI3INjq8OMNJlbPK5LLLUxFDw==}
+    dependencies:
       fast-deep-equal: 3.1.3
       multicast-dns: 7.2.5
     dev: true
@@ -7178,8 +7199,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /react-router-dom@6.21.2(react-dom@0.0.0-experimental-31603f19d-20240109)(react@0.0.0-experimental-31603f19d-20240109):
-    resolution: {integrity: sha512-tE13UukgUOh2/sqYr6jPzZTzmzc70aGRP4pAjG2if0IP3aUT+sBtAKUJh0qMh0zylJHGLmzS+XWVaON4UklHeg==}
+  /react-router-dom@6.21.3(react-dom@0.0.0-experimental-31603f19d-20240109)(react@0.0.0-experimental-31603f19d-20240109):
+    resolution: {integrity: sha512-kNzubk7n4YHSrErzjLK72j0B5i969GsuCGazRl3G6j1zqZBLjuSlYBdVdkDOgzGdPIffUOc9nmgiadTEVoq91g==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
@@ -7188,11 +7209,11 @@ packages:
       '@remix-run/router': 1.14.2
       react: 0.0.0-experimental-31603f19d-20240109
       react-dom: 0.0.0-experimental-31603f19d-20240109(react@0.0.0-experimental-31603f19d-20240109)
-      react-router: 6.21.2(react@0.0.0-experimental-31603f19d-20240109)
+      react-router: 6.21.3(react@0.0.0-experimental-31603f19d-20240109)
     dev: false
 
-  /react-router@6.21.2(react@0.0.0-experimental-31603f19d-20240109):
-    resolution: {integrity: sha512-jJcgiwDsnaHIeC+IN7atO0XiSRCrOsQAHHbChtJxmgqG2IaYQXSnhqGb5vk2CU/wBQA12Zt+TkbuJjIn65gzbA==}
+  /react-router@6.21.3(react@0.0.0-experimental-31603f19d-20240109):
+    resolution: {integrity: sha512-a0H638ZXULv1OdkmiK6s6itNhoy33ywxmUFT/xtSoVyf9VnC7n7+VT4LjVzdIHSaF5TIh9ylUgxMXksHTgGrKg==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
@@ -7935,16 +7956,27 @@ packages:
       uglify-js:
         optional: true
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.20
+      '@jridgewell/trace-mapping': 0.3.21
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
-      terser: 5.26.0
+      terser: 5.27.0
       webpack: 5.89.0
     dev: true
 
   /terser@5.26.0:
     resolution: {integrity: sha512-dytTGoE2oHgbNV9nTzgBEPaqAWvcJNl66VZ0BkJqlvp71IjO8CxdBx/ykCNb47cLnCmCvRZ6ZR0tLkqvZCdVBQ==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      '@jridgewell/source-map': 0.3.5
+      acorn: 8.11.3
+      commander: 2.20.3
+      source-map-support: 0.5.21
+    dev: true
+
+  /terser@5.27.0:
+    resolution: {integrity: sha512-bi1HRwVRskAjheeYl291n3JC4GgO/Ty4z1nVs5AAsmonJulGxpSektecnNedrwK9C7vpvVtcX3cw00VSLt7U2A==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
@@ -8511,9 +8543,9 @@ packages:
       '@types/sockjs': 0.3.36
       '@types/ws': 8.5.10
       ansi-html-community: 0.0.8
-      bonjour-service: 1.1.1
+      bonjour-service: 1.2.1
       chokidar: 3.5.3
-      colorette: 2.0.20
+      colorette: 2.0.19
       compression: 1.7.4
       connect-history-api-fallback: 2.0.0
       default-gateway: 6.0.3
