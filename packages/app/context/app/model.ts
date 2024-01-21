@@ -20,18 +20,17 @@ export default class GlobalModel {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
-	async init() {
+	async init(unlock?: boolean) {
 		$app.Event.on('global.app.lock', this.lock)
+		$app.Event.on('global.app.unlock', this.unlock)
 
 		this.stack.init()
 
 		await this.db.init()
 
-		await this.screenlock.init()
+		if (!unlock) await this.screenlock.init()
 
-		if (this.screenlock.screenlock_open) {
-			return this.lock()
-		}
+		if (this.screenlock.screenlock_open) return this.lock()
 
 		this.app.init()
 		this.shortcuts.init()
@@ -42,7 +41,11 @@ export default class GlobalModel {
 
 	lock() {
 		this.stack.off()
-		this.db.off()
+	}
+
+	unlock() {
+		this.off()
+		this.init(true)
 	}
 
 	on() {
@@ -63,6 +66,7 @@ export default class GlobalModel {
 		this.search.off()
 
 		$app.Event.off('global.app.lock', this.lock)
+		$app.Event.off('global.app.unlock', this.unlock)
 		$app.Event.off('global.stack.add', this.stack.add)
 		$app.Event.off('global.stack.updateFile', this.stack.updateFile)
 		$app.Event.off('global.stack.removeFile', this.stack.removeFile)

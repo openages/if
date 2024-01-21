@@ -98,7 +98,7 @@ module.exports = defineConfig({
 						loader: 'postcss-loader',
 						options: {
 							postcssOptions: {
-								plugins: ['postcss-nested']
+								plugins: ['postcss-import', 'postcss-nested', 'postcss-calc']
 							}
 						}
 					}
@@ -113,7 +113,7 @@ module.exports = defineConfig({
 						loader: 'postcss-loader',
 						options: {
 							postcssOptions: {
-								plugins: ['postcss-nested']
+								plugins: ['postcss-import', 'postcss-nested', 'postcss-calc']
 							}
 						}
 					}

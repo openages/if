@@ -16,15 +16,17 @@ import {
 import { injectable } from 'tsyringe'
 
 import { autolock_value, passphrase } from '@/appdata'
+import Utils from '@/models/utils'
 import { getDocItem, sleep } from '@/utils'
 import { Idle } from '@openages/stk/common'
+import { setStorageWhenChange } from '@openages/stk/mobx'
 
 import type { App } from '@/types'
 
 @injectable()
 export default class Index {
 	modal_open = false
-	screenlock_open = true
+	screenlock_open = false
 	password_mode = true
 	input_password = ''
 	input_private_key = ''
@@ -32,9 +34,17 @@ export default class Index {
 	verified = true
 	keypair = { private_key: '', public_key: '', password: '' } as Omit<App.Screenlock, 'autolock'>
 	data = { private_key: '', public_key: '', password: '', autolock: '30m' } as App.Screenlock
+	click_times = 0
+	clicked = false
 
-	constructor(public idle: Idle) {
+	constructor(
+		public utils: Utils,
+		public idle: Idle
+	) {
 		makeAutoObservable(this, {}, { autoBind: true })
+
+		this.utils.acts = [setStorageWhenChange([{ screenlock_data: 'data' }], this)]
+		this.screenlock_open = this.data.password ? true : false
 	}
 
 	async init() {
@@ -42,10 +52,12 @@ export default class Index {
 
 		this.screenlock_open = this.data.password ? true : false
 
-		this.idle.init(this.data.password ? autolock_value[this.data.autolock] : 0, {
-			context: this,
-			onIdle: this.onIdle
-		})
+		if (!this.data.unlocking && this.data.password) {
+			this.idle.init(autolock_value[this.data.autolock], {
+				context: this,
+				onIdle: this.onIdle
+			})
+		}
 	}
 
 	async getScreenlock() {
@@ -56,7 +68,7 @@ export default class Index {
 		this.data = JSON.parse(getDocItem(key).value)
 	}
 
-	async genKeyPair(password: string) {
+	async genKeyPair(password: string, by_unlocking?: boolean) {
 		const { privateKey, publicKey: public_key } = await generateKey({
 			type: 'ecc',
 			curve: 'ed25519',
@@ -65,16 +77,24 @@ export default class Index {
 			userIDs: { name: '1yasa', email: 'openages@gmail.com', comment: password }
 		})
 
-		const private_key = AES.encrypt(privateKey, password).toString()
+		let private_key = AES.encrypt(privateKey, password).toString()
 
-		this.keypair = {
+		if (by_unlocking) {
+			private_key = AES.encrypt(AES.encrypt(privateKey, passphrase).toString(), passphrase).toString()
+		}
+
+		const target = {
 			private_key,
 			public_key,
 			password: AES.encrypt(password, private_key).toString()
 		}
+
+		if (by_unlocking) return target
+
+		this.keypair = target
 	}
 
-	async verify(value: string, use_password: boolean) {
+	async verify(value: string, use_password: boolean, by_sceenlock?: boolean) {
 		let private_key = ''
 
 		if (use_password) {
@@ -85,14 +105,13 @@ export default class Index {
 			private_key = ntry(() => AES.decrypt(this.data.private_key, password).toString(enc.Utf8))
 		}
 
-		await sleep(600)
-
+		if (!by_sceenlock) await sleep(600)
 		if (!private_key) return false
 
-		return this.verifyByPrivateKey(private_key)
+		return this.verifyByPrivateKey(private_key, by_sceenlock)
 	}
 
-	async verifyByPrivateKey(private_key: string) {
+	async verifyByPrivateKey(private_key: string, by_sceenlock?: boolean) {
 		const public_key = this.data.public_key
 
 		const publicKey = await readKey({ armoredKey: public_key })
@@ -107,6 +126,12 @@ export default class Index {
 		const [err] = await to(res.signatures[0].verified)
 
 		if (err) return false
+
+		if (by_sceenlock) {
+			this.screenlock_open = false
+
+			$app.Event.emit('global.app.unlock')
+		}
 
 		return true
 	}
@@ -131,6 +156,40 @@ export default class Index {
 		this.idle.time = autolock_value[v]
 
 		await this.saveKeyPair()
+	}
+
+	async getFingerprint() {
+		const { code, err } = await (await import('@openages/stk/creep')).getFingerprint()
+
+		if (!code && err) {
+			$message.error('指纹生成失败，请联系openages@gmail.com以提供帮助')
+
+			return ''
+		}
+
+		return code
+	}
+
+	async unlocking() {
+		const code = await this.getFingerprint()
+
+		const { private_key, public_key, password } = await this.genKeyPair(code, true)
+
+		this.data = { private_key, public_key, password, autolock: this.data.autolock, unlocking: true }
+
+		await this.saveKeyPair()
+	}
+
+	async unlock(value: string) {
+		const private_key = ntry(() => AES.decrypt(value, passphrase).toString(enc.Utf8))
+
+		if (!private_key) return (this.verified = false)
+
+		const ok = await this.verifyByPrivateKey(private_key, true)
+
+		this.verified = ok
+
+		if (ok) await this.resetPassword()
 	}
 
 	onIdle() {

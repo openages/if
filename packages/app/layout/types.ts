@@ -138,9 +138,3 @@ export interface IPropsSearch {
 	changeSearchIndex: (index: number) => void
 	clearSearchHistory: () => void
 }
-
-export interface IPropsScreenlock {
-	open: GlobalModel['screenlock']['screenlock_open']
-	close: () => void
-	verify: GlobalModel['screenlock']['verify']
-}

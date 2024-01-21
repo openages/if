@@ -17,5 +17,6 @@ export namespace App {
 		public_key: string
 		password: string
 		autolock: keyof typeof autolock_map
+		unlocking?: boolean
 	}
 }

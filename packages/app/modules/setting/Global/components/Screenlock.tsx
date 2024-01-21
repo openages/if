@@ -27,10 +27,10 @@ const Index = () => {
 		(v?: boolean | any) =>
 			(global.screenlock.modal_open = typeof v === 'boolean' ? v : !global.screenlock.modal_open)
 	)
-	const togglePasswordMode = useMemoizedFn(
-		(v?: boolean | any) =>
-			(global.screenlock.password_mode = typeof v === 'boolean' ? v : !global.screenlock.password_mode)
-	)
+	const togglePasswordMode = useMemoizedFn((v?: boolean | any) => {
+		global.screenlock.verified = true
+		global.screenlock.password_mode = typeof v === 'boolean' ? v : !global.screenlock.password_mode
+	})
 
 	const onChangePassword = useMemoizedFn((e: ChangeEvent<HTMLInputElement>) => {
 		if (!global.screenlock.verified) global.screenlock.verified = true

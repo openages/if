@@ -1,0 +1,23 @@
+.if-btn {
+	&-default {
+		&:active,
+		&:hover {
+			border-color: var(--color_text_grey) !important;
+			color: var(--color_text) !important;
+		}
+	}
+
+	&-primary {
+		&:disabled {
+			color: var(--color_text_light);
+			background-color: var(--color_bg_1);
+		}
+
+		&.if-btn-dangerous {
+			&:hover {
+				background-color: var(--color_danger) !important;
+				outline: 3px solid var(--color_border);
+			}
+		}
+	}
+}

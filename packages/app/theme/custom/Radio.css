@@ -1,0 +1,24 @@
+.if-radio-group {
+	font-weight: 400;
+
+	.if-radio-wrapper {
+		margin-right: 10px;
+
+		&:last-child {
+			margin: 0;
+		}
+
+		span.if-radio + * {
+			padding-inline-start: 6px;
+			padding-inline-end: 0;
+		}
+
+		.if-radio-inner {
+			background-color: unset;
+
+			&::after {
+				background-color: unset;
+			}
+		}
+	}
+}

@@ -1,22 +1,37 @@
 @keyframes gradient {
 	0% {
-		transform: scale(1) rotateZ(0deg);
+		transform: scale(1.2) rotateZ(0deg);
 		filter: saturate(0) hue-rotate(0);
 	}
 
 	50% {
-		transform: scale(3) rotateZ(180deg);
-		filter: saturate(150%) hue-rotate(180deg);
+		transform: scale(1.5) rotateZ(180deg);
+		filter: saturate(180%) hue-rotate(180deg);
 	}
 
 	100% {
-		transform: scale(1) rotateZ(360deg);
+		transform: scale(1.2) rotateZ(360deg);
 		filter: saturate(0) hue-rotate(360deg);
+	}
+}
+
+@keyframes shake {
+	0%,
+	100% {
+		transform: translateX(0);
+	}
+	25%,
+	75% {
+		transform: translateX(-10px);
+	}
+	50% {
+		transform: translateX(10px);
 	}
 }
 
 ._local {
 	color: white;
+	user-select: none;
 
 	:global {
 		.bg_wrap {
@@ -24,16 +39,7 @@
 			height: 100vw;
 			transform-origin: center center;
 
-			background-image: radial-gradient(
-				circle at 100% 100%,
-				red,
-				orange,
-				yellow,
-				green,
-				cyan,
-				blue,
-				purple
-			);
+			background-image: radial-gradient(circle at 0% 0%, red, orange, yellow, green, cyan, blue, purple);
 
 			:local {
 				animation: gradient 30s linear infinite;
@@ -41,71 +47,65 @@
 		}
 
 		.blur_wrap {
-			backdrop-filter: blur(600px);
-		}
-
-		.time_wrap {
-			top: 60px;
-			padding: 3px 6px;
-			font-size: 48px;
-			font-weight: bold;
-			line-height: 1;
-			font-family: 'Avenir';
-
-			.time_item {
-				width: 60px;
-			}
-
-			.divide {
-				margin-top: -12px;
-			}
+			backdrop-filter: blur(300px);
 		}
 
 		.logo {
 			top: 12px;
 			left: 12px;
-			opacity: 0.3;
+			opacity: 0.15;
 		}
 
-		.slogan {
-			bottom: 18px;
-			right: 18px;
-			font-size: 12px;
+		.time_wrap {
+			top: 60px;
+			padding: 3px 6px;
 			line-height: 1;
-			font-weight: 500;
-			opacity: 0.3;
+			font-family: 'Avenir';
+			font-weight: bold;
+
+			.time {
+				margin-bottom: 9px;
+				font-size: 48px;
+
+				.time_item {
+					width: 60px;
+				}
+
+				.divide {
+					margin-top: -12px;
+				}
+			}
 		}
 
 		.content_wrap {
-			bottom: 90px;
+			bottom: 60px;
 			width: 210px;
 
-			--height: 30px;
+			--height: 36px;
 			--padding: 12px;
 			--btn_size: calc(var(--height) - var(--padding) * 2);
 
 			.input_wrap {
-				margin-top: 12px;
-
 				.input {
 					border: none;
 					outline: none;
 					box-shadow: none;
-					height: var(--height);
-					padding-left: calc(var(--padding));
-					padding-right: calc(var(--padding) * 2 + var(--btn_size));
-					line-height: var(--height);
-					border-radius: calc(var(--height) / 2);
-					background-color: rgba(0, 0, 0, 0.3);
-					backdrop-filter: var(--blur);
+					background-color: transparent;
 					color: white;
+					font-size: 12px;
 
 					&::placeholder {
 						color: white !important;
 					}
 
 					&:focus {
-						background-color: rgba(0, 0, 0, 0.6);
+						background-color: rgba(0, 0, 0, 0.12);
+					}
+
+					&.unverified {
+						:local {
+							animation: shake 0.3s ease-in-out;
+						}
 					}
 				}
 
@@ -113,59 +113,141 @@
 					border: none;
 					outline: none;
 					box-shadow: none;
-					background-color: transparent;
-					top: calc(var(--padding) - 6px);
-					right: calc(var(--padding) - 6px);
-					width: calc(var(--btn_size) + 12px);
-					height: calc(var(--btn_size) + 12px);
-					padding: 2px;
-					border: 1px solid white;
-					border-radius: 50%;
 					color: white;
+					background-color: transparent;
+					font-size: 12px;
 
-					&:hover {
-						background-color: white;
-						color: black;
+					&:disabled {
+						opacity: 0.3;
+						pointer-events: none;
+					}
+				}
+
+				&.password {
+					.input {
+						height: var(--height);
+						padding-left: calc(var(--padding));
+						padding-right: calc(var(--padding) * 2 + var(--btn_size));
+						line-height: var(--height);
+						border-radius: calc(var(--height) / 2);
+						border: 1px solid rgba(255, 255, 255, 0.12);
 					}
 
-					svg {
-						width: 100%;
-						height: 100%;
+					.btn_confirm {
+						padding: 2px;
+						top: calc(var(--padding) - 3px);
+						right: calc(var(--padding) - 3px);
+						width: calc(var(--btn_size) + 6px);
+						height: calc(var(--btn_size) + 6px);
+						border-radius: 50%;
+						border: 1px solid white;
+
+						&:hover {
+							background-color: white;
+							color: black;
+						}
+
+						svg {
+							width: 100%;
+							height: 100%;
+						}
+					}
+				}
+
+				&.secret {
+					.input {
+						height: 72px;
+						padding: 6px 9px;
+						margin-bottom: 12px;
+						line-height: 1.2;
+						border-radius: 6px;
+						overflow: scroll;
+						resize: none;
+						background-color: rgba(0, 0, 0, 0.12);
+
+						&:focus {
+							background-color: rgba(0, 0, 0, 0.3);
+						}
+
+						&.lock_input {
+							overflow: hidden;
+						}
+					}
+
+					.btn_confirm {
+						height: 30px;
+						border-radius: 15px;
+						background-color: rgba(0, 0, 0, 0.12);
+
+						&:hover {
+							background-color: rgba(0, 0, 0, 0.3);
+						}
 					}
 				}
 			}
 
-			.btn_forget {
+			.text_normal {
 				font-size: 12px;
 				color: rgba(255, 255, 255, 0.3);
 
 				&:hover {
 					color: white;
 				}
+
+				&.lock_text {
+					color: white;
+				}
+			}
+
+			.btn_copy {
+				top: 0px;
+				right: 0px;
+				width: 21px;
+				height: 21px;
+				color: white;
+				border-top-right-radius: var(--radius);
+				border-bottom-left-radius: var(--radius);
+				background-color: rgba(0, 0, 0, 0.24);
+				backdrop-filter: var(--blur);
+
+				&:hover {
+					background-color: rgba(0, 0, 0, 0.3);
+				}
 			}
 		}
 
 		.actions_wrap {
-			bottom: 60px;
+			bottom: 15px;
+			right: 18px;
 			font-size: 12px;
 			line-height: 1;
 
 			.action_item {
-				margin: 0 18px;
+				width: 24px;
 				color: rgba(255, 255, 255, 0.72);
 
 				&:hover {
 					color: white;
 
 					.icon_wrap {
-						background-color: rgba(0, 0, 0, 0.12);
+						opacity: 1;
+					}
+
+					.text {
+						opacity: 1;
 					}
 				}
 
 				.icon_wrap {
+					margin-top: 3px;
 					padding: 1px;
-					background-color: rgba(0, 0, 0, 0.03);
 					border-radius: 50%;
+					opacity: 0.3;
+				}
+
+				.text {
+					opacity: 0;
+					font-size: 8px;
 				}
 			}
 		}

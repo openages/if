@@ -1,0 +1,44 @@
+.if-switch {
+	outline: 1px solid var(--color_text_softlight);
+	box-sizing: border-box;
+	background-color: transparent;
+	box-shadow: none;
+
+	&:hover {
+		outline-color: var(--color_text_sub);
+
+		&:not(.if-switch-disabled) {
+			background-color: transparent;
+		}
+
+		.if-switch-handle {
+			&::before {
+				background-color: var(--color_text_sub);
+			}
+		}
+	}
+
+	&.if-switch-checked {
+		outline-color: var(--color_text_sub);
+		background-color: var(--color_text_sub);
+
+		&:hover {
+			&:not(.if-switch-disabled) {
+				background-color: var(--color_text_sub);
+			}
+		}
+
+		.if-switch-handle {
+			&::before {
+				background-color: var(--color_bg);
+			}
+		}
+	}
+
+	.if-switch-handle {
+		&::before {
+			box-shadow: none;
+			background-color: var(--color_text_softlight);
+		}
+	}
+}
