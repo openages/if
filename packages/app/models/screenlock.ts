@@ -47,7 +47,9 @@ export default class Index {
 		this.screenlock_open = this.data.password ? true : false
 	}
 
-	async init() {
+	async init(unlock?: boolean) {
+		if (unlock) return this.on()
+
 		await this.getScreenlock()
 
 		this.screenlock_open = this.data.password ? true : false
@@ -55,9 +57,11 @@ export default class Index {
 		if (!this.data.unlocking && this.data.password) {
 			this.idle.init(autolock_value[this.data.autolock], {
 				context: this,
-				onIdle: this.onIdle
+				onIdle: this.lock
 			})
 		}
+
+		this.on()
 	}
 
 	async getScreenlock() {
@@ -131,6 +135,8 @@ export default class Index {
 			this.screenlock_open = false
 
 			$app.Event.emit('global.app.unlock')
+
+			$navigate('/')
 		}
 
 		return true
@@ -189,16 +195,24 @@ export default class Index {
 
 		this.verified = ok
 
-		if (ok) await this.resetPassword()
+		if (!ok) return
+
+		await this.resetPassword()
 	}
 
-	onIdle() {
+	lock() {
 		this.screenlock_open = true
 
 		$app.Event.emit('global.app.lock')
 	}
 
+	on() {
+		$app.Event.on('global.screenlock.lock', this.lock)
+	}
+
 	off() {
 		this.idle.off()
+
+		$app.Event.off('global.screenlock.lock', this.lock)
 	}
 }

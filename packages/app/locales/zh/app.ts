@@ -18,6 +18,7 @@ export default {
 		generate_secret_key: '$t(common.generate)$t(common.secret_key)',
 		secret_key_placeholder: '请输入生成的密钥',
 		desc: '密钥可用来解锁和重置密码，请务必妥善保存',
-		use_x_reset: '$t(common.use){{mode}}$t(common.reset)'
+		use_x_reset: '$t(common.use){{mode}}$t(common.reset)',
+		lock: '锁定屏幕'
 	}
 }

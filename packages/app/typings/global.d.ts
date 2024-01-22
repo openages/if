@@ -21,7 +21,7 @@ declare global {
 	interface Window {
 		$shell?: {
 			type: 'electron'
-			platform: 'android' | 'darwin' | 'linux' | 'win32'
+			platform: 'darwin' | 'win32'
 			stopLoading: () => void
 		}
 

@@ -18,6 +18,7 @@ export default {
 		generate_secret_key: '$t(common.generate) $t(common.secret_key)',
 		secret_key_placeholder: 'Please input secret key',
 		desc: 'Secret key can be used to unlock and reset the password, please be sure to keep it secure.',
-		use_x_reset: '$t(common.use) {{mode}} $t(common.reset)'
+		use_x_reset: '$t(common.use) {{mode}} $t(common.reset)',
+		lock: 'Lock Screen'
 	}
 }

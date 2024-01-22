@@ -69,6 +69,17 @@
 							outline: 3px solid var(--color_border_soft);
 						}
 					}
+
+					.btn_lock {
+						width: 38px;
+						height: 38px;
+						border-radius: 50%;
+						background-color: var(--color_bg);
+
+						&:hover {
+							outline: 3px solid var(--color_border_soft);
+						}
+					}
 				}
 
 				.input {

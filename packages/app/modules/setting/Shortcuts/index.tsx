@@ -15,7 +15,7 @@ const Index = () => {
 	const { t } = useTranslation()
 
 	const getKeyMap = useMemoizedFn((item: GlobalModel['shortcuts']['keys'][number]) => {
-		const key = item.special_key || item.key_bindings
+		const key = item.special_key || global.shortcuts.getKeybinds(item.key_bindings)
 
 		if (key.indexOf(',') !== -1) return key.split(',')
 

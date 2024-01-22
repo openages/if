@@ -51,6 +51,7 @@ export default class Index {
 		if (lang === this.lang) return
 
 		this.lang = lang
+		local.lang = lang
 
 		await this.getLocale(lang)
 

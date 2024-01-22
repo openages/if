@@ -27,8 +27,7 @@ export default class GlobalModel {
 		this.stack.init()
 
 		await this.db.init()
-
-		if (!unlock) await this.screenlock.init()
+		await this.screenlock.init(unlock)
 
 		if (this.screenlock.screenlock_open) return this.lock()
 

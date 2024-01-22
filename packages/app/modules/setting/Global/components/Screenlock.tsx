@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { Button, Input, Modal, Select } from 'antd'
+import { Button, Input, Modal, Select, Tooltip } from 'antd'
 import { motion, AnimatePresence } from 'framer-motion'
 import { observer } from 'mobx-react-lite'
 import { useMemo, Fragment } from 'react'
@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 
 import { getAutolockOptions } from '@/appdata'
 import { useGlobal } from '@/context/app'
-import { Copy, Lock, ShieldStar } from '@phosphor-icons/react'
+import { Copy, Lock, Power, ShieldStar } from '@phosphor-icons/react'
 
 import styles from '../index.css'
 
@@ -27,6 +27,7 @@ const Index = () => {
 		(v?: boolean | any) =>
 			(global.screenlock.modal_open = typeof v === 'boolean' ? v : !global.screenlock.modal_open)
 	)
+
 	const togglePasswordMode = useMemoizedFn((v?: boolean | any) => {
 		global.screenlock.verified = true
 		global.screenlock.password_mode = typeof v === 'boolean' ? v : !global.screenlock.password_mode
@@ -37,6 +38,7 @@ const Index = () => {
 
 		global.screenlock.input_password = e.target.value
 	})
+
 	const onChangePrivateKey = useMemoizedFn((e: ChangeEvent<HTMLTextAreaElement>) => {
 		if (!global.screenlock.verified) global.screenlock.verified = true
 
@@ -86,6 +88,8 @@ const Index = () => {
 	})
 
 	const setAutoLock = useMemoizedFn(v => global.screenlock.setAutoLock(v))
+
+	const lock = useMemoizedFn(global.screenlock.lock)
 
 	const ungenerated = useMemo(() => {
 		if (reset_mode)
@@ -201,6 +205,16 @@ const Index = () => {
 							</div>
 						</div>
 						<div className='value_wrap flex align_center'>
+							{reset_mode && (
+								<Tooltip title={t('translation:app.screenlock.lock')}>
+									<button
+										className='btn_lock flex justify_center align_center clickable mr_12'
+										onClick={lock}
+									>
+										<Power size={18}></Power>
+									</button>
+								</Tooltip>
+							)}
 							<button
 								className='btn flex justify_center align_center clickable'
 								onClick={toggleModalOpen}

@@ -7,7 +7,7 @@ import type { ShortcutEventPaths } from '@/appdata'
 
 export default class Index {
 	keys = shortcuts as Array<{
-		key_bindings: string
+		key_bindings: string | { darwin: string; win32: string }
 		event_path: ShortcutEventPaths
 		readonly: boolean
 		special_key?: string
@@ -29,9 +29,15 @@ export default class Index {
 		this.on()
 	}
 
+	getKeybinds(key_bindings: Index['keys'][number]['key_bindings']) {
+		return typeof key_bindings === 'string' ? key_bindings : key_bindings[window?.$shell?.platform || 'darwin']
+	}
+
 	on() {
 		this.keys.map(item => {
-			hotkeys(item.key_bindings, item.options || {}, e => {
+			const key_bindings = this.getKeybinds(item.key_bindings)
+
+			hotkeys(key_bindings, item.options || {}, e => {
 				if (item.special_key) {
 					if (e.key.toLowerCase() === item.special_key) {
 						e.preventDefault()
@@ -48,6 +54,6 @@ export default class Index {
 	}
 
 	off() {
-		this.keys.map(item => hotkeys.unbind(item.key_bindings))
+		this.keys.map(item => hotkeys.unbind(this.getKeybinds(item.key_bindings)))
 	}
 }
