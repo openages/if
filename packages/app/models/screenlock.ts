@@ -54,13 +54,6 @@ export default class Index {
 
 		this.screenlock_open = this.data.password ? true : false
 
-		if (!this.data.unlocking && this.data.password) {
-			this.idle.init(autolock_value[this.data.autolock], {
-				context: this,
-				onIdle: this.lock
-			})
-		}
-
 		this.on()
 	}
 
@@ -204,9 +197,18 @@ export default class Index {
 		this.screenlock_open = true
 
 		$app.Event.emit('global.app.lock')
+
+		this.idle.off()
 	}
 
 	on() {
+		if (!this.data.unlocking && this.data.password) {
+			this.idle.init(this.screenlock_open ? 0 : autolock_value[this.data.autolock], {
+				context: this,
+				onIdle: this.lock
+			})
+		}
+
 		$app.Event.on('global.screenlock.lock', this.lock)
 	}
 

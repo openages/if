@@ -12,6 +12,10 @@ export default {
 		x_unit_ago: '{{x}}{{unit}}前',
 		x_unit: '{{x}}{{unit}}'
 	},
+	exit: '退出',
+	restart: '重启',
+	minimize: '最小化',
+	confirm: '确认',
 	never: '永不',
 	x_y: '{{x}} {{y}}',
 	notice: '注意',

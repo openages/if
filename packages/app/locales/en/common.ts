@@ -12,6 +12,10 @@ export default {
 		x_unit_ago: '{{x}} {{unit}} ago',
 		x_unit: '{{x}} {{unit}}'
 	},
+	exit: 'Exit',
+	restart: 'Restart',
+	minimize: 'Minimize',
+	confirm: 'Confirm',
 	never: 'Never',
 	x_y: '{{x}} {{y}}',
 	notice: 'Notice',

@@ -19,6 +19,14 @@ export default {
 		secret_key_placeholder: 'Please input secret key',
 		desc: 'Secret key can be used to unlock and reset the password, please be sure to keep it secure.',
 		use_x_reset: '$t(common.use) {{mode}} $t(common.reset)',
-		lock: 'Lock Screen'
+		lock: 'Lock Screen',
+		lock_email_text:
+			'Send the request code above to the email below. The unlocking code will be sent to your email within one to three business days.',
+		lock_password_placeholder: '$t(common.input) $t(common.password)',
+		unlock_placeholder: 'Enter the unlock code',
+		in_lock_mode: 'In lock mode',
+		email_code_placeholder: 'Enter the key received in your email',
+		forget_password: 'Forget Password',
+		use_password: 'Using Password'
 	}
 }

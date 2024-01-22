@@ -119,9 +119,7 @@ const Index = () => {
 								value={global.screenlock.data.private_key}
 							/>
 							<div className='text_normal lock_text w_100 border_box text_center mb_12 flex flex_column align_center'>
-								<span>
-									发送上方请求码到下方邮箱，一至三个工作日内解锁码将发送到您的邮箱
-								</span>
+								<span>{t('translation:app.screenlock.lock_email_text')}</span>
 								<span>openages@gmail.com</span>
 							</div>
 							<Item name='secret' noStyle>
@@ -130,7 +128,7 @@ const Index = () => {
 										'input w_100 border_box',
 										!global.screenlock.verified && 'unverified'
 									)}
-									placeholder='输入解锁码'
+									placeholder={t('translation:app.screenlock.unlock_placeholder')}
 								/>
 							</Item>
 							<button
@@ -138,9 +136,11 @@ const Index = () => {
 								type='submit'
 								disabled={!btn_active}
 							>
-								确认
+								{t('translation:common.confirm')}{' '}
 							</button>
-							<span className='w_100 text_center mt_12 text_normal'>已处于锁定模式</span>
+							<span className='w_100 text_center mt_12 text_normal'>
+								{t('translation:app.screenlock.in_lock_mode')}
+							</span>
 						</div>
 					</Then>
 					<Else>
@@ -153,7 +153,9 @@ const Index = () => {
 											!global.screenlock.verified && 'unverified'
 										)}
 										maxLength={18}
-										placeholder='输入密码'
+										placeholder={t(
+											'translation:app.screenlock.lock_password_placeholder'
+										)}
 										type='password'
 									/>
 								</Item>
@@ -173,7 +175,9 @@ const Index = () => {
 											'input w_100 border_box',
 											!global.screenlock.verified && 'unverified'
 										)}
-										placeholder='输入密钥'
+										placeholder={t(
+											'translation:app.screenlock.email_code_placeholder'
+										)}
 									/>
 								</Item>
 								<button
@@ -186,26 +190,28 @@ const Index = () => {
 							</div>
 						)}
 						<span className='text_normal mt_12 clickable' onClick={togglePasswordMode}>
-							{global.screenlock.password_mode ? '忘记密码' : '使用密码'}
+							{global.screenlock.password_mode
+								? t('translation:app.screenlock.forget_password')
+								: t('translation:app.screenlock.use_password')}
 						</span>
 					</Else>
 				</If>
 			</Form>
 			<div className='actions_wrap flex align_center absolute'>
 				<div className='action_item flex flex_column align_center'>
-					<span className='text'>退出</span>
+					<span className='text'>{t('translation:common.exit')}</span>
 					<div className='icon_wrap flex justify_center align_center clickable'>
 						<Power size={16} weight='light'></Power>
 					</div>
 				</div>
 				<div className='action_item flex flex_column align_center'>
-					<span className='text'>重启</span>
+					<span className='text'>{t('translation:common.restart')}</span>
 					<div className='icon_wrap flex justify_center align_center clickable'>
 						<PlayCircle size={16} weight='light'></PlayCircle>
 					</div>
 				</div>
 				<div className='action_item flex flex_column align_center'>
-					<span className='text'>最小化</span>
+					<span className='text'>{t('translation:common.minimize')}</span>
 					<div className='icon_wrap flex justify_center align_center clickable'>
 						<XCircle size={16} weight='light'></XCircle>
 					</div>
