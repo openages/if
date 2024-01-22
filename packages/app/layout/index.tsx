@@ -129,16 +129,8 @@ const Index = () => {
 		onClose: useMemoizedFn(global.search.closeSearch),
 		find: useMemoizedFn(global.stack.find),
 		add: useMemoizedFn(global.stack.add),
-		changeSearchIndex: useMemoizedFn(index => {
-			if (index < 0 || index > global.search.items.length - 1) return
-
-			global.search.index = index
-		}),
-		clearSearchHistory: useMemoizedFn(() => {
-			global.search.history = []
-
-			global.search.sync()
-		})
+		changeSearchIndex: useMemoizedFn(global.search.changeSearchIndex),
+		clearSearchHistory: useMemoizedFn(global.search.clearSearchHistory)
 	}
 
 	if (global.screenlock.screenlock_open) {

@@ -49,6 +49,7 @@ const Index = (props: IProps) => {
 
 	return (
 		<div
+			id={`search_item_${item.id}`}
 			className={$cx(
 				'search_item w_100 border_box cursor_point transition_normal flex flex_column justify_center relative',
 				styles._local,

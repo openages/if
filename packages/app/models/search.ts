@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx'
+import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
@@ -76,6 +77,28 @@ export default class Index {
 		}
 
 		this.search_history[this.module] = history
+
+		this.sync()
+	}
+
+	changeSearchIndex(index: number) {
+		if (index < 0 || index > this.items.length - 1) return
+
+		this.index = index
+
+		const id = this.items[index]?.item?.id
+
+		if (!id) return
+
+		scrollIntoView(document.getElementById(`search_item_${id}`), {
+			behavior: 'smooth',
+			inline: 'center',
+			block: 'nearest'
+		})
+	}
+
+	clearSearchHistory() {
+		this.history = []
 
 		this.sync()
 	}
