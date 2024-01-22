@@ -128,7 +128,9 @@ const Index = () => {
 										'input w_100 border_box',
 										!global.screenlock.verified && 'unverified'
 									)}
-									placeholder={t('translation:app.screenlock.unlock_placeholder')}
+									placeholder={t(
+										'translation:app.screenlock.email_code_placeholder'
+									)}
 								/>
 							</Item>
 							<button
@@ -136,7 +138,7 @@ const Index = () => {
 								type='submit'
 								disabled={!btn_active}
 							>
-								{t('translation:common.confirm')}{' '}
+								{t('translation:common.confirm')}
 							</button>
 							<span className='w_100 text_center mt_12 text_normal'>
 								{t('translation:app.screenlock.in_lock_mode')}
@@ -176,7 +178,7 @@ const Index = () => {
 											!global.screenlock.verified && 'unverified'
 										)}
 										placeholder={t(
-											'translation:app.screenlock.email_code_placeholder'
+											'translation:app.screenlock.secret_key_placeholder'
 										)}
 									/>
 								</Item>
