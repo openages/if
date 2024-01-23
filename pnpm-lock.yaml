@@ -229,8 +229,8 @@ importers:
         specifier: ^3.0.6
         version: 3.0.6
       '@types/crypto-js':
-        specifier: ^4.2.1
-        version: 4.2.1
+        specifier: ^4.2.2
+        version: 4.2.2
       '@types/dompurify':
         specifier: ^3.0.5
         version: 3.0.5
@@ -3271,8 +3271,8 @@ packages:
       '@types/node': 20.11.5
     dev: false
 
-  /@types/crypto-js@4.2.1:
-    resolution: {integrity: sha512-FSPGd9+OcSok3RsM0UZ/9fcvMOXJ1ENE/ZbLfOPlBWj7BgXtEAM8VYfTtT760GiLbQIMoVozwVuisjvsVwqYWw==}
+  /@types/crypto-js@4.2.2:
+    resolution: {integrity: sha512-sDOLlVbHhXpAUAL0YHDUUwDZf3iN4Bwi4W6a0W0b+QcAezUbRtH4FVb+9J4h+XFPW7l/gQ9F8qC7P+Ec4k8QVQ==}
     dev: true
 
   /@types/dompurify@3.0.5:
@@ -3405,7 +3405,7 @@ packages:
   /@types/react-dom@18.2.18:
     resolution: {integrity: sha512-TJxDm6OfAX2KJWJdMEVTwWke5Sc/E/RlnPGvGfS0W7+6ocy2xhDVQVh/KvC2Uf7kACs+gDytdusDSdWfWkaNzw==}
     dependencies:
-      '@types/react': 18.2.48
+      '@types/react': 18.2.42
     dev: true
 
   /@types/react-reconciler@0.28.8:
@@ -3875,7 +3875,7 @@ packages:
       copy-to-clipboard: 3.3.3
       dayjs: 1.11.10
       qrcode.react: 3.1.0(react@0.0.0-experimental-31603f19d-20240109)
-      rc-cascader: 3.21.0(react-dom@0.0.0-experimental-31603f19d-20240109)(react@0.0.0-experimental-31603f19d-20240109)
+      rc-cascader: 3.21.2(react-dom@0.0.0-experimental-31603f19d-20240109)(react@0.0.0-experimental-31603f19d-20240109)
       rc-checkbox: 3.1.0(react-dom@0.0.0-experimental-31603f19d-20240109)(react@0.0.0-experimental-31603f19d-20240109)
       rc-collapse: 3.7.2(react-dom@0.0.0-experimental-31603f19d-20240109)(react@0.0.0-experimental-31603f19d-20240109)
       rc-dialog: 9.3.4(react-dom@0.0.0-experimental-31603f19d-20240109)(react@0.0.0-experimental-31603f19d-20240109)
@@ -4111,8 +4111,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001571
-      electron-to-chromium: 1.4.616
+      caniuse-lite: 1.0.30001579
+      electron-to-chromium: 1.4.642
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.22.2)
     dev: true
@@ -4183,8 +4183,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /caniuse-lite@1.0.30001571:
-    resolution: {integrity: sha512-tYq/6MoXhdezDLFZuCO/TKboTzuQ/xR5cFdgXPfDtM7/kchBO3b4VWghE/OAi/DV7tTdhmLjZiZBZi1fA/GheQ==}
+  /caniuse-lite@1.0.30001579:
+    resolution: {integrity: sha512-u5AUVkixruKHJjw/pj9wISlcMpgFWzSrczLZbrqBSxukQixmg0SJ5sZTpvaFvxU0HoQKd4yoyAogyrAz9pzJnA==}
     dev: true
 
   /chalk@2.4.2:
@@ -4686,8 +4686,8 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
 
-  /electron-to-chromium@1.4.616:
-    resolution: {integrity: sha512-1n7zWYh8eS0L9Uy+GskE0lkBUNK83cXTVJI0pU3mGprFsbfSdAc15VTFbo+A+Bq4pwstmL30AVcEU3Fo463lNg==}
+  /electron-to-chromium@1.4.642:
+    resolution: {integrity: sha512-M4+u22ZJGpk4RY7tne6W+APkZhnnhmAH48FNl8iEFK2lEgob+U5rUQsIqQhvAwCXYpfd3H20pHK/ENsCvwTbsA==}
     dev: true
 
   /emoji-mart@5.5.2:
@@ -6504,8 +6504,8 @@ packages:
       unpipe: 1.0.0
     dev: true
 
-  /rc-cascader@3.21.0(react-dom@0.0.0-experimental-31603f19d-20240109)(react@0.0.0-experimental-31603f19d-20240109):
-    resolution: {integrity: sha512-7aADjbfqiR4HrTHG9S019p2jeKM/AxISPA5+sBJR7Mlhm/i+lR7VjBju3KQulJNJLKNEnQYg4TFhcPf2SLua9g==}
+  /rc-cascader@3.21.2(react-dom@0.0.0-experimental-31603f19d-20240109)(react@0.0.0-experimental-31603f19d-20240109):
+    resolution: {integrity: sha512-J7GozpgsLaOtzfIHFJFuh4oFY0ePb1w10twqK6is3pAkqHkca/PsokbDr822KIRZ8/CK8CqevxohuPDVZ1RO/A==}
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
@@ -8285,7 +8285,7 @@ packages:
     engines: {node: '>=10.13.0'}
     dependencies:
       glob-to-regexp: 0.4.1
-      graceful-fs: 4.2.11
+      graceful-fs: 4.2.10
     dev: true
 
   /wbuf@1.7.3:
@@ -8355,7 +8355,7 @@ packages:
       webpack:
         optional: true
     dependencies:
-      colorette: 2.0.20
+      colorette: 2.0.19
       memfs: 3.5.3
       mime-types: 2.1.35
       range-parser: 1.2.1
@@ -8372,7 +8372,7 @@ packages:
       webpack:
         optional: true
     dependencies:
-      colorette: 2.0.20
+      colorette: 2.0.19
       memfs: 3.5.3
       mime-types: 2.1.35
       range-parser: 1.2.1
