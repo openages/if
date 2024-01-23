@@ -4,18 +4,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { getItemStatus } from '@/utils/modules/todo'
-import {
-	Bell,
-	Calendar,
-	CaretDown,
-	CaretUp,
-	FireSimple,
-	HourglassMedium,
-	Plus,
-	Sun,
-	Tag,
-	X
-} from '@phosphor-icons/react'
+import { Bell, Calendar, CaretDown, CaretUp, FireSimple, Plus, Repeat, Sun, Tag, X } from '@phosphor-icons/react'
 
 import { useInput } from '../../hooks'
 import Children from '../Children'
@@ -242,7 +231,7 @@ const Index = (props: IPropsDetail) => {
 							)}
 						>
 							<div className='name_wrap flex align_center'>
-								<HourglassMedium size={16}></HourglassMedium>
+								<Repeat size={16}></Repeat>
 								<span className='name'>{t('translation:todo.Input.Cycle.title')}</span>
 							</div>
 							<div className='value_wrap flex align_center'>

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { Case, Switch } from 'react-if'
 
 import { getCycleSpecificDesc } from '@/utils/modules/todo'
-import { HourglassMedium } from '@phosphor-icons/react'
+import { Repeat } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -251,7 +251,7 @@ const Index = (props: IPropsCircle) => {
 						cycle_enabled && cycle && 'cycle_enabled'
 					)}
 				>
-					<HourglassMedium size={15}></HourglassMedium>
+					<Repeat size={15}></Repeat>
 				</div>
 			)
 		}

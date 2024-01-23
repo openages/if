@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { getCycleSpecificDesc } from '@/utils/modules/todo'
-import { HourglassMedium } from '@phosphor-icons/react'
+import { Repeat } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -58,7 +58,7 @@ const Index = (props: IPropsCircleStatus) => {
 				></div>
 			)}
 			<div className='repeat_content w_100 h_100 flex align_center relative'>
-				<HourglassMedium className='icon' size={10}></HourglassMedium>
+				<Repeat className='icon' size={10}></Repeat>
 				<span className='text ml_2'>{desc}</span>
 			</div>
 		</div>
