@@ -8,17 +8,11 @@ import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 
 import { keyCompression } from '@/config'
 import {
-	migration_activity_items,
-	migration_dirtree_items,
-	migration_kv,
-	migration_module_setting,
-	migration_todo_items
-} from '@/migrations'
-import {
 	schema_activity_items,
 	schema_dirtree_items,
 	schema_kv,
 	schema_module_setting,
+	schema_pomo_items,
 	schema_todo_items
 } from '@/schemas'
 import { statics } from '@/utils/rxdb'
@@ -56,29 +50,28 @@ export default class Index {
 		await db.addCollections({
 			kv: {
 				autoMigrate: false,
-				schema: schema_kv,
-				migrationStrategies: migration_kv
+				schema: schema_kv
 			},
 			module_setting: {
 				autoMigrate: false,
-				schema: schema_module_setting,
-				migrationStrategies: migration_module_setting
+				schema: schema_module_setting
 			},
 			activity_items: {
 				autoMigrate: false,
-				schema: schema_activity_items,
-				migrationStrategies: migration_activity_items
+				schema: schema_activity_items
 			},
 			dirtree_items: {
 				autoMigrate: false,
-				schema: schema_dirtree_items,
-				migrationStrategies: migration_dirtree_items
+				schema: schema_dirtree_items
 			},
 			todo_items: {
 				autoMigrate: false,
 				schema: schema_todo_items,
-				migrationStrategies: migration_todo_items,
 				statics
+			},
+			pomo_items: {
+				autoMigrate: false,
+				schema: schema_pomo_items
 			}
 		})
 

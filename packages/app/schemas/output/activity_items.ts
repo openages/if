@@ -22,7 +22,11 @@ export default {
                         "enum": [
                               "insert",
                               "check"
-                        ]
+                        ],
+                        "const": "done"
+                  },
+                  "context": {
+                        "type": "string"
                   },
                   "update_at": {
                         "type": "number"
@@ -59,7 +63,11 @@ export default {
                         "enum": [
                               "insert",
                               "check"
-                        ]
+                        ],
+                        "const": "done"
+                  },
+                  "context": {
+                        "type": "string"
                   },
                   "update_at": {
                         "type": "number"
@@ -78,7 +86,8 @@ export default {
             "enum": [
                   "insert",
                   "check"
-            ]
+            ],
+            "const": "done"
       },
       "Activity.TodoAction": {
             "type": "string",
@@ -86,5 +95,9 @@ export default {
                   "insert",
                   "check"
             ]
+      },
+      "Activity.PomoAction": {
+            "type": "string",
+            "const": "done"
       }
 } as const

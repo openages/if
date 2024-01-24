@@ -6,6 +6,12 @@ const typed_nav_items = [
 		fixed: true
 	},
 	{
+		id: 'pomo',
+		title: 'pomo',
+		path: '/pomo',
+		fixed: true
+	},
+	{
 		id: 'memo',
 		title: 'memo',
 		path: '/memo',
@@ -48,11 +54,7 @@ const typed_nav_items = [
 		title: 'schedule',
 		path: '/schedule'
 	},
-	{
-		id: 'pomodoro',
-		title: 'pomodoro',
-		path: '/pomodoro'
-	},
+
 	{
 		id: 'flag',
 		title: 'flag',

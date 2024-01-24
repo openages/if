@@ -3,7 +3,7 @@ import { toTypedRxJsonSchema } from 'rxdb'
 import { keyCompression } from '@/config'
 import { getCrdtSchema } from '@/utils'
 
-import schema_raw from './output/kv'
+import schema_raw from './output/pomo_items'
 
 import type { ExtractDocumentTypeFromTypedRxJsonSchema, RxJsonSchema } from 'rxdb'
 import type { RxDB } from '@/types'
@@ -11,13 +11,13 @@ import type { RxDB } from '@/types'
 const schema = toTypedRxJsonSchema(
 	getCrdtSchema({
 		version: 0,
-		primaryKey: 'key',
+		primaryKey: 'file_id',
 		keyCompression,
-		...schema_raw['KV.Item']
+		...schema_raw['Pomo.Item']
 	} as const)
 )
 
-export type DocKV = ExtractDocumentTypeFromTypedRxJsonSchema<typeof schema>
-export type DBKV = RxDB.RxCollectionWithFunctions<DocKV>
+export type DocPomoItems = ExtractDocumentTypeFromTypedRxJsonSchema<typeof schema>
+export type DBPomoItems = RxDB.RxCollectionWithFunctions<DocPomoItems>
 
-export const schema_kv: RxJsonSchema<DocKV> = schema
+export const schema_pomo_items: RxJsonSchema<DocPomoItems> = schema

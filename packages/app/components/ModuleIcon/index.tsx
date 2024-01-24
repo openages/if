@@ -6,7 +6,8 @@ import {
 	ChartBarHorizontal,
 	CheckCircle,
 	Clipboard,
-	HourglassMedium,
+	FileText,
+	GearSix,
 	Kanban,
 	MicrosoftPowerpointLogo,
 	Note,
@@ -14,10 +15,9 @@ import {
 	Path,
 	Table,
 	TextColumns,
+	Timer,
 	TreeStructure,
-	GearSix,
-	WebhooksLogo,
-	FileText
+	WebhooksLogo
 } from '@phosphor-icons/react'
 
 import type { IconProps } from '@phosphor-icons/react'
@@ -32,6 +32,7 @@ const Index = (props: IProps) => {
 
 	return match(type)
 		.with('todo', () => <CheckCircle {...icon_props} />)
+		.with('pomo', () => <Timer {...icon_props} />)
 		.with('memo', () => <Note {...icon_props} />)
 		.with('typed', () => <FileText {...icon_props} />)
 		.with('note', () => <Notebook {...icon_props} />)
@@ -40,7 +41,6 @@ const Index = (props: IProps) => {
 		.with('whiteboard', () => <Clipboard {...icon_props} />)
 		.with('ppt', () => <MicrosoftPowerpointLogo {...icon_props} />)
 		.with('schedule', () => <CalendarCheck {...icon_props} />)
-		.with('pomodoro', () => <HourglassMedium {...icon_props} />)
 		.with('flag', () => <Barbell {...icon_props} />)
 		.with('api', () => <WebhooksLogo {...icon_props} />)
 		.with('dataflow', () => <TreeStructure {...icon_props} />)

@@ -1,0 +1,51 @@
+@keyframes rotate {
+	100% {
+		transform: rotateZ(360deg);
+	}
+}
+
+._local {
+	max-width: var(--limited_width);
+	padding: 60px var(--limited_padding);
+	margin: 0 auto;
+
+	--height_actions: 90px;
+
+	:global {
+		.sessions_wrap {
+			height: calc(100% - var(--height_actions));
+		}
+
+		.actions_wrap {
+			height: var(--height_actions);
+			padding: 0 60px;
+
+			.action_item {
+				.icon_wrap {
+					width: 54px;
+					height: 54px;
+					padding: 0;
+					border-radius: 50%;
+					box-shadow: var(--shadow);
+					margin-bottom: 12px;
+					border: none;
+					outline: none;
+
+					&:hover {
+						outline: 3px solid var(--color_border_soft);
+					}
+
+					&.active {
+						:local {
+							animation: rotate 30s infinite;
+						}
+					}
+				}
+
+				.text {
+					color: var(--color_text_light);
+				}
+			}
+		}
+	}
+}

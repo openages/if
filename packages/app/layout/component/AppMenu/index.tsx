@@ -1,6 +1,8 @@
+import { useMemoizedFn } from 'ahooks'
 import { Drawer } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 
 import { ModuleIcon } from '@/components'
@@ -10,10 +12,10 @@ import styles from './index.css'
 
 import type { App } from '@/types'
 import type { IPropsAppMenu } from '../../types'
-
 const Index = (props: IPropsAppMenu) => {
 	const { visible, app_modules, actives, visible_dirtree, onClose } = props
 	const { t } = useTranslation()
+	const { pathname } = useLocation()
 
 	const group_items = useMemo(() => {
 		return Object.keys(group).reduce(
@@ -30,6 +32,14 @@ const Index = (props: IPropsAppMenu) => {
 			[] as Array<{ name: keyof typeof group; items: App.Modules }>
 		)
 	}, [app_modules])
+
+	const getStatus = useMemoizedFn((item: App.Module) => {
+		const is_current = pathname === item.path
+
+		if (actives.find(i => i.app === item.title)) {
+			return is_current ? 'active current' : 'active'
+		}
+	})
 
 	return (
 		<Drawer
@@ -51,7 +61,7 @@ const Index = (props: IPropsAppMenu) => {
 								<Link
 									className={$cx(
 										'menu_item border_box flex align_center clickable relative',
-										actives.find(i => i.app === item.title) && 'active'
+										getStatus(item)
 									)}
 									key={item.title}
 									to={item.path}

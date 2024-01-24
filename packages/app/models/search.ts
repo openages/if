@@ -12,7 +12,7 @@ import type { App, DirTree } from '@/types'
 export default class Index {
 	open = false
 	module = '' as App.ModuleType
-	items = [] as Array<{ item: any; file: DirTree.Item; setting: any }>
+	items = [] as Array<{ item: any; file: DirTree.Item; setting?: any }>
 	index = 0
 	search_history = {} as Record<App.ModuleType, Array<string>>
 
@@ -57,6 +57,30 @@ export default class Index {
 				item: getDocItem(docs[index]),
 				file: getDocItem(files.get(docs[index].file_id)),
 				setting: JSON.parse(getDocItem(settings.get(docs[index].file_id)).setting)
+			}))
+		}
+
+		if (this.module === 'pomo') {
+			const docs = await $db.pomo_items
+				.find({
+					selector: {
+						sessions: {
+							$elemMatch: {
+								title: { $regex: `.*${text}.*`, $options: 'i' }
+							}
+						}
+					},
+					index: 'file_id'
+				})
+				.exec()
+
+			const file_ids = docs.map(item => item.file_id)
+
+			const files = await $db.dirtree_items.findByIds(file_ids).exec()
+
+			this.items = file_ids.map((_, index) => ({
+				item: getDocItem(docs[index]),
+				file: getDocItem(files.get(docs[index].file_id))
 			}))
 		}
 

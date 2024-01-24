@@ -8,7 +8,7 @@ export default {
 	whiteboard: '白板',
 	ppt: '报告',
 	schedule: '日程',
-	pomodoro: '番茄钟',
+	pomo: '番茄钟',
 	flag: '小目标',
 	api: '接口',
 	dataflow: '数据流',

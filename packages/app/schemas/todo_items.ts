@@ -10,7 +10,7 @@ import type { RxDB } from '@/types'
 
 const schema = toTypedRxJsonSchema(
 	getCrdtSchema({
-		version: 1,
+		version: 0,
 		primaryKey: 'id',
 		keyCompression,
 		indexes: ['file_id', 'angle_id', 'status', 'recycle_time', 'archive_time', 'start_time'],

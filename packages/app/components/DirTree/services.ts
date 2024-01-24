@@ -29,7 +29,7 @@ export const remove = async (args: ArgsRemove) => {
 		if (item.type === 'dir') $app.Event.emit(`${module}/dirtree/removeOpenFolder`, item.id)
 
 		if (item.type === 'file') {
-			$app.Event.emit('global.stack.removeFile', item.id)
+			await $app.Event.emit('global.stack.removeFile', item.id)
 
 			await actions.remove(item)
 		}

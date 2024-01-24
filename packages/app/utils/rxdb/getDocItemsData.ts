@@ -12,6 +12,8 @@ export default <T>(arr: RxDB.ItemsDoc<T>) => {
 }
 
 export const getDocItem = <T>(item: RxDocument<T>) => {
+	if (!item) return
+
 	const target = item.toMutableJSON()
 
 	delete target['crdts']

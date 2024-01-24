@@ -8,10 +8,13 @@ export namespace Activity {
 		file_id: string
 		name: string
 		action: Action
+		context?: string
 		update_at?: number
 	}
 
 	export type TodoAction = 'insert' | 'check'
 
-	export type Action = TodoAction
+	export type PomoAction = 'done'
+
+	export type Action = TodoAction | PomoAction
 }
