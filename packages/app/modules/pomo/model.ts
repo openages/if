@@ -13,7 +13,8 @@ import type { Pomo } from '@/types'
 export default class Index {
 	id = ''
 	watcher = null as Subscription
-	pomo = {} as Pomo.Item
+	data = {} as Pomo.Item
+	state = { index: 0, status: '', work_in: 0, break_in: 0 } as Pomo.State
 
 	constructor(public file: File) {
 		makeAutoObservable(this, { watcher: false }, { autoBind: true })
@@ -30,7 +31,7 @@ export default class Index {
 
 	on() {
 		this.watcher = getPomo(this.id).$.subscribe(doc => {
-			this.pomo = getDocItem(doc)
+			this.data = getDocItem(doc)
 		})
 	}
 

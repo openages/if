@@ -28,17 +28,13 @@ module.exports = defineConfig({
 		compress: false
 	},
 	optimization: {
-		splitChunks: {
-			chunks: 'all',
-			maxSize: 30000
-		}
+		splitChunks: { chunks: 'all', maxSize: 30000 }
 	},
 	experiments: {
 		topLevelAwait: true,
 		outputModule: true,
 		rspackFuture: {
 			// newTreeshaking: true,
-			disableApplyEntryLazily: true
 		}
 	},
 	plugins: [

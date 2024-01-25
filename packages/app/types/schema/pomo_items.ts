@@ -1,4 +1,11 @@
 export namespace Pomo {
+	export interface State {
+		index: number
+		status: 'work' | 'break' | ''
+		work_in: number
+		break_in: number
+	}
+
 	export interface Session {
 		id: string
 		title: string

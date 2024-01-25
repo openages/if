@@ -23,3 +23,7 @@ export const getExsitValues = (v: any) => {
 
 	return v
 }
+
+export function chooseBy<T>(obj: T, condition: boolean) {
+	return condition ? obj : {}
+}
