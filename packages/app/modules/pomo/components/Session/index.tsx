@@ -1,9 +1,13 @@
+import dayjs from 'dayjs'
+import { motion } from 'framer-motion'
 import { pick } from 'lodash-es'
 import { useMemo } from 'react'
 import { Arc, Circle, Layer, Line, Stage, Text } from 'react-konva'
 
 import { useCssVariable } from '@/hooks'
+import { swipe_x } from '@/utils/variants'
 
+import { fillTimeText } from '../../utils'
 import styles from './index.css'
 
 import type { IPropsSession } from '../../types'
@@ -24,10 +28,22 @@ function getRotateLinePoints(x: number, y: number, length: number, deg: number) 
 }
 
 const Index = (props: IPropsSession) => {
-	const { item, is_dark_theme, name } = props
-	const { title, work_time, break_time, done, flow_mode } = item
+	const { item, is_dark_theme, name, view_direction } = props
+	const { title, work_time, break_time, flow_mode } = item
 	const color = useCssVariable('--color_text_rgb')
 	const color_bg = useCssVariable('--color_bg')
+
+	const target_work_time = useMemo(() => {
+		const target = dayjs.duration({ minutes: work_time })
+
+		return { hours: fillTimeText(target.hours()), minutes: fillTimeText(target.minutes()) }
+	}, [work_time])
+
+	const target_break_time = useMemo(() => {
+		const target = dayjs.duration({ minutes: break_time })
+
+		return { hours: fillTimeText(target.hours()), minutes: fillTimeText(target.minutes()) }
+	}, [work_time])
 
 	const { work_angle, break_angle } = useMemo(() => {
 		const total = work_time + break_time
@@ -56,14 +72,14 @@ const Index = (props: IPropsSession) => {
 	const props_arc_work = {
 		...props_arc,
 		angle: work_angle,
-		rotation: -break_angle,
+		rotation: -90,
 		fill: `rgba(${color},${is_dark_theme ? '0.6' : '1'})`
 	} as Konva.ArcConfig
 
 	const props_arc_break = {
 		...props_arc,
 		angle: break_angle,
-		rotation: -90 - break_angle,
+		rotation: -90 + work_angle,
 		fill: `rgba(${color},0.${is_dark_theme ? '24' : '06'})`
 	} as Konva.ArcConfig
 
@@ -82,7 +98,7 @@ const Index = (props: IPropsSession) => {
 
 	const props_line = {
 		...props_shadow,
-		points: getRotateLinePoints(props_arc.x, props_arc.y, radius - 4, 90),
+		points: getRotateLinePoints(props_arc.x, props_arc.y, radius - 4, 0),
 		stroke: is_dark_theme ? `rgba(${color},1)` : color_bg,
 		strokeWidth: 6,
 		lineCap: 'round'
@@ -97,11 +113,22 @@ const Index = (props: IPropsSession) => {
 		fontFamily: 'Avenir',
 		fontStyle: 'bold',
 		fill: `rgba(${color},1)`,
-		text: '45:00'
+		text: `${target_work_time.hours}:${target_work_time.minutes}`
 	} as Konva.TextConfig
 
 	return (
-		<div className={$cx(styles._local)}>
+		<motion.div
+			className={$cx(styles._local)}
+			custom={view_direction}
+			variants={swipe_x}
+			initial='enter'
+			animate='center'
+			exit='exit'
+			transition={{
+				x: { type: 'spring', stiffness: 300, damping: 30 },
+				opacity: { duration: 0.2 }
+			}}
+		>
 			<Stage className='stage_wrap' width={size} height={size}>
 				<Layer>
 					<Arc {...props_arc_work}></Arc>
@@ -115,11 +142,15 @@ const Index = (props: IPropsSession) => {
 			<div className='title_wrap flex flex_column align_center'>
 				<span className='title font_bold mb_10'>{title || name}</span>
 				<div className='times'>
-					<span className='time_item mr_6'>Work 45:00</span>
-					<span className='time_item'>Break 15:00</span>
+					<span className='time_item mr_6'>
+						Work {target_work_time.hours}:{target_work_time.minutes}
+					</span>
+					<span className='time_item'>
+						Break {target_break_time.hours}:{target_break_time.minutes}
+					</span>
 				</div>
 			</div>
-		</div>
+		</motion.div>
 	)
 }
 

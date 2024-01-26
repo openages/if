@@ -137,6 +137,7 @@ const Index = () => {
 						animate={{ opacity: 1, height: 'auto' }}
 						exit={{ opacity: 0, height: 0 }}
 						transition={{ duration: 0.18 }}
+						layout
 					>
 						<div className='padding_wrap w_100 border_box flex flex_column align_center relative'>
 							<div

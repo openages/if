@@ -1,5 +1,5 @@
 import { useDeepCompareEffect, useMemoizedFn } from 'ahooks'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 import { DirTree } from '@/types'
@@ -91,6 +91,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 						animate={{ opacity: 1, height: 'auto' }}
 						exit={{ opacity: 0, height: 0 }}
 						transition={{ duration: 0.18 }}
+						layout
 					>
 						{children.map((it, index) => (
 							<DirItem

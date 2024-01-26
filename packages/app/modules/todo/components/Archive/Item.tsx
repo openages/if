@@ -69,6 +69,7 @@ const Index = (props: IPropsArchiveItem) => {
 						animate={{ opacity: 1, height: 'auto' }}
 						exit={{ opacity: 0, height: 0 }}
 						transition={{ duration: 0.18 }}
+						layout
 					>
 						{item.children.map(it => getTextItem(it.id, it.status, it.text, false))}
 					</motion.div>

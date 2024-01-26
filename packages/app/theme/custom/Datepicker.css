@@ -197,7 +197,6 @@
 	.if-picker-time-panel {
 		min-width: 60px;
 		height: unset !important;
-		margin-left: 6px;
 
 		.if-picker-header {
 			padding: 0;
@@ -275,7 +274,6 @@
 			width: 100%;
 			padding: 3px 9px;
 			margin-top: 3px;
-			margin-right: -6px;
 			align-items: center;
 
 			.if-picker-now {

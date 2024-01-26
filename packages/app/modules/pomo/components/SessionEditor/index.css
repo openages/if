@@ -1,0 +1,87 @@
+._local {
+	width: 180px;
+	padding: 12px;
+
+	:global {
+		.input {
+			width: 60px;
+			height: 18px;
+			padding: 0;
+			font-size: 12px;
+			text-align: right;
+		}
+
+		.time_picker {
+			width: 60px;
+			height: 18px;
+			padding: 0;
+
+			input {
+				text-align: right;
+			}
+		}
+
+		.if-form-item {
+			margin-bottom: 12px;
+
+			& > .if-row {
+				justify-content: space-between;
+			}
+
+			.if-form-item-label {
+				display: flex;
+				align-items: center;
+				height: 18px;
+
+				& > label {
+					width: 57px;
+					height: 18px;
+					font-size: 12px;
+
+					&::before {
+						position: absolute;
+						top: 3px;
+						right: 0;
+						margin-inline-end: 0 !important;
+					}
+
+					&::after {
+						display: none;
+					}
+				}
+			}
+
+			.if-form-item-control {
+				width: 60px !important;
+				height: 18px;
+				flex: unset;
+
+				.if-form-item-control-input {
+					width: 60px !important;
+					min-height: 18px;
+					height: 18px;
+
+					.if-form-item-control-input-content {
+						height: 100%;
+						display: flex;
+						align-items: center;
+						justify-content: flex-end;
+					}
+				}
+			}
+		}
+
+		.btn_confirm {
+			height: 24px;
+			border-radius: 12px;
+			font-size: 12px;
+			background-color: transparent;
+			border: 1px solid var(--color_text);
+
+			&:hover {
+				background-color: var(--color_text);
+				color: var(--color_bg);
+			}
+		}
+	}
+}

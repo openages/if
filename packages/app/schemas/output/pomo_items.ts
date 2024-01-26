@@ -14,9 +14,6 @@ export default {
                   "break_time": {
                         "type": "number"
                   },
-                  "done": {
-                        "type": "boolean"
-                  },
                   "flow_mode": {
                         "type": "boolean"
                   }
@@ -26,7 +23,6 @@ export default {
                   "title",
                   "work_time",
                   "break_time",
-                  "done",
                   "flow_mode"
             ]
       },
@@ -54,9 +50,6 @@ export default {
                                     "break_time": {
                                           "type": "number"
                                     },
-                                    "done": {
-                                          "type": "boolean"
-                                    },
                                     "flow_mode": {
                                           "type": "boolean"
                                     }
@@ -66,10 +59,26 @@ export default {
                                     "title",
                                     "work_time",
                                     "break_time",
-                                    "done",
                                     "flow_mode"
                               ]
                         }
+                  },
+                  "index": {
+                        "type": "number"
+                  },
+                  "status": {
+                        "type": "string",
+                        "enum": [
+                              "work",
+                              "break",
+                              null
+                        ]
+                  },
+                  "work_in": {
+                        "type": "number"
+                  },
+                  "break_in": {
+                        "type": "number"
                   },
                   "continuous_mode": {
                         "type": "boolean"
@@ -84,6 +93,10 @@ export default {
             "required": [
                   "file_id",
                   "sessions",
+                  "index",
+                  "status",
+                  "work_in",
+                  "break_in",
                   "continuous_mode",
                   "create_at"
             ]

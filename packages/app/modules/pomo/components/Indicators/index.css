@@ -1,0 +1,46 @@
+._local {
+	margin-top: 27px;
+
+	:global {
+		.indicator_item {
+			padding: 4px;
+			margin: 0 2px;
+			border-radius: 50%;
+
+			&:hover {
+				background-color: var(--color_bg_2);
+
+				.dot {
+					background-color: var(--color_text_light);
+				}
+			}
+
+			.dot {
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background-color: var(--color_bg_2);
+			}
+
+			&.active {
+				.dot {
+					background-color: var(--color_text);
+				}
+			}
+
+			&.done {
+				.dot {
+					background-color: var(--color_text_light);
+				}
+			}
+
+			&.view {
+				background-color: var(--color_bg_2);
+
+				.dot {
+					background-color: var(--color_text_softlight);
+				}
+			}
+		}
+	}
+}

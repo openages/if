@@ -1,10 +1,11 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { File } from '@/models'
-import { getDocItem } from '@/utils'
+import { getDocItem, id } from '@/utils'
+import { disableWatcher } from '@/utils/decorators'
 
-import { getPomo } from './services'
+import { getPomo, update } from './services'
 
 import type { Subscription } from 'rxjs'
 import type { Pomo } from '@/types'
@@ -14,10 +15,12 @@ export default class Index {
 	id = ''
 	watcher = null as Subscription
 	data = {} as Pomo.Item
-	state = { index: 0, status: '', work_in: 0, break_in: 0 } as Pomo.State
+	view_index = 0
+	view_direction = 0
+	disable_watcher = false
 
 	constructor(public file: File) {
-		makeAutoObservable(this, { watcher: false }, { autoBind: true })
+		makeAutoObservable(this, { watcher: false, disable_watcher: false }, { autoBind: true })
 	}
 
 	init(args: { id: string }) {
@@ -29,8 +32,27 @@ export default class Index {
 		this.on()
 	}
 
+	@disableWatcher
+	async add(v: Pomo.Session) {
+		this.data.sessions.push({ ...v, id: id() })
+
+		await update(this.id, { sessions: $copy(this.data.sessions) })
+	}
+
+	@disableWatcher
+	async next() {}
+
+	changeViewIndex(v: number) {
+		runInAction(() => {
+			this.view_direction = v - this.view_direction
+			this.view_index = v
+		})
+	}
+
 	on() {
 		this.watcher = getPomo(this.id).$.subscribe(doc => {
+			if (this.disable_watcher) return
+
 			this.data = getDocItem(doc)
 		})
 	}

@@ -15,6 +15,11 @@ export default async (file_id: string) => {
 						flow_mode: false
 					}
 				],
+				index: 0,
+				status: '',
+				work_in: 0,
+				break_in: 0,
+				continuous_mode: false,
 				create_at: new Date().valueOf()
 			}
 		}
