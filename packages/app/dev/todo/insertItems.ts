@@ -10,7 +10,7 @@ export default async () => {
 	const args = {} as Args
 
 	const one_dirtree = await $db.dirtree_items
-		.find({ selector: { type: 'file' } })
+		.find({ selector: { module: 'todo', type: 'file' } })
 		.sort({ create_at: 'asc' })
 		.limit(1)
 		.exec()

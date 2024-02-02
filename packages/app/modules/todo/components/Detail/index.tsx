@@ -105,14 +105,15 @@ const Index = (props: IPropsDetail) => {
 	return (
 		<Drawer
 			rootClassName={$cx(
+				'useInPage',
 				styles._local,
 				breakpoint && styles.breakpoint,
-				breakpoint === 390 && styles.narrow_390
+				breakpoint === 390 && styles.narrow
 			)}
 			open={visible_detail_modal}
+			mask={Boolean(breakpoint)}
 			title={t('translation:todo.Detail.title')}
 			width={321}
-			mask={Boolean(breakpoint)}
 			zIndex={100}
 			destroyOnClose
 			getContainer={false}

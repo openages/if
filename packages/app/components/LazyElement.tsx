@@ -24,4 +24,4 @@ const Index = (props: IProps) => {
 	)
 }
 
-export default Index
+export default $app.memo(Index)

@@ -1,21 +1,24 @@
 import { useMemoizedFn } from 'ahooks'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
+import { useStackSelector } from '@/context/stack'
 
-import { Actions, Indicators, Session } from './components'
+import { Actions, Indicators, Session, SessionsEditModal } from './components'
 import styles from './index.css'
 import Model from './model'
 
-import type { IProps, IPropsActions, IPropsIndicators } from './types'
+import type { IProps, IPropsActions, IPropsIndicators, IPropsSessionsEditModal } from './types'
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const global = useGlobal()
+	const breakpoint = useStackSelector(v => v.breakpoint)
 	const sessions = $copy(x.data.sessions) || []
+	const add = useMemoizedFn(x.add)
 
 	useLayoutEffect(() => {
 		x.init({ id })
@@ -24,7 +27,8 @@ const Index = ({ id }: IProps) => {
 	}, [id])
 
 	const props_actions: IPropsActions = {
-		add: useMemoizedFn(x.add)
+		add,
+		toggleEditModal: useMemoizedFn(() => (x.visible_edit_modal = !x.visible_edit_modal))
 	}
 
 	const props_indicators: IPropsIndicators = {
@@ -34,30 +38,50 @@ const Index = ({ id }: IProps) => {
 		changeViewIndex: useMemoizedFn(x.changeViewIndex)
 	}
 
+	const props_sessions_edit_modal: IPropsSessionsEditModal = {
+		visible_edit_modal: x.visible_edit_modal,
+		data: $copy(x.data),
+		add,
+		update: useMemoizedFn(x.update),
+		remove: useMemoizedFn(x.remove),
+		close: useMemoizedFn(() => (x.visible_edit_modal = false))
+	}
+
 	if (!x.data.file_id) return
 
 	return (
-		<div className={$cx('w_100 h_100 border_box flex flex_column', styles._local)}>
-			<div className='sessions_wrap flex flex_column justify_center align_center'>
-				<div className='session_items flex justify_center align_center relative'>
-					<AnimatePresence initial={false} custom={x.view_direction}>
-						{sessions.map(
-							(item, idx) =>
-								idx === x.view_index && (
-									<Session
-										item={item}
-										is_dark_theme={global.setting.theme === 'dark'}
-										name={x.file.data.name}
-										view_direction={x.view_direction}
-										key={item.id}
-									></Session>
-								)
-						)}
-					</AnimatePresence>
+		<div
+			className={$cx(
+				'w_100 h_100 border_box',
+				styles._local,
+				breakpoint && styles.breakpoint,
+				x.visible_edit_modal && styles.visible_edit_modal
+			)}
+		>
+			<div className='page_content_wrap w_100 h_100 border_box flex flex_column'>
+				<div className='sessions_wrap flex flex_column justify_center align_center'>
+					<div className='session_items flex justify_center align_center relative'>
+						<AnimatePresence initial={false} custom={x.view_direction}>
+							{sessions.map(
+								(item, idx) =>
+									idx === x.view_index && (
+										<Session
+											item={item}
+											is_dark_theme={global.setting.theme === 'dark'}
+											name={x.file.data.name}
+											view_direction={x.view_direction}
+											changeViewIndex={props_indicators.changeViewIndex}
+											key={item.id}
+										></Session>
+									)
+							)}
+						</AnimatePresence>
+					</div>
+					{props_indicators.counts > 1 && <Indicators {...props_indicators}></Indicators>}
 				</div>
-				{props_indicators.counts > 1 && <Indicators {...props_indicators}></Indicators>}
+				<Actions {...props_actions}></Actions>
 			</div>
-			<Actions {...props_actions}></Actions>
+			<SessionsEditModal {...props_sessions_edit_modal}></SessionsEditModal>
 		</div>
 	)
 }

@@ -11,6 +11,56 @@
 		outline: none;
 	}
 
+	&.useInPage {
+		--padding: 18px;
+
+		&.breakpoint {
+			.if-drawer-content-wrapper {
+				padding: 12px;
+
+				.if-drawer-content {
+					border: none;
+					border-radius: var(--radius);
+				}
+			}
+		}
+
+		.if-drawer-content-wrapper {
+			padding: 0;
+
+			.if-drawer-content {
+				border-radius: 0;
+				border-left: var(--border);
+
+				.if-drawer-header {
+					min-height: unset;
+					padding-top: calc(var(--padding) - 3px);
+					padding-bottom: 15px;
+					padding-left: var(--padding);
+					padding-right: var(--padding);
+					border-bottom: none;
+
+					&-title {
+						.if-drawer-title {
+							font-size: 14px;
+							font-weight: normal;
+							color: var(--color_text_light);
+						}
+
+						.if-drawer-close {
+							right: calc(var(--padding) - 3px);
+							font-size: 13px;
+						}
+					}
+				}
+
+				.if-drawer-body {
+					padding: 0px 0 60px 0;
+				}
+			}
+		}
+	}
+
 	.if-drawer-mask {
 		background-color: rgba(0, 0, 0, 0.3);
 	}

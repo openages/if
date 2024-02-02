@@ -13,11 +13,15 @@ import type { Pomo } from '@/types'
 @injectable()
 export default class Index {
 	id = ''
-	watcher = null as Subscription
 	data = {} as Pomo.Item
+
+	watcher = null as Subscription
+	disable_watcher = false
+
 	view_index = 0
 	view_direction = 0
-	disable_watcher = false
+
+	visible_edit_modal = false
 
 	constructor(public file: File) {
 		makeAutoObservable(this, { watcher: false, disable_watcher: false }, { autoBind: true })
@@ -40,12 +44,39 @@ export default class Index {
 	}
 
 	@disableWatcher
+	async update(index: number, v: Pomo.Session) {
+		this.data.sessions[index] = v
+
+		await update(this.id, { sessions: $copy(this.data.sessions) })
+	}
+
+	@disableWatcher
+	async remove(index: number) {
+		this.data.sessions.splice(index, 1)
+
+		await update(this.id, { sessions: $copy(this.data.sessions) })
+	}
+
+	@disableWatcher
 	async next() {}
 
-	changeViewIndex(v: number) {
+	changeViewIndex(v: number | 'left' | 'right') {
+		let view_direction = -1
+		let view_index = -1
+
+		if (typeof v === 'number') {
+			view_direction = v - this.view_index > 0 ? 1 : -1
+			view_index = v
+		} else {
+			view_direction = v === 'left' ? 1 : -1
+			view_index = this.view_index + view_direction
+		}
+
+		if (view_index < 0 || view_index > this.data.sessions.length - 1) return
+
 		runInAction(() => {
-			this.view_direction = v - this.view_direction
-			this.view_index = v
+			this.view_direction = view_direction
+			this.view_index = view_index
 		})
 	}
 

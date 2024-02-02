@@ -19,5 +19,9 @@ const plugins = [
 plugins.forEach(item => addRxPlugin(item))
 
 if (process.env.NODE_ENV !== 'production') {
-	import('rxdb/plugins/dev-mode').then(({ RxDBDevModePlugin }) => addRxPlugin(RxDBDevModePlugin))
+	// @ts-ignore
+	import('rxdb/plugins/dev-mode').then(({ RxDBDevModePlugin, disableWarnings }) => {
+		disableWarnings()
+		addRxPlugin(RxDBDevModePlugin)
+	})
 }

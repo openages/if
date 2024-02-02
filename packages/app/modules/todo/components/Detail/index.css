@@ -3,81 +3,31 @@
 
 	&.breakpoint {
 		:global {
-			.if-drawer {
-				&-content-wrapper {
-					padding: 12px;
-
-					.if-drawer-content {
-						border: none;
-						border-radius: var(--radius);
-					}
-				}
-			}
-
 			.toggle_wrap {
 				top: 24px;
-				right: 57px;
+				right: 54px;
 			}
 		}
 	}
 
-	&.breakpoint_390 {
-		:global {
-			.if-drawer {
-				&-content-wrapper {
-					width: 100% !important;
-					box-sizing: border-box !important;
+	&.narrow {
+		.if-drawer {
+			&-content-wrapper {
+				width: 100% !important;
+				box-sizing: border-box !important;
 
-					.if-drawer-content {
-						border: none;
-						width: 100% !important;
-					}
+				.if-drawer-content {
+					border: none;
+					width: 100% !important;
 				}
 			}
 		}
 	}
 
 	:global {
-		.if-drawer {
-			&-content-wrapper {
-				padding: 0;
-
-				.if-drawer-content {
-					border-radius: 0;
-					border-left: var(--border);
-
-					.if-drawer-header {
-						min-height: unset;
-						padding-top: calc(var(--padding) - 3px);
-						padding-bottom: 15px;
-						padding-left: var(--padding);
-						padding-right: var(--padding);
-						border-bottom: none;
-
-						&-title {
-							.if-drawer-title {
-								font-size: 14px;
-								font-weight: normal;
-								color: var(--color_text_light);
-							}
-
-							.if-drawer-close {
-								right: var(--padding);
-								font-size: 13px;
-							}
-						}
-					}
-
-					.if-drawer-body {
-						padding: 0px 0 60px 0;
-					}
-				}
-			}
-		}
-
 		.toggle_wrap {
 			top: 12px;
-			right: 48px;
+			right: 42px;
 
 			.btn_toggle {
 				width: 21px;

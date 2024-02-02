@@ -11,6 +11,7 @@ export interface IPropsSession {
 	is_dark_theme: boolean
 	name: Model['file']['data']['name']
 	view_direction: Model['view_direction']
+	changeViewIndex: Model['changeViewIndex']
 }
 
 export interface IPropsSessionEditor {
@@ -21,6 +22,7 @@ export interface IPropsSessionEditor {
 
 export interface IPropsActions {
 	add: Model['add']
+	toggleEditModal: () => void
 }
 
 export interface IPropsIndicators {
@@ -28,4 +30,21 @@ export interface IPropsIndicators {
 	index: Model['data']['index']
 	counts: number
 	changeViewIndex: Model['changeViewIndex']
+}
+
+export interface IPropsSessionsEditModal {
+	visible_edit_modal: Model['visible_edit_modal']
+	data: Model['data']
+	add: Model['add']
+	update: Model['update']
+	remove: Model['remove']
+	close: () => void
+}
+
+export interface IPropsSessionsEditModalItem {
+	item: Pomo.Session
+	index: number
+	disabled: boolean
+	update: Model['update']
+	remove: Model['remove']
 }

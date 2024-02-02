@@ -1,5 +1,5 @@
 ._local {
-	width: 180px;
+	width: 150px;
 	padding: 12px;
 
 	:global {
@@ -71,17 +71,10 @@
 			}
 		}
 
-		.btn_confirm {
+		.btn_main {
 			height: 24px;
 			border-radius: 12px;
 			font-size: 12px;
-			background-color: transparent;
-			border: 1px solid var(--color_text);
-
-			&:hover {
-				background-color: var(--color_text);
-				color: var(--color_bg);
-			}
 		}
 	}
 }

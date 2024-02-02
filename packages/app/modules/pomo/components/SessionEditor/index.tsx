@@ -53,7 +53,13 @@ const Index = (props: IPropsSessionEditor) => {
 	})
 
 	useEffect(() => {
-		if (!item) return
+		if (!item) {
+			return setFieldsValue({
+				work_time: dayjs().hour(0).minute(45),
+				break_time: dayjs().hour(0).minute(15)
+			})
+		}
+
 		if (deepEqual(item, getFieldsValue())) return
 
 		setFieldsValue(getHandler(item))
@@ -69,7 +75,7 @@ const Index = (props: IPropsSessionEditor) => {
 	return (
 		<Form className={$cx('border_box', styles._local)} form={form} onFinish={onFinish}>
 			<Item name='title' label='目标'>
-				<Input className='input' placeholder='输入目标' variant='borderless'></Input>
+				<Input className='input' placeholder='输入目标' variant='borderless' maxLength={12}></Input>
 			</Item>
 			<Item name='work_time' label='工作时间'>
 				<TimePicker
@@ -92,7 +98,7 @@ const Index = (props: IPropsSessionEditor) => {
 			<Item name='flow_mode' label='心流模式'>
 				<Switch className='switch' size='small'></Switch>
 			</Item>
-			<button className='btn_confirm w_100 clickable' type='submit'>
+			<button className='btn_main w_100 clickable' type='submit'>
 				确认
 			</button>
 		</Form>

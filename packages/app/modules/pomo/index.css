@@ -1,11 +1,42 @@
 ._local {
-	max-width: var(--limited_width);
-	padding: 60px var(--limited_padding);
-	margin: 0 auto;
+	transition: padding 0.3s;
 
 	--height_actions: 90px;
 
+	&.visible_edit_modal {
+		padding-right: 90px;
+	}
+
+	&.breakpoint {
+		:global {
+			.page_content_wrap {
+				padding-left: 48px;
+				padding-right: 48px;
+			}
+
+			.actions_wrap {
+				padding-left: 18px;
+				padding-right: 18px;
+
+				.action_item {
+					font-size: 12px;
+
+					.icon_wrap {
+						width: 45px;
+						height: 45px;
+					}
+				}
+			}
+		}
+	}
+
 	:global {
+		.page_content_wrap {
+			max-width: var(--limited_width);
+			padding: 60px var(--limited_padding);
+			margin: 0 auto;
+		}
+
 		.sessions_wrap {
 			height: calc(100% - var(--height_actions));
 		}

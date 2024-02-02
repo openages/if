@@ -226,6 +226,8 @@ export default class Index {
 				const active_item = target_views[active_view]
 				const over_item = target_views[over_view]
 
+				if (!over_item) return
+
 				if (!active_item.fixed) {
 					active_item.fixed = true
 				}
