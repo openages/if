@@ -11,7 +11,7 @@ import styles from './index.css'
 
 import type { Dayjs } from 'dayjs'
 
-const { useForm, Item } = Form
+const { Item, useForm, useWatch } = Form
 
 type FormValues = Omit<IPropsSessionEditor['item'], 'work_time' | 'break_time'> & {
 	work_time: Dayjs
@@ -22,6 +22,7 @@ const Index = (props: IPropsSessionEditor) => {
 	const { item, onChange, close } = props
 	const [form] = useForm()
 	const { getFieldsValue, setFieldsValue } = form
+	const flow_mode = useWatch('flow_mode', form)
 
 	const getHandler = useMemoizedFn((v: IPropsSessionEditor['item']) => {
 		const target = pick(v, ['title', 'flow_mode']) as FormValues
@@ -84,6 +85,7 @@ const Index = (props: IPropsSessionEditor) => {
 					variant='borderless'
 					showNow={false}
 					suffixIcon={null}
+					disabled={flow_mode}
 				></TimePicker>
 			</Item>
 			<Item name='break_time' label='休息时间'>

@@ -51,10 +51,11 @@
 			}
 
 			.work_time {
-				border: 1px dashed var(--color_border_light);
+				border: 1px solid var(--color_border_soft);
 				border-bottom: none;
 				border-top-left-radius: var(--radius);
 				border-top-right-radius: var(--radius);
+				background-color: var(--color_bg);
 
 				.work_time_value {
 					top: 6px;
@@ -64,9 +65,9 @@
 
 			.break_time {
 				border: 1px dashed var(--color_border_light);
-				background-color: var(--color_bg_1);
 				border-bottom-left-radius: var(--radius);
 				border-bottom-right-radius: var(--radius);
+				background-color: var(--color_bg_1);
 			}
 		}
 	}

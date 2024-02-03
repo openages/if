@@ -223,6 +223,8 @@ const Index = (props: IPropsTable) => {
 		})
 	}, [raw_columns, relations])
 
+	const columns = useMemo(() => target_columns.concat(column_options), [target_columns, column_options])
+
 	const components = useMemo(() => ({ body: { row: Row, cell: Cell } }), [])
 
 	const pagination = useMemo(() => {
@@ -272,7 +274,7 @@ const Index = (props: IPropsTable) => {
 				pagination={pagination}
 				loading={search_mode ? false : table_loading}
 				sortDirections={['descend', 'ascend', null]}
-				columns={target_columns.concat(column_options)}
+				columns={columns}
 				dataSource={items}
 				onRow={onRow}
 				onChange={onChange}

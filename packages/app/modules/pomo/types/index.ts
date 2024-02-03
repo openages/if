@@ -35,9 +35,9 @@ export interface IPropsIndicators {
 export interface IPropsSessionsEditModal {
 	visible_edit_modal: Model['visible_edit_modal']
 	data: Model['data']
-	add: Model['add']
 	update: Model['update']
 	remove: Model['remove']
+	move: Model['move']
 	close: () => void
 }
 

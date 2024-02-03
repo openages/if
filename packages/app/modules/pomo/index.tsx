@@ -41,9 +41,9 @@ const Index = ({ id }: IProps) => {
 	const props_sessions_edit_modal: IPropsSessionsEditModal = {
 		visible_edit_modal: x.visible_edit_modal,
 		data: $copy(x.data),
-		add,
 		update: useMemoizedFn(x.update),
 		remove: useMemoizedFn(x.remove),
+		move: useMemoizedFn(x.move),
 		close: useMemoizedFn(() => (x.visible_edit_modal = false))
 	}
 

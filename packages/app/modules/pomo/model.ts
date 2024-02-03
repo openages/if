@@ -4,6 +4,7 @@ import { injectable } from 'tsyringe'
 import { File } from '@/models'
 import { getDocItem, id } from '@/utils'
 import { disableWatcher } from '@/utils/decorators'
+import { arrayMove } from '@dnd-kit/sortable'
 
 import { getPomo, update } from './services'
 
@@ -45,16 +46,32 @@ export default class Index {
 
 	@disableWatcher
 	async update(index: number, v: Pomo.Session) {
-		this.data.sessions[index] = v
+		this.data.sessions[index] = { ...this.data.sessions[index], ...v }
 
 		await update(this.id, { sessions: $copy(this.data.sessions) })
 	}
 
 	@disableWatcher
 	async remove(index: number) {
+		if (this.view_index === index) this.view_index = 0
+
 		this.data.sessions.splice(index, 1)
 
 		await update(this.id, { sessions: $copy(this.data.sessions) })
+	}
+
+	@disableWatcher
+	async move(active_index: number, over_index: number) {
+		this.data.sessions = arrayMove($copy(this.data.sessions), active_index, over_index)
+
+		if (this.data.status) {
+			this.data.status = ''
+			this.data.work_in = 0
+			this.data.break_in = 0
+			this.data.index = 0
+		}
+
+		await update(this.id, $copy(this.data))
 	}
 
 	@disableWatcher
