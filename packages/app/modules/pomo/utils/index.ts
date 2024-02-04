@@ -2,10 +2,31 @@ import dayjs from 'dayjs'
 
 export const fillTimeText = (v: number) => (v < 10 ? `0${v}` : v)
 
-export const getTime = (v: number) => {
+export const getTime = (v: number, raw?: boolean) => {
 	const target = dayjs.duration(v, 'minute')
 
-	return { hours: fillTimeText(target.hours()), minutes: fillTimeText(target.minutes()) }
+	return {
+		hours: raw ? target.hours() : fillTimeText(target.hours()),
+		minutes: raw ? target.minutes() : fillTimeText(target.minutes())
+	}
+}
+
+export const getGoingTime = (v: number) => {
+	return parseInt(dayjs.duration(v, 'second').asMinutes().toFixed(0))
+}
+
+export const getGoingSecond = (v: number) => {
+	return dayjs.duration(v, 'second').seconds()
+}
+
+export const getDurationTime = (v: number) => {
+	const target = dayjs.duration(v, 'second')
+
+	return {
+		hours: fillTimeText(target.hours()),
+		minutes: fillTimeText(target.minutes()),
+		seconds: fillTimeText(target.seconds())
+	}
 }
 
 export const getRotateLinePoints = (x: number, y: number, length: number, deg: number) => {

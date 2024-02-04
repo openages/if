@@ -16,7 +16,8 @@ export default async (file_id: string) => {
 					}
 				],
 				index: 0,
-				status: '',
+				current: '',
+				going: false,
 				work_in: 0,
 				break_in: 0,
 				continuous_mode: false,

@@ -27,6 +27,7 @@
 			.times {
 				font-size: 12px;
 				color: var(--color_text_light);
+				font-family: 'Avenir';
 			}
 		}
 	}

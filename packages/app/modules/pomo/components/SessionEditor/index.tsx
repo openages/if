@@ -24,6 +24,12 @@ const Index = (props: IPropsSessionEditor) => {
 	const { getFieldsValue, setFieldsValue } = form
 	const flow_mode = useWatch('flow_mode', form)
 
+	useEffect(() => {
+		if (flow_mode) {
+			setFieldsValue({ work_time: dayjs().hour(0).minute(0), break_time: dayjs().hour(0).minute(0) })
+		}
+	}, [flow_mode])
+
 	const getHandler = useMemoizedFn((v: IPropsSessionEditor['item']) => {
 		const target = pick(v, ['title', 'flow_mode']) as FormValues
 		const now = dayjs()
@@ -42,13 +48,18 @@ const Index = (props: IPropsSessionEditor) => {
 
 		if (!target.title) target['title'] = ''
 
-		target['work_time'] = dayjs
-			.duration({ hours: v.work_time.hour(), minutes: v.work_time.minute() })
-			.asMinutes()
+		if (!target['flow_mode']) {
+			target['work_time'] = dayjs
+				.duration({ hours: v.work_time.hour(), minutes: v.work_time.minute() })
+				.asMinutes()
 
-		target['break_time'] = dayjs
-			.duration({ hours: v.break_time.hour(), minutes: v.break_time.minute() })
-			.asMinutes()
+			target['break_time'] = dayjs
+				.duration({ hours: v.break_time.hour(), minutes: v.break_time.minute() })
+				.asMinutes()
+		} else {
+			target['work_time'] = 0
+			target['break_time'] = 0
+		}
 
 		return target
 	})
@@ -67,7 +78,7 @@ const Index = (props: IPropsSessionEditor) => {
 	}, [item])
 
 	const onFinish = useMemoizedFn((v: FormValues) => {
-		if (!v['work_time'] || !v['break_time']) return $message.warning('请添加时长')
+		if ((!v['work_time'] || !v['break_time']) && !v['flow_mode']) return $message.warning('请添加时长')
 
 		onChange(setHandler(v))
 		close?.()
@@ -88,15 +99,17 @@ const Index = (props: IPropsSessionEditor) => {
 					disabled={flow_mode}
 				></TimePicker>
 			</Item>
-			<Item name='break_time' label='休息时间'>
-				<TimePicker
-					className='time_picker'
-					format='HH:mm'
-					variant='borderless'
-					showNow={false}
-					suffixIcon={null}
-				></TimePicker>
-			</Item>
+			{!flow_mode && (
+				<Item name='break_time' label='休息时间'>
+					<TimePicker
+						className='time_picker'
+						format='HH:mm'
+						variant='borderless'
+						showNow={false}
+						suffixIcon={null}
+					></TimePicker>
+				</Item>
+			)}
 			<Item name='flow_mode' label='心流模式'>
 				<Switch className='switch' size='small'></Switch>
 			</Item>

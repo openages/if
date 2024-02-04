@@ -12,7 +12,8 @@ export namespace Pomo {
 		file_id: string
 		sessions: Array<Session>
 		index: number
-		status: 'work' | 'break' | ''
+		current: 'work' | 'break' | ''
+		going: boolean
 		work_in: number
 		break_in: number
 		continuous_mode: boolean

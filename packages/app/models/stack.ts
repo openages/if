@@ -6,6 +6,7 @@ import { injectable } from 'tsyringe'
 import Utils from '@/models/utils'
 import { arrayMove } from '@dnd-kit/sortable'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
+import { local } from '@openages/stk/storage'
 
 import type { DirTree, Stack } from '@/types'
 import type { DragEndEvent } from '@dnd-kit/core'
@@ -101,6 +102,11 @@ export default class Index {
 	remove(position: Stack.Position) {
 		const { column, view } = position
 		const target_views = this.columns[column].views
+		const target_view = target_views[view]
+
+		if (local.getItem(`${target_view.module}_active_file`).id === target_view.id) {
+			local.setItem(`${target_view.module}_active_file`, {})
+		}
 
 		target_views.splice(view, 1)
 

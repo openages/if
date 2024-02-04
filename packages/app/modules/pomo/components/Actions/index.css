@@ -29,6 +29,12 @@
 						animation: rotate 30s linear infinite;
 					}
 				}
+
+                        &.disabled{
+                              .icon{
+                                    opacity: 0.3;
+                              }
+                        }
 			}
 
 			.text {

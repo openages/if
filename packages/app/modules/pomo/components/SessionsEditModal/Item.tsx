@@ -12,16 +12,14 @@ import SessionEditor from '../SessionEditor'
 import type { IPropsSessionsEditModalItem } from '../../types'
 
 const Index = (props: IPropsSessionsEditModalItem) => {
-	const { item, index, disabled, update, remove } = props
-	const { title, work_time, break_time } = item
+	const { item, index, disabled, timeline, update, remove } = props
+	const { title, work_time, break_time, flow_mode } = item
 	const { target_work_time, target_break_time } = useTimes({ work_time, break_time })
 	const [edit_open, setEditOpen] = useState(false)
-	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } = useSortable(
-		{
-			id: item.id,
-			data: { index }
-		}
-	)
+	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
+		id: item.id,
+		data: { index }
+	})
 
 	const onRemove = useMemoizedFn(() => remove(index))
 	const onUpdate = useMemoizedFn(v => update(index, v))
@@ -29,14 +27,29 @@ const Index = (props: IPropsSessionsEditModalItem) => {
 
 	return (
 		<div
+			id={item.id}
 			className={$cx('session_item_wrap flex flex_column align_center', disabled && 'disabled')}
 			ref={setNodeRef}
-			style={{ transform: CSS.Transform.toString(transform), transition }}
+			style={{ transform: CSS.Translate.toString(transform), transition }}
 		>
 			<div
-				className='work_time time w_100 flex justify_center align_center relative'
-				style={{ height: work_time > 60 ? 90 : work_time * 2.1 }}
+				className={$cx(
+					'work_time time w_100 flex justify_center align_center relative',
+					flow_mode && 'flow_mode'
+				)}
+				style={{
+					height: !flow_mode
+						? work_time * 2.1
+						: work_time >= 60
+						  ? 90
+						  : work_time < 50
+							  ? 60
+							  : work_time * 1.2
+				}}
 			>
+				{!flow_mode && timeline.current === 'work' && (
+					<span className='timeline absolute' style={{ top: timeline.time * 2.1 }}></span>
+				)}
 				{title && <span className='title w_100 text_center absolute'>{title}</span>}
 				<div className='actions_wrap w_100 border_box none justify_between absolute'>
 					<div
@@ -59,7 +72,11 @@ const Index = (props: IPropsSessionsEditModalItem) => {
 						align={{ offset: [-54] }}
 						open={edit_open}
 						content={
-							<SessionEditor onChange={onUpdate} close={onEditOpenChange}></SessionEditor>
+							<SessionEditor
+								item={item}
+								onChange={onUpdate}
+								close={onEditOpenChange}
+							></SessionEditor>
 						}
 						getPopupContainer={() => document.body}
 						onOpenChange={onEditOpenChange}
@@ -75,14 +92,19 @@ const Index = (props: IPropsSessionsEditModalItem) => {
 					{target_work_time.hours}:{target_work_time.minutes}
 				</span>
 			</div>
-			<div
-				className='break_time time w_100 flex justify_center align_center'
-				style={{ height: break_time < 15 ? 36 : break_time * 2.1 }}
-			>
-				<span className='break_time_value'>
-					{target_break_time.hours}:{target_break_time.minutes}
-				</span>
-			</div>
+			{!flow_mode && (
+				<div
+					className='break_time time w_100 flex justify_center align_center'
+					style={{ height: break_time * 2.1 }}
+				>
+					{timeline.current === 'break' && (
+						<span className='timeline absolute' style={{ top: timeline.time * 2.1 }}></span>
+					)}
+					<span className='break_time_value'>
+						{target_break_time.hours}:{target_break_time.minutes}
+					</span>
+				</div>
+			)}
 		</div>
 	)
 }

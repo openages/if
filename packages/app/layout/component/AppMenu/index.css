@@ -65,11 +65,11 @@
 			width: calc(var(--sidebar_width) + var(--dirtree_width)) !important;
 			padding: 0;
 			box-shadow: var(--shadow) !important;
+                  backdrop-filter: var(--blur);
 
 			.if-drawer-content {
 				padding: 0;
 				background-color: rgba(var(--color_bg_rgb), 0.6);
-				backdrop-filter: var(--blur);
 
 				.if-drawer-body {
 					padding: 0;

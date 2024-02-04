@@ -10,18 +10,25 @@ import SessionEditor from '../SessionEditor'
 import styles from './index.css'
 
 import type { IPropsActions } from '../../types'
+
 const Index = (props: IPropsActions) => {
-	const { add, toggleEditModal } = props
+	const { going, continuous_mode, flow_mode, add, toggleGoing, next, toggleContinuousMode, toggleEditModal } = props
 	const [add_open, setAddOpen] = useState(false)
 
 	const actions = useMemo(
 		() => [
 			{ type: 'edit', Icon: PencilSimple, text: '编辑' },
-			{ type: 'start', Icon: Play, text: '开始', start: true },
-			{ type: 'next', Icon: SkipForward, text: '下一个' },
-			{ type: 'continuous', Icon: PersonSimpleRun, text: '铁人模式', active: true }
+			{ type: 'start', Icon: going ? Stop : Play, text: going ? '停止' : '开始' },
+			{ type: 'next', Icon: SkipForward, text: '跳过' },
+			{
+				type: 'continuous',
+				Icon: PersonSimpleRun,
+				text: '铁人模式',
+				active: continuous_mode,
+				disabled: flow_mode
+			}
 		],
-		[]
+		[going, continuous_mode]
 	)
 
 	const onAddOpenChange = useMemoizedFn((v?: boolean) => setAddOpen(v ? v : false))
@@ -39,9 +46,9 @@ const Index = (props: IPropsActions) => {
 
 		match(type)
 			.with('edit', () => toggleEditModal())
-			.with('start', () => {})
-			.with('next', () => {})
-			.with('continuous', () => {})
+			.with('start', () => toggleGoing())
+			.with('next', () => next())
+			.with('continuous', () => toggleContinuousMode())
 			.otherwise(() => {})
 	})
 
@@ -65,17 +72,18 @@ const Index = (props: IPropsActions) => {
 					<span className='text'>添加</span>
 				</div>
 			</Popover>
-			{actions.map(({ type, Icon, text, active }, index) => (
+			{actions.map(({ type, Icon, text, active, disabled }, index) => (
 				<div className='action_item flex flex_column align_center' key={index}>
 					<Wave>
 						<Button
 							className={$cx(
 								'icon_wrap flex justify_center align_center clickable',
-								active && 'active'
+								!disabled && active && 'active',
+								disabled && 'disabled'
 							)}
 							data-type={type}
 						>
-							<Icon size={21} weight='bold' data-type={type}></Icon>
+							<Icon className='icon' size={21} weight='bold' data-type={type}></Icon>
 						</Button>
 					</Wave>
 					<span className='text'>{text}</span>

@@ -7,8 +7,10 @@ export interface IProps {
 }
 
 export interface IPropsSession {
+	data: Model['data']
 	item: Pomo.Session
 	is_dark_theme: boolean
+	should_show_current: boolean
 	name: Model['file']['data']['name']
 	view_direction: Model['view_direction']
 	changeViewIndex: Model['changeViewIndex']
@@ -21,7 +23,13 @@ export interface IPropsSessionEditor {
 }
 
 export interface IPropsActions {
+	going: Model['data']['going']
+	continuous_mode: Model['data']['continuous_mode']
+	flow_mode: boolean
 	add: Model['add']
+	toggleGoing: Model['toggleGoing']
+	next: Model['next']
+	toggleContinuousMode: Model['toggleContinuousMode']
 	toggleEditModal: () => void
 }
 
@@ -45,6 +53,7 @@ export interface IPropsSessionsEditModalItem {
 	item: Pomo.Session
 	index: number
 	disabled: boolean
+	timeline?: { current: Pomo.Item['current']; time: number }
 	update: Model['update']
 	remove: Model['remove']
 }

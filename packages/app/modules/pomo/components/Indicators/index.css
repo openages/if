@@ -30,7 +30,7 @@
 
 			&.done {
 				.dot {
-					background-color: var(--color_text_light);
+					background-color: var(--color_text_softlight);
 				}
 			}
 
@@ -38,7 +38,7 @@
 				background-color: var(--color_bg_2);
 
 				.dot {
-					background-color: var(--color_text_softlight);
+					background-color: var(--color_text_light);
 				}
 			}
 		}

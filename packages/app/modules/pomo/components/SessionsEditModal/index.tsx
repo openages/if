@@ -1,9 +1,12 @@
 import { useMemoizedFn } from 'ahooks'
 import { Drawer } from 'antd'
+import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 
+import { useDeepEffect } from '@/hooks'
 import { DndContext } from '@dnd-kit/core'
 import { rectSortingStrategy, SortableContext } from '@dnd-kit/sortable'
 
+import { getGoingTime } from '../../utils'
 import styles from './index.css'
 import Item from './Item'
 
@@ -12,6 +15,17 @@ import type { DragEndEvent } from '@dnd-kit/core'
 
 const Index = (props: IPropsSessionsEditModal) => {
 	const { visible_edit_modal, data, update, remove, move, close } = props
+
+	useDeepEffect(() => {
+		if (!visible_edit_modal) return
+
+		const session = data.sessions[data.index]
+
+		scrollIntoView(document.getElementById(session.id), {
+			behavior: 'smooth',
+			block: 'center'
+		})
+	}, [visible_edit_modal, data.sessions, data.index])
 
 	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
 		if (!over?.id) return
@@ -39,7 +53,17 @@ const Index = (props: IPropsSessionsEditModal) => {
 								{...{ update, remove }}
 								item={item}
 								index={index}
-								disabled={data.status && data.index === index}
+								disabled={data.going && data.index === index}
+								timeline={
+									data.current &&
+									data.index === index && {
+										current: data.current,
+										time:
+											data.current === 'work'
+												? getGoingTime(data.work_in)
+												: getGoingTime(data.break_in)
+									}
+								}
 								key={item.id}
 							></Item>
 						))}

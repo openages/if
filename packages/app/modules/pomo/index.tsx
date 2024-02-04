@@ -17,6 +17,7 @@ const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const global = useGlobal()
 	const breakpoint = useStackSelector(v => v.breakpoint)
+	const data = $copy(x.data)
 	const sessions = $copy(x.data.sessions) || []
 	const add = useMemoizedFn(x.add)
 
@@ -27,7 +28,13 @@ const Index = ({ id }: IProps) => {
 	}, [id])
 
 	const props_actions: IPropsActions = {
+		going: x.data.going,
+		continuous_mode: x.data.continuous_mode,
+		flow_mode: sessions[x.data.index]?.flow_mode,
 		add,
+		toggleGoing: useMemoizedFn(x.toggleGoing),
+		next: useMemoizedFn(x.next),
+		toggleContinuousMode: useMemoizedFn(x.toggleContinuousMode),
 		toggleEditModal: useMemoizedFn(() => (x.visible_edit_modal = !x.visible_edit_modal))
 	}
 
@@ -66,8 +73,10 @@ const Index = ({ id }: IProps) => {
 								(item, idx) =>
 									idx === x.view_index && (
 										<Session
+											data={data}
 											item={item}
 											is_dark_theme={global.setting.theme === 'dark'}
+											should_show_current={x.data.index === x.view_index}
 											name={x.file.data.name}
 											view_direction={x.view_direction}
 											changeViewIndex={props_indicators.changeViewIndex}

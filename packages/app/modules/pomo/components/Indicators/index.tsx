@@ -8,9 +8,14 @@ const Index = (props: IPropsIndicators) => {
 	const { view_index, index, counts, changeViewIndex } = props
 
 	const getStatus = useMemoizedFn((idx: number) => {
-		if (index === idx) return 'active'
-		if (idx < index) return 'done'
-		if (view_index === idx) return 'view'
+		if (idx === index) return 'active'
+
+		let status = ''
+
+		if (idx < index) status = 'done'
+		if (view_index === idx) status += ' view'
+
+		return status
 	})
 
 	const onItem = useMemoizedFn(e => {

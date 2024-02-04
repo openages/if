@@ -50,12 +50,49 @@
 				padding: 0 6px;
 			}
 
+			.time {
+				.timeline {
+					left: -2px;
+					width: calc(100% + 4px);
+					height: 1px;
+					background-color: var(--color_text_light);
+					z-index: 100;
+
+					&::before,
+					&::after {
+						content: '';
+						position: absolute;
+						top: -1px;
+						z-index: 10;
+						width: 3px;
+						height: 3px;
+						border-radius: 50%;
+						box-sizing: border-box;
+						background-color: var(--color_text_light);
+					}
+
+					&::before {
+						left: -3px;
+					}
+
+					&::after {
+						right: -3px;
+					}
+				}
+			}
+
 			.work_time {
 				border: 1px solid var(--color_border_soft);
 				border-bottom: none;
 				border-top-left-radius: var(--radius);
 				border-top-right-radius: var(--radius);
 				background-color: var(--color_bg);
+
+				&.flow_mode {
+					border-bottom: 1px solid var(--color_border_soft);
+					border-radius: var(--radius);
+					background-color: var(--color_bg_1);
+				}
 
 				.work_time_value {
 					top: 6px;

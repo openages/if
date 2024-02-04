@@ -66,13 +66,16 @@ export default {
                   "index": {
                         "type": "number"
                   },
-                  "status": {
+                  "current": {
                         "type": "string",
                         "enum": [
                               "work",
                               "break",
                               null
                         ]
+                  },
+                  "going": {
+                        "type": "boolean"
                   },
                   "work_in": {
                         "type": "number"
@@ -94,7 +97,8 @@ export default {
                   "file_id",
                   "sessions",
                   "index",
-                  "status",
+                  "current",
+                  "going",
                   "work_in",
                   "break_in",
                   "continuous_mode",
