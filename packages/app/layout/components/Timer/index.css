@@ -1,4 +1,7 @@
 ._local {
 	:global {
+		.if-progress-text {
+			font-size: 10px !important;
+		}
 	}
 }

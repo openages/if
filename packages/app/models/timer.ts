@@ -1,11 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 
 export default class Index {
-	timer = null as { in: number; total: number } | null
-
-	get percent() {
-		return !this.timer ? 0 : this.timer.in / this.timer.total
-	}
+	timer = null as { in: { hours: string; minutes: string }; percent: number } | null
 
 	constructor() {
 		makeAutoObservable(this, {}, { autoBind: true })

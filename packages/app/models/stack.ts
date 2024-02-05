@@ -108,6 +108,10 @@ export default class Index {
 			local.setItem(`${target_view.module}_active_file`, {})
 		}
 
+		if (target_view.module === 'pomo') {
+			$app.Event.emit(`pomo/${target_view.file.id}/stopRecord`)
+		}
+
 		target_views.splice(view, 1)
 
 		if (!target_views.length) {

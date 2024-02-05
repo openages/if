@@ -7,6 +7,7 @@ import { is_mac_electron } from '@/utils'
 import { DotsNine } from '@phosphor-icons/react'
 
 import { useNavOverflow } from '../../hooks'
+import Timer from '../Timer'
 import { SidebarItem } from './components'
 import styles from './index.css'
 
@@ -55,7 +56,8 @@ const Index = (props: IPropsSidebar) => {
 						<div className='scroll_mask bottom w_100 sticky bottom_0'></div>
 					</When>
 				</div>
-				<div className='sidebar_bottom_wrap w_100 flex flex_column'>
+				<div className='sidebar_bottom_wrap w_100 flex flex_column align_center'>
+					<Timer></Timer>
 					<div className='btn_apps_wrap flex justify_center align_center'>
 						<div
 							className='btn_apps w_100 flex justify_center align_center clickable'

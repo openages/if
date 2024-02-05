@@ -7,7 +7,7 @@ import { disableWatcher } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
 
 import { getPomo, update } from './services'
-import { getGoingTime } from './utils'
+import { getGoingTime, getTime } from './utils'
 
 import type { Subscription } from 'rxjs'
 import type { Pomo } from '@/types'
@@ -184,6 +184,22 @@ export default class Index {
 	checkCurrent() {
 		const session = this.data.sessions[this.data.index]
 
+		if (this.data.current === 'work') {
+			const going_time = getGoingTime(this.data.work_in)
+			const left_time = session.work_time - going_time
+			const percent = ((going_time * 100) / session.work_time).toFixed(0)
+
+			$app.Event.emit('global.app.updateTimer', { in: getTime(left_time), percent })
+		}
+
+		if (this.data.current === 'break') {
+			const going_time = getGoingTime(this.data.break_in)
+			const left_time = session.break_time - going_time
+			const percent = ((going_time * 100) / session.break_time).toFixed(0)
+
+			$app.Event.emit('global.app.updateTimer', { in: getTime(left_time), percent })
+		}
+
 		if (session.flow_mode) {
 			session.work_time = getGoingTime(this.data.work_in)
 
@@ -232,13 +248,6 @@ export default class Index {
 				this.data.break_in += 1
 			}
 
-			$app.Event.emit(
-				'global.app.updateTimer',
-				this.data.current === 'work'
-					? getGoingTime(this.data.work_in)
-					: getGoingTime(this.data.break_in)
-			)
-
 			this.checkCurrent()
 
 			if (this.record_numbers >= 9) {
@@ -250,36 +259,35 @@ export default class Index {
 	}
 
 	stopRecord() {
-		if (this.record_timer) {
-			$app.Event.emit('global.app.updateTimer', null)
+		if (!this.record_timer) return
 
-			clearInterval(this.record_timer)
-		}
-	}
+		$app.Event.emit('global.app.updateTimer', null)
 
-	stopGoing() {
-		if (this.data.going) {
-			this.data.going = false
+		clearInterval(this.record_timer)
 
-			this.updatePomo()
-		}
+		this.data.going = false
+
+		this.updatePomo()
 	}
 
 	on() {
 		this.watcher = getPomo(this.id).$.subscribe(doc => {
 			if (this.disable_watcher) return
 
-			this.data = getDocItem(doc)
+			if (!this.data.file_id) {
+				this.data = getDocItem(doc)
+			}
 
 			if (this.data.index !== this.view_index) {
 				this.view_index = this.data.index
 			}
 		})
+
+		$app.Event.on(`pomo/${this.id}/stopRecord`, this.stopRecord)
 	}
 
 	off() {
-		this.stopRecord()
-		this.stopGoing()
+		$app.Event.off(`pomo/${this.id}/stopRecord`, this.stopRecord)
 
 		this.watcher?.unsubscribe?.()
 	}
