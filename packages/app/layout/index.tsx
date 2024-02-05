@@ -14,7 +14,7 @@ import { GlobalLoading, LazyElement, OffscreenOutlet } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
 
-import { AppMenu, AppSwitch, FreeMark, Screenlock, Search, Sidebar, Stacks } from './component'
+import { AppMenu, AppSwitch, FreeMark, Screenlock, Search, Sidebar, Stacks } from './components'
 import { useGlobalNavigate, useGlobalTranslate, useLayout } from './hooks'
 import styles from './index.css'
 

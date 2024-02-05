@@ -3,7 +3,6 @@ export default {
 	memo: 'Memo',
 	typed: 'Typed',
 	note: 'Note',
-	kanban: 'Kanban',
 	workflow: 'Workflow',
 	whiteboard: 'Board',
 	ppt: 'PPT',

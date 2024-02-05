@@ -36,7 +36,6 @@ const Index = (props: IProps) => {
 		.with('memo', () => <Note {...icon_props} />)
 		.with('typed', () => <FileText {...icon_props} />)
 		.with('note', () => <Notebook {...icon_props} />)
-		.with('kanban', () => <Kanban {...icon_props} />)
 		.with('workflow', () => <Path {...icon_props} />)
 		.with('whiteboard', () => <Clipboard {...icon_props} />)
 		.with('ppt', () => <MicrosoftPowerpointLogo {...icon_props} />)

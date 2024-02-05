@@ -12,6 +12,8 @@ export default {
 		x_unit_ago: '{{x}}{{unit}}前',
 		x_unit: '{{x}}{{unit}}'
 	},
+	start: '开始',
+	stop: '停止',
 	exit: '退出',
 	restart: '重启',
 	minimize: '最小化',

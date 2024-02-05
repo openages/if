@@ -12,7 +12,6 @@ import type { App, Todo, DirTree } from '@/types'
 import type { IPropsSearch } from '@/layout/types'
 
 interface IProps extends Pick<IPropsSearch, 'changeSearchIndex'> {
-	module: App.ModuleType
 	item: Todo.Todo
 	file: DirTree.Item
 	setting: Todo.Setting
@@ -23,7 +22,7 @@ interface IProps extends Pick<IPropsSearch, 'changeSearchIndex'> {
 }
 
 const Index = (props: IProps) => {
-	const { module, item, file, setting, text, active, index, changeSearchIndex, onCheck } = props
+	const { item, file, setting, text, active, index, changeSearchIndex, onCheck } = props
 	const { t } = useTranslation()
 	const ref = useRef(null)
 	const hover = useHover(ref)
@@ -75,7 +74,7 @@ const Index = (props: IProps) => {
 								<Emoji shortcodes={file.icon} size={10} hue={file.icon_hue}></Emoji>
 							</Then>
 							<Else>
-								<LeftIcon module={module} item={file} size={10}></LeftIcon>
+								<LeftIcon module='todo' item={file} size={10}></LeftIcon>
 							</Else>
 						</If>
 					</div>

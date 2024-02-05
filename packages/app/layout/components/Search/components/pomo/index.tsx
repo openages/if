@@ -1,6 +1,5 @@
 import { useHover, useMemoizedFn } from 'ahooks'
 import { useEffect, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { ArrowBendDownLeft } from '@phosphor-icons/react'
 

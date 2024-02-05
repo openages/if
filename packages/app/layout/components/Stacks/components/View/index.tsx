@@ -31,7 +31,7 @@ const Index = (props: IPropsStacksView) => {
 					id={id}
 					className={$cx('w_100 h_100', styles._local, breakpoint === 390 && styles.breakpoint_390)}
 				>
-					<LazyElement type='modules' path={module} params={{ id }} />
+					<LazyElement type='modules' path={module} props={{ id }} />
 				</div>
 			</div>
 		</StackContext.Provider>

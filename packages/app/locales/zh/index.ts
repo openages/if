@@ -4,11 +4,12 @@ import components from './components'
 import dirtree from './dirtree'
 import layout from './layout'
 import modules from './modules'
+import pomo from './pomo'
 import setting from './setting'
 import shortcuts from './shortcuts'
 import todo from './todo'
 
-export default ({
+export default {
 	translation: {
 		app,
 		common,
@@ -18,6 +19,7 @@ export default ({
 		shortcuts,
 		dirtree,
 		components,
-		todo
+		todo,
+		pomo
 	}
-} as const)
+} as const

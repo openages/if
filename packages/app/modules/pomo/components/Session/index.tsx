@@ -1,8 +1,8 @@
 import { useMemoizedFn } from 'ahooks'
-import dayjs from 'dayjs'
 import { motion } from 'framer-motion'
 import { pick } from 'lodash-es'
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Arc, Circle, Layer, Line, Stage, Text } from 'react-konva'
 
 import { useCssVariable } from '@/hooks'
@@ -28,6 +28,7 @@ const Index = (props: IPropsSession) => {
 	const color_bg = useCssVariable('--color_bg')
 	const { target_work_time, target_break_time } = useTimes({ work_time, break_time })
 	const flow_time = getDurationTime(data.work_in)
+	const { t } = useTranslation()
 
 	const { work_angle, break_angle } = useMemo(() => {
 		if (flow_mode) {
@@ -181,16 +182,17 @@ const Index = (props: IPropsSession) => {
 			</Stage>
 			<div className='title_wrap flex flex_column align_center'>
 				<span className='title font_bold mb_10'>{title || name}</span>
-				<div className='times'>
-					<span className='time_item'>
-						Work{' '}
+				<div className='times flex'>
+					<div className='time_item'>
+						<span>{t('translation:pomo.work')} </span>
 						{!flow_mode
 							? `${target_work_time.hours}:${target_work_time.minutes}`
 							: `${flow_time.hours}:${flow_time.minutes}:${flow_time.seconds}`}
-					</span>
+					</div>
 					{!flow_mode && (
 						<span className='time_item ml_6'>
-							Break {target_break_time.hours}:{target_break_time.minutes}
+							{t('translation:pomo.break')} {target_break_time.hours}:
+							{target_break_time.minutes}
 						</span>
 					)}
 				</div>

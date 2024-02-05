@@ -1,6 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { Button, Popover } from 'antd'
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { match } from 'ts-pattern'
 
 import { Wave } from '@/components'
@@ -14,21 +15,26 @@ import type { IPropsActions } from '../../types'
 const Index = (props: IPropsActions) => {
 	const { going, continuous_mode, flow_mode, add, toggleGoing, next, toggleContinuousMode, toggleEditModal } = props
 	const [add_open, setAddOpen] = useState(false)
+	const { t } = useTranslation()
 
 	const actions = useMemo(
 		() => [
-			{ type: 'edit', Icon: PencilSimple, text: '编辑' },
-			{ type: 'start', Icon: going ? Stop : Play, text: going ? '停止' : '开始' },
-			{ type: 'next', Icon: SkipForward, text: '跳过' },
+			{ type: 'edit', Icon: PencilSimple, text: t('translation:pomo.Actions.edit') },
+			{
+				type: 'start',
+				Icon: going ? Stop : Play,
+				text: going ? t('translation:common.stop') : t('translation:common.start')
+			},
+			{ type: 'next', Icon: SkipForward, text: t('translation:pomo.Actions.next') },
 			{
 				type: 'continuous',
 				Icon: PersonSimpleRun,
-				text: '铁人模式',
+				text: t('translation:pomo.Actions.continuous'),
 				active: continuous_mode,
 				disabled: flow_mode
 			}
 		],
-		[going, continuous_mode]
+		[going, continuous_mode, flow_mode]
 	)
 
 	const onAddOpenChange = useMemoizedFn((v?: boolean) => setAddOpen(v ? v : false))
@@ -69,7 +75,7 @@ const Index = (props: IPropsActions) => {
 							<Plus size={21} weight='bold'></Plus>
 						</Button>
 					</Wave>
-					<span className='text'>添加</span>
+					<span className='text'>{t('translation:pomo.Actions.add')}</span>
 				</div>
 			</Popover>
 			{actions.map(({ type, Icon, text, active, disabled }, index) => (

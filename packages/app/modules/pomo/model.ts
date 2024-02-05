@@ -51,8 +51,9 @@ export default class Index {
 	}
 
 	@disableWatcher
-	async toggleGoing() {
-		this.data.going = !this.data.going
+	async toggleGoing(v?: boolean) {
+		this.data.going = v ?? !this.data.going
+		this.view_index = this.data.index
 
 		if (this.data.going) {
 			if (!this.data.current) this.data.current = 'work'
@@ -212,7 +213,7 @@ export default class Index {
 
 				this.data.index = next_index
 
-				this.toggleGoing()
+				this.toggleGoing(true)
 			}
 		}
 	}

@@ -30,11 +30,6 @@ const typed_nav_items = [
 		fixed: true
 	},
 	{
-		id: 'kanban',
-		title: 'kanban',
-		path: '/kanban'
-	},
-	{
 		id: 'workflow',
 		title: 'workflow',
 		path: '/workflow'

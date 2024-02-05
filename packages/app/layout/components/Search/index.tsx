@@ -3,11 +3,10 @@ import { debounce } from 'lodash-es'
 import { useEffect, useRef, useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Modal, SimpleEmpty } from '@/components'
+import { LazyElement, Modal, SimpleEmpty } from '@/components'
 import { sleep } from '@/utils'
 import { ArrowBendDownLeft, ArrowDown, ArrowUp, MagnifyingGlass, Trash, X } from '@phosphor-icons/react'
 
-import { Todo } from './components'
 import styles from './index.css'
 
 import type { IPropsSearch } from '@/layout/types'
@@ -170,18 +169,21 @@ const Index = (props: IPropsSearch) => {
 				<div className='search_items_wrap w_100 border_box flex flex_column'>
 					{items.length > 0 ? (
 						items.map(({ item, file, setting }, idx) => (
-							<Todo
-								module={module}
-								item={item}
-								file={file}
-								setting={setting}
-								text={text}
-								active={idx === index}
-								index={idx}
-								changeSearchIndex={changeSearchIndex}
-								onCheck={onCheck}
-								key={item.id}
-							></Todo>
+							<LazyElement
+								type='search'
+								path={module}
+								props={{
+									item,
+									file,
+									setting,
+									text,
+									active: idx === index,
+									index: idx,
+									changeSearchIndex,
+									onCheck
+								}}
+								key={file.id}
+							></LazyElement>
 						))
 					) : (
 						<Fragment>

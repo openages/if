@@ -3,6 +3,7 @@ import { Form, Input, Switch, TimePicker } from 'antd'
 import dayjs from 'dayjs'
 import { pick } from 'lodash-es'
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { deepEqual } from '@openages/stk/react'
 
@@ -23,6 +24,7 @@ const Index = (props: IPropsSessionEditor) => {
 	const [form] = useForm()
 	const { getFieldsValue, setFieldsValue } = form
 	const flow_mode = useWatch('flow_mode', form)
+	const { t } = useTranslation()
 
 	useEffect(() => {
 		if (flow_mode) {
@@ -78,7 +80,8 @@ const Index = (props: IPropsSessionEditor) => {
 	}, [item])
 
 	const onFinish = useMemoizedFn((v: FormValues) => {
-		if ((!v['work_time'] || !v['break_time']) && !v['flow_mode']) return $message.warning('请添加时长')
+		if ((!v['work_time'] || !v['break_time']) && !v['flow_mode'])
+			return $message.warning(t('translation:pomo.SessionEditor.warning'))
 
 		onChange(setHandler(v))
 		close?.()
@@ -86,10 +89,15 @@ const Index = (props: IPropsSessionEditor) => {
 
 	return (
 		<Form className={$cx('border_box', styles._local)} form={form} onFinish={onFinish}>
-			<Item name='title' label='目标'>
-				<Input className='input' placeholder='输入目标' variant='borderless' maxLength={12}></Input>
+			<Item name='title' label={t('translation:pomo.SessionEditor.target')}>
+				<Input
+					className='input'
+					placeholder={t('translation:pomo.SessionEditor.target_placeholder')}
+					variant='borderless'
+					maxLength={12}
+				></Input>
 			</Item>
-			<Item name='work_time' label='工作时间'>
+			<Item name='work_time' label={t('translation:pomo.SessionEditor.work_time')}>
 				<TimePicker
 					className='time_picker'
 					format='HH:mm'
@@ -100,7 +108,7 @@ const Index = (props: IPropsSessionEditor) => {
 				></TimePicker>
 			</Item>
 			{!flow_mode && (
-				<Item name='break_time' label='休息时间'>
+				<Item name='break_time' label={t('translation:pomo.SessionEditor.break_time')}>
 					<TimePicker
 						className='time_picker'
 						format='HH:mm'
@@ -110,11 +118,11 @@ const Index = (props: IPropsSessionEditor) => {
 					></TimePicker>
 				</Item>
 			)}
-			<Item name='flow_mode' label='心流模式'>
+			<Item name='flow_mode' label={t('translation:pomo.SessionEditor.flow_mode')}>
 				<Switch className='switch' size='small'></Switch>
 			</Item>
 			<button className='btn_main w_100 clickable' type='submit'>
-				确认
+				{t('translation:common.confirm')}
 			</button>
 		</Form>
 	)

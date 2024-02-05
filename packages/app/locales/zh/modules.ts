@@ -3,7 +3,6 @@ export default {
 	memo: '便签',
 	typed: '简记',
 	note: '笔记',
-	kanban: '看板',
 	workflow: '工作流',
 	whiteboard: '白板',
 	ppt: '报告',
