@@ -193,7 +193,11 @@ export default class Index {
 		await this.resetPassword()
 	}
 
-	lock() {
+	async lock() {
+		const has_timer = await $app.Event.emit('global.app.hasTimer')
+
+		if (has_timer) return
+
 		this.screenlock_open = true
 
 		$app.Event.emit('global.app.lock')

@@ -213,8 +213,10 @@ export default class Index {
 
 				this.data.index = next_index
 
-				this.toggleGoing(true)
+				return this.toggleGoing(true)
 			}
+
+			$app.Event.emit('global.app.updateTimer', null)
 		}
 	}
 
@@ -230,6 +232,13 @@ export default class Index {
 				this.data.break_in += 1
 			}
 
+			$app.Event.emit(
+				'global.app.updateTimer',
+				this.data.current === 'work'
+					? getGoingTime(this.data.work_in)
+					: getGoingTime(this.data.break_in)
+			)
+
 			this.checkCurrent()
 
 			if (this.record_numbers >= 9) {
@@ -242,6 +251,8 @@ export default class Index {
 
 	stopRecord() {
 		if (this.record_timer) {
+			$app.Event.emit('global.app.updateTimer', null)
+
 			clearInterval(this.record_timer)
 		}
 	}
