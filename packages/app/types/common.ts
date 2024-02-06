@@ -15,3 +15,9 @@ export type CustomFormItem<T> = {
 	value?: T
 	onChange?: (...args: any) => any
 }
+
+export interface Tag {
+	id: string
+	color: string
+	text: string
+}

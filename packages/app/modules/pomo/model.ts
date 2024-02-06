@@ -7,7 +7,7 @@ import { disableWatcher } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
 
 import { getPomo, update } from './services'
-import { getGoingTime, getTime } from './utils'
+import { fillTimeText, getGoingTime, getTime } from './utils'
 
 import type { Subscription } from 'rxjs'
 import type { Pomo } from '@/types'
@@ -184,6 +184,20 @@ export default class Index {
 	checkCurrent() {
 		const session = this.data.sessions[this.data.index]
 
+		if (session.flow_mode) {
+			session.work_time = getGoingTime(this.data.work_in)
+
+			const time = getTime(getGoingTime(this.data.work_in), true) as { hours: number; minutes: number }
+			const percent = ((time.minutes * 100) / 60).toFixed(0)
+
+			$app.Event.emit('global.app.updateTimer', {
+				in: { hours: fillTimeText(time.hours), minutes: fillTimeText(time.minutes) },
+				percent
+			})
+
+			return
+		}
+
 		if (this.data.current === 'work') {
 			const going_time = getGoingTime(this.data.work_in)
 			const left_time = session.work_time - going_time
@@ -198,12 +212,6 @@ export default class Index {
 			const percent = ((going_time * 100) / session.break_time).toFixed(0)
 
 			$app.Event.emit('global.app.updateTimer', { in: getTime(left_time), percent })
-		}
-
-		if (session.flow_mode) {
-			session.work_time = getGoingTime(this.data.work_in)
-
-			return
 		}
 
 		if (this.data.current === 'work' && getGoingTime(this.data.work_in) >= session.work_time) {
@@ -276,6 +284,8 @@ export default class Index {
 
 			if (!this.data.file_id) {
 				this.data = getDocItem(doc)
+
+				if (this.data.going) this.toggleGoing(true)
 			}
 
 			if (this.data.index !== this.view_index) {

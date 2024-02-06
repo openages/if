@@ -14,25 +14,6 @@ export default {
                   "text"
             ]
       },
-      "Todo.Tag": {
-            "type": "object",
-            "properties": {
-                  "id": {
-                        "type": "string"
-                  },
-                  "color": {
-                        "type": "string"
-                  },
-                  "text": {
-                        "type": "string"
-                  }
-            },
-            "required": [
-                  "id",
-                  "color",
-                  "text"
-            ]
-      },
       "Todo.Setting": {
             "type": "object",
             "properties": {
@@ -116,6 +97,25 @@ export default {
                   "angles",
                   "tags",
                   "auto_archiving"
+            ]
+      },
+      "Tag": {
+            "type": "object",
+            "properties": {
+                  "id": {
+                        "type": "string"
+                  },
+                  "color": {
+                        "type": "string"
+                  },
+                  "text": {
+                        "type": "string"
+                  }
+            },
+            "required": [
+                  "id",
+                  "color",
+                  "text"
             ]
       },
       "Todo.TodoSetting": {
@@ -321,9 +321,6 @@ export default {
                   },
                   "end_time": {
                         "type": "number"
-                  },
-                  "color": {
-                        "type": "string"
                   },
                   "children": {
                         "type": "array",
@@ -546,9 +543,6 @@ export default {
                   },
                   "end_time": {
                         "type": "number"
-                  },
-                  "color": {
-                        "type": "string"
                   },
                   "children": {
                         "type": "array",

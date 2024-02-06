@@ -5,9 +5,11 @@ export const fillTimeText = (v: number) => (v < 10 ? `0${v}` : v)
 export const getTime = (v: number, raw?: boolean) => {
 	const target = dayjs.duration(v, 'minute')
 
+	if (raw) return { hours: target.hours(), minutes: target.minutes() }
+
 	return {
-		hours: raw ? target.hours() : fillTimeText(target.hours()),
-		minutes: raw ? target.minutes() : fillTimeText(target.minutes())
+		hours: fillTimeText(target.hours()),
+		minutes: fillTimeText(target.minutes())
 	}
 }
 

@@ -105,9 +105,6 @@ export default {
                   "end_time": {
                         "type": "number"
                   },
-                  "color": {
-                        "type": "string"
-                  },
                   "children": {
                         "type": "array",
                         "items": {
@@ -285,9 +282,6 @@ export default {
                   "end_time": {
                         "type": "number"
                   },
-                  "color": {
-                        "type": "string"
-                  },
                   "children": {
                         "type": "array",
                         "items": {
@@ -461,9 +455,6 @@ export default {
                   },
                   "end_time": {
                         "type": "number"
-                  },
-                  "color": {
-                        "type": "string"
                   },
                   "children": {
                         "type": "array",

@@ -1,14 +1,10 @@
+import { Tag } from '../common'
+
 export namespace Todo {
 	type Relations = Array<{ items: Array<string>; checked: boolean }>
 
 	export interface Angle {
 		id: string
-		text: string
-	}
-
-	export interface Tag {
-		id: string
-		color: string
 		text: string
 	}
 
@@ -85,7 +81,6 @@ export namespace Todo {
 		 * */
 		start_time?: number
 		end_time?: number
-		color?: string
 		children?: Array<{
 			id: string
 			text: string
