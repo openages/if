@@ -108,7 +108,8 @@ const Index = (props: IPropsDetail) => {
 				'useInPage',
 				styles._local,
 				breakpoint && styles.breakpoint,
-				breakpoint === 390 && styles.narrow
+				breakpoint === 390 && styles.narrow,
+				breakpoint && 'breakpoint'
 			)}
 			open={visible_detail_modal}
 			mask={Boolean(breakpoint)}
