@@ -13,6 +13,7 @@ import {
 	schema_kv,
 	schema_module_setting,
 	schema_pomo_items,
+	schema_schedule_items,
 	schema_todo_items
 } from '@/schemas'
 import { statics } from '@/utils/rxdb'
@@ -72,6 +73,10 @@ export default class Index {
 			pomo_items: {
 				autoMigrate: false,
 				schema: schema_pomo_items
+			},
+			schedule_items: {
+				autoMigrate: false,
+				schema: schema_schedule_items
 			}
 		})
 
