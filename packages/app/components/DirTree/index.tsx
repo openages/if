@@ -12,7 +12,7 @@ import { Actions, DirItems, DragLine, Modal, Options, Search } from './component
 import styles from './index.css'
 import Model from './model'
 
-import type { DirTree } from '@/types'
+import type { DirTree, Extend } from '@/types'
 import type { IProps, IPropsSearch, IPropsActions, IPropsDirItems, IPropsModal, IPropsOptions } from './types'
 
 const Index = (props: IProps) => {
@@ -53,7 +53,7 @@ const Index = (props: IProps) => {
 
 	const props_dir_items: IPropsDirItems = {
 		module: x.module,
-		data: ($copy(x.node_tree.tree) as DirTree.TransformedItems) || [],
+		data: ($copy(x.node_tree.tree) as Extend.DirTree.TransformedItems) || [],
 		loading: x.utils.loading['query'],
 		current_item: $copy(x.current_item),
 		focusing_item: $copy(x.focusing_item),

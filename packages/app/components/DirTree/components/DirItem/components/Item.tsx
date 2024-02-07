@@ -6,7 +6,7 @@ import { Emoji, LeftIcon, Wave } from '@/components'
 import { CaretRight } from '@phosphor-icons/react'
 
 import type { IPropsDirItem_Item } from '../../../types'
-import type { DirTree } from '@/types'
+import type { DirTree, Extend } from '@/types'
 
 const Index = (props: IPropsDirItem_Item) => {
 	const {
@@ -60,13 +60,13 @@ const Index = (props: IPropsDirItem_Item) => {
 						className={$cx(
 							'right_icon_wrap flex align_center justify_end',
 							type === 'dir' &&
-								!(item as DirTree.TransformedItem)?.children?.length &&
+								!(item as Extend.DirTree.TransformedItem)?.children?.length &&
 								'no_children'
 						)}
 					>
-						<When condition={(item as DirTree.TransformedItem)?.children?.length}>
+						<When condition={(item as Extend.DirTree.TransformedItem)?.children?.length}>
 							<span className='children_count text_center'>
-								{(item as DirTree.TransformedItem)?.children?.length}
+								{(item as Extend.DirTree.TransformedItem)?.children?.length}
 							</span>
 						</When>
 						<CaretRight

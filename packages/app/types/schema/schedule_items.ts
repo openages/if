@@ -1,6 +1,6 @@
 import { Tag } from '../common'
 
-export namespace ScheduleItems {
+export namespace Schedule {
 	export interface Setting {
 		type: 'timeline' | 'fixed'
 		tags: Array<Tag>

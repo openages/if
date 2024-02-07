@@ -2,7 +2,6 @@ import { useDeepCompareEffect, useMemoizedFn } from 'ahooks'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
-import { DirTree } from '@/types'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { useDeepUpdateEffect } from '@openages/stk/react'
@@ -11,6 +10,7 @@ import DirItem from '../index'
 import Item from './Item'
 
 import type { IPropsDirItem_Dir, IPropsDirItem_Item } from '../../../types'
+import type { Extend } from '@/types'
 
 const Index = (props: IPropsDirItem_Dir) => {
 	const {
@@ -23,7 +23,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 		dragging,
 		showDirTreeOptions
 	} = props
-	const { type, children = [] } = item as DirTree.TransformedItem
+	const { type, children = [] } = item as Extend.DirTree.TransformedItem
 	const [open, setOpen] = useState(false)
 	const { attributes, listeners, transform, isDragging, setNodeRef } = useDraggable({
 		id: item.id,

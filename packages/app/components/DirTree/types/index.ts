@@ -7,11 +7,12 @@ import type Model from '../model'
 
 export interface IProps {
 	module: Model['module']
-	height?: CSSProperties['height']
 	actions: {
 		insert: (file_id: string) => Promise<any>
 		remove: (focusing_item: DirTree.Item) => Promise<void>
 	}
+	height?: CSSProperties['height']
+	simple?: boolean
 }
 
 export interface IPropsSearch {

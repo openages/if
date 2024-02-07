@@ -1,5 +1,5 @@
 export default {
-      "ScheduleItems.Setting": {
+      "Schedule.Setting": {
             "type": "object",
             "properties": {
                   "type": {
@@ -56,7 +56,7 @@ export default {
                   "text"
             ]
       },
-      "ScheduleItems.ScheduleSetting": {
+      "Schedule.ScheduleSetting": {
             "type": "object",
             "properties": {
                   "file_id": {
@@ -110,7 +110,7 @@ export default {
                   "setting"
             ]
       },
-      "ScheduleItems.Item": {
+      "Schedule.Item": {
             "type": "object",
             "properties": {
                   "id": {

@@ -14,7 +14,7 @@ const schema = toTypedRxJsonSchema(
 		primaryKey: 'id',
 		keyCompression,
 		indexes: ['module'],
-		...schema_raw['DirTreeItems.Item']
+		...schema_raw['DirTree.Item']
 	} as const)
 )
 
