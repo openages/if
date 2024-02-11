@@ -6,12 +6,6 @@ const typed_nav_items = [
 		fixed: true
 	},
 	{
-		id: 'pomo',
-		title: 'pomo',
-		path: '/pomo',
-		fixed: true
-	},
-	{
 		id: 'memo',
 		title: 'memo',
 		path: '/memo',
@@ -30,11 +24,6 @@ const typed_nav_items = [
 		fixed: true
 	},
 	{
-		id: 'workflow',
-		title: 'workflow',
-		path: '/workflow'
-	},
-	{
 		id: 'whiteboard',
 		title: 'whiteboard',
 		path: '/whiteboard'
@@ -45,11 +34,17 @@ const typed_nav_items = [
 		path: '/ppt'
 	},
 	{
+		id: 'pomo',
+		title: 'pomo',
+		path: '/pomo',
+		fixed: true
+	},
+	{
 		id: 'schedule',
 		title: 'schedule',
-		path: '/schedule'
+		path: '/schedule',
+		fixed: true
 	},
-
 	{
 		id: 'flag',
 		title: 'flag',

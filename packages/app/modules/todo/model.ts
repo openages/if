@@ -599,16 +599,12 @@ export default class Index {
 	}
 
 	async setActivity(action: 'insert' | 'check') {
-		return $db.activity_items.insertCRDT({
-			ifMatch: {
-				$set: {
-					id: id(),
-					module: 'setting',
-					file_id: this.id,
-					name: this.file.data.name,
-					action
-				}
-			}
+		return $db.activity_items.insert({
+			id: id(),
+			module: 'setting',
+			file_id: this.id,
+			name: this.file.data.name,
+			action
 		})
 	}
 

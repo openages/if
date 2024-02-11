@@ -2,7 +2,7 @@ import { Tag } from '../common'
 
 export namespace Schedule {
 	export interface Setting {
-		type: 'timeline' | 'fixed'
+		mode: 'timeline' | 'fixed'
 		tags: Array<Tag>
 	}
 
@@ -13,12 +13,25 @@ export namespace Schedule {
 	}
 
 	export interface Item {
+		/** @maxLength 30 */
 		id: string
+		/** @maxLength 30 */
 		file_id: string
+		/** @maxLength 30 */
 		tag: string
 		text: string
 		todos: Array<string>
+		/**
+		 * @multipleOf 1
+		 * @minimum 1
+		 * @maximum 9007199254740991
+		 * */
 		start_time: number
+		/**
+		 * @multipleOf 1
+		 * @minimum 1
+		 * @maximum 9007199254740991
+		 * */
 		end_time: number
 	}
 }

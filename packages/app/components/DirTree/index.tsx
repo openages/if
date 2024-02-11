@@ -27,6 +27,8 @@ const Index = (props: IProps) => {
 		return () => x.off()
 	}, [module])
 
+	console.log($copy(x.node_tree.tree))
+
 	const onClick = useMemoizedFn((v: DirTree.Item) => (x.current_item = v))
 
 	const setModalOpen = useMemoizedFn((v: Model['modal_open'], type?: Model['modal_type']) => {

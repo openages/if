@@ -7,14 +7,13 @@ export namespace Activity {
 		/** @maxLength 30 */
 		file_id: string
 		name: string
-		action: Action
+		action: string
 		context?: string
 		update_at?: number
 	}
 
 	export type TodoAction = 'insert' | 'check'
-
-	export type PomoAction = 'done'
+	export type PomoAction = 'work' | 'break'
 
 	export type Action = TodoAction | PomoAction
 }

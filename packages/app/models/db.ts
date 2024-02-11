@@ -6,6 +6,7 @@ import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
 import { migrateStorage } from 'rxdb/plugins/migration-storage'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 
+import { insertDefault } from '@/actions/schedule'
 import { keyCompression } from '@/config'
 import {
 	schema_activity_items,
@@ -85,6 +86,8 @@ export default class Index {
 
 		await this.migrateSchema()
 		await this.updateDBTimeStamps()
+
+		await insertDefault()
 
 		this.ready = true
 

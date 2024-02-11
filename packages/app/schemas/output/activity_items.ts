@@ -18,12 +18,7 @@ export default {
                         "type": "string"
                   },
                   "action": {
-                        "type": "string",
-                        "enum": [
-                              "insert",
-                              "check"
-                        ],
-                        "const": "done"
+                        "type": "string"
                   },
                   "context": {
                         "type": "string"
@@ -40,14 +35,6 @@ export default {
                   "action"
             ]
       },
-      "Activity.Action": {
-            "type": "string",
-            "enum": [
-                  "insert",
-                  "check"
-            ],
-            "const": "done"
-      },
       "Activity.TodoAction": {
             "type": "string",
             "enum": [
@@ -57,6 +44,16 @@ export default {
       },
       "Activity.PomoAction": {
             "type": "string",
-            "const": "done"
+            "enum": [
+                  "work",
+                  "break"
+            ]
+      },
+      "Activity.Action": {
+            "type": "string",
+            "enum": [
+                  "work",
+                  "break"
+            ]
       }
 } as const

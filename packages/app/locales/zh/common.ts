@@ -12,6 +12,7 @@ export default {
 		x_unit_ago: '{{x}}{{unit}}前',
 		x_unit: '{{x}}{{unit}}'
 	},
+	default: '默认',
 	start: '开始',
 	stop: '停止',
 	exit: '退出',

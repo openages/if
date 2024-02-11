@@ -1,13 +1,13 @@
-import { insert, remove } from '@/actions/schedule'
+import { insertSetting, remove } from '@/actions/schedule'
 import { DirTree } from '@/components'
 
 import type { IPropsDirTree } from '@/components'
 
 const Index = () => {
 	const props_dir_tree: IPropsDirTree = {
-		module: 'pomo',
+		module: 'schedule',
 		actions: {
-			insert,
+			insert: insertSetting,
 			remove
 		},
 		simple: true

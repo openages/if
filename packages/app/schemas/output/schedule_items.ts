@@ -2,7 +2,7 @@ export default {
       "Schedule.Setting": {
             "type": "object",
             "properties": {
-                  "type": {
+                  "mode": {
                         "type": "string",
                         "enum": [
                               "timeline",
@@ -33,7 +33,7 @@ export default {
                   }
             },
             "required": [
-                  "type",
+                  "mode",
                   "tags"
             ]
       },
@@ -68,7 +68,7 @@ export default {
                   "setting": {
                         "type": "object",
                         "properties": {
-                              "type": {
+                              "mode": {
                                     "type": "string",
                                     "enum": [
                                           "timeline",
@@ -99,7 +99,7 @@ export default {
                               }
                         },
                         "required": [
-                              "type",
+                              "mode",
                               "tags"
                         ]
                   }
@@ -114,13 +114,16 @@ export default {
             "type": "object",
             "properties": {
                   "id": {
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 30
                   },
                   "file_id": {
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 30
                   },
                   "tag": {
-                        "type": "string"
+                        "type": "string",
+                        "maxLength": 30
                   },
                   "text": {
                         "type": "string"
@@ -132,10 +135,16 @@ export default {
                         }
                   },
                   "start_time": {
-                        "type": "number"
+                        "type": "number",
+                        "multipleOf": 1,
+                        "minimum": 1,
+                        "maximum": 9007199254740991
                   },
                   "end_time": {
-                        "type": "number"
+                        "type": "number",
+                        "multipleOf": 1,
+                        "minimum": 1,
+                        "maximum": 9007199254740991
                   }
             },
             "required": [

@@ -84,6 +84,7 @@ export default class Index {
 	@loading
 	async query() {
 		const items = await query(this.module)
+		console.log(this.module, getDocItemsData(items))
 
 		this.node_tree.init(getDocItemsData(items))
 	}

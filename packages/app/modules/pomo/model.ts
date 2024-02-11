@@ -147,17 +147,13 @@ export default class Index {
 	}
 
 	async setActivity(action: 'work' | 'break', time: number | string) {
-		return $db.activity_items.insertCRDT({
-			ifMatch: {
-				$set: {
-					id: id(),
-					module: 'pomo',
-					file_id: this.id,
-					name: this.file.data.name,
-					action,
-					context: String(time)
-				}
-			}
+		return $db.activity_items.insert({
+			id: id(),
+			module: 'pomo',
+			file_id: this.id,
+			name: this.file.data.name,
+			action,
+			context: String(time)
 		})
 	}
 
