@@ -21,6 +21,7 @@ import type { MoveData } from './types/model'
 export default class Index {
 	module = '' as App.ModuleType
 	actions = {} as IProps['actions']
+	simple = false
 
 	focusing_index = [] as Array<number>
 	current_item = {} as DirTree.Item
@@ -29,6 +30,7 @@ export default class Index {
 	modal_type = 'file' as DirTree.Item['type']
 	modal_open = false
 
+	open_dirtree = false
 	open_folder = [] as Array<string>
 
 	items_watcher = null as Subscription
@@ -55,12 +57,13 @@ export default class Index {
 		)
 	}
 
-	async init(args: { module: App.ModuleType; actions: IProps['actions'] }) {
-		const { module, actions } = args
+	async init(args: { module: App.ModuleType; actions: IProps['actions']; simple: IProps['simple'] }) {
+		const { module, actions, simple } = args
 
 		this.utils.acts = [...useInstanceWatch(this)]
 		this.module = module
 		this.actions = actions
+		this.simple = simple
 
 		const disposer = setStorageWhenChange(
 			[
@@ -84,7 +87,6 @@ export default class Index {
 	@loading
 	async query() {
 		const items = await query(this.module)
-		console.log(this.module, getDocItemsData(items))
 
 		this.node_tree.init(getDocItemsData(items))
 	}

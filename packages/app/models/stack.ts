@@ -1,6 +1,6 @@
 import { Decimal } from 'decimal.js'
 import { debounce, omit } from 'lodash-es'
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
@@ -298,10 +298,12 @@ export default class Index {
 		const percent = new Decimal(Decimal.div(width, this.container_width).mul(100).toFixed(2)).toNumber()
 		const total = this.columns[column].width + this.columns[column - 1].width
 
-		this.columns[column].width = percent
-		this.columns[column - 1].width = Decimal.sub(total, percent).toNumber()
+		runInAction(() => {
+			this.columns[column].width = percent
+			this.columns[column - 1].width = Decimal.sub(total, percent).toNumber()
 
-		this.columns = $copy(this.columns)
+			this.columns = $copy(this.columns)
+		})
 	}
 
 	private updateColumnsFocus() {

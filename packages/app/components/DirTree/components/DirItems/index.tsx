@@ -59,7 +59,7 @@ const Index = (props: IPropsDirItems) => {
 						))}
 						{active_item &&
 							createPortal(
-								<DragOverlay>
+								<DragOverlay zIndex={1001}>
 									<DirItem
 										{...{
 											module,

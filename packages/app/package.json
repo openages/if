@@ -96,7 +96,7 @@
 		"bun-types": "^1.0.26",
 		"cross-env": "^7.0.3",
 		"fs-extra": "^11.2.0",
-		"globby": "^14.0.0",
+		"globby": "^14.0.1",
 		"postcss-calc": "^9.0.1",
 		"postcss-import": "^16.0.0",
 		"postcss-loader": "^7.3.4",

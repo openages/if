@@ -12,7 +12,7 @@ const Index = (props: IPropsActions) => {
 	const { t } = useTranslation()
 
 	return (
-		<div className={$cx('w_100 border_box flex', styles._local)}>
+		<div className={$cx('actions_wrap w_100 border_box flex', styles._local)}>
 			<div
 				className='add_list_wrap h_100 border_box flex align_center transition_normal cursor_point'
 				onClick={() => setModalOpen(true, 'file')}

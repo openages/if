@@ -20,4 +20,9 @@
 			}
 		}
 	}
+
+	&.if-btn-two-chinese-chars > *:not(.if-icon) {
+		margin-inline-end: unset;
+		letter-spacing: unset;
+	}
 }

@@ -9,7 +9,7 @@
 	--contexify-arrow-color: var(--color_text_grey);
 	--contexify-activeArrow-color: var(--color_text);
 
-      --contexify-zIndex: 999;
+	--contexify-zIndex: 10001;
 	--contexify-menu-minWidth: 220px;
 	--contexify-menu-padding: 6px;
 	--contexify-menu-radius: 6px;
@@ -55,4 +55,3 @@
 		opacity: 1;
 	}
 }
-

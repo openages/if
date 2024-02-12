@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import { Popover } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
 import { useContextMenu } from 'react-contexify'
@@ -7,27 +8,27 @@ import { When } from 'react-if'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
+import { List, X } from '@phosphor-icons/react'
 
 import { Actions, DirItems, DragLine, Modal, Options, Search } from './components'
 import styles from './index.css'
 import Model from './model'
 
 import type { DirTree, Extend } from '@/types'
+import type { MouseEvent } from 'react'
 import type { IProps, IPropsSearch, IPropsActions, IPropsDirItems, IPropsModal, IPropsOptions } from './types'
 
 const Index = (props: IProps) => {
-	const { module, height = '100vh', actions } = props
+	const { module, actions, height = '100vh', simple } = props
 	const [x] = useState(() => container.resolve(Model))
 	const global = useGlobal()
 	const { show } = useContextMenu({ id: 'dirtree_options' })
 
 	useLayoutEffect(() => {
-		x.init({ module, actions })
+		x.init({ module, actions, simple })
 
 		return () => x.off()
-	}, [module])
-
-	console.log($copy(x.node_tree.tree))
+	}, [module, simple])
 
 	const onClick = useMemoizedFn((v: DirTree.Item) => (x.current_item = v))
 
@@ -88,27 +89,68 @@ const Index = (props: IProps) => {
 		resetFocusingItem
 	}
 
-	return (
+	const Dirtree = (
 		<div
 			className={$cx(
 				'border_box relative',
 				styles._local,
-				global.layout.dirtree_width === 0 && styles.hide
+				global.layout.dirtree_width === 0 && styles.hide,
+				simple && styles.simple
 			)}
-			style={{ width: global.layout.dirtree_width, height }}
+			style={!simple ? { width: global.layout.dirtree_width, height } : {}}
 		>
-			<When condition={global.layout.dirtree_width !== 0}>
+			<When condition={!simple && global.layout.dirtree_width !== 0}>
 				<Search {...props_search}></Search>
 			</When>
-			<DragLine></DragLine>
+			<When condition={!simple}>
+				<DragLine></DragLine>
+			</When>
 			<DirItems {...props_dir_items}></DirItems>
 			<When condition={global.layout.dirtree_width !== 0}>
 				<Actions {...props_actions}></Actions>
-				<Modal {...props_modal}></Modal>
+				<When condition={!simple}>
+					<Modal {...props_modal}></Modal>
+				</When>
 			</When>
 			{createPortal(<Options {...props_options}></Options>, document.body)}
 		</div>
 	)
+
+	const onOpenChange = useMemoizedFn((v: boolean | MouseEvent<HTMLButtonElement>) => {
+		if (!v) return
+
+		x.open_dirtree = typeof v === 'boolean' ? v : false
+	})
+
+	if (simple) {
+		return (
+			<Popover
+				open={x.open_dirtree}
+				trigger='click'
+				fresh
+				destroyTooltipOnHide
+				zIndex={1000}
+				arrow={false}
+				placement='bottomRight'
+				align={{ offset: [0, 3] }}
+				getPopupContainer={() => document.body}
+				content={Dirtree}
+				onOpenChange={onOpenChange}
+			>
+				<div className={$cx('fixed', styles.btn_dirtree)}>
+					<button
+						className='btn_dirtree flex justify_center align_center clickable'
+						onClick={onOpenChange}
+					>
+						{x.open_dirtree ? <X size={15}></X> : <List size={15}></List>}
+					</button>
+					<Modal {...props_modal}></Modal>
+				</div>
+			</Popover>
+		)
+	}
+
+	return Dirtree
 }
 
 export default new $app.handle(Index).by(observer).by($app.memo).get()
