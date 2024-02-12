@@ -8,6 +8,7 @@ import { When } from 'react-if'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
+import { useDeepMemo } from '@openages/stk/react'
 import { List, X } from '@phosphor-icons/react'
 
 import { Actions, DirItems, DragLine, Modal, Options, Search } from './components'
@@ -16,12 +17,62 @@ import Model from './model'
 
 import type { DirTree, Extend } from '@/types'
 import type { MouseEvent } from 'react'
-import type { IProps, IPropsSearch, IPropsActions, IPropsDirItems, IPropsModal, IPropsOptions } from './types'
+import type {
+	IProps,
+	IPropsContent,
+	IPropsSearch,
+	IPropsActions,
+	IPropsDirItems,
+	IPropsModal,
+	IPropsOptions
+} from './types'
+
+const Content = $app.memo((props: IPropsContent) => {
+	const {
+		dirtree_width,
+		simple,
+		height,
+		props_search,
+		props_dir_items,
+		props_actions,
+		props_modal,
+		props_options
+	} = props
+
+	return (
+		<div
+			className={$cx(
+				'border_box relative',
+				styles._local,
+				!simple && dirtree_width === 0 && styles.hide,
+				simple && styles.simple
+			)}
+			style={!simple ? { width: dirtree_width, height } : {}}
+		>
+			<When condition={!simple && dirtree_width !== 0}>
+				<Search {...props_search}></Search>
+			</When>
+			<When condition={!simple}>
+				<DragLine></DragLine>
+			</When>
+			<DirItems {...props_dir_items}></DirItems>
+			<When condition={!simple ? dirtree_width !== 0 : true}>
+				<Actions {...props_actions}></Actions>
+				<When condition={!simple}>
+					<Modal {...props_modal}></Modal>
+				</When>
+			</When>
+			{createPortal(<Options {...props_options}></Options>, document.body)}
+		</div>
+	)
+})
 
 const Index = (props: IProps) => {
 	const { module, actions, height = '100vh', simple } = props
 	const [x] = useState(() => container.resolve(Model))
+
 	const global = useGlobal()
+
 	const { show } = useContextMenu({ id: 'dirtree_options' })
 
 	useLayoutEffect(() => {
@@ -89,40 +140,24 @@ const Index = (props: IProps) => {
 		resetFocusingItem
 	}
 
-	const Dirtree = (
-		<div
-			className={$cx(
-				'border_box relative',
-				styles._local,
-				global.layout.dirtree_width === 0 && styles.hide,
-				simple && styles.simple
-			)}
-			style={!simple ? { width: global.layout.dirtree_width, height } : {}}
-		>
-			<When condition={!simple && global.layout.dirtree_width !== 0}>
-				<Search {...props_search}></Search>
-			</When>
-			<When condition={!simple}>
-				<DragLine></DragLine>
-			</When>
-			<DirItems {...props_dir_items}></DirItems>
-			<When condition={global.layout.dirtree_width !== 0}>
-				<Actions {...props_actions}></Actions>
-				<When condition={!simple}>
-					<Modal {...props_modal}></Modal>
-				</When>
-			</When>
-			{createPortal(<Options {...props_options}></Options>, document.body)}
-		</div>
-	)
-
 	const onOpenChange = useMemoizedFn((v: boolean | MouseEvent<HTMLButtonElement>) => {
 		if (!v) return
 
 		x.open_dirtree = typeof v === 'boolean' ? v : false
 	})
 
-	if (simple) {
+	const props_content: IPropsContent = {
+		dirtree_width: global.layout.dirtree_width,
+		simple,
+		height,
+		props_search,
+		props_dir_items,
+		props_actions,
+		props_modal,
+		props_options
+	}
+
+	const Target = useDeepMemo(() => {
 		return (
 			<Popover
 				open={x.open_dirtree}
@@ -131,10 +166,11 @@ const Index = (props: IProps) => {
 				destroyTooltipOnHide
 				zIndex={1000}
 				arrow={false}
-				placement='bottomRight'
-				align={{ offset: [0, 3] }}
+				autoAdjustOverflow={false}
+				placement='topLeft'
+				align={{ offset: [0, -3] }}
 				getPopupContainer={() => document.body}
-				content={Dirtree}
+				content={<Content {...props_content} />}
 				onOpenChange={onOpenChange}
 			>
 				<div className={$cx('fixed', styles.btn_dirtree)}>
@@ -148,9 +184,11 @@ const Index = (props: IProps) => {
 				</div>
 			</Popover>
 		)
-	}
+	}, [x.open_dirtree, props_content])
 
-	return Dirtree
+	if (simple) return Target
+
+	return <Content {...props_content} />
 }
 
 export default new $app.handle(Index).by(observer).by($app.memo).get()

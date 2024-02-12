@@ -15,6 +15,17 @@ export interface IProps {
 	simple?: boolean
 }
 
+export interface IPropsContent {
+	dirtree_width: number
+	simple: boolean
+	height: string | number
+	props_search: IPropsSearch
+	props_dir_items: IPropsDirItems
+	props_actions: IPropsActions
+	props_modal: IPropsModal
+	props_options: IPropsOptions
+}
+
 export interface IPropsSearch {
 	showSearch: () => void
 }

@@ -16,4 +16,4 @@ const Index = () => {
 	return <DirTree {...props_dir_tree}></DirTree>
 }
 
-export default Index
+export default $app.memo(Index)

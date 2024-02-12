@@ -223,6 +223,8 @@ export default class Index {
 	}
 
 	off() {
+		if (this.open_dirtree) this.open_dirtree = false
+
 		this.utils.off()
 		this.items_watcher?.unsubscribe?.()
 
