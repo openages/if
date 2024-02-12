@@ -14,6 +14,7 @@ export default async () => {
 		type: 'file',
 		id: file_id,
 		name: $t('translation:common.default'),
+		icon: ':sa:',
 		create_at: new Date().valueOf()
 	})
 
