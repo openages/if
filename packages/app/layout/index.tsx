@@ -1,6 +1,6 @@
 import '@/global_css'
 
-import { useMemoizedFn } from 'ahooks'
+import { useDebounceEffect, useMemoizedFn } from 'ahooks'
 import { App, ConfigProvider } from 'antd'
 import { minimatch } from 'minimatch'
 import { observer } from 'mobx-react-lite'
@@ -13,6 +13,7 @@ import { exclude_paths } from '@/appdata'
 import { GlobalLoading, LazyElement, OffscreenOutlet } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
+import { useDeepMemo } from '@openages/stk/react'
 
 import { AppMenu, AppSwitch, FreeMark, Screenlock, Search, Sidebar, Stacks } from './components'
 import { useGlobalNavigate, useGlobalTranslate, useLayout } from './hooks'
@@ -32,6 +33,8 @@ const Index = () => {
 	const current_module = useCurrentModule()
 	const apps = $copy(global.app.apps)
 	const actives = $copy(global.app.actives)
+	const columns = $copy(global.stack.columns)
+	const focus = $copy(global.stack.focus)
 
 	useGlobalNavigate()
 	useGlobalTranslate()
@@ -49,6 +52,16 @@ const Index = () => {
 	useEffect(() => {
 		global.search.module = current_module
 	}, [current_module])
+
+	const focus_file = useDeepMemo(() => {
+		if (focus.column === -1 || focus.view === -1) return {}
+
+		return columns[focus.column]?.views?.[focus.view]?.file || {}
+	}, [columns, focus])
+
+	useDebounceEffect(() => {
+		$app.Event.emit(`${current_module}/dirtree/setCurrentItem`, focus_file)
+	}, [current_module, focus_file])
 
 	const is_exclude_router = useMemo(() => exclude_paths.some(item => minimatch(pathname, item)), [pathname])
 
@@ -82,7 +95,6 @@ const Index = () => {
 
 	const props_stacks: IPropsStacks = {
 		visible: !is_exclude_router,
-		current_module,
 		columns: $copy(global.stack.columns),
 		focus: $copy(global.stack.focus),
 		container_width: global.stack.container_width,

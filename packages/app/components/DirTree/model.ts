@@ -6,13 +6,12 @@ import { id } from '@/utils'
 import { disableWatcher, loading } from '@/utils/decorators'
 import { getDocItemsData } from '@/utils/rxdb'
 import { DirTree as NodeTree } from '@openages/stk/common'
-import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
+import { setStorageWhenChange } from '@openages/stk/mobx'
 
 import { getQuery, insert, query, remove, update, updateItems } from './services'
 
 import type { App, DirTree, Stack } from '@/types'
 import type { Active, Over } from '@dnd-kit/core'
-import type { Watch } from '@openages/stk/mobx'
 import type { Subscription } from 'rxjs'
 import type { IProps } from './types'
 import type { MoveData } from './types/model'
@@ -36,10 +35,6 @@ export default class Index {
 	items_watcher = null as Subscription
 	disable_watcher = false
 
-	watch = {
-		current_item: v => this.onClick(v)
-	} as Watch<Index>
-
 	get focusing_item() {
 		if (!this.focusing_index.length) return {} as DirTree.Item
 
@@ -52,7 +47,7 @@ export default class Index {
 	) {
 		makeAutoObservable(
 			this,
-			{ actions: false, items_watcher: false, disable_watcher: false, watch: false },
+			{ actions: false, items_watcher: false, disable_watcher: false },
 			{ autoBind: true }
 		)
 	}
@@ -60,7 +55,6 @@ export default class Index {
 	async init(args: { module: App.ModuleType; actions: IProps['actions']; simple: IProps['simple'] }) {
 		const { module, actions, simple } = args
 
-		this.utils.acts = [...useInstanceWatch(this)]
 		this.module = module
 		this.actions = actions
 		this.simple = simple
@@ -77,8 +71,6 @@ export default class Index {
 		this.watchItems()
 
 		this.query()
-
-		this.onClick(this.current_item)
 
 		this.utils.acts.push(disposer)
 	}
@@ -171,6 +163,8 @@ export default class Index {
 
 	onClick(v: DirTree.Item) {
 		if (!v?.id) return
+
+		this.current_item = v
 
 		$app.Event.emit('global.stack.add', {
 			id: v.id,

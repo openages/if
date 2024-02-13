@@ -1,8 +1,9 @@
-import { Logo } from '@/components'
-import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { useMemoizedFn } from 'ahooks'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Else, If, Then } from 'react-if'
+
+import { Logo } from '@/components'
+import { useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
 
 import { Content, NavBar, View } from './components'
 import styles from './index.css'
@@ -14,7 +15,6 @@ import type { IPropsStacks, IPropsStacksContent, IPropsStacksNavBar } from '../.
 const Index = (props: IPropsStacks) => {
 	const {
 		visible,
-		current_module,
 		columns,
 		focus,
 		container_width,
@@ -30,16 +30,6 @@ const Index = (props: IPropsStacks) => {
 	} = props
 	const [drag_view, setDragView] = useState<{ column_index: number; view_index: number; view: Stack.View }>(null)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
-
-	const focus_file = useMemo(() => {
-		if (focus.column === -1 || focus.view === -1) return {}
-
-		return columns[focus.column]?.views?.[focus.view]?.file || {}
-	}, [columns, focus])
-
-	useEffect(() => {
-		$app.Event.emit(`${current_module}/dirtree/setCurrentItem`, focus_file)
-	}, [current_module, focus_file])
 
 	useEffect(() => {
 		observe()

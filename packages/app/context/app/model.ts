@@ -22,9 +22,7 @@ export default class GlobalModel {
 	}
 
 	async init(unlock?: boolean) {
-		$app.Event.on('global.app.lock', this.lock)
-		$app.Event.on('global.app.unlock', this.unlock)
-
+		this.on()
 		this.stack.init()
 
 		await this.db.init()
@@ -36,8 +34,6 @@ export default class GlobalModel {
 		this.shortcuts.init()
 		this.search.init()
 		this.timer.init()
-
-		this.on()
 	}
 
 	lock() {
@@ -50,9 +46,8 @@ export default class GlobalModel {
 	}
 
 	on() {
-		$app.Event.on('global.stack.add', this.stack.add)
-		$app.Event.on('global.stack.updateFile', this.stack.updateFile)
-		$app.Event.on('global.stack.removeFile', this.stack.removeFile)
+		$app.Event.on('global.app.lock', this.lock)
+		$app.Event.on('global.app.unlock', this.unlock)
 	}
 
 	off() {
@@ -69,8 +64,5 @@ export default class GlobalModel {
 
 		$app.Event.off('global.app.lock', this.lock)
 		$app.Event.off('global.app.unlock', this.unlock)
-		$app.Event.off('global.stack.add', this.stack.add)
-		$app.Event.off('global.stack.updateFile', this.stack.updateFile)
-		$app.Event.off('global.stack.removeFile', this.stack.removeFile)
 	}
 }

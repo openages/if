@@ -81,8 +81,6 @@ const Index = (props: IProps) => {
 		return () => x.off()
 	}, [module, simple])
 
-	const onClick = useMemoizedFn((v: DirTree.Item) => (x.current_item = v))
-
 	const setModalOpen = useMemoizedFn((v: Model['modal_open'], type?: Model['modal_type']) => {
 		x.focusing_index = []
 		x.modal_open = v
@@ -112,7 +110,7 @@ const Index = (props: IProps) => {
 		current_item: $copy(x.current_item),
 		focusing_item: $copy(x.focusing_item),
 		open_folder: $copy(x.open_folder),
-		onClick,
+		onClick: useMemoizedFn(x.onClick),
 		showDirTreeOptions
 	}
 
@@ -168,7 +166,7 @@ const Index = (props: IProps) => {
 				arrow={false}
 				autoAdjustOverflow={false}
 				placement='topLeft'
-				align={{ offset: [0, -3] }}
+				align={{ offset: [0, -6] }}
 				getPopupContainer={() => document.body}
 				content={<Content {...props_content} />}
 				onOpenChange={onOpenChange}

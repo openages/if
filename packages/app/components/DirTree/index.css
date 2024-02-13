@@ -13,7 +13,6 @@
 		position: unset;
 		left: unset;
 		border-right: none;
-		border: var(--border);
 		border-radius: var(--radius);
 
 		:global {
@@ -69,7 +68,6 @@
 			height: 30px;
 			background-color: var(--color_bg);
 			box-shadow: var(--shadow);
-			border: var(--border);
 			border-radius: var(--radius);
 		}
 	}

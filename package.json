@@ -21,7 +21,7 @@
 		"*.(j|t)s?(x)": ["biome format --write --changed ./packages"]
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.5.3-nightly.6cbf1c7",
+		"@biomejs/biome": "1.5.3-nightly.d2858ee",
 		"lint-staged": "^15.2.1",
 		"prettier": "^3.2.4",
 		"turbo": "^1.12.2",

@@ -1,11 +1,11 @@
 import { Decimal } from 'decimal.js'
 import { debounce, omit } from 'lodash-es'
-import { makeAutoObservable, runInAction } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
 import { arrayMove } from '@dnd-kit/sortable'
-import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
+import { setStorageWhenChange, transaction, useInstanceWatch } from '@openages/stk/mobx'
 import { local } from '@openages/stk/storage'
 
 import type { DirTree, Stack } from '@/types'
@@ -36,6 +36,8 @@ export default class Index {
 
 	init() {
 		this.getObserver()
+
+		this.on()
 	}
 
 	find(id: string) {
@@ -164,6 +166,7 @@ export default class Index {
 		this.updateColumnsFocus()
 	}
 
+	@transaction
 	click(position: Stack.Position, ignore_columns?: boolean) {
 		const { column, view } = position
 		const target_views = this.columns[column].views
@@ -294,16 +297,15 @@ export default class Index {
 		this.updateColumnsFocus()
 	}
 
+	@transaction
 	resize(column: number, width: number) {
 		const percent = new Decimal(Decimal.div(width, this.container_width).mul(100).toFixed(2)).toNumber()
 		const total = this.columns[column].width + this.columns[column - 1].width
 
-		runInAction(() => {
-			this.columns[column].width = percent
-			this.columns[column - 1].width = Decimal.sub(total, percent).toNumber()
+		this.columns[column].width = percent
+		this.columns[column - 1].width = Decimal.sub(total, percent).toNumber()
 
-			this.columns = $copy(this.columns)
-		})
+		this.columns = $copy(this.columns)
 	}
 
 	private updateColumnsFocus() {
@@ -333,8 +335,18 @@ export default class Index {
 		this.observer?.disconnect()
 	}
 
+	on() {
+		$app.Event.on('global.stack.add', this.add)
+		$app.Event.on('global.stack.updateFile', this.updateFile)
+		$app.Event.on('global.stack.removeFile', this.removeFile)
+	}
+
 	off() {
 		this.observer?.disconnect()
 		this.utils.off()
+
+		$app.Event.off('global.stack.add', this.add)
+		$app.Event.off('global.stack.updateFile', this.updateFile)
+		$app.Event.off('global.stack.removeFile', this.removeFile)
 	}
 }
