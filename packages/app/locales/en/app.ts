@@ -28,5 +28,9 @@ export default {
 		email_code_placeholder: 'Enter the key received in your email',
 		forget_password: 'Forget Password',
 		use_password: 'Using Password'
+	},
+	ErrorBoundary: {
+		title: 'Error',
+		desc: 'App encountered unexpected exception'
 	}
 }

@@ -3,9 +3,10 @@ import { observer } from 'mobx-react-lite'
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { clearStorage } from '@/actions/global'
 import { locale_options, themes } from '@/appdata'
 import { useGlobal } from '@/context/app'
-import { Layout, Palette, TextAa, Translate } from '@phosphor-icons/react'
+import { Circuitry, Layout, Palette, TextAa, Translate } from '@phosphor-icons/react'
 
 const { Group: RadioGroup } = Radio
 
@@ -125,6 +126,23 @@ const Index = () => {
 							]}
 							onChange={({ target: { value } }) => global.setting.setPageWidth(value)}
 						></RadioGroup>
+					</div>
+				</div>
+				<div className='setting_item w_100 border_box flex justify_between align_center'>
+					<div className='title_wrap flex align_center'>
+						<Circuitry size={24}></Circuitry>
+						<div className='text_wrap flex flex_column'>
+							<span className='title'>{t('translation:common.storage')}</span>
+							<span className='desc'>{t('translation:common.clear_storage_desc')}</span>
+						</div>
+					</div>
+					<div className='value_wrap flex align_center'>
+						<button
+							className='btn flex justify_center align_center clickable'
+							onClick={clearStorage}
+						>
+							{t('translation:common.clear_storage')}
+						</button>
 					</div>
 				</div>
 			</div>

@@ -27,5 +27,9 @@ export default {
 		email_code_placeholder: '输入邮箱接收到的密钥',
 		forget_password: '忘记密码',
 		use_password: '使用密码'
+	},
+	ErrorBoundary: {
+		title: '错误',
+		desc: '程序发生了异常'
 	}
 }

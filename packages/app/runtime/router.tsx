@@ -1,6 +1,6 @@
 import { createHashRouter } from 'react-router-dom'
 
-import { LazyElement } from '@/components'
+import { ErrorBoundary, LazyElement } from '@/components'
 import Layout from '@/layout'
 
 import type { RouteObject } from 'react-router-dom'
@@ -36,6 +36,7 @@ export default createHashRouter([
 	{
 		path: '/',
 		element: <Layout />,
-		children: routes
+		children: routes,
+		ErrorBoundary
 	}
 ])
