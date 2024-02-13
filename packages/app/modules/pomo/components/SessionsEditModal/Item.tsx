@@ -47,8 +47,8 @@ const Index = (props: IPropsSessionsEditModalItem) => {
 							  : work_time * 1.2
 				}}
 			>
-				{!flow_mode && timeline.current === 'work' && (
-					<span className='timeline absolute' style={{ top: timeline.time * 2.1 }}></span>
+				{!flow_mode && timeline?.current === 'work' && (
+					<span className='timeline absolute' style={{ top: timeline?.time * 2.1 }}></span>
 				)}
 				{title && <span className='title w_100 text_center absolute'>{title}</span>}
 				<div className='actions_wrap w_100 border_box none justify_between absolute'>
@@ -94,11 +94,11 @@ const Index = (props: IPropsSessionsEditModalItem) => {
 			</div>
 			{!flow_mode && (
 				<div
-					className='break_time time w_100 flex justify_center align_center'
+					className='break_time time w_100 flex justify_center align_center relative'
 					style={{ height: break_time * 2.1 }}
 				>
-					{timeline.current === 'break' && (
-						<span className='timeline absolute' style={{ top: timeline.time * 2.1 }}></span>
+					{timeline?.current === 'break' && (
+						<span className='timeline absolute' style={{ top: timeline?.time * 2.1 }}></span>
 					)}
 					<span className='break_time_value'>
 						{target_break_time.hours}:{target_break_time.minutes}

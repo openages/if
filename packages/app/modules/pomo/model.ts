@@ -1,4 +1,5 @@
-import { makeAutoObservable, runInAction } from 'mobx'
+import { makeAutoObservable } from 'mobx'
+import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
 import { File } from '@/models'
@@ -116,32 +117,56 @@ export default class Index {
 
 	@disableWatcher
 	async next() {
-		const next_index = this.data.index + 1
-		const next_session = this.data.sessions.at(next_index)
+		const session = this.data.sessions[this.data.index]
 
-		this.data.current = ''
-		this.data.going = false
-		this.data.work_in = 0
-		this.data.break_in = 0
+		const goNextSession = () => {
+			const next_index = this.data.index + 1
+			const next_session = this.data.sessions.at(next_index)
 
-		if (this.data.current) {
-			this.setActivity(
-				this.data.current,
-				this.data.current === 'work'
-					? getGoingTime(this.data.work_in)
-					: getGoingTime(this.data.break_in)
-			)
+			if (!next_session) {
+				this.data.index = 0
+				this.view_index = 0
+
+				return this.updatePomo()
+			}
+
+			this.data.index = next_index
+			this.view_index = next_index
 		}
 
-		if (!next_session) {
-			this.data.index = 0
-			this.view_index = 0
-
-			return this.updatePomo()
+		const reset = (current?: Index['data']['current']) => {
+			this.data.current = current ?? ''
+			this.data.going = false
+			this.data.work_in = 0
+			this.data.break_in = 0
 		}
 
-		this.data.index = next_index
-		this.view_index = next_index
+		if (this.data.going) this.stopRecord()
+
+		if (session.flow_mode) {
+			this.setActivity('work', getGoingTime(this.data.work_in))
+
+			reset()
+			goNextSession()
+
+			return
+		}
+
+		match(this.data.current)
+			.with('', () => {
+				goNextSession()
+			})
+			.with('work', () => {
+				this.setActivity('work', getGoingTime(this.data.work_in))
+
+				reset('break')
+			})
+			.with('break', () => {
+				this.setActivity('break', getGoingTime(this.data.break_in))
+
+				reset()
+				goNextSession()
+			})
 
 		this.updatePomo()
 	}
@@ -171,10 +196,8 @@ export default class Index {
 
 		if (view_index < 0 || view_index > this.data.sessions.length - 1) return
 
-		runInAction(() => {
-			this.view_direction = view_direction
-			this.view_index = view_index
-		})
+		this.view_direction = view_direction
+		this.view_index = view_index
 	}
 
 	checkCurrent() {
@@ -184,7 +207,7 @@ export default class Index {
 			session.work_time = getGoingTime(this.data.work_in)
 
 			const time = getTime(getGoingTime(this.data.work_in), true) as { hours: number; minutes: number }
-			const percent = ((time.minutes * 100) / 60).toFixed(0)
+			const percent = ((time.minutes * 100) / 60).toFixed(2)
 
 			$app.Event.emit('global.app.updateTimer', {
 				in: { hours: fillTimeText(time.hours), minutes: fillTimeText(time.minutes) },
@@ -197,7 +220,7 @@ export default class Index {
 		if (this.data.current === 'work') {
 			const going_time = getGoingTime(this.data.work_in)
 			const left_time = session.work_time - going_time
-			const percent = ((going_time * 100) / session.work_time).toFixed(0)
+			const percent = ((going_time * 100) / session.work_time).toFixed(2)
 
 			$app.Event.emit('global.app.updateTimer', { in: getTime(left_time), percent })
 		}
@@ -205,7 +228,7 @@ export default class Index {
 		if (this.data.current === 'break') {
 			const going_time = getGoingTime(this.data.break_in)
 			const left_time = session.break_time - going_time
-			const percent = ((going_time * 100) / session.break_time).toFixed(0)
+			const percent = ((going_time * 100) / session.break_time).toFixed(2)
 
 			$app.Event.emit('global.app.updateTimer', { in: getTime(left_time), percent })
 		}

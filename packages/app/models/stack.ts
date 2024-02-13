@@ -5,7 +5,7 @@ import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
 import { arrayMove } from '@dnd-kit/sortable'
-import { setStorageWhenChange, transaction, useInstanceWatch } from '@openages/stk/mobx'
+import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
 import { local } from '@openages/stk/storage'
 
 import type { DirTree, Stack } from '@/types'
@@ -166,7 +166,6 @@ export default class Index {
 		this.updateColumnsFocus()
 	}
 
-	@transaction
 	click(position: Stack.Position, ignore_columns?: boolean) {
 		const { column, view } = position
 		const target_views = this.columns[column].views
@@ -297,7 +296,6 @@ export default class Index {
 		this.updateColumnsFocus()
 	}
 
-	@transaction
 	resize(column: number, width: number) {
 		const percent = new Decimal(Decimal.div(width, this.container_width).mul(100).toFixed(2)).toNumber()
 		const total = this.columns[column].width + this.columns[column - 1].width

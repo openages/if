@@ -14,7 +14,7 @@ export const getTime = (v: number, raw?: boolean) => {
 }
 
 export const getGoingTime = (v: number) => {
-	return parseInt(dayjs.duration(v, 'second').asMinutes().toFixed(0))
+	return parseInt(dayjs.duration(v, 'second').asMinutes().toFixed(2))
 }
 
 export const getGoingSecond = (v: number) => {

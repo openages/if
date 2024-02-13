@@ -1,5 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { Drawer } from 'antd'
+import { useMemo } from 'react'
 import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 
 import { useDeepEffect } from '@/hooks'
@@ -12,7 +13,6 @@ import Item from './Item'
 
 import type { IPropsSessionsEditModal } from '../../types'
 import type { DragEndEvent } from '@dnd-kit/core'
-
 const Index = (props: IPropsSessionsEditModal) => {
 	const { visible_edit_modal, data, update, remove, move, close } = props
 
@@ -32,6 +32,15 @@ const Index = (props: IPropsSessionsEditModal) => {
 		if (active.id === over.id) return
 
 		move(active.data.current.index as number, over.data.current.index as number)
+	})
+
+	const getTimeline = useMemoizedFn((index: number) => {
+		if (!(data.current && data.index === index)) return
+
+		return {
+			current: data.current,
+			time: data.current === 'work' ? getGoingTime(data.work_in) : getGoingTime(data.break_in)
+		}
 	})
 
 	return (
@@ -54,16 +63,7 @@ const Index = (props: IPropsSessionsEditModal) => {
 								item={item}
 								index={index}
 								disabled={data.going && data.index === index}
-								timeline={
-									data.current &&
-									data.index === index && {
-										current: data.current,
-										time:
-											data.current === 'work'
-												? getGoingTime(data.work_in)
-												: getGoingTime(data.break_in)
-									}
-								}
+								timeline={getTimeline(index)}
 								key={item.id}
 							></Item>
 						))}
