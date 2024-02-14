@@ -30,7 +30,7 @@ export default {
 		use_password: 'Using Password'
 	},
 	ErrorBoundary: {
-		title: 'Error',
+		title: 'Something Error',
 		desc: 'App encountered unexpected exception'
 	}
 }

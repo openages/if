@@ -29,7 +29,7 @@ export default {
 		use_password: '使用密码'
 	},
 	ErrorBoundary: {
-		title: '错误',
-		desc: '程序发生了异常'
+		title: '运行错误',
+		desc: '程序发生了未知异常'
 	}
 }

@@ -15,13 +15,14 @@ const Index = () => {
 	return (
 		<div className={$cx('fixed top_0 left_0 w_100vw h_100vh flex justify_center align_center', styles._local)}>
 			<div className='error_wrap flex flex_column align_center'>
+				<img className='img' src='/illustrations/sorry.svg' alt='sorry' />
 				<span className='title'>{t('translation:app.ErrorBoundary.title')}</span>
 				<span className='desc'>{t('translation:app.ErrorBoundary.desc')}</span>
 				<div className='actions_wrap'>
-					<button className='btn btn_main clickable mr_12' onClick={reload}>
+					<button className='btn clickable mr_12' onClick={reload}>
 						{t('translation:common.reload')}
 					</button>
-					<button className='btn btn_main clickable' onClick={clearStorage}>
+					<button className='btn clickable' onClick={clearStorage}>
 						{t('translation:common.clear_storage')}
 					</button>
 				</div>

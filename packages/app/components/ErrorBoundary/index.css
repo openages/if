@@ -6,23 +6,31 @@
 		.error_wrap {
 			line-height: 1;
 
-			.title {
-				font-size: 24px;
-				font-weight: bold;
+			.img {
+				max-width: 180px;
 				margin-bottom: 12px;
 			}
 
-			.desc {
+			.title {
 				font-size: 16px;
-				color: var(--color_text_grey);
-				margin-bottom: 24px;
+				margin-bottom: 9px;
+			}
+
+			.desc {
+				margin-bottom: 18px;
 			}
 
 			.actions_wrap {
 				.btn {
 					width: 90px;
 					height: 30px;
-					border-radius: 15px;
+					border-radius: var(--radius);
+					background-color: transparent;
+					border: var(--border);
+
+					&:hover {
+						border-color: var(--color_text);
+					}
 				}
 			}
 		}
