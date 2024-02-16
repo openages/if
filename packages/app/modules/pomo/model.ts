@@ -207,7 +207,7 @@ export default class Index {
 			session.work_time = getGoingTime(this.data.work_in)
 
 			const time = getTime(getGoingTime(this.data.work_in), true) as { hours: number; minutes: number }
-			const percent = ((time.minutes * 100) / 60).toFixed(2)
+			const percent = parseFloat(((time.minutes * 100) / 60).toFixed(2))
 
 			$app.Event.emit('global.app.updateTimer', {
 				in: { hours: fillTimeText(time.hours), minutes: fillTimeText(time.minutes) },
@@ -220,7 +220,7 @@ export default class Index {
 		if (this.data.current === 'work') {
 			const going_time = getGoingTime(this.data.work_in)
 			const left_time = session.work_time - going_time
-			const percent = ((going_time * 100) / session.work_time).toFixed(2)
+			const percent = parseFloat(((going_time * 100) / session.work_time).toFixed(2))
 
 			$app.Event.emit('global.app.updateTimer', { in: getTime(left_time), percent })
 		}
@@ -228,7 +228,7 @@ export default class Index {
 		if (this.data.current === 'break') {
 			const going_time = getGoingTime(this.data.break_in)
 			const left_time = session.break_time - going_time
-			const percent = ((going_time * 100) / session.break_time).toFixed(2)
+			const percent = parseFloat(((going_time * 100) / session.break_time).toFixed(2))
 
 			$app.Event.emit('global.app.updateTimer', { in: getTime(left_time), percent })
 		}
@@ -236,7 +236,7 @@ export default class Index {
 		if (this.data.current === 'work' && getGoingTime(this.data.work_in) >= session.work_time) {
 			this.data.current = 'break'
 
-			this.updatePomo()
+			this.stopRecord(true)
 			this.setActivity('work', session.work_time)
 		}
 
@@ -245,7 +245,7 @@ export default class Index {
 			this.data.work_in = 0
 			this.data.break_in = 0
 
-			this.updatePomo()
+			this.stopRecord(true)
 			this.setActivity('break', session.break_time)
 
 			if (this.data.continuous_mode) {
@@ -258,8 +258,6 @@ export default class Index {
 
 				return this.toggleGoing(true)
 			}
-
-			$app.Event.emit('global.app.updateTimer', null)
 		}
 	}
 
@@ -285,10 +283,10 @@ export default class Index {
 		}, 1000)
 	}
 
-	stopRecord() {
+	stopRecord(ignoreTimer?: boolean) {
 		if (!this.record_timer) return
 
-		$app.Event.emit('global.app.updateTimer', null)
+		if (!ignoreTimer) $app.Event.emit('global.app.updateTimer', null)
 
 		clearInterval(this.record_timer)
 

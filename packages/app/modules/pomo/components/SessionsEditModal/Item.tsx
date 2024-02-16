@@ -1,6 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { Popover } from 'antd'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -25,6 +25,22 @@ const Index = (props: IPropsSessionsEditModalItem) => {
 	const onUpdate = useMemoizedFn(v => update(index, v))
 	const onEditOpenChange = useMemoizedFn((v?: boolean) => setEditOpen(v ? v : false))
 
+	const work_height = useMemo(() => {
+		if (work_time < 50) return 60
+
+		if (flow_mode) {
+			return work_time >= 60 ? 90 : work_time * 1.2
+		}
+
+		return work_time * 2.1
+	}, [flow_mode, work_time])
+
+	const break_height = useMemo(() => {
+		if (break_time < 30) return 30
+
+		return break_time * 2.1
+	}, [flow_mode, break_time])
+
 	return (
 		<div
 			id={item.id}
@@ -37,15 +53,7 @@ const Index = (props: IPropsSessionsEditModalItem) => {
 					'work_time time w_100 flex justify_center align_center relative',
 					flow_mode && 'flow_mode'
 				)}
-				style={{
-					height: !flow_mode
-						? work_time * 2.1
-						: work_time >= 60
-						  ? 90
-						  : work_time < 50
-							  ? 60
-							  : work_time * 1.2
-				}}
+				style={{ height: work_height }}
 			>
 				{!flow_mode && timeline?.current === 'work' && (
 					<span className='timeline absolute' style={{ top: timeline?.time * 2.1 }}></span>
@@ -95,7 +103,7 @@ const Index = (props: IPropsSessionsEditModalItem) => {
 			{!flow_mode && (
 				<div
 					className='break_time time w_100 flex justify_center align_center relative'
-					style={{ height: break_time * 2.1 }}
+					style={{ height: break_height }}
 				>
 					{timeline?.current === 'break' && (
 						<span className='timeline absolute' style={{ top: timeline?.time * 2.1 }}></span>

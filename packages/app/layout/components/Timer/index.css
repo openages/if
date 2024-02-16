@@ -1,6 +1,25 @@
+@keyframes blink {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
 ._local {
+	&.blink {
+		:local {
+			animation: blink 1s infinite;
+		}
+	}
+
 	:global {
 		.if-progress-text {
+			color: var(--color_text) !important;
 			font-size: 10px !important;
 		}
 	}
