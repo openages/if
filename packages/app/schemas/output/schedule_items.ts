@@ -121,6 +121,13 @@ export default {
                         "type": "string",
                         "maxLength": 30
                   },
+                  "type": {
+                        "type": "string",
+                        "enum": [
+                              "calendar",
+                              "timeline"
+                        ]
+                  },
                   "tag": {
                         "type": "string",
                         "maxLength": 30
@@ -150,6 +157,7 @@ export default {
             "required": [
                   "id",
                   "file_id",
+                  "type",
                   "tag",
                   "text",
                   "todos",

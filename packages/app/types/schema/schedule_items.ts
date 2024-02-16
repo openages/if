@@ -17,6 +17,7 @@ export namespace Schedule {
 		id: string
 		/** @maxLength 30 */
 		file_id: string
+		type: 'calendar' | 'timeline'
 		/** @maxLength 30 */
 		tag: string
 		text: string
