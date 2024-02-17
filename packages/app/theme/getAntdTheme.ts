@@ -62,10 +62,10 @@ export default (theme: Theme, color_main: string) => {
 				optionActiveBg: vars.color_bg_2
 			},
 			Segmented: {
-				borderRadiusSM: 20,
-				borderRadiusXS: 20,
-				controlHeightSM: 20,
-				colorBgLayout: vars.color_bg_2
+				borderRadiusSM: 6,
+				borderRadiusXS: 4,
+				controlHeightSM: 24,
+				colorBgLayout: vars.color_bg_1
 			},
 			Slider: {
 				handleSize: 8,

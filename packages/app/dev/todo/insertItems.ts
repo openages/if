@@ -19,7 +19,11 @@ export default async () => {
 
 	args.file_id = one_dirtree[0].id
 
-	const one_module_setting = await $db.module_setting.find().sort({ create_at: 'asc' }).limit(1).exec()
+	const one_module_setting = await $db.module_setting
+		.find({ selector: { module: 'todo' } })
+		.sort({ create_at: 'asc' })
+		.limit(1)
+		.exec()
 
 	if (!one_module_setting.length) return
 

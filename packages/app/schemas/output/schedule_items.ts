@@ -2,13 +2,6 @@ export default {
       "Schedule.Setting": {
             "type": "object",
             "properties": {
-                  "mode": {
-                        "type": "string",
-                        "enum": [
-                              "timeline",
-                              "fixed"
-                        ]
-                  },
                   "tags": {
                         "type": "array",
                         "items": {
@@ -33,7 +26,6 @@ export default {
                   }
             },
             "required": [
-                  "mode",
                   "tags"
             ]
       },
@@ -68,13 +60,6 @@ export default {
                   "setting": {
                         "type": "object",
                         "properties": {
-                              "mode": {
-                                    "type": "string",
-                                    "enum": [
-                                          "timeline",
-                                          "fixed"
-                                    ]
-                              },
                               "tags": {
                                     "type": "array",
                                     "items": {
@@ -99,7 +84,6 @@ export default {
                               }
                         },
                         "required": [
-                              "mode",
                               "tags"
                         ]
                   }
@@ -125,7 +109,8 @@ export default {
                         "type": "string",
                         "enum": [
                               "calendar",
-                              "timeline"
+                              "timeline",
+                              "fixed"
                         ]
                   },
                   "tag": {

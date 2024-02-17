@@ -143,6 +143,22 @@
 		}
 	}
 
+	.if-picker-week-panel {
+		.if-picker-body {
+			padding: 0 2px;
+
+			.if-picker-content {
+				tbody {
+					tr {
+						td {
+							padding: 3px 0;
+						}
+					}
+				}
+			}
+		}
+	}
+
 	.if-picker-month-panel,
 	.if-picker-year-panel,
 	.if-picker-decade-panel {

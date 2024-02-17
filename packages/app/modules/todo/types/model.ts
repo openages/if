@@ -1,4 +1,4 @@
-import type { Todo } from '@/types'
+import type { Todo, Tag } from '@/types'
 import type { Dayjs } from 'dayjs'
 
 export type Mode = 'list' | 'kanban' | 'table'
@@ -6,7 +6,7 @@ export type KanbanMode = 'angle' | 'tag'
 
 export interface KanbanItems {
 	[key: string]: {
-		dimension: { type: 'angle'; value: Todo.Angle } | { type: 'tag'; value: Todo.Tag }
+		dimension: { type: 'angle'; value: Todo.Angle } | { type: 'tag'; value: Tag }
 		items: Array<Todo.Todo>
 	}
 }

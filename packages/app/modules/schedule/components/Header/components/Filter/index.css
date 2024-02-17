@@ -1,4 +1,17 @@
 ._local {
+	right: 9px;
+
 	:global {
+		.btn_filter {
+			width: 24px;
+			height: 24px;
+			padding: 0;
+			border-radius: var(--radius_small);
+			background-color: transparent;
+
+			&:hover {
+				background-color: var(--color_bg_2);
+			}
+		}
 	}
 }

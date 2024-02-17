@@ -2,7 +2,6 @@ import { Tag } from '../common'
 
 export namespace Schedule {
 	export interface Setting {
-		mode: 'timeline' | 'fixed'
 		tags: Array<Tag>
 	}
 
@@ -17,7 +16,7 @@ export namespace Schedule {
 		id: string
 		/** @maxLength 30 */
 		file_id: string
-		type: 'calendar' | 'timeline'
+		type: 'calendar' | 'timeline' | 'fixed'
 		/** @maxLength 30 */
 		tag: string
 		text: string
