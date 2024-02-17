@@ -14,10 +14,10 @@
 			}
 		}
 
-		.view_toggle_wrap {
+		.toggle_wrap {
 			height: 24px;
 
-			.view_item {
+			.toggle_item {
 				width: 24px;
 				border-radius: var(--radius_small);
 				color: rgba(var(--color_text_rgb), 0.3);

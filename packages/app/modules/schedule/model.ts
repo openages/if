@@ -3,12 +3,13 @@ import { injectable } from 'tsyringe'
 
 import { File } from '@/models'
 
-import type { View } from './types/model'
+import type { View, Scale } from './types/model'
 
 @injectable()
 export default class Index {
 	id = ''
 	view = 'calendar' as View
+	scale = 'week' as Scale
 
 	constructor(public file: File) {
 		makeAutoObservable(this, {}, { autoBind: true })

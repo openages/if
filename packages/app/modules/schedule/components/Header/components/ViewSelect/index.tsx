@@ -1,6 +1,6 @@
 import { Tooltip } from 'antd'
 
-import { views } from '@/appdata/schedule'
+import { scales, views } from '@/appdata/schedule'
 import { ListChecks } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -12,12 +12,24 @@ const Index = () => {
 				<ListChecks></ListChecks>
 			</button>
 			<div className='d_line'></div>
-			<div className='view_toggle_wrap flex align_center'>
+			<div className='toggle_wrap flex align_center'>
 				{views.map(item => (
-					<Tooltip title={item.value}>
+					<Tooltip title={item.value} key={item.value}>
 						<div
-							className='view_item h_100 flex justify_center align_center clickable'
-							key={item.value}
+							className='toggle_item h_100 flex justify_center align_center clickable'
+							data-key={item.value}
+						>
+							{item.icon}
+						</div>
+					</Tooltip>
+				))}
+			</div>
+			<div className='d_line'></div>
+			<div className='toggle_wrap flex align_center'>
+				{scales.map(item => (
+					<Tooltip title={item.value} key={item.value}>
+						<div
+							className='toggle_item h_100 flex justify_center align_center clickable'
 							data-key={item.value}
 						>
 							{item.icon}
