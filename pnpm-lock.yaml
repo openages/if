@@ -114,8 +114,8 @@ importers:
         specifier: ^3.13.7
         version: 3.13.7
       i18next:
-        specifier: ^23.8.2
-        version: 23.8.2
+        specifier: ^23.8.3
+        version: 23.8.3
       js-xxhash:
         specifier: ^3.0.1
         version: 3.0.1
@@ -166,7 +166,7 @@ importers:
         version: 4.1.4(react-dom@0.0.0-experimental-03d6f7cf0-20240209)(react@0.0.0-experimental-03d6f7cf0-20240209)
       react-i18next:
         specifier: ^13.5.0
-        version: 13.5.0(i18next@23.8.2)(react-dom@0.0.0-experimental-03d6f7cf0-20240209)(react@0.0.0-experimental-03d6f7cf0-20240209)
+        version: 13.5.0(i18next@23.8.3)(react-dom@0.0.0-experimental-03d6f7cf0-20240209)(react@0.0.0-experimental-03d6f7cf0-20240209)
       react-icons:
         specifier: ^4.12.0
         version: 4.12.0(react@0.0.0-experimental-03d6f7cf0-20240209)
@@ -250,8 +250,8 @@ importers:
         specifier: ^20.11.19
         version: 20.11.19
       '@types/react':
-        specifier: ^18.2.55
-        version: 18.2.55
+        specifier: ^18.2.56
+        version: 18.2.56
       '@types/react-dom':
         specifier: ^18.2.19
         version: 18.2.19
@@ -259,11 +259,11 @@ importers:
         specifier: ^0.16.8
         version: 0.16.8
       bun:
-        specifier: ^1.0.26
-        version: 1.0.26
+        specifier: ^1.0.27
+        version: 1.0.27
       bun-types:
-        specifier: ^1.0.26
-        version: 1.0.26
+        specifier: ^1.0.27
+        version: 1.0.27
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -2571,8 +2571,24 @@ packages:
     dev: true
     optional: true
 
+  /@oven/bun-darwin-aarch64@1.0.27:
+    resolution: {integrity: sha512-AGmJyFjzCxywxP73Yos7dbvko/nkkIoZc/anLM5hu2weXsWdAeOmO6DtTQ3E+GfOZkRBe5kNyEGm9sjUa42y+A==}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
   /@oven/bun-darwin-x64-baseline@1.0.26:
     resolution: {integrity: sha512-ssVJJs6tAvVZKnCx5bXAXZ05nSbfLHJ4qD/XFlVYb+3aue81YhXzQpbsOr9DShv209rBp9756SqHs9KZH66cbQ==}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@oven/bun-darwin-x64-baseline@1.0.27:
+    resolution: {integrity: sha512-WvQtVN2v9cTdr7Xx/HLRRdQFGCwV9rmG9ovTY/Q7Rh/+HLv8s3BuWe51K4lO6ZcDVMmmEzfGQO127yavMVH9Sg==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
@@ -2587,8 +2603,24 @@ packages:
     dev: true
     optional: true
 
+  /@oven/bun-darwin-x64@1.0.27:
+    resolution: {integrity: sha512-pB3KOsz2TGAm3zH7kSCxVFSIBwLCWdEpOqwzux6OBkRmavDBEwvzt06Sg+E393PnI6rnrli7jdwSoWr2tU5d/w==}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
   /@oven/bun-linux-aarch64@1.0.26:
     resolution: {integrity: sha512-YSG6pOFMpXquGf3i4/Ta05NAlsSkiZVk5P5EAlfO1fnJANlkcu1QfD/IYvddQ5YY4aOTwlQFqA29pYxYj+2A/A==}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@oven/bun-linux-aarch64@1.0.27:
+    resolution: {integrity: sha512-5RFV1Jmniyzf5bfoR72ffu4/EFjoS9nMeNU7V6LJM8TXq01vcrk+OoR3Cz8xPskIIT7itERPDFtRbIPTopAkFQ==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
@@ -2603,8 +2635,24 @@ packages:
     dev: true
     optional: true
 
+  /@oven/bun-linux-x64-baseline@1.0.27:
+    resolution: {integrity: sha512-NgZz/oYBk1oqsGVUTcswt/cl6/YqyBjzo9WQxrAqwKUCYkk309EsZ/dFGCQ9PlZZaDR+ExtEGbxgrDRV2eVR5Q==}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
   /@oven/bun-linux-x64@1.0.26:
     resolution: {integrity: sha512-ErEH7yBkWIt01qROMysM6ZQqz8epY+2DtQW0rfjKbaPm8JuEdZVyeA5zoKES3e2J37FUY073MdbwdzE5KPX2cQ==}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@oven/bun-linux-x64@1.0.27:
+    resolution: {integrity: sha512-3C7aGVQ/prk+PLa+GkcAm8IuCeIRQt2pQDojNrXNJQRyNUrhCUbBQ2SGEi06WmHMRMgDod7LwCiBk1aLnBK90g==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
@@ -2669,8 +2717,8 @@ packages:
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
     dev: false
 
-  /@rc-component/color-picker@1.5.1(react-dom@0.0.0-experimental-03d6f7cf0-20240209)(react@0.0.0-experimental-03d6f7cf0-20240209):
-    resolution: {integrity: sha512-onyAFhWKXuG4P162xE+7IgaJkPkwM94XlOYnQuu69XdXWMfxpeFi6tpJBsieIMV7EnyLV5J3lDzdLiFeK0iEBA==}
+  /@rc-component/color-picker@1.5.2(react-dom@0.0.0-experimental-03d6f7cf0-20240209)(react@0.0.0-experimental-03d6f7cf0-20240209):
+    resolution: {integrity: sha512-YJXujYzYFAEtlXJXy0yJUhwzUWPTcniBZto+wZ/vnACmFnUTNR7dH+NOeqSwMMsssh74e9H5Jfpr5LAH2PYqUw==}
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
@@ -3682,13 +3730,13 @@ packages:
   /@types/react-dom@18.2.19:
     resolution: {integrity: sha512-aZvQL6uUbIJpjZk4U8JZGbau9KDeAwMfmhyWorxgBkqDIEf6ROjRozcmPIicqsUwPUjbkDfHKgGee1Lq65APcA==}
     dependencies:
-      '@types/react': 18.2.55
+      '@types/react': 18.2.42
     dev: true
 
   /@types/react-reconciler@0.28.8:
     resolution: {integrity: sha512-SN9c4kxXZonFhbX4hJrZy37yw9e7EIxcpHCxQv5JUS18wDE5ovkQKlqQEkufdJCCMfuI9BnjUJvhYeJ9x5Ra7g==}
     dependencies:
-      '@types/react': 18.2.55
+      '@types/react': 18.2.56
     dev: false
 
   /@types/react@18.2.42:
@@ -3707,8 +3755,8 @@ packages:
       csstype: 3.1.3
     dev: true
 
-  /@types/react@18.2.55:
-    resolution: {integrity: sha512-Y2Tz5P4yz23brwm2d7jNon39qoAtMMmalOQv6+fEFt1mT+FcM3D841wDpoUvFXhaYenuROCy3FZYqdTjM7qVyA==}
+  /@types/react@18.2.56:
+    resolution: {integrity: sha512-NpwHDMkS/EFZF2dONFQHgkPRwhvgq/OAvIaGQzxGSBmaeR++kTg6njr15Vatz0/2VcCEwJQFi6Jf4Q0qBu0rLA==}
     dependencies:
       '@types/prop-types': 15.7.11
       '@types/scheduler': 0.16.8
@@ -4161,7 +4209,7 @@ packages:
       '@ant-design/icons': 5.3.0(react-dom@0.0.0-experimental-03d6f7cf0-20240209)(react@0.0.0-experimental-03d6f7cf0-20240209)
       '@ant-design/react-slick': 1.0.2(react@0.0.0-experimental-03d6f7cf0-20240209)
       '@ctrl/tinycolor': 3.6.1
-      '@rc-component/color-picker': 1.5.1(react-dom@0.0.0-experimental-03d6f7cf0-20240209)(react@0.0.0-experimental-03d6f7cf0-20240209)
+      '@rc-component/color-picker': 1.5.2(react-dom@0.0.0-experimental-03d6f7cf0-20240209)(react@0.0.0-experimental-03d6f7cf0-20240209)
       '@rc-component/mutate-observer': 1.1.0(react-dom@0.0.0-experimental-03d6f7cf0-20240209)(react@0.0.0-experimental-03d6f7cf0-20240209)
       '@rc-component/tour': 1.12.3(react-dom@0.0.0-experimental-03d6f7cf0-20240209)(react@0.0.0-experimental-03d6f7cf0-20240209)
       '@rc-component/trigger': 1.18.3(react-dom@0.0.0-experimental-03d6f7cf0-20240209)(react@0.0.0-experimental-03d6f7cf0-20240209)
@@ -4427,7 +4475,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001587
+      caniuse-lite: 1.0.30001588
       electron-to-chromium: 1.4.673
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
@@ -4456,6 +4504,13 @@ packages:
       '@types/ws': 8.5.10
     dev: true
 
+  /bun-types@1.0.27:
+    resolution: {integrity: sha512-fwaJ3Ey6InD4nAkUd+AwzHDmxGdWWRy/SWh0QQEw7QF/ABnoqSv+iQrA5tIK4TyUyR/V9446G+w53+sOmJOJyA==}
+    dependencies:
+      '@types/node': 20.11.19
+      '@types/ws': 8.5.10
+    dev: true
+
   /bun@1.0.26:
     resolution: {integrity: sha512-+aSzKvGLE9hWwCRDwvnhoMTDntCYEk5bKn16L0QGD0v630WJMPhazAMxaSJmfq6dSAtiqPpauPpmHbzwoGPjlQ==}
     cpu: [arm64, x64]
@@ -4469,6 +4524,21 @@ packages:
       '@oven/bun-linux-aarch64': 1.0.26
       '@oven/bun-linux-x64': 1.0.26
       '@oven/bun-linux-x64-baseline': 1.0.26
+    dev: true
+
+  /bun@1.0.27:
+    resolution: {integrity: sha512-7f5yrsJpppyhqi9uowS55xxu4jyb+4zrv0g9OGoLzu/nyOFjo9h4gugt/v6DjagCy8vZPlwqlaJkEBE7//opCQ==}
+    cpu: [arm64, x64]
+    os: [darwin, linux]
+    hasBin: true
+    requiresBuild: true
+    optionalDependencies:
+      '@oven/bun-darwin-aarch64': 1.0.27
+      '@oven/bun-darwin-x64': 1.0.27
+      '@oven/bun-darwin-x64-baseline': 1.0.27
+      '@oven/bun-linux-aarch64': 1.0.27
+      '@oven/bun-linux-x64': 1.0.27
+      '@oven/bun-linux-x64-baseline': 1.0.27
     dev: true
 
   /bytes@3.0.0:
@@ -4518,8 +4588,8 @@ packages:
     resolution: {integrity: sha512-vsJG3V5vgfduaQGVxL53uSX/HUzxyr2eA8xCo36OLal7sRcSZbibJtLeh0qja4sFOr/QQGt4opB4tOy+eOgAxg==}
     dev: true
 
-  /caniuse-lite@1.0.30001587:
-    resolution: {integrity: sha512-HMFNotUmLXn71BQxg8cijvqxnIAofforZOwGsxyXJ0qugTdspUF4sPSJ2vhgprHCB996tIDzEq1ubumPDV8ULA==}
+  /caniuse-lite@1.0.30001588:
+    resolution: {integrity: sha512-+hVY9jE44uKLkH0SrUTqxjxqNTOWHsbnQDIKjwkZ3lNTzUUVdBLBGXtj/q5Mp5u98r3droaZAewQuEDzjQdZlQ==}
     dev: true
 
   /chalk@2.4.2:
@@ -5761,8 +5831,8 @@ packages:
     engines: {node: '>=16.17.0'}
     dev: true
 
-  /i18next@23.8.2:
-    resolution: {integrity: sha512-Z84zyEangrlERm0ZugVy4bIt485e/H8VecGUZkZWrH7BDePG6jT73QdL9EA1tRTTVVMpry/MgWIP1FjEn0DRXA==}
+  /i18next@23.8.3:
+    resolution: {integrity: sha512-IQn6Tfn+XkIRHjC/z3uQSGLhsRC6Y14kgyrsgoPqnFD9MqbNt2B9MF3Ch4p114pEVPQ2qktE2nd0aYr7UxRLKA==}
     dependencies:
       '@babel/runtime': 7.23.9
     dev: false
@@ -7453,7 +7523,7 @@ packages:
       smooth-scroll-into-view-if-needed: 1.1.33
     dev: false
 
-  /react-i18next@13.5.0(i18next@23.8.2)(react-dom@0.0.0-experimental-03d6f7cf0-20240209)(react@0.0.0-experimental-03d6f7cf0-20240209):
+  /react-i18next@13.5.0(i18next@23.8.3)(react-dom@0.0.0-experimental-03d6f7cf0-20240209)(react@0.0.0-experimental-03d6f7cf0-20240209):
     resolution: {integrity: sha512-CFJ5NDGJ2MUyBohEHxljOq/39NQ972rh1ajnadG9BjTk+UXbHLq4z5DKEbEQBDoIhUmmbuS/fIMJKo6VOax1HA==}
     peerDependencies:
       i18next: '>= 23.2.3'
@@ -7468,7 +7538,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.9
       html-parse-stringify: 3.0.1
-      i18next: 23.8.2
+      i18next: 23.8.3
       react: 0.0.0-experimental-03d6f7cf0-20240209
       react-dom: 0.0.0-experimental-03d6f7cf0-20240209(react@0.0.0-experimental-03d6f7cf0-20240209)
     dev: false
