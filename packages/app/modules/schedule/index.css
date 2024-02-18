@@ -5,3 +5,15 @@
 .content {
 	height: calc(100% - 36px);
 }
+
+.schedule {
+	width: 100%;
+
+	&.visible_task_panel {
+		width: calc(100% - 180px);
+	}
+}
+
+.view_wrap {
+	height: calc(100% - 36px);
+}

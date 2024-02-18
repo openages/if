@@ -1,0 +1,65 @@
+._local {
+	height: 36px;
+	background-color: var(--color_bg);
+	border-bottom: var(--border);
+	font-size: 12px;
+	line-height: 1;
+	user-select: none;
+
+	:global {
+		.weekday_item {
+			width: calc((100% - 1px) / 7);
+			padding: 0 9px;
+			border-right: var(--border);
+			white-space: nowrap;
+
+			&:last-child {
+				border-right: none;
+			}
+
+			&:nth-last-of-type(1),
+			&:nth-last-of-type(2) {
+				background-color: var(--color_bg_1);
+			}
+
+			&.today {
+				.date {
+					font-size: 10px;
+					padding: 1px 2px;
+					border-radius: 3px;
+					color: var(--color_text);
+					border: 1px solid var(--color_text);
+				}
+			}
+
+			.date {
+				color: var(--color_text_softlight);
+				font-size: 10px;
+			}
+
+			.lunar {
+				color: var(--color_text_softlight);
+				font-size: 10px;
+			}
+
+			.extra_wrap {
+				.holiday {
+					color: var(--color_main);
+					font-weight: bold;
+				}
+
+				.status {
+					font-size: 10px;
+
+					&.work {
+						color: var(--color_warning);
+					}
+
+					&.relax {
+						color: var(--color_success);
+					}
+				}
+			}
+		}
+	}
+}

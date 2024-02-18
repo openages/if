@@ -1,6 +1,11 @@
-import { MdCalendarViewMonth, MdOutlineViewWeek } from 'react-icons/md'
-
-import { AlignCenterVertical, CalendarCheck, Compass } from '@phosphor-icons/react'
+import {
+	AlignCenterVertical,
+	CalendarCheck,
+	Compass,
+	GridNine,
+	SquareSplitHorizontal,
+	Sun
+} from '@phosphor-icons/react'
 
 export const views = [
 	{
@@ -19,11 +24,16 @@ export const views = [
 
 export const scales = [
 	{
+		value: 'day',
+		icon: <Sun />,
+		when: ['calendar']
+	},
+	{
 		value: 'week',
-		icon: <MdOutlineViewWeek style={{ fontSize: 13 }} />
+		icon: <SquareSplitHorizontal />
 	},
 	{
 		value: 'month',
-		icon: <MdCalendarViewMonth style={{ fontSize: 13 }} />
+		icon: <GridNine />
 	}
 ]
