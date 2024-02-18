@@ -1,0 +1,16 @@
+._local {
+	width: 48px;
+	max-height: 100%;
+	overflow-y: scroll;
+	font-family: 'Avenir';
+	font-size: 12px;
+
+	:global {
+		.hours_wrap {
+			.hour_item {
+				height: 48px;
+				border-bottom: var(--border);
+			}
+		}
+	}
+}

@@ -1,3 +1,4 @@
+import { fillTimeText } from '@/modules/pomo/utils'
 import {
 	AlignCenterVertical,
 	CalendarCheck,
@@ -37,3 +38,5 @@ export const scales = [
 		icon: <GridNine />
 	}
 ]
+
+export const hours = Array.from({ length: 24 }, (_, index) => fillTimeText(index))

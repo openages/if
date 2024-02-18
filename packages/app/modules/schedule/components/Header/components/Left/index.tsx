@@ -5,10 +5,20 @@ import { ListChecks } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
-const Index = () => {
+import type { IPropsHeaderLeft } from '../../../../types'
+
+const Index = (props: IPropsHeaderLeft) => {
+	const { view, scale, visible_task_panel, toggleVisibleTaskPanel, changeView, changeScale } = props
+
 	return (
 		<div className={$cx('absolute flex align_center', styles._local)}>
-			<button className='btn_toggle_panel flex justify_center align_center clickable'>
+			<button
+				className={$cx(
+					'btn_toggle_panel flex justify_center align_center clickable',
+					visible_task_panel && 'active'
+				)}
+				onClick={toggleVisibleTaskPanel}
+			>
 				<ListChecks></ListChecks>
 			</button>
 			<div className='d_line'></div>
@@ -16,7 +26,10 @@ const Index = () => {
 				{views.map(item => (
 					<Tooltip title={item.value} key={item.value}>
 						<div
-							className='toggle_item h_100 flex justify_center align_center clickable'
+							className={$cx(
+								'toggle_item h_100 flex justify_center align_center clickable',
+								view === item.value && 'active'
+							)}
 							data-key={item.value}
 						>
 							{item.icon}
@@ -29,7 +42,10 @@ const Index = () => {
 				{scales.map(item => (
 					<Tooltip title={item.value} key={item.value}>
 						<div
-							className='toggle_item h_100 flex justify_center align_center clickable'
+							className={$cx(
+								'toggle_item h_100 flex justify_center align_center clickable',
+								scale === item.value && 'active'
+							)}
 							data-key={item.value}
 						>
 							{item.icon}

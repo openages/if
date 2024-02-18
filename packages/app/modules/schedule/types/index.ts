@@ -12,7 +12,17 @@ export interface IPropsHeader {
 	current: Model['current']
 	visible_task_panel: Model['visible_task_panel']
 	step: Model['step']
+	toggleVisibleTaskPanel: () => boolean
+	changeView: (v: Model['view']) => void
+	changeScale: (v: Model['scale']) => void
+	changeCurrent: (v: Model['current']) => void
 }
+
+export interface IPropsHeaderLeft
+	extends Pick<
+		IPropsHeader,
+		'view' | 'scale' | 'visible_task_panel' | 'toggleVisibleTaskPanel' | 'changeView' | 'changeScale'
+	> {}
 
 export interface IPropsHeaderCenter {
 	current: Model['current']

@@ -4,7 +4,7 @@ import { useLayoutEffect, useState } from 'react'
 import { match } from 'ts-pattern'
 import { container } from 'tsyringe'
 
-import { CalendarView, DateScale, Header, SettingsModal, TaskPanel, TimelineView } from './components'
+import { CalendarView, DateScale, Header, SettingsModal, TaskPanel, Timeline, TimelineView } from './components'
 import styles from './index.css'
 import Model from './model'
 
@@ -23,7 +23,11 @@ const Index = ({ id }: IProps) => {
 		scale: x.scale,
 		current: x.current,
 		visible_task_panel: x.visible_task_panel,
-		step: useMemoizedFn(x.step)
+		step: useMemoizedFn(x.step),
+		toggleVisibleTaskPanel: useMemoizedFn(() => (x.visible_task_panel = !x.visible_task_panel)),
+		changeView: useMemoizedFn((v: Model['view']) => (x.view = v)),
+		changeScale: useMemoizedFn((v: Model['scale']) => (x.scale = v)),
+		changeCurrent: useMemoizedFn((v: Model['current']) => (x.current = v))
 	}
 
 	const props_date_scale: IPropsDateScale = {
@@ -45,11 +49,14 @@ const Index = ({ id }: IProps) => {
 				>
 					<DateScale {...props_date_scale}></DateScale>
 					<div className={$cx('flex', styles.view_wrap)}>
-						{match(x.view)
-							.with('calendar', () => <CalendarView></CalendarView>)
-							.with('timeline', () => <TimelineView></TimelineView>)
-							.with('fixed', () => <TimelineView></TimelineView>)
-							.exhaustive()}
+						<Timeline></Timeline>
+						<div className={$cx('flex', styles.view)}>
+							{match(x.view)
+								.with('calendar', () => <CalendarView></CalendarView>)
+								.with('timeline', () => <TimelineView></TimelineView>)
+								.with('fixed', () => <TimelineView></TimelineView>)
+								.exhaustive()}
+						</div>
 					</div>
 				</div>
 			</div>

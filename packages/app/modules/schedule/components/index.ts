@@ -1,6 +1,7 @@
 export { default as Header } from './Header'
 export { default as TaskPanel } from './TaskPanel'
 export { default as DateScale } from './DateScale'
+export { default as Timeline } from './Timeline'
 export { default as CalendarView } from './CalendarView'
 export { default as TimelineView } from './TimelineView'
 export { default as SettingsModal } from './SettingsModal'

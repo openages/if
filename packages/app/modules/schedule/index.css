@@ -16,4 +16,8 @@
 
 .view_wrap {
 	height: calc(100% - 36px);
+
+	.view {
+		width: calc(100% - 48px);
+	}
 }
