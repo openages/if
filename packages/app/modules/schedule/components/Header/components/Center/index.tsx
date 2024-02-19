@@ -21,7 +21,7 @@ const Index = (props: IPropsHeaderCenter) => {
 			<DatePicker
 				className='datepicker'
 				picker='week'
-				popupAlign={{ offset: [-60] }}
+				popupAlign={{ offset: [-66] }}
 				variant='borderless'
 				allowClear={false}
 				suffixIcon={null}

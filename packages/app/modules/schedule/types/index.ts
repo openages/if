@@ -1,6 +1,8 @@
-import { Schedule } from '@/types'
+import type { Schedule } from '@/types'
 
-import Model from '../model'
+import type Model from '../model'
+
+import type { MutableRefObject } from 'react'
 
 export interface IProps {
 	id: string
@@ -31,5 +33,23 @@ export interface IPropsHeaderCenter {
 
 export interface IPropsDateScale {
 	scale: Model['scale']
-	weekdays: Model['weekdays']
+	days: Model['days']
+}
+
+export interface IPropsCalendarView {
+	container: MutableRefObject<HTMLDivElement>
+	scale: Model['scale']
+	days: Model['days']
+	addTimeBlock: Model['addTimeBlock']
+}
+
+export interface IPropsCalendarViewDay {
+	day: Schedule.CalendarDay
+	counts: number
+	index: number
+}
+
+export interface IPropsCalendarContextMenu {
+	container: MutableRefObject<HTMLDivElement>
+	addTimeBlock: Model['addTimeBlock']
 }

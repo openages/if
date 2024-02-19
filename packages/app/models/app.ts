@@ -43,7 +43,7 @@ export default class Index {
 	}
 
 	init() {
-		this.utils.acts = [...useInstanceWatch(this)]
+		this.utils.acts.push(...useInstanceWatch(this))
 
 		this.on()
 	}

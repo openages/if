@@ -9,15 +9,11 @@ import styles from './index.css'
 import type { IPropsDateScale } from '../../types'
 
 const Index = (props: IPropsDateScale) => {
-	const { scale, weekdays } = props
+	const { scale, days } = props
 	const { i18n } = useTranslation()
 	const is_zh = i18n.language === 'zh'
 
-	const target_weekdays = useMemo(() => {
-		if (scale === 'day') return []
-
-		return scale === 'week' ? weekdays : getStaticWeekdays()
-	}, [scale, weekdays])
+	const target_weekdays = useMemo(() => (scale === 'month' ? getStaticWeekdays() : days), [scale, days])
 
 	return (
 		<div className={$cx('w_100 border_box flex', styles._local)}>

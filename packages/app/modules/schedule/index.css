@@ -16,6 +16,8 @@
 
 .view_wrap {
 	height: calc(100% - 36px);
+	overflow-y: scroll;
+	outline: none;
 
 	.view {
 		width: calc(100% - 48px);

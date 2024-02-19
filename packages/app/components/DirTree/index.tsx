@@ -15,7 +15,7 @@ import { Actions, DirItems, DragLine, Modal, Options, Search } from './component
 import styles from './index.css'
 import Model from './model'
 
-import type { DirTree, Extend } from '@/types'
+import type { Extend } from '@/types'
 import type { MouseEvent } from 'react'
 import type {
 	IProps,

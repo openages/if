@@ -20,12 +20,6 @@ export default class Index {
 	container_width = 0
 	resizing = false
 
-	constructor(public utils: Utils) {
-		makeAutoObservable(this, { watch: false }, { autoBind: true })
-
-		this.utils.acts = [setStorageWhenChange(['columns', 'focus'], this), ...useInstanceWatch(this)]
-	}
-
 	watch = {
 		columns(v) {
 			if (v.length) return
@@ -33,6 +27,12 @@ export default class Index {
 			this.focus = { column: -1, view: -1 }
 		}
 	} as Watch<Index>
+
+	constructor(public utils: Utils) {
+		makeAutoObservable(this, { watch: false }, { autoBind: true })
+
+		this.utils.acts = [setStorageWhenChange(['columns', 'focus'], this), ...useInstanceWatch(this)]
+	}
 
 	init() {
 		this.getObserver()

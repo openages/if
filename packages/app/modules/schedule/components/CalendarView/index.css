@@ -1,4 +1,43 @@
 ._local {
+	&.week {
+		:global {
+			.day_wrap {
+				&:nth-last-of-type(1),
+				&:nth-last-of-type(2) {
+					.hours_wrap {
+						.hour_item {
+							background-color: rgba(var(--color_text_rgb), 0.018);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.Day {
 	:global {
+		.hours_wrap {
+			.hour_item {
+				height: 48px;
+				border-bottom: var(--border);
+				border-left: var(--border);
+			}
+		}
+
+		.time_block {
+			background-color: var(--color_bg_1);
+			border: 1px solid var(--color_border);
+			border-radius: var(--radius_small_1);
+		}
+	}
+}
+
+.ContextMenu {
+	:global {
+		.menu_item {
+			padding: 0 6px;
+			min-height: 30px;
+		}
 	}
 }

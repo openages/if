@@ -1,4 +1,4 @@
-import { Tag } from '../common'
+import type { Tag } from '../common'
 
 export namespace Schedule {
 	export interface Setting {
@@ -34,4 +34,8 @@ export namespace Schedule {
 		 * */
 		end_time: number
 	}
+
+	export type CalendarItem = Item & { start: number; length: number }
+	export type CalendarDay = Array<CalendarItem>
+	export type CalendarDays = Array<CalendarDay>
 }

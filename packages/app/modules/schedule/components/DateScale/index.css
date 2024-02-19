@@ -9,7 +9,7 @@
 
 	:global {
 		.weekday_item {
-			width: calc((100% - 1px) / 7);
+			width: calc(100% / 7);
 			padding: 0 9px;
 			border-left: var(--border);
 			white-space: nowrap;
@@ -42,7 +42,6 @@
 			.extra_wrap {
 				.holiday {
 					color: var(--color_main);
-					font-weight: bold;
 				}
 
 				.status {

@@ -1,16 +1,19 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { match } from 'ts-pattern'
-import { container } from 'tsyringe'
+import { container as model_container } from 'tsyringe'
 
 import { CalendarView, DateScale, Header, SettingsModal, TaskPanel, Timeline, TimelineView } from './components'
 import styles from './index.css'
 import Model from './model'
 
-import type { IProps, IPropsDateScale, IPropsHeader } from './types'
+import type { IProps, IPropsDateScale, IPropsHeader, IPropsCalendarView } from './types'
+
 const Index = ({ id }: IProps) => {
-	const [x] = useState(() => container.resolve(Model))
+	const [x] = useState(() => model_container.resolve(Model))
+	const container = useRef<HTMLDivElement>(null)
+	const days = $copy(x.days)
 
 	useLayoutEffect(() => {
 		x.init({ id })
@@ -32,8 +35,17 @@ const Index = ({ id }: IProps) => {
 
 	const props_date_scale: IPropsDateScale = {
 		scale: x.scale,
-		weekdays: $copy(x.weekdays)
+		days
 	}
+
+	const props_calendar_view: IPropsCalendarView = {
+		container,
+		scale: x.scale,
+		days,
+		addTimeBlock: useMemoizedFn(x.addTimeBlock)
+	}
+
+	console.log(days)
 
 	return (
 		<div className={$cx('w_100 h_100 border_box flex flex_column', styles._local)}>
@@ -48,11 +60,13 @@ const Index = ({ id }: IProps) => {
 					)}
 				>
 					<DateScale {...props_date_scale}></DateScale>
-					<div className={$cx('flex', styles.view_wrap)}>
+					<div className={$cx('flex', styles.view_wrap)} ref={container}>
 						<Timeline></Timeline>
 						<div className={$cx('flex', styles.view)}>
 							{match(x.view)
-								.with('calendar', () => <CalendarView></CalendarView>)
+								.with('calendar', () => (
+									<CalendarView {...props_calendar_view}></CalendarView>
+								))
 								.with('timeline', () => <TimelineView></TimelineView>)
 								.with('fixed', () => <TimelineView></TimelineView>)
 								.exhaustive()}
