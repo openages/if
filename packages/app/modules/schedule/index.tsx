@@ -40,12 +40,12 @@ const Index = ({ id }: IProps) => {
 
 	const props_calendar_view: IPropsCalendarView = {
 		container,
+		view: x.view,
 		scale: x.scale,
-		days,
-		addTimeBlock: useMemoizedFn(x.addTimeBlock)
+		calendar_days: $copy(x.calendar_days),
+		addTimeBlock: useMemoizedFn(x.addTimeBlock),
+		updateTimeBlock: useMemoizedFn(x.updateTimeBlock)
 	}
-
-	console.log(days)
 
 	return (
 		<div className={$cx('w_100 h_100 border_box flex flex_column', styles._local)}>

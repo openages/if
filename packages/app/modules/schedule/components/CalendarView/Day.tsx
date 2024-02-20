@@ -1,21 +1,47 @@
 import { useMemoizedFn } from 'ahooks'
+import { useEffect, useState } from 'react'
 import { useContextMenu } from 'react-contexify'
 
 import { hours } from '@/appdata/schedule'
 
+import { collisionDetection, getStartByY } from '../../utils'
+import TimeBlock from '../TimeBlock'
 import styles from './index.css'
 
 import type { IPropsCalendarViewDay } from '../../types'
 import type { MouseEvent } from 'react'
 
 const Index = (props: IPropsCalendarViewDay) => {
-	const { day, counts, index } = props
+	const { container, day, counts, index, updateTimeBlock } = props
 	const { show } = useContextMenu({ id: 'timeblock_context_menu' })
+	const [signal, setSignal] = useState(null)
+
+	const clearSignal = useMemoizedFn(v => {
+		if (v === index) return
+
+		setSignal(null)
+	})
+
+	useEffect(() => {
+		$app.Event.on('schedule/context_menu/hidden', clearSignal)
+
+		return () => $app.Event.off('schedule/context_menu/hidden', clearSignal)
+	}, [])
 
 	const onContextMenu = useMemoizedFn((e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
 
-		show({ event: e, props: { index, y: e.clientY } })
+		$app.Event.emit('schedule/context_menu/hidden', index)
+
+		const start = getStartByY(container, e.clientY)
+		const length = start + 3 >= 72 ? 72 - start : 3
+
+		const target_length = collisionDetection(day, start, length)
+
+		if (!target_length) return
+
+		setSignal({ start, length: target_length })
+		show({ event: e, props: { index, start, length: target_length } })
 	})
 
 	return (
@@ -32,13 +58,10 @@ const Index = (props: IPropsCalendarViewDay) => {
 					></span>
 				))}
 			</div>
-			{/* {day.map((item, index) => (
-				<div
-					className='time_block w_100 border_box absolute top_0'
-					key={index}
-					style={{ transform: `translateY(${item.start * 16}px)`, height: item.length * 16 }}
-				></div>
-			))} */}
+			{signal && <TimeBlock item={{ ...signal }} signal updateTimeBlock={updateTimeBlock}></TimeBlock>}
+			{day.map(item => (
+				<TimeBlock item={item} key={item.id} updateTimeBlock={updateTimeBlock}></TimeBlock>
+			))}
 		</div>
 	)
 }

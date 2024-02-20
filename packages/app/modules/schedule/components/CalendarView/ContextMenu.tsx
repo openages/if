@@ -9,24 +9,22 @@ import type { IPropsCalendarContextMenu } from '../../types'
 import type { ItemProps } from 'react-contexify'
 
 const Index = (props: IPropsCalendarContextMenu) => {
-	const { container, addTimeBlock } = props
+	const { view, addTimeBlock } = props
 
 	const onAddTimeBlock: ItemProps['onClick'] = useMemoizedFn(({ props }) => {
-		const { index, y } = props
+		const { index, start, length } = props
 
-		if (!container.current) return
+		addTimeBlock(view, index, start, length)
+	})
 
-		const container_top = container.current.getBoundingClientRect().top
-		const scroll_top = container.current.scrollTop
+	const onHidden = useMemoizedFn((v: boolean) => {
+		if (v) return
 
-		const position = y - container_top + scroll_top
-		const start = Math.ceil(position / 16)
-
-		addTimeBlock(index, start)
+		$app.Event.emit('schedule/context_menu/hidden')
 	})
 
 	return (
-		<Menu id='timeblock_context_menu' className={styles.ContextMenu}>
+		<Menu id='timeblock_context_menu' className={styles.ContextMenu} onVisibilityChange={onHidden}>
 			<Item onClick={onAddTimeBlock}>
 				<div className='menu_item flex align_center'>
 					<Plus className='icon mr_4' size={16}></Plus>

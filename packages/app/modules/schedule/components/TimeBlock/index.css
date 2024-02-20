@@ -1,4 +1,113 @@
 ._local {
+	background-color: var(--color_bg_1);
+	border: 1px solid var(--color_border_light);
+	border-radius: var(--radius_small);
+	font-size: 12px;
+	overflow: hidden;
+
+	&:hover {
+		:global {
+			.btn_detail {
+				display: flex;
+			}
+		}
+	}
+
+	&.signal {
+		border-color: var(--color_text);
+		background-color: var(--color_bg);
+	}
+
+	&.small {
+		:global {
+			.btn_detail {
+				border-radius: 0;
+				border-bottom: none;
+			}
+
+			.text_wrap {
+				height: 14px;
+				padding: 0 3px;
+				white-space: nowrap;
+			}
+		}
+	}
+
+	&.middle {
+		padding: 2px 3px;
+
+		:global {
+			.text_wrap {
+				height: 12px;
+				padding: 0;
+				white-space: nowrap;
+			}
+
+			.time {
+				margin-top: 4px;
+			}
+		}
+	}
+
+	&.large {
+		padding: 6px;
+
+		:global {
+			.text_wrap {
+				padding: 0;
+				line-height: 16px;
+				white-space: nowrap;
+			}
+		}
+	}
+
+	&.xlarge {
+		padding: 6px;
+
+		:global {
+			.text_wrap {
+				padding: 0;
+				line-height: 16px;
+			}
+		}
+	}
+
 	:global {
+		.btn_detail {
+			width: 16px;
+			height: 16px;
+			border-bottom-left-radius: var(--radius_small);
+			border-left: var(--border);
+			border-bottom: var(--border);
+
+			&:hover {
+				background-color: var(--color_bg_2);
+			}
+		}
+
+		.text_scroll_wrap {
+			overflow-x: scroll;
+		}
+
+		.text_wrap {
+			line-height: 14px;
+			font-size: 12px;
+			outline: none;
+			font-weight: 500;
+
+			&:empty {
+				&::after {
+					content: attr(data-placeholder);
+					color: var(--color_text_light);
+				}
+			}
+		}
+
+		.time {
+			margin-top: 6px;
+			font-size: 10px;
+			line-height: 1;
+			color: var(--color_text_light);
+		}
 	}
 }

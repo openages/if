@@ -38,18 +38,28 @@ export interface IPropsDateScale {
 
 export interface IPropsCalendarView {
 	container: MutableRefObject<HTMLDivElement>
+	view: Model['view']
 	scale: Model['scale']
-	days: Model['days']
+	calendar_days: Model['calendar_days']
 	addTimeBlock: Model['addTimeBlock']
+	updateTimeBlock: Model['updateTimeBlock']
 }
 
 export interface IPropsCalendarViewDay {
+	container: MutableRefObject<HTMLDivElement>
 	day: Schedule.CalendarDay
 	counts: number
 	index: number
+	updateTimeBlock: Model['updateTimeBlock']
 }
 
 export interface IPropsCalendarContextMenu {
-	container: MutableRefObject<HTMLDivElement>
+	view: Model['view']
 	addTimeBlock: Model['addTimeBlock']
+}
+
+export interface IPropsCalendarViewTimeBlock {
+	item: Schedule.CalendarItem
+	signal?: boolean
+	updateTimeBlock: Model['updateTimeBlock']
 }

@@ -5,14 +5,21 @@ import styles from './index.css'
 import type { IPropsCalendarView } from '../../types'
 
 const Index = (props: IPropsCalendarView) => {
-	const { container, scale, days, addTimeBlock } = props
+	const { container, view, scale, calendar_days, addTimeBlock, updateTimeBlock } = props
 
 	return (
 		<div className={$cx('w_100 flex', styles._local, scale === 'week' && styles.week)}>
-			{days.map((day, index) => (
-				<Day day={day} counts={days.length} index={index} key={index}></Day>
+			{calendar_days.map((day, index) => (
+				<Day
+					container={container}
+					day={day}
+					counts={calendar_days.length}
+					index={index}
+					updateTimeBlock={updateTimeBlock}
+					key={index}
+				></Day>
 			))}
-			<ContextMenu container={container} addTimeBlock={addTimeBlock}></ContextMenu>
+			<ContextMenu view={view} addTimeBlock={addTimeBlock}></ContextMenu>
 		</div>
 	)
 }
