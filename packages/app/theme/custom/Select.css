@@ -105,4 +105,12 @@
 			font-size: 12px;
 		}
 	}
+
+	&.small {
+		.if-select-item {
+			min-height: unset;
+			padding: 4px 6px;
+			font-size: 12px;
+		}
+	}
 }

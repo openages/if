@@ -63,3 +63,8 @@ export interface IPropsCalendarViewTimeBlock {
 	signal?: boolean
 	updateTimeBlock: Model['updateTimeBlock']
 }
+
+export interface IPropsCalendarViewTimeBlockDetail {
+	item: Schedule.CalendarItem
+	updateTimeBlock: Model['updateTimeBlock']
+}
