@@ -40,7 +40,7 @@ export type ArgsUpdateStatus = {
 
 export type ArgsCheck = {
 	file_id: string
-	setting: Model['setting']
+	setting: Model['setting']['setting']
 	id: string
 	status: Todo.Todo['status']
 }

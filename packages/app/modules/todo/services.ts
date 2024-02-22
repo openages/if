@@ -227,14 +227,14 @@ export const updateStatus = async (args: ArgsUpdateStatus) => {
 
 export const check = async (args: ArgsCheck) => {
 	const { file_id, setting, id, status } = args
-	const { auto_archiving } = setting.setting
+	const { auto_archiving } = setting
 
-	const exsit_index = setting.setting?.relations?.findIndex(item => item.items.includes(id))
+	const exsit_index = setting?.relations?.findIndex(item => item.items.includes(id))
 
 	await updateStatus({ id, status, auto_archiving })
 
-	if (setting.setting?.relations?.length && exsit_index !== -1) {
-		const relation_ids = $copy(setting.setting.relations[exsit_index]).items
+	if (setting?.relations?.length && exsit_index !== -1) {
+		const relation_ids = $copy(setting.relations[exsit_index]).items
 		const target_index = relation_ids.findIndex(item => item === id)
 
 		relation_ids.splice(target_index, 1)
@@ -249,7 +249,7 @@ export const check = async (args: ArgsCheck) => {
 			})
 		)
 
-		const relations = $copy(setting.setting.relations)
+		const relations = $copy(setting.relations)
 
 		relations[exsit_index].checked = status === 'checked'
 

@@ -324,7 +324,7 @@ export default class Index {
 
 		await check({
 			file_id: this.id,
-			setting: this.setting,
+			setting: this.setting.setting,
 			id: item.id,
 			status
 		})

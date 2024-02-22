@@ -63,7 +63,6 @@ const Index = (props: IPropsChildren) => {
 					animate={{ opacity: 1, height: 'auto' }}
 					exit={{ opacity: 0, height: 0 }}
 					transition={{ duration: 0.18 }}
-					layout
 				>
 					<div className='children_wrap w_100 border_box flex flex_column'>
 						<DndContext onDragEnd={onDragEnd}>

@@ -9,7 +9,7 @@ import type { Todo } from '@/types'
 export default class Index {
 	search_todos = [] as Array<Todo.Todo>
 	compositing = false
-	tab = 'todos' as 'todos' | 'set_todos'
+	tab = 'todos' as 'todos' | 'search'
 
 	constructor() {
 		makeAutoObservable(this, {}, { autoBind: true })

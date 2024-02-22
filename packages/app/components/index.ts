@@ -21,6 +21,7 @@ export { default as Show } from './Show'
 export { default as IconEditor } from './IconEditor'
 export { default as Emoji } from './Emoji'
 export { default as SettingsModal } from './SettingsModal'
+export { default as FormEditable } from './FormEditable'
 
 export type { IProps as IPropsDirTree } from './DirTree/types'
 export type { SortableProps } from './SortableWrap'

@@ -1,4 +1,87 @@
 ._local {
+	padding: 6px 0;
+}
+
+.empty {
+	color: var(--color_text_light);
+}
+
+.Item {
+	&.done {
+		:global {
+			.action_wrap {
+				opacity: 0.3;
+			}
+
+			.todo_text {
+				opacity: 0.3;
+			}
+
+			.children_wrap {
+				.action_wrap {
+					opacity: 0.3;
+				}
+
+				.todo_text {
+					opacity: 0.3;
+				}
+			}
+		}
+	}
+
 	:global {
+		.action_wrap {
+			width: 18px;
+			height: 18px;
+			margin-right: 2px;
+			transform: translateY(1.5px);
+			border-radius: 3px;
+			color: var(--color_text_sub);
+
+			&:hover {
+				background-color: var(--color_bg_2);
+			}
+		}
+
+		.todo_text {
+			width: calc(100% - (18px + 2px));
+			padding: 2px 0;
+			line-height: 18px;
+
+			&.has_children {
+				&::after {
+					content: attr(data-children);
+					box-sizing: border-box;
+					height: 14px;
+					padding: 0 3px;
+					margin-left: 6px;
+					line-height: 12px;
+					font-size: 10px;
+					background-color: var(--color_bg_1);
+					border-radius: 8px;
+					border: var(--border);
+					vertical-align: 1px;
+				}
+			}
+		}
+
+		.children_wrap {
+			padding-left: 9px;
+			overflow: hidden;
+		}
+	}
+}
+
+.ChildrenItem {
+	&.checked {
+		:global {
+			.action_wrap {
+				opacity: 0.3;
+			}
+
+			.todo_text {
+				opacity: 0.3;
+			}
+		}
 	}
 }

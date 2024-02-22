@@ -1,13 +1,15 @@
 import { useEventListener, useMemoizedFn } from 'ahooks'
-import { Form, Input, Select } from 'antd'
+import { Form, Select } from 'antd'
 import { debounce } from 'lodash-es'
 import { observer } from 'mobx-react-lite'
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { container } from 'tsyringe'
 
+import { Todos } from '@/atoms'
+import { FormEditable } from '@/components'
 import { useDeepEffect } from '@/hooks'
-import { deepEqual } from '@openages/stk/react'
-import { ListChecks, ListPlus } from '@phosphor-icons/react'
+import { deepEqual, useDeepMemo } from '@openages/stk/react'
+import { ListChecks, MagnifyingGlass } from '@phosphor-icons/react'
 
 import styles from './index.css'
 import Model from './model'
@@ -15,7 +17,6 @@ import Model from './model'
 import type { IPropsCalendarViewTimeBlockDetail } from '../../types'
 
 const { useForm, Item } = Form
-const { TextArea } = Input
 
 const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 	const { item, updateTimeBlock } = props
@@ -24,6 +25,11 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 	const searcher = useRef<HTMLInputElement>()
 	const { setFieldsValue, getFieldsValue } = form
 	const search_todos = $copy(x.search_todos)
+
+	const options_todos = useDeepMemo(
+		() => search_todos.filter(it => !item.todos.includes(it.id)),
+		[search_todos, item.todos]
+	)
 
 	useDeepEffect(() => {
 		const form_item = getFieldsValue()
@@ -36,14 +42,24 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 
 		setFieldsValue(target)
 
-		if (!item.todos.length) x.tab = 'set_todos'
+		if (!item.todos.length) x.tab = 'search'
 	}, [item])
 
-	useEventListener('compositionstart', () => (x.compositing = true), { target: searcher?.current })
+	useEventListener(
+		'compositionstart',
+		() => {
+			if (!searcher?.current) return
+
+			x.compositing = true
+		},
+		{ target: searcher?.current }
+	)
 
 	useEventListener(
 		'compositionend',
 		() => {
+			if (!searcher?.current) return
+
 			x.compositing = false
 
 			x.search(searcher.current.value)
@@ -60,12 +76,24 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 	const search = useMemoizedFn(debounce(x.search, 300))
 
 	const setTabTodos = useMemoizedFn(() => (x.tab = 'todos'))
-	const setTabSetTodos = useMemoizedFn(() => (x.tab = 'set_todos'))
+	const setTabSearch = useMemoizedFn(() => (x.tab = 'search'))
+
+	const onSelectTodo = useMemoizedFn(v => {
+		if (item.todos.includes(v)) return
+
+		const todos = $copy(item.todos)
+
+		todos.push(v)
+
+		updateTimeBlock(item.id, { todos })
+	})
+
+	const onValuesChange = useMemoizedFn(v => updateTimeBlock(item.id, v))
 
 	return (
-		<Form className={$cx('border_box relative', styles._local)} form={form}>
+		<Form className={$cx('border_box relative', styles._local)} form={form} onValuesChange={onValuesChange}>
 			<Item label='描述' name='text'>
-				<TextArea autoSize placeholder='输入描述'></TextArea>
+				<FormEditable className='text_wrap border_box' placeholder='输入描述'></FormEditable>
 			</Item>
 			<Item label='标签' name='tag'>
 				<Select
@@ -75,23 +103,23 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 					placeholder='选择标签'
 				></Select>
 			</Item>
-			{x.tab === 'set_todos' && (
-				<Item name='todos' noStyle dependencies={[search_todos]}>
-					<Select
-						className='select todos w_100'
-						popupClassName='small'
-						variant='borderless'
-						suffixIcon={null}
-						placeholder='搜索待办'
-						fieldNames={{ label: 'text', value: 'id' }}
-						filterOption={false}
-						mode='multiple'
-						showSearch
-						options={search_todos}
-						onInputKeyDown={onInputKeyDown}
-						onSearch={search}
-					></Select>
-				</Item>
+			{x.tab === 'search' ? (
+				<Select
+					className='select todos w_100'
+					popupClassName='small'
+					variant='borderless'
+					suffixIcon={null}
+					placeholder='搜索待办'
+					fieldNames={{ label: 'text', value: 'id' }}
+					filterOption={false}
+					showSearch
+					options={options_todos}
+					onInputKeyDown={onInputKeyDown}
+					onSearch={search}
+					onSelect={onSelectTodo}
+				></Select>
+			) : (
+				<Todos ids={item.todos}></Todos>
 			)}
 			<div className='tab_wrap w_100 border_box flex absolute bottom_0 left_0'>
 				<span
@@ -102,15 +130,16 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 					onClick={setTabTodos}
 				>
 					<ListChecks size={14}></ListChecks>
+					{item.todos.length > 0 && <span className='ml_2 counts'>{item.todos.length}</span>}
 				</span>
 				<span
 					className={$cx(
 						'tab_item h_100 border_box flex justify_center align_center clickable',
-						x.tab === 'set_todos' && 'active'
+						x.tab === 'search' && 'active'
 					)}
-					onClick={setTabSetTodos}
+					onClick={setTabSearch}
 				>
-					<ListPlus size={14}></ListPlus>
+					<MagnifyingGlass size={14}></MagnifyingGlass>
 				</span>
 			</div>
 		</Form>

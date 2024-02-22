@@ -1,19 +1,45 @@
 import { useMemoizedFn } from 'ahooks'
 import { Popover } from 'antd'
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 
 import { useInput } from '@/modules/todo/hooks'
+import { getDocItemsData } from '@/utils'
 import { Info, X } from '@phosphor-icons/react'
 
 import TimeBlockDetail from '../TimeBlockDetail'
 import styles from './index.css'
 
 import type { IPropsCalendarViewTimeBlock } from '../../types'
+import type { Subscription } from 'rxjs'
+import type { Todo } from '@/types'
 
 const Index = (props: IPropsCalendarViewTimeBlock) => {
 	const { item, signal, updateTimeBlock } = props
 	const [visible_detail, setVisibleDetail] = useState(false)
+	const [status, setStatus] = useState('')
+
+	useLayoutEffect(() => {
+		let watcher = null as Subscription
+
+		if (item?.todos?.length) {
+			watcher = $db.todo_items.findByIds(item.todos).$.subscribe(doc => {
+				const items = getDocItemsData(Array.from(doc.values())) as Array<Todo.Todo>
+
+				const done_items = items.filter(item => item.status === 'checked' || item.status === 'closed')
+
+				setStatus(`${done_items.length}/${items.length}`)
+			})
+		} else {
+			setStatus('')
+		}
+
+		return () => {
+			setVisibleDetail(false)
+
+			watcher?.unsubscribe?.()
+		}
+	}, [item.todos])
 
 	if (signal) {
 		return (
@@ -51,7 +77,6 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 			destroyTooltipOnHide
 			fresh
 			placement='right'
-			getPopupContainer={() => document.body}
 		>
 			<div
 				className={$cx(
@@ -84,9 +109,13 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 					></div>
 				</div>
 				{item.length > 1 && (
-					<span className='time'>
-						{dayjs(item.start_time).format('HH:mm')} - {dayjs(item.end_time).format('HH:mm')}
-					</span>
+					<div className='time flex justify_between'>
+						<span>
+							{dayjs(item.start_time).format('HH:mm')} -{' '}
+							{dayjs(item.end_time).format('HH:mm')}
+						</span>
+						{status && <span>{status}</span>}
+					</div>
 				)}
 			</div>
 		</Popover>

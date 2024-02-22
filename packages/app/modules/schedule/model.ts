@@ -36,10 +36,6 @@ export default class Index {
 	watch = {
 		'scale|current': () => {
 			this.getDays()
-		},
-		days: () => {
-			this.stopWatchCalendarDays()
-			this.watchCalendarDays()
 		}
 	} as Watch<Index & { 'scale|current': any }>
 
@@ -67,6 +63,9 @@ export default class Index {
 			.with('week', () => getWeekdays(this.current))
 			.with('month', () => getMonthDays(this.current.month() + 1))
 			.exhaustive()
+
+		this.stopWatchCalendarDays()
+		this.watchCalendarDays()
 	}
 
 	step(type: 'prev' | 'next') {

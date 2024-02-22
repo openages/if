@@ -27,13 +27,13 @@ const Index = (props: IPropsCalendarContextMenu) => {
 		<Menu id='timeblock_context_menu' className={styles.ContextMenu} onVisibilityChange={onHidden}>
 			<Item onClick={onAddTimeBlock}>
 				<div className='menu_item flex align_center'>
-					<Plus className='icon mr_4' size={16}></Plus>
+					<Plus className='icon mr_4' size={14}></Plus>
 					<span className='text'>添加</span>
 				</div>
 			</Item>
 			<Item disabled>
 				<div className='menu_item flex align_center'>
-					<Copy className='icon mr_4' size={16}></Copy>
+					<Copy className='icon mr_4' size={14}></Copy>
 					<span className='text'>粘贴</span>
 				</div>
 			</Item>
