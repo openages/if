@@ -8,13 +8,13 @@ import { CalendarView, DateScale, Header, SettingsModal, TaskPanel, Timeline, Ti
 import styles from './index.css'
 import Model from './model'
 
-import type { IProps, IPropsDateScale, IPropsHeader, IPropsCalendarView } from './types'
-import type { Schedule } from '@/types'
+import type { IProps, IPropsDateScale, IPropsHeader, IPropsCalendarView, IPropsSettingsModal } from './types'
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => model_container.resolve(Model))
 	const container = useRef<HTMLDivElement>(null)
 	const days = $copy(x.days)
+	const tags = $copy(x.setting?.setting?.tags || [])
 
 	useLayoutEffect(() => {
 		x.init({ id })
@@ -27,11 +27,14 @@ const Index = ({ id }: IProps) => {
 		scale: x.scale,
 		current: x.current,
 		visible_task_panel: x.visible_task_panel,
+		tags,
+		filter_tags: $copy(x.filter_tags),
 		step: useMemoizedFn(x.step),
 		toggleVisibleTaskPanel: useMemoizedFn(() => (x.visible_task_panel = !x.visible_task_panel)),
 		changeView: useMemoizedFn((v: Model['view']) => (x.view = v)),
 		changeScale: useMemoizedFn((v: Model['scale']) => (x.scale = v)),
-		changeCurrent: useMemoizedFn((v: Model['current']) => (x.current = v))
+		changeCurrent: useMemoizedFn((v: Model['current']) => (x.current = v)),
+		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true))
 	}
 
 	const props_date_scale: IPropsDateScale = {
@@ -45,10 +48,20 @@ const Index = ({ id }: IProps) => {
 		scale: x.scale,
 		calendar_days: $copy(x.calendar_days),
 		timeblock_copied: $copy(x.timeblock_copied),
+		tags,
 		addTimeBlock: useMemoizedFn(x.addTimeBlock),
 		updateTimeBlock: useMemoizedFn(x.updateTimeBlock),
 		removeTimeBlock: useMemoizedFn(x.removeTimeBlock),
-		copyTimeBlock: useMemoizedFn((v: Schedule.Item) => (x.timeblock_copied = v))
+		copyTimeBlock: useMemoizedFn(v => (x.timeblock_copied = v)),
+		updateTodoSchedule: useMemoizedFn(x.updateTodoSchedule)
+	}
+
+	const props_settings_modal: IPropsSettingsModal = {
+		visible_settings_modal: x.visible_settings_modal,
+		setting: { ...$copy(x.setting?.setting), ...$copy(x.file.data) },
+		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false)),
+		updateSetting: useMemoizedFn(x.updateSetting),
+		removeTag: useMemoizedFn(x.removeTag)
 	}
 
 	return (
@@ -78,7 +91,7 @@ const Index = ({ id }: IProps) => {
 					</div>
 				</div>
 			</div>
-			<SettingsModal></SettingsModal>
+			<SettingsModal {...props_settings_modal}></SettingsModal>
 		</div>
 	)
 }

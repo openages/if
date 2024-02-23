@@ -74,6 +74,10 @@
 			.if-select-arrow {
 				right: 0;
 			}
+
+			.if-select-clear {
+				right: 0;
+			}
 		}
 
 		.tab_wrap {

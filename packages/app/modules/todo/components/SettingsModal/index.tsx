@@ -3,14 +3,14 @@ import { Button, Form, Input, Select } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { SettingsModal } from '@/components'
+import { AnglesEditor, SettingsModal, TagsEditor } from '@/components'
 import { useLimits } from '@/hooks'
 import { cleanTodoItems } from '@/modules/todo/services'
 
-import { AnglesEditor, TagsEditor } from './components'
 import styles from './index.css'
 
 import type { IPropsSettingsModal } from '../../types'
+
 const { Item } = Form
 const { TextArea } = Input
 
@@ -50,10 +50,10 @@ const Index = (props: IPropsSettingsModal) => {
 						maxLength={limits.todo_list_desc_max_length}
 					></TextArea>
 				</Item>
-				<Item name='angles' label={t('translation:todo.SettingsModal.angles.label')}>
+				<Item name='angles' label={t('translation:common.angles.label')}>
 					<AnglesEditor remove={removeAngle}></AnglesEditor>
 				</Item>
-				<Item name='tags' label={t('translation:todo.SettingsModal.tags.label')}>
+				<Item name='tags' label={t('translation:common.tags.label')}>
 					<TagsEditor remove={removeTag}></TagsEditor>
 				</Item>
 				<Item name='auto_archiving' label={t('translation:todo.SettingsModal.auto_archiving.label')}>

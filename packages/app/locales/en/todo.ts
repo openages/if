@@ -41,7 +41,6 @@ export default {
 			table: 'Table'
 		},
 		options: {
-			edit: 'Edit',
 			archive: 'Archive',
 			sort: {
 				text: 'Sort',
@@ -57,18 +56,6 @@ export default {
 		desc: {
 			label: 'Description',
 			placeholder: 'A brief description about the todo.'
-		},
-		angles: {
-			label: 'Angles',
-			placeholder: 'Categories within the todo list.',
-			remove_confirm:
-				'This will remove {{counts}} items under this category({{counts}} items). Please confirm if you want to proceed with the deletion.'
-		},
-		tags: {
-			label: 'Tags',
-			placeholder: 'Tag name',
-			remove_confirm:
-				'This tag has {{counts}} items and cannot be deleted (tags not associated with any items can be deleted).'
 		},
 		auto_archiving: {
 			label: 'Auto archiving',

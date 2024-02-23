@@ -1,5 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { Dropdown, Popover } from 'antd'
+import Color from 'color'
 import dayjs from 'dayjs'
 import { omit } from 'lodash-es'
 import { useLayoutEffect, useMemo, useState } from 'react'
@@ -19,7 +20,7 @@ import type { Todo } from '@/types'
 import type { MenuProps } from 'antd'
 
 const Index = (props: IPropsCalendarViewTimeBlock) => {
-	const { item, signal, updateTimeBlock, removeTimeBlock, copyTimeBlock } = props
+	const { item, tags, updateTimeBlock, removeTimeBlock, copyTimeBlock, updateTodoSchedule } = props
 	const [visible_detail, setVisibleDetail] = useState(false)
 	const [status, setStatus] = useState('')
 	const { t, i18n } = useTranslation()
@@ -53,6 +54,15 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 		max_length: 60,
 		update: useMemoizedFn(textContent => updateTimeBlock(item.id, { text: textContent }))
 	})
+
+	const tag_styles = useMemo(() => {
+		if (!tags.length) return {}
+		if (!item.tag) return {}
+
+		const target = tags.find(it => it.id === item.tag)
+
+		return { '--tag_color': Color(target.color).rgb().array().join(',') }
+	}, [item.tag, tags])
 
 	const context_menu_items = useMemo(
 		() =>
@@ -110,23 +120,17 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 		}
 	})
 
-	if (signal) {
-		return (
-			<div
-				className={$cx(
-					'w_100 border_box absolute top_0 flex flex_column',
-					styles._local,
-					styles.signal
-				)}
-				style={{ transform: `translateY(${item.start * 16}px)`, height: item.length * 16 }}
-			></div>
-		)
-	}
-
 	return (
 		<Popover
 			open={visible_detail}
-			content={<TimeBlockDetail item={item} updateTimeBlock={updateTimeBlock} />}
+			content={
+				<TimeBlockDetail
+					item={item}
+					tags={tags}
+					updateTimeBlock={updateTimeBlock}
+					updateTodoSchedule={updateTodoSchedule}
+				/>
+			}
 			zIndex={100}
 			overlayClassName='border_popover'
 			destroyTooltipOnHide
@@ -149,9 +153,14 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 						item.length === 1 && styles.small,
 						item.length === 2 && styles.middle,
 						item.length === 3 && styles.large,
-						item.length > 3 && styles.xlarge
+						item.length > 3 && styles.xlarge,
+						tag_styles['--tag_color'] && styles.has_tag
 					)}
-					style={{ transform: `translateY(${item.start * 16}px)`, height: item.length * 16 }}
+					style={{
+						transform: `translateY(${item.start * 16}px)`,
+						height: item.length * 16,
+						...tag_styles
+					}}
 				>
 					<div
 						className={$cx(

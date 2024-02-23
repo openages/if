@@ -19,4 +19,10 @@ export namespace App {
 		autolock: keyof typeof autolock_map
 		unlocking?: boolean
 	}
+
+	export interface ModuleSetting {
+		file_id: string
+		module: string
+		setting: any
+	}
 }

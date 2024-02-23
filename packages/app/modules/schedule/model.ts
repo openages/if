@@ -6,13 +6,22 @@ import { injectable } from 'tsyringe'
 
 import { File } from '@/models'
 import Utils from '@/models/utils'
-import { getDocItemsData } from '@/utils'
+import { getQuerySetting, updateSetting } from '@/services'
+import { getDocItem, getDocItemsData } from '@/utils'
+import { confirm } from '@/utils/antd'
 import { useInstanceWatch } from '@openages/stk/mobx'
 
-import { addTimeBlock, getTimeBlocks, removeTimeBlock, updateTimeBlock } from './services'
+import {
+	addTimeBlock,
+	getTagTimeBlockCounts,
+	getTimeBlocks,
+	removeTag,
+	removeTimeBlock,
+	updateTimeBlock
+} from './services'
 import { getCalendarDays, getDayDetails, getMonthDays, getWeekdays } from './utils'
 
-import type { Scale } from './types/model'
+import type { Scale, SettingValues, ChangedSettingValues } from './types/model'
 import type { Schedule } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
 import type { DayDetail } from './utils'
@@ -21,20 +30,22 @@ import type { Subscription } from 'rxjs'
 @injectable()
 export default class Index {
 	id = ''
-
-	watcher = null as Subscription
-	disable_watcher = false
-
 	view = 'calendar' as Schedule.Item['type']
 	scale = 'week' as Scale
 	current = dayjs()
 	days = [] as Array<DayDetail>
+	disable_watcher = false
+
+	setting = {} as Schedule.ScheduleSetting
+	setting_watcher = null as Subscription
 	calendar_days = [] as Schedule.CalendarDays
-	timeline_days = []
+	calendar_days_watcher = null as Subscription
 
 	timeblock_copied = null as Omit<Schedule.CalendarItem, 'id'>
+	filter_tags = [] as Array<string>
 
 	visible_task_panel = false
+	visible_settings_modal = false
 
 	watch = {
 		'scale|current': () => {
@@ -46,7 +57,11 @@ export default class Index {
 		public utils: Utils,
 		public file: File
 	) {
-		makeAutoObservable(this, { watcher: false, disable_watcher: false }, { autoBind: true })
+		makeAutoObservable(
+			this,
+			{ disable_watcher: false, setting_watcher: false, calendar_days_watcher: false },
+			{ autoBind: true }
+		)
 
 		this.utils.acts = [...useInstanceWatch(this)]
 	}
@@ -57,6 +72,7 @@ export default class Index {
 		this.id = id
 		this.file.init(id)
 
+		this.on()
 		this.getDays()
 	}
 
@@ -117,11 +133,50 @@ export default class Index {
 		this.addTimeBlock({ type, index, start, length, info })
 	}
 
+	async updateTodoSchedule(id: string) {
+		const doc = await $db.todo_items.findOne(id).exec()
+
+		if (!doc.schedule) return
+
+		await doc.updateCRDT({ ifMatch: { $unset: { schedule: false } } })
+	}
+
+	async updateSetting(changed_values: ChangedSettingValues, values: SettingValues) {
+		await updateSetting({ file_id: this.id, setting: this.setting, changed_values, values })
+	}
+
+	async removeTag(tag: string) {
+		const counts = await getTagTimeBlockCounts(this.id, tag)
+
+		if (counts > 0) {
+			const res = await confirm({
+				id: this.id,
+				title: $t('translation:common.notice'),
+				// @ts-ignore
+				content: $t('translation:todo.SettingsModal.tags.remove_confirm', { counts })
+			})
+
+			if (!res) return false
+		}
+
+		await removeTag(this.id, tag)
+
+		return true
+	}
+
+	watchSetting() {
+		this.setting_watcher = getQuerySetting(this.id).$.subscribe(setting => {
+			const doc_setting = getDocItem(setting)
+
+			this.setting = { ...omit(doc_setting, 'setting'), setting: JSON.parse(doc_setting.setting) }
+		})
+	}
+
 	watchCalendarDays() {
 		const start_time = this.days.at(0).value.startOf('day')
 		const end_time = this.days.at(-1).value.endOf('day')
 
-		this.watcher = getTimeBlocks(this.id, {
+		this.calendar_days_watcher = getTimeBlocks(this.id, {
 			type: this.view,
 			start_time: { $gte: start_time.valueOf() },
 			end_time: { $lte: end_time.valueOf() }
@@ -157,18 +212,21 @@ export default class Index {
 	}
 
 	stopWatchCalendarDays() {
-		if (!this.watcher) return
+		if (!this.calendar_days_watcher) return
 
-		this.watcher.unsubscribe()
+		this.calendar_days_watcher.unsubscribe()
 
-		this.watcher = null
+		this.calendar_days_watcher = null
 	}
 
-	on() {}
+	on() {
+		this.watchSetting()
+	}
 
 	off() {
 		this.utils.off()
 
-		this.watcher?.unsubscribe?.()
+		this.setting_watcher?.unsubscribe?.()
+		this.calendar_days_watcher?.unsubscribe?.()
 	}
 }

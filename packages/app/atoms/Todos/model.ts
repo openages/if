@@ -14,21 +14,22 @@ import type { DragEndEvent } from '@dnd-kit/core'
 
 @injectable()
 export default class Index {
+	ids = [] as Array<string>
 	items = [] as Array<Todo.Todo>
 
 	watcher = null as Subscription
-	disable_watcher = false
 
 	onChange = null as (ids: Array<string>) => void
 
 	constructor() {
-		makeAutoObservable(this, { watcher: false, disable_watcher: false, onChange: false }, { autoBind: true })
+		makeAutoObservable(this, { watcher: false, onChange: false }, { autoBind: true })
 	}
 
-	init(ids: Array<string>, onChange: Index['onChange']) {
+	init(ids: Index['ids'], onChange: Index['onChange']) {
+		this.ids = ids
 		this.onChange = onChange
 
-		this.watchItems(ids)
+		this.watchItems()
 	}
 
 	remove(index: number) {
@@ -107,9 +108,21 @@ export default class Index {
 		})
 	}
 
-	watchItems(ids: Array<string>) {
-		this.watcher = getTodoItems(ids).$.subscribe(doc => {
-			if (this.disable_watcher) return
+	checkExsit(keys: Array<string>) {
+		this.ids.forEach((item, index) => {
+			if (!keys.includes(item)) {
+				this.ids[index] = null
+			}
+		})
+
+		this.ids = this.ids.filter(item => item)
+
+		this.onChange($copy(this.ids))
+	}
+
+	watchItems() {
+		this.watcher = getTodoItems(this.ids).$.subscribe(doc => {
+			this.checkExsit(Array.from(doc.keys()))
 
 			this.items = getDocItemsData(Array.from(doc.values())) as Array<Todo.Todo>
 		})

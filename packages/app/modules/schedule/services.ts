@@ -29,3 +29,11 @@ export const updateTimeBlock = async (id: string, v: Partial<Schedule.Item>) => 
 export const removeTimeBlock = async (id: string) => {
 	return $db.schedule_items.findOne(id).remove()
 }
+
+export const getTagTimeBlockCounts = async (file_id: string, tag: string) => {
+	return $db.schedule_items.count({ selector: { file_id, tag } }).exec()
+}
+
+export const removeTag = async (file_id: string, tag: string) => {
+	return $db.schedule_items.find({ selector: { file_id, tag } }).remove()
+}

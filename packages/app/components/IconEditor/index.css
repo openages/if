@@ -1,5 +1,6 @@
 ._local {
 	--icon_size: 38px;
+
 	width: var(--icon_size);
 	height: var(--icon_size);
 	border: 1px dashed var(--color_border);

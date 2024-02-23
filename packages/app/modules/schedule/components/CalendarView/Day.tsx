@@ -6,13 +6,24 @@ import { hours } from '@/appdata/schedule'
 
 import { collisionDetection, getStartByY } from '../../utils'
 import TimeBlock from '../TimeBlock'
+import Signal from '../TimeBlock/Signal'
 import styles from './index.css'
 
 import type { IPropsCalendarViewDay } from '../../types'
 import type { MouseEvent } from 'react'
 
 const Index = (props: IPropsCalendarViewDay) => {
-	const { container, day, counts, index, updateTimeBlock, removeTimeBlock, copyTimeBlock } = props
+	const {
+		container,
+		day,
+		counts,
+		index,
+		tags,
+		updateTimeBlock,
+		removeTimeBlock,
+		copyTimeBlock,
+		updateTodoSchedule
+	} = props
 	const { show } = useContextMenu({ id: 'timeblock_context_menu' })
 	const [signal, setSignal] = useState(null)
 
@@ -58,22 +69,16 @@ const Index = (props: IPropsCalendarViewDay) => {
 					></span>
 				))}
 			</div>
-			{signal && (
-				<TimeBlock
-					item={{ ...signal }}
-					signal
-					updateTimeBlock={updateTimeBlock}
-					removeTimeBlock={removeTimeBlock}
-					copyTimeBlock={copyTimeBlock}
-				></TimeBlock>
-			)}
+			{signal && <Signal item={signal}></Signal>}
 			{day.map(item => (
 				<TimeBlock
 					item={item}
-					key={item.id}
+					tags={tags}
 					updateTimeBlock={updateTimeBlock}
 					removeTimeBlock={removeTimeBlock}
 					copyTimeBlock={copyTimeBlock}
+					updateTodoSchedule={updateTodoSchedule}
+					key={item.id}
 				></TimeBlock>
 			))}
 		</div>

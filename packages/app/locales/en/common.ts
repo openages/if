@@ -12,6 +12,7 @@ export default {
 		x_unit_ago: '{{x}} {{unit}} ago',
 		x_unit: '{{x}} {{unit}}'
 	},
+	setting: 'Setting',
 	copy: 'Copy',
 	check: 'Check',
 	remove: 'Remove',
@@ -61,5 +62,15 @@ export default {
 	erase: {
 		title: 'Erase',
 		confirm: 'Confirm permanent erase this record? It can`t be recovered after erased.'
+	},
+	angles: {
+		label: 'Angles',
+		placeholder: 'Categories within the todo list.',
+		remove_confirm: 'This will remove {{counts}} items under this category({{counts}} items). Please confirm.'
+	},
+	tags: {
+		label: 'Tags',
+		placeholder: 'Tag name',
+		remove_confirm: 'This will remove {{counts}} items under this tag({{counts}} items). Please confirm.'
 	}
 }

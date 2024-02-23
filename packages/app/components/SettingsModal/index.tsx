@@ -12,12 +12,13 @@ export interface IPropsSettingsModal {
 	visible: boolean
 	info: any
 	className?: HTMLAttributes<any>['className']
+	IconEditCenter?: boolean
 	onClose: () => void
 	onValuesChange: (changedValues: any, values: any) => void
 }
 
 const Index = (props: IPropsSettingsModal) => {
-	const { children, visible, info, className, onClose, onValuesChange } = props
+	const { children, visible, info, className, IconEditCenter, onClose, onValuesChange } = props
 	const { t } = useTranslation()
 
 	return (
@@ -29,7 +30,7 @@ const Index = (props: IPropsSettingsModal) => {
 			maskClosable
 			onCancel={onClose}
 		>
-			<Form info={info} onValuesChange={onValuesChange}>
+			<Form info={info} IconEditCenter={IconEditCenter} onValuesChange={onValuesChange}>
 				{children}
 			</Form>
 		</Modal>

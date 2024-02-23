@@ -12,6 +12,7 @@ export default {
 		x_unit_ago: '{{x}}{{unit}}前',
 		x_unit: '{{x}}{{unit}}'
 	},
+	setting: '设置',
 	copy: '复制',
 	check: '查看',
 	remove: '移除',
@@ -61,5 +62,15 @@ export default {
 	erase: {
 		title: '彻底删除',
 		confirm: '确认彻底删除该记录，彻底删除后将无法恢复？'
+	},
+	angles: {
+		label: '分类',
+		placeholder: 'todo list内部的分类',
+		remove_confirm: '你将删除该分类下的{{counts}}个待办项，请确认是否执行删除？'
+	},
+	tags: {
+		label: '标签',
+		placeholder: '标签名',
+		remove_confirm: '你将删除该标签下的{{counts}}个待办项，请确认是否执行删除？'
 	}
 }

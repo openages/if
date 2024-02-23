@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import { omit, uniq } from 'lodash-es'
 import { match } from 'ts-pattern'
 
-import { updateSetting } from '@/actions/todo'
+import { updateSetting } from '@/actions/global'
 import { getArchiveTime, getDocItem, getDocItemsData } from '@/utils'
 import { confirm, info } from '@/utils/antd'
 
@@ -36,10 +36,6 @@ export const getMaxMinSort = async (angle_id: string, min?: boolean) => {
 
 export const getTotalCounts = async (selector: MangoQuerySelector<Todo.TodoItem>) => {
 	return $db.todo_items.count({ selector: { ...selector, type: 'todo' } }).exec()
-}
-
-export const getQueryTodoSetting = (file_id: string) => {
-	return $db.module_setting.findOne({ selector: { file_id } })
 }
 
 export const getQueryItems = (args: ArgsQueryItems) => {
@@ -351,16 +347,23 @@ export const cleanTodoItems = async (id: string) => {
 	return $db.todo_items.bulkClean()
 }
 
-export const restoreArchiveItem = async (id: string, angles: Todo.Setting['angles'], current_angle_id: string) => {
+export const restoreArchiveItem = async (
+	id: string,
+	angles: Todo.Setting['angles'],
+	tags: Todo.Setting['tags'],
+	current_angle_id: string
+) => {
 	const doc = await $db.todo_items.findOne({ selector: { id } }).exec()
 	const angle_exsit = angles.find(item => item.id === doc.angle_id)
+	const tags_exsit_items = doc.tag_ids.filter(item => tags.find(tag => tag.id === item))
 	const sort = await getMaxMinSort(current_angle_id)
 
 	const target = {
 		archive: false,
 		archive_time: undefined,
 		status: 'unchecked',
-		sort: sort + 1
+		sort: sort + 1,
+		tag_ids: tags_exsit_items
 	} as Todo.Todo
 
 	if (!angle_exsit) target['angle_id'] = current_angle_id
@@ -417,6 +420,12 @@ export const getAngleTodoCounts = async (file_id: string, angle_id: string) => {
 
 export const removeAngle = async (file_id: string, angle_id: string) => {
 	return $db.todo_items.find({ selector: { file_id, angle_id, archive: false } }).remove()
+}
+
+export const removeTag = async (file_id: string, tag_id: string) => {
+	return $db.todo_items
+		.find({ selector: { file_id, tag_ids: { $elemMatch: { $in: [tag_id] } }, archive: false } })
+		.remove()
 }
 
 export const getTagTodoCounts = async (file_id: string, tag_id: string) => {

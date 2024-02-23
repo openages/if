@@ -1,11 +1,9 @@
 import stringify from 'json-stable-stringify'
 
-import type { Todo } from '@/types'
-
-export default async (file_id: string, data: Partial<Todo.Setting>) => {
+export default async <T>(file_id: string, data: Partial<T>) => {
 	const module_setting = await $db.module_setting.findOne({ selector: { file_id } }).exec()
 
-	const setting = JSON.parse(module_setting.setting) as Todo.Setting
+	const setting = JSON.parse(module_setting.setting) as T
 
 	await module_setting.updateCRDT({
 		ifMatch: {

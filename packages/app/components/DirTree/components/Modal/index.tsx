@@ -110,7 +110,7 @@ const Index = (props: IPropsModal) => {
 				<IconEditor
 					value={icon}
 					left_icon_item={left_icon_item}
-					useByDirtree
+					center
 					onChange={onSelectIcon}
 				></IconEditor>
 				<Input

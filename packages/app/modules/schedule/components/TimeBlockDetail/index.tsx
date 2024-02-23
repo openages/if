@@ -19,7 +19,7 @@ import type { IPropsCalendarViewTimeBlockDetail } from '../../types'
 const { useForm, Item } = Form
 
 const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
-	const { item, updateTimeBlock } = props
+	const { item, tags, updateTimeBlock, updateTodoSchedule } = props
 	const [x] = useState(() => container.resolve(Model))
 	const [form] = useForm()
 	const searcher = useRef<HTMLInputElement>()
@@ -78,7 +78,7 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 	const setTabTodos = useMemoizedFn(() => (x.tab = 'todos'))
 	const setTabSearch = useMemoizedFn(() => (x.tab = 'search'))
 
-	const onSelectTodo = useMemoizedFn(v => {
+	const onSelectTodo = useMemoizedFn(async v => {
 		if (item.todos.includes(v)) return
 
 		const todos = $copy(item.todos)
@@ -86,6 +86,7 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 		todos.push(v)
 
 		updateTimeBlock(item.id, { todos })
+		updateTodoSchedule(v)
 	})
 
 	const onChangeTodos = useMemoizedFn((todos: Array<string>) => updateTimeBlock(item.id, { todos }))
@@ -111,8 +112,12 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 				<Select
 					className='select'
 					variant='borderless'
+					popupClassName='small'
+					allowClear
 					suffixIcon={null}
 					placeholder='选择标签'
+					fieldNames={{ label: 'text', value: 'id' }}
+					options={tags}
 				></Select>
 			</Item>
 			{x.tab === 'search' ? (

@@ -11,10 +11,12 @@ const Index = (props: IPropsCalendarView) => {
 		scale,
 		calendar_days,
 		timeblock_copied,
+		tags,
 		addTimeBlock,
 		updateTimeBlock,
 		removeTimeBlock,
-		copyTimeBlock
+		copyTimeBlock,
+		updateTodoSchedule
 	} = props
 
 	return (
@@ -25,9 +27,11 @@ const Index = (props: IPropsCalendarView) => {
 					day={day}
 					counts={calendar_days.length}
 					index={index}
+					tags={tags}
 					updateTimeBlock={updateTimeBlock}
 					removeTimeBlock={removeTimeBlock}
 					copyTimeBlock={copyTimeBlock}
+					updateTodoSchedule={updateTodoSchedule}
 					key={index}
 				></Day>
 			))}

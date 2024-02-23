@@ -7,9 +7,9 @@ import {
 	ArchiveBox,
 	ArrowsDownUp,
 	CalendarPlus,
+	GearSix,
 	Kanban,
 	ListChecks,
-	PencilSimple,
 	Question,
 	Star,
 	Table,
@@ -85,12 +85,12 @@ export default (args: HookArgs) => {
 	const options_menu: MenuProps['items'] = useMemo(
 		() => [
 			{
-				key: 'edit',
+				key: 'setting',
 				disabled: mode === 'kanban',
 				label: (
 					<div className='menu_item_wrap flex align_center'>
-						<PencilSimple size={16}></PencilSimple>
-						<span className='text ml_6'>{t('translation:todo.Header.options.edit')}</span>
+						<GearSix size={16}></GearSix>
+						<span className='text ml_6'>{t('translation:common.setting')}</span>
 					</div>
 				)
 			},
@@ -199,7 +199,7 @@ export default (args: HookArgs) => {
 			}
 		} else {
 			switch (key) {
-				case 'edit':
+				case 'setting':
 					showSettingsModal()
 					break
 				case 'archive':

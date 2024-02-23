@@ -7,6 +7,7 @@ import { injectable } from 'tsyringe'
 import { archive, cycle } from '@/actions/todo'
 import { GlobalModel } from '@/context/app'
 import { File, Loadmore, Utils } from '@/models'
+import { getQuerySetting } from '@/services'
 import { getDocItem, getDocItemsData, id } from '@/utils'
 import { confirm } from '@/utils/antd'
 import { disableWatcher, loading } from '@/utils/decorators'
@@ -23,7 +24,6 @@ import {
 	getAngleTodoCounts,
 	getMaxMinSort,
 	getQueryItems,
-	getQueryTodoSetting,
 	getTagTodoCounts,
 	getTotalCounts,
 	queryArchives,
@@ -31,6 +31,7 @@ import {
 	queryItem,
 	recycle,
 	removeAngle,
+	removeTag,
 	removeTodoItem,
 	restoreArchiveItem,
 	update,
@@ -247,7 +248,7 @@ export default class Index {
 		this.file.init(this.id)
 
 		this.on()
-		this.watchTodo()
+		this.watchSetting()
 
 		this.utils.acts.push(disposer)
 	}
@@ -439,16 +440,17 @@ export default class Index {
 		const counts = await getTagTodoCounts(this.id, tag_id)
 
 		if (counts > 0) {
-			$modal.warning({
+			const res = await confirm({
+				id: this.id,
 				title: $t('translation:common.notice'),
 				// @ts-ignore
-				content: $t('translation:todo.SettingsModal.tags.remove_confirm', { counts }),
-				centered: true,
-				getContainer: () => document.getElementById(this.id)
+				content: $t('translation:todo.SettingsModal.tags.remove_confirm', { counts })
 			})
 
-			return false
+			if (!res) return false
 		}
+
+		await removeTag(this.id, tag_id)
 
 		return true
 	}
@@ -572,7 +574,7 @@ export default class Index {
 			await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time: undefined } } })
 		}
 
-		await restoreArchiveItem(id, this.setting.setting.angles, this.current_angle_id)
+		await restoreArchiveItem(id, this.setting.setting.angles, this.setting.setting.tags, this.current_angle_id)
 
 		this.updateArchiveItems(id)
 	}
@@ -824,8 +826,8 @@ export default class Index {
 		}
 	}
 
-	watchTodo() {
-		this.setting_watcher = getQueryTodoSetting(this.id).$.subscribe(setting => {
+	watchSetting() {
+		this.setting_watcher = getQuerySetting(this.id).$.subscribe(setting => {
 			const todo_setting = getDocItem(setting)
 
 			this.setting = { ...omit(todo_setting, 'setting'), setting: JSON.parse(todo_setting.setting) }
