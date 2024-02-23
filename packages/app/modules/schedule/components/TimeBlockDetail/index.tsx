@@ -88,10 +88,22 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 		updateTimeBlock(item.id, { todos })
 	})
 
+	const onChangeTodos = useMemoizedFn((todos: Array<string>) => updateTimeBlock(item.id, { todos }))
+
 	const onValuesChange = useMemoizedFn(v => updateTimeBlock(item.id, v))
 
+	const stopPropagation = useMemoizedFn(e => {
+		e.preventDefault()
+		e.stopPropagation()
+	})
+
 	return (
-		<Form className={$cx('border_box relative', styles._local)} form={form} onValuesChange={onValuesChange}>
+		<Form
+			className={$cx('border_box relative', styles._local)}
+			form={form}
+			onContextMenu={stopPropagation}
+			onValuesChange={onValuesChange}
+		>
 			<Item label='描述' name='text'>
 				<FormEditable className='text_wrap border_box' placeholder='输入描述'></FormEditable>
 			</Item>
@@ -119,7 +131,7 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 					onSelect={onSelectTodo}
 				></Select>
 			) : (
-				<Todos ids={item.todos}></Todos>
+				<Todos ids={item.todos} onChange={onChangeTodos}></Todos>
 			)}
 			<div className='tab_wrap w_100 border_box flex absolute bottom_0 left_0'>
 				<span

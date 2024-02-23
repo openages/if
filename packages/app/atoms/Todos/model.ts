@@ -3,12 +3,14 @@ import { injectable } from 'tsyringe'
 
 import { check, queryItem, recycle } from '@/modules/todo/services'
 import { getDocItem, getDocItemsData, id as GenId } from '@/utils'
+import { arrayMove } from '@dnd-kit/sortable'
 
 import { getTodoItems, updateTodoItem } from './services'
 
 import type { Todo } from '@/types'
 import type { Subscription } from 'rxjs'
 import type { RxDocument } from 'rxdb'
+import type { DragEndEvent } from '@dnd-kit/core'
 
 @injectable()
 export default class Index {
@@ -17,20 +19,45 @@ export default class Index {
 	watcher = null as Subscription
 	disable_watcher = false
 
+	onChange = null as (ids: Array<string>) => void
+
 	constructor() {
-		makeAutoObservable(this, { watcher: false, disable_watcher: false }, { autoBind: true })
+		makeAutoObservable(this, { watcher: false, disable_watcher: false, onChange: false }, { autoBind: true })
 	}
 
-	init(ids: Array<string>) {
+	init(ids: Array<string>, onChange: Index['onChange']) {
+		this.onChange = onChange
+
 		this.watchItems(ids)
 	}
 
-	watchItems(ids: Array<string>) {
-		this.watcher = getTodoItems(ids).$.subscribe(doc => {
-			if (this.disable_watcher) return
+	remove(index: number) {
+		const target = $copy(this.items)
 
-			this.items = getDocItemsData(Array.from(doc.values())) as Array<Todo.Todo>
-		})
+		target.splice(index, 1)
+
+		this.items = target
+
+		this.onChange(target.map(item => item.id))
+	}
+
+	onDragEnd({ active, over }: DragEndEvent) {
+		if (!over?.id) return
+		if (active.id === over.id) return
+
+		const target = arrayMove(this.items, active.data.current.index as number, over.data.current.index as number)
+
+		this.items = target
+
+		this.onChange(target.map(item => item.id))
+	}
+
+	async check(index: number) {
+		const { id, file_id } = this.items[index]
+
+		const file = await $db.dirtree_items.findOne(file_id).exec()
+
+		await $app.Event.emit('global.app.check', { id, file: getDocItem(file) })
 	}
 
 	async updateTodoItem(index: number, id: string, v: Partial<Todo.Todo>) {
@@ -39,7 +66,7 @@ export default class Index {
 		await updateTodoItem(id, v)
 	}
 
-	async check(index: number, id: string, status: Todo.Todo['status']) {
+	async changeStatus(index: number, id: string, status: Todo.Todo['status']) {
 		const { file_id } = this.items[index]
 
 		this.items[index] = { ...this.items[index], status }
@@ -77,6 +104,14 @@ export default class Index {
 			file_id,
 			name: file.name,
 			action: 'check'
+		})
+	}
+
+	watchItems(ids: Array<string>) {
+		this.watcher = getTodoItems(ids).$.subscribe(doc => {
+			if (this.disable_watcher) return
+
+			this.items = getDocItemsData(Array.from(doc.values())) as Array<Todo.Todo>
 		})
 	}
 

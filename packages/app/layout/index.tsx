@@ -139,8 +139,7 @@ const Index = () => {
 		history: $copy(global.search.history),
 		searchByInput: useMemoizedFn(global.search.searchByInput),
 		onClose: useMemoizedFn(global.search.closeSearch),
-		find: useMemoizedFn(global.stack.find),
-		add: useMemoizedFn(global.stack.add),
+		onCheck: useMemoizedFn(global.search.onCheck),
 		changeSearchIndex: useMemoizedFn(global.search.changeSearchIndex),
 		clearSearchHistory: useMemoizedFn(global.search.clearSearchHistory)
 	}

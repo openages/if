@@ -12,6 +12,9 @@ export default {
 		x_unit_ago: '{{x}}{{unit}}前',
 		x_unit: '{{x}}{{unit}}'
 	},
+	copy: '复制',
+	check: '查看',
+	remove: '移除',
 	reload: '重新加载',
 	storage: '应用缓存',
 	clear_storage: '清除缓存',

@@ -47,6 +47,7 @@
 			width: calc(100% - (18px + 2px));
 			padding: 2px 0;
 			line-height: 18px;
+			user-select: none;
 
 			&.has_children {
 				&::after {

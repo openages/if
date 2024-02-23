@@ -12,6 +12,9 @@ export default {
 		x_unit_ago: '{{x}} {{unit}} ago',
 		x_unit: '{{x}} {{unit}}'
 	},
+	copy: 'Copy',
+	check: 'Check',
+	remove: 'Remove',
 	reload: 'Reload',
 	storage: 'Cache',
 	clear_storage: 'Clear Cache',

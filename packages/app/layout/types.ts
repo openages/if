@@ -132,8 +132,7 @@ export interface IPropsSearch {
 	history: GlobalModel['search']['history']
 	searchByInput: GlobalModel['search']['searchByInput']
 	onClose: GlobalModel['search']['closeSearch']
-	find: GlobalModel['stack']['find']
-	add: GlobalModel['stack']['add']
+	onCheck: GlobalModel['search']['onCheck']
 	changeSearchIndex: (index: number) => void
 	clearSearchHistory: () => void
 }

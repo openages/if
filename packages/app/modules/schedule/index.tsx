@@ -9,6 +9,7 @@ import styles from './index.css'
 import Model from './model'
 
 import type { IProps, IPropsDateScale, IPropsHeader, IPropsCalendarView } from './types'
+import type { Schedule } from '@/types'
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => model_container.resolve(Model))
@@ -43,8 +44,11 @@ const Index = ({ id }: IProps) => {
 		view: x.view,
 		scale: x.scale,
 		calendar_days: $copy(x.calendar_days),
+		timeblock_copied: $copy(x.timeblock_copied),
 		addTimeBlock: useMemoizedFn(x.addTimeBlock),
-		updateTimeBlock: useMemoizedFn(x.updateTimeBlock)
+		updateTimeBlock: useMemoizedFn(x.updateTimeBlock),
+		removeTimeBlock: useMemoizedFn(x.removeTimeBlock),
+		copyTimeBlock: useMemoizedFn((v: Schedule.Item) => (x.timeblock_copied = v))
 	}
 
 	return (

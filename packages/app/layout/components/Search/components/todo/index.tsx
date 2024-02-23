@@ -8,7 +8,7 @@ import { ArrowBendDownLeft } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
-import type { App, Todo, DirTree } from '@/types'
+import type { Todo, DirTree } from '@/types'
 import type { IPropsSearch } from '@/layout/types'
 
 interface IProps extends Pick<IPropsSearch, 'changeSearchIndex'> {
@@ -18,7 +18,7 @@ interface IProps extends Pick<IPropsSearch, 'changeSearchIndex'> {
 	text: string
 	active: boolean
 	index: number
-	onCheck: (id: string, file: DirTree.Item) => Promise<void>
+	onCheck: (args: { id: string; file: DirTree.Item }) => Promise<void>
 }
 
 const Index = (props: IProps) => {
@@ -44,7 +44,7 @@ const Index = (props: IProps) => {
 			.map(it => it.text)
 	}, [item.tag_ids, setting.tags])
 
-	const onItem = useMemoizedFn(() => onCheck(item.id, file))
+	const onItem = useMemoizedFn(() => onCheck({ id: item.id, file }))
 
 	return (
 		<div

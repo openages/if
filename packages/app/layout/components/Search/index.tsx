@@ -4,13 +4,11 @@ import { useEffect, useRef, useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { LazyElement, Modal, SimpleEmpty } from '@/components'
-import { sleep } from '@/utils'
 import { ArrowBendDownLeft, ArrowDown, ArrowUp, MagnifyingGlass, Trash, X } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
 import type { IPropsSearch } from '@/layout/types'
-import type { DirTree } from '@/types'
 import type { KeyboardEvent, MouseEvent } from 'react'
 
 const Index = (props: IPropsSearch) => {
@@ -22,8 +20,7 @@ const Index = (props: IPropsSearch) => {
 		history,
 		searchByInput,
 		onClose,
-		find,
-		add,
+		onCheck,
 		changeSearchIndex,
 		clearSearchHistory
 	} = props
@@ -45,30 +42,6 @@ const Index = (props: IPropsSearch) => {
 		{ target: ref }
 	)
 
-	const onCheck = useMemoizedFn(async (id: string, file: DirTree.Item) => {
-		const view = $copy(find(file.id).view)
-
-		if (view) {
-			add(view)
-
-			if (view.active === false) await sleep(360)
-		} else {
-			add({
-				id: file.id,
-				module,
-				file,
-				active: true,
-				fixed: true
-			})
-
-			await sleep(360)
-		}
-
-		await $app.Event.emit(`todo/${file.id}/redirect`, id)
-
-		onClose()
-	})
-
 	const handleChangeIndex = useMemoizedFn(e => {
 		const event = e as KeyboardEvent
 
@@ -79,7 +52,7 @@ const Index = (props: IPropsSearch) => {
 
 			if (!target) return
 
-			onCheck(target.item.id, target.file)
+			onCheck({ id: target.item.id, file: target.file })
 		}
 
 		if (event.key === 'Escape') {
@@ -182,7 +155,7 @@ const Index = (props: IPropsSearch) => {
 									changeSearchIndex,
 									onCheck
 								}}
-								key={file.id}
+								key={item.id}
 							></LazyElement>
 						))
 					) : (

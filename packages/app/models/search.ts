@@ -3,7 +3,7 @@ import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { getDocItem } from '@/utils'
+import { getDocItem, sleep } from '@/utils'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 
 import type { App, DirTree } from '@/types'
@@ -89,6 +89,32 @@ export default class Index {
 		}
 	}
 
+	async onCheck(args: { id: string; file: DirTree.Item }) {
+		const { id, file } = args
+		const find_view = await $app.Event.emit('global.stack.find', file.id)
+		const view = $copy(find_view)
+
+		if (view?.view) {
+			await $app.Event.emit('global.stack.add', view.view)
+
+			if (view.active === false) await sleep(360)
+		} else {
+			await $app.Event.emit('global.stack.add', {
+				id: file.id,
+				module: file.module,
+				file,
+				active: true,
+				fixed: true
+			})
+
+			await sleep(360)
+		}
+
+		await $app.Event.emit(`${file.module}/${file.id}/redirect`, id)
+
+		if (this.open) this.closeSearch()
+	}
+
 	addSearchHistory(text: string) {
 		const history = this.search_history[this.module] || []
 
@@ -144,6 +170,7 @@ export default class Index {
 	}
 
 	on() {
+		$app.Event.on('global.app.check', this.onCheck)
 		$app.Event.on('global.app.showSearch', this.showSearch)
 		$app.Event.on('global.app.closeSearch', this.closeSearch)
 	}
@@ -151,6 +178,7 @@ export default class Index {
 	off() {
 		this.utils.off()
 
+		$app.Event.on('global.app.check', this.onCheck)
 		$app.Event.off('global.app.showSearch', this.showSearch)
 		$app.Event.off('global.app.closeSearch', this.closeSearch)
 	}

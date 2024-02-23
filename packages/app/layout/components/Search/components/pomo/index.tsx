@@ -14,7 +14,7 @@ interface IProps extends Pick<IPropsSearch, 'changeSearchIndex'> {
 	text: string
 	active: boolean
 	index: number
-	onCheck: (id: string, file: DirTree.Item) => Promise<void>
+	onCheck: (args: { id: string; file: DirTree.Item }) => Promise<void>
 }
 
 const Index = (props: IProps) => {
@@ -26,7 +26,7 @@ const Index = (props: IProps) => {
 		hover && changeSearchIndex(index)
 	}, [hover])
 
-	const onItem = useMemoizedFn(() => onCheck(item.file_id, file))
+	const onItem = useMemoizedFn(() => onCheck({ id: item.file_id, file }))
 
 	return (
 		<div

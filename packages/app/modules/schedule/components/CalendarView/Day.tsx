@@ -12,7 +12,7 @@ import type { IPropsCalendarViewDay } from '../../types'
 import type { MouseEvent } from 'react'
 
 const Index = (props: IPropsCalendarViewDay) => {
-	const { container, day, counts, index, updateTimeBlock } = props
+	const { container, day, counts, index, updateTimeBlock, removeTimeBlock, copyTimeBlock } = props
 	const { show } = useContextMenu({ id: 'timeblock_context_menu' })
 	const [signal, setSignal] = useState(null)
 
@@ -58,9 +58,23 @@ const Index = (props: IPropsCalendarViewDay) => {
 					></span>
 				))}
 			</div>
-			{signal && <TimeBlock item={{ ...signal }} signal updateTimeBlock={updateTimeBlock}></TimeBlock>}
+			{signal && (
+				<TimeBlock
+					item={{ ...signal }}
+					signal
+					updateTimeBlock={updateTimeBlock}
+					removeTimeBlock={removeTimeBlock}
+					copyTimeBlock={copyTimeBlock}
+				></TimeBlock>
+			)}
 			{day.map(item => (
-				<TimeBlock item={item} key={item.id} updateTimeBlock={updateTimeBlock}></TimeBlock>
+				<TimeBlock
+					item={item}
+					key={item.id}
+					updateTimeBlock={updateTimeBlock}
+					removeTimeBlock={removeTimeBlock}
+					copyTimeBlock={copyTimeBlock}
+				></TimeBlock>
 			))}
 		</div>
 	)

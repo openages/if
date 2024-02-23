@@ -41,8 +41,11 @@ export interface IPropsCalendarView {
 	view: Model['view']
 	scale: Model['scale']
 	calendar_days: Model['calendar_days']
+	timeblock_copied: Model['timeblock_copied']
 	addTimeBlock: Model['addTimeBlock']
 	updateTimeBlock: Model['updateTimeBlock']
+	removeTimeBlock: Model['removeTimeBlock']
+	copyTimeBlock: (v: Omit<Schedule.CalendarItem, 'id'>) => void
 }
 
 export interface IPropsCalendarViewDay {
@@ -51,20 +54,25 @@ export interface IPropsCalendarViewDay {
 	counts: number
 	index: number
 	updateTimeBlock: Model['updateTimeBlock']
-}
-
-export interface IPropsCalendarContextMenu {
-	view: Model['view']
-	addTimeBlock: Model['addTimeBlock']
+	removeTimeBlock: Model['removeTimeBlock']
+	copyTimeBlock: IPropsCalendarView['copyTimeBlock']
 }
 
 export interface IPropsCalendarViewTimeBlock {
 	item: Schedule.CalendarItem
 	signal?: boolean
 	updateTimeBlock: Model['updateTimeBlock']
+	removeTimeBlock: Model['removeTimeBlock']
+	copyTimeBlock: IPropsCalendarView['copyTimeBlock']
 }
 
 export interface IPropsCalendarViewTimeBlockDetail {
 	item: Schedule.CalendarItem
 	updateTimeBlock: Model['updateTimeBlock']
+}
+
+export interface IPropsCalendarContextMenu {
+	view: Model['view']
+	timeblock_copied: Model['timeblock_copied']
+	addTimeBlock: Model['addTimeBlock']
 }

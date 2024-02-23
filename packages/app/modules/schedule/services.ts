@@ -9,26 +9,23 @@ export const getTimeBlocks = (file_id: string, selector: MangoQuerySelector<Sche
 	return $db.schedule_items.find({ selector: { file_id, ...selector } })
 }
 
-export const addTimeBlock = (
-	file_id: string,
-	type: Schedule.Item['type'],
-	start_time: Schedule.Item['start_time'],
-	end_time: Schedule.Item['end_time']
-) => {
+export const addTimeBlock = (file_id: string, args: Partial<Schedule.Item>) => {
 	return $db.schedule_items.insert({
 		id: id(),
 		file_id,
-		type,
 		tag: '',
 		text: '',
 		todos: [],
-		start_time,
-		end_time
-	})
+		...args
+	} as Schedule.Item)
 }
 
 export const updateTimeBlock = async (id: string, v: Partial<Schedule.Item>) => {
 	const doc = await getTimeBlock(id)
 
 	return doc.updateCRDT({ ifMatch: { $set: v } })
+}
+
+export const removeTimeBlock = async (id: string) => {
+	return $db.schedule_items.findOne(id).remove()
 }

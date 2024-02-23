@@ -1,11 +1,14 @@
 import { useMemoizedFn } from 'ahooks'
-import { Popover } from 'antd'
+import { Dropdown, Popover } from 'antd'
 import dayjs from 'dayjs'
-import { useLayoutEffect, useState } from 'react'
+import { omit } from 'lodash-es'
+import { useLayoutEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
+import { useDeepEffect } from '@/hooks'
 import { useInput } from '@/modules/todo/hooks'
 import { getDocItemsData } from '@/utils'
-import { Info, X } from '@phosphor-icons/react'
+import { Check, Copy, Info, Trash, X } from '@phosphor-icons/react'
 
 import TimeBlockDetail from '../TimeBlockDetail'
 import styles from './index.css'
@@ -13,13 +16,17 @@ import styles from './index.css'
 import type { IPropsCalendarViewTimeBlock } from '../../types'
 import type { Subscription } from 'rxjs'
 import type { Todo } from '@/types'
+import type { MenuProps } from 'antd'
 
 const Index = (props: IPropsCalendarViewTimeBlock) => {
-	const { item, signal, updateTimeBlock } = props
+	const { item, signal, updateTimeBlock, removeTimeBlock, copyTimeBlock } = props
 	const [visible_detail, setVisibleDetail] = useState(false)
 	const [status, setStatus] = useState('')
+	const { t, i18n } = useTranslation()
 
-	useLayoutEffect(() => {
+	useLayoutEffect(() => () => setVisibleDetail(false), [])
+
+	useDeepEffect(() => {
 		let watcher = null as Subscription
 
 		if (item?.todos?.length) {
@@ -28,18 +35,80 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 
 				const done_items = items.filter(item => item.status === 'checked' || item.status === 'closed')
 
-				setStatus(`${done_items.length}/${items.length}`)
+				if (done_items.length !== items.length) {
+					setStatus(`${done_items.length}/${items.length}`)
+				} else {
+					setStatus('ok')
+				}
 			})
 		} else {
 			setStatus('')
 		}
 
-		return () => {
-			setVisibleDetail(false)
-
-			watcher?.unsubscribe?.()
-		}
+		return () => watcher?.unsubscribe?.()
 	}, [item.todos])
+
+	const { input, onInput } = useInput({
+		value: item.text,
+		max_length: 60,
+		update: useMemoizedFn(textContent => updateTimeBlock(item.id, { text: textContent }))
+	})
+
+	const context_menu_items = useMemo(
+		() =>
+			[
+				{
+					key: 'check',
+					label: (
+						<div className='menu_item_wrap flex align_center'>
+							<Info size={14}></Info>
+							<span className='text ml_6'>{t('translation:common.check')}</span>
+						</div>
+					)
+				},
+				{
+					key: 'copy',
+					label: (
+						<div className='menu_item_wrap flex align_center'>
+							<Copy size={14}></Copy>
+							<span className='text ml_6'>{t('translation:common.copy')}</span>
+						</div>
+					)
+				},
+				{
+					key: 'remove',
+					label: (
+						<div className='menu_item_wrap flex align_center'>
+							<Trash size={14}></Trash>
+							<span className='text ml_6'>{t('translation:common.remove')}</span>
+						</div>
+					)
+				}
+			] as MenuProps['items'],
+		[i18n.language]
+	)
+
+	const onKeyDown = useMemoizedFn(e => {
+		if (e.key === 'Enter' || e.key === 'Tab') {
+			e.preventDefault()
+		}
+	})
+
+	const toggleVisibleDetail = useMemoizedFn(() => setVisibleDetail(!visible_detail))
+
+	const onContextMenu = useMemoizedFn(({ key }) => {
+		switch (key) {
+			case 'check':
+				toggleVisibleDetail()
+				break
+			case 'copy':
+				copyTimeBlock(omit(item, 'id'))
+				break
+			case 'remove':
+				removeTimeBlock(item.id)
+				break
+		}
+	})
 
 	if (signal) {
 		return (
@@ -54,20 +123,6 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 		)
 	}
 
-	const { input, onInput } = useInput({
-		value: item.text,
-		max_length: 60,
-		update: useMemoizedFn(textContent => updateTimeBlock(item.id, { text: textContent }))
-	})
-
-	const onKeyDown = useMemoizedFn(e => {
-		if (e.key === 'Enter' || e.key === 'Tab') {
-			e.preventDefault()
-		}
-	})
-
-	const toggleVisibleDetail = useMemoizedFn(() => setVisibleDetail(!visible_detail))
-
 	return (
 		<Popover
 			open={visible_detail}
@@ -78,46 +133,61 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 			fresh
 			placement='right'
 		>
-			<div
-				className={$cx(
-					'w_100 border_box absolute top_0 flex flex_column',
-					styles._local,
-					item.length === 1 && styles.small,
-					item.length === 2 && styles.middle,
-					item.length === 3 && styles.large,
-					item.length > 3 && styles.xlarge
-				)}
-				style={{ transform: `translateY(${item.start * 16}px)`, height: item.length * 16 }}
+			<Dropdown
+				destroyPopupOnHide
+				trigger={['contextMenu']}
+				overlayStyle={{ width: 90 }}
+				menu={{
+					items: context_menu_items,
+					onClick: onContextMenu
+				}}
 			>
 				<div
 					className={$cx(
-						'btn_detail none justify_center align_center absolute top_0 right_0 clickable',
-						visible_detail && 'visible_detail'
+						'w_100 border_box absolute top_0 flex flex_column',
+						styles._local,
+						item.length === 1 && styles.small,
+						item.length === 2 && styles.middle,
+						item.length === 3 && styles.large,
+						item.length > 3 && styles.xlarge
 					)}
-					onClick={toggleVisibleDetail}
+					style={{ transform: `translateY(${item.start * 16}px)`, height: item.length * 16 }}
 				>
-					{visible_detail ? <X size={12}></X> : <Info size={14}></Info>}
-				</div>
-				<div className='text_scroll_wrap w_100'>
 					<div
-						className='text_wrap w_100 border_box'
-						ref={input}
-						contentEditable='plaintext-only'
-						data-placeholder='输入描述'
-						onInput={onInput}
-						onKeyDown={onKeyDown}
-					></div>
-				</div>
-				{item.length > 1 && (
-					<div className='time flex justify_between'>
-						<span>
-							{dayjs(item.start_time).format('HH:mm')} -{' '}
-							{dayjs(item.end_time).format('HH:mm')}
-						</span>
-						{status && <span>{status}</span>}
+						className={$cx(
+							'btn_detail none justify_center align_center absolute top_0 right_0 clickable',
+							visible_detail && 'visible_detail'
+						)}
+						onClick={toggleVisibleDetail}
+					>
+						{visible_detail ? <X size={12}></X> : <Info size={14}></Info>}
 					</div>
-				)}
-			</div>
+					<div className='text_scroll_wrap w_100'>
+						<div
+							className='text_wrap w_100 border_box'
+							ref={input}
+							contentEditable='plaintext-only'
+							data-placeholder='输入描述'
+							onInput={onInput}
+							onKeyDown={onKeyDown}
+						></div>
+					</div>
+					{item.length > 1 && (
+						<div className='time flex justify_between'>
+							<span>
+								{dayjs(item.start_time).format('HH:mm')} -{' '}
+								{dayjs(item.end_time).format('HH:mm')}
+							</span>
+							{status &&
+								(status === 'ok' ? (
+									<Check weight='bold'></Check>
+								) : (
+									<span>{status}</span>
+								))}
+						</div>
+					)}
+				</div>
+			</Dropdown>
 		</Popover>
 	)
 }

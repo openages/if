@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { omit } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
@@ -8,7 +9,7 @@ import Utils from '@/models/utils'
 import { getDocItemsData } from '@/utils'
 import { useInstanceWatch } from '@openages/stk/mobx'
 
-import { addTimeBlock, getTimeBlocks, updateTimeBlock } from './services'
+import { addTimeBlock, getTimeBlocks, removeTimeBlock, updateTimeBlock } from './services'
 import { getCalendarDays, getDayDetails, getMonthDays, getWeekdays } from './utils'
 
 import type { Scale } from './types/model'
@@ -30,6 +31,8 @@ export default class Index {
 	days = [] as Array<DayDetail>
 	calendar_days = [] as Schedule.CalendarDays
 	timeline_days = []
+
+	timeblock_copied = null as Omit<Schedule.CalendarItem, 'id'>
 
 	visible_task_panel = false
 
@@ -72,17 +75,46 @@ export default class Index {
 		this.current = this.current[type === 'prev' ? 'subtract' : 'add'](1, this.scale)
 	}
 
-	async addTimeBlock(type: Schedule.Item['type'], index: number, start: number, length: number) {
+	async addTimeBlock(args: {
+		type: Schedule.Item['type']
+		index: number
+		start: number
+		length: number
+		info?: Omit<Schedule.Item, 'id'>
+	}) {
+		const { type, index, start, length, info } = args
 		const date = this.days[index].value
 		const date_start = date.startOf('day')
 		const start_time = date_start.add(start * 20, 'minutes')
 		const end_time = start_time.add(length * 20, 'minutes')
+		const target_info = info ? omit(info, ['start', 'length']) : {}
 
-		addTimeBlock(this.id, type, start_time.valueOf(), end_time.valueOf())
+		addTimeBlock(this.id, {
+			type,
+			...target_info,
+			start_time: start_time.valueOf(),
+			end_time: end_time.valueOf()
+		})
 	}
 
 	async updateTimeBlock(id: string, v: Partial<Schedule.Item>) {
-		updateTimeBlock(id, v)
+		await updateTimeBlock(id, v)
+	}
+
+	async removeTimeBlock(id: string) {
+		await removeTimeBlock(id)
+	}
+
+	async pasteTimeBlock(args: {
+		type: Schedule.Item['type']
+		index: number
+		start: number
+		length: number
+		info: Omit<Schedule.Item, 'id'>
+	}) {
+		const { type, index, start, length, info } = args
+
+		this.addTimeBlock({ type, index, start, length, info })
 	}
 
 	watchCalendarDays() {

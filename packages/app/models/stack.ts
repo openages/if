@@ -334,6 +334,7 @@ export default class Index {
 	}
 
 	on() {
+		$app.Event.on('global.stack.find', this.find)
 		$app.Event.on('global.stack.add', this.add)
 		$app.Event.on('global.stack.updateFile', this.updateFile)
 		$app.Event.on('global.stack.removeFile', this.removeFile)
@@ -343,6 +344,7 @@ export default class Index {
 		this.observer?.disconnect()
 		this.utils.off()
 
+		$app.Event.off('global.stack.find', this.find)
 		$app.Event.off('global.stack.add', this.add)
 		$app.Event.off('global.stack.updateFile', this.updateFile)
 		$app.Event.off('global.stack.removeFile', this.removeFile)
