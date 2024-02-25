@@ -165,9 +165,7 @@ const Index = (props: IPropsDetail) => {
 						<div className='option_item w_100 border_box flex align_center'>
 							<div className='name_wrap flex align_center'>
 								<Tag size={16}></Tag>
-								<span className='name'>
-									{t('translation:todo.SettingsModal.tags.label')}
-								</span>
+								<span className='name'>{t('translation:common.tags.label')}</span>
 							</div>
 							<div className='value_wrap flex align_center'>
 								<TagSelect

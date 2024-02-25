@@ -276,6 +276,7 @@ const Index = (props: IPropsTable) => {
 				sortDirections={['descend', 'ascend', null]}
 				columns={columns}
 				dataSource={items}
+				virtual={false}
 				onRow={onRow}
 				onChange={onChange}
 			></Table>
