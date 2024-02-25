@@ -45,6 +45,13 @@
 			}
 		}
 
+		.if-table-container {
+			&::before,
+			&::after {
+				display: none;
+			}
+		}
+
 		table {
 			border-collapse: collapse;
 
