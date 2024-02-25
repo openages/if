@@ -1,8 +1,8 @@
 import { useEventListener, useMemoizedFn } from 'ahooks'
 import { Form, Select } from 'antd'
-import { debounce } from 'lodash-es'
+import { debounce, pick } from 'lodash-es'
 import { observer } from 'mobx-react-lite'
-import { useMemo, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { container } from 'tsyringe'
 
 import { Todos } from '@/atoms'
@@ -34,7 +34,7 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 	useDeepEffect(() => {
 		const form_item = getFieldsValue()
 
-		if (deepEqual(item, form_item)) return
+		if (deepEqual(pick(item, ['text', 'tag']), form_item)) return
 
 		const target = $copy(item)
 
@@ -118,6 +118,12 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 					placeholder='选择标签'
 					fieldNames={{ label: 'text', value: 'id' }}
 					options={tags}
+					optionRender={({ data: { color, text } }: any) => (
+						<div className='option_item w_100 flex align_center'>
+							<span className='tag_color mr_6' style={{ backgroundColor: color }}></span>
+							<span className='text'>{text}</span>
+						</div>
+					)}
 				></Select>
 			</Item>
 			{x.tab === 'search' ? (
@@ -125,6 +131,7 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 					className='select todos w_100'
 					popupClassName='small'
 					variant='borderless'
+					allowClear
 					suffixIcon={null}
 					placeholder='搜索待办'
 					fieldNames={{ label: 'text', value: 'id' }}

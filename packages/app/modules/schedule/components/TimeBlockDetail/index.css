@@ -78,6 +78,14 @@
 			.if-select-clear {
 				right: 0;
 			}
+
+			.option_item {
+				.tag_color {
+					width: 9px;
+					height: 9px;
+					border-radius: 50%;
+				}
+			}
 		}
 
 		.tab_wrap {
