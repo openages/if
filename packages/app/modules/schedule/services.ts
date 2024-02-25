@@ -5,7 +5,13 @@ import type { MangoQuerySelector } from 'rxdb'
 
 export const getTimeBlock = (id: string) => $db.schedule_items.findOne(id).exec()
 
-export const getTimeBlocks = (file_id: string, selector: MangoQuerySelector<Schedule.Item>) => {
+export const getTimeBlocks = (
+	file_id: string,
+	selector: MangoQuerySelector<Schedule.Item>,
+	filter_tags: Array<string>
+) => {
+	if (filter_tags.length) selector['tag'] = { $in: filter_tags }
+
 	return $db.schedule_items.find({ selector: { file_id, ...selector } })
 }
 

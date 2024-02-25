@@ -48,9 +48,8 @@ export default class Index {
 	visible_settings_modal = false
 
 	watch = {
-		'scale|current': () => {
-			this.getDays()
-		}
+		'scale|current': () => this.getDays(),
+		filter_tags: () => this.watchCalendarDays()
 	} as Watch<Index & { 'scale|current': any }>
 
 	constructor(
@@ -83,7 +82,6 @@ export default class Index {
 			.with('month', () => getMonthDays(this.current.month() + 1))
 			.exhaustive()
 
-		this.stopWatchCalendarDays()
 		this.watchCalendarDays()
 	}
 
@@ -173,14 +171,20 @@ export default class Index {
 	}
 
 	watchCalendarDays() {
+		this.stopWatchCalendarDays()
+
 		const start_time = this.days.at(0).value.startOf('day')
 		const end_time = this.days.at(-1).value.endOf('day')
 
-		this.calendar_days_watcher = getTimeBlocks(this.id, {
-			type: this.view,
-			start_time: { $gte: start_time.valueOf() },
-			end_time: { $lte: end_time.valueOf() }
-		}).$.subscribe(doc => {
+		this.calendar_days_watcher = getTimeBlocks(
+			this.id,
+			{
+				type: this.view,
+				start_time: { $gte: start_time.valueOf() },
+				end_time: { $lte: end_time.valueOf() }
+			},
+			this.filter_tags
+		).$.subscribe(doc => {
 			if (this.disable_watcher) return
 
 			const items = getDocItemsData(doc)

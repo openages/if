@@ -13,5 +13,85 @@
 				background-color: var(--color_bg_2);
 			}
 		}
+
+		.if-select {
+			display: flex;
+			align-items: center;
+
+			&:hover {
+				.if-select-arrow {
+					opacity: unset;
+					background-color: var(--color_bg_2);
+					border-radius: var(--radius_small);
+				}
+			}
+
+			&.has_value {
+				display: unset;
+
+				.if-select-selector {
+					width: unset;
+
+					.if-select-selection-overflow {
+						padding-right: 0;
+
+						.if-select-selection-overflow-item {
+							margin-right: 6px;
+
+							&:nth-last-child(2) {
+								margin-right: 0;
+							}
+
+							.if-select-selection-item {
+								height: 18px;
+								margin: 0;
+								padding: 0 4px;
+								font-size: 12px;
+								line-height: 18px;
+								border-radius: var(--radius_small);
+								background-color: unset;
+
+								.if-select-selection-item-content {
+									margin-right: 0;
+								}
+
+								.if-select-selection-item-remove {
+									display: none;
+								}
+							}
+						}
+
+						.if-select-selection-overflow-item-suffix {
+							display: none;
+						}
+					}
+				}
+
+				.if-select-clear {
+					right: 0;
+				}
+
+				.if-select-arrow {
+					display: none;
+				}
+			}
+
+			.if-select-selector {
+				width: 24px;
+				padding: 0;
+			}
+
+			.if-select-selection-placeholder {
+				display: none;
+			}
+
+			.if-select-arrow {
+				vertical-align: unset;
+				top: unset;
+				height: 24px;
+				margin-top: unset;
+				inset-inline-end: unset;
+			}
+		}
 	}
 }

@@ -1,0 +1,15 @@
+._local {
+	font-size: 12px;
+
+	:global {
+		.tag_color {
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+		}
+
+		.text {
+			margin-right: 3px;
+		}
+	}
+}

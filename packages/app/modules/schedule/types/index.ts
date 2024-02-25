@@ -21,6 +21,7 @@ export interface IPropsHeader {
 	changeScale: (v: Model['scale']) => void
 	changeCurrent: (v: Model['current']) => void
 	showSettingsModal: () => void
+	changeFilterTags: (v: Model['filter_tags']) => void
 }
 
 export interface IPropsHeaderLeft
@@ -38,6 +39,7 @@ export interface IPropsHeaderRight {
 	tags: Schedule.Setting['tags']
 	filter_tags: Model['filter_tags']
 	showSettingsModal: IPropsHeader['showSettingsModal']
+	changeFilterTags: IPropsHeader['changeFilterTags']
 }
 
 export interface IPropsDateScale {

@@ -34,7 +34,8 @@ const Index = ({ id }: IProps) => {
 		changeView: useMemoizedFn((v: Model['view']) => (x.view = v)),
 		changeScale: useMemoizedFn((v: Model['scale']) => (x.scale = v)),
 		changeCurrent: useMemoizedFn((v: Model['current']) => (x.current = v)),
-		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true))
+		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true)),
+		changeFilterTags: useMemoizedFn(v => (x.filter_tags = v))
 	}
 
 	const props_date_scale: IPropsDateScale = {
