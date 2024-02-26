@@ -58,7 +58,6 @@ const Index = (props: IPropsSessionsEditModalItem) => {
 				{!flow_mode && timeline?.current === 'work' && (
 					<span className='timeline absolute' style={{ top: timeline?.time * 2.1 }}></span>
 				)}
-				{title && <span className='title w_100 text_center absolute'>{title}</span>}
 				<div className='actions_wrap w_100 border_box none justify_between absolute'>
 					<div
 						className='btn_remove icon_wrap border_box flex justify_center align_center clickable'
@@ -96,8 +95,11 @@ const Index = (props: IPropsSessionsEditModalItem) => {
 						</div>
 					</Popover>
 				</div>
-				<span className='work_time_value'>
-					{target_work_time.hours}:{target_work_time.minutes}
+				<span className='work_time_value flex flex_column'>
+					{title && <span className='title w_100 text_center mb_6'>{title}</span>}
+					<span>
+						{target_work_time.hours}:{target_work_time.minutes}
+					</span>
 				</span>
 			</div>
 			{!flow_mode && (
