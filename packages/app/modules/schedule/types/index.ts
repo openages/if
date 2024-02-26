@@ -59,6 +59,7 @@ export interface IPropsCalendarView {
 	removeTimeBlock: Model['removeTimeBlock']
 	copyTimeBlock: (v: Omit<Schedule.CalendarItem, 'id'>) => void
 	updateTodoSchedule: Model['updateTodoSchedule']
+	changeTimeBlockLength: Model['changeTimeBlockLength']
 }
 
 export interface IPropsCalendarViewDay {
@@ -71,15 +72,19 @@ export interface IPropsCalendarViewDay {
 	removeTimeBlock: Model['removeTimeBlock']
 	copyTimeBlock: IPropsCalendarView['copyTimeBlock']
 	updateTodoSchedule: Model['updateTodoSchedule']
+	changeTimeBlockLength: Model['changeTimeBlockLength']
 }
 
 export interface IPropsCalendarViewTimeBlock {
 	item: Schedule.CalendarItem
 	tags: Schedule.Setting['tags']
+	day_index: number
+	timeblock_index: number
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
 	copyTimeBlock: IPropsCalendarView['copyTimeBlock']
 	updateTodoSchedule: Model['updateTodoSchedule']
+	changeTimeBlockLength: Model['changeTimeBlockLength']
 }
 
 export interface IPropsCalendarViewTimeBlockSignal {

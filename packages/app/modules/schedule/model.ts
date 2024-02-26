@@ -103,7 +103,7 @@ export default class Index {
 		const end_time = start_time.add(length * 20, 'minutes')
 		const target_info = info ? omit(info, ['start', 'length']) : {}
 
-		addTimeBlock(this.id, {
+		await addTimeBlock(this.id, {
 			type,
 			...target_info,
 			start_time: start_time.valueOf(),
@@ -129,6 +129,21 @@ export default class Index {
 		const { type, index, start, length, info } = args
 
 		this.addTimeBlock({ type, index, start, length, info })
+	}
+
+	async changeTimeBlockLength(args: { day_index: number; timeblock_index: number; step: number }) {
+		const { day_index, timeblock_index, step } = args
+		const item = this.calendar_days[day_index][timeblock_index]
+		const target_length = item.length + step
+
+		if (!target_length) return
+
+		item.length = target_length
+		item.end_time = dayjs(item.start_time)
+			.add(item.length * 20, 'minutes')
+			.valueOf()
+
+		this.updateTimeBlock(item.id, { end_time: item.end_time })
 	}
 
 	async updateTodoSchedule(id: string) {
@@ -181,7 +196,7 @@ export default class Index {
 			{
 				type: this.view,
 				start_time: { $gte: start_time.valueOf() },
-				end_time: { $lte: end_time.valueOf() }
+				end_time: { $lte: end_time.valueOf() + 1 }
 			},
 			this.filter_tags
 		).$.subscribe(doc => {

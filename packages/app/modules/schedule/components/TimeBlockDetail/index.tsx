@@ -33,12 +33,10 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 
 	useDeepEffect(() => {
 		const form_item = getFieldsValue()
+		const target = $copy(pick(item, ['text', 'tag']))
 
-		if (deepEqual(pick(item, ['text', 'tag']), form_item)) return
-
-		const target = $copy(item)
-
-		if (!item.tag) target.tag = null
+		if (!target.tag) target.tag = undefined
+		if (deepEqual(target, form_item)) return
 
 		setFieldsValue(target)
 

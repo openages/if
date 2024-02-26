@@ -54,7 +54,8 @@ const Index = ({ id }: IProps) => {
 		updateTimeBlock: useMemoizedFn(x.updateTimeBlock),
 		removeTimeBlock: useMemoizedFn(x.removeTimeBlock),
 		copyTimeBlock: useMemoizedFn(v => (x.timeblock_copied = v)),
-		updateTodoSchedule: useMemoizedFn(x.updateTodoSchedule)
+		updateTodoSchedule: useMemoizedFn(x.updateTodoSchedule),
+		changeTimeBlockLength: useMemoizedFn(x.changeTimeBlockLength)
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {

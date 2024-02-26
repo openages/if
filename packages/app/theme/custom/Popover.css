@@ -17,6 +17,7 @@
 		}
 
 		.if-popover-arrow {
+			top: 18px;
 			left: -7px !important;
 			width: 0;
 			height: 0;
@@ -57,9 +58,16 @@
 			}
 		}
 
-		&.if-popover-placement-left {
+		&.if-popover-placement-leftTop {
 			.if-popover-arrow {
 				left: 189px !important;
+			}
+		}
+
+		&.if-popover-placement-rightBottom {
+			.if-popover-arrow {
+				top: unset !important;
+				bottom: 18px !important;
 			}
 		}
 	}

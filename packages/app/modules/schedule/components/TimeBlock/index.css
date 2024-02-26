@@ -83,12 +83,19 @@
 	}
 
 	:global {
+		.drag_line {
+			height: 6px;
+			cursor: row-resize;
+			user-select: none;
+		}
+
 		.btn_detail {
 			width: 16px;
 			height: 16px;
 			border-bottom-left-radius: var(--radius_small);
 			border-left: var(--border);
 			border-bottom: var(--border);
+			background-color: var(--color_bg);
 
 			&:hover {
 				background-color: var(--color_bg_2);

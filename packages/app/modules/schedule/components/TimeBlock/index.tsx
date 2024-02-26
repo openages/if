@@ -9,9 +9,11 @@ import { useTranslation } from 'react-i18next'
 import { useDeepEffect } from '@/hooks'
 import { useInput } from '@/modules/todo/hooks'
 import { getDocItemsData } from '@/utils'
-import { Check, Copy, Info, Trash, X } from '@phosphor-icons/react'
+import { Check, Info, X } from '@phosphor-icons/react'
 
+import { useDragLength } from '../../hooks'
 import TimeBlockDetail from '../TimeBlockDetail'
+import { useContextMenuItems } from './hooks'
 import styles from './index.css'
 
 import type { IPropsCalendarViewTimeBlock } from '../../types'
@@ -20,10 +22,28 @@ import type { Todo } from '@/types'
 import type { MenuProps } from 'antd'
 
 const Index = (props: IPropsCalendarViewTimeBlock) => {
-	const { item, tags, updateTimeBlock, removeTimeBlock, copyTimeBlock, updateTodoSchedule } = props
+	const {
+		item,
+		tags,
+		day_index,
+		timeblock_index,
+		updateTimeBlock,
+		removeTimeBlock,
+		copyTimeBlock,
+		updateTodoSchedule,
+		changeTimeBlockLength
+	} = props
 	const [visible_detail, setVisibleDetail] = useState(false)
 	const [status, setStatus] = useState('')
-	const { t, i18n } = useTranslation()
+	const context_menu_items = useContextMenuItems()
+	const { t } = useTranslation()
+
+	const { drag_ref, changing } = useDragLength({
+		type: 'timeblock',
+		day_index,
+		timeblock_index,
+		changeTimeBlockLength
+	})
 
 	useLayoutEffect(() => () => setVisibleDetail(false), [])
 
@@ -64,40 +84,6 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 		return { '--tag_color': Color(target.color).rgb().array().join(',') }
 	}, [item.tag, tags])
 
-	const context_menu_items = useMemo(
-		() =>
-			[
-				{
-					key: 'check',
-					label: (
-						<div className='menu_item_wrap flex align_center'>
-							<Info size={14}></Info>
-							<span className='text ml_6'>{t('translation:common.check')}</span>
-						</div>
-					)
-				},
-				{
-					key: 'copy',
-					label: (
-						<div className='menu_item_wrap flex align_center'>
-							<Copy size={14}></Copy>
-							<span className='text ml_6'>{t('translation:common.copy')}</span>
-						</div>
-					)
-				},
-				{
-					key: 'remove',
-					label: (
-						<div className='menu_item_wrap flex align_center'>
-							<Trash size={14}></Trash>
-							<span className='text ml_6'>{t('translation:common.remove')}</span>
-						</div>
-					)
-				}
-			] as MenuProps['items'],
-		[i18n.language]
-	)
-
 	const onKeyDown = useMemoizedFn(e => {
 		if (e.key === 'Enter' || e.key === 'Tab') {
 			e.preventDefault()
@@ -135,7 +121,7 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 			overlayClassName='border_popover'
 			destroyTooltipOnHide
 			fresh
-			placement='right'
+			placement='rightTop'
 		>
 			<Dropdown
 				destroyPopupOnHide
@@ -154,7 +140,8 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 						item.length === 2 && styles.middle,
 						item.length === 3 && styles.large,
 						item.length > 3 && styles.xlarge,
-						tag_styles['--tag_color'] && styles.has_tag
+						tag_styles['--tag_color'] && styles.has_tag,
+						changing && styles.changing
 					)}
 					style={{
 						transform: `translateY(${item.start * 16}px)`,
@@ -162,6 +149,7 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 						...tag_styles
 					}}
 				>
+					<div className='drag_line w_100 absolute bottom_0 right_0' ref={drag_ref}></div>
 					<div
 						className={$cx(
 							'btn_detail none justify_center align_center absolute top_0 right_0 clickable',

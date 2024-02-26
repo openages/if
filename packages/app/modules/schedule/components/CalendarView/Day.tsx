@@ -22,7 +22,8 @@ const Index = (props: IPropsCalendarViewDay) => {
 		updateTimeBlock,
 		removeTimeBlock,
 		copyTimeBlock,
-		updateTodoSchedule
+		updateTodoSchedule,
+		changeTimeBlockLength
 	} = props
 	const { show } = useContextMenu({ id: 'timeblock_context_menu' })
 	const [signal, setSignal] = useState(null)
@@ -70,14 +71,17 @@ const Index = (props: IPropsCalendarViewDay) => {
 				))}
 			</div>
 			{signal && <Signal item={signal}></Signal>}
-			{day.map(item => (
+			{day.map((item, timeblock_index) => (
 				<TimeBlock
 					item={item}
 					tags={tags}
+					day_index={index}
+					timeblock_index={timeblock_index}
 					updateTimeBlock={updateTimeBlock}
 					removeTimeBlock={removeTimeBlock}
 					copyTimeBlock={copyTimeBlock}
 					updateTodoSchedule={updateTodoSchedule}
+					changeTimeBlockLength={changeTimeBlockLength}
 					key={item.id}
 				></TimeBlock>
 			))}
