@@ -46,6 +46,6 @@ export default async (file_id: string) => {
 			}
 		})
 
-		await module_setting.updateCRDT({ ifMatch: { $set: { setting: stringify({ ...info, relations }) } } })
+		await module_setting.incrementalPatch({ setting: stringify({ ...info, relations }) })
 	}
 }

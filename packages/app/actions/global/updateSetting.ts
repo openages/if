@@ -5,9 +5,7 @@ export default async <T>(file_id: string, data: Partial<T>) => {
 
 	const setting = JSON.parse(module_setting.setting) as T
 
-	await module_setting.updateCRDT({
-		ifMatch: {
-			$set: { setting: stringify({ ...setting, ...data }) }
-		}
+	await module_setting.incrementalPatch({
+		setting: stringify({ ...setting, ...data })
 	})
 }

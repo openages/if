@@ -7,5 +7,5 @@ export const getPomo = (id: string) => {
 export const update = async (id: string, v: Partial<Pomo.Item>) => {
 	const doc = await getPomo(id).exec()
 
-	return doc.updateCRDT({ ifMatch: { $set: v } })
+	return doc.incrementalPatch(v)
 }

@@ -149,5 +149,206 @@ export default {
                   "start_time",
                   "end_time"
             ]
+      },
+      "Schedule.CalendarItem": {
+            "type": "object",
+            "properties": {
+                  "start": {
+                        "type": "number"
+                  },
+                  "length": {
+                        "type": "number"
+                  },
+                  "id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "file_id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "type": {
+                        "type": "string",
+                        "enum": [
+                              "calendar",
+                              "timeline",
+                              "fixed"
+                        ]
+                  },
+                  "tag": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "text": {
+                        "type": "string"
+                  },
+                  "todos": {
+                        "type": "array",
+                        "items": {
+                              "type": "string"
+                        }
+                  },
+                  "start_time": {
+                        "type": "number",
+                        "multipleOf": 1,
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                  },
+                  "end_time": {
+                        "type": "number",
+                        "multipleOf": 1,
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                  }
+            },
+            "required": [
+                  "end_time",
+                  "file_id",
+                  "id",
+                  "length",
+                  "start",
+                  "start_time",
+                  "tag",
+                  "text",
+                  "todos",
+                  "type"
+            ]
+      },
+      "Schedule.CalendarDay": {
+            "type": "array",
+            "items": {
+                  "type": "object",
+                  "properties": {
+                        "start": {
+                              "type": "number"
+                        },
+                        "length": {
+                              "type": "number"
+                        },
+                        "id": {
+                              "type": "string",
+                              "maxLength": 30
+                        },
+                        "file_id": {
+                              "type": "string",
+                              "maxLength": 30
+                        },
+                        "type": {
+                              "type": "string",
+                              "enum": [
+                                    "calendar",
+                                    "timeline",
+                                    "fixed"
+                              ]
+                        },
+                        "tag": {
+                              "type": "string",
+                              "maxLength": 30
+                        },
+                        "text": {
+                              "type": "string"
+                        },
+                        "todos": {
+                              "type": "array",
+                              "items": {
+                                    "type": "string"
+                              }
+                        },
+                        "start_time": {
+                              "type": "number",
+                              "multipleOf": 1,
+                              "minimum": 1,
+                              "maximum": 9007199254740991
+                        },
+                        "end_time": {
+                              "type": "number",
+                              "multipleOf": 1,
+                              "minimum": 1,
+                              "maximum": 9007199254740991
+                        }
+                  },
+                  "required": [
+                        "end_time",
+                        "file_id",
+                        "id",
+                        "length",
+                        "start",
+                        "start_time",
+                        "tag",
+                        "text",
+                        "todos",
+                        "type"
+                  ]
+            }
+      },
+      "Schedule.CalendarDays": {
+            "type": "array",
+            "items": {
+                  "type": "array",
+                  "items": {
+                        "type": "object",
+                        "properties": {
+                              "start": {
+                                    "type": "number"
+                              },
+                              "length": {
+                                    "type": "number"
+                              },
+                              "id": {
+                                    "type": "string",
+                                    "maxLength": 30
+                              },
+                              "file_id": {
+                                    "type": "string",
+                                    "maxLength": 30
+                              },
+                              "type": {
+                                    "type": "string",
+                                    "enum": [
+                                          "calendar",
+                                          "timeline",
+                                          "fixed"
+                                    ]
+                              },
+                              "tag": {
+                                    "type": "string",
+                                    "maxLength": 30
+                              },
+                              "text": {
+                                    "type": "string"
+                              },
+                              "todos": {
+                                    "type": "array",
+                                    "items": {
+                                          "type": "string"
+                                    }
+                              },
+                              "start_time": {
+                                    "type": "number",
+                                    "multipleOf": 1,
+                                    "minimum": 1,
+                                    "maximum": 9007199254740991
+                              },
+                              "end_time": {
+                                    "type": "number",
+                                    "multipleOf": 1,
+                                    "minimum": 1,
+                                    "maximum": 9007199254740991
+                              }
+                        },
+                        "required": [
+                              "end_time",
+                              "file_id",
+                              "id",
+                              "length",
+                              "start",
+                              "start_time",
+                              "tag",
+                              "text",
+                              "todos",
+                              "type"
+                        ]
+                  }
+            }
       }
 } as const

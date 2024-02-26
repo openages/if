@@ -141,7 +141,7 @@ export default class Index {
 		const data = { key: 'screenlock', value: stringify($copy(this.data)) }
 		const screenlock = (await $db.kv.findOne('screenlock').exec()) ?? (await $db.kv.insert(data))
 
-		await screenlock.updateCRDT({ ifMatch: { $set: { value: data.value } } })
+		await screenlock.incrementalPatch({ value: data.value })
 	}
 
 	async resetPassword() {
