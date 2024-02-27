@@ -11,11 +11,45 @@
 	overflow-y: scroll;
 	padding: 0 36px;
 	outline: none;
-	position: relative;
 
 	:global {
 		.if-table {
 			scrollbar-color: unset;
+
+			table {
+				thead {
+					tr {
+						th {
+							&:nth-of-type(2) {
+								padding-left: 3px !important;
+							}
+
+							&:last-child {
+								padding-right: 0 !important;
+							}
+						}
+					}
+				}
+
+				tbody {
+					tr {
+						td {
+							&:first-child {
+								padding-left: 0 !important;
+								padding-right: 0 !important;
+							}
+
+							&:nth-of-type(2) {
+								padding-left: 3px !important;
+							}
+
+							&:last-child {
+								padding-right: 0 !important;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

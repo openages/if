@@ -1,6 +1,7 @@
+import { cloneElement, useMemo, Children } from 'react'
+
 import { useSortable } from '@dnd-kit/sortable'
 import { useDeepMemo } from '@openages/stk/react'
-import { Children, cloneElement, useMemo } from 'react'
 
 import type { DraggableAttributes } from '@dnd-kit/core'
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
@@ -47,7 +48,7 @@ const Index = (props: IProps) => {
 		return { attributes, transform, transition, isDragging, listeners, setNodeRef, setActivatorNodeRef }
 	}, [attributes, transform, transition, isDragging])
 
-	return Children.map(children, child => cloneElement(child, { sortable_props }))
+	return cloneElement(children, { sortable_props })
 }
 
 export default $app.memo(Index)

@@ -29,7 +29,7 @@ export default class Index {
 	} as Watch<Index>
 
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, { watch: false }, { autoBind: true })
+		makeAutoObservable(this, { observer: false, watch: false }, { autoBind: true })
 
 		this.utils.acts = [setStorageWhenChange(['columns', 'focus'], this), ...useInstanceWatch(this)]
 	}

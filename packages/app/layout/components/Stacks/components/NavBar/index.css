@@ -40,7 +40,7 @@
 			user-select: none;
 			border-radius: 0;
 			box-shadow: none;
-			outline: none;
+			outline: none !important;
 			transition: none;
 			background-color: var(--color_bg);
 

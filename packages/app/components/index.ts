@@ -24,6 +24,12 @@ export { default as TagsEditor } from './TagsEditor'
 export { default as Emoji } from './Emoji'
 export { default as SettingsModal } from './SettingsModal'
 export { default as FormEditable } from './FormEditable'
+export { default as FormTable } from './FormTable'
 
 export type { IProps as IPropsDirTree } from './DirTree/types'
 export type { SortableProps } from './SortableWrap'
+export type {
+	IProps as IPropsFormTable,
+	Column as IPropsFormTableColumn,
+	Component as IPropsFormTableComponent
+} from './FormTable/types'

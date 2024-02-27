@@ -30,6 +30,9 @@ module.exports = defineConfig({
 	optimization: {
 		splitChunks: { chunks: 'all', maxSize: 30000 }
 	},
+	node: {
+		global: false
+	},
 	experiments: {
 		topLevelAwait: true,
 		outputModule: true,

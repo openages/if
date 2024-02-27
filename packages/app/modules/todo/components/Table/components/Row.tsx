@@ -46,9 +46,11 @@ const Index = (props: IProps) => {
 	})
 
 	return (
-		<Form form={form} component={false} onValuesChange={onValuesChange}>
-			<tr {...rest}>{children}</tr>
-		</Form>
+		<tr {...rest}>
+			<Form form={form} component={false} onValuesChange={onValuesChange}>
+				{children}
+			</Form>
+		</tr>
 	)
 }
 
