@@ -8,44 +8,45 @@
 	--disable_opacity: 0.3;
 
 	height: calc(100% - 72px);
-	overflow-y: scroll;
 	padding: 0 36px;
-	outline: none;
 
 	:global {
-		.if-table {
+		.scroll_wrap {
+			overflow: scroll;
+			outline: none;
+		}
+
+		.table_wrap {
 			scrollbar-color: unset;
 
-			table {
-				thead {
-					tr {
-						th {
-							&:nth-of-type(2) {
-								padding-left: 3px !important;
-							}
+			thead {
+				tr {
+					th {
+						&:nth-of-type(2) {
+							padding-left: 3px !important;
+						}
 
-							&:last-child {
-								padding-right: 0 !important;
-							}
+						&:last-child {
+							padding-right: 0 !important;
 						}
 					}
 				}
+			}
 
-				tbody {
-					tr {
-						td {
-							&:first-child {
-								padding-left: 0 !important;
-								padding-right: 0 !important;
-							}
+			tbody {
+				tr {
+					td {
+						&:first-child {
+							padding-left: 0 !important;
+							padding-right: 0 !important;
+						}
 
-							&:nth-of-type(2) {
-								padding-left: 3px !important;
-							}
+						&:nth-of-type(2) {
+							padding-left: 3px !important;
+						}
 
-							&:last-child {
-								padding-right: 0 !important;
-							}
+						&:last-child {
+							padding-right: 0 !important;
 						}
 					}
 				}

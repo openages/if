@@ -5,9 +5,10 @@ import { TextAlignCenter } from '@phosphor-icons/react'
 import Remark from '../../Remark'
 import styles from '../index.css'
 
-import type { CustomFormItem, Todo } from '@/types'
+import type { Todo } from '@/types'
+import type { IPropsFormTableComponent } from '@/components'
 
-const Index = (props: CustomFormItem<Todo.Todo['remark']>) => {
+const Index = (props: IPropsFormTableComponent<Todo.Todo['remark']>) => {
 	const { value, onChange } = props
 
 	return (

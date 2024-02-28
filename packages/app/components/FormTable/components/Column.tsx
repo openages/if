@@ -10,15 +10,25 @@ import type { ReactElement } from 'react'
 const { Item } = Form
 
 const Field = $app.memo((props: Pick<IPropsColumn, 'component'> & Component<any>) => {
-	const { component, value, row_index, dataIndex, deps, extra, onChange } = props
+	const { component, value, row_index, dataIndex, deps, extra, getProps, onAction, onChange } = props
 
 	const change = useMemoizedFn(onChange)
 
-	return cloneElement(component as ReactElement, { value, row_index, dataIndex, deps, extra, onChange: change })
+	return cloneElement(component as ReactElement, {
+		value,
+		row_index,
+		dataIndex,
+		deps,
+		extra,
+		getProps,
+		onAction,
+		onChange: change
+	})
 })
 
 const Index = (props: IPropsColumn) => {
-	const { row_index, dataIndex, deps, component, align, fixed, extra, stickyOffset, shadow } = props
+	const { row_index, dataIndex, deps, component, align, fixed, extra, stickyOffset, shadow, getProps, onAction } =
+		props
 	const style = useStyle({ align, fixed, stickyOffset })
 
 	return (
@@ -31,7 +41,7 @@ const Index = (props: IPropsColumn) => {
 			style={style}
 		>
 			<Item name={dataIndex} noStyle>
-				<Field {...{ component, row_index, dataIndex, deps, extra }}></Field>
+				<Field {...{ component, row_index, dataIndex, deps, extra, getProps, onAction }}></Field>
 			</Item>
 		</td>
 	)

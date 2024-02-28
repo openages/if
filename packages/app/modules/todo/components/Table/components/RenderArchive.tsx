@@ -6,14 +6,13 @@ import { ArchiveBox, Spinner, UploadSimple } from '@phosphor-icons/react'
 
 import styles from '../index.css'
 
-import type { CustomFormItem, Todo } from '@/types'
+import type { IPropsFormTableComponent } from '@/components'
 
-interface IProps extends CustomFormItem<Todo.Todo['archive']> {
-	archive_time: Todo.Todo['archive_time']
-}
+import type { Todo } from '@/types'
 
-const Index = (props: IProps) => {
-	const { value, archive_time, onChange } = props
+const Index = (props: IPropsFormTableComponent<Todo.Todo['archive']>) => {
+	const { value, deps, onChange } = props
+	const { archive_time } = deps
 	const ref = useRef(null)
 	const hover = useHover(ref)
 

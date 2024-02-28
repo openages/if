@@ -1,9 +1,10 @@
 import Level from '../../Level'
 import styles from '../index.css'
 
-import type { CustomFormItem, Todo } from '@/types'
+import type { Todo } from '@/types'
+import type { IPropsFormTableComponent } from '@/components'
 
-const Index = (props: CustomFormItem<Todo.Todo['level']>) => {
+const Index = (props: IPropsFormTableComponent<Todo.Todo['level']>) => {
 	const { value, onChange } = props
 
 	return (

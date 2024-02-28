@@ -5,9 +5,10 @@ import { Minus } from '@phosphor-icons/react'
 
 import styles from '../index.css'
 
-import type { CustomFormItem, Todo } from '@/types'
+import type { Todo } from '@/types'
+import type { IPropsFormTableComponent } from '@/components'
 
-const Index = (props: CustomFormItem<Todo.Todo['children']>) => {
+const Index = (props: IPropsFormTableComponent<Todo.Todo['children']>) => {
 	const { value } = props
 
 	const checked_children = value?.filter(item => item.status === 'checked')

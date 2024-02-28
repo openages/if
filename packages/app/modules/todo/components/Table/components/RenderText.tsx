@@ -2,9 +2,10 @@ import { Input } from 'antd'
 
 import styles from '../index.css'
 
-import type { CustomFormItem, Todo } from '@/types'
+import type { Todo } from '@/types'
+import type { IPropsFormTableComponent } from '@/components'
 
-const Index = (props: CustomFormItem<Todo.Todo['text']>) => {
+const Index = (props: IPropsFormTableComponent<Todo.Todo['text']>) => {
 	const { value, onChange } = props
 
 	return <Input className={styles.RenderText} variant='borderless' value={value} onChange={onChange}></Input>

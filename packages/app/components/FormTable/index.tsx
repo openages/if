@@ -1,6 +1,8 @@
 import { useMemoizedFn } from 'ahooks'
 import { debounce } from 'lodash-es'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+
+import { useDeepMemo } from '@openages/stk/react'
 
 import { ColGroup, Header, Pagination, Row } from './components'
 import styles from './index.css'
@@ -8,20 +10,37 @@ import styles from './index.css'
 import type { IProps, IPropsHeader, IPropsPagination, IPropsColGroup } from './types'
 
 const Index = (props: IProps) => {
-	const { columns, dataSource, rowKey, loading, stickyTop, scrollX, onChange } = props
+	const { columns, dataSource, rowKey, loading, stickyTop, scrollX, onChange, getRowClassName } = props
 	const ref_container = useRef<HTMLDivElement>(null)
-	const ref_table = useRef<HTMLTableElement>(null)
 	const [width, setWidth] = useState(0)
 	const [scroll_position, setScrollPosition] = useState<'start' | 'center' | 'end' | false>(false)
 
-	const scroll = useMemoizedFn(() => {
-		const element = ref_container.current
+	const getScroller = useMemoizedFn(() => {
+		let scroller = ref_container?.current?.parentElement
 
-		if (!element.scrollLeft) {
+		if (!scroller) return null
+
+		while (scroller) {
+			if (getComputedStyle(scroller).overflow.indexOf('scroll') !== -1) {
+				break
+			}
+
+			scroller = scroller.parentElement
+		}
+
+		return { scroller }
+	})
+
+	const scroll = useMemoizedFn(() => {
+		const { scroller } = getScroller()
+
+		if (!scroller) return
+
+		if (!scroller.scrollLeft) {
 			return setScrollPosition('start')
 		}
 
-		if (element.scrollLeft + element.clientWidth >= element.scrollWidth) {
+		if (scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth) {
 			return setScrollPosition('end')
 		}
 
@@ -29,17 +48,20 @@ const Index = (props: IProps) => {
 	})
 
 	const debounceScroll = useMemoizedFn(debounce(scroll, 450))
+	const debounceChange = useMemoizedFn(debounce(onChange, 450))
 
 	useEffect(() => {
-		const element = ref_container.current
+		const { scroller } = getScroller()
 
-		if (!element) return
+		if (!scroller) return
 
 		const observer = new ResizeObserver(
 			debounce(
 				(elements: Array<ResizeObserverEntry>) => {
-					if (!elements.length) return
 					const element = ref_container.current
+
+					if (!elements.length) return
+					if (!element?.scrollWidth) return
 
 					if (element.scrollWidth > element.clientWidth) {
 						scroll()
@@ -54,16 +76,16 @@ const Index = (props: IProps) => {
 			)
 		)
 
-		element.addEventListener('scroll', debounceScroll)
-		observer.observe(element)
+		scroller.addEventListener('scroll', debounceScroll)
+		observer.observe(scroller)
 
 		return () => {
-			element.removeEventListener('scroll', debounceScroll)
+			scroller.removeEventListener('scroll', debounceScroll)
 			observer.disconnect()
 		}
 	}, [])
 
-	const { target_columns, exist_fixed_column, left_shadow_index, right_shadow_index } = useMemo(() => {
+	const { target_columns, exist_fixed_column, left_shadow_index, right_shadow_index } = useDeepMemo(() => {
 		let exist_fixed_column = false
 		let left_shadow_index = null
 		let right_shadow_index = null
@@ -101,7 +123,7 @@ const Index = (props: IProps) => {
 		return { target_columns, exist_fixed_column, left_shadow_index, right_shadow_index }
 	}, [columns])
 
-	const shadow = useMemo(() => {
+	const shadow = useDeepMemo(() => {
 		if (!width || !exist_fixed_column) return false
 		if (width > scrollX) return false
 
@@ -125,16 +147,12 @@ const Index = (props: IProps) => {
 
 	return (
 		<div
-			className={$cx(
-				'w_100 flex flex_column relative',
-				styles._local,
-				shadow && styles[`shadow_${[shadow]}`]
-			)}
+			className={$cx('w_100 flex flex_column', styles._local, shadow && styles[`shadow_${[shadow]}`])}
 			ref={ref_container}
 		>
-			<table className='table_wrap w_100' ref={ref_table}>
+			<Header {...props_header}></Header>
+			<table className='table_wrap w_100'>
 				<ColGroup {...props_col_group}></ColGroup>
-				<Header {...props_header}></Header>
 				<tbody>
 					{dataSource.map((item, index) => (
 						<Row
@@ -143,7 +161,8 @@ const Index = (props: IProps) => {
 							index={index}
 							left_shadow_index={left_shadow_index}
 							right_shadow_index={right_shadow_index}
-							onChange={onChange}
+							onChange={debounceChange}
+							getRowClassName={getRowClassName}
 							key={rowKey ? item[rowKey] : item.id}
 						></Row>
 					))}

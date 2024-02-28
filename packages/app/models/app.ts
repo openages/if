@@ -29,8 +29,6 @@ export default class Index {
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { watch: false }, { autoBind: true })
-
-		this.utils.acts = [setStorageWhenChange(['app_modules'], this)]
 	}
 
 	get apps() {
@@ -43,7 +41,7 @@ export default class Index {
 	}
 
 	init() {
-		this.utils.acts.push(...useInstanceWatch(this))
+		this.utils.acts = [setStorageWhenChange(['app_modules'], this), ...useInstanceWatch(this)]
 
 		this.on()
 	}

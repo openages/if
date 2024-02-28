@@ -3,7 +3,7 @@ import { Form } from 'antd'
 import { pick } from 'lodash-es'
 
 import { useDeepEffect } from '@/hooks'
-import { deepEqual } from '@openages/stk/react'
+import { deepEqual, useDeepMemo } from '@openages/stk/react'
 
 import Column from './Column'
 
@@ -13,7 +13,7 @@ import type { FormProps } from 'antd'
 const { useForm } = Form
 
 const Index = (props: IPropsRow) => {
-	const { columns, item, index, left_shadow_index, right_shadow_index, onChange } = props
+	const { columns, item, index, left_shadow_index, right_shadow_index, onChange, getRowClassName } = props
 	const [form] = useForm()
 	const { setFieldsValue, getFieldsValue } = form
 
@@ -29,8 +29,10 @@ const Index = (props: IPropsRow) => {
 		onChange(index, v)
 	})
 
+	const className = useDeepMemo(() => getRowClassName(item), [item])
+
 	return (
-		<tr className='form_table_tr'>
+		<tr className={$cx('form_table_tr', ...className)}>
 			<Form form={form} component={false} onValuesChange={onValuesChange}>
 				{columns.map((col, idx) => (
 					<Column
@@ -46,6 +48,8 @@ const Index = (props: IPropsRow) => {
 							(left_shadow_index === idx && 'start') ||
 							(right_shadow_index === idx && 'end')
 						}
+						getProps={col.getProps}
+						onAction={col.onAction}
 						key={col.dataIndex || col.title}
 					></Column>
 				))}

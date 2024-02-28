@@ -3,9 +3,10 @@ import dayjs from 'dayjs'
 
 import styles from '../index.css'
 
-import type { CustomFormItem, Todo } from '@/types'
+import type { Todo } from '@/types'
+import type { IPropsFormTableComponent } from '@/components'
 
-const Index = (props: CustomFormItem<Todo.Todo['create_at']>) => {
+const Index = (props: IPropsFormTableComponent<Todo.Todo['create_at']>) => {
 	const { value } = props
 
 	return (

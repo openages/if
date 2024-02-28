@@ -1,9 +1,10 @@
 import DateTime from '../../DateTime'
 import styles from '../index.css'
 
-import type { CustomFormItem, Todo } from '@/types'
+import type { Todo } from '@/types'
+import type { IPropsFormTableComponent } from '@/components'
 
-const Index = (props: CustomFormItem<Todo.Todo['remind_time']>) => {
+const Index = (props: IPropsFormTableComponent<Todo.Todo['remind_time']>) => {
 	const { value, onChange } = props
 
 	return (

@@ -2,11 +2,12 @@ import { useMemoizedFn, useSize } from 'ahooks'
 import { Table } from 'antd'
 import { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { match } from 'ts-pattern'
 
 import { getSort } from '@/appdata/const'
 import { FormTable, LoadingCircle } from '@/components'
 import { getItemStatus } from '@/utils/modules/todo'
-import { deepEqual } from '@openages/stk/react'
+import { deepEqual, useDeepMemo } from '@openages/stk/react'
 
 import {
 	Cell,
@@ -26,7 +27,6 @@ import {
 	RenderText,
 	Row
 } from './components'
-import Test from './components/Test'
 import styles from './index.css'
 
 import type { Todo } from '@/types'
@@ -58,91 +58,116 @@ const Index = (props: IPropsTable) => {
 	} = props
 	const { t } = useTranslation()
 
-	const columns = useMemo(
+	const getPropsStatus = useMemoizedFn(({ id, status }) => {
+		const target = getItemStatus({ relations, id, status })
+
+		return target ? target.linked : undefined
+	})
+
+	const getRowClassName = useMemoizedFn((item: Todo.Todo) => {
+		const target = []
+		const status = getItemStatus({ relations, id: item.id, status: item.status })
+
+		if (item.archive) target.push(styles.archive)
+
+		if (status) {
+			if (status.done) target.push(styles.done)
+			if (status.linked) target.push(styles.linked)
+		}
+
+		return target
+	})
+
+	const onAction: IPropsFormTableColumn['onAction'] = useMemoizedFn(
+		(action: 'detail' | 'remove' | 'clean', { id }, index) => {
+			match(action)
+				.with('detail', () => showDetailModal({ id, index }))
+				.with('remove', () => remove({ id }))
+				.with('clean', () => clean(id))
+				.exhaustive()
+		}
+	)
+
+	const columns = useDeepMemo(
 		() =>
 			[
 				{
 					dataIndex: 'status',
-					deps: ['archive'],
+					deps: ['id'],
 					width: 15,
+					align: 'left',
 					fixed: 'left',
-					component: Test
+					component: RenderStatus,
+					getProps: getPropsStatus
 				},
 				{
 					title: t('translation:todo.common.text'),
 					dataIndex: 'text',
-					deps: ['archive'],
 					width: 150,
+					align: 'left',
 					fixed: 'left',
-					component: Test
+					component: RenderText
 				},
 				{
 					title: t('translation:todo.Header.options.tags'),
 					dataIndex: 'tag_ids',
-					deps: ['archive'],
 					width: 96,
 					align: 'center',
 					extra: { tags },
-					component: Test
+					component: RenderTags
 				},
 				{
 					title: t('translation:todo.common.level'),
 					dataIndex: 'level',
-					deps: ['archive'],
 					width: 96,
 					align: 'center',
 					sort: true,
-					component: Test
+					component: RenderLevel
 				},
 				{
 					title: t('translation:todo.Input.Remind.title'),
 					dataIndex: 'remind_time',
-					deps: ['archive'],
 					width: 96,
 					align: 'center',
 					sort: true,
-					component: Test
+					component: RenderRemind
 				},
 				{
 					title: t('translation:todo.Input.Deadline.title'),
 					dataIndex: 'end_time',
-					deps: ['archive'],
 					width: 96,
 					align: 'center',
 					sort: true,
-					component: Test
+					component: RenderDeadline
 				},
 				{
 					title: t('translation:todo.Input.Cycle.title'),
 					dataIndex: 'cycle',
-					deps: ['archive', 'cycle_enabled'],
+					deps: ['cycle_enabled'],
 					width: 96,
 					align: 'center',
-					component: Test
+					component: RenderCycle
 				},
 				{
 					title: t('translation:modules.schedule'),
 					dataIndex: 'schedule',
-					deps: ['archive'],
 					width: 60,
 					align: 'center',
-					component: Test
+					component: RenderSchedule
 				},
 				{
 					title: t('translation:todo.common.children'),
 					dataIndex: 'children',
-					deps: ['archive'],
 					width: 60,
 					align: 'center',
-					component: Test
+					component: RenderChildren
 				},
 				{
 					title: t('translation:todo.Detail.remark.title'),
 					dataIndex: 'remark',
-					deps: ['archive'],
 					width: 60,
 					align: 'center',
-					component: Test
+					component: RenderRemark
 				},
 				{
 					title: t('translation:todo.Archive.title'),
@@ -150,7 +175,7 @@ const Index = (props: IPropsTable) => {
 					deps: ['archive_time'],
 					width: 81,
 					align: 'center',
-					component: Test
+					component: RenderArchive
 				},
 				{
 					title: t('translation:todo.Header.options.sort.create_at'),
@@ -159,29 +184,34 @@ const Index = (props: IPropsTable) => {
 					align: 'center',
 					ignoreArchive: true,
 					sort: true,
-					component: Test
+					component: RenderCreateAt
 				},
 				{
 					title: t('translation:todo.common.options'),
 					dataIndex: 'options',
+					deps: ['id'],
 					width: 81,
 					align: 'center',
 					fixed: 'right',
-					component: Test
+					component: RenderOptions,
+					onAction
 				}
 			] as Array<IPropsFormTableColumn>,
-		[]
+		[tags]
 	)
 
 	return (
 		<div className={$cx('w_100 border_box', styles._local)}>
-			<FormTable
-				columns={columns}
-				dataSource={items}
-				scrollX={1200}
-				stickyTop={0}
-				onChange={onTableRowChange}
-			></FormTable>
+			<div className='scroll_wrap w_100 h_100'>
+				<FormTable
+					columns={columns}
+					dataSource={items}
+					scrollX={1200}
+					stickyTop={0}
+					onChange={onTableRowChange}
+					getRowClassName={getRowClassName}
+				></FormTable>
+			</div>
 		</div>
 	)
 }

@@ -6,14 +6,10 @@ import { Eraser, Notepad, Trash } from '@phosphor-icons/react'
 
 import styles from '../index.css'
 
-interface IProps {
-	showDetailModal: () => void
-	remove: () => void
-	clean: () => void
-}
+import type { IPropsFormTableComponent } from '@/components'
 
-const Index = (props: IProps) => {
-	const { showDetailModal, remove, clean } = props
+const Index = (props: IPropsFormTableComponent) => {
+	const { row_index, deps, onAction } = props
 	const { t } = useTranslation()
 
 	const confirmClean = useMemoizedFn(() => {
@@ -22,10 +18,13 @@ const Index = (props: IProps) => {
 			content: t('translation:common.erase.confirm'),
 			centered: true,
 			onOk() {
-				clean()
+				onAction('clean', deps, row_index)
 			}
 		})
 	})
+
+	const onDetail = useMemoizedFn(() => onAction('detail', deps, row_index))
+	const onRemove = useMemoizedFn(() => onAction('remove', deps, row_index))
 
 	return (
 		<div className={$cx('flex justify_center align_center', styles.RenderOptions)}>
@@ -33,7 +32,7 @@ const Index = (props: IProps) => {
 				<div>
 					<div
 						className='btn_action flex justify_center align_center cursor_point clickable mr_2'
-						onClick={showDetailModal}
+						onClick={onDetail}
 					>
 						<Notepad size={14}></Notepad>
 					</div>
@@ -43,7 +42,7 @@ const Index = (props: IProps) => {
 				<div>
 					<div
 						className='btn_action flex justify_center align_center cursor_point clickable mr_2'
-						onClick={remove}
+						onClick={onRemove}
 					>
 						<Trash size={14}></Trash>
 					</div>

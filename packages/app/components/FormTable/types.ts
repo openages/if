@@ -8,6 +8,7 @@ export interface IProps {
 	stickyTop?: number
 	scrollX?: number
 	onChange: (index: number, v: any) => void
+	getRowClassName?: (item: any) => Array<string>
 }
 
 export interface Column {
@@ -21,6 +22,8 @@ export interface Column {
 	stickyOffset?: number
 	sort?: boolean
 	extra?: any
+	getProps?: (...args: any) => any
+	onAction?: (action: string, deps: any, index: number) => void
 }
 
 export interface IPropsColGroup {
@@ -41,12 +44,11 @@ export interface IPropsTh {
 	shadow?: 'start' | 'end' | ''
 }
 
-export interface IPropsRow extends Pick<IProps, 'columns'> {
+export interface IPropsRow extends Pick<IProps, 'columns' | 'onChange' | 'getRowClassName'> {
 	item: any
 	index: number
 	left_shadow_index: number | null
 	right_shadow_index: number | null
-	onChange: IProps['onChange']
 }
 
 export interface IPropsColumn {
@@ -59,15 +61,19 @@ export interface IPropsColumn {
 	extra: Column['extra']
 	stickyOffset: Column['stickyOffset']
 	shadow?: 'start' | 'end' | ''
+	getProps: Column['getProps']
+	onAction: Column['onAction']
 }
 
 export interface IPropsPagination {}
 
-export interface Component<T> {
+export interface Component<T = any> {
 	value?: T
 	row_index: number
 	dataIndex: string
 	deps: any
 	extra: Column['extra']
+	getProps?: Column['getProps']
+	onAction?: Column['onAction']
 	onChange?: (...args: any) => any
 }

@@ -1,18 +1,16 @@
 import TagSelect from '../../TagSelect'
 import styles from '../index.css'
 
-import type { CustomFormItem, Todo } from '@/types'
+import type { Todo } from '@/types'
+import type { IPropsFormTableComponent } from '@/components'
 
-interface IProps extends CustomFormItem<Todo.Todo['tag_ids']> {
-	options: Todo.Setting['tags']
-}
-
-const Index = (props: IProps) => {
-	const { options, value, onChange } = props
+const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids']>) => {
+	const { value, extra, onChange } = props
+	const { tags } = extra
 
 	return (
 		<div className={$cx('flex justify_center', styles.RenderTags)} style={{ overflow: 'scroll' }}>
-			<TagSelect useByTable options={options} value={value} onChange={onChange}></TagSelect>
+			<TagSelect useByTable options={tags} value={value} onChange={onChange}></TagSelect>
 		</div>
 	)
 }

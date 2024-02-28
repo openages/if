@@ -61,13 +61,12 @@ export default class Index {
 			{ disable_watcher: false, setting_watcher: false, calendar_days_watcher: false },
 			{ autoBind: true }
 		)
-
-		this.utils.acts = [...useInstanceWatch(this)]
 	}
 
 	init(args: { id: string }) {
 		const { id } = args
 
+		this.utils.acts = [...useInstanceWatch(this)]
 		this.id = id
 		this.file.init(id)
 

@@ -3,9 +3,10 @@ import { Switch } from 'antd'
 
 import styles from '../index.css'
 
-import type { CustomFormItem, Todo } from '@/types'
+import type { Todo } from '@/types'
+import type { IPropsFormTableComponent } from '@/components'
 
-const Index = (props: CustomFormItem<Todo.Todo['schedule']>) => {
+const Index = (props: IPropsFormTableComponent<Todo.Todo['schedule']>) => {
 	const { value, onChange } = props
 
 	const onToggleValue = useMemoizedFn(() => onChange(!value))

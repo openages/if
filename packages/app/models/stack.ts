@@ -30,11 +30,11 @@ export default class Index {
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { observer: false, watch: false }, { autoBind: true })
-
-		this.utils.acts = [setStorageWhenChange(['columns', 'focus'], this), ...useInstanceWatch(this)]
 	}
 
 	init() {
+		this.utils.acts = [setStorageWhenChange(['columns', 'focus'], this), ...useInstanceWatch(this)]
+
 		this.getObserver()
 
 		this.on()

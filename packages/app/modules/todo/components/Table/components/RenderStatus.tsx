@@ -1,14 +1,31 @@
 import { useMemoizedFn } from 'ahooks'
+import { xxHash32 } from 'js-xxhash'
+import { useMemo } from 'react'
 import { Case, Switch } from 'react-if'
+import genColor from 'uniqolor'
 
 import { CheckCircle, CheckSquare, Circle, Square } from '@phosphor-icons/react'
 
 import styles from '../index.css'
 
-import type { CustomFormItem, Todo } from '@/types'
+import type { IPropsFormTableComponent } from '@/components'
 
-const Index = (props: CustomFormItem<Todo.Todo['status']> & { linked?: string }) => {
-	const { value, linked, onChange } = props
+import type { Todo } from '@/types'
+
+const Index = (props: IPropsFormTableComponent<Todo.Todo['status']>) => {
+	const { value, deps, getProps, onChange } = props
+	const linked = getProps({ id: deps.id, status: value })
+
+	const style = useMemo(() => {
+		if (!linked) return {}
+
+		return {
+			'--color_relation_group': genColor(xxHash32(linked).toString(3), {
+				saturation: 72,
+				lightness: [30, 72]
+			}).color
+		}
+	}, [linked])
 
 	const onCheck = useMemoizedFn(() => {
 		if (value === 'closed') return
@@ -22,6 +39,7 @@ const Index = (props: CustomFormItem<Todo.Todo['status']> & { linked?: string })
 				'flex border_box justify_center align_center cursor_point clickable',
 				styles.RenderStatus
 			)}
+			style={style}
 			onClick={onCheck}
 		>
 			<Switch>

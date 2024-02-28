@@ -1,8 +1,51 @@
 [data-theme='dark'] {
+	._local {
+		&.shadow_end,
+		&.shadow_center {
+			:global {
+				.table_wrap {
+					thead,
+					tbody {
+						tr {
+							th,
+							td {
+								&.shadow_start {
+									&::after {
+										box-shadow: inset 9px 0 9px -9px rgba(var(--color_std_rgb), 0.3);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		&.shadow_start,
+		&.shadow_center {
+			:global {
+				.table_wrap {
+					thead,
+					tbody {
+						tr {
+							th,
+							td {
+								&.shadow_end {
+									&::after {
+										box-shadow: inset -9px 0 9px -9px
+											rgba(var(--color_std_rgb), 0.3);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 ._local {
-	overflow-x: scroll;
 	outline: none;
 
 	&.shadow_end,
@@ -67,7 +110,7 @@
 								position: absolute;
 								top: 0;
 								width: 12px;
-								height: calc(100% + 1px);
+								height: 100%;
 								pointer-events: none;
 								transition: box-shadow 0.3s;
 							}

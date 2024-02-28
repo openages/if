@@ -1,14 +1,12 @@
 import Cycle from '../../Cycle'
 import styles from '../index.css'
 
-import type { CustomFormItem, Todo } from '@/types'
+import type { Todo } from '@/types'
+import type { IPropsFormTableComponent } from '@/components'
 
-interface IProps extends CustomFormItem<Todo.Todo['cycle']> {
-	cycle_enabled: Todo.Todo['cycle_enabled']
-}
-
-const Index = (props: IProps) => {
-	const { value, cycle_enabled, onChange } = props
+const Index = (props: IPropsFormTableComponent<Todo.Todo['cycle']>) => {
+	const { value, deps, onChange } = props
+	const { cycle_enabled } = deps
 
 	return (
 		<div className={$cx('flex justify_center', styles.RenderCycle)}>

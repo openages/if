@@ -27,14 +27,10 @@ module.exports = defineConfig({
 	devServer: {
 		compress: false
 	},
-	optimization: {
-		splitChunks: { chunks: 'all', maxSize: 30000 }
-	},
 	node: {
 		global: false
 	},
 	experiments: {
-		topLevelAwait: true,
 		outputModule: true,
 		rspackFuture: {
 			// newTreeshaking: true,
@@ -55,8 +51,35 @@ module.exports = defineConfig({
 	module: {
 		rules: [
 			{
-				test: /\.tsx?$/,
-				type: 'javascript/auto',
+				test: /\.ts$/,
+				use: {
+					loader: 'builtin:swc-loader',
+					options: {
+						sourceMap: !is_prod,
+						isModule: true,
+						jsc: {
+							parser: {
+								syntax: 'typescript',
+								dynamicImport: true,
+								exportDefaultFrom: true,
+								exportNamespaceFrom: true,
+								decorators: true
+							},
+							transform: {
+								legacyDecorator: true,
+								decoratorMetadata: true
+							},
+							externalHelpers: true
+						},
+						env: {
+							targets: 'chrome >= 120'
+						}
+					}
+				}
+			},
+			{
+				test: /\.tsx$/,
+				exclude: [/[\\/]node_modules[\\/]/],
 				use: {
 					loader: 'builtin:swc-loader',
 					options: {
