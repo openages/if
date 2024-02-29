@@ -50,10 +50,10 @@ export interface IPropsDateScale {
 export interface IPropsCalendarView {
 	container: MutableRefObject<HTMLDivElement>
 	view: Model['view']
-	scale: Model['scale']
 	calendar_days: Model['calendar_days']
 	timeblock_copied: Model['timeblock_copied']
 	tags: Schedule.Setting['tags']
+	today_index: number
 	addTimeBlock: Model['addTimeBlock']
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
@@ -68,6 +68,7 @@ export interface IPropsCalendarViewDay {
 	counts: number
 	index: number
 	tags: Schedule.Setting['tags']
+	today: boolean
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
 	copyTimeBlock: IPropsCalendarView['copyTimeBlock']

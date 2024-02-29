@@ -1,6 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
+import dayjs from 'dayjs'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { match } from 'ts-pattern'
 import { container as model_container } from 'tsyringe'
 
@@ -15,6 +16,7 @@ const Index = ({ id }: IProps) => {
 	const container = useRef<HTMLDivElement>(null)
 	const days = $copy(x.days)
 	const tags = $copy(x.setting?.setting?.tags || [])
+	const today_index = useMemo(() => days.findIndex(item => item.value.isToday()), [days])
 
 	useLayoutEffect(() => {
 		x.init({ id })
@@ -46,10 +48,10 @@ const Index = ({ id }: IProps) => {
 	const props_calendar_view: IPropsCalendarView = {
 		container,
 		view: x.view,
-		scale: x.scale,
 		calendar_days: $copy(x.calendar_days),
 		timeblock_copied: $copy(x.timeblock_copied),
 		tags,
+		today_index,
 		addTimeBlock: useMemoizedFn(x.addTimeBlock),
 		updateTimeBlock: useMemoizedFn(x.updateTimeBlock),
 		removeTimeBlock: useMemoizedFn(x.removeTimeBlock),

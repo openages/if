@@ -19,6 +19,7 @@ const Index = (props: IPropsCalendarViewDay) => {
 		counts,
 		index,
 		tags,
+		today,
 		updateTimeBlock,
 		removeTimeBlock,
 		copyTimeBlock,
@@ -58,7 +59,7 @@ const Index = (props: IPropsCalendarViewDay) => {
 
 	return (
 		<div
-			className={$cx('day_wrap border_box relative', styles.Day)}
+			className={$cx('day_wrap border_box relative', styles.Day, today && styles.today)}
 			style={{ width: `calc(100% / ${counts})` }}
 			onContextMenu={onContextMenu}
 		>

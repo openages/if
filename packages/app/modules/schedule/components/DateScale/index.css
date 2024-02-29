@@ -14,12 +14,9 @@
 			border-left: var(--border);
 			white-space: nowrap;
 
-			&:nth-last-of-type(1),
-			&:nth-last-of-type(2) {
-				background-color: var(--color_bg_1);
-			}
-
 			&.today {
+				background-color: var(--color_bg_1);
+
 				.date {
 					font-size: 10px;
 					padding: 1px 2px;

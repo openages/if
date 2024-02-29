@@ -81,7 +81,9 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 
 		const target = tags.find(it => it.id === item.tag)
 
-		return { '--tag_color': Color(target.color).rgb().array().join(',') }
+		return {
+			'--tag_color': Color(target.color).rgb().array().join(',')
+		}
 	}, [item.tag, tags])
 
 	const onKeyDown = useMemoizedFn(e => {
@@ -152,37 +154,39 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 					<div className='drag_line w_100 absolute bottom_0 right_0' ref={drag_ref}></div>
 					<div
 						className={$cx(
-							'btn_detail none justify_center align_center absolute top_0 right_0 clickable',
+							'btn_detail none justify_center align_center absolute clickable',
 							visible_detail && 'visible_detail'
 						)}
 						onClick={toggleVisibleDetail}
 					>
 						{visible_detail ? <X size={12}></X> : <Info size={14}></Info>}
 					</div>
-					<div className='text_scroll_wrap w_100'>
-						<div
-							className='text_wrap w_100 border_box'
-							ref={input}
-							contentEditable='plaintext-only'
-							data-placeholder='输入描述'
-							onInput={onInput}
-							onKeyDown={onKeyDown}
-						></div>
-					</div>
-					{item.length > 1 && (
-						<div className='time flex justify_between'>
-							<span>
-								{dayjs(item.start_time).format('HH:mm')} -{' '}
-								{dayjs(item.end_time).format('HH:mm')}
-							</span>
-							{status &&
-								(status === 'ok' ? (
-									<Check weight='bold'></Check>
-								) : (
-									<span>{status}</span>
-								))}
+					<div className='timeblock_content_wrap w_100 h_100 border_box flex flex_column absolute top_0 left_0'>
+						<div className='text_scroll_wrap w_100'>
+							<div
+								className='text_wrap w_100 border_box'
+								ref={input}
+								contentEditable='plaintext-only'
+								data-placeholder='输入描述'
+								onInput={onInput}
+								onKeyDown={onKeyDown}
+							></div>
 						</div>
-					)}
+						{item.length > 1 && (
+							<div className='time flex justify_between'>
+								<span>
+									{dayjs(item.start_time).format('HH:mm')} -{' '}
+									{dayjs(item.end_time).format('HH:mm')}
+								</span>
+								{status &&
+									(status === 'ok' ? (
+										<Check weight='bold'></Check>
+									) : (
+										<span>{status}</span>
+									))}
+							</div>
+						)}
+					</div>
 				</div>
 			</Dropdown>
 		</Popover>

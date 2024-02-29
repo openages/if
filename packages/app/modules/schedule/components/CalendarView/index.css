@@ -1,21 +1,14 @@
-._local {
-	&.week {
+.Day {
+	&.today {
 		:global {
-			.day_wrap {
-				&:nth-of-type(6),
-				&:nth-of-type(7) {
-					.hours_wrap {
-						.hour_item {
-							background-color: rgba(var(--color_text_rgb), 0.018);
-						}
-					}
+			.hours_wrap {
+				.hour_item {
+					background-color: var(--color_bg_1);
 				}
 			}
 		}
 	}
-}
 
-.Day {
 	:global {
 		.hours_wrap {
 			.hour_item {

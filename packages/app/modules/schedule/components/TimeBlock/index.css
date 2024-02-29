@@ -1,9 +1,8 @@
 ._local {
-	background-color: var(--color_bg);
-	border: 1px solid var(--color_border);
-	border-radius: var(--radius_small);
 	font-size: 12px;
 	overflow: hidden;
+	background-color: var(--color_bg);
+	border-radius: var(--radius_small);
 
 	&:hover {
 		:global {
@@ -14,19 +13,18 @@
 	}
 
 	&.signal {
-		border-color: var(--color_text);
+		border: 1px dashed var(--color_text);
 		background-color: var(--color_bg);
 	}
 
 	&.small {
 		:global {
 			.btn_detail {
+				width: 14px;
+				height: 14px;
 				border-radius: 0;
-				border-bottom: none;
-
-				svg {
-					margin-top: -2px;
-				}
+				border: none;
+				background-color: unset;
 			}
 
 			.text_wrap {
@@ -38,48 +36,57 @@
 	}
 
 	&.middle {
-		padding: 2px 3px;
-
 		:global {
-			.text_wrap {
-				height: 12px;
-				padding: 0;
-				white-space: nowrap;
-			}
+			.timeblock_content_wrap {
+				padding: 2px 3px;
 
-			.time {
-				margin-top: 4px;
+				.text_wrap {
+					height: 12px;
+					padding: 0;
+					white-space: nowrap;
+				}
+
+				.time {
+					margin-top: 4px;
+				}
 			}
 		}
 	}
 
 	&.large {
-		padding: 6px;
-
 		:global {
-			.text_wrap {
-				padding: 0;
-				line-height: 16px;
-				white-space: nowrap;
+			.timeblock_content_wrap {
+				padding: 6px;
+
+				.text_wrap {
+					padding: 0;
+					line-height: 16px;
+					white-space: nowrap;
+				}
 			}
 		}
 	}
 
 	&.xlarge {
-		padding: 6px;
-
 		:global {
-			.text_wrap {
-				padding: 0;
-				line-height: 16px;
+			.timeblock_content_wrap {
+				padding: 6px;
+
+				.text_wrap {
+					padding: 0;
+					line-height: 16px;
+				}
 			}
 		}
 	}
 
 	&.has_tag {
-		border-color: rgba(var(--tag_color), 0.48);
-		background-color: rgba(var(--tag_color), 0.06);
-		backdrop-filter: blur(12px);
+		:global {
+			.timeblock_content_wrap {
+				border-color: rgba(var(--tag_color), 0.48);
+				background-color: rgba(var(--tag_color), 0.06);
+			}
+		}
 	}
 
 	:global {
@@ -87,50 +94,51 @@
 			height: 6px;
 			cursor: row-resize;
 			user-select: none;
+			z-index: 1;
 		}
 
 		.btn_detail {
+			top: 1px;
+			right: 1px;
 			width: 16px;
 			height: 16px;
-			border-bottom-left-radius: var(--radius_small);
-			border-left: var(--border);
-			border-bottom: var(--border);
-			background-color: var(--color_bg);
-
-			&:hover {
-				background-color: var(--color_bg_2);
-			}
+			z-index: 1;
 
 			&.visible_detail {
 				display: flex;
 			}
 		}
 
-		.text_scroll_wrap {
-			overflow-x: scroll;
-		}
+		.timeblock_content_wrap {
+			border: 1px solid var(--color_border);
+			border-radius: var(--radius_small);
 
-		.text_wrap {
-			line-height: 14px;
-			font-size: 12px;
-			outline: none;
-			font-weight: 500;
+			.text_scroll_wrap {
+				overflow-x: scroll;
+			}
 
-			&:empty {
-				&::after {
-					content: attr(data-placeholder);
-					color: var(--color_text_light);
-					font-weight: normal;
+			.text_wrap {
+				line-height: 14px;
+				font-size: 12px;
+				outline: none;
+				font-weight: 500;
+
+				&:empty {
+					&::after {
+						content: attr(data-placeholder);
+						color: var(--color_text_light);
+						font-weight: normal;
+					}
 				}
 			}
-		}
 
-		.time {
-			margin-top: 6px;
-			font-size: 10px;
-			line-height: 1;
-			color: var(--color_text_light);
-			user-select: none;
+			.time {
+				margin-top: 6px;
+				font-size: 10px;
+				line-height: 1;
+				color: var(--color_text_light);
+				user-select: none;
+			}
 		}
 	}
 }
