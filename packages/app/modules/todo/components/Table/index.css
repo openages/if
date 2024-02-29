@@ -145,6 +145,8 @@
 
 .RenderText {
 	padding: 0;
+	border: none;
+	outline: none;
 	font-size: 12px;
 	text-overflow: ellipsis;
 }

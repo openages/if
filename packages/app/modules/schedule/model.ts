@@ -233,7 +233,6 @@ export default class Index {
 		if (!this.calendar_days_watcher) return
 
 		this.calendar_days_watcher.unsubscribe()
-
 		this.calendar_days_watcher = null
 	}
 

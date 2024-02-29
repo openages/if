@@ -295,7 +295,16 @@ export default class Index {
 		this.updatePomo()
 	}
 
+	stopWatch() {
+		if (!this.watcher) return
+
+		this.watcher?.unsubscribe?.()
+		this.watcher = null
+	}
+
 	on() {
+		this.stopWatch()
+
 		this.watcher = getPomo(this.id).$.subscribe(doc => {
 			if (this.disable_watcher) return
 
@@ -316,6 +325,6 @@ export default class Index {
 	off() {
 		$app.Event.off(`pomo/${this.id}/stopRecord`, this.stopRecord)
 
-		this.watcher?.unsubscribe?.()
+		this.stopWatch()
 	}
 }

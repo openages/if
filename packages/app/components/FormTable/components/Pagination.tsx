@@ -1,11 +1,11 @@
+import { Pagination } from 'antd'
+
 import styles from '../index.css'
 
 import type { IPropsPagination } from '../types'
 
 const Index = (props: IPropsPagination) => {
-	const {} = props
-
-	return <div className={$cx(styles.Pagination)}></div>
+	return <Pagination className={styles.Pagination} {...props}></Pagination>
 }
 
 export default $app.memo(Index)

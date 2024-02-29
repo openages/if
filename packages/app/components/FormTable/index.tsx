@@ -7,32 +7,27 @@ import { useDeepMemo } from '@openages/stk/react'
 import { ColGroup, Header, Pagination, Row } from './components'
 import styles from './index.css'
 
-import type { IProps, IPropsHeader, IPropsPagination, IPropsColGroup } from './types'
+import type { IProps, IPropsHeader, IPropsColGroup } from './types'
 
 const Index = (props: IProps) => {
-	const { columns, dataSource, rowKey, loading, stickyTop, scrollX, onChange, getRowClassName } = props
-	const ref_container = useRef<HTMLDivElement>(null)
+	const {
+		columns,
+		dataSource,
+		rowKey,
+		loading,
+		stickyTop,
+		scroller,
+		scrollX,
+		pagination,
+		onChange,
+		getRowClassName
+	} = props
+	const scroll_wrap = useRef<HTMLDivElement>(null)
 	const [width, setWidth] = useState(0)
 	const [scroll_position, setScrollPosition] = useState<'start' | 'center' | 'end' | false>(false)
 
-	const getScroller = useMemoizedFn(() => {
-		let scroller = ref_container?.current?.parentElement
-
-		if (!scroller) return null
-
-		while (scroller) {
-			if (getComputedStyle(scroller).overflow.indexOf('scroll') !== -1) {
-				break
-			}
-
-			scroller = scroller.parentElement
-		}
-
-		return { scroller }
-	})
-
 	const scroll = useMemoizedFn(() => {
-		const { scroller } = getScroller()
+		const scroller = scroll_wrap.current
 
 		if (!scroller) return
 
@@ -51,14 +46,14 @@ const Index = (props: IProps) => {
 	const debounceChange = useMemoizedFn(debounce(onChange, 450))
 
 	useEffect(() => {
-		const { scroller } = getScroller()
+		const scroller = scroll_wrap.current
 
 		if (!scroller) return
 
 		const observer = new ResizeObserver(
 			debounce(
 				(elements: Array<ResizeObserverEntry>) => {
-					const element = ref_container.current
+					const element = scroll_wrap.current
 
 					if (!elements.length) return
 					if (!element?.scrollWidth) return
@@ -133,6 +128,8 @@ const Index = (props: IProps) => {
 	const props_header: IPropsHeader = {
 		columns: target_columns,
 		stickyTop,
+		scrollerX: scroll_wrap.current,
+		scrollerY: scroller.current,
 		left_shadow_index,
 		right_shadow_index
 	}
@@ -141,34 +138,29 @@ const Index = (props: IProps) => {
 		columns
 	}
 
-	const props_pagination: IPropsPagination = {
-		columns
-	}
-
 	return (
-		<div
-			className={$cx('w_100 flex flex_column', styles._local, shadow && styles[`shadow_${[shadow]}`])}
-			ref={ref_container}
-		>
-			<Header {...props_header}></Header>
-			<table className='table_wrap w_100'>
-				<ColGroup {...props_col_group}></ColGroup>
-				<tbody>
-					{dataSource.map((item, index) => (
-						<Row
-							columns={columns}
-							item={item}
-							index={index}
-							left_shadow_index={left_shadow_index}
-							right_shadow_index={right_shadow_index}
-							onChange={debounceChange}
-							getRowClassName={getRowClassName}
-							key={rowKey ? item[rowKey] : item.id}
-						></Row>
-					))}
-				</tbody>
-			</table>
-			<Pagination {...props_pagination}></Pagination>
+		<div className={$cx('w_100 flex flex_column', styles._local, shadow && styles[`shadow_${[shadow]}`])}>
+			<div className='scroll_wrap w_100' ref={scroll_wrap}>
+				<Header {...props_header}></Header>
+				<table className='table_wrap w_100'>
+					<ColGroup {...props_col_group}></ColGroup>
+					<tbody>
+						{dataSource.map((item, index) => (
+							<Row
+								columns={columns}
+								item={item}
+								index={index}
+								left_shadow_index={left_shadow_index}
+								right_shadow_index={right_shadow_index}
+								onChange={debounceChange}
+								getRowClassName={getRowClassName}
+								key={rowKey ? item[rowKey] : item.id}
+							></Row>
+						))}
+					</tbody>
+				</table>
+			</div>
+			{pagination && <Pagination {...pagination}></Pagination>}
 		</div>
 	)
 }

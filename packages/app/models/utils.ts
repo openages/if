@@ -12,5 +12,6 @@ export default class Utils {
 
 	off() {
 		this.acts.map(item => item())
+		this.acts = []
 	}
 }

@@ -1,4 +1,6 @@
-import { Input } from 'antd'
+import { useMemoizedFn } from 'ahooks'
+
+import { todo } from '@/appdata'
 
 import styles from '../index.css'
 
@@ -8,7 +10,16 @@ import type { IPropsFormTableComponent } from '@/components'
 const Index = (props: IPropsFormTableComponent<Todo.Todo['text']>) => {
 	const { value, onChange } = props
 
-	return <Input className={styles.RenderText} variant='borderless' value={value} onChange={onChange}></Input>
+	const change = useMemoizedFn(({ target: { value } }) => onChange(value))
+
+	return (
+		<input
+			className={styles.RenderText}
+			maxLength={todo.text_max_length}
+			value={value || ''}
+			onChange={change}
+		/>
+	)
 }
 
 export default $app.memo(Index)

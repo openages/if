@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import { Case, Switch } from 'react-if'
 
+import { todo } from '@/appdata'
 import { useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { CheckSquare, DotsSixVertical, Square } from '@phosphor-icons/react'
@@ -100,6 +101,7 @@ const Index = (props: IPropsTodoItem) => {
 
 	const { input, onInput } = useInput({
 		value: text,
+		max_length: todo.text_max_length,
 		update: useMemoizedFn(textContent =>
 			update({ type: 'parent', index, dimension_id, value: { text: textContent } })
 		)

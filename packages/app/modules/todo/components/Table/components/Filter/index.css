@@ -1,6 +1,4 @@
 ._local {
-	padding-top: 6px;
-
 	:global {
 		.if-form-item {
 			margin-right: 12px;

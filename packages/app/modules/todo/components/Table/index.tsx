@@ -34,7 +34,7 @@ import type { TableColumnType, PaginationProps, TableProps, SpinProps } from 'an
 import type { TdHTMLAttributes } from 'react'
 import type { IPropsTable, IPropsTableFilter } from '../../types'
 import type { SorterResult } from 'antd/es/table/interface'
-import type { IPropsFormTableColumn } from '@/components'
+import type { IPropsFormTableColumn, IPropsFormTable } from '@/components'
 
 type Column = TableColumnType<Todo.Todo> & { ignoreArchive?: boolean; deps?: Array<Partial<keyof Todo.Todo>> }
 
@@ -57,6 +57,7 @@ const Index = (props: IPropsTable) => {
 		onTableSearch
 	} = props
 	const { t } = useTranslation()
+	const scroller = useRef<HTMLDivElement>(null)
 
 	const getPropsStatus = useMemoizedFn(({ id, status }) => {
 		const target = getItemStatus({ relations, id, status })
@@ -200,17 +201,37 @@ const Index = (props: IPropsTable) => {
 		[tags]
 	)
 
+	const pagination = {
+		...table_pagination,
+		showSizeChanger: true,
+		pageSizeOptions: [15, 30, 60, 120, 180, 300],
+		// @ts-ignore
+		showTotal: useMemoizedFn(total => t('translation:common.total', { counts: total })),
+		onChange: onTablePageChange
+	} as PaginationProps
+
+	const props_filter: IPropsTableFilter = {
+		visible_table_filter,
+		tags,
+		onTableSearch
+	}
+
+	const props_form_table: IPropsFormTable = {
+		columns,
+		dataSource: items,
+		scrollX: 1200,
+		stickyTop: 0,
+		scroller,
+		pagination: table_pagination.total ? pagination : false,
+		onChange: onTableRowChange,
+		getRowClassName
+	}
+
 	return (
-		<div className={$cx('w_100 border_box', styles._local)}>
-			<div className='scroll_wrap w_100 h_100'>
-				<FormTable
-					columns={columns}
-					dataSource={items}
-					scrollX={1200}
-					stickyTop={0}
-					onChange={onTableRowChange}
-					getRowClassName={getRowClassName}
-				></FormTable>
+		<div className={$cx('w_100 border_box', styles._local)} ref={scroller}>
+			<div className='scroll_wrap w_100 h_100 flex flex_column'>
+				<Filter {...props_filter}></Filter>
+				<FormTable {...props_form_table}></FormTable>
 			</div>
 		</div>
 	)

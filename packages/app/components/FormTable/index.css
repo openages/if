@@ -162,3 +162,26 @@
 		}
 	}
 }
+
+.Affix {
+	:global {
+		.if-affix {
+			overflow-x: scroll;
+			z-index: 101;
+			transform: translateY(-0.1px);
+		}
+	}
+}
+
+.Pagination {
+	:global {
+		.if-pagination-options {
+			.if-select {
+				.if-select-dropdown {
+					border: var(--border);
+					box-shadow: none;
+				}
+			}
+		}
+	}
+}

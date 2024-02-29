@@ -2,8 +2,6 @@ import { useEventListener, useMemoizedFn } from 'ahooks'
 import { debounce } from 'lodash-es'
 import { useEffect, useRef, useState } from 'react'
 
-import { todo } from '@/appdata'
-
 interface HookArgs {
 	value: string
 	max_length?: number
@@ -14,7 +12,7 @@ export default (args: HookArgs) => {
 	const { value, update } = args
 	const input = useRef<HTMLDivElement>(null)
 	const [compositing, setCompositing] = useState(false)
-	const max_length = args.max_length ?? todo.text_max_length
+	const max_length = args.max_length || 6000
 
 	useEffect(() => {
 		const el = input.current

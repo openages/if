@@ -250,6 +250,17 @@ export default class Index {
 		this.on()
 		this.watchSetting()
 
+		if (this.mode === 'list' || this.mode === 'table') {
+			if (this.items_watcher) return
+			if (this.mode === 'list' && !this.current_angle_id) return
+
+			this.watchItems()
+		} else {
+			if (this.kanban_items_watcher.length) return
+
+			this.watchKanbanItems()
+		}
+
 		this.utils.acts.push(disposer)
 	}
 
@@ -260,10 +271,13 @@ export default class Index {
 		)) as RxDB.ItemsDoc<Todo.TodoItem>
 
 		if (items.length === 0) {
-			this.archives = []
 			this.loadmore.end = true
 
-			if (!reset) return
+			if (reset) {
+				this.archives = []
+			} else {
+				return
+			}
 		}
 
 		const data = getDocItemsData(items) as Array<Todo.Todo>
@@ -948,8 +962,13 @@ export default class Index {
 		this.file.off()
 
 		this.setting_watcher?.unsubscribe?.()
+		this.setting_watcher = null
+
 		this.items_watcher?.unsubscribe?.()
+		this.items_watcher = null
+
 		this.kanban_items_watcher.forEach(item => item?.unsubscribe?.())
+		this.kanban_items_watcher = []
 
 		clearInterval(this.timer_cycle)
 		clearInterval(this.timer_archive)

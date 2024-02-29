@@ -78,6 +78,9 @@ export default (theme: Theme, color_main: string) => {
 			},
 			Tabs: {
 				colorPrimary: vars.color_text
+			},
+			Pagination: {
+				controlHeight: 24
 			}
 		}
 	} as ThemeConfig

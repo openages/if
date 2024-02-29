@@ -1,6 +1,8 @@
 .if-pagination {
 	position: relative;
+	display: flex;
 	justify-content: center !important;
+	margin: 12px 0;
 
 	.if-pagination-item {
 		outline: none !important;
@@ -17,7 +19,7 @@
 
 		a {
 			height: 100%;
-			line-height: 32px;
+			line-height: 24px;
 			color: var(--color_text_grey);
 		}
 	}
@@ -52,7 +54,9 @@
 
 		.if-select {
 			.if-select-selector {
+				height: 24px;
 				border: none;
+				font-size: 12px;
 
 				&::after {
 					display: none;
@@ -65,6 +69,8 @@
 				}
 
 				.if-select-selection-item {
+					height: 100%;
+					line-height: 24px;
 					padding-inline-end: 0;
 					color: var(--color_text_softlight);
 				}
@@ -72,6 +78,17 @@
 
 			.if-select-arrow {
 				display: none;
+			}
+
+			.if-select-dropdown {
+				width: unset !important;
+				min-width: 81px !important;
+
+				.if-select-item {
+					min-height: unset;
+					padding: 4px 6px;
+					font-size: 12px;
+				}
 			}
 		}
 	}
