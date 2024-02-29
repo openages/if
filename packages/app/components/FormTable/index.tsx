@@ -2,6 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import { debounce } from 'lodash-es'
 import { useEffect, useRef, useState } from 'react'
 
+import { LoadingCircle } from '@/components'
 import { useDeepMemo } from '@openages/stk/react'
 
 import { ColGroup, Header, Pagination, Row } from './components'
@@ -20,11 +21,21 @@ const Index = (props: IProps) => {
 		scrollX,
 		pagination,
 		onChange,
+		onChangeSort,
 		getRowClassName
 	} = props
 	const scroll_wrap = useRef<HTMLDivElement>(null)
 	const [width, setWidth] = useState(0)
 	const [scroll_position, setScrollPosition] = useState<'start' | 'center' | 'end' | false>(false)
+	const [sort, setSort] = useState<{ field: string; order: 'desc' | 'asc' | null }>(null)
+
+	const changeSort = useMemoizedFn(field => {
+		if (!sort || !sort?.order) return setSort({ field, order: 'desc' })
+		if (field !== sort.field) return setSort({ field, order: 'desc' })
+
+		if (sort.order === 'desc') return setSort({ field, order: 'asc' })
+		if (sort.order === 'asc') return setSort(null)
+	})
 
 	const scroll = useMemoizedFn(() => {
 		const scroller = scroll_wrap.current
@@ -44,6 +55,10 @@ const Index = (props: IProps) => {
 
 	const debounceScroll = useMemoizedFn(debounce(scroll, 450))
 	const debounceChange = useMemoizedFn(debounce(onChange, 450))
+
+	useEffect(() => {
+		if (onChangeSort) onChangeSort(sort)
+	}, [sort])
 
 	useEffect(() => {
 		const scroller = scroll_wrap.current
@@ -131,7 +146,9 @@ const Index = (props: IProps) => {
 		scrollerX: scroll_wrap.current,
 		scrollerY: scroller.current,
 		left_shadow_index,
-		right_shadow_index
+		right_shadow_index,
+		sort,
+		changeSort
 	}
 
 	const props_col_group: IPropsColGroup = {
@@ -142,23 +159,34 @@ const Index = (props: IProps) => {
 		<div className={$cx('w_100 flex flex_column', styles._local, shadow && styles[`shadow_${[shadow]}`])}>
 			<div className='scroll_x_wrap w_100' ref={scroll_wrap}>
 				<Header {...props_header}></Header>
-				<table className='table_wrap w_100'>
-					<ColGroup {...props_col_group}></ColGroup>
-					<tbody>
-						{dataSource.map((item, index) => (
-							<Row
-								columns={columns}
-								item={item}
-								index={index}
-								left_shadow_index={left_shadow_index}
-								right_shadow_index={right_shadow_index}
-								onChange={debounceChange}
-								getRowClassName={getRowClassName}
-								key={rowKey ? item[rowKey] : item.id}
-							></Row>
-						))}
-					</tbody>
-				</table>
+				<div className='w_100 relative'>
+					{loading && scroll_wrap.current && (
+						<div
+							className='table_loading_wrap h_100 flex justify_center align_center absolute'
+							style={{ width: getComputedStyle(scroll_wrap.current).width }}
+						>
+							<LoadingCircle className='icon_loading' />
+						</div>
+					)}
+					<table className='table_wrap w_100'>
+						<ColGroup {...props_col_group}></ColGroup>
+						<tbody>
+							{dataSource.map((item, index) => (
+								<Row
+									columns={columns}
+									item={item}
+									index={index}
+									left_shadow_index={left_shadow_index}
+									right_shadow_index={right_shadow_index}
+									sort={sort}
+									onChange={debounceChange}
+									getRowClassName={getRowClassName}
+									key={rowKey ? item[rowKey] : item.id}
+								></Row>
+							))}
+						</tbody>
+					</table>
+				</div>
 			</div>
 			{pagination && <Pagination {...pagination}></Pagination>}
 		</div>

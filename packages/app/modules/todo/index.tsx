@@ -126,16 +126,13 @@ const Index = ({ id }: IProps) => {
 
 	const props_table: IPropsTable = {
 		items,
-		loading: x.utils.loading['table'],
 		tags,
 		table_pagination: $copy(x.table_pagination),
-		table_sort: $copy(x.table_sort),
 		visible_table_filter: x.visible_table_filter,
-		search_mode,
 		clean: useMemoizedFn(x.clean),
 		onTableRowChange: useMemoizedFn(x.onTableRowChange),
 		onTablePageChange: useMemoizedFn(x.onTablePageChange),
-		onTableSorterChange: useMemoizedFn(x.onTableSorterChange),
+		onTableSortChange: useMemoizedFn(x.onTableSortChange),
 		onTableSearch: useMemoizedFn(x.onTableSearch),
 		...pick(props_todos, ['relations', 'showDetailModal', 'remove'])
 	}

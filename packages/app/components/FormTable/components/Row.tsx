@@ -13,7 +13,7 @@ import type { FormProps } from 'antd'
 const { useForm } = Form
 
 const Index = (props: IPropsRow) => {
-	const { columns, item, index, left_shadow_index, right_shadow_index, onChange, getRowClassName } = props
+	const { columns, item, index, left_shadow_index, right_shadow_index, sort, onChange, getRowClassName } = props
 	const [form] = useForm()
 	const { setFieldsValue, getFieldsValue } = form
 
@@ -48,6 +48,7 @@ const Index = (props: IPropsRow) => {
 							(left_shadow_index === idx && 'start') ||
 							(right_shadow_index === idx && 'end')
 						}
+						sorting={sort?.field === col.dataIndex && sort?.order !== null}
 						getProps={col.getProps}
 						onAction={col.onAction}
 						key={col.dataIndex || col.title}

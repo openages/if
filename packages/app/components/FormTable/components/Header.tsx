@@ -7,7 +7,8 @@ import Th from './Th'
 import type { IPropsHeader } from '../types'
 
 const Index = (props: IPropsHeader) => {
-	const { columns, stickyTop, scrollerX, scrollerY, left_shadow_index, right_shadow_index } = props
+	const { columns, stickyTop, scrollerX, scrollerY, left_shadow_index, right_shadow_index, sort, changeSort } =
+		props
 	const signal = useRef<HTMLTableElement>(null)
 	const th_wrap = useRef<HTMLTableElement>(null)
 	const [visible] = useInViewport(signal, { root: () => scrollerY })
@@ -40,7 +41,7 @@ const Index = (props: IPropsHeader) => {
 				sticky
 					? {
 							top: stickyTop,
-							zIndex: 101,
+							zIndex: 102,
 							overflowX: 'scroll',
 							width: getComputedStyle(scrollerX).width
 					  }
@@ -55,7 +56,9 @@ const Index = (props: IPropsHeader) => {
 						{columns.map((item, index) => (
 							<Th
 								title={item.title}
-								sort={item.sort}
+								dataIndex={item.dataIndex}
+								showSort={item.sort}
+								sort={item.sort && sort?.field === item.dataIndex && sort ? sort : null}
 								align={item.align}
 								fixed={item.fixed}
 								stickyOffset={item.stickyOffset}
@@ -63,6 +66,7 @@ const Index = (props: IPropsHeader) => {
 									(left_shadow_index === index ? 'start' : '') ||
 									(right_shadow_index === index ? 'end' : '')
 								}
+								changeSort={item.sort && changeSort}
 								key={item.dataIndex || item.title}
 							></Th>
 						))}

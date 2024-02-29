@@ -27,8 +27,20 @@ const Field = $app.memo((props: Pick<IPropsColumn, 'component'> & Component<any>
 })
 
 const Index = (props: IPropsColumn) => {
-	const { row_index, dataIndex, deps, component, align, fixed, extra, stickyOffset, shadow, getProps, onAction } =
-		props
+	const {
+		row_index,
+		dataIndex,
+		deps,
+		component,
+		align,
+		fixed,
+		extra,
+		stickyOffset,
+		shadow,
+		sorting,
+		getProps,
+		onAction
+	} = props
 	const style = useStyle({ align, fixed, stickyOffset })
 
 	return (
@@ -36,7 +48,8 @@ const Index = (props: IPropsColumn) => {
 			className={$cx(
 				'form_table_td',
 				shadow && 'shadow',
-				shadow && (shadow === 'start' ? 'shadow_start' : 'shadow_end')
+				shadow && (shadow === 'start' ? 'shadow_start' : 'shadow_end'),
+				sorting && 'sorting'
 			)}
 			style={style}
 		>

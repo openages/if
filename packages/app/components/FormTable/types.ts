@@ -11,6 +11,7 @@ export interface IProps {
 	scrollX?: number
 	pagination?: PaginationProps | false
 	onChange: (index: number, v: any) => void
+	onChangeSort?: (v: { field: string; order: 'desc' | 'asc' | null }) => void
 	getRowClassName?: (item: any) => Array<string>
 }
 
@@ -38,15 +39,20 @@ export interface IPropsHeader extends Pick<IProps, 'columns' | 'stickyTop'> {
 	scrollerY: HTMLDivElement
 	left_shadow_index: number | null
 	right_shadow_index: number | null
+	sort: { field: string; order: 'desc' | 'asc' | null }
+	changeSort: (field: string) => void
 }
 
 export interface IPropsTh {
 	title: Column['title']
-	sort: Column['sort']
+	dataIndex: Column['dataIndex']
+	showSort: boolean
+	sort: IPropsHeader['sort'] | undefined
 	align: Column['align']
 	fixed: Column['fixed']
 	stickyOffset: Column['stickyOffset']
 	shadow?: 'start' | 'end' | ''
+	changeSort?: IPropsHeader['changeSort']
 }
 
 export interface IPropsRow extends Pick<IProps, 'columns' | 'onChange' | 'getRowClassName'> {
@@ -54,6 +60,7 @@ export interface IPropsRow extends Pick<IProps, 'columns' | 'onChange' | 'getRow
 	index: number
 	left_shadow_index: number | null
 	right_shadow_index: number | null
+	sort: IPropsHeader['sort']
 }
 
 export interface IPropsColumn {
@@ -66,6 +73,7 @@ export interface IPropsColumn {
 	extra: Column['extra']
 	stickyOffset: Column['stickyOffset']
 	shadow?: 'start' | 'end' | ''
+	sorting?: boolean
 	getProps: Column['getProps']
 	onAction: Column['onAction']
 }

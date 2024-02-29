@@ -188,16 +188,13 @@ export interface IPropsKanban extends Omit<IPropsTodos, 'items'> {
 
 export interface IPropsTable extends Pick<IPropsTodos, 'relations' | 'showDetailModal' | 'remove'> {
 	items: Model['items']
-	loading: boolean
 	tags: Model['setting']['setting']['tags']
 	table_pagination: Model['table_pagination']
-	table_sort: Model['table_sort']
 	visible_table_filter: Model['visible_table_filter']
-	search_mode: boolean
 	clean: Model['clean']
 	onTableRowChange: Model['onTableRowChange']
 	onTablePageChange: Model['onTablePageChange']
-	onTableSorterChange: Model['onTableSorterChange']
+	onTableSortChange: Model['onTableSortChange']
 	onTableSearch: Model['onTableSearch']
 }
 

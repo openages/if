@@ -680,8 +680,9 @@ export default class Index {
 		this.update({ type: 'parent', index, value: values })
 	}
 
-	onTableSorterChange(key: string, order: 'asc' | 'desc' | null) {
-		this.table_sort = order ? { [key]: order } : {}
+	onTableSortChange(v: { field: string; order: 'asc' | 'desc' | null }) {
+		this.table_sort = v?.order ? { [v.field]: v.order } : {}
+		this.table_pagination = { ...this.table_pagination, current: 1 }
 
 		this.stopWatchItems()
 		this.watchItems()
@@ -872,8 +873,6 @@ export default class Index {
 		}
 
 		if (this.mode === 'table') {
-			this.utils.loading['table'] = true
-
 			getTotalCounts({ file_id: this.id, ...$copy(this.table_selector) }).then(
 				res => (this.table_pagination.total = res)
 			)
@@ -886,8 +885,6 @@ export default class Index {
 				table_page: this.table_pagination.current,
 				table_pagesize: this.table_pagination.pageSize
 			}).$.subscribe(items => {
-				this.utils.loading['table'] = false
-
 				this.items = getDocItemsData(items)
 
 				this.checkCurrentDetailIndex()
