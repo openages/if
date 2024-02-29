@@ -92,6 +92,10 @@
 	}
 
 	:global {
+		.scroll_x_wrap {
+			overflow-x: scroll;
+		}
+
 		.table_wrap {
 			border-collapse: collapse;
 			table-layout: fixed;
@@ -136,12 +140,14 @@
 			thead {
 				tr {
 					th {
-						padding: 3px 6px;
+						height: 30px;
+						padding: 0px 6px;
 						text-transform: capitalize;
 						font-size: 12px;
 						font-weight: normal;
 						white-space: nowrap;
 						user-select: none;
+						box-sizing: border-box;
 						color: var(--color_text_light);
 						background-color: var(--color_bg);
 						border-bottom: 1px dashed var(--color_border_light);
@@ -159,16 +165,6 @@
 					}
 				}
 			}
-		}
-	}
-}
-
-.Affix {
-	:global {
-		.if-affix {
-			overflow-x: scroll;
-			z-index: 101;
-			transform: translateY(-0.1px);
 		}
 	}
 }

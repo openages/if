@@ -140,7 +140,7 @@ const Index = (props: IProps) => {
 
 	return (
 		<div className={$cx('w_100 flex flex_column', styles._local, shadow && styles[`shadow_${[shadow]}`])}>
-			<div className='scroll_wrap w_100' ref={scroll_wrap}>
+			<div className='scroll_x_wrap w_100' ref={scroll_wrap}>
 				<Header {...props_header}></Header>
 				<table className='table_wrap w_100'>
 					<ColGroup {...props_col_group}></ColGroup>

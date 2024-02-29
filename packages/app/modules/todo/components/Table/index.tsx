@@ -220,7 +220,7 @@ const Index = (props: IPropsTable) => {
 		columns,
 		dataSource: items,
 		scrollX: 1200,
-		stickyTop: 0,
+		stickyTop: 72,
 		scroller,
 		pagination: table_pagination.total ? pagination : false,
 		onChange: onTableRowChange,

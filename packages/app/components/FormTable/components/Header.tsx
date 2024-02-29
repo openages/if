@@ -1,8 +1,6 @@
-import { useDebounceEffect, useInViewport, useMemoizedFn } from 'ahooks'
-import { Affix } from 'antd'
-import { useEffect, useRef, useState, Fragment } from 'react'
+import { useInViewport, useMemoizedFn } from 'ahooks'
+import { useEffect, useMemo, useRef, Fragment } from 'react'
 
-import styles from '../index.css'
 import ColGroup from './ColGroup'
 import Th from './Th'
 
@@ -10,74 +8,76 @@ import type { IPropsHeader } from '../types'
 
 const Index = (props: IPropsHeader) => {
 	const { columns, stickyTop, scrollerX, scrollerY, left_shadow_index, right_shadow_index } = props
-	const header = useRef<HTMLTableElement>(null)
-	const [visible] = useInViewport(header, { root: () => scrollerY })
+	const signal = useRef<HTMLTableElement>(null)
+	const th_wrap = useRef<HTMLTableElement>(null)
+	const [visible] = useInViewport(signal, { root: () => scrollerY })
+	const sticky = useMemo(() => stickyTop !== undefined && scrollerX && !visible, [stickyTop, scrollerX, visible])
 
 	const scrollSync = useMemoizedFn(() => {
-		if (!scrollerX || visible) return
+		if (!scrollerX || visible || !th_wrap.current) return
 
-		const affix = scrollerX.querySelector(`.${styles.Affix} .if-affix`)
+		if (th_wrap.current.scrollLeft === scrollerX.scrollLeft) return
 
-		if (affix.scrollLeft === scrollerX.scrollLeft) return
-
-		affix.scrollLeft = scrollerX.scrollLeft
+		th_wrap.current.scrollLeft = scrollerX.scrollLeft
 	})
 
 	useEffect(() => {
-		if (!scrollerX || !scrollerY || visible) return
+		if (stickyTop === undefined || !scrollerX || visible) return
 
 		scrollerX.addEventListener('scroll', scrollSync)
-		scrollerY.addEventListener('scroll', scrollSync)
 
-		return () => {
-			scrollerX.removeEventListener('scroll', scrollSync)
-			scrollerY.removeEventListener('scroll', scrollSync)
-		}
-	}, [scrollerX, scrollerY, visible])
+		return () => scrollerX.removeEventListener('scroll', scrollSync)
+	}, [stickyTop, scrollerX, visible])
 
-	useDebounceEffect(
-		() => {
-			if (!visible) scrollSync()
-		},
-		[visible],
-		{ wait: 30 }
-	)
+	useEffect(() => {
+		if (!visible) scrollSync()
+	}, [visible])
 
 	const Content = (
-		<table className='w_100 table_wrap relative'>
-			<ColGroup columns={columns}></ColGroup>
-			<thead>
-				<tr>
-					{columns.map((item, index) => (
-						<Th
-							title={item.title}
-							sort={item.sort}
-							align={item.align}
-							fixed={item.fixed}
-							stickyOffset={item.stickyOffset}
-							shadow={
-								(left_shadow_index === index ? 'start' : '') ||
-								(right_shadow_index === index ? 'end' : '')
-							}
-							key={item.dataIndex || item.title}
-						></Th>
-					))}
-				</tr>
-			</thead>
-		</table>
+		<div
+			className={$cx('w_100 table_th_wrap', sticky && 'absolute')}
+			style={
+				sticky
+					? {
+							top: stickyTop,
+							zIndex: 101,
+							overflowX: 'scroll',
+							width: getComputedStyle(scrollerX).width
+					  }
+					: {}
+			}
+			ref={th_wrap}
+		>
+			<table className='w_100 table_wrap'>
+				<ColGroup columns={columns}></ColGroup>
+				<thead>
+					<tr>
+						{columns.map((item, index) => (
+							<Th
+								title={item.title}
+								sort={item.sort}
+								align={item.align}
+								fixed={item.fixed}
+								stickyOffset={item.stickyOffset}
+								shadow={
+									(left_shadow_index === index ? 'start' : '') ||
+									(right_shadow_index === index ? 'end' : '')
+								}
+								key={item.dataIndex || item.title}
+							></Th>
+						))}
+					</tr>
+				</thead>
+			</table>
+		</div>
 	)
 
 	if (stickyTop !== undefined) {
 		return (
 			<Fragment>
-				<div ref={header} style={{ visibility: 'hidden' }}></div>
-				<Affix
-					className={styles.Affix}
-					offsetTop={!visible ? (!stickyTop ? 0.1 : stickyTop) : 0}
-					target={() => scrollerY}
-				>
-					{Content}
-				</Affix>
+				<div ref={signal} style={{ visibility: 'hidden' }}></div>
+				{Content}
+				{!visible && <div className='w_100' style={{ height: 30 }}></div>}
 			</Fragment>
 		)
 	}
