@@ -16,7 +16,14 @@
 			border-radius: var(--radius);
 			background-color: transparent;
 			backdrop-filter: var(--blur);
-			font-family: Georgia, 'SimSong';
+
+			&.kanban_mode {
+				border-radius: var(--radius_small);
+
+				.drag_wrap {
+					right: -9px;
+				}
+			}
 
 			.drag_wrap {
 				top: 6px;

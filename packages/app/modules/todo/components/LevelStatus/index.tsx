@@ -8,7 +8,10 @@ const Index = (props: IPropsLevelStatus) => {
 	const color = getColorByLevel(level)
 
 	return (
-		<div className={$cx('other_wrap border_box flex justify_center align_center')} style={{ color }}>
+		<div
+			className={$cx('other_wrap border_box flex justify_center align_center')}
+			style={{ color, marginRight: 2 }}
+		>
 			<FireSimple fontSize={12} weight='fill'></FireSimple>
 		</div>
 	)

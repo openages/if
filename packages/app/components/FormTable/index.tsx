@@ -64,9 +64,9 @@ const Index = (props: IProps) => {
 	}, [sort])
 
 	useEffect(() => {
-		const scroller = scroll_wrap.current
+		const scroller_x = scroll_wrap.current
 
-		if (!scroller) return
+		if (!scroller_x) return
 
 		const observer = new ResizeObserver(
 			debounce(
@@ -89,11 +89,11 @@ const Index = (props: IProps) => {
 			)
 		)
 
-		scroller.addEventListener('scroll', debounceScroll)
-		observer.observe(scroller)
+		scroller_x.addEventListener('scroll', debounceScroll)
+		observer.observe(scroller_x)
 
 		return () => {
-			scroller.removeEventListener('scroll', debounceScroll)
+			scroller_x.removeEventListener('scroll', debounceScroll)
 			observer.disconnect()
 		}
 	}, [])

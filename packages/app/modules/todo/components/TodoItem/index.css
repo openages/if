@@ -1,7 +1,21 @@
+[data-theme='dark'] {
+	.todo_item_wrap {
+		&.kanban_mode {
+			box-shadow: 0 1.5px 3px rgba(var(--color_std_rgb), 0.24);
+		}
+	}
+}
+
 .todo_item_wrap {
 	&.kanban_mode {
+		padding-top: 3px;
+		border: var(--border);
+		border-radius: var(--radius_small);
+		margin-bottom: 6px;
+		box-shadow: 0 1.5px 3px rgba(var(--color_text_rgb), 0.06);
+
 		&.is_dragging {
-			opacity: 1;
+			opacity: 0;
 		}
 
 		&.is_over {
@@ -9,10 +23,9 @@
 
 			:global {
 				.over_line {
-					width: calc(100% - 12px);
 					height: 1px;
-					left: 12px;
-					bottom: -1px;
+					left: 0;
+					bottom: -5px;
 					background-color: var(--color_text);
 
 					&::before,
@@ -41,7 +54,28 @@
 			:global {
 				.drag_wrap {
 					left: unset;
-					right: 0px;
+					right: -9px;
+				}
+			}
+		}
+
+		:global {
+			.children_wrap {
+				margin-bottom: 3px;
+			}
+
+			.date_wrap {
+				padding: 9px;
+				padding-top: 3px;
+				padding-left: 11px;
+				font-size: 10px;
+				line-height: 1;
+				color: var(--color_text_light);
+				white-space: nowrap;
+
+				&.in_options {
+					padding: 0;
+					margin-bottom: -1px;
 				}
 			}
 		}
@@ -235,22 +269,22 @@
 		.options_wrap {
 			padding-top: 3px;
 			padding-bottom: 9px;
-			padding-left: 30px;
+			padding-left: 9.6px;
+			padding-right: 12px;
 			transition: padding ease 0.3s;
 			font-family: 'RedditSans';
-
-			&.open {
-				padding-left: 9.6px;
-			}
 
 			&.checked,
 			&.closed {
 				opacity: 0.6;
 			}
 
+			.options_content {
+				overflow-x: scroll;
+			}
+
 			.other_wrap {
-				height: 14px;
-				margin-right: 9px;
+				margin-right: 6px;
 				margin-bottom: -1px;
 				border-radius: 7px;
 				z-index: 1;

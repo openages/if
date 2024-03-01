@@ -9,6 +9,7 @@
 		padding: 0 9px;
 		padding-bottom: 150px;
 		overflow-y: scroll;
+		outline: none;
 
 		&.isOver {
 			padding: 0 20px;

@@ -196,7 +196,7 @@ const Index = ({ id }: IProps) => {
 		drag_disabled: false,
 		zen_mode: props_todos.zen_mode,
 		open_items: props_todos.open_items,
-		kanban_mode: props_todos.kanban_mode,
+		kanban_mode: x.kanban_mode,
 		dimension_id: drag_todo_item.dimension_id,
 		drag_overlay: true,
 		makeLinkLine: () => {},

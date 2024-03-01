@@ -235,7 +235,7 @@ const Index = (props: IPropsTable) => {
 
 	return (
 		<div className={$cx('w_100 border_box', styles._local)} ref={scroller}>
-			<div className='scroll_wrap w_100 h_100 flex flex_column'>
+			<div className={$cx(styles.scroll_wrap, 'table_scroll_wrap w_100 h_100 flex flex_column')}>
 				<Filter {...props_filter}></Filter>
 				<FormTable {...props_form_table}></FormTable>
 			</div>

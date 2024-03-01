@@ -8,12 +8,12 @@
 	&.tag_mode {
 		.kanban_item_wrap {
 			.kanban_item_header {
-				padding-left: 36px;
+				padding-left: 24px;
 
 				&::before {
 					content: '';
 					position: absolute;
-					left: 20px;
+					left: 9px;
 					width: 9px;
 					height: 9px;
 					border-radius: 50%;
@@ -26,11 +26,10 @@
 	.kanban_item_wrap {
 		width: 300px;
 		min-width: 300px;
-		font-family: Georgia, 'SimSong';
 
 		.kanban_item_header {
 			height: 30px;
-			padding: 0 21px;
+			padding: 0 9px;
 			line-height: 1;
 
 			:global {

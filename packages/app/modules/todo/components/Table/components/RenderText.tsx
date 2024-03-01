@@ -16,7 +16,6 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['text']>) => {
 		<input
 			className={$cx('w_100', styles.RenderText)}
 			maxLength={todo.text_max_length}
-			autoFocus
 			value={value || ''}
 			onChange={change}
 		/>

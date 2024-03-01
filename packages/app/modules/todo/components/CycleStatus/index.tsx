@@ -57,7 +57,7 @@ const Index = (props: IPropsCircleStatus) => {
 					style={{ width: `${percent}%` }}
 				></div>
 			)}
-			<div className='repeat_content w_100 h_100 flex align_center relative'>
+			<div className='repeat_content h_100 flex align_center relative'>
 				<Repeat className='icon' size={10}></Repeat>
 				<span className='text ml_2'>{desc}</span>
 			</div>

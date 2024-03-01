@@ -19,6 +19,7 @@
 
 		min-width: unset;
 		margin-left: 0;
+		margin-right: 4px;
 
 		:global {
 			.tag {

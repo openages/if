@@ -10,12 +10,12 @@
 	height: calc(100% - 72px);
 	padding: 0 36px;
 
-	:global {
-		.scroll_wrap {
-			overflow: scroll;
-			outline: none;
-		}
+	.scroll_wrap {
+		overflow-y: scroll;
+		outline: none;
+	}
 
+	:global {
 		.table_wrap {
 			scrollbar-color: unset;
 

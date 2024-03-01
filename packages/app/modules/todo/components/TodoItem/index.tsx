@@ -2,7 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import { ConfigProvider, Dropdown } from 'antd'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
-import { Case, Switch } from 'react-if'
+import { Case, Else, If, Switch, Then } from 'react-if'
 
 import { todo } from '@/appdata'
 import { useDroppable } from '@dnd-kit/core'
@@ -15,7 +15,6 @@ import CycleStatus from '../CycleStatus'
 import DeadlineStatus from '../DeadlineStatus'
 import LevelStatus from '../LevelStatus'
 import RemindStatus from '../RemindStatus'
-import ScheduleStatus from '../ScheduleStatus'
 import TagSelect from '../TagSelect'
 import { useContextMenu, useHandlers, useLink, useOnContextMenu, useOpen, useOptions } from './hooks'
 import styles from './index.css'
@@ -60,7 +59,8 @@ const Index = (props: IPropsTodoItem) => {
 		cycle,
 		recycle_time,
 		schedule,
-		children
+		children,
+		create_at
 	} = item
 
 	const {
@@ -155,7 +155,8 @@ const Index = (props: IPropsTodoItem) => {
 	const OptionsWrap = useMemo(
 		() => (
 			<div className={$cx('options_wrap w_100 border_box flex align_center', open && 'open', status)}>
-				<div className='flex align_center'>
+				<div className='options_content w_100 flex align_center'>
+					{level > 0 && <LevelStatus level={level}></LevelStatus>}
 					{tags?.length > 0 && tag_ids?.length > 0 && (
 						<TagSelect
 							className='tag_select'
@@ -165,7 +166,6 @@ const Index = (props: IPropsTodoItem) => {
 							onChange={updateTags}
 						></TagSelect>
 					)}
-					{schedule && <ScheduleStatus></ScheduleStatus>}
 					{remind_time && <RemindStatus remind_time={remind_time}></RemindStatus>}
 					{status === 'unchecked' && end_time && (
 						<DeadlineStatus end_time={end_time}></DeadlineStatus>
@@ -173,11 +173,15 @@ const Index = (props: IPropsTodoItem) => {
 					{cycle_enabled && cycle && cycle.value !== undefined && (
 						<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
 					)}
-					{level > 0 && <LevelStatus level={level}></LevelStatus>}
+					{kanban_mode && (
+						<span className='date_wrap in_options'>
+							{dayjs(create_at).format('HH:mm MM-DD dddd')}
+						</span>
+					)}
 				</div>
 			</div>
 		),
-		[open, status, tags, tag_ids, schedule, remind_time, end_time, cycle_enabled, cycle, level]
+		[open, status, tags, tag_ids, remind_time, end_time, cycle_enabled, cycle, level, kanban_mode]
 	)
 
 	const is_dragging = useMemo(() => kanban_mode && isDragging, [kanban_mode, isDragging])
@@ -192,6 +196,8 @@ const Index = (props: IPropsTodoItem) => {
 		[zen_mode, end_time]
 	)
 
+	const disableContextMenu = useMemoizedFn(e => e.preventDefault())
+
 	return (
 		<div
 			className={$cx(
@@ -203,15 +209,17 @@ const Index = (props: IPropsTodoItem) => {
 				!children?.length && styles.no_children,
 				is_dragging && styles.is_dragging,
 				is_over && styles.is_over,
-				drag_overlay && 'todo_item_drag_overlay'
+				drag_overlay && 'todo_item_drag_overlay',
+				kanban_mode && 'kanban_mode'
 			)}
 			ref={ref => {
 				setSortRef(ref)
 				setDropRef(ref)
 			}}
 			style={{ transform: CSS.Translate.toString(transform), transition }}
+			onContextMenu={disableContextMenu}
 		>
-			{is_over && <div className='over_line absolute left_0 flex align_center'></div>}
+			{is_over && <div className='over_line w_100 absolute left_0 flex align_center'></div>}
 			<div
 				className={$cx(
 					'w_100 border_box flex align_start relative',
@@ -286,7 +294,18 @@ const Index = (props: IPropsTodoItem) => {
 				</div>
 			</div>
 			<Children {...props_children}></Children>
-			{!zen_mode && !kanban_mode && has_options && OptionsWrap}
+			<If condition={kanban_mode}>
+				<Then>
+					{has_options ? (
+						OptionsWrap
+					) : (
+						<div className='date_wrap w_100 border_box'>
+							{dayjs(create_at).format('HH:mm MM-DD dddd')}
+						</div>
+					)}
+				</Then>
+				<Else>{!zen_mode && has_options && OptionsWrap}</Else>
+			</If>
 		</div>
 	)
 }
