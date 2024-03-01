@@ -10,9 +10,21 @@ import type { ReactElement } from 'react'
 const { Item } = Form
 
 const Field = $app.memo((props: Pick<IPropsColumn, 'component'> & Component<any>) => {
-	const { component, value, row_index, dataIndex, deps, extra, getProps, onAction, onChange } = props
+	const {
+		component,
+		value,
+		row_index,
+		dataIndex,
+		deps,
+		extra,
+		editing,
+		setEditingField,
+		getProps,
+		onAction,
+		onChange
+	} = props
 
-	const change = useMemoizedFn(onChange)
+	const change = useMemoizedFn(onChange ? onChange : () => {})
 
 	return cloneElement(component as ReactElement, {
 		value,
@@ -20,6 +32,8 @@ const Field = $app.memo((props: Pick<IPropsColumn, 'component'> & Component<any>
 		dataIndex,
 		deps,
 		extra,
+		editing,
+		setEditingField,
 		getProps,
 		onAction,
 		onChange: change
@@ -28,6 +42,7 @@ const Field = $app.memo((props: Pick<IPropsColumn, 'component'> & Component<any>
 
 const Index = (props: IPropsColumn) => {
 	const {
+		value,
 		row_index,
 		dataIndex,
 		deps,
@@ -38,10 +53,28 @@ const Index = (props: IPropsColumn) => {
 		stickyOffset,
 		shadow,
 		sorting,
+		editing,
+		setEditingField,
 		getProps,
 		onAction
 	} = props
 	const style = useStyle({ align, fixed, stickyOffset })
+
+	const props_field = {
+		component,
+		row_index,
+		dataIndex,
+		deps,
+		extra,
+		editing,
+		setEditingField,
+		getProps,
+		onAction
+	}
+
+	if (!editing) props_field['value'] = value
+
+	const Content = <Field {...props_field}></Field>
 
 	return (
 		<td
@@ -53,9 +86,13 @@ const Index = (props: IPropsColumn) => {
 			)}
 			style={style}
 		>
-			<Item name={dataIndex} noStyle>
-				<Field {...{ component, row_index, dataIndex, deps, extra, getProps, onAction }}></Field>
-			</Item>
+			{editing ? (
+				<Item name={dataIndex} noStyle>
+					{Content}
+				</Item>
+			) : (
+				Content
+			)}
 		</td>
 	)
 }

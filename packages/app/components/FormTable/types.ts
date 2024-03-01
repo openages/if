@@ -26,6 +26,9 @@ export interface Column {
 	stickyOffset?: number
 	sort?: boolean
 	extra?: any
+	alwaysEditing?: boolean
+	disableEditing?: boolean
+	disableResetEditing?: boolean
 	getProps?: (...args: any) => any
 	onAction?: (action: string, deps: any, index: number) => void
 }
@@ -61,9 +64,12 @@ export interface IPropsRow extends Pick<IProps, 'columns' | 'onChange' | 'getRow
 	left_shadow_index: number | null
 	right_shadow_index: number | null
 	sort: IPropsHeader['sort']
+	editing_field: string | undefined
+	setEditingInfo: (v: { row_index: number; field: string } | null) => void
 }
 
 export interface IPropsColumn {
+	value: any
 	row_index: number
 	dataIndex: string
 	deps: any
@@ -72,8 +78,10 @@ export interface IPropsColumn {
 	fixed: Column['fixed']
 	extra: Column['extra']
 	stickyOffset: Column['stickyOffset']
+	editing: boolean
 	shadow?: 'start' | 'end' | ''
 	sorting?: boolean
+	setEditingField: ((v: string) => void) | undefined
 	getProps: Column['getProps']
 	onAction: Column['onAction']
 }
@@ -86,6 +94,8 @@ export interface Component<T = any> {
 	dataIndex: string
 	deps: any
 	extra: Column['extra']
+	editing: boolean
+	setEditingField: IPropsColumn['setEditingField']
 	getProps?: Column['getProps']
 	onAction?: Column['onAction']
 	onChange?: (...args: any) => any

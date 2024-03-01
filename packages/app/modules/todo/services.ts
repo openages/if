@@ -355,18 +355,18 @@ export const restoreArchiveItem = async (
 ) => {
 	const doc = await $db.todo_items.findOne({ selector: { id } }).exec()
 	const angle_exsit = angles.find(item => item.id === doc.angle_id)
-	const tags_exsit_items = doc.tag_ids.filter(item => tags.find(tag => tag.id === item))
+	const tags_exsit_items = doc.tag_ids && doc.tag_ids.filter(item => tags.find(tag => tag.id === item))
 	const sort = await getMaxMinSort(current_angle_id)
 
 	const target = {
 		archive: false,
 		archive_time: undefined,
 		status: 'unchecked',
-		sort: sort + 1,
-		tag_ids: tags_exsit_items
+		sort: sort + 1
 	} as Todo.Todo
 
 	if (!angle_exsit) target['angle_id'] = current_angle_id
+	if (tags_exsit_items && tags_exsit_items?.length) target['tag_ids'] = tags_exsit_items
 
 	doc.updateCRDT({
 		ifMatch: {

@@ -13,9 +13,24 @@ import type { FormProps } from 'antd'
 const { useForm } = Form
 
 const Index = (props: IPropsRow) => {
-	const { columns, item, index, left_shadow_index, right_shadow_index, sort, onChange, getRowClassName } = props
+	const {
+		columns,
+		item,
+		index,
+		left_shadow_index,
+		right_shadow_index,
+		sort,
+		editing_field,
+		setEditingInfo,
+		onChange,
+		getRowClassName
+	} = props
 	const [form] = useForm()
 	const { setFieldsValue, getFieldsValue } = form
+
+	const setEditingField = useMemoizedFn((v: string) => {
+		setEditingInfo(v ? { row_index: index, field: v } : null)
+	})
 
 	useDeepEffect(() => {
 		const form_item = getFieldsValue()
@@ -26,16 +41,22 @@ const Index = (props: IPropsRow) => {
 	}, [item])
 
 	const onValuesChange: FormProps['onValuesChange'] = useMemoizedFn(v => {
+		const key = Object.keys(v)[0]
+		const column = columns.find(item => item.dataIndex === key)
+
 		onChange(index, v)
+
+		if (!column.disableResetEditing) setEditingField('')
 	})
 
 	const className = useDeepMemo(() => getRowClassName(item), [item])
 
 	return (
-		<tr className={$cx('form_table_tr', ...className)}>
-			<Form form={form} component={false} onValuesChange={onValuesChange}>
+		<Form form={form} component={false} onValuesChange={onValuesChange}>
+			<tr className={$cx('form_table_tr', ...className)}>
 				{columns.map((col, idx) => (
 					<Column
+						value={pick(item, col.dataIndex)[col.dataIndex]}
 						row_index={index}
 						dataIndex={col.dataIndex}
 						deps={pick(item, col.deps)}
@@ -49,13 +70,19 @@ const Index = (props: IPropsRow) => {
 							(right_shadow_index === idx && 'end')
 						}
 						sorting={sort?.field === col.dataIndex && sort?.order !== null}
+						editing={
+							col.alwaysEditing
+								? true
+								: !col.disableEditing && col.dataIndex === editing_field
+						}
+						setEditingField={!col.alwaysEditing && !col.disableEditing && setEditingField}
 						getProps={col.getProps}
 						onAction={col.onAction}
 						key={col.dataIndex || col.title}
 					></Column>
 				))}
-			</Form>
-		</tr>
+			</tr>
+		</Form>
 	)
 }
 

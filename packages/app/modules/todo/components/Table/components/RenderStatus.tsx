@@ -9,7 +9,7 @@ import { CheckCircle, CheckSquare, Circle, Square } from '@phosphor-icons/react'
 import styles from '../index.css'
 
 import type { IPropsFormTableComponent } from '@/components'
-
+import type { CSSProperties } from 'react'
 import type { Todo } from '@/types'
 
 const Index = (props: IPropsFormTableComponent<Todo.Todo['status']>) => {
@@ -17,7 +17,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['status']>) => {
 	const linked = getProps({ id: deps.id, status: value })
 
 	const style = useMemo(() => {
-		if (!linked) return {}
+		if (!linked) return {} as CSSProperties
 
 		return {
 			'--color_relation_group': genColor(xxHash32(linked).toString(3), {

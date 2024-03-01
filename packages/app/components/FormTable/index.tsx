@@ -28,6 +28,9 @@ const Index = (props: IProps) => {
 	const [width, setWidth] = useState(0)
 	const [scroll_position, setScrollPosition] = useState<'start' | 'center' | 'end' | false>(false)
 	const [sort, setSort] = useState<{ field: string; order: 'desc' | 'asc' | null }>(null)
+	const [editing_info, _setEditingInfo] = useState<{ row_index: number; field: string }>(null)
+
+	const setEditingInfo = useMemoizedFn(_setEditingInfo)
 
 	const changeSort = useMemoizedFn(field => {
 		if (!sort || !sort?.order) return setSort({ field, order: 'desc' })
@@ -179,6 +182,12 @@ const Index = (props: IProps) => {
 									left_shadow_index={left_shadow_index}
 									right_shadow_index={right_shadow_index}
 									sort={sort}
+									editing_field={
+										editing_info?.row_index === index && editing_info
+											? editing_info.field
+											: undefined
+									}
+									setEditingInfo={setEditingInfo}
 									onChange={debounceChange}
 									getRowClassName={getRowClassName}
 									key={rowKey ? item[rowKey] : item.id}
