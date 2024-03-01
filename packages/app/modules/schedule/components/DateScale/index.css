@@ -15,7 +15,7 @@
 			white-space: nowrap;
 
 			&.today {
-				background-color: var(--color_bg_1);
+				background-color: rgba(var(--color_text_rgb), 0.018);
 
 				.date {
 					font-size: 10px;

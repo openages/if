@@ -3,7 +3,7 @@
 		:global {
 			.hours_wrap {
 				.hour_item {
-					background-color: var(--color_bg_1);
+					background-color: rgba(var(--color_text_rgb), 0.018);
 				}
 			}
 		}
