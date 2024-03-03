@@ -79,7 +79,7 @@
 
 			.if-select-selection-placeholder {
 				inset-inline: 0 !important;
-				padding-left: 2px;
+				padding-left: 1px;
 			}
 		}
 

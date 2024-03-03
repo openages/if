@@ -13,7 +13,7 @@ import type { Dayjs } from 'dayjs'
 import type { IPropsDateTime } from '../../types'
 
 const Index = (props: IPropsDateTime) => {
-	const { value, useByDetail, ignoreDetail, Icon, onChange } = props
+	const { value, useByDetail, ignoreDetail, Icon, onFocus, onChange } = props
 	const { t, i18n } = useTranslation()
 
 	const status = useMemo(() => {
@@ -77,6 +77,7 @@ const Index = (props: IPropsDateTime) => {
 			presets={options}
 			format={ignoreDetail ? formatIgnoreDetail : format}
 			value={value ? dayjs(value) : undefined}
+			onOpenChange={onFocus}
 			onChange={onChangeTime}
 		></DatePicker>
 	)

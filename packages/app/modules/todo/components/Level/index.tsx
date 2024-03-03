@@ -8,7 +8,7 @@ import styles from './index.css'
 import type { IPropsLevel } from '../../types'
 
 const Index = (props: IPropsLevel) => {
-	const { value, onChangeLevel } = props
+	const { value, onChangeLevel, onFocus, onBlur } = props
 	const color = getColorByLevel(value)
 
 	return (
@@ -21,6 +21,8 @@ const Index = (props: IPropsLevel) => {
 			style={{ '--color_star': color || 'var(--color_text)' }}
 			value={value}
 			onChange={onChangeLevel}
+			onFocus={onFocus}
+			onBlur={onBlur}
 		></Rate>
 	)
 }

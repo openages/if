@@ -8,7 +8,7 @@
 			height: 15px;
 
 			&:not(:last-child) {
-				margin-inline-end: 3px;
+				margin-inline-end: 0;
 			}
 
 			div[role='radio'] {

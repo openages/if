@@ -1,12 +1,16 @@
+import { useMemoizedFn } from 'ahooks'
 import { ColorPicker, Input } from 'antd'
+import { debounce } from 'lodash-es'
 import { useTranslation } from 'react-i18next'
 
 import { useTagColor } from '@/hooks'
-import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { DotsSixVertical, Plus, Trash } from '@phosphor-icons/react'
 
+import type { SortableProps } from '@/components'
+
 interface IProps {
+	sortable_props?: SortableProps
 	item: { id: string; color: string; text: string }
 	index: number
 	limitMax: boolean
@@ -16,13 +20,14 @@ interface IProps {
 }
 
 const Index = (props: IProps) => {
-	const { item, index, limitMax, onAdd, onRemove, onUpdate } = props
-	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
-		id: item.id,
-		data: { index }
-	})
+	const { sortable_props, item, index, limitMax, onAdd, onRemove, onUpdate } = props
+	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = sortable_props
+
 	const { t } = useTranslation()
 	const color = useTagColor(item.color)
+
+	const getPopupContainer = useMemoizedFn(() => document.body)
+	const onDebounceChange = useMemoizedFn(debounce((_, v) => onUpdate('color', index, v), 300))
 
 	return (
 		<div
@@ -34,9 +39,9 @@ const Index = (props: IProps) => {
 				className='color_picker mr_6'
 				disabledAlpha
 				placement='topLeft'
-				getPopupContainer={() => document.body}
+				getPopupContainer={getPopupContainer}
 				value={item.color}
-				onChange={(_, v) => onUpdate('color', index, v)}
+				onChange={onDebounceChange}
 			></ColorPicker>
 			<Input
 				className='input'

@@ -22,6 +22,7 @@ export interface IPropsTagSelect {
 	placement?: SelectProps['placement']
 	unlimit?: boolean
 	onChange?: (v: Array<string>) => void
+	onFocus?: (v: boolean) => void
 }
 
 export interface IPropsHeader
@@ -65,6 +66,8 @@ export interface IPropsInput {
 export interface IPropsLevel {
 	value: Todo.Todo['level']
 	onChangeLevel: (v: Todo.Todo['level']) => void
+	onFocus?: () => void
+	onBlur?: () => void
 }
 
 export interface IPropsLevelStatus {
@@ -76,6 +79,7 @@ export interface IPropsDateTime {
 	Icon?: Icon
 	useByDetail?: boolean
 	ignoreDetail?: boolean
+	onFocus?: (v: boolean) => void
 	onChange: (v: number) => void
 }
 
@@ -91,7 +95,10 @@ export interface IPropsCircle {
 	cycle_enabled: Todo.Todo['cycle_enabled']
 	cycle: Todo.Todo['cycle']
 	useByDetail?: boolean
-	onChangeCircle: (args: Partial<Pick<IPropsCircle, 'cycle_enabled' | 'cycle'>>) => void
+	unEditing?: boolean
+	onFocus?: (v?: boolean) => void
+	onChange: (v: Todo.Todo['cycle']) => void
+	onChangeItem: (v: any) => void
 }
 
 export interface IPropsCircleStatus {

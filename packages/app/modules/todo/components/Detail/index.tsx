@@ -70,6 +70,7 @@ const Index = (props: IPropsDetail) => {
 		updateLevel,
 		updateRemind,
 		updateDeadline,
+		updateCycle,
 		updateSchedule,
 		updateRemark,
 		insertChildren,
@@ -239,7 +240,8 @@ const Index = (props: IPropsDetail) => {
 									cycle_enabled={cycle_enabled}
 									cycle={cycle}
 									useByDetail
-									onChangeCircle={updateValues}
+									onChange={updateCycle}
+									onChangeItem={updateValues}
 								></Cycle>
 							</div>
 						</div>

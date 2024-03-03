@@ -8,7 +8,8 @@ import styles from './index.css'
 import type { IPropsTagSelect } from '../../types'
 
 const Index = (props: IPropsTagSelect) => {
-	const { options, value, useByTodo, useByDetail, useByTable, className, placement, unlimit, onChange } = props
+	const { options, value, useByTodo, useByDetail, useByTable, className, placement, unlimit, onChange, onFocus } =
+		props
 	const { t } = useTranslation()
 
 	const Tag = useMemo(() => {
@@ -38,13 +39,11 @@ const Index = (props: IPropsTagSelect) => {
 				getPopupContainer={() => document.body}
 				placeholder={t('translation:todo.Input.tag_placeholder')}
 				tagRender={Tag}
+				maxCount={unlimit ? 30 : 3}
 				options={options}
 				value={value}
-				onChange={v => {
-					if (!unlimit && v?.length > 3) return
-
-					onChange(v)
-				}}
+				onDropdownVisibleChange={onFocus}
+				onChange={onChange}
 			></Select>
 		</div>
 	)

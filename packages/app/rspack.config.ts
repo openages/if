@@ -27,11 +27,11 @@ module.exports = defineConfig({
 	devServer: {
 		compress: false
 	},
-	// node: {
-	// 	global: false
-	// },
+	node: {
+		global: false
+	},
 	experiments: {
-		// outputModule: true,
+		outputModule: true,
 		rspackFuture: {
 			// newTreeshaking: true,
 		}
@@ -39,8 +39,8 @@ module.exports = defineConfig({
 	plugins: [
 		new HtmlRspackPlugin({
 			title: 'IF - GTD for prefessionals.',
-			template: './public/index.html'
-			// scriptLoading: 'module'
+			template: './public/index.html',
+			scriptLoading: 'module'
 		}),
 		!is_prod && new ReactRefreshPlugin({ exclude: [/node_modules/] }),
 		is_prod &&
@@ -56,7 +56,7 @@ module.exports = defineConfig({
 					loader: 'builtin:swc-loader',
 					options: {
 						sourceMap: !is_prod,
-						// isModule: true,
+						isModule: true,
 						jsc: {
 							parser: {
 								syntax: 'typescript',
@@ -84,7 +84,7 @@ module.exports = defineConfig({
 					loader: 'builtin:swc-loader',
 					options: {
 						sourceMap: !is_prod,
-						// isModule: true,
+						isModule: true,
 						jsc: {
 							parser: {
 								syntax: 'typescript',

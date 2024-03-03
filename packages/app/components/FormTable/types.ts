@@ -28,7 +28,8 @@ export interface Column {
 	extra?: any
 	alwaysEditing?: boolean
 	disableEditing?: boolean
-	disableResetEditing?: boolean
+	resetEditing?: boolean
+	useRowChange?: boolean
 	getProps?: (...args: any) => any
 	onAction?: (action: string, deps: any, index: number) => void
 }
@@ -64,8 +65,8 @@ export interface IPropsRow extends Pick<IProps, 'columns' | 'onChange' | 'getRow
 	left_shadow_index: number | null
 	right_shadow_index: number | null
 	sort: IPropsHeader['sort']
-	editing_field: string | undefined
-	setEditingInfo: (v: { row_index: number; field: string } | null) => void
+	editing_info: { row_index: number; field: string; focus: boolean } | undefined
+	setEditingInfo: (v: IPropsRow['editing_info'] | null) => void
 }
 
 export interface IPropsColumn {
@@ -78,25 +79,31 @@ export interface IPropsColumn {
 	fixed: Column['fixed']
 	extra: Column['extra']
 	stickyOffset: Column['stickyOffset']
-	editing: boolean
+	alwaysEditing: Column['alwaysEditing']
+	disableEditing: Column['disableEditing']
+	focus: boolean
 	shadow?: 'start' | 'end' | ''
 	sorting?: boolean
-	setEditingField: ((v: string) => void) | undefined
+	useRowChange?: Column['useRowChange']
+	setEditingField: ((v: { field: string; focus: boolean } | null) => void) | undefined
 	getProps: Column['getProps']
 	onAction: Column['onAction']
+	onRowChange?: (v: any) => void
 }
 
 export interface IPropsPagination extends PaginationProps {}
 
-export interface Component<T = any> {
+export interface Component<T = any, E = any> {
 	value?: T
 	row_index: number
 	dataIndex: string
 	deps: any
-	extra: Column['extra']
+	extra: E
 	editing: boolean
-	setEditingField: IPropsColumn['setEditingField']
+	onFocus?: (v?: any) => void
+	onBlur?: () => void
 	getProps?: Column['getProps']
 	onAction?: Column['onAction']
 	onChange?: (...args: any) => any
+	onRowChange?: IPropsColumn['onRowChange']
 }

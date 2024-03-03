@@ -1,6 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { debounce } from 'lodash-es'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default (callback: () => void, visible: boolean) => {
 	const [node, setRef] = useState<HTMLDivElement>(null)
@@ -19,11 +19,12 @@ export default (callback: () => void, visible: boolean) => {
 		if (!visible) return
 		if (!node?.parentElement) return
 
+		const parent = node.parentElement
 		const _hander = debounce(handler, 300)
 
-		node.parentElement.addEventListener('scroll', _hander)
+		parent.addEventListener('scroll', _hander)
 
-		return () => node.parentElement.removeEventListener('scroll', _hander)
+		return () => parent.removeEventListener('scroll', _hander)
 	}, [visible, node])
 
 	return { setRef }

@@ -29,9 +29,6 @@ importers:
       '@abraham/reflection':
         specifier: ^0.12.0
         version: 0.12.0
-      '@check-light-or-dark/color':
-        specifier: ^1.0.3
-        version: 1.0.3
       '@dnd-kit/core':
         specifier: ^6.1.0
         version: 6.1.0(react-dom@0.0.0-experimental-2f8f77602-20240229)(react@0.0.0-experimental-2f8f77602-20240229)
@@ -1876,16 +1873,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@check-light-or-dark/color@1.0.3:
-    resolution: {integrity: sha512-O9p/QKvMB4RJn/aHg9aMyOrQW3z3UillGOAC+UqGnPozzzpgIzic86DziwI6qcdRl96q/w/fYh0B9GPGEIYaAQ==}
-    dependencies:
-      '@check-light-or-dark/utils': 1.0.1
-    dev: false
-
-  /@check-light-or-dark/utils@1.0.1:
-    resolution: {integrity: sha512-TaWUR2ub7MEFyKJQvOW2i4GQFCpOcs8qQKDzyJuCdhN9ktXmoY738RxpJKN+xhcECtbst88OguklGhPL8w4aMA==}
-    dev: false
 
   /@cspotcode/source-map-support@0.8.1:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}

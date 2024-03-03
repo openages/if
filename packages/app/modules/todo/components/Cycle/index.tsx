@@ -16,7 +16,7 @@ import type { Dayjs } from 'dayjs'
 const { Group } = Radio
 
 const Index = (props: IPropsCircle) => {
-	const { cycle_enabled, cycle, useByDetail, onChangeCircle } = props
+	const { cycle_enabled, cycle, useByDetail, unEditing, onFocus, onChange, onChangeItem } = props
 	const { t, i18n } = useTranslation()
 	const [type, setType] = useState<IPropsCircle['cycle']['type']>(() => cycle?.type ?? 'interval')
 	const every_text = t(`translation:todo.Input.Cycle.every`)
@@ -59,7 +59,7 @@ const Index = (props: IPropsCircle) => {
 
 		setType(type)
 
-		onChangeCircle({ cycle: { type, scale: undefined, value: undefined } })
+		onChange({ type, scale: undefined, value: undefined })
 	})
 
 	const onWeekday = useMemoizedFn((day: number) => {
@@ -73,37 +73,35 @@ const Index = (props: IPropsCircle) => {
 			target_exclude.push(day)
 		}
 
-		onChangeCircle({
-			cycle: { ...cycle, exclude: target_exclude }
-		})
+		onChange({ ...cycle, exclude: target_exclude })
 	})
 
-	const onChangeEnabled = useMemoizedFn(v => onChangeCircle({ cycle_enabled: v }))
+	const onChangeEnabled = useMemoizedFn(v => onChangeItem({ cycle_enabled: v }))
 
 	const onChangeScale = useMemoizedFn(({ target: { value } }) => {
-		if (value === 'reset') setType('interval')
+		if (value === 'reset') {
+			setType('interval')
+			onChange(undefined)
 
-		onChangeCircle({
-			cycle:
-				value === 'reset'
-					? undefined
-					: {
-							...cycle,
-							type,
-							scale: value,
-							value: type === 'interval' ? 1 : undefined,
-							exclude: []
-					  }
+			return
+		}
+
+		onChange({
+			...cycle,
+			type,
+			scale: value,
+			value: type === 'interval' ? 1 : undefined,
+			exclude: []
 		})
 	})
 
-	const onChangeValue = useMemoizedFn(v => onChangeCircle({ cycle: { ...cycle, value: v } }))
+	const onChangeValue = useMemoizedFn(v => onChange({ ...cycle, value: v }))
 
 	const onChangeDay = useMemoizedFn((v: Dayjs) =>
-		onChangeCircle({ cycle: { ...cycle, value: cycle.scale === 'date' ? v.date() : v.valueOf() } })
+		onChange({ ...cycle, value: cycle.scale === 'date' ? v.date() : v.valueOf() })
 	)
 
-	const onChangeHour = useMemoizedFn((v: Dayjs) => onChangeCircle({ cycle: { ...cycle, value: v.hour() } }))
+	const onChangeHour = useMemoizedFn((v: Dayjs) => onChange({ ...cycle, value: v.hour() }))
 
 	const options_weekday = useMemo(() => {
 		return [0, 1, 2, 3, 4, 5, 6].map(item => ({
@@ -289,7 +287,9 @@ const Index = (props: IPropsCircle) => {
 		}
 	}, [i18n.language, cycle_enabled, cycle, useByDetail])
 
-	return (
+	return unEditing ? (
+		<div className={styles.trigger_wrap}>{Trigger}</div>
+	) : (
 		<Popover
 			rootClassName={styles._local}
 			trigger='click'
@@ -298,6 +298,7 @@ const Index = (props: IPropsCircle) => {
 			content={Content}
 			align={!useByDetail ? { offset: [8, -8] } : {}}
 			getPopupContainer={() => document.body}
+			onOpenChange={onFocus}
 		>
 			<div className={styles.trigger_wrap}>{Trigger}</div>
 		</Popover>

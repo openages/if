@@ -99,8 +99,6 @@ const Index = (props: IPropsTable) => {
 					width: 150,
 					align: 'left',
 					fixed: 'left',
-					alwaysEditing: true,
-					disableResetEditing: true,
 					component: RenderText
 				},
 				{
@@ -109,7 +107,6 @@ const Index = (props: IPropsTable) => {
 					width: 96,
 					align: 'center',
 					extra: { tags },
-					alwaysEditing: true,
 					component: RenderTags
 				},
 				{
@@ -118,7 +115,6 @@ const Index = (props: IPropsTable) => {
 					width: 96,
 					align: 'center',
 					sort: true,
-					alwaysEditing: true,
 					component: RenderLevel
 				},
 				{
@@ -127,7 +123,6 @@ const Index = (props: IPropsTable) => {
 					width: 96,
 					align: 'center',
 					sort: true,
-					alwaysEditing: true,
 					component: RenderRemind
 				},
 				{
@@ -136,7 +131,6 @@ const Index = (props: IPropsTable) => {
 					width: 96,
 					align: 'center',
 					sort: true,
-					alwaysEditing: true,
 					component: RenderDeadline
 				},
 				{
@@ -145,7 +139,7 @@ const Index = (props: IPropsTable) => {
 					deps: ['cycle_enabled'],
 					width: 96,
 					align: 'center',
-					alwaysEditing: true,
+					useRowChange: true,
 					component: RenderCycle
 				},
 				{
@@ -153,7 +147,7 @@ const Index = (props: IPropsTable) => {
 					dataIndex: 'schedule',
 					width: 60,
 					align: 'center',
-					alwaysEditing: true,
+					disableEditing: true,
 					component: RenderSchedule
 				},
 				{
@@ -161,7 +155,7 @@ const Index = (props: IPropsTable) => {
 					dataIndex: 'children',
 					width: 60,
 					align: 'center',
-					alwaysEditing: true,
+					disableEditing: true,
 					component: RenderChildren
 				},
 				{
@@ -169,7 +163,6 @@ const Index = (props: IPropsTable) => {
 					dataIndex: 'remark',
 					width: 60,
 					align: 'center',
-					alwaysEditing: true,
 					component: RenderRemark
 				},
 				{
@@ -178,7 +171,7 @@ const Index = (props: IPropsTable) => {
 					deps: ['archive_time'],
 					width: 81,
 					align: 'center',
-					alwaysEditing: true,
+					disableEditing: true,
 					component: RenderArchive
 				},
 				{
@@ -188,7 +181,6 @@ const Index = (props: IPropsTable) => {
 					align: 'center',
 					ignoreArchive: true,
 					sort: true,
-					alwaysEditing: true,
 					component: RenderCreateAt
 				},
 				{

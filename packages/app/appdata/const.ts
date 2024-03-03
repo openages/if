@@ -82,3 +82,5 @@ export const autolock_value = Object.keys(autolock_map).reduce(
 	},
 	{} as Record<keyof typeof autolock_map, number>
 )
+
+export const getArray = (length: number) => Array.from({ length })

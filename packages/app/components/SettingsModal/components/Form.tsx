@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import { IconEditor } from '@/components'
 import { useLimits } from '@/hooks'
+import { isFormValuesEqual } from '@/utils'
 
 const { Item, useForm } = Form
 
@@ -15,9 +16,15 @@ const Index = (props: Pick<IPropsSettingsModal, 'children' | 'info' | 'IconEditC
 	const [form] = useForm()
 	const limits = useLimits()
 	const { t } = useTranslation()
-	const { setFieldsValue } = form
+	const { getFieldsValue, setFieldsValue } = form
 
-	useEffect(() => setFieldsValue({ ...info, icon_info: { icon: info.icon, icon_hue: info.icon_hue } }), [info])
+	useEffect(() => {
+		const target = { ...info, icon_info: { icon: info.icon, icon_hue: info.icon_hue } }
+
+		if (isFormValuesEqual(getFieldsValue(), target)) return
+
+		setFieldsValue(target)
+	}, [info])
 
 	return (
 		<Form

@@ -1,6 +1,8 @@
 import { useMemoizedFn } from 'ahooks'
 import { Form } from 'antd'
-import { cloneElement } from 'react'
+import { cloneElement, useEffect, useRef, useState } from 'react'
+
+import { useDeepMemo } from '@openages/stk/react'
 
 import { useStyle } from '../hooks'
 
@@ -9,7 +11,7 @@ import type { ReactElement } from 'react'
 
 const { Item } = Form
 
-const Field = $app.memo((props: Pick<IPropsColumn, 'component'> & Component<any>) => {
+const Field = $app.memo((props: Pick<IPropsColumn, 'component' | 'useRowChange'> & Component<any>) => {
 	const {
 		component,
 		value,
@@ -18,26 +20,34 @@ const Field = $app.memo((props: Pick<IPropsColumn, 'component'> & Component<any>
 		deps,
 		extra,
 		editing,
-		setEditingField,
+		useRowChange,
+		onFocus,
+		onBlur,
 		getProps,
 		onAction,
-		onChange
+		onChange,
+		onRowChange
 	} = props
 
 	const change = useMemoizedFn(onChange ? onChange : () => {})
 
-	return cloneElement(component as ReactElement, {
+	const props_component = {
 		value,
 		row_index,
 		dataIndex,
 		deps,
 		extra,
 		editing,
-		setEditingField,
+		onFocus,
+		onBlur,
 		getProps,
 		onAction,
 		onChange: change
-	})
+	}
+
+	if (useRowChange) props_component['onRowChange'] = onRowChange
+
+	return cloneElement(component as ReactElement, props_component)
 })
 
 const Index = (props: IPropsColumn) => {
@@ -53,12 +63,45 @@ const Index = (props: IPropsColumn) => {
 		stickyOffset,
 		shadow,
 		sorting,
-		editing,
+		alwaysEditing,
+		disableEditing,
+		focus,
+		useRowChange,
 		setEditingField,
 		getProps,
-		onAction
+		onAction,
+		onRowChange
 	} = props
 	const style = useStyle({ align, fixed, stickyOffset })
+	const ref = useRef<HTMLTableCellElement>(null)
+	const [hover, setHover] = useState(false)
+
+	useEffect(() => {
+		const td = ref.current
+
+		if (alwaysEditing || disableEditing) return
+
+		const setHoverTrue = () => setHover(true)
+		const setHoverFalse = () => setHover(false)
+
+		td.addEventListener('mouseenter', setHoverTrue)
+		td.addEventListener('mouseleave', setHoverFalse)
+
+		return () => {
+			td.removeEventListener('mouseenter', setHoverTrue)
+			td.removeEventListener('mouseleave', setHoverFalse)
+		}
+	}, [alwaysEditing, disableEditing])
+
+	const onFocus = useMemoizedFn(v => {
+		if (v === undefined || v) {
+			setEditingField({ field: dataIndex, focus: true })
+		} else {
+			setEditingField(null)
+		}
+	})
+
+	const onBlur = useMemoizedFn(() => setEditingField(null))
 
 	const props_field = {
 		component,
@@ -66,15 +109,21 @@ const Index = (props: IPropsColumn) => {
 		dataIndex,
 		deps,
 		extra,
-		editing,
-		setEditingField,
+		editing: focus || hover,
+		useRowChange,
 		getProps,
-		onAction
+		onAction,
+		onRowChange
 	}
 
-	if (!editing) props_field['value'] = value
+	if (props_field.editing) {
+		props_field['onFocus'] = onFocus
+		props_field['onBlur'] = onBlur
+	} else {
+		props_field['value'] = value
+	}
 
-	const Content = <Field {...props_field}></Field>
+	const Content = useDeepMemo(() => <Field {...props_field}></Field>, [props_field])
 
 	return (
 		<td
@@ -85,8 +134,9 @@ const Index = (props: IPropsColumn) => {
 				sorting && 'sorting'
 			)}
 			style={style}
+			ref={ref}
 		>
-			{editing ? (
+			{props_field.editing ? (
 				<Item name={dataIndex} noStyle>
 					{Content}
 				</Item>

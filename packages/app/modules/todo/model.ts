@@ -669,10 +669,6 @@ export default class Index {
 			return this.check({ index, status: value as Todo.Todo['status'] })
 		}
 
-		if (key === 'cycle') {
-			return this.update({ type: 'parent', index, value: { ...(value as Partial<Todo.Todo>) } })
-		}
-
 		if (key === 'archive') {
 			return this.restoreArchiveItem(item.id)
 		}

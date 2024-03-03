@@ -60,7 +60,8 @@ const Index = (props: IPropsInput) => {
 	const props_circle: IPropsCircle = {
 		cycle_enabled: (input as Todo.Todo).cycle_enabled,
 		cycle: (input as Todo.Todo).cycle,
-		onChangeCircle: useMemoizedFn(v => setInput(input => ({ ...input, ...v })))
+		onChange: useMemoizedFn(v => setInput(input => ({ ...input, cycle: v }))),
+		onChangeItem: useMemoizedFn(v => setInput(input => ({ ...input, ...v })))
 	}
 
 	const onKeyDown = useMemoizedFn(async (e: KeyboardEvent<HTMLDivElement>) => {

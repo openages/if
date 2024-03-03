@@ -152,8 +152,41 @@
 	background-color: transparent;
 }
 
+.RenderTagsViewer {
+	line-height: 1;
+
+	:global {
+		.tag_item {
+			height: 14px;
+			line-height: 14px;
+			padding: 0 4px;
+			margin: 0 1px;
+			font-size: 10px;
+			font-weight: 500;
+			border-radius: var(--radius_small);
+		}
+	}
+}
+
+.RenderLevelViewer {
+	:global {
+		.level_item {
+			color: rgba(var(--color_text_rgb), 0.24);
+
+			&.active {
+				color: var(--color_star);
+			}
+		}
+	}
+}
+
 .DateTime {
 	:global {
+		.viewer_wrap {
+			line-height: 1;
+			margin-bottom: -1px;
+		}
+
 		.if-picker-input {
 			input {
 				text-align: center;
@@ -202,7 +235,7 @@
 					background-color: var(--color_bg_2);
 
 					&.if-progress-steps-item-active {
-						background-color: var(--color_main);
+						background-color: var(--color_text);
 					}
 				}
 			}
