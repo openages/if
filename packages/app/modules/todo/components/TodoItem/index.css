@@ -1,18 +1,10 @@
-[data-theme='dark'] {
-	.todo_item_wrap {
-		&.kanban_mode {
-			box-shadow: 0 1.5px 3px rgba(var(--color_std_rgb), 0.24);
-		}
-	}
-}
-
 .todo_item_wrap {
 	&.kanban_mode {
 		padding-top: 3px;
 		border: var(--border);
 		border-radius: var(--radius_small);
 		margin-bottom: 6px;
-		box-shadow: 0 1.5px 3px rgba(var(--color_text_rgb), 0.06);
+		box-shadow: var(--shadow_card);
 
 		&.is_dragging {
 			opacity: 0;

@@ -152,6 +152,14 @@ const Index = (props: IPropsTodoItem) => {
 		[level, tag_ids, remind_time, end_time, cycle_enabled, cycle, schedule]
 	)
 
+	const date = useMemo(() => {
+		const target = dayjs(create_at)
+
+		if (target.diff(dayjs(), 'week') >= 1) return target.format('YYYY-MM-DD')
+
+		return `${dayjs().to(target)} ${target.format('dddd')}`
+	}, [create_at])
+
 	const OptionsWrap = useMemo(
 		() => (
 			<div className={$cx('options_wrap w_100 border_box flex align_center', open && 'open', status)}>
@@ -173,11 +181,7 @@ const Index = (props: IPropsTodoItem) => {
 					{cycle_enabled && cycle && cycle.value !== undefined && (
 						<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
 					)}
-					{kanban_mode && (
-						<span className='date_wrap in_options'>
-							{dayjs(create_at).format('HH:mm MM-DD dddd')}
-						</span>
-					)}
+					{kanban_mode && <span className='date_wrap in_options'>{date}</span>}
 				</div>
 			</div>
 		),
@@ -296,13 +300,7 @@ const Index = (props: IPropsTodoItem) => {
 			<Children {...props_children}></Children>
 			<If condition={kanban_mode}>
 				<Then>
-					{has_options ? (
-						OptionsWrap
-					) : (
-						<div className='date_wrap w_100 border_box'>
-							{dayjs(create_at).format('HH:mm MM-DD dddd')}
-						</div>
-					)}
+					{has_options ? OptionsWrap : <div className='date_wrap w_100 border_box'>{date}</div>}
 				</Then>
 				<Else>{!zen_mode && has_options && OptionsWrap}</Else>
 			</If>

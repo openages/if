@@ -21,5 +21,6 @@ export default {
 	shadow_left: '-6px 6px 30px rgba(var(--color_std_rgb), 0.36)',
 	shadow_right: '6px 0 30px rgba(var(--color_std_rgb), 0.36)',
 	shadow_top: '0 6px 30px rgba(var(--color_std_rgb), 0.36)',
+	shadow_card: '0 1.5px 3px rgba(var(--color_std_rgb), 0.24)',
 	wave: 'rgba(var(--color_text_rgb), 0.3)'
 }
