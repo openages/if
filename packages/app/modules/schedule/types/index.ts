@@ -33,6 +33,7 @@ export interface IPropsHeaderLeft
 export interface IPropsHeaderCenter {
 	current: Model['current']
 	step: Model['step']
+	changeCurrent: IPropsHeader['changeCurrent']
 }
 
 export interface IPropsHeaderRight {

@@ -29,32 +29,45 @@ const Index = (props: IPropsDateScale) => {
 						<span className='weekday mr_6'>{item.weekday}</span>
 						<span className='date'>{item.date}</span>
 					</div>
-					<When condition={is_zh && scale === 'week'}>
-						<If condition={!!item.extra}>
-							<Then>
-								<div className='extra_wrap'>
-									<If condition={item.extra.target}>
-										<Then>
-											<span className='holiday'>{item.extra.holiday}</span>
-										</Then>
-										<Else>
-											<If condition={item.extra.work}>
+					<If condition={item.global_festival}>
+						<Then>
+							<span className='holiday'>{item.global_festival}</span>
+						</Then>
+						<Else>
+							<When condition={is_zh}>
+								<If condition={!!item.extra}>
+									<Then>
+										<div className='extra_wrap'>
+											<If condition={item.extra.target}>
 												<Then>
-													<span className='status work'>班</span>
+													<span className='holiday'>
+														{item.extra.holiday}
+													</span>
 												</Then>
 												<Else>
-													<span className='status relax'>休</span>
+													<If condition={item.extra.work}>
+														<Then>
+															<span className='status work'>
+																班
+															</span>
+														</Then>
+														<Else>
+															<span className='status relax'>
+																休
+															</span>
+														</Else>
+													</If>
 												</Else>
 											</If>
-										</Else>
-									</If>
-								</div>
-							</Then>
-							<Else>
-								<span className='lunar'>{item.lunar}</span>
-							</Else>
-						</If>
-					</When>
+										</div>
+									</Then>
+									<Else>
+										<span className='lunar'>{item.lunar}</span>
+									</Else>
+								</If>
+							</When>
+						</Else>
+					</If>
 				</div>
 			))}
 		</div>

@@ -15,6 +15,7 @@ const Index = (props: IPropsHeader) => {
 		toggleVisibleTaskPanel,
 		changeView,
 		changeScale,
+		changeCurrent,
 		showSettingsModal,
 		changeFilterTags
 	} = props
@@ -30,7 +31,8 @@ const Index = (props: IPropsHeader) => {
 
 	const props_center: IPropsHeaderCenter = {
 		current,
-		step
+		step,
+		changeCurrent
 	}
 
 	const props_right: IPropsHeaderRight = {

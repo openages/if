@@ -8,7 +8,7 @@ import styles from './index.css'
 import type { IPropsHeaderCenter } from '../../../../types'
 
 const Index = (props: IPropsHeaderCenter) => {
-	const { current, step } = props
+	const { current, step, changeCurrent } = props
 
 	const prev = useMemoizedFn(() => step('prev'))
 	const next = useMemoizedFn(() => step('next'))
@@ -27,6 +27,7 @@ const Index = (props: IPropsHeaderCenter) => {
 				suffixIcon={null}
 				showWeek
 				value={current}
+				onChange={changeCurrent}
 			></DatePicker>
 			<div className='btn btn_prev flex justify_center align_center clickable' onClick={next}>
 				<CaretRight></CaretRight>

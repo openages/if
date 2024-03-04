@@ -13,6 +13,7 @@
 			padding: 0 9px;
 			border-left: var(--border);
 			white-space: nowrap;
+			overflow: hidden;
 
 			&.today {
 				background-color: rgba(var(--color_text_rgb), 0.018);
@@ -36,11 +37,13 @@
 				font-size: 10px;
 			}
 
-			.extra_wrap {
-				.holiday {
-					color: var(--color_main);
-				}
+			.holiday {
+				color: var(--color_success);
+				margin-left: 6px;
+				font-size: 10px;
+			}
 
+			.extra_wrap {
 				.status {
 					font-size: 10px;
 
