@@ -120,8 +120,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       konva:
-        specifier: ^9.3.4
-        version: 9.3.4
+        specifier: ^9.3.5
+        version: 9.3.5
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -175,7 +175,7 @@ importers:
         version: 4.1.5(react@0.0.0-experimental-2f8f77602-20240229)
       react-konva:
         specifier: ^18.2.10
-        version: 18.2.10(konva@9.3.4)(react-dom@0.0.0-experimental-2f8f77602-20240229)(react@0.0.0-experimental-2f8f77602-20240229)
+        version: 18.2.10(konva@9.3.5)(react-dom@0.0.0-experimental-2f8f77602-20240229)(react@0.0.0-experimental-2f8f77602-20240229)
       react-nice-avatar:
         specifier: ^1.5.0
         version: 1.5.0(react@0.0.0-experimental-2f8f77602-20240229)
@@ -4370,7 +4370,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001591
+      caniuse-lite: 1.0.30001593
       electron-to-chromium: 1.4.690
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
@@ -4483,8 +4483,8 @@ packages:
     resolution: {integrity: sha512-vsJG3V5vgfduaQGVxL53uSX/HUzxyr2eA8xCo36OLal7sRcSZbibJtLeh0qja4sFOr/QQGt4opB4tOy+eOgAxg==}
     dev: true
 
-  /caniuse-lite@1.0.30001591:
-    resolution: {integrity: sha512-PCzRMei/vXjJyL5mJtzNiUCKP59dm8Apqc3PH8gJkMnMXZGox93RbE76jHsmLwmIo6/3nsYIpJtx0O7u5PqFuQ==}
+  /caniuse-lite@1.0.30001593:
+    resolution: {integrity: sha512-UWM1zlo3cZfkpBysd7AS+z+v007q9G1+fLTUU42rQnY6t2axoogPW/xol6T7juU5EUoOhML4WgBIdG+9yYqAjQ==}
     dev: true
 
   /chalk@2.4.2:
@@ -5028,7 +5028,7 @@ packages:
     resolution: {integrity: sha512-QHTXI/sZQmko1cbDoNAa3mJ5qhWUUNAq3vR0/YiD379fWQrcfuoX1+HW2S0MTt7XmoPLapdaDKUtelUSPic7hQ==}
     engines: {node: '>=10.13.0'}
     dependencies:
-      graceful-fs: 4.2.11
+      graceful-fs: 4.2.10
       tapable: 2.2.1
     dev: true
 
@@ -6085,8 +6085,8 @@ packages:
     resolution: {integrity: sha512-7SIbS09K7J40sd/hKCAOLQ1ss45aQ76pz99K1esBlgH/CkdCbetTEx6v+gPeCIXwnT1VHU5JKGjNbJO7ktZNFQ==}
     dev: false
 
-  /konva@9.3.4:
-    resolution: {integrity: sha512-JTv9drt5uE2XWMxvTzCIsbMz7PicK/kCzzFYeyu6z99IZNHFq2aaOXgFf2V50SQx76xdnfVIqY11QYVsMxKKAQ==}
+  /konva@9.3.5:
+    resolution: {integrity: sha512-mMs9TAlz5709m41F2dc8Q8vMtN09wJ1se0x72v9jwSnIAiaXWAr5OP4/8qQPtV7/VADYwCMv6NN3+qn6lTJacg==}
     dev: false
 
   /launch-editor@2.6.1:
@@ -7485,7 +7485,7 @@ packages:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: false
 
-  /react-konva@18.2.10(konva@9.3.4)(react-dom@0.0.0-experimental-2f8f77602-20240229)(react@0.0.0-experimental-2f8f77602-20240229):
+  /react-konva@18.2.10(konva@9.3.5)(react-dom@0.0.0-experimental-2f8f77602-20240229)(react@0.0.0-experimental-2f8f77602-20240229):
     resolution: {integrity: sha512-ohcX1BJINL43m4ynjZ24MxFI1syjBdrXhqVxYVDw2rKgr3yuS0x/6m1Y2Z4sl4T/gKhfreBx8KHisd0XC6OT1g==}
     peerDependencies:
       konva: ^8.0.1 || ^7.2.5 || ^9.0.0
@@ -7494,7 +7494,7 @@ packages:
     dependencies:
       '@types/react-reconciler': 0.28.8
       its-fine: 1.1.1(react@0.0.0-experimental-2f8f77602-20240229)
-      konva: 9.3.4
+      konva: 9.3.5
       react: 0.0.0-experimental-2f8f77602-20240229
       react-dom: 0.0.0-experimental-2f8f77602-20240229(react@0.0.0-experimental-2f8f77602-20240229)
       react-reconciler: 0.29.0(react@0.0.0-experimental-2f8f77602-20240229)
