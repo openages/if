@@ -64,7 +64,7 @@ const PressItem = $app.memo((props: IProps) => {
 		<Item {...itemProps}>
 			<div className={$cx('flex w_100 h_100 relative', styles._local, className)} ref={ref}>
 				<div className=' flex align_center w_100 h_100 relative z_index_10'>
-					<Icon className='' size={16} weight='bold'></Icon>
+					<Icon className='' size={14} weight='bold'></Icon>
 					<span className='text ml_6 font_bold'>{text}</span>
 				</div>
 				<div
@@ -84,7 +84,7 @@ const Index = (props: IProps) => {
 	return (
 		<Item {...itemProps}>
 			<div className={$cx('flex align_center w_100 h_100', styles._local, className)}>
-				<Icon size={16} weight='bold'></Icon>
+				<Icon size={14} weight='bold'></Icon>
 				<span className='text ml_6 font_bold'>{text}</span>
 			</div>
 		</Item>

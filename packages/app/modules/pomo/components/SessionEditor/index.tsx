@@ -88,7 +88,7 @@ const Index = (props: IPropsSessionEditor) => {
 	})
 
 	return (
-		<Form className={$cx('border_box', styles._local)} form={form} onFinish={onFinish}>
+		<Form className={$cx('border_box', styles._local)} preserve={false} form={form} onFinish={onFinish}>
 			<Item name='title' label={t('translation:pomo.SessionEditor.target')}>
 				<Input
 					className='input'

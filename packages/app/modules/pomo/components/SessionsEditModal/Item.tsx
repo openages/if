@@ -27,10 +27,7 @@ const Index = (props: IPropsSessionsEditModalItem) => {
 
 	const work_height = useMemo(() => {
 		if (work_time < 50) return 60
-
-		if (flow_mode) {
-			return work_time >= 60 ? 90 : work_time * 1.2
-		}
+		if (flow_mode) return work_time >= 60 ? 90 : work_time * 1.2
 
 		return work_time * 2.1
 	}, [flow_mode, work_time])
@@ -58,6 +55,9 @@ const Index = (props: IPropsSessionsEditModalItem) => {
 				{!flow_mode && timeline?.current === 'work' && (
 					<span className='timeline absolute' style={{ top: timeline?.time * 2.1 }}></span>
 				)}
+				<span className='number_wrap flex justify_center align_center absolute top_0 left_0'>
+					{index + 1}
+				</span>
 				<div className='actions_wrap w_100 border_box none justify_between absolute'>
 					<div
 						className='btn_remove icon_wrap border_box flex justify_center align_center clickable'
@@ -76,6 +76,7 @@ const Index = (props: IPropsSessionsEditModalItem) => {
 					<Popover
 						trigger='click'
 						placement='left'
+						destroyTooltipOnHide
 						align={{ offset: [-54] }}
 						open={edit_open}
 						content={
@@ -89,7 +90,7 @@ const Index = (props: IPropsSessionsEditModalItem) => {
 						onOpenChange={onEditOpenChange}
 					>
 						<div>
-							<div className='btn_edit icon_wrap border_box flex justify_center align_center clickable'>
+							<div className='btn_edit icon_wrap border_box flex justify_center align_center clickable relative'>
 								<PencilSimple size={10}></PencilSimple>
 							</div>
 						</div>

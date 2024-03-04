@@ -25,6 +25,7 @@ const Index = (props: IPropsHeaderCenter) => {
 				variant='borderless'
 				allowClear={false}
 				suffixIcon={null}
+				showWeek
 				value={current}
 			></DatePicker>
 			<div className='btn btn_prev flex justify_center align_center clickable' onClick={next}>

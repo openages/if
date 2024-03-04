@@ -33,6 +33,18 @@
 				z-index: 10;
 			}
 
+			.number_wrap {
+				padding: 2px 3px;
+				z-index: 10;
+				color: var(--color_text_light);
+				font-weight: 500;
+				border-bottom: 1px solid var(--color_border_light);
+				border-right: 1px solid var(--color_border_light);
+				border-top-left-radius: var(--radius);
+				border-bottom-right-radius: var(--radius);
+				background-color: var(--color_bg);
+			}
+
 			.icon_wrap {
 				width: 16px;
 				height: 16px;

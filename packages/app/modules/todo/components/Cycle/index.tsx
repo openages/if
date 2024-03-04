@@ -156,8 +156,10 @@ const Index = (props: IPropsCircle) => {
 				<Switch>
 					<Case condition={cycle.scale === 'clock'}>
 						<TimePicker
+							popupClassName='clock_picker'
 							className='w_100'
 							inputReadOnly
+							showNow={false}
 							format='HH'
 							value={cycle.value ? dayjs().hour(cycle.value) : undefined}
 							onChange={onChangeHour}

@@ -149,6 +149,15 @@
 						font-weight: bold;
 					}
 				}
+
+				.clock_picker {
+					.if-picker-footer {
+						.if-picker-ranges {
+							margin-top: 0 !important;
+							padding-top: 0 !important;
+						}
+					}
+				}
 			}
 		}
 	}

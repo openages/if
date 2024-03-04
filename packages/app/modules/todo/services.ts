@@ -23,13 +23,22 @@ import type { RxDB, Todo } from '@/types'
 import type { ManipulateType } from 'dayjs'
 
 export const getMaxMinSort = async (angle_id: string, min?: boolean) => {
-	const [max_sort_item] = await $db.todo_items
-		.find({ selector: { angle_id, archive: false } })
+	const [sort_item] = await $db.todo_items
+		.find({
+			selector: {
+				angle_id,
+				$or: [
+					{ archive: { $exists: false } },
+					{ archive: { $eq: false } },
+					{ archive: { $eq: undefined } }
+				]
+			}
+		})
 		.sort({ sort: min ? 'asc' : 'desc' })
 		.limit(1)
 		.exec()
 
-	if (max_sort_item) return max_sort_item.sort
+	if (sort_item) return sort_item.sort
 
 	return 0
 }
