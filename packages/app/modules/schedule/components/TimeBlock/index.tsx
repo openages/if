@@ -9,6 +9,8 @@ import { useTranslation } from 'react-i18next'
 import { useDeepEffect } from '@/hooks'
 import { useInput } from '@/modules/todo/hooks'
 import { getDocItemsData } from '@/utils'
+import { useDraggable } from '@dnd-kit/core'
+import { CSS } from '@dnd-kit/utilities'
 import { Check, Info, X } from '@phosphor-icons/react'
 
 import { useDragLength } from '../../hooks'
@@ -19,7 +21,6 @@ import styles from './index.css'
 import type { IPropsCalendarViewTimeBlock } from '../../types'
 import type { Subscription } from 'rxjs'
 import type { Todo } from '@/types'
-import type { MenuProps } from 'antd'
 
 const Index = (props: IPropsCalendarViewTimeBlock) => {
 	const {
@@ -37,6 +38,17 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 	const [status, setStatus] = useState('')
 	const context_menu_items = useContextMenuItems()
 	const { t } = useTranslation()
+	const {
+		attributes,
+		listeners,
+		transform,
+		isDragging,
+		setNodeRef: setDragRef,
+		setActivatorNodeRef
+	} = useDraggable({
+		id: item.id,
+		data: { day_index, timeblock_index }
+	})
 
 	const { drag_ref, changing } = useDragLength({
 		type: 'timeblock',
@@ -146,10 +158,13 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 						changing && styles.changing
 					)}
 					style={{
-						transform: `translateY(${item.start * 16}px)`,
+						top: item.start * 16,
 						height: item.length * 16,
+						transform: CSS.Translate.toString(transform),
 						...tag_styles
 					}}
+					ref={setDragRef}
+					{...attributes}
 				>
 					<div className='drag_line w_100 absolute bottom_0 right_0' ref={drag_ref}></div>
 					<div
@@ -161,7 +176,11 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 					>
 						{visible_detail ? <X size={12}></X> : <Info size={14}></Info>}
 					</div>
-					<div className='timeblock_content_wrap w_100 h_100 border_box flex flex_column absolute top_0 left_0'>
+					<div
+						className='timeblock_content_wrap w_100 h_100 border_box flex flex_column absolute top_0 left_0'
+						ref={setActivatorNodeRef}
+						{...listeners}
+					>
 						<div className='text_scroll_wrap w_100'>
 							<div
 								className='text_wrap w_100 border_box'

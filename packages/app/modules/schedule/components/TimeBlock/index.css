@@ -112,9 +112,11 @@
 		.timeblock_content_wrap {
 			border: 1px solid var(--color_border);
 			border-radius: var(--radius_small);
+			cursor: grab;
 
 			.text_scroll_wrap {
 				overflow-x: scroll;
+				cursor: text;
 			}
 
 			.text_wrap {
@@ -122,6 +124,7 @@
 				font-size: 12px;
 				outline: none;
 				font-weight: 500;
+				cursor: text;
 
 				&:empty {
 					&::after {

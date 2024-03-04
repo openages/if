@@ -26,6 +26,7 @@ import type { Schedule } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
 import type { DayDetail } from './utils'
 import type { Subscription } from 'rxjs'
+import type { DragStartEvent, DragMoveEvent, DragEndEvent } from '@dnd-kit/core'
 
 @injectable()
 export default class Index {
@@ -46,6 +47,9 @@ export default class Index {
 
 	visible_task_panel = false
 	visible_settings_modal = false
+
+	active_item = null as Schedule.CalendarItem
+	move_item = null as Schedule.CalendarItem
 
 	watch = {
 		'scale|current': () => this.getDays(),
@@ -86,6 +90,23 @@ export default class Index {
 
 	step(type: 'prev' | 'next') {
 		this.current = this.current[type === 'prev' ? 'subtract' : 'add'](1, this.scale)
+	}
+
+	onDragStart({ active }: DragStartEvent) {
+		this.active_item = active.data.current.item
+	}
+
+	onDragMove({ active, over, delta }: DragMoveEvent) {
+		const day_index = over.id
+		console.log(delta.y)
+	}
+
+	onDragEnd({ active, over }: DragEndEvent) {
+		if (!over?.id) return
+		if (active.id === over.id) return
+
+		this.active_item = null
+		this.move_item = null
 	}
 
 	async addTimeBlock(args: {

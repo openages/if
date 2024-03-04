@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useContextMenu } from 'react-contexify'
 
 import { hours } from '@/appdata/schedule'
+import { useDroppable } from '@dnd-kit/core'
 
 import { collisionDetection, getStartByY } from '../../utils'
 import TimeBlock from '../TimeBlock'
@@ -28,6 +29,7 @@ const Index = (props: IPropsCalendarViewDay) => {
 	} = props
 	const { show } = useContextMenu({ id: 'timeblock_context_menu' })
 	const [signal, setSignal] = useState(null)
+	const { setNodeRef } = useDroppable({ id: index })
 
 	const clearSignal = useMemoizedFn(v => {
 		if (v === index) return
@@ -62,6 +64,7 @@ const Index = (props: IPropsCalendarViewDay) => {
 			className={$cx('day_wrap border_box relative', styles.Day, today && styles.today)}
 			style={{ width: `calc(100% / ${counts})` }}
 			onContextMenu={onContextMenu}
+			ref={setNodeRef}
 		>
 			<div className='hours_wrap w_100 flex flex_column'>
 				{hours.map(item => (
