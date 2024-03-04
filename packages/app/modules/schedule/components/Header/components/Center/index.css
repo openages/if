@@ -22,5 +22,13 @@
 				}
 			}
 		}
+
+		.if-picker-footer {
+			padding-bottom: 9px;
+
+			.if-picker-footer-extra {
+				line-height: 1;
+			}
+		}
 	}
 }

@@ -24,6 +24,7 @@ export default {
 		感恩节: '感恩节',
 		圣诞节: '圣诞节'
 	},
+	current_week: '本周',
 	setting: '设置',
 	copy: '复制',
 	check: '查看',

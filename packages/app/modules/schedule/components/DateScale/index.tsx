@@ -37,7 +37,7 @@ const Index = (props: IPropsDateScale) => {
 							<When condition={is_zh}>
 								<If condition={!!item.extra}>
 									<Then>
-										<div className='extra_wrap'>
+										<div className='extra_wrap flex align_center'>
 											<If condition={item.extra.target}>
 												<Then>
 													<span className='holiday'>

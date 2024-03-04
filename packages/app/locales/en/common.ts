@@ -24,6 +24,7 @@ export default {
 		感恩节: 'Thanksgiving',
 		圣诞节: 'Christmas'
 	},
+	current_week: 'Current Week',
 	setting: 'Setting',
 	copy: 'Copy',
 	check: 'Check',

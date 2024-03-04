@@ -31,6 +31,7 @@ export interface IPropsHeaderLeft
 	> {}
 
 export interface IPropsHeaderCenter {
+	scale: Model['scale']
 	current: Model['current']
 	step: Model['step']
 	changeCurrent: IPropsHeader['changeCurrent']
