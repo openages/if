@@ -1,5 +1,25 @@
 ._local {
 	overflow: hidden;
+
+	:global {
+		.btn_std {
+			width: 24px;
+			height: 24px;
+			padding: 0;
+			border-radius: var(--radius_small);
+			background-color: transparent;
+			color: rgba(var(--color_text_rgb), 0.3);
+
+			&:hover {
+				background-color: var(--color_bg_2);
+				color: rgba(var(--color_text_rgb), 1);
+			}
+
+			&.active {
+				color: rgba(var(--color_text_rgb), 1);
+			}
+		}
+	}
 }
 
 .content {

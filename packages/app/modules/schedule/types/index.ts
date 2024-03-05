@@ -47,6 +47,7 @@ export interface IPropsHeaderRight {
 export interface IPropsDateScale {
 	scale: Model['scale']
 	days: Model['days']
+	scrollToScanline: () => void
 }
 
 export interface IPropsCalendarView {
@@ -115,4 +116,10 @@ export interface IPropsSettingsModal {
 	closeSettingsModal: () => void
 	updateSetting: Model['updateSetting']
 	removeTag: Model['removeTag']
+}
+
+export interface IPropsScanline {
+	view: Model['view']
+	scanline: MutableRefObject<HTMLDivElement>
+	scrollToScanline: () => void
 }

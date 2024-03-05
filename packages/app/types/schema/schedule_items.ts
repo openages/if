@@ -35,7 +35,7 @@ export namespace Schedule {
 		end_time: number
 	}
 
-	export type CalendarItem = Item & { start: number; length: number }
+	export type CalendarItem = Item & { start: number; length: number; past: boolean }
 	export type CalendarDay = Array<CalendarItem>
 	export type CalendarDays = Array<CalendarDay>
 }

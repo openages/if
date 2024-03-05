@@ -44,7 +44,7 @@ const Index = (props: IPropsHeaderLeft) => {
 		<div className={$cx('absolute flex align_center', styles._local)}>
 			<button
 				className={$cx(
-					'btn_toggle_panel flex justify_center align_center clickable',
+					'btn_std flex justify_center align_center clickable',
 					visible_task_panel && 'active'
 				)}
 				onClick={toggleVisibleTaskPanel}
@@ -57,7 +57,7 @@ const Index = (props: IPropsHeaderLeft) => {
 					<Tooltip title={item.value} key={item.value}>
 						<div
 							className={$cx(
-								'toggle_item h_100 flex justify_center align_center clickable',
+								'btn_std h_100 flex justify_center align_center clickable',
 								view === item.value && 'active'
 							)}
 							data-key={item.value}
@@ -73,7 +73,7 @@ const Index = (props: IPropsHeaderLeft) => {
 					<Tooltip title={item.value} key={item.value}>
 						<div
 							className={$cx(
-								'toggle_item h_100 flex justify_center align_center clickable',
+								'btn_std h_100 flex justify_center align_center clickable',
 								scale === item.value && 'active'
 							)}
 							data-key={item.value}

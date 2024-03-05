@@ -34,7 +34,7 @@ const Index = (props: IPropsHeaderCenter) => {
 
 	return (
 		<div className={$cx('flex', styles._local)}>
-			<div className='btn btn_prev flex justify_center align_center clickable' onClick={prev}>
+			<div className='btn_std btn_prev flex justify_center align_center clickable' onClick={prev}>
 				<CaretLeft></CaretLeft>
 			</div>
 			<DatePicker
@@ -49,7 +49,7 @@ const Index = (props: IPropsHeaderCenter) => {
 				onChange={changeCurrent}
 				{...props_datepicker}
 			></DatePicker>
-			<div className='btn btn_prev flex justify_center align_center clickable' onClick={next}>
+			<div className='btn_std btn_prev flex justify_center align_center clickable' onClick={next}>
 				<CaretRight></CaretRight>
 			</div>
 		</div>

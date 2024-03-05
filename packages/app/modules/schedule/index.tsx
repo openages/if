@@ -2,21 +2,39 @@ import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { match } from 'ts-pattern'
 import { container as model_container } from 'tsyringe'
 
 import { useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
 import { restrictToFirstScrollableAncestor } from '@dnd-kit/modifiers'
 
-import { CalendarView, DateScale, Header, SettingsModal, TaskPanel, Timeline, TimelineView } from './components'
+import {
+	CalendarView,
+	DateScale,
+	Header,
+	Scanline,
+	SettingsModal,
+	TaskPanel,
+	TimelineView,
+	TimeScale
+} from './components'
 import styles from './index.css'
 import Model from './model'
 
-import type { IProps, IPropsDateScale, IPropsHeader, IPropsCalendarView, IPropsSettingsModal } from './types'
+import type {
+	IProps,
+	IPropsDateScale,
+	IPropsHeader,
+	IPropsCalendarView,
+	IPropsSettingsModal,
+	IPropsScanline
+} from './types'
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => model_container.resolve(Model))
 	const container = useRef<HTMLDivElement>(null)
+	const scanline = useRef<HTMLDivElement>(null)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 12 } }))
 	const days = $copy(x.days)
 	const tags = $copy(x.setting?.setting?.tags || [])
@@ -27,6 +45,12 @@ const Index = ({ id }: IProps) => {
 
 		return () => x.off()
 	}, [id])
+
+	const scrollToScanline = useMemoizedFn(() => {
+		if (!scanline.current) return
+
+		scrollIntoView(scanline.current, { behavior: 'smooth', block: 'start' })
+	})
 
 	const props_header: IPropsHeader = {
 		view: x.view,
@@ -46,7 +70,8 @@ const Index = ({ id }: IProps) => {
 
 	const props_date_scale: IPropsDateScale = {
 		scale: x.scale,
-		days
+		days,
+		scrollToScanline
 	}
 
 	const props_calendar_view: IPropsCalendarView = {
@@ -73,6 +98,12 @@ const Index = ({ id }: IProps) => {
 		removeTag: useMemoizedFn(x.removeTag)
 	}
 
+	const props_scanline: IPropsScanline = {
+		view: x.view,
+		scanline,
+		scrollToScanline
+	}
+
 	const onDragMove = useMemoizedFn(args => x.onDragMove(container.current, args))
 	const onDragEnd = useMemoizedFn(x.onDragEnd)
 	const onDragCancel = useMemoizedFn(x.onDragCancel)
@@ -97,12 +128,13 @@ const Index = ({ id }: IProps) => {
 						)}
 					>
 						<DateScale {...props_date_scale}></DateScale>
-						<div className={$cx('flex relative', styles.view_wrap)} ref={container}>
-							<Timeline></Timeline>
+						<div className={$cx('flex', styles.view_wrap)} ref={container}>
+							<TimeScale></TimeScale>
 							<div
-								className={$cx(styles.view)}
+								className={$cx('relative', styles.view)}
 								style={{ height: x.view === 'timeline' ? 'auto' : 1152 }}
 							>
+								<Scanline {...props_scanline}></Scanline>
 								{match(x.view)
 									.with('calendar', () => (
 										<CalendarView {...props_calendar_view}></CalendarView>

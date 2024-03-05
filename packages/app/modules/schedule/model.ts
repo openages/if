@@ -125,32 +125,6 @@ export default class Index {
 		this.move_item = { day_index, start, length } as Index['move_item']
 	}
 
-	@disableWatcher
-	onDragEnd({ active, over }: DragEndEvent) {
-		if (over?.id === undefined) return
-
-		const active_item = this.calendar_days[active.data.current.day_index][active.data.current.timeblock_index]
-		const date = this.days[over.id as number].value
-		const { start_time, end_time } = getStartEnd(date, this.move_item.start, this.move_item.length)
-
-		active_item.start = this.move_item.start
-		active_item.length = this.move_item.length
-		active_item.start_time = start_time
-		active_item.end_time = end_time
-
-		if (active.data.current.day_index === over.id) {
-			this.calendar_days[active.data.current.day_index][active.data.current.timeblock_index] =
-				$copy(active_item)
-		} else {
-			this.calendar_days[active.data.current.day_index].splice(active.data.current.timeblock_index, 1)
-			this.calendar_days[over.id].push($copy(active_item))
-		}
-
-		this.move_item = null
-
-		this.updateTimeBlock(active_item.id, { start_time, end_time })
-	}
-
 	onDragCancel() {
 		this.move_item = null
 	}
@@ -193,6 +167,34 @@ export default class Index {
 		const { type, index, start, length, info } = args
 
 		this.addTimeBlock({ type, index, start, length, info })
+	}
+
+	@disableWatcher
+	async onDragEnd({ active, over }: DragEndEvent) {
+		if (over?.id === undefined) return
+
+		const now = dayjs()
+		const active_item = this.calendar_days[active.data.current.day_index][active.data.current.timeblock_index]
+		const date = this.days[over.id as number].value
+		const { start_time, end_time } = getStartEnd(date, this.move_item.start, this.move_item.length)
+
+		active_item.start = this.move_item.start
+		active_item.length = this.move_item.length
+		active_item.start_time = start_time
+		active_item.end_time = end_time
+		active_item.past = now.valueOf() >= active_item.end_time
+
+		if (active.data.current.day_index === over.id) {
+			this.calendar_days[active.data.current.day_index][active.data.current.timeblock_index] =
+				$copy(active_item)
+		} else {
+			this.calendar_days[active.data.current.day_index].splice(active.data.current.timeblock_index, 1)
+			this.calendar_days[over.id].push($copy(active_item))
+		}
+
+		this.move_item = null
+
+		await this.updateTimeBlock(active_item.id, { start_time, end_time })
 	}
 
 	async changeTimeBlockLength(args: { day_index: number; timeblock_index: number; step: number }) {
@@ -268,6 +270,7 @@ export default class Index {
 
 			const items = getDocItemsData(doc)
 			const target = this.days.map(_ => [])
+			const now = dayjs()
 
 			items.forEach(item => {
 				const start_time = dayjs(item.start_time)
@@ -278,6 +281,7 @@ export default class Index {
 
 				item['start'] = start_time.diff(begin, 'minutes') / 20
 				item['length'] = end_time.diff(start_time, 'minutes') / 20
+				item['past'] = now.valueOf() >= item.end_time
 
 				if (index !== -1) {
 					if (target[index]) {

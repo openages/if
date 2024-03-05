@@ -26,7 +26,7 @@ const Index = (props: IPropsHeaderRight) => {
 				popupClassName='borderless'
 				placement='bottomRight'
 				suffixIcon={
-					<button className='btn flex justify_center align_center clickable'>
+					<button className='btn_std active flex justify_center align_center clickable'>
 						<Funnel></Funnel>
 					</button>
 				}
@@ -39,7 +39,10 @@ const Index = (props: IPropsHeaderRight) => {
 				optionRender={TagOptionRender}
 				onChange={onChangeFilterTags}
 			></Select>
-			<button className='btn flex justify_center align_center clickable' onClick={showSettingsModal}>
+			<button
+				className='btn_std active flex justify_center align_center clickable'
+				onClick={showSettingsModal}
+			>
 				<GearSix></GearSix>
 			</button>
 		</div>

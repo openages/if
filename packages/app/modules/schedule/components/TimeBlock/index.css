@@ -80,6 +80,14 @@
 		}
 	}
 
+	&.past {
+		:global {
+			.timeblock_content_wrap {
+				opacity: 0.48;
+			}
+		}
+	}
+
 	&.has_tag {
 		:global {
 			.timeblock_content_wrap {
@@ -90,7 +98,7 @@
 	}
 
 	&.isDragging {
-		z-index: 1000;
+		z-index: 998;
 	}
 
 	:global {

@@ -154,6 +154,7 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 						item.length === 2 && styles.middle,
 						item.length === 3 && styles.large,
 						item.length > 3 && styles.xlarge,
+						item.past && styles.past,
 						tag_styles['--tag_color'] && styles.has_tag,
 						changing && styles.changing,
 						isDragging && styles.isDragging

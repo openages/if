@@ -98,6 +98,7 @@ const Index = (props: IPropsModal) => {
 			open={modal_open}
 			title={title}
 			width={300}
+			zIndex={10000}
 			confirmLoading={loading_create || loading_updateItem}
 			centered
 			destroyOnClose
