@@ -89,6 +89,10 @@
 		}
 	}
 
+	&.isDragging {
+		z-index: 1000;
+	}
+
 	:global {
 		.drag_line {
 			height: 6px;

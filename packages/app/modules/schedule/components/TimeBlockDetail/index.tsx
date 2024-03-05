@@ -135,6 +135,7 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 					fieldNames={{ label: 'text', value: 'id' }}
 					filterOption={false}
 					showSearch
+					virtual
 					options={options_todos}
 					onInputKeyDown={onInputKeyDown}
 					onSearch={search}

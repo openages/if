@@ -21,6 +21,7 @@ const Index = (props: IPropsCalendarViewDay) => {
 		index,
 		tags,
 		today,
+		move_item,
 		updateTimeBlock,
 		removeTimeBlock,
 		copyTimeBlock,
@@ -38,6 +39,12 @@ const Index = (props: IPropsCalendarViewDay) => {
 	})
 
 	useEffect(() => {
+		if (!move_item) return setSignal(null)
+
+		setSignal(move_item)
+	}, [move_item])
+
+	useEffect(() => {
 		$app.Event.on('schedule/context_menu/hidden', clearSignal)
 
 		return () => $app.Event.off('schedule/context_menu/hidden', clearSignal)
@@ -48,7 +55,7 @@ const Index = (props: IPropsCalendarViewDay) => {
 
 		$app.Event.emit('schedule/context_menu/hidden', index)
 
-		const start = getStartByY(container, e.clientY)
+		const start = getStartByY(container.current, e.clientY)
 		const length = start + 3 >= 72 ? 72 - start : 3
 
 		const target_length = collisionDetection(day, start, length)
@@ -61,7 +68,7 @@ const Index = (props: IPropsCalendarViewDay) => {
 
 	return (
 		<div
-			className={$cx('day_wrap border_box relative', styles.Day, today && styles.today)}
+			className={$cx('day_wrap h_100 border_box relative', styles.Day, today && styles.today)}
 			style={{ width: `calc(100% / ${counts})` }}
 			onContextMenu={onContextMenu}
 			ref={setNodeRef}

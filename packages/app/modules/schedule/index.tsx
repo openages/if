@@ -6,6 +6,7 @@ import { match } from 'ts-pattern'
 import { container as model_container } from 'tsyringe'
 
 import { useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
+import { restrictToFirstScrollableAncestor } from '@dnd-kit/modifiers'
 
 import { CalendarView, DateScale, Header, SettingsModal, TaskPanel, Timeline, TimelineView } from './components'
 import styles from './index.css'
@@ -16,7 +17,7 @@ import type { IProps, IPropsDateScale, IPropsHeader, IPropsCalendarView, IPropsS
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => model_container.resolve(Model))
 	const container = useRef<HTMLDivElement>(null)
-	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
+	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 12 } }))
 	const days = $copy(x.days)
 	const tags = $copy(x.setting?.setting?.tags || [])
 	const today_index = useMemo(() => days.findIndex(item => item.value.isToday()), [days])
@@ -55,6 +56,7 @@ const Index = ({ id }: IProps) => {
 		timeblock_copied: $copy(x.timeblock_copied),
 		tags,
 		today_index,
+		move_item: $copy(x.move_item),
 		addTimeBlock: useMemoizedFn(x.addTimeBlock),
 		updateTimeBlock: useMemoizedFn(x.updateTimeBlock),
 		removeTimeBlock: useMemoizedFn(x.removeTimeBlock),
@@ -71,19 +73,20 @@ const Index = ({ id }: IProps) => {
 		removeTag: useMemoizedFn(x.removeTag)
 	}
 
-	const onDragStart = useMemoizedFn(x.onDragStart)
-	const onDragMove = useMemoizedFn(x.onDragMove)
+	const onDragMove = useMemoizedFn(args => x.onDragMove(container.current, args))
 	const onDragEnd = useMemoizedFn(x.onDragEnd)
+	const onDragCancel = useMemoizedFn(x.onDragCancel)
 
 	return (
 		<div className={$cx('w_100 h_100 border_box flex flex_column', styles._local)}>
 			<Header {...props_header}></Header>
 			<div className={$cx('flex', styles.content)}>
 				<DndContext
-					onDragStart={onDragStart}
 					onDragMove={onDragMove}
 					onDragEnd={onDragEnd}
+					onDragCancel={onDragCancel}
 					sensors={sensors}
+					modifiers={[restrictToFirstScrollableAncestor]}
 				>
 					{x.visible_task_panel && <TaskPanel></TaskPanel>}
 					<div
@@ -94,9 +97,12 @@ const Index = ({ id }: IProps) => {
 						)}
 					>
 						<DateScale {...props_date_scale}></DateScale>
-						<div className={$cx('flex', styles.view_wrap)} ref={container}>
+						<div className={$cx('flex relative', styles.view_wrap)} ref={container}>
 							<Timeline></Timeline>
-							<div className={$cx('flex', styles.view)}>
+							<div
+								className={$cx(styles.view)}
+								style={{ height: x.view === 'timeline' ? 'auto' : 1152 }}
+							>
 								{match(x.view)
 									.with('calendar', () => (
 										<CalendarView {...props_calendar_view}></CalendarView>

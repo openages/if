@@ -148,14 +148,15 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 			>
 				<div
 					className={$cx(
-						'w_100 border_box absolute top_0 flex flex_column',
+						'timeblock_item_wrap w_100 border_box absolute top_0 flex flex_column',
 						styles._local,
 						item.length === 1 && styles.small,
 						item.length === 2 && styles.middle,
 						item.length === 3 && styles.large,
 						item.length > 3 && styles.xlarge,
 						tag_styles['--tag_color'] && styles.has_tag,
-						changing && styles.changing
+						changing && styles.changing,
+						isDragging && styles.isDragging
 					)}
 					style={{
 						top: item.start * 16,

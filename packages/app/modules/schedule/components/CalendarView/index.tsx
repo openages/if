@@ -11,6 +11,7 @@ const Index = (props: IPropsCalendarView) => {
 		timeblock_copied,
 		tags,
 		today_index,
+		move_item,
 		addTimeBlock,
 		updateTimeBlock,
 		removeTimeBlock,
@@ -20,7 +21,7 @@ const Index = (props: IPropsCalendarView) => {
 	} = props
 
 	return (
-		<div className={$cx('w_100 flex')}>
+		<div className={$cx('w_100 h_100 flex')}>
 			{calendar_days.map((day, index) => (
 				<Day
 					container={container}
@@ -29,6 +30,7 @@ const Index = (props: IPropsCalendarView) => {
 					index={index}
 					tags={tags}
 					today={index === today_index}
+					move_item={move_item?.day_index === index && move_item}
 					updateTimeBlock={updateTimeBlock}
 					removeTimeBlock={removeTimeBlock}
 					copyTimeBlock={copyTimeBlock}

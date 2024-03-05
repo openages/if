@@ -56,6 +56,7 @@ export interface IPropsCalendarView {
 	timeblock_copied: Model['timeblock_copied']
 	tags: Schedule.Setting['tags']
 	today_index: number
+	move_item: Model['move_item']
 	addTimeBlock: Model['addTimeBlock']
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
@@ -71,6 +72,7 @@ export interface IPropsCalendarViewDay {
 	index: number
 	tags: Schedule.Setting['tags']
 	today: boolean
+	move_item?: Model['move_item']
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
 	copyTimeBlock: IPropsCalendarView['copyTimeBlock']

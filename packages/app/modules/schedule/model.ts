@@ -9,6 +9,7 @@ import Utils from '@/models/utils'
 import { getQuerySetting, updateSetting } from '@/services'
 import { getDocItem, getDocItemsData } from '@/utils'
 import { confirm } from '@/utils/antd'
+import { disableWatcher } from '@/utils/decorators'
 import { useInstanceWatch } from '@openages/stk/mobx'
 
 import {
@@ -19,14 +20,14 @@ import {
 	removeTimeBlock,
 	updateTimeBlock
 } from './services'
-import { getCalendarDays, getDayDetails, getMonthDays, getWeekdays } from './utils'
+import { collisionDetection, getDayDetails, getMonthDays, getStartByY, getStartEnd, getWeekdays } from './utils'
 
 import type { Scale, SettingValues, ChangedSettingValues } from './types/model'
 import type { Schedule } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
 import type { DayDetail } from './utils'
 import type { Subscription } from 'rxjs'
-import type { DragStartEvent, DragMoveEvent, DragEndEvent } from '@dnd-kit/core'
+import type { DragMoveEvent, DragEndEvent } from '@dnd-kit/core'
 
 @injectable()
 export default class Index {
@@ -48,8 +49,7 @@ export default class Index {
 	visible_task_panel = false
 	visible_settings_modal = false
 
-	active_item = null as Schedule.CalendarItem
-	move_item = null as Schedule.CalendarItem
+	move_item = null as Schedule.CalendarItem & { day_index: number }
 
 	watch = {
 		'scale|current': () => this.getDays(),
@@ -62,7 +62,11 @@ export default class Index {
 	) {
 		makeAutoObservable(
 			this,
-			{ disable_watcher: false, setting_watcher: false, calendar_days_watcher: false },
+			{
+				disable_watcher: false,
+				setting_watcher: false,
+				calendar_days_watcher: false
+			},
 			{ autoBind: true }
 		)
 	}
@@ -92,20 +96,62 @@ export default class Index {
 		this.current = this.current[type === 'prev' ? 'subtract' : 'add'](1, this.scale)
 	}
 
-	onDragStart({ active }: DragStartEvent) {
-		this.active_item = active.data.current.item
-	}
+	onDragMove(container: HTMLDivElement, { active, over, activatorEvent }: DragMoveEvent) {
+		if (!over) return
 
-	onDragMove({ active, over, delta }: DragMoveEvent) {
+		let target = activatorEvent.target as Element
+
+		while (!target.classList.contains('timeblock_item_wrap')) {
+			target = target.parentElement
+		}
+
 		const day_index = over.id
-		console.log(delta.y)
+		const active_item = this.calendar_days[active.data.current.day_index][active.data.current.timeblock_index]
+
+		let start = getStartByY(container, target.getBoundingClientRect().top)
+
+		if (start < 0) start = 0
+		if (start + active_item.length > 72) start = 72 - active_item.length
+
+		const length = collisionDetection(
+			this.calendar_days[day_index],
+			start,
+			active_item.length,
+			active.id as string
+		)
+
+		if (!length) return (this.move_item = null)
+
+		this.move_item = { day_index, start, length } as Index['move_item']
 	}
 
+	@disableWatcher
 	onDragEnd({ active, over }: DragEndEvent) {
-		if (!over?.id) return
-		if (active.id === over.id) return
+		if (over?.id === undefined) return
 
-		this.active_item = null
+		const active_item = this.calendar_days[active.data.current.day_index][active.data.current.timeblock_index]
+		const date = this.days[over.id as number].value
+		const { start_time, end_time } = getStartEnd(date, this.move_item.start, this.move_item.length)
+
+		active_item.start = this.move_item.start
+		active_item.length = this.move_item.length
+		active_item.start_time = start_time
+		active_item.end_time = end_time
+
+		if (active.data.current.day_index === over.id) {
+			this.calendar_days[active.data.current.day_index][active.data.current.timeblock_index] =
+				$copy(active_item)
+		} else {
+			this.calendar_days[active.data.current.day_index].splice(active.data.current.timeblock_index, 1)
+			this.calendar_days[over.id].push($copy(active_item))
+		}
+
+		this.move_item = null
+
+		this.updateTimeBlock(active_item.id, { start_time, end_time })
+	}
+
+	onDragCancel() {
 		this.move_item = null
 	}
 
@@ -118,16 +164,14 @@ export default class Index {
 	}) {
 		const { type, index, start, length, info } = args
 		const date = this.days[index].value
-		const date_start = date.startOf('day')
-		const start_time = date_start.add(start * 20, 'minutes')
-		const end_time = start_time.add(length * 20, 'minutes')
+		const { start_time, end_time } = getStartEnd(date, start, length)
 		const target_info = info ? omit(info, ['start', 'length']) : {}
 
 		await addTimeBlock(this.id, {
 			type,
 			...target_info,
-			start_time: start_time.valueOf(),
-			end_time: end_time.valueOf()
+			start_time,
+			end_time
 		})
 	}
 
