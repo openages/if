@@ -6,11 +6,13 @@ import type { Dayjs } from 'dayjs'
 const west_holidays = [
 	'元旦节',
 	'情人节',
+	'妇女节',
 	'愚人节',
 	'劳动节',
 	'母亲节',
 	'儿童节',
 	'父亲节',
+	'教师节',
 	'万圣节',
 	'感恩节',
 	'圣诞节'

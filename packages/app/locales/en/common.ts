@@ -15,11 +15,13 @@ export default {
 	days: {
 		元旦节: 'New Year',
 		情人节: `Valentine's Day`,
+		妇女节: `Women's Day`,
 		愚人节: `April Fools' Day`,
 		劳动节: 'Labour Day',
 		母亲节: `Mother's Day`,
 		儿童节: `Children's Day`,
 		父亲节: `Father's Day`,
+		教师节: `Teacher's Day`,
 		万圣节: 'Halloween',
 		感恩节: 'Thanksgiving',
 		圣诞节: 'Christmas'
