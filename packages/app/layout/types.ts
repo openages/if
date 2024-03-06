@@ -25,7 +25,6 @@ export interface IPropsSidebarItem {
 }
 
 export interface IPropsStacks {
-	visible: boolean
 	columns: GlobalModel['stack']['columns']
 	focus: GlobalModel['stack']['focus']
 	container_width: GlobalModel['stack']['container_width']

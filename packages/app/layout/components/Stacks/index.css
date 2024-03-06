@@ -1,9 +1,4 @@
 ._local {
-	&.hidden {
-		position: fixed;
-		transform: translateX(100vw);
-	}
-
 	:global {
 		.nav_bar_item_wrap {
 			&.drag_overlay {

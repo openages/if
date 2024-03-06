@@ -49,7 +49,7 @@ const Index = ({ id }: IProps) => {
 	const scrollToScanline = useMemoizedFn(() => {
 		if (!scanline.current) return
 
-		scrollIntoView(scanline.current, { behavior: 'smooth', block: 'start' })
+		scrollIntoView(scanline.current, { behavior: 'smooth', block: 'center' })
 	})
 
 	const props_header: IPropsHeader = {

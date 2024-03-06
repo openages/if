@@ -14,7 +14,6 @@ import type { IPropsStacks, IPropsStacksContent, IPropsStacksNavBar } from '../.
 
 const Index = (props: IPropsStacks) => {
 	const {
-		visible,
 		columns,
 		focus,
 		container_width,
@@ -69,10 +68,7 @@ const Index = (props: IPropsStacks) => {
 	}
 
 	return (
-		<div
-			id='stacks_container'
-			className={$cx('w_100 h_100vh border_box flex flex_column', styles._local, !visible && styles.hidden)}
-		>
+		<div id='stacks_container' className={$cx('w_100 h_100vh border_box flex flex_column', styles._local)}>
 			<If condition={columns.length}>
 				<Then>
 					<DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>

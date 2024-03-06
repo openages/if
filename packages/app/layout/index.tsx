@@ -4,7 +4,7 @@ import { useDebounceEffect, useMemoizedFn } from 'ahooks'
 import { App, ConfigProvider } from 'antd'
 import { minimatch } from 'minimatch'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useLayoutEffect, useMemo, useState } from 'react'
+import { unstable_Activity as Activity, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { IconContext } from 'react-icons'
 import { useLocation } from 'react-router-dom'
 import { container } from 'tsyringe'
@@ -94,7 +94,6 @@ const Index = () => {
 	}
 
 	const props_stacks: IPropsStacks = {
-		visible: !is_exclude_router,
 		columns: $copy(global.stack.columns),
 		focus: $copy(global.stack.focus),
 		container_width: global.stack.container_width,
@@ -170,7 +169,9 @@ const Index = () => {
 						>
 							<div className='w_100 border_box'>
 								<OffscreenOutlet {...props_offscreen_pages_outlet} />
-								<Stacks {...props_stacks}></Stacks>
+								<Activity mode={is_exclude_router ? 'hidden' : 'visible'}>
+									<Stacks {...props_stacks}></Stacks>
+								</Activity>
 							</div>
 						</div>
 						<AppMenu {...props_app_menu}></AppMenu>
