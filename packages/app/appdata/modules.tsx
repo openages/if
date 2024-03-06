@@ -12,15 +12,15 @@ const typed_nav_items = [
 		fixed: true
 	},
 	{
-		id: 'typed',
-		title: 'typed',
-		path: '/typed',
-		fixed: true
-	},
-	{
 		id: 'note',
 		title: 'note',
 		path: '/note',
+		fixed: true
+	},
+	{
+		id: 'page',
+		title: 'page',
+		path: '/page',
 		fixed: true
 	},
 	{
@@ -51,16 +51,6 @@ const typed_nav_items = [
 		path: '/flag'
 	},
 	{
-		id: 'api',
-		title: 'api',
-		path: '/api'
-	},
-	{
-		id: 'dataflow',
-		title: 'dataflow',
-		path: '/dataflow'
-	},
-	{
 		id: 'table',
 		title: 'table',
 		path: '/table'
@@ -74,6 +64,21 @@ const typed_nav_items = [
 		id: 'chart',
 		title: 'chart',
 		path: '/chart'
+	},
+	{
+		id: 'api',
+		title: 'api',
+		path: '/api'
+	},
+	{
+		id: 'dataflow',
+		title: 'dataflow',
+		path: '/dataflow'
+	},
+	{
+		id: 'database',
+		title: 'database',
+		path: '/database'
 	},
 	{
 		id: 'setting',

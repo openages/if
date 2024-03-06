@@ -1,11 +1,13 @@
 import { match } from 'ts-pattern'
 
 import {
+	AppWindow,
 	Barbell,
 	CalendarCheck,
 	ChartBarHorizontal,
 	CheckCircle,
 	Clipboard,
+	Database,
 	FileText,
 	GearSix,
 	MicrosoftPowerpointLogo,
@@ -31,18 +33,19 @@ const Index = (props: IProps) => {
 	return match(type)
 		.with('todo', () => <CheckCircle {...icon_props} />)
 		.with('memo', () => <Note {...icon_props} />)
-		.with('typed', () => <FileText {...icon_props} />)
 		.with('note', () => <Notebook {...icon_props} />)
+		.with('page', () => <AppWindow {...icon_props} />)
 		.with('whiteboard', () => <Clipboard {...icon_props} />)
 		.with('ppt', () => <MicrosoftPowerpointLogo {...icon_props} />)
 		.with('pomo', () => <Timer {...icon_props} />)
 		.with('schedule', () => <CalendarCheck {...icon_props} />)
 		.with('flag', () => <Barbell {...icon_props} />)
-		.with('api', () => <WebhooksLogo {...icon_props} />)
-		.with('dataflow', () => <TreeStructure {...icon_props} />)
 		.with('table', () => <Table {...icon_props} />)
 		.with('form', () => <TextColumns {...icon_props} />)
 		.with('chart', () => <ChartBarHorizontal {...icon_props} />)
+		.with('api', () => <WebhooksLogo {...icon_props} />)
+		.with('dataflow', () => <TreeStructure {...icon_props} />)
+		.with('database', () => <Database {...icon_props} />)
 		.with('setting', () => <GearSix {...icon_props} />)
 		.exhaustive()
 }

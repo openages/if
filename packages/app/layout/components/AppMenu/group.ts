@@ -1,6 +1,6 @@
 export default {
-	content: ['todo', 'memo', 'typed', 'note', 'whiteboard', 'ppt'],
+	content: ['todo', 'memo', 'note', 'page', 'whiteboard', 'ppt'],
 	plan: ['flow', 'schedule', 'pomo', 'flag'],
-	data: ['api', 'dataflow', 'table', 'form', 'chart'],
+	data: ['table', 'form', 'chart', 'api', 'dataflow', 'database'],
 	setting: ['setting']
 }
