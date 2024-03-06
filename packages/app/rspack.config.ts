@@ -4,12 +4,22 @@ import { defineConfig } from '@rspack/cli'
 import { CopyRspackPlugin, HtmlRspackPlugin } from '@rspack/core'
 import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
 
+const is_dev = process.env.NODE_ENV === 'development'
 const is_prod = process.env.NODE_ENV === 'production'
 
-const prod_config = is_prod && defineConfig({ devtool: false })
+const plugins_dev = [
+	new ReactRefreshPlugin({
+		exclude: [/node_modules/]
+	})
+]
+const plugins_prod = [
+	new CopyRspackPlugin({
+		patterns: [{ from: './public', to: './', globOptions: { ignore: ['**/index.html'] } }]
+	})
+]
 
 module.exports = defineConfig({
-	...(prod_config || {}),
+	devtool: is_dev ? 'eval-source-map' : false,
 	entry: {
 		main: './runtime/index.tsx'
 	},
@@ -42,11 +52,7 @@ module.exports = defineConfig({
 			template: './public/index.html',
 			scriptLoading: 'module'
 		}),
-		!is_prod && new ReactRefreshPlugin({ exclude: [/node_modules/] }),
-		is_prod &&
-			new CopyRspackPlugin({
-				patterns: [{ from: './public', to: './', globOptions: { ignore: ['**/index.html'] } }]
-			})
+		...(is_dev ? plugins_dev : plugins_prod)
 	],
 	module: {
 		rules: [
@@ -55,7 +61,6 @@ module.exports = defineConfig({
 				use: {
 					loader: 'builtin:swc-loader',
 					options: {
-						sourceMap: !is_prod,
 						isModule: true,
 						jsc: {
 							parser: {
@@ -83,7 +88,6 @@ module.exports = defineConfig({
 				use: {
 					loader: 'builtin:swc-loader',
 					options: {
-						sourceMap: !is_prod,
 						isModule: true,
 						jsc: {
 							parser: {
