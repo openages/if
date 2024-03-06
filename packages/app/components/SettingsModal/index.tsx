@@ -6,8 +6,10 @@ import { Form } from './components'
 import styles from './index.css'
 
 import type { HTMLAttributes, ReactNode } from 'react'
+import type { App } from '@/types'
 
 export interface IPropsSettingsModal {
+	module: App.ModuleType
 	children: ReactNode
 	visible: boolean
 	info: any
@@ -18,7 +20,7 @@ export interface IPropsSettingsModal {
 }
 
 const Index = (props: IPropsSettingsModal) => {
-	const { children, visible, info, className, IconEditCenter, onClose, onValuesChange } = props
+	const { module, children, visible, info, className, IconEditCenter, onClose, onValuesChange } = props
 	const { t } = useTranslation()
 
 	return (
@@ -30,7 +32,7 @@ const Index = (props: IPropsSettingsModal) => {
 			maskClosable
 			onCancel={onClose}
 		>
-			<Form info={info} IconEditCenter={IconEditCenter} onValuesChange={onValuesChange}>
+			<Form module={module} info={info} IconEditCenter={IconEditCenter} onValuesChange={onValuesChange}>
 				{children}
 			</Form>
 		</Modal>

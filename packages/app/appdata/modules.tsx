@@ -84,3 +84,8 @@ const typed_nav_items = [
 ] as const
 
 export default typed_nav_items.map(item => item)
+
+export const module_default_icon = {
+	pomo: ':timer_clock:',
+	schedule: ':date:'
+}

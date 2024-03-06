@@ -15,6 +15,7 @@ import type { IPropsModal } from '../../types'
 
 const Index = (props: IPropsModal) => {
 	const {
+		module,
 		modal_open,
 		modal_type,
 		current_option,
@@ -109,6 +110,7 @@ const Index = (props: IPropsModal) => {
 		>
 			<div className='w_100 flex align_center justify_between'>
 				<IconEditor
+					module={module}
 					value={icon}
 					left_icon_item={left_icon_item}
 					center

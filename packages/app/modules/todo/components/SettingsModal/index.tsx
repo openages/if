@@ -10,6 +10,7 @@ import { cleanTodoItems } from '@/modules/todo/services'
 import styles from './index.css'
 
 import type { IPropsSettingsModal } from '../../types'
+import type { App } from '@/types'
 
 const { Item } = Form
 const { TextArea } = Input
@@ -29,6 +30,7 @@ const Index = (props: IPropsSettingsModal) => {
 	}, [i18n.language])
 
 	const props_settings_modal = {
+		module: 'todo' as App.ModuleType,
 		className: styles._local,
 		visible: visible_settings_modal,
 		info: setting,

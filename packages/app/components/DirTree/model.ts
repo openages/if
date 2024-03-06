@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
+import { module_default_icon } from '@/appdata'
 import { Utils } from '@/models'
 import { id } from '@/utils'
 import { disableWatcher, loading } from '@/utils/decorators'
@@ -86,6 +87,8 @@ export default class Index {
 	@disableWatcher
 	@loading
 	async insert(item: Partial<DirTree.Item>) {
+		if (!item.icon && item.type === 'file') item.icon = module_default_icon[this.module] || ''
+
 		const { item: target, effect_items } = this.node_tree.insert(
 			{ ...item, id: id(), module: this.module } as DirTree.Item,
 			this.focusing_index

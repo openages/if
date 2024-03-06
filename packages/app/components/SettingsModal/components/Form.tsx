@@ -11,8 +11,10 @@ const { Item, useForm } = Form
 
 import type { IPropsSettingsModal } from '../index'
 
-const Index = (props: Pick<IPropsSettingsModal, 'children' | 'info' | 'IconEditCenter' | 'onValuesChange'>) => {
-	const { children, info, IconEditCenter, onValuesChange } = props
+const Index = (
+	props: Pick<IPropsSettingsModal, 'module' | 'children' | 'info' | 'IconEditCenter' | 'onValuesChange'>
+) => {
+	const { module, children, info, IconEditCenter, onValuesChange } = props
 	const [form] = useForm()
 	const limits = useLimits()
 	const { t } = useTranslation()
@@ -36,7 +38,7 @@ const Index = (props: Pick<IPropsSettingsModal, 'children' | 'info' | 'IconEditC
 		>
 			<div className='flex justify_between'>
 				<Item name='icon_info'>
-					<IconEditor center={IconEditCenter}></IconEditor>
+					<IconEditor module={module} center={IconEditCenter}></IconEditor>
 				</Item>
 				<Item className='name_item_wrap' name='name'>
 					<Input

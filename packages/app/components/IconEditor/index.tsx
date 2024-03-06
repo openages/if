@@ -7,15 +7,16 @@ import { Emoji, EmojiPicker, LeftIcon } from '@/components'
 import styles from './index.css'
 
 import type { IPropsCustomFormItem } from '@/types'
-import type { DirTree } from '@/types'
+import type { DirTree, App } from '@/types'
 
 interface IProps extends IPropsCustomFormItem<{ icon: string; icon_hue?: number }> {
+	module: App.ModuleType
 	left_icon_item?: DirTree.Item
 	center?: boolean
 }
 
 const Index = (props: IProps) => {
-	const { value = { icon: '', icon_hue: undefined }, left_icon_item, center, onChange } = props
+	const { value = { icon: '', icon_hue: undefined }, module, left_icon_item, center, onChange } = props
 	const { t } = useTranslation()
 
 	return (
@@ -53,7 +54,7 @@ const Index = (props: IProps) => {
 						</Then>
 						<Else>
 							<LeftIcon
-								module='todo'
+								module={module}
 								item={left_icon_item ?? ({ type: 'file', icon: value } as any)}
 							></LeftIcon>
 						</Else>
