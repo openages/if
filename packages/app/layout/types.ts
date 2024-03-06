@@ -12,6 +12,7 @@ export interface IPropsSidebar {
 	show_bar_title: GlobalModel['setting']['show_bar_title']
 	apps: GlobalModel['app']['apps']
 	actives: GlobalModel['app']['actives']
+	timer: GlobalModel['timer']['timer']
 	showAppMenu: () => void
 }
 

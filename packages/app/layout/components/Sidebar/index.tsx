@@ -14,8 +14,8 @@ import styles from './index.css'
 import type { IPropsSidebar } from '../../types'
 
 const Index = (props: IPropsSidebar) => {
-	const { current_module, theme, show_bar_title, apps, actives, showAppMenu } = props
-	const { ref_sidebar, ref_items_wrap, overflow } = useNavOverflow()
+	const { current_module, theme, show_bar_title, apps, actives, timer, showAppMenu } = props
+	const { ref_sidebar, ref_items_wrap, overflow } = useNavOverflow(timer)
 
 	useAntdApp()
 

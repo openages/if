@@ -71,6 +71,7 @@ const Index = () => {
 		show_bar_title: global.setting.show_bar_title,
 		apps,
 		actives,
+		timer: $copy(global.timer.timer),
 		showAppMenu: useMemoizedFn(() => (global.app.visible_app_menu = true))
 	}
 

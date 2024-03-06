@@ -33,7 +33,8 @@
 	:global {
 		.page_content_wrap {
 			max-width: var(--limited_width);
-			padding: 60px var(--limited_padding);
+			padding: 6vh var(--limited_padding);
+			padding-top: 0;
 			margin: 0 auto;
 		}
 
