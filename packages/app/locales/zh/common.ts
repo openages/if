@@ -69,8 +69,18 @@ export default {
 		confirm: '未查找到相关记录，请确认存在相关记录，再进行操作'
 	},
 	clean: {
-		title: '清理已删除的记录',
-		confirm: '确认彻底删除{{counts}}条记录，彻底删除后将无法恢复？'
+		title: '清理',
+		title_removed: '清理已删除的记录',
+		confirm: '确认彻底删除{{counts}}条记录，彻底删除后将无法恢复？',
+		confirm_with_date: '你将删除{{date}}前的所有记录（{{counts}}条），请确认是否删除？',
+		options: {
+			'1year': '一年前',
+			'6month': '六个月前',
+			'3month': '三个月前',
+			'1month': '一个月前',
+			'15days': '十五天前',
+			'1week': '一周前'
+		}
 	},
 	erase: {
 		title: '彻底删除',

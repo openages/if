@@ -21,3 +21,5 @@ export interface Tag {
 	color: string
 	text: string
 }
+
+export type CleanTime = '1year' | '6month' | '3month' | '1month' | '15days' | '1week'

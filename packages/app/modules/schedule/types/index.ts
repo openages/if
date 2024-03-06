@@ -116,6 +116,7 @@ export interface IPropsSettingsModal {
 	closeSettingsModal: () => void
 	updateSetting: Model['updateSetting']
 	removeTag: Model['removeTag']
+	cleanByTime: Model['cleanByTime']
 }
 
 export interface IPropsScanline {

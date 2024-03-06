@@ -60,7 +60,8 @@ import type {
 	KanbanMode,
 	Mode
 } from './types/model'
-import type { ArgsArchiveByTime, ArgsUpdateTodoData } from './types/services'
+import type { ArgsUpdateTodoData } from './types/services'
+import type { CleanTime } from '@/types'
 
 @injectable()
 export default class Index {
@@ -599,8 +600,10 @@ export default class Index {
 		this.updateArchiveItems(id)
 	}
 
-	async archiveByTime(v: ArgsArchiveByTime) {
-		await archiveByTime(this.id, v)
+	async archiveByTime(v: CleanTime) {
+		const res = await archiveByTime(this.id, v)
+
+		if (!res) return
 
 		this.loadmore.page = 0
 		this.loadmore.end = false

@@ -20,7 +20,7 @@ const Index = (props: IPropsSettingsModal) => {
 	const limits = useLimits()
 	const { t, i18n } = useTranslation()
 
-	const auto_archiving_options = useMemo(() => {
+	const archive_options = useMemo(() => {
 		const locale_options = t('translation:todo.SettingsModal.auto_archiving.options') as Record<string, string>
 
 		return Object.keys(locale_options).map(key => ({
@@ -59,10 +59,10 @@ const Index = (props: IPropsSettingsModal) => {
 					<TagsEditor remove={removeTag}></TagsEditor>
 				</Item>
 				<Item name='auto_archiving' label={t('translation:todo.SettingsModal.auto_archiving.label')}>
-					<Select options={auto_archiving_options}></Select>
+					<Select options={archive_options}></Select>
 				</Item>
 				<Button className='clickable' type='primary' danger onClick={onClean}>
-					{t('translation:common.clean.title')}
+					{t('translation:common.clean.title_removed')}
 				</Button>
 			</div>
 		</SettingsModal>

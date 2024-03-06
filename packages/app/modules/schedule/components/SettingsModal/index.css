@@ -1,12 +1,29 @@
 ._local {
 	:global {
-		.btn_make {
-			height: 36px;
-			border-radius: var(--radius);
-			border: 1px dashed var(--color_border);
+		.archive_select {
+			.if-select-selector {
+				border: none;
+				text-align: center;
+				background-color: var(--color_danger);
+				outline: 3px solid transparent;
+				color: white !important;
+				transition: transform ease 0.12s;
 
-			&:hover {
-				border-color: var(--color_text_grey);
+				&:hover {
+					outline: 3px solid var(--color_border);
+				}
+
+				&:active {
+					transform: scale(0.9);
+				}
+
+				.if-select-selection-placeholder {
+					color: white !important;
+				}
+			}
+
+			.if-select-clear {
+				margin-top: -5px;
 			}
 		}
 	}

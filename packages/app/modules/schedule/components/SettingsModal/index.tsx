@@ -1,7 +1,8 @@
-import { Form } from 'antd'
+import { Form, Select } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 import { SettingsModal, TagsEditor } from '@/components'
+import { useArchiveOptions } from '@/hooks'
 
 import styles from './index.css'
 
@@ -11,8 +12,9 @@ import type { App } from '@/types'
 const { Item } = Form
 
 const Index = (props: IPropsSettingsModal) => {
-	const { visible_settings_modal, setting, closeSettingsModal, updateSetting, removeTag } = props
+	const { visible_settings_modal, setting, closeSettingsModal, updateSetting, removeTag, cleanByTime } = props
 	const { t } = useTranslation()
+	const archive_options = useArchiveOptions()
 
 	const props_settings_modal = {
 		module: 'schedule' as App.ModuleType,
@@ -30,6 +32,15 @@ const Index = (props: IPropsSettingsModal) => {
 				<Item name='tags' label={t('translation:common.tags.label')}>
 					<TagsEditor remove={removeTag}></TagsEditor>
 				</Item>
+				<Select
+					className='archive_select'
+					placeholder={t('translation:common.clean.title')}
+					suffixIcon={null}
+					allowClear
+					getPopupContainer={() => document.body}
+					options={archive_options}
+					onSelect={cleanByTime}
+				></Select>
 			</div>
 		</SettingsModal>
 	)

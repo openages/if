@@ -78,7 +78,10 @@ const Index = (props: IProps) => {
 				</DndContext>
 			) : (
 				<div
-					className='w_100 btn_make border_box flex justify_center align_center clickable'
+					className={$cx(
+						'w_100 border_box flex justify_center align_center clickable',
+						styles.btn_make
+					)}
 					onClick={() => onAdd(0)}
 				>
 					<Plus size={18}></Plus>

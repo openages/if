@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
 
 import { SimpleEmpty } from '@/components'
+import { useArchiveOptions } from '@/hooks'
 import { getExsitValues } from '@/utils'
 import { ArrowCounterClockwise, Funnel } from '@phosphor-icons/react'
 
@@ -35,18 +36,7 @@ const Index = (props: IPropsArchive) => {
 	} = props
 	const { t } = useTranslation()
 	const { setRef } = useScrollToBottom(loadMore, visible_archive_modal)
-
-	const options_archive = useMemo(
-		() => [
-			{ label: t('translation:todo.Archive.clean.options.1week'), value: '1week' },
-			{ label: t('translation:todo.Archive.clean.options.15days'), value: '15days' },
-			{ label: t('translation:todo.Archive.clean.options.1month'), value: '1month' },
-			{ label: t('translation:todo.Archive.clean.options.3month'), value: '3month' },
-			{ label: t('translation:todo.Archive.clean.options.6month'), value: '6month' },
-			{ label: t('translation:todo.Archive.clean.options.1year'), value: '1year' }
-		],
-		[]
-	)
+	const archive_options = useArchiveOptions()
 
 	const exsit_query_params = useMemo(
 		() => Object.keys(getExsitValues(archive_query_params)).length > 0,
@@ -94,7 +84,7 @@ const Index = (props: IPropsArchive) => {
 			>
 				<DatePicker
 					className='w_100'
-					showToday={false}
+					showNow={false}
 					inputReadOnly
 					style={{ height: 32 }}
 					disabledDate={v => v.valueOf() > new Date().valueOf()}
@@ -106,7 +96,7 @@ const Index = (props: IPropsArchive) => {
 			>
 				<DatePicker
 					className='w_100'
-					showToday={false}
+					showNow={false}
 					inputReadOnly
 					style={{ height: 32 }}
 					disabledDate={v => v.valueOf() > new Date().valueOf()}
@@ -163,7 +153,7 @@ const Index = (props: IPropsArchive) => {
 					suffixIcon={false}
 					popupMatchSelectWidth={false}
 					size='small'
-					options={options_archive}
+					options={archive_options}
 					onSelect={archiveByTime}
 				></Select>
 			</div>

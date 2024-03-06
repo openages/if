@@ -3,13 +3,12 @@ import { omit, uniq } from 'lodash-es'
 import { match } from 'ts-pattern'
 
 import { updateSetting } from '@/actions/global'
-import { getArchiveTime, getDocItem, getDocItemsData } from '@/utils'
+import { getArchiveTime, getCleanTime, getDocItem, getDocItemsData } from '@/utils'
 import { confirm, info } from '@/utils/antd'
 
 import type { MangoQueryOperators, MangoQuerySelector, MangoQuerySortPart, RxDocument } from 'rxdb'
 import type { ArchiveQueryParams } from './types/model'
 import type {
-	ArgsArchiveByTime,
 	ArgsCheck,
 	ArgsQueryArchives,
 	ArgsQueryItems,
@@ -19,7 +18,7 @@ import type {
 	ArgsUpdateTodoData
 } from './types/services'
 
-import type { RxDB, Todo } from '@/types'
+import type { RxDB, Todo, CleanTime } from '@/types'
 import type { ManipulateType } from 'dayjs'
 
 export const getMaxMinSort = async (angle_id: string, min?: boolean) => {
@@ -384,23 +383,14 @@ export const restoreArchiveItem = async (
 	})
 }
 
-export const archiveByTime = async (file_id: string, v: ArgsArchiveByTime) => {
-	const now = dayjs()
-
-	const target_time = match(v)
-		.with('1year', () => now.subtract(1, 'year'))
-		.with('6month', () => now.subtract(6, 'month'))
-		.with('3month', () => now.subtract(3, 'month'))
-		.with('1month', () => now.subtract(1, 'month'))
-		.with('15days', () => now.subtract(15, 'day'))
-		.with('1week', () => now.subtract(1, 'week'))
-		.exhaustive()
+export const archiveByTime = async (file_id: string, v: CleanTime) => {
+	const target_time = getCleanTime(v)
 
 	const query = $db.todo_items.find({
 		selector: {
 			file_id,
 			archive: true,
-			create_at: { $lte: now.subtract(3, 'second').valueOf() }
+			create_at: { $lte: target_time.valueOf() }
 		}
 	})
 
@@ -416,7 +406,7 @@ export const archiveByTime = async (file_id: string, v: ArgsArchiveByTime) => {
 		})
 	})
 
-	if (!res || !remove_items.length) return
+	if (!res || !remove_items.length) return false
 
 	await query.remove()
 

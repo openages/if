@@ -69,8 +69,18 @@ export default {
 		confirm: 'No relevant records found. Please verify the existence of related records before proceeding.'
 	},
 	clean: {
-		title: 'Clean Removed Records',
-		confirm: 'Confirm permanent erase {{counts}} items? It can`t be recovered after erased.'
+		title: 'Clean',
+		title_removed: 'Clean Removed Records',
+		confirm: 'Confirm permanent erase {{counts}} items? It can`t be recovered after erased.',
+		confirm_with_date: 'Do you want to delete {{counts}} items before {{date}}? Please confirm.',
+		options: {
+			'1year': '1 year ago',
+			'6month': '6 months ago',
+			'3month': '3 months ago',
+			'1month': '1 month ago',
+			'15days': '15 days ago',
+			'1week': '1 week ago'
+		}
 	},
 	erase: {
 		title: 'Erase',

@@ -95,7 +95,8 @@ const Index = ({ id }: IProps) => {
 		setting: { ...$copy(x.setting?.setting), ...$copy(x.file.data) },
 		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false)),
 		updateSetting: useMemoizedFn(x.updateSetting),
-		removeTag: useMemoizedFn(x.removeTag)
+		removeTag: useMemoizedFn(x.removeTag),
+		cleanByTime: useMemoizedFn(x.cleanByTime)
 	}
 
 	const props_scanline: IPropsScanline = {

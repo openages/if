@@ -136,15 +136,7 @@ export default {
 		remove: '删除',
 		clean: {
 			title: '清档：',
-			placeholder: '选择日期',
-			options: {
-				'1year': '一年前',
-				'6month': '六个月前',
-				'3month': '三个月前',
-				'1month': '一个月前',
-				'15days': '十五天前',
-				'1week': '一周前'
-			}
+			placeholder: '选择日期'
 		},
 		confirm: '你将删除{{date}}前的所有归档（{{counts}}条），请确认是否删除？',
 		filter: {

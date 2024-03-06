@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import { match } from 'ts-pattern'
 
 import type { Dayjs } from 'dayjs'
+import type { CleanTime } from '@/types'
 
 export const format = (v: Dayjs, ignoreDetail?: boolean) => {
 	if (!v) return undefined
@@ -34,4 +35,17 @@ export const format = (v: Dayjs, ignoreDetail?: boolean) => {
 	}
 
 	return target(detail_time)
+}
+
+export const getCleanTime = (v: CleanTime) => {
+	const now = dayjs()
+
+	return match(v)
+		.with('1year', () => now.subtract(1, 'year'))
+		.with('6month', () => now.subtract(6, 'month'))
+		.with('3month', () => now.subtract(3, 'month'))
+		.with('1month', () => now.subtract(1, 'month'))
+		.with('15days', () => now.subtract(15, 'day'))
+		.with('1week', () => now.subtract(1, 'week'))
+		.exhaustive()
 }

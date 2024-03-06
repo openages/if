@@ -14,6 +14,7 @@ import { useInstanceWatch } from '@openages/stk/mobx'
 
 import {
 	addTimeBlock,
+	cleanByTime,
 	getTagTimeBlockCounts,
 	getTimeBlocks,
 	removeTag,
@@ -23,7 +24,7 @@ import {
 import { collisionDetection, getDayDetails, getMonthDays, getStartByY, getStartEnd, getWeekdays } from './utils'
 
 import type { Scale, SettingValues, ChangedSettingValues } from './types/model'
-import type { Schedule } from '@/types'
+import type { Schedule, CleanTime } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
 import type { DayDetail } from './utils'
 import type { Subscription } from 'rxjs'
@@ -241,6 +242,10 @@ export default class Index {
 		await removeTag(this.id, tag)
 
 		return true
+	}
+
+	async cleanByTime(v: CleanTime) {
+		await cleanByTime(this.id, v)
 	}
 
 	watchSetting() {

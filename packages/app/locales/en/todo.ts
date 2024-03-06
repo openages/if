@@ -136,17 +136,9 @@ export default {
 		remove: 'Remove',
 		clean: {
 			title: 'Clean:',
-			placeholder: 'Select date',
-			options: {
-				'1year': '1 year ago',
-				'6month': '6 months ago',
-				'3month': '3 months ago',
-				'1month': '1 month ago',
-				'15days': '15 days ago',
-				'1week': '1 week ago'
-			}
+			placeholder: 'Select date'
 		},
-		confirm: 'Do you want to delete all archives before {{date}}? Please confirm.',
+		confirm: 'Do you want to delete {{counts}} archive items before {{date}}? Please confirm.',
 		filter: {
 			select: 'Select\t',
 			angle: 'angle',

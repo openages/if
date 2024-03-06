@@ -77,7 +77,8 @@ export default class Index {
 			},
 			schedule_items: {
 				autoMigrate: false,
-				schema: schema_schedule_items
+				schema: schema_schedule_items,
+				statics
 			}
 		})
 
