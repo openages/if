@@ -101,6 +101,49 @@
 		z-index: 998;
 	}
 
+	&.month_mode {
+		height: 18px;
+		border-radius: 0;
+		margin-bottom: 1px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		&.has_tag {
+			:global {
+				.timeblock_content_wrap {
+					background-color: rgba(var(--tag_color), 0.18);
+				}
+			}
+		}
+
+		:global {
+			.btn_detail {
+				top: 0;
+				width: 18px;
+				height: 18px;
+				border-radius: 0;
+				border: none;
+				background-color: unset;
+			}
+
+			.timeblock_content_wrap {
+				padding: 0 6px;
+				border: none;
+				border-radius: 0;
+				cursor: unset;
+				background-color: var(--color_bg_1);
+
+				.text_wrap {
+					height: 18px;
+					line-height: 18px;
+					white-space: nowrap;
+				}
+			}
+		}
+	}
+
 	:global {
 		.drag_line {
 			height: 6px;

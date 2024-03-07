@@ -1,10 +1,13 @@
 import dayjs from 'dayjs'
+import { flatten } from 'lodash-es'
 
 import getDayDetails from './getDayDetails'
 
-export default (month: number) => {
-	const start_of_month = dayjs().month(month).startOf('month')
-	const end_of_month = dayjs().month(month).endOf('month')
+import type { Dayjs } from 'dayjs'
+
+export default (day: Dayjs) => {
+	const start_of_month = day.startOf('month')
+	const end_of_month = day.endOf('month')
 	const calendar_data = []
 
 	let start_of_week = start_of_month.startOf('week')
@@ -28,5 +31,5 @@ export default (month: number) => {
 		start_of_week = end_of_week.add(1, 'day')
 	}
 
-	return calendar_data
+	return flatten(calendar_data)
 }

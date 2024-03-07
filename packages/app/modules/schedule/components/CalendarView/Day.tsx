@@ -25,7 +25,6 @@ const Index = (props: IPropsCalendarViewDay) => {
 		updateTimeBlock,
 		removeTimeBlock,
 		copyTimeBlock,
-		updateTodoSchedule,
 		changeTimeBlockLength
 	} = props
 	const { show } = useContextMenu({ id: 'timeblock_context_menu' })
@@ -91,7 +90,6 @@ const Index = (props: IPropsCalendarViewDay) => {
 					updateTimeBlock={updateTimeBlock}
 					removeTimeBlock={removeTimeBlock}
 					copyTimeBlock={copyTimeBlock}
-					updateTodoSchedule={updateTodoSchedule}
 					changeTimeBlockLength={changeTimeBlockLength}
 					key={item.id}
 				></TimeBlock>

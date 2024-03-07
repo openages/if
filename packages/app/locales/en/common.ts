@@ -27,6 +27,8 @@ export default {
 		圣诞节: 'Christmas'
 	},
 	current_week: 'Current Week',
+	current_month: 'Current Month',
+	today: 'Today',
 	setting: 'Setting',
 	copy: 'Copy',
 	check: 'Check',

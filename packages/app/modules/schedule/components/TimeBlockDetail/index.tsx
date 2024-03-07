@@ -14,12 +14,12 @@ import { ListChecks, MagnifyingGlass } from '@phosphor-icons/react'
 import styles from './index.css'
 import Model from './model'
 
-import type { IPropsCalendarViewTimeBlockDetail } from '../../types'
+import type { IPropsTimeBlockDetail } from '../../types'
 
 const { useForm, Item } = Form
 
-const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
-	const { item, tags, updateTimeBlock, updateTodoSchedule } = props
+const Index = (props: IPropsTimeBlockDetail) => {
+	const { item, tags, updateTimeBlock } = props
 	const [x] = useState(() => container.resolve(Model))
 	const [form] = useForm()
 	const searcher = useRef<HTMLInputElement>()
@@ -84,7 +84,6 @@ const Index = (props: IPropsCalendarViewTimeBlockDetail) => {
 		todos.push(v)
 
 		updateTimeBlock(item.id, { todos })
-		updateTodoSchedule(v)
 	})
 
 	const onChangeTodos = useMemoizedFn((todos: Array<string>) => updateTimeBlock(item.id, { todos }))

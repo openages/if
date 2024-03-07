@@ -1,0 +1,67 @@
+.Day {
+	width: calc(100% / 7);
+	height: 20%;
+	border-right: var(--border);
+	border-bottom: var(--border);
+	font-size: 12px;
+
+	&:hover {
+		.extra_wrap {
+			display: none;
+		}
+
+		.btn_jump {
+			display: flex;
+		}
+	}
+
+	&.not_current_month {
+		background-color: rgba(var(--color_text_rgb), 0.018);
+
+		.header_wrap {
+			opacity: 0.3;
+		}
+
+		.timeblocks_wrap {
+			opacity: 0.3;
+		}
+	}
+
+	&.is_today {
+		border: 1px solid var(--color_text);
+	}
+
+	.header_wrap {
+		height: 18px;
+		padding: 0 6px;
+		line-height: 1;
+
+		:global {
+			.counts {
+				min-width: 12px;
+				height: 12px;
+				padding: 0 2px;
+				font-size: 10px;
+				border-radius: 6px;
+				color: var(--color_text_light);
+				border: var(--border);
+			}
+		}
+
+		.btn_jump {
+			width: 18px;
+			height: 18px;
+			border-left: var(--border);
+			border-bottom: var(--border);
+
+			&:hover {
+				background-color: var(--color_bg_2);
+			}
+		}
+	}
+
+	.timeblocks_wrap {
+		height: calc(100% - 18px);
+		overflow-y: scroll;
+	}
+}

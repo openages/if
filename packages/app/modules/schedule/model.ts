@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import { omit } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import { match } from 'ts-pattern'
@@ -21,7 +21,7 @@ import {
 	removeTimeBlock,
 	updateTimeBlock
 } from './services'
-import { collisionDetection, getDayDetails, getMonthDays, getStartByY, getStartEnd, getWeekdays } from './utils'
+import { collisionDetection, getMonthDays, getStartByY, getStartEnd, getThreeDays, getWeekdays } from './utils'
 
 import type { Scale, SettingValues, ChangedSettingValues } from './types/model'
 import type { Schedule, CleanTime } from '@/types'
@@ -34,7 +34,7 @@ import type { DragMoveEvent, DragEndEvent } from '@dnd-kit/core'
 export default class Index {
 	id = ''
 	view = 'calendar' as Schedule.Item['type']
-	scale = 'week' as Scale
+	scale = 'month' as Scale
 	current = dayjs()
 	days = [] as Array<DayDetail>
 	disable_watcher = false
@@ -72,6 +72,12 @@ export default class Index {
 		)
 	}
 
+	get show_time_scale() {
+		return (
+			(this.view === 'calendar' || this.view === 'fixed') && (this.scale === 'day' || this.scale === 'week')
+		)
+	}
+
 	init(args: { id: string }) {
 		const { id } = args
 
@@ -85,9 +91,9 @@ export default class Index {
 
 	getDays() {
 		this.days = match(this.scale)
-			.with('day', () => [getDayDetails(this.current)])
+			.with('day', () => getThreeDays(this.current))
 			.with('week', () => getWeekdays(this.current))
-			.with('month', () => getMonthDays(this.current.month() + 1))
+			.with('month', () => getMonthDays(this.current))
 			.exhaustive()
 
 		this.watchCalendarDays()
@@ -102,7 +108,7 @@ export default class Index {
 
 		let target = activatorEvent.target as Element
 
-		while (!target.classList.contains('timeblock_item_wrap')) {
+		while (!target?.classList?.contains('timeblock_item_wrap')) {
 			target = target.parentElement
 		}
 
@@ -128,6 +134,11 @@ export default class Index {
 
 	onDragCancel() {
 		this.move_item = null
+	}
+
+	jump(v: Dayjs) {
+		this.current = v
+		this.scale = 'day'
 	}
 
 	async addTimeBlock(args: {
@@ -283,10 +294,12 @@ export default class Index {
 				const begin = dayjs(item.start_time).startOf('day')
 				const date = start_time.format('YYYY-MM-DD')
 				const index = this.days.findIndex(day => day.value.format('YYYY-MM-DD') === date)
-
 				item['start'] = start_time.diff(begin, 'minutes') / 20
 				item['length'] = end_time.diff(start_time, 'minutes') / 20
-				item['past'] = now.valueOf() >= item.end_time
+
+				if (this.show_time_scale) {
+					item['past'] = now.valueOf() >= item.end_time
+				}
 
 				if (index !== -1) {
 					if (target[index]) {

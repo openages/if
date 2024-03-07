@@ -1,0 +1,30 @@
+._local {
+	user-select: none;
+
+	:global {
+		.holiday {
+			color: var(--color_success);
+			margin-left: 6px;
+			font-size: 10px;
+		}
+
+		.extra_wrap {
+			.status {
+				font-size: 10px;
+
+				&.work {
+					color: var(--color_warning);
+				}
+
+				&.relax {
+					color: var(--color_success);
+				}
+			}
+		}
+
+		.lunar {
+			color: var(--color_text_softlight);
+			font-size: 10px;
+		}
+	}
+}

@@ -6,6 +6,19 @@
 	line-height: 1;
 	user-select: none;
 
+	&.hidden_time_scale {
+		:global {
+			.weekday_items {
+				width: 100%;
+
+				.weekday_item {
+					border-left: none;
+					border-right: var(--border);
+				}
+			}
+		}
+	}
+
 	:global {
 		.btn_now_wrap {
 			width: 48px;
@@ -15,7 +28,6 @@
 			width: calc(100% - 48px);
 
 			.weekday_item {
-				width: calc(100% / 7);
 				padding: 0 9px;
 				border-left: var(--border);
 				white-space: nowrap;
@@ -33,34 +45,13 @@
 					}
 				}
 
+				&.hidden_time_scale {
+					justify-content: center;
+				}
+
 				.date {
 					color: var(--color_text_softlight);
 					font-size: 10px;
-				}
-
-				.lunar {
-					color: var(--color_text_softlight);
-					font-size: 10px;
-				}
-
-				.holiday {
-					color: var(--color_success);
-					margin-left: 6px;
-					font-size: 10px;
-				}
-
-				.extra_wrap {
-					.status {
-						font-size: 10px;
-
-						&.work {
-							color: var(--color_warning);
-						}
-
-						&.relax {
-							color: var(--color_success);
-						}
-					}
 				}
 			}
 		}

@@ -3,6 +3,7 @@ import type { Schedule } from '@/types'
 import type Model from '../model'
 
 import type { MutableRefObject } from 'react'
+import type { DayDetail } from '../utils'
 
 export interface IProps {
 	id: string
@@ -47,7 +48,12 @@ export interface IPropsHeaderRight {
 export interface IPropsDateScale {
 	scale: Model['scale']
 	days: Model['days']
+	show_time_scale: boolean
 	scrollToScanline: () => void
+}
+
+export interface IPropsDayExtra {
+	item: DayDetail
 }
 
 export interface IPropsCalendarView {
@@ -62,7 +68,6 @@ export interface IPropsCalendarView {
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
 	copyTimeBlock: (v: Omit<Schedule.CalendarItem, 'id'>) => void
-	updateTodoSchedule: Model['updateTodoSchedule']
 	changeTimeBlockLength: Model['changeTimeBlockLength']
 }
 
@@ -77,19 +82,6 @@ export interface IPropsCalendarViewDay {
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
 	copyTimeBlock: IPropsCalendarView['copyTimeBlock']
-	updateTodoSchedule: Model['updateTodoSchedule']
-	changeTimeBlockLength: Model['changeTimeBlockLength']
-}
-
-export interface IPropsCalendarViewTimeBlock {
-	item: Schedule.CalendarItem
-	tags: Schedule.Setting['tags']
-	day_index: number
-	timeblock_index: number
-	updateTimeBlock: Model['updateTimeBlock']
-	removeTimeBlock: Model['removeTimeBlock']
-	copyTimeBlock: IPropsCalendarView['copyTimeBlock']
-	updateTodoSchedule: Model['updateTodoSchedule']
 	changeTimeBlockLength: Model['changeTimeBlockLength']
 }
 
@@ -97,17 +89,50 @@ export interface IPropsCalendarViewTimeBlockSignal {
 	item: Schedule.CalendarItem
 }
 
-export interface IPropsCalendarViewTimeBlockDetail {
-	item: Schedule.CalendarItem
-	tags: Schedule.Setting['tags']
-	updateTimeBlock: Model['updateTimeBlock']
-	updateTodoSchedule: Model['updateTodoSchedule']
-}
-
 export interface IPropsCalendarContextMenu {
 	view: Model['view']
 	timeblock_copied: Model['timeblock_copied']
 	addTimeBlock: Model['addTimeBlock']
+}
+
+export interface IPropsMonthView {
+	view: Model['view']
+	days: Model['days']
+	calendar_days: Model['calendar_days']
+	tags: Schedule.Setting['tags']
+	updateTimeBlock: Model['updateTimeBlock']
+	removeTimeBlock: Model['removeTimeBlock']
+	copyTimeBlock: (v: Omit<Schedule.CalendarItem, 'id'>) => void
+	jump: Model['jump']
+}
+
+export interface IPropsMonthViewDay {
+	day_info: DayDetail
+	day: Schedule.CalendarDay
+	index: number
+	tags: Schedule.Setting['tags']
+	updateTimeBlock: Model['updateTimeBlock']
+	removeTimeBlock: Model['removeTimeBlock']
+	copyTimeBlock: IPropsCalendarView['copyTimeBlock']
+	jump: Model['jump']
+}
+
+export interface IPropsTimeBlock {
+	item: Schedule.CalendarItem
+	tags: Schedule.Setting['tags']
+	day_index: number
+	timeblock_index: number
+	month_mode?: boolean
+	updateTimeBlock: Model['updateTimeBlock']
+	removeTimeBlock: Model['removeTimeBlock']
+	copyTimeBlock: IPropsCalendarView['copyTimeBlock']
+	changeTimeBlockLength?: Model['changeTimeBlockLength']
+}
+
+export interface IPropsTimeBlockDetail {
+	item: Schedule.CalendarItem
+	tags: Schedule.Setting['tags']
+	updateTimeBlock: Model['updateTimeBlock']
 }
 
 export interface IPropsSettingsModal {

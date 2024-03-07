@@ -19,7 +19,7 @@ const plugins_prod = [
 ]
 
 module.exports = defineConfig({
-	devtool: is_dev ? 'eval-source-map' : false,
+	devtool: is_dev ? 'source-map' : false,
 	entry: {
 		main: './runtime/index.tsx'
 	},

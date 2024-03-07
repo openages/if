@@ -14,30 +14,22 @@ const Index = (props: IPropsHeaderLeft) => {
 
 	const onChangeView = useMemoizedFn((e: MouseEvent<HTMLDivElement>) => {
 		let target = e.target as HTMLDivElement
-		let key = target.getAttribute('data-key') as IPropsHeaderLeft['view']
 
-		if (!key) {
+		while (!target?.classList?.contains('btn_std')) {
 			target = target.parentElement as HTMLDivElement
-			key = target.getAttribute('data-type') as IPropsHeaderLeft['view']
 		}
 
-		if (!key) return
-
-		changeView(key)
+		changeView(target?.getAttribute('data-key') as IPropsHeaderLeft['view'])
 	})
 
 	const onChangeScale = useMemoizedFn((e: MouseEvent<HTMLDivElement>) => {
 		let target = e.target as HTMLDivElement
-		let key = target.getAttribute('data-key') as IPropsHeaderLeft['scale']
 
-		if (!key) {
+		while (!target?.classList?.contains('btn_std')) {
 			target = target.parentElement as HTMLDivElement
-			key = target.getAttribute('data-type') as IPropsHeaderLeft['scale']
 		}
 
-		if (!key) return
-
-		changeScale(key)
+		changeScale(target?.getAttribute('data-key') as IPropsHeaderLeft['scale'])
 	})
 
 	return (

@@ -1,11 +1,12 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import scrollIntoView from 'smooth-scroll-into-view-if-needed'
-import { match } from 'ts-pattern'
+import { match, P } from 'ts-pattern'
 import { container as model_container } from 'tsyringe'
 
+import { useGlobal } from '@/context/app'
 import { useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
 import { restrictToFirstScrollableAncestor } from '@dnd-kit/modifiers'
 
@@ -13,6 +14,7 @@ import {
 	CalendarView,
 	DateScale,
 	Header,
+	MonthView,
 	Scanline,
 	SettingsModal,
 	TaskPanel,
@@ -27,18 +29,24 @@ import type {
 	IPropsDateScale,
 	IPropsHeader,
 	IPropsCalendarView,
+	IPropsMonthView,
 	IPropsSettingsModal,
 	IPropsScanline
 } from './types'
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => model_container.resolve(Model))
+	const global = useGlobal()
 	const container = useRef<HTMLDivElement>(null)
 	const scanline = useRef<HTMLDivElement>(null)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 12 } }))
+	const stack_columns = $copy(global.stack.columns)
 	const days = $copy(x.days)
+	const calendar_days = $copy(x.calendar_days)
 	const tags = $copy(x.setting?.setting?.tags || [])
-	const today_index = useMemo(() => days.findIndex(item => item.value.isToday()), [days])
+	const timeblock_copied = $copy(x.timeblock_copied)
+	const today_index = useMemo(() => days.findIndex(item => item?.value?.isToday()), [days])
+	const active = useMemo(() => global.stack.find(id)?.view?.active, [id, stack_columns])
 
 	useLayoutEffect(() => {
 		x.init({ id })
@@ -71,14 +79,15 @@ const Index = ({ id }: IProps) => {
 	const props_date_scale: IPropsDateScale = {
 		scale: x.scale,
 		days,
+		show_time_scale: x.show_time_scale,
 		scrollToScanline
 	}
 
 	const props_calendar_view: IPropsCalendarView = {
 		container,
 		view: x.view,
-		calendar_days: $copy(x.calendar_days),
-		timeblock_copied: $copy(x.timeblock_copied),
+		calendar_days,
+		timeblock_copied,
 		tags,
 		today_index,
 		move_item: $copy(x.move_item),
@@ -86,8 +95,18 @@ const Index = ({ id }: IProps) => {
 		updateTimeBlock: useMemoizedFn(x.updateTimeBlock),
 		removeTimeBlock: useMemoizedFn(x.removeTimeBlock),
 		copyTimeBlock: useMemoizedFn(v => (x.timeblock_copied = v)),
-		updateTodoSchedule: useMemoizedFn(x.updateTodoSchedule),
 		changeTimeBlockLength: useMemoizedFn(x.changeTimeBlockLength)
+	}
+
+	const props_month_view: IPropsMonthView = {
+		view: x.view,
+		days,
+		calendar_days,
+		tags,
+		updateTimeBlock: useMemoizedFn(x.updateTimeBlock),
+		removeTimeBlock: useMemoizedFn(x.removeTimeBlock),
+		copyTimeBlock: useMemoizedFn(v => (x.timeblock_copied = v)),
+		jump: useMemoizedFn(x.jump)
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
@@ -130,19 +149,28 @@ const Index = ({ id }: IProps) => {
 					>
 						<DateScale {...props_date_scale}></DateScale>
 						<div className={$cx('flex', styles.view_wrap)} ref={container}>
-							<TimeScale></TimeScale>
+							{x.show_time_scale && <TimeScale></TimeScale>}
 							<div
-								className={$cx('relative', styles.view)}
-								style={{ height: x.view === 'timeline' ? 'auto' : 1152 }}
+								className={$cx(
+									'relative',
+									styles.view,
+									x.show_time_scale && styles.show_time_scale
+								)}
+								style={{ height: x.show_time_scale ? 1152 : 'auto' }}
 							>
-								<Scanline {...props_scanline}></Scanline>
-								{match(x.view)
-									.with('calendar', () => (
-										<CalendarView {...props_calendar_view}></CalendarView>
+								{x.show_time_scale && <Scanline {...props_scanline}></Scanline>}
+								{match([x.view, x.scale])
+									.with(
+										[P.union('calendar', 'fixed'), P.union('day', 'week')],
+										() => <CalendarView {...props_calendar_view}></CalendarView>
+									)
+									.with([P.union('calendar', 'fixed'), 'month'], () => (
+										<MonthView {...props_month_view}></MonthView>
 									))
-									.with('timeline', () => <TimelineView></TimelineView>)
-									.with('fixed', () => <TimelineView></TimelineView>)
-									.exhaustive()}
+									.with(['timeline', P.union('day', 'week', 'month')], () => (
+										<TimelineView></TimelineView>
+									))
+									.otherwise(null)}
 							</div>
 						</div>
 					</div>

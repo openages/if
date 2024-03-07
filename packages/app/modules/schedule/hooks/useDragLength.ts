@@ -48,13 +48,24 @@ export default (args: Args) => {
 	})
 
 	useEffect(() => {
+		if (!changeTimeBlockLength) return
+
+		const drag_ref = ref.current
+
+		drag_ref.addEventListener('mousedown', start)
+		document.addEventListener('mouseup', stop)
+
+		return () => {
+			drag_ref.removeEventListener('mousedown', start)
+			document.removeEventListener('mouseup', stop)
+		}
+	}, [changeTimeBlockLength])
+
+	useEffect(() => {
 		if (changing) document.addEventListener('mousemove', setWidth)
 
 		return () => document.removeEventListener('mousemove', setWidth)
 	}, [changing])
-
-	useEventListener('mousedown', start, { target: ref })
-	useEventListener('mouseup', stop, { target: document })
 
 	return { drag_ref: ref, changing }
 }

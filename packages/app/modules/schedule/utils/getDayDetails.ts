@@ -51,4 +51,4 @@ const Index = (day: Dayjs) => {
 
 export default Index
 
-export type DayDetail = ReturnType<typeof Index>
+export type DayDetail = ReturnType<typeof Index> & { is_current_month?: boolean }

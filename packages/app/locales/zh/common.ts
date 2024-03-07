@@ -27,6 +27,8 @@ export default {
 		圣诞节: '圣诞节'
 	},
 	current_week: '本周',
+	current_month: '本月',
+	today: '今天',
 	setting: '设置',
 	copy: '复制',
 	check: '查看',

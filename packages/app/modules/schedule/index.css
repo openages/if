@@ -40,6 +40,10 @@
 	outline: none;
 
 	.view {
-		width: calc(100% - 48px);
+		width: 100%;
+
+		&.show_time_scale {
+			width: calc(100% - 48px);
+		}
 	}
 }

@@ -3,8 +3,9 @@ import { Dropdown, Popover } from 'antd'
 import Color from 'color'
 import dayjs from 'dayjs'
 import { omit } from 'lodash-es'
-import { useLayoutEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { When } from 'react-if'
 
 import { useDeepEffect } from '@/hooks'
 import { useInput } from '@/modules/todo/hooks'
@@ -18,20 +19,20 @@ import TimeBlockDetail from '../TimeBlockDetail'
 import { useContextMenuItems } from './hooks'
 import styles from './index.css'
 
-import type { IPropsCalendarViewTimeBlock } from '../../types'
+import type { IPropsTimeBlock } from '../../types'
 import type { Subscription } from 'rxjs'
 import type { Todo } from '@/types'
 
-const Index = (props: IPropsCalendarViewTimeBlock) => {
+const Index = (props: IPropsTimeBlock) => {
 	const {
 		item,
 		tags,
 		day_index,
 		timeblock_index,
+		month_mode,
 		updateTimeBlock,
 		removeTimeBlock,
 		copyTimeBlock,
-		updateTodoSchedule,
 		changeTimeBlockLength
 	} = props
 	const [visible_detail, setVisibleDetail] = useState(false)
@@ -47,17 +48,31 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 		setActivatorNodeRef
 	} = useDraggable({
 		id: item.id,
+		disabled: month_mode,
 		data: { day_index, timeblock_index }
 	})
 
-	const { drag_ref, changing } = useDragLength({
+	const { drag_ref } = useDragLength({
 		type: 'timeblock',
 		day_index,
 		timeblock_index,
 		changeTimeBlockLength
 	})
 
-	useLayoutEffect(() => () => setVisibleDetail(false), [])
+	const closePopover = useMemoizedFn(() => {
+		const popovers = document.getElementsByClassName('month_mode_timeblock_popover')
+
+		if (!popovers.length) return
+
+		Array.from(popovers).forEach(i => ((i as HTMLDivElement).style.display = 'none'))
+	})
+
+	useEffect(() => {
+		return () => {
+			closePopover()
+			setVisibleDetail(false)
+		}
+	}, [month_mode])
 
 	useDeepEffect(() => {
 		let watcher = null as Subscription
@@ -120,22 +135,39 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 		}
 	})
 
+	const look = useMemo(() => {
+		if (month_mode) {
+			return {
+				class: ['relative', styles.month_mode],
+				style: {}
+			}
+		}
+
+		return {
+			class: [
+				'absolute',
+				item.length === 1 && styles.small,
+				item.length === 2 && styles.middle,
+				item.length === 3 && styles.large,
+				item.length > 3 && styles.xlarge,
+				item.past && styles.past
+			],
+			style: {
+				top: item.start * 16,
+				height: item.length * 16
+			}
+		}
+	}, [item, month_mode])
+
 	return (
 		<Popover
 			open={visible_detail}
-			content={
-				<TimeBlockDetail
-					item={item}
-					tags={tags}
-					updateTimeBlock={updateTimeBlock}
-					updateTodoSchedule={updateTodoSchedule}
-				/>
-			}
+			content={<TimeBlockDetail item={item} tags={tags} updateTimeBlock={updateTimeBlock} />}
 			zIndex={100}
-			overlayClassName='border_popover'
+			overlayClassName={$cx('border_popover', month_mode && 'month_mode_timeblock_popover')}
 			destroyTooltipOnHide
-			fresh
-			placement='rightTop'
+			placement={month_mode ? 'right' : 'rightTop'}
+			getPopupContainer={month_mode ? () => document.body : null}
 		>
 			<Dropdown
 				destroyPopupOnHide
@@ -148,27 +180,23 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 			>
 				<div
 					className={$cx(
-						'timeblock_item_wrap w_100 border_box absolute top_0 flex flex_column',
+						'timeblock_item_wrap w_100 border_box flex flex_column',
 						styles._local,
-						item.length === 1 && styles.small,
-						item.length === 2 && styles.middle,
-						item.length === 3 && styles.large,
-						item.length > 3 && styles.xlarge,
-						item.past && styles.past,
 						tag_styles['--tag_color'] && styles.has_tag,
-						changing && styles.changing,
-						isDragging && styles.isDragging
+						isDragging && styles.isDragging,
+						...look.class
 					)}
 					style={{
-						top: item.start * 16,
-						height: item.length * 16,
-						transform: CSS.Translate.toString(transform),
+						transform: month_mode ? 'unset' : CSS.Translate.toString(transform),
+						...look.style,
 						...tag_styles
 					}}
 					ref={setDragRef}
 					{...attributes}
 				>
-					<div className='drag_line w_100 absolute bottom_0 right_0' ref={drag_ref}></div>
+					<When condition={!month_mode}>
+						<div className='drag_line w_100 absolute bottom_0 right_0' ref={drag_ref}></div>
+					</When>
 					<div
 						className={$cx(
 							'btn_detail none justify_center align_center absolute clickable',
@@ -180,7 +208,7 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 					</div>
 					<div
 						className='timeblock_content_wrap w_100 h_100 border_box flex flex_column absolute top_0 left_0'
-						ref={setActivatorNodeRef}
+						ref={!month_mode ? setActivatorNodeRef : null}
 						{...listeners}
 					>
 						<div className='text_scroll_wrap w_100'>
@@ -193,7 +221,7 @@ const Index = (props: IPropsCalendarViewTimeBlock) => {
 								onKeyDown={onKeyDown}
 							></div>
 						</div>
-						{item.length > 1 && (
+						{!month_mode && item.length > 1 && (
 							<div className='time flex justify_between'>
 								<span>
 									{dayjs(item.start_time).format('HH:mm')} -{' '}

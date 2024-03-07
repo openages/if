@@ -16,7 +16,6 @@ const Index = (props: IPropsCalendarView) => {
 		updateTimeBlock,
 		removeTimeBlock,
 		copyTimeBlock,
-		updateTodoSchedule,
 		changeTimeBlockLength
 	} = props
 
@@ -34,7 +33,6 @@ const Index = (props: IPropsCalendarView) => {
 					updateTimeBlock={updateTimeBlock}
 					removeTimeBlock={removeTimeBlock}
 					copyTimeBlock={copyTimeBlock}
-					updateTodoSchedule={updateTodoSchedule}
 					changeTimeBlockLength={changeTimeBlockLength}
 					key={index}
 				></Day>
