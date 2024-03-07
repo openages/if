@@ -45,6 +45,7 @@ const Index = (props: IPropsHeaderCenter) => {
 				allowClear={false}
 				suffixIcon={null}
 				showWeek
+				format='YYYY-MM-DD'
 				value={current}
 				onChange={changeCurrent}
 				{...props_datepicker}
