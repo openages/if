@@ -1,15 +1,14 @@
 import { useMemoizedFn } from 'ahooks'
-
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import { container } from 'tsyringe'
 
 import { GlobalModel } from '@/context/app'
 import { DndContext } from '@dnd-kit/core'
-import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable'
+import { arrayMove, SortableContext } from '@dnd-kit/sortable'
 
-import Item from './Item'
 import styles from './index.css'
+import Item from './Item'
 
 import type { DragEndEvent } from '@dnd-kit/core'
 
@@ -35,9 +34,9 @@ const Index = () => {
 	})
 
 	return (
-		<div className={$cx('flex flex_wrap', styles._local)}>
+		<div className={$cx('flex flex_column', styles._local)}>
 			<DndContext onDragEnd={onDragEnd}>
-				<SortableContext items={app_modules} strategy={rectSortingStrategy}>
+				<SortableContext items={app_modules}>
 					{app_modules.map((item, index) => (
 						<Item key={item.id} {...{ item, index, changeIsFixed }}></Item>
 					))}

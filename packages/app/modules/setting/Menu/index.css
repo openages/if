@@ -1,15 +1,25 @@
 ._local {
-	width: calc(100% + 12px);
-	margin-left: -6px;
+	max-width: 360px;
+	margin: 0 auto;
 
 	:global {
 		.app_module_item_wrap {
-			width: calc(100% / 4);
-			padding: 6px;
+			margin-bottom: 6px;
+
+			&.isDragging {
+				z-index: 100;
+
+				.app_module_item {
+					background-color: transparent;
+					outline: 1px dashed var(--color_text);
+					backdrop-filter: var(--blur);
+				}
+			}
 
 			.app_module_item {
+				padding: 12px 18px;
 				background-color: var(--color_bg_1);
-				border-radius: var(--radius);
+				border-radius: var(--radius_large);
 
 				&:hover {
 					.btn_drag {
@@ -17,38 +27,15 @@
 					}
 				}
 
-				.module_icon {
-					padding: 24px 18px;
-				}
-
 				.btn_drag {
 					opacity: 0;
-					top: 9px;
-					right: 9px;
+					right: 48px;
 					padding: 3px;
 					border-radius: var(--radius);
 					cursor: grab;
 
 					&:hover {
 						background-color: var(--color_bg_2);
-					}
-				}
-
-				.toggle_wrap {
-					padding: 12px 18px;
-					border-top: var(--border);
-
-					.if-switch {
-						.if-switch-inner {
-							padding: 0;
-						}
-
-						&-checked {
-							.if-switch-inner {
-								padding-right: 18px;
-								padding-left: 4px;
-							}
-						}
 					}
 				}
 			}

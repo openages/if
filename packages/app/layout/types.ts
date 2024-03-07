@@ -1,6 +1,5 @@
 import type { GlobalModel } from '@/context/app'
 import type { App, Auth } from '@/types'
-import type { IconProps } from '@phosphor-icons/react'
 
 export interface IPropsFreeMark {
 	user_type: Auth.UserType
@@ -20,7 +19,6 @@ export interface IPropsSidebarItem {
 	current_module: App.ModuleType
 	theme: GlobalModel['setting']['theme']
 	show_bar_title: GlobalModel['setting']['show_bar_title']
-	icon_weight: IconProps['weight']
 	item: App.Module
 	active: boolean
 }

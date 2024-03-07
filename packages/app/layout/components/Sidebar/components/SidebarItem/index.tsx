@@ -10,7 +10,7 @@ import type { MouseEvent } from 'react'
 import type { IPropsSidebarItem } from '../../../../types'
 
 const Index = (props: IPropsSidebarItem) => {
-	const { current_module, show_bar_title, icon_weight, item, active } = props
+	const { current_module, show_bar_title, item, active } = props
 	const { t } = useTranslation()
 
 	const exitApp = useMemoizedFn((e: MouseEvent<HTMLAnchorElement>) => {
@@ -33,7 +33,12 @@ const Index = (props: IPropsSidebarItem) => {
 			to={item.path}
 			onContextMenu={exitApp}
 		>
-			<ModuleIcon className='icon_bar' type={item.title} size={27} weight={icon_weight}></ModuleIcon>
+			<ModuleIcon
+				className='icon_bar'
+				type={item.title}
+				size={27}
+				weight={active ? 'duotone' : 'regular'}
+			></ModuleIcon>
 			<When condition={show_bar_title}>
 				<span className='sidebar_item_title'>{t(`translation:modules.${item.title}`)}</span>
 			</When>

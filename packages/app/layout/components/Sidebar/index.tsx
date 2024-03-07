@@ -46,7 +46,7 @@ const Index = (props: IPropsSidebar) => {
 					<div className='sidebar_top_wrap flex flex_column align_center' ref={ref_items_wrap}>
 						{apps.map(item => (
 							<SidebarItem
-								{...{ current_module, theme, show_bar_title, icon_weight, item }}
+								{...{ current_module, theme, show_bar_title, item }}
 								active={Boolean(actives.find(i => i.app === item.title))}
 								key={item.title}
 							></SidebarItem>

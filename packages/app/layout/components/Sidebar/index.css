@@ -25,7 +25,6 @@
 
 			&.dark {
 				.sidebar_item {
-					&:hover,
 					&.active {
 						svg {
 							path:first-child {
@@ -71,7 +70,9 @@
 				&:hover,
 				&.active {
 					opacity: 1;
+				}
 
+				&.active {
 					svg {
 						path:first-child {
 							fill: var(--color_main);

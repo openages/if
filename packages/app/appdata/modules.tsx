@@ -1,3 +1,5 @@
+import type { App } from '@/types'
+
 const typed_nav_items = [
 	{
 		id: 'todo',
@@ -93,4 +95,27 @@ export default typed_nav_items.map(item => item)
 export const module_default_icon = {
 	pomo: ':timer_clock:',
 	schedule: ':date:'
+}
+
+export const module_group = {
+	content: ['todo', 'memo', 'note', 'page', 'whiteboard', 'ppt'],
+	plan: ['flow', 'schedule', 'pomo', 'flag'],
+	data: ['table', 'form', 'chart', 'api', 'dataflow', 'database'],
+	setting: ['setting']
+}
+
+export const getGroupModules = (modules: App.Modules) => {
+	return Object.keys(module_group).reduce(
+		(total, group_name: keyof typeof module_group) => {
+			const groups = module_group[group_name]
+
+			total.push({
+				name: group_name,
+				items: modules.filter(item => groups.includes(item.title))
+			})
+
+			return total
+		},
+		[] as Array<{ name: keyof typeof module_group; items: App.Modules }>
+	)
 }

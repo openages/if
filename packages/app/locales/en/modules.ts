@@ -2,7 +2,7 @@ export default {
 	todo: 'Todo',
 	memo: 'Memo',
 	note: 'Note',
-	Page: 'Page',
+	page: 'Page',
 	workflow: 'Workflow',
 	whiteboard: 'Board',
 	ppt: 'PPT',

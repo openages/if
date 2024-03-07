@@ -17,18 +17,20 @@ export interface IProps {
 const Index = (props: IProps) => {
 	const { item, index, changeIsFixed } = props
 	const { t } = useTranslation()
-	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
-		id: item.id,
-		data: { index }
-	})
+	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } = useSortable(
+		{
+			id: item.id,
+			data: { index }
+		}
+	)
 
 	return (
 		<div
-			className='app_module_item_wrap border_box'
+			className={$cx('app_module_item_wrap w_100 border_box', isDragging && 'isDragging')}
 			ref={setNodeRef}
 			style={{ transform: CSS.Transform.toString(transform), transition }}
 		>
-			<div className='app_module_item w_100 border_box flex flex_column align_center relative'>
+			<div className='app_module_item w_100 border_box flex align_center justify_between relative'>
 				<div
 					className='btn_drag flex justify_end align_center absolute'
 					ref={setActivatorNodeRef}
@@ -37,18 +39,11 @@ const Index = (props: IProps) => {
 				>
 					<DotsSixVertical size={16} weight='bold'></DotsSixVertical>
 				</div>
-				<div className='module_icon w_100 border_box flex flex_column align_center'>
-					<ModuleIcon type={item.title} size={36} weight='duotone'></ModuleIcon>
-					<span className='name mt_4'>{t(`translation:modules.${item.title}`)}</span>
+				<div className='module_icon w_100 border_box flex align_center'>
+					<ModuleIcon type={item.title} size={24} weight='duotone'></ModuleIcon>
+					<span className='name ml_12'>{t(`translation:modules.${item.title}`)}</span>
 				</div>
-				<div className='toggle_wrap w_100 border_box flex justify_between align_center'>
-					<span className='label'>{t('translation:setting.Menu.fixed')}</span>
-					<Switch
-						size='small'
-						checked={item.fixed}
-						onChange={v => changeIsFixed(index, v)}
-					></Switch>
-				</div>
+				<Switch size='small' checked={item.fixed} onChange={v => changeIsFixed(index, v)}></Switch>
 			</div>
 		</div>
 	)

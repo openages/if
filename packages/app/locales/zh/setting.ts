@@ -44,9 +44,6 @@ export default {
 	ColorSelector: {
 		title: '主题色'
 	},
-	Menu: {
-		fixed: '固定'
-	},
 	Screenlock: {
 		title: '锁屏',
 		password: {

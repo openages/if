@@ -5,33 +5,20 @@ import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 
+import { getGroupModules } from '@/appdata'
 import { ModuleIcon } from '@/components'
 
-import group from './group'
 import styles from './index.css'
 
 import type { App } from '@/types'
 import type { IPropsAppMenu } from '../../types'
+
 const Index = (props: IPropsAppMenu) => {
 	const { visible, app_modules, actives, visible_dirtree, onClose } = props
 	const { t } = useTranslation()
 	const { pathname } = useLocation()
 
-	const group_items = useMemo(() => {
-		return Object.keys(group).reduce(
-			(total, group_name: keyof typeof group) => {
-				const groups = group[group_name]
-
-				total.push({
-					name: group_name,
-					items: app_modules.filter(item => groups.includes(item.title))
-				})
-
-				return total
-			},
-			[] as Array<{ name: keyof typeof group; items: App.Modules }>
-		)
-	}, [app_modules])
+	const group_items = useMemo(() => getGroupModules(app_modules), [app_modules])
 
 	const getStatus = useMemoizedFn((item: App.Module) => {
 		const is_current = pathname === item.path
