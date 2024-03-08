@@ -19,8 +19,8 @@ import type { IPropsTodos } from '../../types'
 const Index = (props: IPropsTodos) => {
 	const {
 		items,
-		tags,
 		angles: _angles,
+		tags,
 		relations,
 		drag_disabled,
 		zen_mode,

@@ -1,6 +1,7 @@
 export { default as Filter } from './Filter'
 export { default as RenderStatus } from './RenderStatus'
 export { default as RenderText } from './RenderText'
+export { default as RenderAngle } from './RenderAngle'
 export { default as RenderSchedule } from './RenderSchedule'
 export { default as RenderLevel } from './RenderLevel'
 export { default as RenderTags } from './RenderTags'

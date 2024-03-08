@@ -59,16 +59,25 @@
 	color: var(--color_text_light);
 	pointer-events: none;
 
-	.RenderText {
-		color: var(--color_text_light);
-	}
-
+	.RenderAngle,
 	.RenderTags,
 	.RenderLevel,
 	.RenderSchedule,
 	.RenderChildren,
 	.RenderRemark {
 		opacity: var(--disable_opacity);
+	}
+
+	.RenderText {
+		color: var(--color_text_light);
+	}
+
+	.RenderAngle {
+		:global {
+			.if-select {
+				pointer-events: none;
+			}
+		}
 	}
 
 	.DateTime {
@@ -87,15 +96,8 @@
 }
 
 .done {
-	.RenderStatus {
-		opacity: var(--disable_opacity);
-
-		&:hover {
-			opacity: 1;
-		}
-	}
-
 	.RenderText,
+	.RenderAngle,
 	.RenderTags,
 	.RenderLevel,
 	.DateTime,
@@ -107,6 +109,24 @@
 		color: var(--color_text_light);
 		pointer-events: none;
 		opacity: var(--disable_opacity);
+	}
+
+	.RenderStatus {
+		opacity: var(--disable_opacity);
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
+	.RenderAngle {
+		:global {
+			.if-select {
+				.if-select-selector {
+					color: var(--color_text_light);
+				}
+			}
+		}
 	}
 
 	.DateTime {
@@ -121,17 +141,28 @@
 }
 
 .linked {
-	.RenderStatus {
-		color: var(--color_relation_group);
-		border-radius: 50%;
-	}
-
+	.RenderAngle,
 	.DateTime,
 	.RenderCycle,
 	.RenderSchedule {
 		color: var(--color_text_light);
 		pointer-events: none;
 		opacity: var(--disable_opacity);
+	}
+
+	.RenderStatus {
+		color: var(--color_relation_group);
+		border-radius: 50%;
+	}
+
+	.RenderAngle {
+		:global {
+			.if-select {
+				.if-select-selector {
+					color: var(--color_text_light);
+				}
+			}
+		}
 	}
 }
 
@@ -150,6 +181,14 @@
 	font-size: 12px;
 	text-overflow: ellipsis;
 	background-color: transparent;
+}
+
+.RenderAngle {
+	:global {
+		.if-select {
+			--height: 32px;
+		}
+	}
 }
 
 .RenderTagsViewer {

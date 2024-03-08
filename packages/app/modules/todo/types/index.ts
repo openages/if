@@ -131,8 +131,8 @@ export interface IPropsTodoItem {
 	sortable_props?: SortableProps
 	item: Todo.Todo
 	index: number
-	tags: Model['setting']['setting']['tags']
 	angles: Model['setting']['setting']['angles']
+	tags: Model['setting']['setting']['tags']
 	drag_disabled: boolean
 	zen_mode: Model['zen_mode']
 	open_items: Model['open_items']
@@ -195,6 +195,7 @@ export interface IPropsKanban extends Omit<IPropsTodos, 'items'> {
 
 export interface IPropsTable extends Pick<IPropsTodos, 'relations' | 'showDetailModal' | 'remove'> {
 	items: Model['items']
+	angles: Model['setting']['setting']['angles']
 	tags: Model['setting']['setting']['tags']
 	table_pagination: Model['table_pagination']
 	visible_table_filter: Model['visible_table_filter']
@@ -207,6 +208,7 @@ export interface IPropsTable extends Pick<IPropsTodos, 'relations' | 'showDetail
 
 export interface IPropsTableFilter {
 	visible_table_filter: Model['visible_table_filter']
+	angles: Model['setting']['setting']['angles']
 	tags: Model['setting']['setting']['tags']
 	onTableSearch: Model['onTableSearch']
 }
@@ -249,6 +251,7 @@ export interface IPropsDetail {
 	current_detail_index: Model['current_detail_index']
 	current_detail_item: Model['current_detail_item']
 	relations: Todo.Setting['relations']
+	angles: Model['setting']['setting']['angles']
 	tags: Model['setting']['setting']['tags']
 	update: Model['update']
 	tab: Model['tab']

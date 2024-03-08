@@ -98,8 +98,8 @@ const Index = ({ id }: IProps) => {
 
 	const props_todos: IPropsTodos = {
 		items,
-		tags,
 		angles: move_to_angles,
+		tags,
 		relations,
 		drag_disabled: x.is_filtered,
 		zen_mode: x.zen_mode,
@@ -126,6 +126,7 @@ const Index = ({ id }: IProps) => {
 
 	const props_table: IPropsTable = {
 		items,
+		angles,
 		tags,
 		table_pagination: $copy(x.table_pagination),
 		visible_table_filter: x.visible_table_filter,
@@ -171,6 +172,7 @@ const Index = ({ id }: IProps) => {
 		current_detail_index: $copy(x.current_detail_index),
 		current_detail_item,
 		relations,
+		angles,
 		tags,
 		update: useMemoizedFn(x.update),
 		tab: useMemoizedFn(x.tab),

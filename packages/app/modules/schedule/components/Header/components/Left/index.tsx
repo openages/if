@@ -15,6 +15,8 @@ const Index = (props: IPropsHeaderLeft) => {
 	const onChangeView = useMemoizedFn((e: MouseEvent<HTMLDivElement>) => {
 		let target = e.target as HTMLDivElement
 
+		if (!target?.parentElement) return
+
 		while (!target?.classList?.contains('btn_std')) {
 			target = target.parentElement as HTMLDivElement
 		}
@@ -24,6 +26,8 @@ const Index = (props: IPropsHeaderLeft) => {
 
 	const onChangeScale = useMemoizedFn((e: MouseEvent<HTMLDivElement>) => {
 		let target = e.target as HTMLDivElement
+
+		if (!target?.parentElement) return
 
 		while (!target?.classList?.contains('btn_std')) {
 			target = target.parentElement as HTMLDivElement

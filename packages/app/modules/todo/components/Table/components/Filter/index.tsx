@@ -12,7 +12,7 @@ import type { IPropsTableFilter } from '../../../../types'
 const { useForm, Item } = Form
 
 const Index = (props: IPropsTableFilter) => {
-	const { visible_table_filter, tags, onTableSearch } = props
+	const { visible_table_filter, angles, tags, onTableSearch } = props
 	const [form] = useForm()
 	const { t } = useTranslation()
 	const status_options = useOptions(options_status, 'translation:todo.common.status')
@@ -57,6 +57,17 @@ const Index = (props: IPropsTableFilter) => {
 									suffixIcon={null}
 									placeholder={t('translation:todo.common.status.label')}
 									options={status_options}
+								></Select>
+							</Item>
+							<Item name='angle_id'>
+								<Select
+									className='select'
+									allowClear
+									virtual={false}
+									suffixIcon={null}
+									placeholder={t('translation:todo.Archive.filter.angle')}
+									fieldNames={{ label: 'text', value: 'id' }}
+									options={angles}
 								></Select>
 							</Item>
 							<Item name='tag_id'>

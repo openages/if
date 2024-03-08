@@ -9,6 +9,7 @@ import { useDeepMemo } from '@openages/stk/react'
 
 import {
 	Filter,
+	RenderAngle,
 	RenderArchive,
 	RenderChildren,
 	RenderCreateAt,
@@ -36,6 +37,7 @@ const Index = (props: IPropsTable) => {
 	const {
 		relations,
 		items,
+		angles,
 		tags,
 		table_pagination,
 		visible_table_filter,
@@ -100,6 +102,14 @@ const Index = (props: IPropsTable) => {
 					align: 'left',
 					fixed: 'left',
 					component: RenderText
+				},
+				{
+					title: t('translation:todo.Archive.filter.angle'),
+					dataIndex: 'angle_id',
+					width: 72,
+					align: 'center',
+					extra: { angles },
+					component: RenderAngle
 				},
 				{
 					title: t('translation:todo.Header.options.tags'),
@@ -195,7 +205,7 @@ const Index = (props: IPropsTable) => {
 					onAction
 				}
 			] as Array<IPropsFormTableColumn>,
-		[tags]
+		[angles, tags]
 	)
 
 	const pagination = {
@@ -209,6 +219,7 @@ const Index = (props: IPropsTable) => {
 
 	const props_filter: IPropsTableFilter = {
 		visible_table_filter,
+		angles,
 		tags,
 		onTableSearch
 	}

@@ -72,6 +72,7 @@
 		&:hover {
 			color: var(--color_bg) !important;
 			border-color: var(--color_text) !important;
+			background-color: var(--color_text) !important;
 			outline: 3px solid var(--color_border);
 		}
 	}

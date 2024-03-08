@@ -713,6 +713,10 @@ export default class Index {
 			selector['text'] = { $regex: `.*${values.text}.*`, $options: 'i' }
 		}
 
+		if (values.angle_id) {
+			selector['angle_id'] = values.angle_id
+		}
+
 		if (values.tag_id) {
 			selector['tag_ids'] = { $elemMatch: { $in: [values['tag_id']] } }
 		}
