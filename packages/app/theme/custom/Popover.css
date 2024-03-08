@@ -58,7 +58,8 @@
 			}
 		}
 
-		&.if-popover-placement-leftTop {
+		&.if-popover-placement-leftTop,
+		&.if-popover-placement-left {
 			.if-popover-arrow {
 				left: 189px !important;
 			}

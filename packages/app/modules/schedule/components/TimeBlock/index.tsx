@@ -72,7 +72,7 @@ const Index = (props: IPropsTimeBlock) => {
 			closePopover()
 			setVisibleDetail(false)
 		}
-	}, [month_mode])
+	}, [])
 
 	useDeepEffect(() => {
 		let watcher = null as Subscription
@@ -164,10 +164,10 @@ const Index = (props: IPropsTimeBlock) => {
 			open={visible_detail}
 			content={<TimeBlockDetail item={item} tags={tags} updateTimeBlock={updateTimeBlock} />}
 			zIndex={100}
-			overlayClassName={$cx('border_popover', month_mode && 'month_mode_timeblock_popover')}
+			overlayClassName={$cx('border_popover', 'month_mode_timeblock_popover')}
 			destroyTooltipOnHide
-			placement={month_mode ? 'right' : 'rightTop'}
-			getPopupContainer={month_mode ? () => document.body : null}
+			placement='right'
+			getPopupContainer={() => document.body}
 		>
 			<Dropdown
 				destroyPopupOnHide
@@ -184,6 +184,7 @@ const Index = (props: IPropsTimeBlock) => {
 						styles._local,
 						tag_styles['--tag_color'] && styles.has_tag,
 						isDragging && styles.isDragging,
+						month_mode && visible_detail && styles.visible_detail,
 						...look.class
 					)}
 					style={{
@@ -211,7 +212,12 @@ const Index = (props: IPropsTimeBlock) => {
 						ref={!month_mode ? setActivatorNodeRef : null}
 						{...listeners}
 					>
-						<div className='text_scroll_wrap w_100'>
+						<div
+							className={$cx(
+								'text_scroll_wrap w_100',
+								month_mode && status && 'has_status'
+							)}
+						>
 							<div
 								className='text_wrap w_100 border_box'
 								ref={input}
@@ -236,6 +242,9 @@ const Index = (props: IPropsTimeBlock) => {
 							</div>
 						)}
 					</div>
+					{month_mode && status && (
+						<span className='status flex justify_center align_center absolute'>{status}</span>
+					)}
 				</div>
 			</Dropdown>
 		</Popover>

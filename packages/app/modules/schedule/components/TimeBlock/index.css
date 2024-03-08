@@ -104,16 +104,23 @@
 	&.month_mode {
 		height: 18px;
 		border-radius: 0;
-		margin-bottom: 1px;
+		margin-bottom: 2px;
+		flex-direction: row;
+		align-items: center;
 
-		&:last-child {
-			margin-bottom: 0;
+		&:hover,
+		&.visible_detail {
+			:global {
+				.status {
+					opacity: 0;
+				}
+			}
 		}
 
 		&.has_tag {
 			:global {
 				.timeblock_content_wrap {
-					background-color: rgba(var(--tag_color), 0.18);
+					background-color: rgba(var(--tag_color), 0.12);
 				}
 			}
 		}
@@ -129,17 +136,34 @@
 			}
 
 			.timeblock_content_wrap {
-				padding: 0 6px;
+				padding: 0 4px;
 				border: none;
 				border-radius: 0;
 				cursor: unset;
 				background-color: var(--color_bg_1);
 
+				.text_scroll_wrap {
+					&.has_status {
+						width: calc(100% - 18px);
+					}
+				}
+
 				.text_wrap {
 					height: 18px;
 					line-height: 18px;
+					font-weight: normal;
 					white-space: nowrap;
 				}
+			}
+
+			.status {
+				right: 0px;
+				width: 18px;
+				height: 100%;
+				font-size: 10px;
+				line-height: 1;
+				color: var(--color_text_light);
+				user-select: none;
 			}
 		}
 	}

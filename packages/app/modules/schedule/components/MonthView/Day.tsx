@@ -28,15 +28,13 @@ const Index = (props: IPropsMonthViewDay) => {
 					styles.header_wrap
 				)}
 			>
-				<div className='flex align_center'>
-					<span className='date'>{day_info.date}</span>
+				<span className='date'>{day_info.date}</span>
+				<div className={$cx('h_100 flex align_center', styles.extra_wrap)}>
 					{day.length > 0 && (
-						<span className='counts border_box flex justify_center align_center ml_6'>
+						<span className='counts border_box flex justify_center align_center'>
 							{day.length}
 						</span>
 					)}
-				</div>
-				<div className={styles.extra_wrap}>
 					<DayExtra item={day_info}></DayExtra>
 				</div>
 				<div
@@ -46,7 +44,7 @@ const Index = (props: IPropsMonthViewDay) => {
 					)}
 					onClick={onJump}
 				>
-					<ArrowRight size={12}></ArrowRight>
+					<ArrowRight size={10}></ArrowRight>
 				</div>
 			</div>
 			{day.length > 0 && (

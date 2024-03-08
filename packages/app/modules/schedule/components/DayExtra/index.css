@@ -4,7 +4,6 @@
 	:global {
 		.holiday {
 			color: var(--color_success);
-			margin-left: 6px;
 			font-size: 10px;
 		}
 

@@ -6,7 +6,6 @@ import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { match, P } from 'ts-pattern'
 import { container as model_container } from 'tsyringe'
 
-import { useGlobal } from '@/context/app'
 import { useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
 import { restrictToFirstScrollableAncestor } from '@dnd-kit/modifiers'
 
@@ -36,17 +35,14 @@ import type {
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => model_container.resolve(Model))
-	const global = useGlobal()
 	const container = useRef<HTMLDivElement>(null)
 	const scanline = useRef<HTMLDivElement>(null)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 12 } }))
-	const stack_columns = $copy(global.stack.columns)
 	const days = $copy(x.days)
 	const calendar_days = $copy(x.calendar_days)
 	const tags = $copy(x.setting?.setting?.tags || [])
 	const timeblock_copied = $copy(x.timeblock_copied)
 	const today_index = useMemo(() => days.findIndex(item => item?.value?.isToday()), [days])
-	const active = useMemo(() => global.stack.find(id)?.view?.active, [id, stack_columns])
 
 	useLayoutEffect(() => {
 		x.init({ id })
