@@ -70,7 +70,7 @@
 						}
 					}
 
-					.btn_lock {
+					.btn_action {
 						width: 38px;
 						height: 38px;
 						border-radius: 50%;
@@ -78,6 +78,18 @@
 
 						&:hover {
 							outline: 3px solid var(--color_border_soft);
+						}
+					}
+
+					.btn_auto_theme {
+						&.active {
+							svg {
+								opacity: 1;
+							}
+						}
+
+						svg {
+							opacity: 0.3;
 						}
 					}
 				}

@@ -207,9 +207,12 @@ const Index = () => {
 						</div>
 						<div className='value_wrap flex align_center'>
 							{reset_mode && (
-								<Tooltip title={t('translation:app.screenlock.lock')}>
+								<Tooltip
+									title={t('translation:app.screenlock.lock')}
+									mouseEnterDelay={0.72}
+								>
 									<button
-										className='btn_lock flex justify_center align_center clickable mr_12'
+										className='btn_action flex justify_center align_center clickable mr_12'
 										onClick={lock}
 									>
 										<Power size={18}></Power>

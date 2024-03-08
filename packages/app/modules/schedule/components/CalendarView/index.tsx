@@ -1,5 +1,6 @@
 import ContextMenu from './ContextMenu'
 import Day from './Day'
+import styles from './index.css'
 
 import type { IPropsCalendarView } from '../../types'
 
@@ -7,6 +8,7 @@ const Index = (props: IPropsCalendarView) => {
 	const {
 		container,
 		view,
+		scale,
 		calendar_days,
 		timeblock_copied,
 		tags,
@@ -20,7 +22,7 @@ const Index = (props: IPropsCalendarView) => {
 	} = props
 
 	return (
-		<div className={$cx('w_100 h_100 flex')}>
+		<div className={$cx('w_100 h_100 flex', scale === 'day' && styles.day_scale)}>
 			{calendar_days.map((day, index) => (
 				<Day
 					container={container}

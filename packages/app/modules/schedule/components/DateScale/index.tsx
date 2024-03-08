@@ -14,7 +14,14 @@ const Index = (props: IPropsDateScale) => {
 	const target_weekdays = useMemo(() => (scale === 'month' ? getStaticWeekdays() : days), [scale, days])
 
 	return (
-		<div className={$cx('w_100 border_box flex', styles._local, !show_time_scale && styles.hidden_time_scale)}>
+		<div
+			className={$cx(
+				'w_100 border_box flex',
+				styles._local,
+				!show_time_scale && styles.hidden_time_scale,
+				scale === 'day' && styles.day_scale
+			)}
+		>
 			{show_time_scale && (
 				<div className='btn_now_wrap h_100 border_box flex justify_center align_center'>
 					<div

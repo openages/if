@@ -20,6 +20,16 @@
 	}
 }
 
+.day_scale {
+	:global {
+		.hours_wrap {
+			.hour_item {
+				background-color: unset !important;
+			}
+		}
+	}
+}
+
 .ContextMenu {
 	min-width: 90px;
 	font-size: 12px;

@@ -16,6 +16,10 @@
 			padding: 9px;
 			background-color: rgba(var(--color_text_rgb), 0.81);
 			backdrop-filter: var(--blur);
+
+			.if-modal-body {
+				padding: 0;
+			}
 		}
 
 		.switch_items_wrap {

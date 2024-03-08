@@ -1,4 +1,5 @@
-import { Radio, Select } from 'antd'
+import { useMemoizedFn } from 'ahooks'
+import { Radio, Select, Tooltip } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -6,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { clearStorage } from '@/actions/global'
 import { locale_options, themes } from '@/appdata'
 import { useGlobal } from '@/context/app'
-import { Circuitry, Layout, Palette, TextAa, Translate } from '@phosphor-icons/react'
+import { Circuitry, Layout, Moon, Palette, Sun, TextAa, Translate } from '@phosphor-icons/react'
 
 const { Group: RadioGroup } = Radio
 
@@ -51,6 +52,25 @@ const Index = () => {
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
+						<Tooltip
+							title={t('translation:setting.Normal.theme.auto_theme')}
+							mouseEnterDelay={0.72}
+							overlayStyle={{ width: 180 }}
+						>
+							<button
+								className={$cx(
+									'btn_auto_theme btn_action flex justify_center align_center clickable mr_12',
+									global.setting.auto_theme && 'active'
+								)}
+								onClick={global.setting.toggleAutoTheme}
+							>
+								{global.setting.theme === 'light' ? (
+									<Moon size={18}></Moon>
+								) : (
+									<Sun size={18}></Sun>
+								)}
+							</button>
+						</Tooltip>
 						<Select
 							className='select'
 							value={global.setting.theme}

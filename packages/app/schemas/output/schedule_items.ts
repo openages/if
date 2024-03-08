@@ -137,6 +137,14 @@ export default {
                         "multipleOf": 1,
                         "minimum": 1,
                         "maximum": 9007199254740991
+                  },
+                  "fixed_scale": {
+                        "type": "string",
+                        "enum": [
+                              "day",
+                              "week",
+                              "month"
+                        ]
                   }
             },
             "required": [
@@ -158,6 +166,9 @@ export default {
                   },
                   "length": {
                         "type": "number"
+                  },
+                  "past": {
+                        "type": "boolean"
                   },
                   "id": {
                         "type": "string",
@@ -199,6 +210,14 @@ export default {
                         "multipleOf": 1,
                         "minimum": 1,
                         "maximum": 9007199254740991
+                  },
+                  "fixed_scale": {
+                        "type": "string",
+                        "enum": [
+                              "day",
+                              "week",
+                              "month"
+                        ]
                   }
             },
             "required": [
@@ -206,6 +225,7 @@ export default {
                   "file_id",
                   "id",
                   "length",
+                  "past",
                   "start",
                   "start_time",
                   "tag",
@@ -224,6 +244,9 @@ export default {
                         },
                         "length": {
                               "type": "number"
+                        },
+                        "past": {
+                              "type": "boolean"
                         },
                         "id": {
                               "type": "string",
@@ -265,6 +288,14 @@ export default {
                               "multipleOf": 1,
                               "minimum": 1,
                               "maximum": 9007199254740991
+                        },
+                        "fixed_scale": {
+                              "type": "string",
+                              "enum": [
+                                    "day",
+                                    "week",
+                                    "month"
+                              ]
                         }
                   },
                   "required": [
@@ -272,6 +303,7 @@ export default {
                         "file_id",
                         "id",
                         "length",
+                        "past",
                         "start",
                         "start_time",
                         "tag",
@@ -293,6 +325,9 @@ export default {
                               },
                               "length": {
                                     "type": "number"
+                              },
+                              "past": {
+                                    "type": "boolean"
                               },
                               "id": {
                                     "type": "string",
@@ -334,6 +369,14 @@ export default {
                                     "multipleOf": 1,
                                     "minimum": 1,
                                     "maximum": 9007199254740991
+                              },
+                              "fixed_scale": {
+                                    "type": "string",
+                                    "enum": [
+                                          "day",
+                                          "week",
+                                          "month"
+                                    ]
                               }
                         },
                         "required": [
@@ -341,6 +384,7 @@ export default {
                               "file_id",
                               "id",
                               "length",
+                              "past",
                               "start",
                               "start_time",
                               "tag",

@@ -8,11 +8,11 @@ export default class GlobalModel {
 	constructor(
 		public locale: Locale,
 		public stack: Stack,
+		public setting: Setting,
 		public db: DB,
 		public screenlock: Screenlock,
 		public auth: Auth,
 		public layout: Layout,
-		public setting: Setting,
 		public app: App,
 		public shortcuts: Shortcuts,
 		public search: Search,
@@ -24,6 +24,7 @@ export default class GlobalModel {
 	async init(unlock?: boolean) {
 		this.on()
 		this.stack.init()
+		this.setting.init()
 
 		await this.db.init()
 		await this.screenlock.init(unlock)
@@ -51,12 +52,12 @@ export default class GlobalModel {
 	}
 
 	off() {
-		this.db.off()
 		this.locale.off()
-		this.layout.off()
-		this.setting.off()
 		this.stack.off()
+		this.setting.off()
+		this.db.off()
 		this.screenlock.off()
+		this.layout.off()
 		this.app.off()
 		this.shortcuts.off()
 		this.search.off()

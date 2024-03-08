@@ -33,6 +33,7 @@ export namespace Schedule {
 		 * @maximum 9007199254740991
 		 * */
 		end_time: number
+		fixed_scale?: 'day' | 'week' | 'month'
 	}
 
 	export type CalendarItem = Item & { start: number; length: number; past: boolean }

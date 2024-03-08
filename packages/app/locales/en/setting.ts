@@ -19,7 +19,8 @@ export default {
 			options: {
 				light: 'Light',
 				dark: 'Dark'
-			}
+			},
+			auto_theme: 'Auto theme, light theme from 6AM to 6PM, dark theme the rest of the time'
 		},
 		show_bar_title: {
 			title: 'Bar Title',

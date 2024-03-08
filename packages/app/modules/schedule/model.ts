@@ -21,7 +21,7 @@ import {
 	removeTimeBlock,
 	updateTimeBlock
 } from './services'
-import { collisionDetection, getMonthDays, getStartByY, getStartEnd, getThreeDays, getWeekdays } from './utils'
+import { collisionDetection, getDayDetails, getMonthDays, getStartByY, getStartEnd, getWeekdays } from './utils'
 
 import type { Scale, SettingValues, ChangedSettingValues } from './types/model'
 import type { Schedule, CleanTime } from '@/types'
@@ -34,7 +34,7 @@ import type { DragMoveEvent, DragEndEvent } from '@dnd-kit/core'
 export default class Index {
 	id = ''
 	view = 'calendar' as Schedule.Item['type']
-	scale = 'month' as Scale
+	scale = 'day' as Scale
 	current = dayjs()
 	days = [] as Array<DayDetail>
 	disable_watcher = false
@@ -91,7 +91,7 @@ export default class Index {
 
 	getDays() {
 		this.days = match(this.scale)
-			.with('day', () => getThreeDays(this.current))
+			.with('day', () => [getDayDetails(this.current)])
 			.with('week', () => getWeekdays(this.current))
 			.with('month', () => getMonthDays(this.current))
 			.exhaustive()

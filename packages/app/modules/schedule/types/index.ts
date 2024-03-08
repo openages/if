@@ -59,6 +59,7 @@ export interface IPropsDayExtra {
 export interface IPropsCalendarView {
 	container: MutableRefObject<HTMLDivElement>
 	view: Model['view']
+	scale: Model['scale']
 	calendar_days: Model['calendar_days']
 	timeblock_copied: Model['timeblock_copied']
 	tags: Schedule.Setting['tags']

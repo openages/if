@@ -19,7 +19,8 @@ export default {
 			options: {
 				light: '浅色',
 				dark: '深色'
-			}
+			},
+			auto_theme: '自动切换主题，6点到18点浅色主题，其余时间深色主题'
 		},
 		show_bar_title: {
 			title: '导航栏标题',

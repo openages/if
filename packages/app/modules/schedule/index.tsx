@@ -82,6 +82,7 @@ const Index = ({ id }: IProps) => {
 	const props_calendar_view: IPropsCalendarView = {
 		container,
 		view: x.view,
+		scale: x.scale,
 		calendar_days,
 		timeblock_copied,
 		tags,
@@ -148,9 +149,10 @@ const Index = ({ id }: IProps) => {
 							{x.show_time_scale && <TimeScale></TimeScale>}
 							<div
 								className={$cx(
-									'relative',
+									'border_box relative',
 									styles.view,
-									x.show_time_scale && styles.show_time_scale
+									x.show_time_scale && styles.show_time_scale,
+									x.scale === 'day' && styles.day_scale
 								)}
 								style={{ height: x.show_time_scale ? 1152 : 'auto' }}
 							>
