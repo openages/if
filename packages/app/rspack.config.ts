@@ -1,5 +1,6 @@
 import { resolve } from 'path'
 
+import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
 import { defineConfig } from '@rspack/cli'
 import { CopyRspackPlugin, HtmlRspackPlugin } from '@rspack/core'
 import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
@@ -13,6 +14,7 @@ const plugins_dev = [
 	})
 ]
 const plugins_prod = [
+	new RsdoctorRspackPlugin(),
 	new CopyRspackPlugin({
 		patterns: [{ from: './public', to: './', globOptions: { ignore: ['**/index.html'] } }]
 	})
@@ -32,7 +34,10 @@ module.exports = defineConfig({
 	},
 	resolve: {
 		extensions: ['.tsx', '.ts', '.js'],
-		tsConfigPath: resolve(__dirname, 'tsconfig.json')
+		tsConfigPath: resolve(__dirname, 'tsconfig.json'),
+		alias: process.env.DOCTOR && {
+			tslib: resolve(__dirname, 'node_modules/tslib')
+		}
 	},
 	devServer: {
 		compress: false
