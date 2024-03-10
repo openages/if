@@ -13,6 +13,7 @@ const Index = (props: IPropsMonthView) => {
 					day={day}
 					index={index}
 					tags={tags}
+					fixed_view={view === 'fixed'}
 					updateTimeBlock={updateTimeBlock}
 					removeTimeBlock={removeTimeBlock}
 					copyTimeBlock={copyTimeBlock}

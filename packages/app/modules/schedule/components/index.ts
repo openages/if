@@ -1,4 +1,5 @@
 export { default as SettingsModal } from './SettingsModal'
+export { default as ContextMenu } from './ContextMenu'
 export { default as Header } from './Header'
 export { default as TaskPanel } from './TaskPanel'
 export { default as DateScale } from './DateScale'

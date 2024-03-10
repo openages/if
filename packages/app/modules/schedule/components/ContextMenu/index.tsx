@@ -18,11 +18,9 @@ const Index = (props: IPropsCalendarContextMenu) => {
 	})
 
 	const onPasteTimeBlock = useMemoizedFn(({ props }) => {
-		const { index, start } = props
+		const { index, start, length } = props
 
-		const target_length = start + timeblock_copied.length >= 72 ? 72 - start : timeblock_copied.length
-
-		addTimeBlock({ type: view, index, start, length: target_length, info: timeblock_copied })
+		addTimeBlock({ type: view, index, start, length, info: timeblock_copied })
 	})
 
 	const onHidden = useMemoizedFn((v: boolean) => {
@@ -32,7 +30,7 @@ const Index = (props: IPropsCalendarContextMenu) => {
 	})
 
 	return (
-		<Menu id='timeblock_context_menu' className={styles.ContextMenu} onVisibilityChange={onHidden}>
+		<Menu id='timeblock_context_menu' className={styles._local} onVisibilityChange={onHidden}>
 			<Item onClick={onAddTimeBlock}>
 				<div className='menu_item flex align_center'>
 					<Plus className='icon mr_6' size={14}></Plus>

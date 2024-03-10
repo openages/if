@@ -16,6 +16,7 @@ import type { MouseEvent } from 'react'
 const Index = (props: IPropsCalendarViewDay) => {
 	const {
 		container,
+		view,
 		day,
 		counts,
 		index,
@@ -87,6 +88,7 @@ const Index = (props: IPropsCalendarViewDay) => {
 					tags={tags}
 					day_index={index}
 					timeblock_index={timeblock_index}
+					at_bottom={view === 'timeline'}
 					updateTimeBlock={updateTimeBlock}
 					removeTimeBlock={removeTimeBlock}
 					copyTimeBlock={copyTimeBlock}

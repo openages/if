@@ -11,6 +11,7 @@ import { restrictToFirstScrollableAncestor } from '@dnd-kit/modifiers'
 
 import {
 	CalendarView,
+	ContextMenu,
 	DateScale,
 	Header,
 	MonthView,
@@ -56,6 +57,11 @@ const Index = ({ id }: IProps) => {
 		scrollIntoView(scanline.current, { behavior: 'smooth', block: 'center' })
 	})
 
+	const addTimeBlock = useMemoizedFn(x.addTimeBlock)
+	const updateTimeBlock = useMemoizedFn(x.updateTimeBlock)
+	const removeTimeBlock = useMemoizedFn(x.removeTimeBlock)
+	const copyTimeBlock = useMemoizedFn(v => (x.timeblock_copied = v))
+
 	const props_header: IPropsHeader = {
 		view: x.view,
 		scale: x.scale,
@@ -73,6 +79,7 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_date_scale: IPropsDateScale = {
+		view: x.view,
 		scale: x.scale,
 		days,
 		show_time_scale: x.show_time_scale,
@@ -82,16 +89,13 @@ const Index = ({ id }: IProps) => {
 	const props_calendar_view: IPropsCalendarView = {
 		container,
 		view: x.view,
-		scale: x.scale,
 		calendar_days,
-		timeblock_copied,
 		tags,
 		today_index,
 		move_item: $copy(x.move_item),
-		addTimeBlock: useMemoizedFn(x.addTimeBlock),
-		updateTimeBlock: useMemoizedFn(x.updateTimeBlock),
-		removeTimeBlock: useMemoizedFn(x.removeTimeBlock),
-		copyTimeBlock: useMemoizedFn(v => (x.timeblock_copied = v)),
+		updateTimeBlock,
+		removeTimeBlock,
+		copyTimeBlock,
 		changeTimeBlockLength: useMemoizedFn(x.changeTimeBlockLength)
 	}
 
@@ -100,9 +104,9 @@ const Index = ({ id }: IProps) => {
 		days,
 		calendar_days,
 		tags,
-		updateTimeBlock: useMemoizedFn(x.updateTimeBlock),
-		removeTimeBlock: useMemoizedFn(x.removeTimeBlock),
-		copyTimeBlock: useMemoizedFn(v => (x.timeblock_copied = v)),
+		updateTimeBlock,
+		removeTimeBlock,
+		copyTimeBlock,
 		jump: useMemoizedFn(x.jump)
 	}
 
@@ -144,8 +148,15 @@ const Index = ({ id }: IProps) => {
 							x.visible_task_panel && styles.visible_task_panel
 						)}
 					>
-						<DateScale {...props_date_scale}></DateScale>
-						<div className={$cx('flex', styles.view_wrap)} ref={container}>
+						{x.show_date_scale && <DateScale {...props_date_scale}></DateScale>}
+						<div
+							className={$cx(
+								'flex',
+								styles.view_wrap,
+								x.show_date_scale && styles.show_date_scale
+							)}
+							ref={container}
+						>
 							{x.show_time_scale && <TimeScale></TimeScale>}
 							<div
 								className={$cx(
@@ -179,6 +190,11 @@ const Index = ({ id }: IProps) => {
 						)} */}
 				</DndContext>
 			</div>
+			<ContextMenu
+				view={x.view}
+				timeblock_copied={x.timeblock_copied}
+				addTimeBlock={addTimeBlock}
+			></ContextMenu>
 			<SettingsModal {...props_settings_modal}></SettingsModal>
 		</div>
 	)

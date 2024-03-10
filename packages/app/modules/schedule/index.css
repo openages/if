@@ -35,9 +35,13 @@
 }
 
 .view_wrap {
-	height: calc(100% - 36px);
+	height: 100%;
 	overflow-y: scroll;
 	outline: none;
+
+	&.show_date_scale {
+		height: calc(100% - 36px);
+	}
 
 	.view {
 		width: 100%;

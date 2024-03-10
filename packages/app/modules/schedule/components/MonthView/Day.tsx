@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import { useContextMenu } from 'react-contexify'
 
 import { ArrowRight } from '@phosphor-icons/react'
 
@@ -7,11 +8,21 @@ import TimeBlock from '../TimeBlock'
 import styles from './index.css'
 
 import type { IPropsMonthViewDay } from '../../types'
+import type { MouseEvent } from 'react'
 
 const Index = (props: IPropsMonthViewDay) => {
 	const { day_info, day, index, tags, updateTimeBlock, removeTimeBlock, copyTimeBlock, jump } = props
+	const { show } = useContextMenu({ id: 'timeblock_context_menu' })
 
 	const onJump = useMemoizedFn(() => jump(day_info.value))
+
+	const onContextMenu = useMemoizedFn((e: MouseEvent<HTMLDivElement>) => {
+		e.preventDefault()
+
+		$app.Event.emit('schedule/context_menu/hidden', index)
+
+		show({ event: e, props: { index, start: 0, length: 3 } })
+	})
 
 	return (
 		<div
@@ -21,6 +32,7 @@ const Index = (props: IPropsMonthViewDay) => {
 				!day_info.is_current_month && styles.not_current_month,
 				day_info.is_today && styles.is_today
 			)}
+			onContextMenu={onContextMenu}
 		>
 			<div
 				className={$cx(

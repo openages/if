@@ -33,6 +33,7 @@ export namespace Schedule {
 		 * @maximum 9007199254740991
 		 * */
 		end_time: number
+		/** @maxLength 6 */
 		fixed_scale?: 'day' | 'week' | 'month'
 	}
 

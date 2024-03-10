@@ -46,7 +46,7 @@ const Index = (props: IPropsHeader) => {
 	return (
 		<div className={$cx('w_100 border_box flex justify_center align_center relative', styles._local)}>
 			<Left {...props_left}></Left>
-			<Center {...props_center}></Center>
+			{view !== 'fixed' && <Center {...props_center}></Center>}
 			<Right {...props_right}></Right>
 		</div>
 	)

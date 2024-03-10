@@ -19,25 +19,3 @@
 		}
 	}
 }
-
-.day_scale {
-	:global {
-		.hours_wrap {
-			.hour_item {
-				background-color: unset !important;
-			}
-		}
-	}
-}
-
-.ContextMenu {
-	min-width: 90px;
-	font-size: 12px;
-
-	:global {
-		.menu_item {
-			padding: 0 6px;
-			min-height: 24px;
-		}
-	}
-}

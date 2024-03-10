@@ -1,4 +1,4 @@
-import { useEventListener, useMemoizedFn } from 'ahooks'
+import { useMemoizedFn } from 'ahooks'
 import { useEffect, useRef, useState } from 'react'
 
 import type Model from '../model'

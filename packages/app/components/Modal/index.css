@@ -9,7 +9,7 @@
 	top: 0;
 	left: 0;
 	background-color: rgba(0, 0, 0, 0.3);
-	z-index: 1000;
+	z-index: 1001;
 
 	&.on_body {
 		position: fixed;
@@ -20,7 +20,7 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: 1001;
+	z-index: 1002;
 	padding: 60px;
 	overflow-y: scroll;
 

@@ -30,6 +30,7 @@ const Index = (props: IPropsTimeBlock) => {
 		day_index,
 		timeblock_index,
 		month_mode,
+		at_bottom,
 		updateTimeBlock,
 		removeTimeBlock,
 		copyTimeBlock,
@@ -120,8 +121,9 @@ const Index = (props: IPropsTimeBlock) => {
 	})
 
 	const toggleVisibleDetail = useMemoizedFn(() => setVisibleDetail(!visible_detail))
+	const stopPropagationContextMenu = useMemoizedFn(e => e.stopPropagation())
 
-	const onContextMenu = useMemoizedFn(({ key }) => {
+	const onAction = useMemoizedFn(({ key }) => {
 		switch (key) {
 			case 'check':
 				toggleVisibleDetail()
@@ -163,10 +165,10 @@ const Index = (props: IPropsTimeBlock) => {
 		<Popover
 			open={visible_detail}
 			content={<TimeBlockDetail item={item} tags={tags} updateTimeBlock={updateTimeBlock} />}
-			zIndex={100}
+			zIndex={1000}
 			overlayClassName={$cx('border_popover', 'month_mode_timeblock_popover')}
 			destroyTooltipOnHide
-			placement='right'
+			placement={at_bottom ? 'bottom' : 'right'}
 			getPopupContainer={() => document.body}
 		>
 			<Dropdown
@@ -175,7 +177,7 @@ const Index = (props: IPropsTimeBlock) => {
 				overlayStyle={{ width: 90 }}
 				menu={{
 					items: context_menu_items,
-					onClick: onContextMenu
+					onClick: onAction
 				}}
 			>
 				<div
@@ -194,6 +196,7 @@ const Index = (props: IPropsTimeBlock) => {
 					}}
 					ref={setDragRef}
 					{...attributes}
+					onContextMenu={stopPropagationContextMenu}
 				>
 					<When condition={!month_mode}>
 						<div className='drag_line w_100 absolute bottom_0 right_0' ref={drag_ref}></div>

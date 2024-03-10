@@ -46,6 +46,7 @@ export interface IPropsHeaderRight {
 }
 
 export interface IPropsDateScale {
+	view: Model['view']
 	scale: Model['scale']
 	days: Model['days']
 	show_time_scale: boolean
@@ -59,13 +60,10 @@ export interface IPropsDayExtra {
 export interface IPropsCalendarView {
 	container: MutableRefObject<HTMLDivElement>
 	view: Model['view']
-	scale: Model['scale']
 	calendar_days: Model['calendar_days']
-	timeblock_copied: Model['timeblock_copied']
 	tags: Schedule.Setting['tags']
 	today_index: number
 	move_item: Model['move_item']
-	addTimeBlock: Model['addTimeBlock']
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
 	copyTimeBlock: (v: Omit<Schedule.CalendarItem, 'id'>) => void
@@ -74,6 +72,7 @@ export interface IPropsCalendarView {
 
 export interface IPropsCalendarViewDay {
 	container: MutableRefObject<HTMLDivElement>
+	view: Model['view']
 	day: Schedule.CalendarDay
 	counts: number
 	index: number
@@ -112,6 +111,7 @@ export interface IPropsMonthViewDay {
 	day: Schedule.CalendarDay
 	index: number
 	tags: Schedule.Setting['tags']
+	fixed_view: boolean
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
 	copyTimeBlock: IPropsCalendarView['copyTimeBlock']
@@ -124,6 +124,7 @@ export interface IPropsTimeBlock {
 	day_index: number
 	timeblock_index: number
 	month_mode?: boolean
+	at_bottom?: boolean
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
 	copyTimeBlock: IPropsCalendarView['copyTimeBlock']

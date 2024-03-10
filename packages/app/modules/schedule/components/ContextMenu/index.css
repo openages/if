@@ -1,0 +1,11 @@
+._local {
+	min-width: 90px;
+	font-size: 12px;
+
+	:global {
+		.menu_item {
+			padding: 0 6px;
+			min-height: 24px;
+		}
+	}
+}

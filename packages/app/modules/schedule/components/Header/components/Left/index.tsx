@@ -15,25 +15,33 @@ const Index = (props: IPropsHeaderLeft) => {
 	const onChangeView = useMemoizedFn((e: MouseEvent<HTMLDivElement>) => {
 		let target = e.target as HTMLDivElement
 
-		if (!target?.parentElement) return
-
 		while (!target?.classList?.contains('btn_std')) {
+			if (!target?.parentElement) break
+
 			target = target.parentElement as HTMLDivElement
 		}
 
-		changeView(target?.getAttribute('data-key') as IPropsHeaderLeft['view'])
+		const key = target?.getAttribute('data-key') as IPropsHeaderLeft['view']
+
+		if (!key) return
+
+		changeView(key)
 	})
 
 	const onChangeScale = useMemoizedFn((e: MouseEvent<HTMLDivElement>) => {
 		let target = e.target as HTMLDivElement
 
-		if (!target?.parentElement) return
-
 		while (!target?.classList?.contains('btn_std')) {
+			if (!target?.parentElement) break
+
 			target = target.parentElement as HTMLDivElement
 		}
 
-		changeScale(target?.getAttribute('data-key') as IPropsHeaderLeft['scale'])
+		const key = target?.getAttribute('data-key') as IPropsHeaderLeft['scale']
+
+		if (!key) return
+
+		changeScale(key)
 	})
 
 	return (
@@ -50,7 +58,7 @@ const Index = (props: IPropsHeaderLeft) => {
 			<div className='d_line'></div>
 			<div className='toggle_wrap flex align_center' onClick={onChangeView}>
 				{views.map(item => (
-					<Tooltip title={item.value} key={item.value}>
+					<Tooltip title={item.value} mouseEnterDelay={0.9} destroyTooltipOnHide key={item.value}>
 						<div
 							className={$cx(
 								'btn_std h_100 flex justify_center align_center clickable',
@@ -66,7 +74,7 @@ const Index = (props: IPropsHeaderLeft) => {
 			<div className='d_line'></div>
 			<div className='toggle_wrap flex align_center' onClick={onChangeScale}>
 				{scales.map(item => (
-					<Tooltip title={item.value} key={item.value}>
+					<Tooltip title={item.value} mouseEnterDelay={0.9} destroyTooltipOnHide key={item.value}>
 						<div
 							className={$cx(
 								'btn_std h_100 flex justify_center align_center clickable',

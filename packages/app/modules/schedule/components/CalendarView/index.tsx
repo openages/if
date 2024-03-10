@@ -1,6 +1,4 @@
-import ContextMenu from './ContextMenu'
 import Day from './Day'
-import styles from './index.css'
 
 import type { IPropsCalendarView } from '../../types'
 
@@ -8,13 +6,10 @@ const Index = (props: IPropsCalendarView) => {
 	const {
 		container,
 		view,
-		scale,
 		calendar_days,
-		timeblock_copied,
 		tags,
 		today_index,
 		move_item,
-		addTimeBlock,
 		updateTimeBlock,
 		removeTimeBlock,
 		copyTimeBlock,
@@ -22,10 +17,11 @@ const Index = (props: IPropsCalendarView) => {
 	} = props
 
 	return (
-		<div className={$cx('w_100 h_100 flex', scale === 'day' && styles.day_scale)}>
+		<div className={$cx('w_100 h_100 flex')}>
 			{calendar_days.map((day, index) => (
 				<Day
 					container={container}
+					view={view}
 					day={day}
 					counts={calendar_days.length}
 					index={index}
@@ -39,11 +35,6 @@ const Index = (props: IPropsCalendarView) => {
 					key={index}
 				></Day>
 			))}
-			<ContextMenu
-				view={view}
-				timeblock_copied={timeblock_copied}
-				addTimeBlock={addTimeBlock}
-			></ContextMenu>
 		</div>
 	)
 }

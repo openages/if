@@ -144,7 +144,8 @@ export default {
                               "day",
                               "week",
                               "month"
-                        ]
+                        ],
+                        "maxLength": 6
                   }
             },
             "required": [
@@ -217,7 +218,8 @@ export default {
                               "day",
                               "week",
                               "month"
-                        ]
+                        ],
+                        "maxLength": 6
                   }
             },
             "required": [
@@ -295,7 +297,8 @@ export default {
                                     "day",
                                     "week",
                                     "month"
-                              ]
+                              ],
+                              "maxLength": 6
                         }
                   },
                   "required": [
@@ -376,7 +379,8 @@ export default {
                                           "day",
                                           "week",
                                           "month"
-                                    ]
+                                    ],
+                                    "maxLength": 6
                               }
                         },
                         "required": [

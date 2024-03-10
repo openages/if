@@ -209,7 +209,7 @@ const Index = () => {
 							{reset_mode && (
 								<Tooltip
 									title={t('translation:app.screenlock.lock')}
-									mouseEnterDelay={0.72}
+									mouseEnterDelay={0.9}
 								>
 									<button
 										className='btn_action flex justify_center align_center clickable mr_12'

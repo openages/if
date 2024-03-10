@@ -19,20 +19,6 @@
 		}
 	}
 
-	&.day_scale {
-		border-right: var(--border);
-
-		:global {
-			.weekday_items {
-				.weekday_item {
-					&.today {
-						background-color: unset;
-					}
-				}
-			}
-		}
-	}
-
 	:global {
 		.btn_now_wrap {
 			width: 48px;
@@ -60,6 +46,10 @@
 				}
 
 				&.hidden_time_scale {
+					justify-content: center;
+				}
+
+				&.fixed_view {
 					justify-content: center;
 				}
 
