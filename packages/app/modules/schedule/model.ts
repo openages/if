@@ -198,18 +198,6 @@ export default class Index {
 		await removeTimeBlock(id)
 	}
 
-	async pasteTimeBlock(args: {
-		type: Schedule.Item['type']
-		index: number
-		start: number
-		length: number
-		info: Omit<Schedule.Item, 'id'>
-	}) {
-		const { type, index, start, length, info } = args
-
-		this.addTimeBlock({ type, index, start, length, info })
-	}
-
 	@disableWatcher
 	async onDragEnd({ active, over }: DragEndEvent) {
 		if (over?.id === undefined) return
@@ -328,7 +316,7 @@ export default class Index {
 
 			const items = getDocItemsData(doc)
 			const now = dayjs()
-			const target = $copy(this.calendar_days)
+			const target = this.days.map(_ => [])
 
 			items.forEach(item => {
 				const start_time = dayjs(item.start_time)
@@ -336,6 +324,7 @@ export default class Index {
 				const begin = dayjs(item.start_time).startOf('day')
 				const date = start_time.format('YYYY-MM-DD')
 				const index = this.days.findIndex(day => day.value.format('YYYY-MM-DD') === date)
+
 				item['start'] = start_time.diff(begin, 'minutes') / 20
 				item['length'] = end_time.diff(start_time, 'minutes') / 20
 
@@ -344,11 +333,7 @@ export default class Index {
 				}
 
 				if (index !== -1) {
-					if (target[index]) {
-						target[index].push(item as Schedule.CalendarItem)
-					} else {
-						target[index] = [item as Schedule.CalendarItem]
-					}
+					target[index].push(item as Schedule.CalendarItem)
 				} else {
 					target[index] = []
 				}

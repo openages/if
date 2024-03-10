@@ -192,7 +192,7 @@ const Index = ({ id }: IProps) => {
 			</div>
 			<ContextMenu
 				view={x.view}
-				timeblock_copied={x.timeblock_copied}
+				timeblock_copied={timeblock_copied}
 				addTimeBlock={addTimeBlock}
 			></ContextMenu>
 			<SettingsModal {...props_settings_modal}></SettingsModal>
