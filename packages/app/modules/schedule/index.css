@@ -49,9 +49,5 @@
 		&.show_time_scale {
 			width: calc(100% - 48px);
 		}
-
-		&.day_scale {
-			border-right: var(--border);
-		}
 	}
 }

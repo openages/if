@@ -143,9 +143,13 @@ export default {
                         "enum": [
                               "day",
                               "week",
-                              "month"
+                              "month",
+                              "year"
                         ],
                         "maxLength": 6
+                  },
+                  "in_timeline_year": {
+                        "type": "boolean"
                   }
             },
             "required": [
@@ -217,9 +221,13 @@ export default {
                         "enum": [
                               "day",
                               "week",
-                              "month"
+                              "month",
+                              "year"
                         ],
                         "maxLength": 6
+                  },
+                  "in_timeline_year": {
+                        "type": "boolean"
                   }
             },
             "required": [
@@ -296,9 +304,13 @@ export default {
                               "enum": [
                                     "day",
                                     "week",
-                                    "month"
+                                    "month",
+                                    "year"
                               ],
                               "maxLength": 6
+                        },
+                        "in_timeline_year": {
+                              "type": "boolean"
                         }
                   },
                   "required": [
@@ -378,9 +390,13 @@ export default {
                                     "enum": [
                                           "day",
                                           "week",
-                                          "month"
+                                          "month",
+                                          "year"
                                     ],
                                     "maxLength": 6
+                              },
+                              "in_timeline_year": {
+                                    "type": "boolean"
                               }
                         },
                         "required": [

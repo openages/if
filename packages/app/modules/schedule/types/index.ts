@@ -18,9 +18,9 @@ export interface IPropsHeader {
 	filter_tags: Model['filter_tags']
 	step: Model['step']
 	toggleVisibleTaskPanel: () => boolean
-	changeView: (v: Model['view']) => void
-	changeScale: (v: Model['scale']) => void
-	changeCurrent: (v: Model['current']) => void
+	changeView: Model['changeView']
+	changeScale: Model['changeScale']
+	changeCurrent: Model['changeCurrent']
 	showSettingsModal: () => void
 	changeFilterTags: (v: Model['filter_tags']) => void
 }
@@ -118,6 +118,23 @@ export interface IPropsMonthViewDay {
 	jump: Model['jump']
 }
 
+export interface IPropsTimelineView {
+	container: MutableRefObject<HTMLDivElement>
+	view: Model['view']
+	days: Model['days']
+	calendar_days: Model['calendar_days']
+	tags: Schedule.Setting['tags']
+	updateTimeBlock: Model['updateTimeBlock']
+	removeTimeBlock: Model['removeTimeBlock']
+	copyTimeBlock: (v: Omit<Schedule.CalendarItem, 'id'>) => void
+}
+
+export interface IPropsTimelineViewDay {
+	day_info: DayDetail
+	index: number
+	counts: number
+}
+
 export interface IPropsTimeBlock {
 	item: Schedule.CalendarItem
 	tags: Schedule.Setting['tags']
@@ -125,6 +142,7 @@ export interface IPropsTimeBlock {
 	timeblock_index: number
 	month_mode?: boolean
 	at_bottom?: boolean
+	day_width?: number
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
 	copyTimeBlock: IPropsCalendarView['copyTimeBlock']

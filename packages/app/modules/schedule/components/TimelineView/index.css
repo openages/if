@@ -1,4 +1,14 @@
-._local {
+.Day {
+	border-right: var(--border);
+
+	&.today {
+		background-color: rgba(var(--color_text_rgb), 0.018);
+	}
+}
+
+.timeline_wrap {
+	overflow-y: scroll;
+
 	:global {
 	}
 }

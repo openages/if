@@ -5,7 +5,8 @@ import {
 	Compass,
 	GridNine,
 	SquareSplitHorizontal,
-	Sun
+	Sun,
+	Waves
 } from '@phosphor-icons/react'
 
 export const views = [
@@ -38,6 +39,11 @@ export const scales = [
 		icon: <GridNine data-key='month' />
 	}
 ]
+
+export const scale_year = {
+	value: 'year',
+	icon: <Waves data-key='year' />
+}
 
 export const hours = Array.from({ length: 24 }, (_, index) => fillTimeText(index))
 export const week_placeholder = []

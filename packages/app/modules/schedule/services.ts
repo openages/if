@@ -51,7 +51,12 @@ export const cleanByTime = async (file_id: string, v: CleanTime) => {
 	const query = $db.schedule_items.find({
 		selector: {
 			file_id,
-			end_time: { $lte: target_time.valueOf() }
+			end_time: { $lte: target_time.valueOf() },
+			$or: [
+				{ fixed_scale: { $exists: false } },
+				{ fixed_scale: { $eq: undefined } },
+				{ fixed_scale: { $eq: false } }
+			]
 		}
 	})
 

@@ -30,6 +30,7 @@ import type {
 	IPropsHeader,
 	IPropsCalendarView,
 	IPropsMonthView,
+	IPropsTimelineView,
 	IPropsSettingsModal,
 	IPropsScanline
 } from './types'
@@ -71,9 +72,9 @@ const Index = ({ id }: IProps) => {
 		filter_tags: $copy(x.filter_tags),
 		step: useMemoizedFn(x.step),
 		toggleVisibleTaskPanel: useMemoizedFn(() => (x.visible_task_panel = !x.visible_task_panel)),
-		changeView: useMemoizedFn((v: Model['view']) => (x.view = v)),
-		changeScale: useMemoizedFn((v: Model['scale']) => (x.scale = v)),
-		changeCurrent: useMemoizedFn((v: Model['current']) => (x.current = v)),
+		changeView: useMemoizedFn(x.changeView),
+		changeScale: useMemoizedFn(x.changeScale),
+		changeCurrent: useMemoizedFn(x.changeCurrent),
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true)),
 		changeFilterTags: useMemoizedFn(v => (x.filter_tags = v))
 	}
@@ -108,6 +109,17 @@ const Index = ({ id }: IProps) => {
 		removeTimeBlock,
 		copyTimeBlock,
 		jump: useMemoizedFn(x.jump)
+	}
+
+	const props_timeline_view: IPropsTimelineView = {
+		container,
+		view: x.view,
+		days,
+		calendar_days,
+		tags,
+		updateTimeBlock,
+		removeTimeBlock,
+		copyTimeBlock
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
@@ -162,8 +174,7 @@ const Index = ({ id }: IProps) => {
 								className={$cx(
 									'border_box relative',
 									styles.view,
-									x.show_time_scale && styles.show_time_scale,
-									x.scale === 'day' && styles.day_scale
+									x.show_time_scale && styles.show_time_scale
 								)}
 								style={{ height: x.show_time_scale ? 1152 : 'auto' }}
 							>
@@ -177,7 +188,7 @@ const Index = ({ id }: IProps) => {
 										<MonthView {...props_month_view}></MonthView>
 									))
 									.with(['timeline', P.union('day', 'week', 'month')], () => (
-										<TimelineView></TimelineView>
+										<TimelineView {...props_timeline_view}></TimelineView>
 									))
 									.otherwise(null)}
 							</div>

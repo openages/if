@@ -34,7 +34,8 @@ export namespace Schedule {
 		 * */
 		end_time: number
 		/** @maxLength 6 */
-		fixed_scale?: 'day' | 'week' | 'month'
+		fixed_scale?: 'day' | 'week' | 'month' | 'year'
+		in_timeline_year?: boolean
 	}
 
 	export type CalendarItem = Item & { start: number; length: number; past: boolean }

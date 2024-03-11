@@ -1,7 +1,8 @@
 import { useMemoizedFn } from 'ahooks'
 import { Tooltip } from 'antd'
+import { useMemo } from 'react'
 
-import { scales, views } from '@/appdata/schedule'
+import { scales, scale_year, views } from '@/appdata/schedule'
 import { ListChecks } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -11,6 +12,8 @@ import type { MouseEvent } from 'react'
 
 const Index = (props: IPropsHeaderLeft) => {
 	const { view, scale, visible_task_panel, toggleVisibleTaskPanel, changeView, changeScale } = props
+
+	const target_scales = useMemo(() => (view !== 'timeline' ? scales : [...scales, scale_year]), [view])
 
 	const onChangeView = useMemoizedFn((e: MouseEvent<HTMLDivElement>) => {
 		let target = e.target as HTMLDivElement
@@ -73,7 +76,7 @@ const Index = (props: IPropsHeaderLeft) => {
 			</div>
 			<div className='d_line'></div>
 			<div className='toggle_wrap flex align_center' onClick={onChangeScale}>
-				{scales.map(item => (
+				{target_scales.map(item => (
 					<Tooltip title={item.value} mouseEnterDelay={0.9} destroyTooltipOnHide key={item.value}>
 						<div
 							className={$cx(

@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs'
 import { omit } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
-import { match, P } from 'ts-pattern'
+import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
 import { File } from '@/models'
@@ -21,9 +21,17 @@ import {
 	removeTimeBlock,
 	updateTimeBlock
 } from './services'
-import { collisionDetection, getDayDetails, getMonthDays, getStartByY, getStartEnd, getWeekdays } from './utils'
+import {
+	collisionDetection,
+	getDayDetails,
+	getMonthDays,
+	getStartByY,
+	getStartEnd,
+	getWeekdays,
+	getYearDays
+} from './utils'
 
-import type { Scale, SettingValues, ChangedSettingValues } from './types/model'
+import type { SettingValues, ChangedSettingValues } from './types/model'
 import type { Schedule, CleanTime } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
 import type { DayDetail } from './utils'
@@ -34,8 +42,8 @@ import type { MangoQuerySelector } from 'rxdb'
 @injectable()
 export default class Index {
 	id = ''
-	view = 'calendar' as Schedule.Item['type']
-	scale = 'day' as Scale
+	view = 'timeline' as Schedule.Item['type']
+	scale = 'day' as Schedule.Item['fixed_scale']
 	current = dayjs()
 	days = [] as Array<DayDetail>
 	disable_watcher = false
@@ -54,15 +62,8 @@ export default class Index {
 	move_item = null as Schedule.CalendarItem & { day_index: number }
 
 	watch = {
-		view: v => {
-			this.current = v === 'fixed' ? dayjs('1970-1-1') : dayjs()
-			this.timeblock_copied = null
-
-			this.getDays()
-		},
-		scale: () => this.getDays(),
 		filter_tags: () => this.watchCalendarDays()
-	} as Watch<Index & { 'scale|current': any }>
+	} as Watch<Index>
 
 	constructor(
 		public utils: Utils,
@@ -102,32 +103,50 @@ export default class Index {
 		this.getDays()
 	}
 
-	getDays() {
-		this.days = match([this.view, this.scale])
-			.with([P.union('calendar', 'fixed'), 'day'], () => {
-				return [
-					getDayDetails(this.current),
-					getDayDetails(this.current.add(1, 'day')),
-					getDayDetails(this.current.add(2, 'day'))
-				]
-			})
-			.with([P.union('calendar', 'fixed'), 'week'], () => {
-				return getWeekdays(this.current)
-			})
-			.with([P.union('calendar', 'fixed'), 'month'], () => {
-				return getMonthDays(this.current, this.view === 'fixed')
-			})
-			.otherwise(null)
+	changeView(v: Index['view']) {
+		this.timeblock_copied = null
+		this.current = v === 'fixed' ? dayjs('1970-1-1') : dayjs()
 
-		this.calendar_days = this.days.map(_ => [])
+		if (this.view === 'timeline' && this.scale === 'year') this.scale = 'day'
 
-		this.watchCalendarDays()
+		this.view = v
+
+		this.getDays()
+	}
+
+	changeScale(v: Index['scale']) {
+		this.scale = v
+
+		this.getDays()
+	}
+
+	changeCurrent(v: Index['current']) {
+		this.current = v
+
+		this.getDays()
 	}
 
 	step(type: 'prev' | 'next') {
 		this.current = this.current[type === 'prev' ? 'subtract' : 'add'](1, this.scale)
 
 		this.getDays()
+	}
+
+	getDays() {
+		this.days = match(this.scale)
+			.with('day', () => [
+				getDayDetails(this.current),
+				getDayDetails(this.current.add(1, 'day')),
+				getDayDetails(this.current.add(2, 'day'))
+			])
+			.with('week', () => getWeekdays(this.current))
+			.with('month', () => getMonthDays(this.current, this.view === 'fixed'))
+			.with('year', () => getYearDays(this.current))
+			.otherwise(null)
+
+		this.calendar_days = this.days.map(_ => [])
+
+		this.watchCalendarDays()
 	}
 
 	onDragMove(container: HTMLDivElement, { active, over, activatorEvent }: DragMoveEvent) {

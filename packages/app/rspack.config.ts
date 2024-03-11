@@ -7,6 +7,7 @@ import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
 
 const is_dev = process.env.NODE_ENV === 'development'
 const is_prod = process.env.NODE_ENV === 'production'
+const is_module = false
 
 const plugins_dev = [
 	new ReactRefreshPlugin({
@@ -46,7 +47,7 @@ module.exports = defineConfig({
 		global: false
 	},
 	experiments: {
-		outputModule: true,
+		outputModule: is_module,
 		rspackFuture: {
 			// newTreeshaking: true,
 		}
@@ -55,7 +56,7 @@ module.exports = defineConfig({
 		new HtmlRspackPlugin({
 			title: 'IF - GTD for prefessionals.',
 			template: './public/index.html',
-			scriptLoading: 'module'
+			scriptLoading: is_module ? 'module' : 'defer'
 		}),
 		...(is_dev ? plugins_dev : plugins_prod)
 	],
@@ -66,7 +67,7 @@ module.exports = defineConfig({
 				use: {
 					loader: 'builtin:swc-loader',
 					options: {
-						isModule: true,
+						// isModule: is_module,
 						jsc: {
 							parser: {
 								syntax: 'typescript',
@@ -93,7 +94,7 @@ module.exports = defineConfig({
 				use: {
 					loader: 'builtin:swc-loader',
 					options: {
-						isModule: true,
+						// isModule: is_module,
 						jsc: {
 							parser: {
 								syntax: 'typescript',
