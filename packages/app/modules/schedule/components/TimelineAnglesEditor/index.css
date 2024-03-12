@@ -1,0 +1,56 @@
+.Item {
+	margin-bottom: 12px;
+
+	&.last {
+		margin-bottom: 6px;
+	}
+
+	:global {
+		.input {
+			width: calc(100% - 42px * 4);
+			height: 36px;
+		}
+
+		.btn {
+			width: 36px;
+			height: 36px;
+			border: 1px dashed var(--color_border);
+			border-radius: var(--radius);
+
+			&:hover {
+				border-color: var(--color_text_grey);
+			}
+
+			&.disabled {
+				svg {
+					opacity: 0.3;
+				}
+			}
+		}
+
+		.rows_wrap {
+			.row_item {
+				width: calc((100% - 6px * 11) / 12);
+				height: 27px;
+				border-radius: var(--radius_small);
+				border: 1px dashed var(--color_border_light);
+
+				&:hover {
+					border-color: var(--color_text_grey);
+
+					.icon_remove {
+						display: block;
+					}
+
+					.icon_row {
+						display: none;
+					}
+				}
+
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
+	}
+}

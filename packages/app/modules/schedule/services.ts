@@ -37,12 +37,35 @@ export const removeTimeBlock = async (id: string) => {
 	return $db.schedule_items.findOne(id).remove()
 }
 
-export const getTagTimeBlockCounts = async (file_id: string, tag: string) => {
-	return $db.schedule_items.count({ selector: { file_id, tag } }).exec()
+export const hangleTimeBlock = async (
+	file_id: string,
+	params: { type: 'counts' | 'remove'; tag?: string; angle_id?: string; row_id?: string }
+) => {
+	const selector = { file_id } as MangoQuerySelector<Schedule.Item>
+
+	if (params.tag) selector['tag'] = params.tag
+	if (params.angle_id) selector['timeline_angle_id'] = params.angle_id
+	if (params.row_id) selector['timeline_angle_row_id'] = params.row_id
+
+	if (params.type === 'counts') {
+		return $db.schedule_items.count({ selector }).exec()
+	} else {
+		return $db.schedule_items.find({ selector }).remove()
+	}
 }
 
-export const removeTag = async (file_id: string, tag: string) => {
-	return $db.schedule_items.find({ selector: { file_id, tag } }).remove()
+export const removeTimeblock = async (file_id: string, params: { tag?: string; angle_id?: string; row?: number }) => {
+	if (params.angle_id) {
+		const selector = {} as MangoQuerySelector<Schedule.Item>
+
+		if (params.row) selector['timeline_angle_row'] = params.row
+
+		return $db.schedule_items
+			.find({ selector: { file_id, timeline_angle_id: params.angle_id, ...selector } })
+			.remove()
+	}
+
+	return $db.schedule_items.find({ selector: { file_id, tag: params.tag } }).remove()
 }
 
 export const cleanByTime = async (file_id: string, v: CleanTime) => {

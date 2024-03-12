@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { SettingsModal, TagsEditor } from '@/components'
 import { useArchiveOptions } from '@/hooks'
 
+import TimelineAnglesEditor from '../TimelineAnglesEditor'
 import styles from './index.css'
 
 import type { IPropsSettingsModal } from '../../types'
@@ -12,7 +13,16 @@ import type { App } from '@/types'
 const { Item } = Form
 
 const Index = (props: IPropsSettingsModal) => {
-	const { visible_settings_modal, setting, closeSettingsModal, updateSetting, removeTag, cleanByTime } = props
+	const {
+		visible_settings_modal,
+		setting,
+		closeSettingsModal,
+		updateSetting,
+		removeTag,
+		removeTimelineAngle,
+		removeTimelineRow,
+		cleanByTime
+	} = props
 	const { t } = useTranslation()
 	const archive_options = useArchiveOptions()
 
@@ -31,6 +41,12 @@ const Index = (props: IPropsSettingsModal) => {
 			<div className='w_100 flex flex_column'>
 				<Item name='tags' label={t('translation:common.tags.label')}>
 					<TagsEditor remove={removeTag}></TagsEditor>
+				</Item>
+				<Item name='timeline_angles' label={t('translation:schedule.timeline_angles')}>
+					<TimelineAnglesEditor
+						removeTimelineAngle={removeTimelineAngle}
+						removeTimelineRow={removeTimelineRow}
+					></TimelineAnglesEditor>
 				</Item>
 				<Select
 					className='archive_select'

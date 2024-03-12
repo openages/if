@@ -92,12 +92,12 @@ export default {
 	},
 	angles: {
 		label: 'Angles',
-		placeholder: 'Categories within the todo list.',
-		remove_confirm: 'This will remove {{counts}} items under this category({{counts}} items). Please confirm.'
+		placeholder: 'Input angles',
+		remove_confirm: 'This will remove {{counts}} items under this angle. Please confirm.'
 	},
 	tags: {
 		label: 'Tags',
 		placeholder: 'Tag name',
-		remove_confirm: 'This will remove {{counts}} items under this tag({{counts}} items). Please confirm.'
+		remove_confirm: 'This will remove {{counts}} items under this tag. Please confirm.'
 	}
 }

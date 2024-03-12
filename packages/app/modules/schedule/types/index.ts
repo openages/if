@@ -120,6 +120,7 @@ export interface IPropsMonthViewDay {
 
 export interface IPropsTimelineView {
 	container: MutableRefObject<HTMLDivElement>
+	timeline_angles: Schedule.Setting['timeline_angles']
 	view: Model['view']
 	days: Model['days']
 	calendar_days: Model['calendar_days']
@@ -130,9 +131,12 @@ export interface IPropsTimelineView {
 }
 
 export interface IPropsTimelineViewDay {
-	day_info: DayDetail
 	index: number
 	counts: number
+}
+
+export interface IPropsTimelineAngles {
+	timeline_angles: Schedule.Setting['timeline_angles']
 }
 
 export interface IPropsTimeBlock {
@@ -161,6 +165,8 @@ export interface IPropsSettingsModal {
 	closeSettingsModal: () => void
 	updateSetting: Model['updateSetting']
 	removeTag: Model['removeTag']
+	removeTimelineAngle: Model['removeTimelineAngle']
+	removeTimelineRow: Model['removeTimelineRow']
 	cleanByTime: Model['cleanByTime']
 }
 

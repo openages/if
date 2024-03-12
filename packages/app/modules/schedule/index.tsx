@@ -117,6 +117,7 @@ const Index = ({ id }: IProps) => {
 		days,
 		calendar_days,
 		tags,
+		timeline_angles: $copy(x.setting?.setting?.['timeline_angles'] || []),
 		updateTimeBlock,
 		removeTimeBlock,
 		copyTimeBlock
@@ -128,6 +129,8 @@ const Index = ({ id }: IProps) => {
 		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false)),
 		updateSetting: useMemoizedFn(x.updateSetting),
 		removeTag: useMemoizedFn(x.removeTag),
+		removeTimelineAngle: useMemoizedFn(x.removeTimelineAngle),
+		removeTimelineRow: useMemoizedFn(x.removeTimelineRow),
 		cleanByTime: useMemoizedFn(x.cleanByTime)
 	}
 

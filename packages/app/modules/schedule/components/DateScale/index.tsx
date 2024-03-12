@@ -21,16 +21,17 @@ const Index = (props: IPropsDateScale) => {
 				'w_100 border_box flex',
 				styles._local,
 				!show_time_scale && styles.hidden_time_scale,
-				scale === 'day' && styles.day_scale
+				scale === 'day' && styles.day_scale,
+				view === 'timeline' && styles.timeline
 			)}
 		>
-			{show_time_scale && (
+			{(show_time_scale || view === 'timeline') && (
 				<div className='btn_now_wrap h_100 border_box flex justify_center align_center'>
 					<div
 						className='btn_std flex justify_center align_center clickable'
 						onClick={scrollToScanline}
 					>
-						<ArrowLineDown></ArrowLineDown>
+						{view !== 'timeline' && <ArrowLineDown></ArrowLineDown>}
 					</div>
 				</div>
 			)}

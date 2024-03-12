@@ -1,8 +1,9 @@
-.Day {
-	border-right: var(--border);
+.days_wrap {
+	left: 90px;
+	width: calc(100% - 90px);
 
-	&.today {
-		background-color: rgba(var(--color_text_rgb), 0.018);
+	.Day {
+		border-right: var(--border);
 	}
 }
 
@@ -10,5 +11,38 @@
 	overflow-y: scroll;
 
 	:global {
+		.timeline_angle {
+			border-bottom: var(--border);
+			padding-left: 90px;
+
+			&:hover {
+				.angle_rows {
+					.timeline_row {
+						border-bottom-color: var(--color_border_light);
+					}
+				}
+			}
+
+			.angle_header {
+				width: 90px;
+				border-right: var(--border);
+				font-size: 12px;
+				line-height: 1;
+			}
+
+			.angle_rows {
+				.timeline_row {
+					&:last-child {
+						border-bottom-color: transparent;
+					}
+				}
+			}
+		}
 	}
+}
+
+.Row {
+	height: 38px;
+	border-top: 1px solid transparent;
+	border-bottom: 1px dashed transparent;
 }

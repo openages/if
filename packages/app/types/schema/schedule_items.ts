@@ -1,8 +1,15 @@
 import type { Tag } from '../common'
 
 export namespace Schedule {
+	export interface TimelineAngle {
+		id: string
+		text: string
+		rows: Array<string>
+	}
+
 	export interface Setting {
 		tags: Array<Tag>
+		timeline_angles: Array<TimelineAngle>
 	}
 
 	export interface ScheduleSetting {
@@ -35,7 +42,11 @@ export namespace Schedule {
 		end_time: number
 		/** @maxLength 6 */
 		fixed_scale?: 'day' | 'week' | 'month' | 'year'
-		in_timeline_year?: boolean
+		/** @maxLength 30 */
+		timeline_angle_id?: string
+		/** @maxLength 30 */
+		timeline_angle_row_id?: string
+		timeline_year?: boolean
 	}
 
 	export type CalendarItem = Item & { start: number; length: number; past: boolean }

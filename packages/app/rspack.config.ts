@@ -67,7 +67,6 @@ module.exports = defineConfig({
 				use: {
 					loader: 'builtin:swc-loader',
 					options: {
-						// isModule: is_module,
 						jsc: {
 							parser: {
 								syntax: 'typescript',
@@ -94,7 +93,6 @@ module.exports = defineConfig({
 				use: {
 					loader: 'builtin:swc-loader',
 					options: {
-						// isModule: is_module,
 						jsc: {
 							parser: {
 								syntax: 'typescript',

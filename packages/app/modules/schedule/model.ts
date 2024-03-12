@@ -15,9 +15,9 @@ import { useInstanceWatch } from '@openages/stk/mobx'
 import {
 	addTimeBlock,
 	cleanByTime,
-	getTagTimeBlockCounts,
 	getTimeBlocks,
-	removeTag,
+	hangleTimeBlock,
+	removeTimeblock,
 	removeTimeBlock,
 	updateTimeBlock
 } from './services'
@@ -280,21 +280,50 @@ export default class Index {
 		await updateSetting({ file_id: this.id, setting: this.setting, changed_values, values })
 	}
 
-	async removeTag(tag: string) {
-		const counts = await getTagTimeBlockCounts(this.id, tag)
-
+	async confirm(counts: number) {
 		if (counts > 0) {
 			const res = await confirm({
 				id: this.id,
 				title: $t('translation:common.notice'),
 				// @ts-ignore
-				content: $t('translation:todo.SettingsModal.tags.remove_confirm', { counts })
+				content: $t('translation:common.tags.remove_confirm', { counts })
 			})
 
 			if (!res) return false
 		}
 
-		await removeTag(this.id, tag)
+		return true
+	}
+
+	async removeTag(tag: string) {
+		const counts = (await hangleTimeBlock(this.id, { type: 'counts', tag })) as number
+		const res = await this.confirm(counts)
+
+		if (!res) return false
+
+		await hangleTimeBlock(this.id, { type: 'remove', tag })
+
+		return true
+	}
+
+	async removeTimelineAngle(angle_id: string) {
+		const counts = (await hangleTimeBlock(this.id, { type: 'counts', angle_id })) as number
+		const res = await this.confirm(counts)
+
+		if (!res) return false
+
+		await hangleTimeBlock(this.id, { type: 'remove', angle_id })
+
+		return true
+	}
+
+	async removeTimelineRow(angle_id: string, row_id: string) {
+		const counts = (await hangleTimeBlock(this.id, { type: 'counts', angle_id, row_id })) as number
+		const res = await this.confirm(counts)
+
+		if (!res) return false
+
+		await hangleTimeBlock(this.id, { type: 'remove', angle_id, row_id })
 
 		return true
 	}

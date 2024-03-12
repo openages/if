@@ -92,12 +92,12 @@ export default {
 	},
 	angles: {
 		label: '分类',
-		placeholder: 'todo list内部的分类',
-		remove_confirm: '你将删除该分类下的{{counts}}个待办项，请确认是否执行删除？'
+		placeholder: '输入分类',
+		remove_confirm: '你将删除该分类下的{{counts}}个记录，请确认是否执行删除？'
 	},
 	tags: {
 		label: '标签',
 		placeholder: '标签名',
-		remove_confirm: '你将删除该标签下的{{counts}}个待办项，请确认是否执行删除？'
+		remove_confirm: '你将删除该标签下的{{counts}}个记录，请确认是否执行删除？'
 	}
 }

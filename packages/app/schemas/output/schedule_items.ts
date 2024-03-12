@@ -1,4 +1,23 @@
 export default {
+      "Schedule.TimelineAngle": {
+            "type": "object",
+            "properties": {
+                  "id": {
+                        "type": "string"
+                  },
+                  "text": {
+                        "type": "string"
+                  },
+                  "rows": {
+                        "type": "number"
+                  }
+            },
+            "required": [
+                  "id",
+                  "text",
+                  "rows"
+            ]
+      },
       "Schedule.Setting": {
             "type": "object",
             "properties": {
@@ -23,10 +42,33 @@ export default {
                                     "text"
                               ]
                         }
+                  },
+                  "timeline_angles": {
+                        "type": "array",
+                        "items": {
+                              "type": "object",
+                              "properties": {
+                                    "id": {
+                                          "type": "string"
+                                    },
+                                    "text": {
+                                          "type": "string"
+                                    },
+                                    "rows": {
+                                          "type": "number"
+                                    }
+                              },
+                              "required": [
+                                    "id",
+                                    "text",
+                                    "rows"
+                              ]
+                        }
                   }
             },
             "required": [
-                  "tags"
+                  "tags",
+                  "timeline_angles"
             ]
       },
       "Tag": {
@@ -81,10 +123,33 @@ export default {
                                                 "text"
                                           ]
                                     }
+                              },
+                              "timeline_angles": {
+                                    "type": "array",
+                                    "items": {
+                                          "type": "object",
+                                          "properties": {
+                                                "id": {
+                                                      "type": "string"
+                                                },
+                                                "text": {
+                                                      "type": "string"
+                                                },
+                                                "rows": {
+                                                      "type": "number"
+                                                }
+                                          },
+                                          "required": [
+                                                "id",
+                                                "text",
+                                                "rows"
+                                          ]
+                                    }
                               }
                         },
                         "required": [
-                              "tags"
+                              "tags",
+                              "timeline_angles"
                         ]
                   }
             },
@@ -148,7 +213,15 @@ export default {
                         ],
                         "maxLength": 6
                   },
-                  "in_timeline_year": {
+                  "timeline_angle_id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "timeline_angle_row_id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "timeline_year": {
                         "type": "boolean"
                   }
             },
@@ -226,7 +299,15 @@ export default {
                         ],
                         "maxLength": 6
                   },
-                  "in_timeline_year": {
+                  "timeline_angle_id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "timeline_angle_row_id": {
+                        "type": "string",
+                        "maxLength": 30
+                  },
+                  "timeline_year": {
                         "type": "boolean"
                   }
             },
@@ -309,7 +390,15 @@ export default {
                               ],
                               "maxLength": 6
                         },
-                        "in_timeline_year": {
+                        "timeline_angle_id": {
+                              "type": "string",
+                              "maxLength": 30
+                        },
+                        "timeline_angle_row_id": {
+                              "type": "string",
+                              "maxLength": 30
+                        },
+                        "timeline_year": {
                               "type": "boolean"
                         }
                   },
@@ -395,7 +484,15 @@ export default {
                                     ],
                                     "maxLength": 6
                               },
-                              "in_timeline_year": {
+                              "timeline_angle_id": {
+                                    "type": "string",
+                                    "maxLength": 30
+                              },
+                              "timeline_angle_row_id": {
+                                    "type": "string",
+                                    "maxLength": 30
+                              },
+                              "timeline_year": {
                                     "type": "boolean"
                               }
                         },

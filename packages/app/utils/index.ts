@@ -1,5 +1,5 @@
 export { default as getLang } from './getLang'
-export { default as id } from './id'
+export { default as id, getIds } from './id'
 export { default as sleep } from './sleep'
 export { default as setFavicon } from './setFavicon'
 export { default as setGlobalAnimation } from './setGlobalAnimation'
