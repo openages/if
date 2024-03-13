@@ -79,6 +79,11 @@ module.exports = defineConfig({
 								legacyDecorator: true,
 								decoratorMetadata: true
 							},
+							minify: {
+								compress: {
+									drop_console: is_prod
+								}
+							},
 							externalHelpers: true
 						},
 						env: {
@@ -110,6 +115,11 @@ module.exports = defineConfig({
 									refresh: !is_prod,
 									runtime: 'automatic',
 									useBuiltins: true
+								}
+							},
+							minify: {
+								compress: {
+									drop_console: is_prod
 								}
 							},
 							externalHelpers: true
