@@ -1,5 +1,5 @@
 .Item {
-	margin-bottom: 12px;
+	margin-bottom: 15px;
 
 	&.last {
 		margin-bottom: 6px;
@@ -30,10 +30,10 @@
 
 		.rows_wrap {
 			.row_item {
-				width: calc((100% - 6px * 11) / 12);
-				height: 27px;
+				width: calc((100% - 6px * 5) / 6);
+				height: 30px;
 				border-radius: var(--radius_small);
-				border: 1px dashed var(--color_border_light);
+				border: 1px dashed var(--color_border);
 
 				&:hover {
 					border-color: var(--color_text_grey);

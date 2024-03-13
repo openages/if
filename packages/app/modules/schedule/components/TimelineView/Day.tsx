@@ -7,11 +7,8 @@ const Index = (props: IPropsTimelineViewDay) => {
 
 	return (
 		<div
-			className={$cx('h_100', styles.Day)}
-			style={{
-				width: `calc(100% / ${counts})`,
-				left: `calc(((100% / ${counts}) * ${index}))`
-			}}
+			className={$cx('h_100 absolute top_0', styles.Day)}
+			style={{ left: `calc(((100% / ${counts}) * ${index + 1}) - 1px)` }}
 		></div>
 	)
 }

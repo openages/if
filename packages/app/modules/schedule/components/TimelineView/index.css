@@ -1,12 +1,3 @@
-.days_wrap {
-	left: 90px;
-	width: calc(100% - 90px);
-
-	.Day {
-		border-right: var(--border);
-	}
-}
-
 .timeline_wrap {
 	overflow-y: scroll;
 
@@ -25,13 +16,19 @@
 
 			.angle_header {
 				width: 90px;
+				padding: 0 12px;
 				border-right: var(--border);
 				font-size: 12px;
-				line-height: 1;
+				font-weight: 500;
+				line-height: 1.2;
 			}
 
 			.angle_rows {
 				.timeline_row {
+					&:hover {
+						border-bottom-color: var(--color_border_light);
+					}
+
 					&:last-child {
 						border-bottom-color: transparent;
 					}
@@ -39,6 +36,11 @@
 			}
 		}
 	}
+}
+
+.Day {
+	width: 1px;
+	background-color: var(--color_border_light);
 }
 
 .Row {

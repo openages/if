@@ -87,10 +87,11 @@ export interface IPropsCalendarViewDay {
 
 export interface IPropsCalendarViewTimeBlockSignal {
 	item: Schedule.CalendarItem
+	step?: number
+	timeline?: boolean
 }
 
 export interface IPropsCalendarContextMenu {
-	view: Model['view']
 	timeblock_copied: Model['timeblock_copied']
 	addTimeBlock: Model['addTimeBlock']
 }
@@ -120,10 +121,10 @@ export interface IPropsMonthViewDay {
 
 export interface IPropsTimelineView {
 	container: MutableRefObject<HTMLDivElement>
-	timeline_angles: Schedule.Setting['timeline_angles']
 	view: Model['view']
 	days: Model['days']
-	calendar_days: Model['calendar_days']
+	setting_timeline_angles: Schedule.Setting['timeline_angles']
+	timeline_angles: Model['timeline_angles']
 	tags: Schedule.Setting['tags']
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
@@ -133,6 +134,17 @@ export interface IPropsTimelineView {
 export interface IPropsTimelineViewDay {
 	index: number
 	counts: number
+}
+
+export interface IPropsTimelineViewRow {
+	container: MutableRefObject<HTMLDivElement>
+	step: number
+	days_length: number
+	angle_index: number
+	row_index: number
+	angle_id: string
+	row_id: string
+	timeblocks: Schedule.CalendarDay
 }
 
 export interface IPropsTimelineAngles {

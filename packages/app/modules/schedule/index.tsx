@@ -42,6 +42,7 @@ const Index = ({ id }: IProps) => {
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 12 } }))
 	const days = $copy(x.days)
 	const calendar_days = $copy(x.calendar_days)
+	const timeline_angles = $copy(x.timeline_angles)
 	const tags = $copy(x.setting?.setting?.tags || [])
 	const timeblock_copied = $copy(x.timeblock_copied)
 	const today_index = useMemo(() => days.findIndex(item => item?.value?.isToday()), [days])
@@ -115,9 +116,9 @@ const Index = ({ id }: IProps) => {
 		container,
 		view: x.view,
 		days,
-		calendar_days,
+		setting_timeline_angles: $copy(x.setting?.setting?.['timeline_angles'] || []),
+		timeline_angles,
 		tags,
-		timeline_angles: $copy(x.setting?.setting?.['timeline_angles'] || []),
 		updateTimeBlock,
 		removeTimeBlock,
 		copyTimeBlock
@@ -143,6 +144,8 @@ const Index = ({ id }: IProps) => {
 	const onDragMove = useMemoizedFn(args => x.onDragMove(container.current, args))
 	const onDragEnd = useMemoizedFn(x.onDragEnd)
 	const onDragCancel = useMemoizedFn(x.onDragCancel)
+
+	console.log(timeline_angles)
 
 	return (
 		<div className={$cx('w_100 h_100 border_box flex flex_column', styles._local)}>
@@ -204,11 +207,7 @@ const Index = ({ id }: IProps) => {
 						)} */}
 				</DndContext>
 			</div>
-			<ContextMenu
-				view={x.view}
-				timeblock_copied={timeblock_copied}
-				addTimeBlock={addTimeBlock}
-			></ContextMenu>
+			<ContextMenu timeblock_copied={timeblock_copied} addTimeBlock={addTimeBlock}></ContextMenu>
 			<SettingsModal {...props_settings_modal}></SettingsModal>
 		</div>
 	)

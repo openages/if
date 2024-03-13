@@ -56,7 +56,7 @@ const Index = (props: IProps) => {
 				<div
 					className={$cx(
 						'btn btn_add border_box flex justify_center align_center clickable ml_6',
-						(item.rows.length >= 12 || item.rows.length === 1) && 'disabled'
+						(item.rows.length >= 6 || item.rows.length === 1) && 'disabled'
 					)}
 					onClick={() => onAddRow(index)}
 				>
@@ -91,6 +91,7 @@ const Index = (props: IProps) => {
 						<AlignCenterHorizontalSimple
 							className='icon_row'
 							size={15}
+							weight='duotone'
 						></AlignCenterHorizontalSimple>
 					</span>
 				))}

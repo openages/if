@@ -27,6 +27,7 @@ import {
 	getMonthDays,
 	getStartByY,
 	getStartEnd,
+	getTimelineAngles,
 	getWeekdays,
 	getYearDays
 } from './utils'
@@ -52,6 +53,8 @@ export default class Index {
 	setting_watcher = null as Subscription
 	calendar_days = [] as Schedule.CalendarDays
 	calendar_days_watcher = null as Subscription
+	timeline_angles = {} as Record<string, Schedule.CalendarDay>
+	timeline_angles_watcher = null as Subscription
 
 	timeblock_copied = null as Omit<Schedule.CalendarItem, 'id'>
 	filter_tags = [] as Array<string>
@@ -62,7 +65,13 @@ export default class Index {
 	move_item = null as Schedule.CalendarItem & { day_index: number }
 
 	watch = {
-		filter_tags: () => this.watchCalendarDays()
+		filter_tags: () => {
+			if (this.view === 'timeline') {
+				this.watchTimelineAngles()
+			} else {
+				this.watchCalendarDays()
+			}
+		}
 	} as Watch<Index>
 
 	constructor(
@@ -74,7 +83,8 @@ export default class Index {
 			{
 				disable_watcher: false,
 				setting_watcher: false,
-				calendar_days_watcher: false
+				calendar_days_watcher: false,
+				timeline_angles_watcher: false
 			},
 			{ autoBind: true }
 		)
@@ -144,9 +154,15 @@ export default class Index {
 			.with('year', () => getYearDays(this.current))
 			.otherwise(null)
 
-		this.calendar_days = this.days.map(_ => [])
+		if (this.view === 'timeline') {
+			if (!this.setting?.setting?.timeline_angles) return
 
-		this.watchCalendarDays()
+			this.timeline_angles = getTimelineAngles(this.setting.setting.timeline_angles)
+			this.watchTimelineAngles()
+		} else {
+			this.calendar_days = this.days.map(_ => [])
+			this.watchCalendarDays()
+		}
 	}
 
 	onDragMove(container: HTMLDivElement, { active, over, activatorEvent }: DragMoveEvent) {
@@ -188,22 +204,30 @@ export default class Index {
 	}
 
 	async addTimeBlock(args: {
-		type: Schedule.Item['type']
 		index: number
 		start: number
 		length: number
 		info?: Omit<Schedule.Item, 'id'>
+		row_index?: number
 	}) {
-		const { type, index, start, length, info } = args
-		const date = this.days[index].value
-		const { start_time, end_time } = getStartEnd(date, start, length)
+		const { index, row_index, start, length, info } = args
+		const timeline = this.view === 'timeline'
+		const date = timeline ? this.current : this.days[index].value
+		const { start_time, end_time } = getStartEnd(date, start, length, timeline)
 		const target_info = info ? omit(info, ['start', 'length']) : {}
 
 		if (this.view === 'fixed') target_info['fixed_scale'] = this.scale
 
+		if (timeline) {
+			const angle = this.setting.setting.timeline_angles[index]
+
+			target_info['timeline_angle_id'] = angle.id
+			target_info['timeline_angle_row_id'] = angle.rows[row_index]
+		}
+
 		await addTimeBlock(this.id, {
 			...target_info,
-			type,
+			type: this.view,
 			start_time,
 			end_time
 		})
@@ -337,10 +361,13 @@ export default class Index {
 			const doc_setting = getDocItem(setting)
 
 			this.setting = { ...omit(doc_setting, 'setting'), setting: JSON.parse(doc_setting.setting) }
+
+			this.getDays()
 		})
 	}
 
 	watchCalendarDays() {
+		this.stopWatchTimelineAngles()
 		this.stopWatchCalendarDays()
 
 		const start_time = this.days.at(0).value.startOf('day')
@@ -398,6 +425,51 @@ export default class Index {
 		this.calendar_days_watcher = null
 	}
 
+	watchTimelineAngles() {
+		this.stopWatchCalendarDays()
+		this.stopWatchTimelineAngles()
+
+		const start_time = this.days.at(0).value.startOf('day')
+		const end_time = this.days.at(-1).value.endOf('day')
+
+		const selector: MangoQuerySelector<Schedule.Item> = {}
+		selector['start_time'] = { $gte: start_time.valueOf() }
+		selector['end_time'] = { $lte: end_time.valueOf() + 1 }
+
+		this.timeline_angles_watcher = getTimeBlocks(
+			this.id,
+			{ type: this.view, ...selector },
+			this.filter_tags
+		).$.subscribe(doc => {
+			if (this.disable_watcher) return
+
+			const items = getDocItemsData(doc)
+			const now = dayjs()
+			const target = getTimelineAngles(this.setting.setting.timeline_angles)
+
+			items.forEach(item => {
+				const start_time = dayjs(item.start_time)
+				const end_time = dayjs(item.end_time)
+				const begin = dayjs(this.current).startOf('day')
+
+				item['start'] = start_time.diff(begin, 'hours') / 12
+				item['length'] = end_time.diff(start_time, 'hours') / 12
+				item['past'] = now.valueOf() >= item.end_time
+
+				target[item.timeline_angle_row_id].push(item as Schedule.CalendarItem)
+			})
+
+			this.timeline_angles = target
+		})
+	}
+
+	stopWatchTimelineAngles() {
+		if (!this.timeline_angles_watcher) return
+
+		this.timeline_angles_watcher.unsubscribe()
+		this.timeline_angles_watcher = null
+	}
+
 	on() {
 		this.watchSetting()
 	}
@@ -407,5 +479,6 @@ export default class Index {
 
 		this.setting_watcher?.unsubscribe?.()
 		this.calendar_days_watcher?.unsubscribe?.()
+		this.timeline_angles_watcher?.unsubscribe?.()
 	}
 }

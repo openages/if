@@ -6,6 +6,8 @@ export { default as getCalendarDays } from './getCalendarDays'
 export { default as getMonthDays } from './getMonthDays'
 export { default as getYearDays } from './getYearDays'
 export { default as getStartByY } from './getStartByY'
+export { default as getStartByX } from './getStartByX'
 export { default as getStartEnd } from './getStartEnd'
+export { default as getTimelineAngles } from './getTimelineAngles'
 
 export type { DayDetail } from './getDayDetails'

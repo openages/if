@@ -9,18 +9,18 @@ import type { IPropsCalendarContextMenu } from '../../types'
 import type { ItemProps } from 'react-contexify'
 
 const Index = (props: IPropsCalendarContextMenu) => {
-	const { view, timeblock_copied, addTimeBlock } = props
+	const { timeblock_copied, addTimeBlock } = props
 
 	const onAddTimeBlock: ItemProps['onClick'] = useMemoizedFn(({ props }) => {
-		const { index, start, length } = props
+		const { index, row_index, start, length } = props
 
-		addTimeBlock({ type: view, index, start, length })
+		addTimeBlock({ index, row_index, start, length })
 	})
 
 	const onPasteTimeBlock = useMemoizedFn(({ props }) => {
-		const { index, start, length } = props
+		const { index, row_index, start, length } = props
 
-		addTimeBlock({ type: view, index, start, length, info: timeblock_copied })
+		addTimeBlock({ index, row_index, start, length, info: timeblock_copied })
 	})
 
 	const onHidden = useMemoizedFn((v: boolean) => {
