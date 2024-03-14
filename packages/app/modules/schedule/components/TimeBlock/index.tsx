@@ -15,6 +15,7 @@ import { CSS } from '@dnd-kit/utilities'
 import { Check, Info, X } from '@phosphor-icons/react'
 
 import { useDragLength } from '../../hooks'
+import { getCrossTime } from '../../utils'
 import TimeBlockDetail from '../TimeBlockDetail'
 import { useContextMenuItems } from './hooks'
 import styles from './index.css'
@@ -28,8 +29,10 @@ const Index = (props: IPropsTimeBlock) => {
 		item,
 		tags,
 		day_index,
+		angle_row_id,
 		timeblock_index,
 		month_mode,
+		step,
 		at_bottom,
 		updateTimeBlock,
 		removeTimeBlock,
@@ -40,6 +43,8 @@ const Index = (props: IPropsTimeBlock) => {
 	const [status, setStatus] = useState('')
 	const context_menu_items = useContextMenuItems()
 	const { t } = useTranslation()
+	const timeline = angle_row_id !== undefined
+
 	const {
 		attributes,
 		listeners,
@@ -50,12 +55,13 @@ const Index = (props: IPropsTimeBlock) => {
 	} = useDraggable({
 		id: item.id,
 		disabled: month_mode,
-		data: { day_index, timeblock_index }
+		data: { day_index, angle_row_id, timeblock_index }
 	})
 
 	const { drag_ref } = useDragLength({
-		type: 'timeblock',
 		day_index,
+		angle_row_id,
+		step,
 		timeblock_index,
 		changeTimeBlockLength
 	})
@@ -138,6 +144,16 @@ const Index = (props: IPropsTimeBlock) => {
 	})
 
 	const look = useMemo(() => {
+		if (timeline) {
+			return {
+				class: ['absolute', styles.timeline],
+				style: {
+					left: item.start * step,
+					width: item.length * step
+				}
+			}
+		}
+
 		if (month_mode) {
 			return {
 				class: ['relative', styles.month_mode],
@@ -159,7 +175,25 @@ const Index = (props: IPropsTimeBlock) => {
 				height: item.length * 16
 			}
 		}
-	}, [item, month_mode])
+	}, [item, month_mode, timeline, step])
+
+	const time = useMemo(() => {
+		const start_time = dayjs(item.start_time)
+		const end_time = dayjs(item.end_time)
+		const cross_time = getCrossTime(start_time, end_time, timeline)
+
+		if (timeline) {
+			return {
+				time: `${start_time.format('MM.DD')} - ${end_time.format('MM.DD')}`,
+				cross_time
+			}
+		} else {
+			return {
+				time: `${start_time.format('HH:mm')} - ${end_time.format('HH:mm')}`,
+				cross_time
+			}
+		}
+	}, [item, timeline])
 
 	return (
 		<Popover
@@ -230,12 +264,12 @@ const Index = (props: IPropsTimeBlock) => {
 								onKeyDown={onKeyDown}
 							></div>
 						</div>
-						{!month_mode && item.length > 1 && (
+						{((!month_mode && item.length > 1) || timeline) && (
 							<div className='time flex justify_between'>
-								<span>
-									{dayjs(item.start_time).format('HH:mm')} -{' '}
-									{dayjs(item.end_time).format('HH:mm')}
-								</span>
+								<div className='flex'>
+									<span className='mr_4'>{time.time}</span>
+									<span>{time.cross_time}</span>
+								</div>
 								{status &&
 									(status === 'ok' ? (
 										<Check weight='bold'></Check>

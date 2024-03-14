@@ -59,7 +59,6 @@ export interface IPropsDayExtra {
 
 export interface IPropsCalendarView {
 	container: MutableRefObject<HTMLDivElement>
-	view: Model['view']
 	calendar_days: Model['calendar_days']
 	tags: Schedule.Setting['tags']
 	today_index: number
@@ -72,7 +71,6 @@ export interface IPropsCalendarView {
 
 export interface IPropsCalendarViewDay {
 	container: MutableRefObject<HTMLDivElement>
-	view: Model['view']
 	day: Schedule.CalendarDay
 	counts: number
 	index: number
@@ -103,7 +101,7 @@ export interface IPropsMonthView {
 	tags: Schedule.Setting['tags']
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
-	copyTimeBlock: (v: Omit<Schedule.CalendarItem, 'id'>) => void
+	copyTimeBlock: IPropsCalendarView['copyTimeBlock']
 	jump: Model['jump']
 }
 
@@ -121,14 +119,15 @@ export interface IPropsMonthViewDay {
 
 export interface IPropsTimelineView {
 	container: MutableRefObject<HTMLDivElement>
-	view: Model['view']
 	days: Model['days']
 	setting_timeline_angles: Schedule.Setting['timeline_angles']
 	timeline_angles: Model['timeline_angles']
 	tags: Schedule.Setting['tags']
+	move_item: Model['move_item']
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
-	copyTimeBlock: (v: Omit<Schedule.CalendarItem, 'id'>) => void
+	copyTimeBlock: IPropsCalendarView['copyTimeBlock']
+	changeTimeBlockLength: Model['changeTimeBlockLength']
 }
 
 export interface IPropsTimelineViewDay {
@@ -138,6 +137,7 @@ export interface IPropsTimelineViewDay {
 
 export interface IPropsTimelineViewRow {
 	container: MutableRefObject<HTMLDivElement>
+	tags: Schedule.Setting['tags']
 	step: number
 	days_length: number
 	angle_index: number
@@ -145,6 +145,11 @@ export interface IPropsTimelineViewRow {
 	angle_id: string
 	row_id: string
 	timeblocks: Schedule.CalendarDay
+	move_item?: Model['move_item']
+	updateTimeBlock: Model['updateTimeBlock']
+	removeTimeBlock: Model['removeTimeBlock']
+	copyTimeBlock: IPropsCalendarView['copyTimeBlock']
+	changeTimeBlockLength: Model['changeTimeBlockLength']
 }
 
 export interface IPropsTimelineAngles {
@@ -154,11 +159,12 @@ export interface IPropsTimelineAngles {
 export interface IPropsTimeBlock {
 	item: Schedule.CalendarItem
 	tags: Schedule.Setting['tags']
-	day_index: number
 	timeblock_index: number
+	day_index?: number
+	angle_row_id?: string
 	month_mode?: boolean
+	step?: number
 	at_bottom?: boolean
-	day_width?: number
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
 	copyTimeBlock: IPropsCalendarView['copyTimeBlock']

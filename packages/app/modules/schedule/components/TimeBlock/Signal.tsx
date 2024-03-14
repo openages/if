@@ -10,10 +10,14 @@ const Index = (props: IPropsCalendarViewTimeBlockSignal) => {
 	const style = useMemo(() => {
 		const target = {}
 
-		if (!timeline) return (target['height'] = item.length * step)
+		if (!timeline) {
+			target['height'] = item.length * step
+
+			return target
+		}
 
 		target['width'] = item.length * step
-		target['height'] = 38
+		target['height'] = 36
 
 		return target
 	}, [item, step, timeline])

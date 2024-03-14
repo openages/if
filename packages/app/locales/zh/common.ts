@@ -1,10 +1,13 @@
 export default {
 	time: {
 		just_now: '刚刚',
+		m: '分钟',
 		minute: '分钟',
 		minutes: '分钟',
+		h: '小时',
 		hour: '小时',
 		hours: '小时',
+		d: '天',
 		day: '天',
 		days: '天',
 		week: '周',

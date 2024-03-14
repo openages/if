@@ -1,10 +1,13 @@
 export default {
 	time: {
 		just_now: 'Just now',
+		m: 'm',
 		minute: 'minute',
 		minutes: 'minutes',
+		h: 'h',
 		hour: 'hour',
 		hours: 'hours',
+		d: 'd',
 		day: 'day',
 		days: 'days',
 		week: 'week',

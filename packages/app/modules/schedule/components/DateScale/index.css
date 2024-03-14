@@ -66,6 +66,24 @@
 					justify-content: center;
 				}
 
+				&.timeline_narrow {
+					.date {
+						color: var(--color_text);
+					}
+
+					&.today {
+						background-color: rgba(var(--color_text_rgb), 0.03);
+
+						.date {
+							padding: unset;
+							border: none;
+							border-radius: unset;
+							font-size: 12px;
+							font-weight: 500;
+						}
+					}
+				}
+
 				.date {
 					color: var(--color_text_softlight);
 					font-size: 10px;

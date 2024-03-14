@@ -11,6 +11,7 @@ import { getDocItem, getDocItemsData } from '@/utils'
 import { confirm } from '@/utils/antd'
 import { disableWatcher } from '@/utils/decorators'
 import { useInstanceWatch } from '@openages/stk/mobx'
+import { deepEqual } from '@openages/stk/react'
 
 import {
 	addTimeBlock,
@@ -25,6 +26,7 @@ import {
 	collisionDetection,
 	getDayDetails,
 	getMonthDays,
+	getStartByX,
 	getStartByY,
 	getStartEnd,
 	getTimelineAngles,
@@ -62,7 +64,7 @@ export default class Index {
 	visible_task_panel = false
 	visible_settings_modal = false
 
-	move_item = null as Schedule.CalendarItem & { day_index: number }
+	move_item = null as Schedule.CalendarItem & { day_index?: number; angle_index?: number; row_index?: number }
 
 	watch = {
 		filter_tags: () => {
@@ -150,7 +152,7 @@ export default class Index {
 				getDayDetails(this.current.add(2, 'day'))
 			])
 			.with('week', () => getWeekdays(this.current))
-			.with('month', () => getMonthDays(this.current, this.view === 'fixed'))
+			.with('month', () => getMonthDays(this.current, this.view === 'fixed' || this.view === 'timeline'))
 			.with('year', () => getYearDays(this.current))
 			.otherwise(null)
 
@@ -166,7 +168,7 @@ export default class Index {
 	}
 
 	onDragMove(container: HTMLDivElement, { active, over, activatorEvent }: DragMoveEvent) {
-		if (!over) return
+		if (!over) return (this.move_item = null)
 
 		let target = activatorEvent.target as Element
 
@@ -174,24 +176,49 @@ export default class Index {
 			target = target.parentElement
 		}
 
-		const day_index = over.id
-		const active_item = this.calendar_days[active.data.current.day_index][active.data.current.timeblock_index]
+		if (this.view === 'timeline') {
+			const { step, angle_index, row_index, row_id } = over.data.current
+			const { angle_row_id, timeblock_index } = active.data.current
+			const active_item = this.timeline_angles[angle_row_id][timeblock_index]
+			const total = 2 * this.days.length
 
-		let start = getStartByY(container, target.getBoundingClientRect().top)
+			let start = getStartByX(container, step, target.getBoundingClientRect().left)
 
-		if (start < 0) start = 0
-		if (start + active_item.length > 72) start = 72 - active_item.length
+			if (start < 0) start = 0
+			if (start + active_item.length > total) start = total - active_item.length
 
-		const length = collisionDetection(
-			this.calendar_days[day_index],
-			start,
-			active_item.length,
-			active.id as string
-		)
+			const length = collisionDetection(
+				this.timeline_angles[row_id],
+				start,
+				active_item.length,
+				active.id as string
+			)
 
-		if (!length) return (this.move_item = null)
+			if (!length) return (this.move_item = null)
 
-		this.move_item = { day_index, start, length } as Index['move_item']
+			this.move_item = { angle_index, row_index, start, length } as Index['move_item']
+		} else {
+			const over_day_index = over.id
+			const { day_index: active_day_index, timeblock_index } = active.data.current
+
+			const active_item = this.calendar_days[active_day_index][timeblock_index]
+
+			let start = getStartByY(container, target.getBoundingClientRect().top)
+
+			if (start < 0) start = 0
+			if (start + active_item.length > 72) start = 72 - active_item.length
+
+			const length = collisionDetection(
+				this.calendar_days[over_day_index],
+				start,
+				active_item.length,
+				active.id as string
+			)
+
+			if (!length) return (this.move_item = null)
+
+			this.move_item = { day_index: over_day_index, start, length } as Index['move_item']
+		}
 	}
 
 	onDragCancel() {
@@ -212,7 +239,7 @@ export default class Index {
 	}) {
 		const { index, row_index, start, length, info } = args
 		const timeline = this.view === 'timeline'
-		const date = timeline ? this.current : this.days[index].value
+		const date = this.days[timeline ? 0 : index].value
 		const { start_time, end_time } = getStartEnd(date, start, length, timeline)
 		const target_info = info ? omit(info, ['start', 'length']) : {}
 
@@ -246,10 +273,26 @@ export default class Index {
 		if (over?.id === undefined) return
 		if (!this.move_item) return
 
-		const now = dayjs()
-		const active_item = this.calendar_days[active.data.current.day_index][active.data.current.timeblock_index]
-		const date = this.days[over.id as number].value
-		const { start_time, end_time } = getStartEnd(date, this.move_item.start, this.move_item.length)
+		const { day_index, angle_row_id, timeblock_index } = active.data.current
+		const { angle_id, row_id } = over.data.current || {}
+
+		let active_item = null as Schedule.CalendarItem
+		let date = null as Dayjs
+
+		if (this.view === 'timeline') {
+			active_item = this.timeline_angles[angle_row_id][timeblock_index]
+			date = this.days[0].value
+		} else {
+			active_item = this.calendar_days[day_index][timeblock_index]
+			date = this.days[over.id as number].value
+		}
+
+		const { start_time, end_time } = getStartEnd(
+			date,
+			this.move_item.start,
+			this.move_item.length,
+			this.view === 'timeline'
+		)
 
 		active_item.start = this.move_item.start
 		active_item.length = this.move_item.length
@@ -257,39 +300,94 @@ export default class Index {
 		active_item.end_time = end_time
 
 		if (this.view !== 'fixed' && this.show_time_scale) {
-			active_item.past = now.valueOf() >= active_item.end_time
+			active_item.past = dayjs().valueOf() >= active_item.end_time
 		}
 
-		if (active.data.current.day_index === over.id) {
-			this.calendar_days[active.data.current.day_index][active.data.current.timeblock_index] =
-				$copy(active_item)
+		if (this.view === 'timeline') {
+			const data = { start_time, end_time } as Partial<Schedule.Item>
+
+			if (angle_row_id === row_id) {
+				this.timeline_angles[angle_row_id][timeblock_index] = $copy(active_item)
+			} else {
+				active_item.timeline_angle_id = angle_id
+				active_item.timeline_angle_row_id = row_id
+
+				data['timeline_angle_id'] = angle_id
+				data['timeline_angle_row_id'] = row_id
+
+				this.timeline_angles[angle_row_id].splice(timeblock_index, 1)
+				this.timeline_angles[row_id].push($copy(active_item))
+			}
+
+			this.move_item = null
+
+			await this.updateTimeBlock(active_item.id, data)
 		} else {
-			this.calendar_days[active.data.current.day_index].splice(active.data.current.timeblock_index, 1)
-			this.calendar_days[over.id].push($copy(active_item))
+			if (day_index === over.id) {
+				this.calendar_days[day_index][timeblock_index] = $copy(active_item)
+			} else {
+				this.calendar_days[day_index].splice(timeblock_index, 1)
+				this.calendar_days[over.id].push($copy(active_item))
+			}
+
+			this.move_item = null
+
+			await this.updateTimeBlock(active_item.id, { start_time, end_time })
 		}
-
-		this.move_item = null
-
-		await this.updateTimeBlock(active_item.id, { start_time, end_time })
 	}
 
-	async changeTimeBlockLength(args: { day_index: number; timeblock_index: number; step: number }) {
-		const { day_index, timeblock_index, step } = args
-		const item = this.calendar_days[day_index][timeblock_index]
-		const after_length = item.length + step
+	async changeTimeBlockLength(args: {
+		day_index?: number
+		angle_row_id?: string
+		timeblock_index: number
+		step: number
+	}) {
+		const { day_index, angle_row_id, timeblock_index, step } = args
+		const timeline = angle_row_id !== undefined
 
-		if (!after_length) return
+		if (timeline) {
+			const item = this.timeline_angles[angle_row_id][timeblock_index]
+			const after_length = item.length + step
 
-		const target_length = collisionDetection(this.calendar_days[day_index], item.start, after_length, item.id)
+			if (!after_length) return
 
-		if (!target_length) return
+			const target_length = collisionDetection(
+				this.timeline_angles[angle_row_id],
+				item.start,
+				after_length,
+				item.id
+			)
 
-		item.length = target_length
-		item.end_time = dayjs(item.start_time)
-			.add(item.length * 20, 'minutes')
-			.valueOf()
+			if (!target_length) return
 
-		this.updateTimeBlock(item.id, { end_time: item.end_time })
+			item.length = target_length
+			item.end_time = dayjs(item.start_time)
+				.add(item.length * 12, 'hours')
+				.valueOf()
+
+			this.updateTimeBlock(item.id, { end_time: item.end_time })
+		} else {
+			const item = this.calendar_days[day_index][timeblock_index]
+			const after_length = item.length + step
+
+			if (!after_length) return
+
+			const target_length = collisionDetection(
+				this.calendar_days[day_index],
+				item.start,
+				after_length,
+				item.id
+			)
+
+			if (!target_length) return
+
+			item.length = target_length
+			item.end_time = dayjs(item.start_time)
+				.add(item.length * 20, 'minutes')
+				.valueOf()
+
+			this.updateTimeBlock(item.id, { end_time: item.end_time })
+		}
 	}
 
 	async updateTodoSchedule(id: string) {
@@ -359,10 +457,17 @@ export default class Index {
 	watchSetting() {
 		this.setting_watcher = getQuerySetting(this.id).$.subscribe(setting => {
 			const doc_setting = getDocItem(setting)
+			const current_setting = JSON.parse(doc_setting.setting)
+			const prev_setting = $copy(this.setting)
 
-			this.setting = { ...omit(doc_setting, 'setting'), setting: JSON.parse(doc_setting.setting) }
+			this.setting = { ...omit(doc_setting, 'setting'), setting: current_setting }
 
-			this.getDays()
+			if (
+				this.view === 'timeline' &&
+				!deepEqual(prev_setting?.setting?.timeline_angles, current_setting.timeline_angles)
+			) {
+				this.getDays()
+			}
 		})
 	}
 
@@ -450,7 +555,7 @@ export default class Index {
 			items.forEach(item => {
 				const start_time = dayjs(item.start_time)
 				const end_time = dayjs(item.end_time)
-				const begin = dayjs(this.current).startOf('day')
+				const begin = this.days[0].value.startOf('day')
 
 				item['start'] = start_time.diff(begin, 'hours') / 12
 				item['length'] = end_time.diff(start_time, 'hours') / 12

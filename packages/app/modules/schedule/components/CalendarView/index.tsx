@@ -5,7 +5,6 @@ import type { IPropsCalendarView } from '../../types'
 const Index = (props: IPropsCalendarView) => {
 	const {
 		container,
-		view,
 		calendar_days,
 		tags,
 		today_index,
@@ -21,7 +20,6 @@ const Index = (props: IPropsCalendarView) => {
 			{calendar_days.map((day, index) => (
 				<Day
 					container={container}
-					view={view}
 					day={day}
 					counts={calendar_days.length}
 					index={index}

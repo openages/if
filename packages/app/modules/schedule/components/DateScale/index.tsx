@@ -13,7 +13,16 @@ const Index = (props: IPropsDateScale) => {
 
 	const not_fixed = useMemo(() => view !== 'fixed', [view])
 	const timeline = useMemo(() => view === 'timeline', [view])
-	const target_weekdays = useMemo(() => (scale === 'month' ? getStaticWeekdays() : days), [scale, days])
+
+	const target_weekdays = useMemo(
+		() => (view !== 'timeline' && scale === 'month' ? getStaticWeekdays() : days),
+		[view, scale, days]
+	)
+
+	const timeline_narrow = useMemo(
+		() => view === 'timeline' && (scale === 'month' || scale === 'year'),
+		[view, scale]
+	)
 
 	return (
 		<div
@@ -39,21 +48,25 @@ const Index = (props: IPropsDateScale) => {
 				{target_weekdays.map((item, index) => (
 					<div
 						className={$cx(
-							'weekday_item border_box flex justify_between align_center',
+							'weekday_item border_box flex align_center',
 							item.is_today && 'today',
 							!show_time_scale && !timeline && 'hidden_time_scale',
-							!not_fixed && 'fixed_view'
+							!not_fixed && 'fixed_view',
+							!timeline_narrow ? 'justify_between' : 'justify_center',
+							timeline_narrow && 'timeline_narrow'
 						)}
 						style={{ width: `calc(100% / ${show_time_scale || timeline ? days.length : 7})` }}
 						key={index}
 					>
 						<div className='flex align_center'>
-							<span className='weekday'>{item.weekday}</span>
+							{!timeline_narrow && <span className='weekday mr_6'>{item.weekday}</span>}
 							{not_fixed && (show_time_scale || timeline) && (
-								<span className='date ml_6'>{item.date}</span>
+								<span className='date'>{item.date}</span>
 							)}
 						</div>
-						{not_fixed && (show_time_scale || timeline) && <DayExtra item={item}></DayExtra>}
+						{not_fixed && (show_time_scale || timeline) && !timeline_narrow && (
+							<DayExtra item={item}></DayExtra>
+						)}
 					</div>
 				))}
 			</div>

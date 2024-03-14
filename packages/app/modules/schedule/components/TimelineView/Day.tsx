@@ -1,5 +1,3 @@
-import styles from './index.css'
-
 import type { IPropsTimelineViewDay } from '../../types'
 
 const Index = (props: IPropsTimelineViewDay) => {
@@ -7,7 +5,7 @@ const Index = (props: IPropsTimelineViewDay) => {
 
 	return (
 		<div
-			className={$cx('h_100 absolute top_0', styles.Day)}
+			className='day_line h_100 absolute top_0'
 			style={{ left: `calc(((100% / ${counts}) * ${index + 1}) - 1px)` }}
 		></div>
 	)

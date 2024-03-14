@@ -3,6 +3,7 @@
 	overflow: hidden;
 	background-color: var(--color_bg);
 	border-radius: var(--radius_small);
+	outline: none;
 
 	&:hover {
 		:global {
@@ -168,12 +169,41 @@
 		}
 	}
 
+	&.timeline {
+		height: 36px;
+
+		:global {
+			.drag_line {
+				width: 6px;
+				height: 100%;
+				cursor: col-resize;
+			}
+
+			.timeblock_content_wrap {
+				padding: 1px 4px;
+				padding-top: 0;
+
+				.text_wrap {
+					height: 20px;
+					line-height: 20px;
+					padding: 0;
+					white-space: nowrap;
+				}
+
+				.time {
+					height: 14px;
+					margin-top: 1px;
+				}
+			}
+		}
+	}
+
 	:global {
 		.drag_line {
 			height: 6px;
-			cursor: row-resize;
 			user-select: none;
 			z-index: 1;
+			cursor: row-resize;
 		}
 
 		.btn_detail {
@@ -195,6 +225,7 @@
 
 			.text_scroll_wrap {
 				overflow-x: scroll;
+				outline: none;
 				cursor: text;
 			}
 
@@ -220,6 +251,7 @@
 				line-height: 1;
 				color: var(--color_text_light);
 				user-select: none;
+				white-space: nowrap;
 			}
 		}
 	}

@@ -38,7 +38,20 @@ const Index = (props: IProps) => {
 	const ref_content_wrap = useRef<HTMLDivElement>(null)
 	const ref_content = useRef<HTMLDivElement>(null)
 	const [on_body, setOnbody] = useState(false)
+	const [self_open, setSelfOpen] = useState(false)
 	const container = getContainer?.()
+
+	useEffect(() => {
+		if (open) {
+			setSelfOpen(true)
+		} else {
+			const timer = setTimeout(() => {
+				setSelfOpen(false)
+			}, 180)
+
+			return () => clearTimeout(timer)
+		}
+	}, [open])
 
 	useClickAway(e => {
 		if (!maskClosable) return
@@ -124,10 +137,10 @@ const Index = (props: IProps) => {
 	)
 
 	if (container) {
-		return createPortal(Content, container)
+		return self_open ? createPortal(Content, container) : null
 	}
 
-	return Content
+	return self_open ? Content : null
 }
 
 export default $app.memo(Index)

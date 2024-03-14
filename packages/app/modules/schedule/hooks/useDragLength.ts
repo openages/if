@@ -4,17 +4,19 @@ import { useEffect, useRef, useState } from 'react'
 import type Model from '../model'
 
 interface Args {
-	type: 'timeblock' | 'timeline'
-	day_index: number
+	day_index?: number
+	angle_row_id?: string
+	step?: number
 	timeblock_index: number
 	changeTimeBlockLength: Model['changeTimeBlockLength']
 }
 
 export default (args: Args) => {
-	const { type, day_index, timeblock_index, changeTimeBlockLength } = args
+	const { day_index, angle_row_id, step, timeblock_index, changeTimeBlockLength } = args
 	const ref = useRef<HTMLDivElement>(null)
 	const changed = useRef(0)
 	const [changing, setChanging] = useState(false)
+	const timeline = angle_row_id !== undefined
 
 	useEffect(() => {
 		changed.current = 0
@@ -23,7 +25,7 @@ export default (args: Args) => {
 	const start = useMemoizedFn(() => {
 		setChanging(true)
 
-		document.body.style.cursor = type === 'timeblock' ? 'row-resize' : 'col-resize'
+		document.body.style.cursor = timeline ? 'col-resize' : 'row-resize'
 	})
 
 	const stop = useMemoizedFn(() => {
@@ -35,16 +37,30 @@ export default (args: Args) => {
 	const setWidth = useMemoizedFn((e: MouseEvent) => {
 		if (!changing) return
 
-		if (type === 'timeblock') {
-			const move = e.clientY - changed.current
+		let move = 0
+
+		if (timeline) {
+			move = e.clientX - changed.current
+
+			if (changed.current === 0) return (changed.current = e.clientX)
+			if (Math.abs(move) < step) return
+
+			changed.current = 0
+		} else {
+			move = e.clientY - changed.current
 
 			if (changed.current === 0) return (changed.current = e.clientY)
 			if (Math.abs(move) < 16) return
 
 			changed.current = 0
-
-			changeTimeBlockLength({ day_index, timeblock_index, step: move > 0 ? 1 : -1 })
 		}
+
+		changeTimeBlockLength({
+			day_index,
+			angle_row_id,
+			timeblock_index,
+			step: move > 0 ? 1 : -1
+		})
 	})
 
 	useEffect(() => {

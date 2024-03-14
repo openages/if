@@ -2,23 +2,47 @@ import { useMemoizedFn } from 'ahooks'
 import { useEffect, useState } from 'react'
 import { useContextMenu } from 'react-contexify'
 
+import { useDroppable } from '@dnd-kit/core'
+
 import { collisionDetection, getStartByX } from '../../utils'
+import TimeBlock from '../TimeBlock'
 import Signal from '../TimeBlock/Signal'
-import styles from './index.css'
 
 import type { IPropsTimelineViewRow } from '../../types'
 import type { MouseEvent } from 'react'
 
 const Index = (props: IPropsTimelineViewRow) => {
-	const { container, step, days_length, angle_index, row_index, angle_id, row_id, timeblocks } = props
+	const {
+		container,
+		tags,
+		step,
+		days_length,
+		angle_index,
+		row_index,
+		angle_id,
+		row_id,
+		timeblocks,
+		move_item,
+		updateTimeBlock,
+		removeTimeBlock,
+		copyTimeBlock,
+		changeTimeBlockLength
+	} = props
 	const [signal, setSignal] = useState(null)
 	const { show } = useContextMenu({ id: 'timeblock_context_menu' })
+	const { setNodeRef } = useDroppable({ id: row_id, data: { step, angle_index, row_index, angle_id, row_id } })
 
 	const clearSignal = useMemoizedFn(v => {
 		if (v === row_id) return
 
 		setSignal(null)
 	})
+
+	useEffect(() => {
+		if (!move_item) return setSignal(null)
+
+		setSignal(move_item)
+	}, [move_item])
 
 	useEffect(() => {
 		$app.Event.on('schedule/context_menu/hidden', clearSignal)
@@ -43,8 +67,23 @@ const Index = (props: IPropsTimelineViewRow) => {
 	})
 
 	return (
-		<div className={$cx('timeline_row relative', styles.Row)} onContextMenu={onContextMenu}>
+		<div className='timeline_row relative' onContextMenu={onContextMenu} ref={setNodeRef}>
 			{signal && <Signal item={signal} step={step} timeline></Signal>}
+			{timeblocks.map((item, timeblock_index) => (
+				<TimeBlock
+					item={item}
+					tags={tags}
+					angle_row_id={row_id}
+					timeblock_index={timeblock_index}
+					step={step}
+					at_bottom
+					updateTimeBlock={updateTimeBlock}
+					removeTimeBlock={removeTimeBlock}
+					copyTimeBlock={copyTimeBlock}
+					changeTimeBlockLength={changeTimeBlockLength}
+					key={item.id}
+				></TimeBlock>
+			))}
 		</div>
 	)
 }

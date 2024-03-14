@@ -6,10 +6,19 @@
 			border-bottom: var(--border);
 			padding-left: 90px;
 
-			&:hover {
+			&:hover,
+			&.move_over {
 				.angle_rows {
+					.day_line {
+						display: block;
+					}
+
 					.timeline_row {
 						border-bottom-color: var(--color_border_light);
+
+						&:nth-of-type(2n + 1) {
+							background-color: var(--color_bg_1);
+						}
 					}
 				}
 			}
@@ -24,27 +33,20 @@
 			}
 
 			.angle_rows {
-				.timeline_row {
-					&:hover {
-						border-bottom-color: var(--color_border_light);
-					}
+				padding: 1.5px 0;
 
-					&:last-child {
-						border-bottom-color: transparent;
-					}
+				.day_line {
+					display: none;
+					width: 1px;
+					background-color: var(--color_border_light);
+					z-index: 1;
+				}
+
+				.timeline_row {
+					height: 36px;
+					margin: 1.5px 0;
 				}
 			}
 		}
 	}
-}
-
-.Day {
-	width: 1px;
-	background-color: var(--color_border_light);
-}
-
-.Row {
-	height: 38px;
-	border-top: 1px solid transparent;
-	border-bottom: 1px dashed transparent;
 }

@@ -45,6 +45,7 @@ const Index = ({ id }: IProps) => {
 	const timeline_angles = $copy(x.timeline_angles)
 	const tags = $copy(x.setting?.setting?.tags || [])
 	const timeblock_copied = $copy(x.timeblock_copied)
+	const move_item = $copy(x.move_item)
 	const today_index = useMemo(() => days.findIndex(item => item?.value?.isToday()), [days])
 
 	useLayoutEffect(() => {
@@ -63,6 +64,7 @@ const Index = ({ id }: IProps) => {
 	const updateTimeBlock = useMemoizedFn(x.updateTimeBlock)
 	const removeTimeBlock = useMemoizedFn(x.removeTimeBlock)
 	const copyTimeBlock = useMemoizedFn(v => (x.timeblock_copied = v))
+	const changeTimeBlockLength = useMemoizedFn(x.changeTimeBlockLength)
 
 	const props_header: IPropsHeader = {
 		view: x.view,
@@ -90,15 +92,14 @@ const Index = ({ id }: IProps) => {
 
 	const props_calendar_view: IPropsCalendarView = {
 		container,
-		view: x.view,
 		calendar_days,
 		tags,
 		today_index,
-		move_item: $copy(x.move_item),
+		move_item,
 		updateTimeBlock,
 		removeTimeBlock,
 		copyTimeBlock,
-		changeTimeBlockLength: useMemoizedFn(x.changeTimeBlockLength)
+		changeTimeBlockLength
 	}
 
 	const props_month_view: IPropsMonthView = {
@@ -114,14 +115,15 @@ const Index = ({ id }: IProps) => {
 
 	const props_timeline_view: IPropsTimelineView = {
 		container,
-		view: x.view,
 		days,
 		setting_timeline_angles: $copy(x.setting?.setting?.['timeline_angles'] || []),
 		timeline_angles,
 		tags,
+		move_item,
 		updateTimeBlock,
 		removeTimeBlock,
-		copyTimeBlock
+		copyTimeBlock,
+		changeTimeBlockLength
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
@@ -144,8 +146,6 @@ const Index = ({ id }: IProps) => {
 	const onDragMove = useMemoizedFn(args => x.onDragMove(container.current, args))
 	const onDragEnd = useMemoizedFn(x.onDragEnd)
 	const onDragCancel = useMemoizedFn(x.onDragCancel)
-
-	console.log(timeline_angles)
 
 	return (
 		<div className={$cx('w_100 h_100 border_box flex flex_column', styles._local)}>
