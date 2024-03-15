@@ -536,12 +536,27 @@ export default class Index {
 		this.stopWatchCalendarDays()
 		this.stopWatchTimelineAngles()
 
-		const start_time = this.days.at(0).value.startOf('day')
-		const end_time = this.days.at(-1).value.endOf('day')
+		const now = dayjs()
+		const begin = this.days[0].value.startOf('day')
+		const view_start_time = this.days.at(0).value.startOf('day')
+		const view_end_time = this.days.at(-1).value.endOf('day')
 
-		const selector: MangoQuerySelector<Schedule.Item> = {}
-		selector['start_time'] = { $gte: start_time.valueOf() }
-		selector['end_time'] = { $lte: end_time.valueOf() + 1 }
+		const selector: MangoQuerySelector<Schedule.Item> = {
+			$or: [
+				{
+					start_time: { $gte: view_start_time.valueOf() },
+					end_time: { $lte: view_end_time.valueOf() + 1 }
+				},
+				{
+					start_time: { $lt: view_start_time.valueOf() },
+					end_time: { $gt: view_start_time.valueOf() }
+				},
+				{
+					start_time: { $lt: view_end_time.valueOf() + 1 },
+					end_time: { $gt: view_end_time.valueOf() + 1 }
+				}
+			]
+		}
 
 		this.timeline_angles_watcher = getTimeBlocks(
 			this.id,
@@ -550,20 +565,27 @@ export default class Index {
 		).$.subscribe(doc => {
 			if (this.disable_watcher) return
 
-			const items = getDocItemsData(doc)
-			const now = dayjs()
+			const items = getDocItemsData(doc) as Schedule.CalendarDay
 			const target = getTimelineAngles(this.setting.setting.timeline_angles)
 
 			items.forEach(item => {
+				if (item.start_time < view_start_time.valueOf()) {
+					item['raw_start_time'] = item.start_time
+					item.start_time = view_start_time.valueOf()
+				}
+				if (item.end_time > view_end_time.valueOf()) {
+					item['raw_end_time'] = item.end_time
+					item.end_time = view_end_time.valueOf() + 1
+				}
+
 				const start_time = dayjs(item.start_time)
 				const end_time = dayjs(item.end_time)
-				const begin = this.days[0].value.startOf('day')
 
 				item['start'] = start_time.diff(begin, 'hours') / 12
 				item['length'] = end_time.diff(start_time, 'hours') / 12
 				item['past'] = now.valueOf() >= item.end_time
 
-				target[item.timeline_angle_row_id].push(item as Schedule.CalendarItem)
+				target[item.timeline_angle_row_id].push(item)
 			})
 
 			this.timeline_angles = target

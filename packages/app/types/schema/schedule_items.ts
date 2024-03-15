@@ -49,7 +49,14 @@ export namespace Schedule {
 		timeline_year?: boolean
 	}
 
-	export type CalendarItem = Item & { start: number; length: number; past: boolean }
+	export type CalendarItem = Item & {
+		start: number
+		length: number
+		past: boolean
+		raw_start_time?: number
+		raw_end_time?: number
+	}
+
 	export type CalendarDay = Array<CalendarItem>
 	export type CalendarDays = Array<CalendarDay>
 }

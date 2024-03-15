@@ -13,8 +13,8 @@ export default (args: Args) => {
 	const { item, timeline } = args
 
 	return useMemo(() => {
-		const start_time = dayjs(item.start_time)
-		const end_time = dayjs(item.end_time)
+		const start_time = dayjs(item.raw_start_time ?? item.start_time)
+		const end_time = dayjs(item.raw_end_time ?? item.end_time)
 		const cross_time = getCrossTime(start_time, end_time, timeline)
 
 		if (timeline) {

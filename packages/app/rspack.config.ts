@@ -7,7 +7,7 @@ import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
 
 const is_dev = process.env.NODE_ENV === 'development'
 const is_prod = process.env.NODE_ENV === 'production'
-const is_module = false
+const is_module = true
 
 const plugins_dev = [
 	new ReactRefreshPlugin({

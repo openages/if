@@ -14,12 +14,14 @@ const Index = (props: IPropsCalendarContextMenu) => {
 	const onAddTimeBlock: ItemProps['onClick'] = useMemoizedFn(({ props }) => {
 		const { index, row_index, start, length } = props
 
+		onHidden(false)
 		addTimeBlock({ index, row_index, start, length })
 	})
 
 	const onPasteTimeBlock = useMemoizedFn(({ props }) => {
 		const { index, row_index, start, length } = props
 
+		onHidden(false)
 		addTimeBlock({ index, row_index, start, length, info: timeblock_copied })
 	})
 
