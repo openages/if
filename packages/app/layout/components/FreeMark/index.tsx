@@ -8,11 +8,11 @@ const Index = (props: IPropsFreeMark) => {
 	const { user_type } = props
 	const { t } = useTranslation()
 
-	if (user_type !== 'free') return null
+	if (user_type !== 'trial') return null
 
 	return (
 		<div
-			className={$cx('fixed flex flex_column cursor_point', styles._local)}
+			className={$cx('fixed flex flex_column align_end cursor_point', styles._local)}
 			style={{ zIndex: `calc(infinity + 1)` }}
 		>
 			<span className={styles.title}>{t('translation:app.free_mark.title')}</span>

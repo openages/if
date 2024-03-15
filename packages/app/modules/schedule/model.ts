@@ -228,6 +228,8 @@ export default class Index {
 	jump(v: Dayjs) {
 		this.current = v
 		this.scale = 'day'
+
+		this.getDays()
 	}
 
 	async addTimeBlock(args: {

@@ -1,28 +1,20 @@
 import { useMemoizedFn } from 'ahooks'
 import { Dropdown, Popover } from 'antd'
-import Color from 'color'
-import dayjs from 'dayjs'
-import { omit } from 'lodash-es'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
 
-import { useDeepEffect } from '@/hooks'
 import { useInput } from '@/modules/todo/hooks'
-import { getDocItemsData } from '@/utils'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { Check, Info, X } from '@phosphor-icons/react'
 
 import { useDragLength } from '../../hooks'
-import { getCrossTime } from '../../utils'
 import TimeBlockDetail from '../TimeBlockDetail'
-import { useContextMenuItems } from './hooks'
+import { useContextMenuItems, useHandlers, useLook, useTagStyles, useTime, useTodos, useVisibleDetail } from './hooks'
 import styles from './index.css'
 
 import type { IPropsTimeBlock } from '../../types'
-import type { Subscription } from 'rxjs'
-import type { Todo } from '@/types'
 
 const Index = (props: IPropsTimeBlock) => {
 	const {
@@ -39,11 +31,21 @@ const Index = (props: IPropsTimeBlock) => {
 		copyTimeBlock,
 		changeTimeBlockLength
 	} = props
-	const [visible_detail, setVisibleDetail] = useState(false)
-	const [status, setStatus] = useState('')
 	const context_menu_items = useContextMenuItems()
 	const { t } = useTranslation()
-	const timeline = angle_row_id !== undefined
+	const { visible_detail, toggleVisibleDetail } = useVisibleDetail()
+	const status = useTodos(item?.todos || [])
+	const tag_styles = useTagStyles(tags, item.tag)
+	const timeline = useMemo(() => angle_row_id !== undefined, [angle_row_id])
+	const look = useLook({ item, month_mode, step, timeline })
+	const time = useTime({ item, timeline })
+
+	const { stopPropagationContextMenu, onKeyDown, onAction } = useHandlers({
+		item,
+		copyTimeBlock,
+		removeTimeBlock,
+		toggleVisibleDetail
+	})
 
 	const {
 		attributes,
@@ -66,134 +68,11 @@ const Index = (props: IPropsTimeBlock) => {
 		changeTimeBlockLength
 	})
 
-	const closePopover = useMemoizedFn(() => {
-		const popovers = document.getElementsByClassName('month_mode_timeblock_popover')
-
-		if (!popovers.length) return
-
-		Array.from(popovers).forEach(i => ((i as HTMLDivElement).style.display = 'none'))
-	})
-
-	useEffect(() => {
-		return () => {
-			closePopover()
-			setVisibleDetail(false)
-		}
-	}, [])
-
-	useDeepEffect(() => {
-		let watcher = null as Subscription
-
-		if (item?.todos?.length) {
-			watcher = $db.todo_items.findByIds(item.todos).$.subscribe(doc => {
-				const items = getDocItemsData(Array.from(doc.values())) as Array<Todo.Todo>
-
-				const done_items = items.filter(item => item.status === 'checked' || item.status === 'closed')
-
-				if (done_items.length !== items.length) {
-					setStatus(`${done_items.length}/${items.length}`)
-				} else {
-					setStatus('ok')
-				}
-			})
-		} else {
-			setStatus('')
-		}
-
-		return () => watcher?.unsubscribe?.()
-	}, [item.todos])
-
 	const { input, onInput } = useInput({
 		value: item.text,
 		max_length: 60,
 		update: useMemoizedFn(textContent => updateTimeBlock(item.id, { text: textContent }))
 	})
-
-	const tag_styles = useMemo(() => {
-		if (!tags.length) return {}
-		if (!item.tag) return {}
-
-		const target = tags.find(it => it.id === item.tag)
-
-		return {
-			'--tag_color': Color(target.color).rgb().array().join(',')
-		}
-	}, [item.tag, tags])
-
-	const onKeyDown = useMemoizedFn(e => {
-		if (e.key === 'Enter' || e.key === 'Tab') {
-			e.preventDefault()
-		}
-	})
-
-	const toggleVisibleDetail = useMemoizedFn(() => setVisibleDetail(!visible_detail))
-	const stopPropagationContextMenu = useMemoizedFn(e => e.stopPropagation())
-
-	const onAction = useMemoizedFn(({ key }) => {
-		switch (key) {
-			case 'check':
-				toggleVisibleDetail()
-				break
-			case 'copy':
-				copyTimeBlock(omit(item, 'id'))
-				break
-			case 'remove':
-				removeTimeBlock(item.id)
-				break
-		}
-	})
-
-	const look = useMemo(() => {
-		if (timeline) {
-			return {
-				class: ['absolute', styles.timeline],
-				style: {
-					left: item.start * step,
-					width: item.length * step
-				}
-			}
-		}
-
-		if (month_mode) {
-			return {
-				class: ['relative', styles.month_mode],
-				style: {}
-			}
-		}
-
-		return {
-			class: [
-				'absolute',
-				item.length === 1 && styles.small,
-				item.length === 2 && styles.middle,
-				item.length === 3 && styles.large,
-				item.length > 3 && styles.xlarge,
-				item.past && styles.past
-			],
-			style: {
-				top: item.start * 16,
-				height: item.length * 16
-			}
-		}
-	}, [item, month_mode, timeline, step])
-
-	const time = useMemo(() => {
-		const start_time = dayjs(item.start_time)
-		const end_time = dayjs(item.end_time)
-		const cross_time = getCrossTime(start_time, end_time, timeline)
-
-		if (timeline) {
-			return {
-				time: `${start_time.format('MM.DD')} - ${end_time.format('MM.DD')}`,
-				cross_time
-			}
-		} else {
-			return {
-				time: `${start_time.format('HH:mm')} - ${end_time.format('HH:mm')}`,
-				cross_time
-			}
-		}
-	}, [item, timeline])
 
 	return (
 		<Popover

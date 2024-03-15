@@ -1,3 +1,3 @@
 export namespace Auth {
-	export type UserType = 'free' | 'prefessional' | 'sponsor'
+	export type UserType = 'trial' | 'prefessional' | 'team' | 'sponsor' | 'golden_sponsor'
 }

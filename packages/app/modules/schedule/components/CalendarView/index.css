@@ -1,4 +1,6 @@
 .Day {
+	padding: 0 1.5px;
+
 	&.today {
 		:global {
 			.hours_wrap {
@@ -11,6 +13,9 @@
 
 	:global {
 		.hours_wrap {
+			width: calc(100% + 3px);
+			margin-left: -1.5px;
+
 			.hour_item {
 				height: 48px;
 				border-bottom: var(--border);

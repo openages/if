@@ -21,9 +21,10 @@
 	color: rgba(var(--color_main_rgb), 0.72);
 	transition: color ease 0.3s;
 	font-weight: 600;
+	background-color: transparent;
 
 	:local {
-		animation: gradient ease 12s infinite;
+		animation: gradient ease 18s infinite;
 	}
 
 	&:hover {
