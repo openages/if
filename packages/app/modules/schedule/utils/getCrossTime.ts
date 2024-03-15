@@ -12,9 +12,10 @@ export default (start: Dayjs, end: Dayjs, timeline?: boolean) => {
 		const hours = duration.hours()
 		const minutes = duration.minutes()
 
-		let target = `${hours}${$t('translation:common.time.h')}`
+		let target = ''
 
-		if (minutes > 0) target += ` ${minutes}${$t('translation:common.time.m')}`
+		if (hours > 0) target += `${hours}${$t('translation:common.time.h')} `
+		if (minutes > 0) target += `${minutes}${$t('translation:common.time.m')}`
 
 		return target
 	}

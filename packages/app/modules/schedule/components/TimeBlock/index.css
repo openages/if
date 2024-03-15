@@ -3,7 +3,6 @@
 		&.has_tag {
 			:global {
 				.timeblock_content_wrap {
-					border-color: rgba(var(--tag_color), 0.36);
 					background-color: rgba(var(--tag_color), 0.09);
 				}
 			}
@@ -15,7 +14,7 @@
 	font-size: 12px;
 	overflow: hidden;
 	background-color: var(--color_bg);
-	border-radius: var(--radius_small_1);
+	border-radius: var(--radius_small);
 	outline: none;
 
 	&:hover {
@@ -111,8 +110,8 @@
 	&.has_tag {
 		:global {
 			.timeblock_content_wrap {
-				border-color: rgba(var(--tag_color), 0.12);
-				background-color: rgba(var(--tag_color), 0.06);
+				border: none;
+				background-color: rgba(var(--tag_color), 0.15);
 			}
 		}
 	}
@@ -140,7 +139,7 @@
 		&.has_tag {
 			:global {
 				.timeblock_content_wrap {
-					background-color: rgba(var(--tag_color), 0.12);
+					background-color: rgba(var(--tag_color), 0.15);
 				}
 			}
 		}
@@ -190,6 +189,15 @@
 
 	&.timeline {
 		height: 36px;
+		z-index: 2;
+
+		&.has_tag {
+			:global {
+				.timeblock_content_wrap {
+					background-color: rgba(var(--tag_color), 0.18);
+				}
+			}
+		}
 
 		:global {
 			.drag_line {
@@ -239,7 +247,7 @@
 
 		.timeblock_content_wrap {
 			border: 1px solid var(--color_border);
-			border-radius: var(--radius_small_1);
+			border-radius: var(--radius_small);
 			cursor: grab;
 
 			.text_scroll_wrap {
@@ -271,6 +279,20 @@
 				color: var(--color_text_light);
 				user-select: none;
 				white-space: nowrap;
+
+				.time_value {
+					width: 100%;
+
+					&.has_status {
+						width: calc(100% - 27px);
+						overflow: scroll;
+					}
+				}
+
+				.status {
+					right: 0px;
+					backdrop-filter: var(--blur);
+				}
 			}
 		}
 	}

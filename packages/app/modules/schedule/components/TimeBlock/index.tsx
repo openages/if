@@ -144,17 +144,19 @@ const Index = (props: IPropsTimeBlock) => {
 							></div>
 						</div>
 						{((!month_mode && item.length > 1) || timeline) && (
-							<div className='time flex justify_between'>
-								<div className='flex'>
+							<div className='time flex justify_between align_center relative'>
+								<div className={$cx('time_value flex', status && 'has_status')}>
 									<span className='mr_4'>{time.time}</span>
 									<span>{time.cross_time}</span>
 								</div>
-								{status &&
-									(status === 'ok' ? (
-										<Check weight='bold'></Check>
-									) : (
-										<span>{status}</span>
-									))}
+								<span className='status flex justify_center align_center absolute'>
+									{status &&
+										(status === 'ok' ? (
+											<Check weight='bold'></Check>
+										) : (
+											<span>{status}</span>
+										))}
+								</span>
 							</div>
 						)}
 					</div>
