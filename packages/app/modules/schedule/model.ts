@@ -154,7 +154,7 @@ export default class Index {
 			.with('week', () => getWeekdays(this.current))
 			.with('month', () => getMonthDays(this.current, this.view === 'fixed' || this.view === 'timeline'))
 			.with('year', () => getYearDays(this.current))
-			.otherwise(null)
+			.otherwise(() => null)
 
 		if (this.view === 'timeline') {
 			if (!this.setting?.setting?.timeline_angles) return
@@ -180,7 +180,7 @@ export default class Index {
 			const { step, angle_index, row_index, row_id } = over.data.current
 			const { angle_row_id, timeblock_index } = active.data.current
 			const active_item = this.timeline_angles[angle_row_id][timeblock_index]
-			const total = 2 * this.days.length
+			const total = this.scale !== 'year' ? 2 * this.days.length : this.days.length
 
 			let start = getStartByX(container, step, target.getBoundingClientRect().left)
 
@@ -241,8 +241,9 @@ export default class Index {
 	}) {
 		const { index, row_index, start, length, info } = args
 		const timeline = this.view === 'timeline'
+		const year_scale = this.scale === 'year'
 		const date = this.days[timeline ? 0 : index].value
-		const { start_time, end_time } = getStartEnd(date, start, length, timeline)
+		const { start_time, end_time } = getStartEnd(date, start, length, timeline, year_scale)
 		const target_info = info ? omit(info, ['start', 'length']) : {}
 
 		if (this.view === 'fixed') target_info['fixed_scale'] = this.scale
@@ -252,6 +253,8 @@ export default class Index {
 
 			target_info['timeline_angle_id'] = angle.id
 			target_info['timeline_angle_row_id'] = angle.rows[row_index]
+
+			if (this.scale === 'year') target_info['timeline_year'] = true
 		}
 
 		await addTimeBlock(this.id, {
@@ -293,8 +296,11 @@ export default class Index {
 			date,
 			this.move_item.start,
 			this.move_item.length,
-			this.view === 'timeline'
+			this.view === 'timeline',
+			this.scale === 'year'
 		)
+
+		console.log(start_time, end_time)
 
 		active_item.start = this.move_item.start
 		active_item.length = this.move_item.length
@@ -363,9 +369,14 @@ export default class Index {
 			if (!target_length) return
 
 			item.length = target_length
-			item.end_time = dayjs(item.start_time)
-				.add(item.length * 12, 'hours')
-				.valueOf()
+
+			if (this.scale !== 'year') {
+				item.end_time = dayjs(item.start_time)
+					.add(item.length * 12, 'hours')
+					.valueOf()
+			} else {
+				item.end_time = dayjs(item.start_time).add(item.length, 'month').valueOf()
+			}
 
 			this.updateTimeBlock(item.id, { end_time: item.end_time })
 		} else {
@@ -539,10 +550,12 @@ export default class Index {
 		const now = dayjs()
 		const begin = this.days[0].value.startOf('day')
 		const view_start_time = this.days.at(0).value.startOf('day')
-		const view_end_time = this.days.at(-1).value.endOf('day')
+		const view_end_time = this.days.at(-1).value.endOf(this.scale !== 'year' ? 'day' : 'year')
 
-		const selector: MangoQuerySelector<Schedule.Item> = {
-			$or: [
+		const selector: MangoQuerySelector<Schedule.Item> = {}
+
+		if (this.scale !== 'year') {
+			selector['$or'] = [
 				{
 					start_time: { $gte: view_start_time.valueOf() },
 					end_time: { $lte: view_end_time.valueOf() + 1 }
@@ -556,6 +569,10 @@ export default class Index {
 					end_time: { $gt: view_end_time.valueOf() + 1 }
 				}
 			]
+		} else {
+			selector['timeline_year'] = true
+			selector['start_time'] = { $gte: this.current.startOf('year').valueOf() }
+			selector['end_time'] = { $lte: this.current.endOf('year').valueOf() + 1 }
 		}
 
 		this.timeline_angles_watcher = getTimeBlocks(
@@ -581,8 +598,14 @@ export default class Index {
 				const start_time = dayjs(item.start_time)
 				const end_time = dayjs(item.end_time)
 
-				item['start'] = start_time.diff(begin, 'hours') / 12
-				item['length'] = end_time.diff(start_time, 'hours') / 12
+				if (this.scale !== 'year') {
+					item['start'] = start_time.diff(begin, 'hours') / 12
+					item['length'] = end_time.diff(start_time, 'hours') / 12
+				} else {
+					item['start'] = start_time.diff(begin, 'month')
+					item['length'] = end_time.diff(start_time, 'month')
+				}
+
 				item['past'] = now.valueOf() >= item.end_time
 
 				target[item.timeline_angle_row_id].push(item)

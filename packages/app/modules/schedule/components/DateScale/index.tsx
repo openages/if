@@ -48,12 +48,13 @@ const Index = (props: IPropsDateScale) => {
 				{target_weekdays.map((item, index) => (
 					<div
 						className={$cx(
-							'weekday_item border_box flex align_center cursor_point',
+							'weekday_item border_box flex align_center',
 							item.is_today && 'today',
 							!show_time_scale && !timeline && 'hidden_time_scale',
 							!not_fixed && 'fixed_view',
 							!timeline_narrow ? 'justify_between' : 'justify_center',
-							timeline_narrow && 'timeline_narrow'
+							timeline_narrow && 'timeline_narrow',
+							view === 'timeline' && scale === 'month' && 'cursor_point'
 						)}
 						style={{ width: `calc(100% / ${show_time_scale || timeline ? days.length : 7})` }}
 						onClick={view === 'timeline' && scale === 'month' ? () => jump(item.value) : null}
@@ -62,7 +63,11 @@ const Index = (props: IPropsDateScale) => {
 						<div className='flex align_center'>
 							{!timeline_narrow && <span className='weekday mr_6'>{item.weekday}</span>}
 							{not_fixed && (show_time_scale || timeline) && (
-								<span className='date'>{item.date}</span>
+								<span className='date'>
+									{timeline && scale === 'year'
+										? item.value.format('MMMM')
+										: item.date}
+								</span>
 							)}
 						</div>
 						{not_fixed && (show_time_scale || timeline) && !timeline_narrow && (

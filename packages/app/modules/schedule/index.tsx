@@ -194,10 +194,11 @@ const Index = ({ id }: IProps) => {
 									.with([P.union('calendar', 'fixed'), 'month'], () => (
 										<MonthView {...props_month_view}></MonthView>
 									))
-									.with(['timeline', P.union('day', 'week', 'month')], () => (
-										<TimelineView {...props_timeline_view}></TimelineView>
-									))
-									.otherwise(null)}
+									.with(
+										['timeline', P.union('day', 'week', 'month', 'year')],
+										() => <TimelineView {...props_timeline_view}></TimelineView>
+									)
+									.otherwise(() => null)}
 							</div>
 						</div>
 					</div>

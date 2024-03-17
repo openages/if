@@ -12,6 +12,8 @@ export default {
 		days: '天',
 		week: '周',
 		weeks: '周',
+		month: '个月',
+		months: '个月',
 		x_unit_ago: '{{x}}{{unit}}前',
 		x_unit: '{{x}}{{unit}}'
 	},

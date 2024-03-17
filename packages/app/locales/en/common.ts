@@ -12,6 +12,8 @@ export default {
 		days: 'days',
 		week: 'week',
 		weeks: 'weeks',
+		month: 'month',
+		months: 'months',
 		x_unit_ago: '{{x}} {{unit}} ago',
 		x_unit: '{{x}} {{unit}}'
 	},

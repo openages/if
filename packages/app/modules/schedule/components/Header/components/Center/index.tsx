@@ -44,6 +44,7 @@ const Index = (props: IPropsHeaderCenter) => {
 			.with('day', () => ({ value: 'date', offset: -51 }))
 			.with('week', () => ({ value: 'week', offset: -66 }))
 			.with('month', () => ({ value: 'month', offset: -40 }))
+			.with('year', () => ({ value: 'year', offset: -40 }))
 			.exhaustive()
 	}, [scale])
 

@@ -26,6 +26,7 @@ const Index = (props: IPropsTimeBlock) => {
 		month_mode,
 		step,
 		at_bottom,
+		year_scale,
 		updateTimeBlock,
 		removeTimeBlock,
 		copyTimeBlock,
@@ -38,7 +39,7 @@ const Index = (props: IPropsTimeBlock) => {
 	const tag_styles = useTagStyles(tags, item.tag)
 	const timeline = useMemo(() => angle_row_id !== undefined, [angle_row_id])
 	const look = useLook({ item, month_mode, step, timeline })
-	const time = useTime({ item, timeline })
+	const time = useTime({ year_scale, item, timeline })
 
 	const { stopPropagationContextMenu, onKeyDown, onAction } = useHandlers({
 		item,

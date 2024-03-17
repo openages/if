@@ -14,8 +14,10 @@ import type { MouseEvent } from 'react'
 const Index = (props: IPropsTimelineViewRow) => {
 	const {
 		container,
+		scale,
 		tags,
 		step,
+		limit,
 		days_length,
 		angle_index,
 		row_index,
@@ -56,7 +58,7 @@ const Index = (props: IPropsTimelineViewRow) => {
 		$app.Event.emit('schedule/context_menu/hidden', row_id)
 
 		const start = getStartByX(container.current, step, e.clientX)
-		const length = start + 2 >= days_length * 2 ? days_length * 2 - start : 2
+		const length = start + limit >= days_length * limit ? days_length * limit - start : limit
 
 		const target_length = collisionDetection(timeblocks, start, length)
 
@@ -76,6 +78,7 @@ const Index = (props: IPropsTimelineViewRow) => {
 					angle_row_id={row_id}
 					timeblock_index={timeblock_index}
 					step={step}
+					year_scale={scale === 'year'}
 					at_bottom
 					updateTimeBlock={updateTimeBlock}
 					removeTimeBlock={removeTimeBlock}

@@ -23,11 +23,13 @@ const Index = (props: IPropsTimelineView) => {
 	} = props
 	const size = useSize(container)
 
+	const limit = useMemo(() => (scale === 'year' ? 1 : 2), [scale])
+
 	const step = useMemo(() => {
 		if (!size?.width || !days.length) return 0
 
-		return parseFloat(((size.width - 90) / days.length / 2).toFixed(3))
-	}, [days, size])
+		return parseFloat(((size.width - 90) / days.length / limit).toFixed(3))
+	}, [days, size, limit])
 
 	return (
 		<div className='h_100 relative'>
@@ -49,8 +51,10 @@ const Index = (props: IPropsTimelineView) => {
 								{angle.rows.map((row_id, row_index) => (
 									<Row
 										container={container}
+										scale={scale}
 										tags={tags}
 										step={step}
+										limit={limit}
 										days_length={days.length}
 										angle_index={angle_index}
 										row_index={row_index}

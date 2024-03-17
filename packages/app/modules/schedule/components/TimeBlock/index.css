@@ -2,7 +2,7 @@
 	font-size: 12px;
 	overflow: hidden;
 	background-color: var(--color_bg);
-	border-radius: var(--radius_small);
+	border-radius: var(--radius_small_1);
 	outline: none;
 
 	&:hover {
@@ -102,6 +102,12 @@
 			.timeblock_content_wrap {
 				border: none;
 				background-color: rgba(var(--tag_color), 0.15);
+
+				.text_wrap {
+					&:empty::after {
+						color: rgba(var(--tag_color), 0.6);
+					}
+				}
 
 				.time {
 					color: rgba(var(--tag_color), 0.6);
@@ -243,7 +249,7 @@
 
 		.timeblock_content_wrap {
 			border: 1px solid var(--color_border);
-			border-radius: var(--radius_small);
+			border-radius: var(--radius_small_1);
 			cursor: grab;
 
 			.text_scroll_wrap {

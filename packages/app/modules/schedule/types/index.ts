@@ -139,8 +139,10 @@ export interface IPropsTimelineViewDay {
 
 export interface IPropsTimelineViewRow {
 	container: MutableRefObject<HTMLDivElement>
+	scale: Model['scale']
 	tags: Schedule.Setting['tags']
 	step: number
+	limit: number
 	days_length: number
 	angle_index: number
 	row_index: number
@@ -167,6 +169,7 @@ export interface IPropsTimeBlock {
 	month_mode?: boolean
 	step?: number
 	at_bottom?: boolean
+	year_scale?: boolean
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
 	copyTimeBlock: IPropsCalendarView['copyTimeBlock']
