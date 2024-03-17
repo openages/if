@@ -1,5 +1,5 @@
 import cx from 'classix'
-import copy from 'fast-copy'
+import rfdc from 'rfdc'
 
 import Emittery from '@openages/stk/emittery'
 import { handle, memo } from '@openages/stk/react'
@@ -17,7 +17,7 @@ window.$app = {
 }
 
 window.$t = (() => {}) as any
-window.$copy = copy
+window.$copy = rfdc({ proto: true })
 window.$cx = cx
 window.$navigate = (() => {}) as any
 

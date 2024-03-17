@@ -1,7 +1,7 @@
 import { useSize } from 'ahooks'
 import { useMemo } from 'react'
 
-import Day from './Day'
+import Scanline from '../Scanline'
 import styles from './index.css'
 import Row from './Row'
 
@@ -10,6 +10,7 @@ import type { IPropsTimelineView } from '../../types'
 const Index = (props: IPropsTimelineView) => {
 	const {
 		container,
+		scale,
 		days,
 		setting_timeline_angles,
 		timeline_angles,
@@ -30,6 +31,7 @@ const Index = (props: IPropsTimelineView) => {
 
 	return (
 		<div className='h_100 relative'>
+			<Scanline timeline scale={scale} step={step}></Scanline>
 			<div className={$cx('w_100 h_100 absolute top_0 left_0', styles.timeline_wrap)}>
 				<div className='w_100 flex flex_column'>
 					{setting_timeline_angles.map((angle, angle_index) => (
@@ -44,9 +46,6 @@ const Index = (props: IPropsTimelineView) => {
 								{angle.text}
 							</div>
 							<div className='angle_rows w_100 border_box flex flex_column relative'>
-								{days.map((_, index) => (
-									<Day index={index} counts={days.length} key={index}></Day>
-								))}
 								{angle.rows.map((row_id, row_index) => (
 									<Row
 										container={container}

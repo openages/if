@@ -23,5 +23,9 @@
 				display: none;
 			}
 		}
+
+		.btn_clean {
+			box-shadow: none !important;
+		}
 	}
 }

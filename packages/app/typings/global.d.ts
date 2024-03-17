@@ -9,7 +9,7 @@ import type { memo } from 'react'
 import type { NavigateFunction } from 'react-router-dom'
 
 type $CX = (...args: Array<string | boolean | null | undefined>) => string
-type $Copy = <T>(v: T) => T
+type $Copy = <T>(input: T) => T
 
 interface $App {
 	memo: typeof memo

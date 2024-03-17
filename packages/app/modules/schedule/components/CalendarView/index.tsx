@@ -5,9 +5,9 @@ import type { IPropsCalendarView } from '../../types'
 const Index = (props: IPropsCalendarView) => {
 	const {
 		container,
+		days,
 		calendar_days,
 		tags,
-		today_index,
 		move_item,
 		updateTimeBlock,
 		removeTimeBlock,
@@ -20,11 +20,11 @@ const Index = (props: IPropsCalendarView) => {
 			{calendar_days.map((day, index) => (
 				<Day
 					container={container}
+					day_info={days[index]}
 					day={day}
 					counts={calendar_days.length}
 					index={index}
 					tags={tags}
-					today={index === today_index}
 					move_item={move_item?.day_index === index && move_item}
 					updateTimeBlock={updateTimeBlock}
 					removeTimeBlock={removeTimeBlock}

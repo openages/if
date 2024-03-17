@@ -40,7 +40,7 @@ export default (args: Args) => {
 			],
 			style: {
 				top: `calc(${item.start * 16}px + 1.5px)`,
-				left: 1.5,
+				left: 2,
 				width: `calc(100% - 3px)`,
 				height: `calc(${item.length * 16}px - 3px)`
 			}

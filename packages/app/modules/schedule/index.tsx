@@ -46,7 +46,6 @@ const Index = ({ id }: IProps) => {
 	const tags = $copy(x.setting?.setting?.tags || [])
 	const timeblock_copied = $copy(x.timeblock_copied)
 	const move_item = $copy(x.move_item)
-	const today_index = useMemo(() => days.findIndex(item => item?.value?.isToday()), [days])
 
 	useLayoutEffect(() => {
 		x.init({ id })
@@ -65,6 +64,7 @@ const Index = ({ id }: IProps) => {
 	const removeTimeBlock = useMemoizedFn(x.removeTimeBlock)
 	const copyTimeBlock = useMemoizedFn(v => (x.timeblock_copied = v))
 	const changeTimeBlockLength = useMemoizedFn(x.changeTimeBlockLength)
+	const jump = useMemoizedFn(x.jump)
 
 	const props_header: IPropsHeader = {
 		view: x.view,
@@ -87,14 +87,15 @@ const Index = ({ id }: IProps) => {
 		scale: x.scale,
 		days,
 		show_time_scale: x.show_time_scale,
-		scrollToScanline
+		scrollToScanline,
+		jump
 	}
 
 	const props_calendar_view: IPropsCalendarView = {
 		container,
+		days,
 		calendar_days,
 		tags,
-		today_index,
 		move_item,
 		updateTimeBlock,
 		removeTimeBlock,
@@ -110,11 +111,12 @@ const Index = ({ id }: IProps) => {
 		updateTimeBlock,
 		removeTimeBlock,
 		copyTimeBlock,
-		jump: useMemoizedFn(x.jump)
+		jump
 	}
 
 	const props_timeline_view: IPropsTimelineView = {
 		container,
+		scale: x.scale,
 		days,
 		setting_timeline_angles: $copy(x.setting?.setting?.['timeline_angles'] || []),
 		timeline_angles,
@@ -138,7 +140,6 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_scanline: IPropsScanline = {
-		view: x.view,
 		scanline,
 		scrollToScanline
 	}

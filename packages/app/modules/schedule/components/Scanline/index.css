@@ -1,5 +1,4 @@
 ._local {
-	height: 1px;
 	background-color: rgba(var(--color_main_rgb), 0.48);
 	z-index: 999;
 
@@ -9,21 +8,54 @@
 	&::after {
 		content: '';
 		position: absolute;
-		top: calc(-1 * var(--size));
-		width: var(--size);
-		height: calc(2 * var(--size) + 1px);
 		background-color: rgba(var(--color_main_rgb), 0.48);
 		backdrop-filter: blur(30px);
 		z-index: 999;
 	}
 
-	&::before {
+	&.x {
 		left: 0;
-		border-radius: 0 var(--size) var(--size) 0;
+		width: 100%;
+		height: 1px;
+
+		&::before,
+		&::after {
+			top: calc(-1 * var(--size));
+			width: var(--size);
+			height: calc(2 * var(--size) + 1px);
+		}
+
+		&::before {
+			left: 0;
+			border-radius: 0 var(--size) var(--size) 0;
+		}
+
+		&::after {
+			right: 0;
+			border-radius: var(--size) 0 0 var(--size);
+		}
 	}
 
-	&::after {
-		right: 0;
-		border-radius: var(--size) 0 0 var(--size);
+	&.y {
+		top: 0;
+		width: 1px;
+		height: 100%;
+
+		&::before,
+		&::after {
+			left: calc(-1 * var(--size));
+			width: calc(2 * var(--size) + 1px);
+			height: var(--size);
+		}
+
+		&::before {
+			top: 0;
+			border-radius: 0 0 var(--size) var(--size);
+		}
+
+		&::after {
+			bottom: 0;
+			border-radius: var(--size) var(--size) 0 0;
+		}
 	}
 }

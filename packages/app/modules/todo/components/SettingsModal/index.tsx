@@ -61,7 +61,7 @@ const Index = (props: IPropsSettingsModal) => {
 				<Item name='auto_archiving' label={t('translation:todo.SettingsModal.auto_archiving.label')}>
 					<Select options={archive_options}></Select>
 				</Item>
-				<Button className='clickable' type='primary' danger onClick={onClean}>
+				<Button className='btn_clean clickable' type='primary' danger onClick={onClean}>
 					{t('translation:common.clean.title_removed')}
 				</Button>
 			</div>

@@ -51,6 +51,7 @@ export interface IPropsDateScale {
 	days: Model['days']
 	show_time_scale: boolean
 	scrollToScanline: () => void
+	jump: Model['jump']
 }
 
 export interface IPropsDayExtra {
@@ -59,9 +60,9 @@ export interface IPropsDayExtra {
 
 export interface IPropsCalendarView {
 	container: MutableRefObject<HTMLDivElement>
+	days: Model['days']
 	calendar_days: Model['calendar_days']
 	tags: Schedule.Setting['tags']
-	today_index: number
 	move_item: Model['move_item']
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
@@ -71,11 +72,11 @@ export interface IPropsCalendarView {
 
 export interface IPropsCalendarViewDay {
 	container: MutableRefObject<HTMLDivElement>
+	day_info: DayDetail
 	day: Schedule.CalendarDay
 	counts: number
 	index: number
 	tags: Schedule.Setting['tags']
-	today: boolean
 	move_item?: Model['move_item']
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
@@ -119,6 +120,7 @@ export interface IPropsMonthViewDay {
 
 export interface IPropsTimelineView {
 	container: MutableRefObject<HTMLDivElement>
+	scale: Model['scale']
 	days: Model['days']
 	setting_timeline_angles: Schedule.Setting['timeline_angles']
 	timeline_angles: Model['timeline_angles']
@@ -189,7 +191,9 @@ export interface IPropsSettingsModal {
 }
 
 export interface IPropsScanline {
-	view: Model['view']
-	scanline: MutableRefObject<HTMLDivElement>
-	scrollToScanline: () => void
+	scanline?: MutableRefObject<HTMLDivElement>
+	timeline?: boolean
+	scale?: Model['scale']
+	step?: number
+	scrollToScanline?: () => void
 }

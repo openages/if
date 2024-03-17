@@ -6,23 +6,6 @@
 			border-bottom: var(--border);
 			padding-left: 90px;
 
-			&:hover,
-			&.move_over {
-				.angle_rows {
-					.day_line {
-						display: block;
-					}
-
-					.timeline_row {
-						border-bottom-color: var(--color_border_light);
-
-						&:nth-of-type(2n + 1) {
-							background-color: var(--color_bg_1);
-						}
-					}
-				}
-			}
-
 			.angle_header {
 				width: 90px;
 				padding: 0 12px;
@@ -33,15 +16,6 @@
 			}
 
 			.angle_rows {
-				padding: 1.5px 0;
-
-				.day_line {
-					display: none;
-					width: 1px;
-					background-color: var(--color_border_light);
-					z-index: 1;
-				}
-
 				.timeline_row {
 					height: 36px;
 					padding: 1.5px 0;

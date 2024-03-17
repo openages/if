@@ -16,11 +16,11 @@ import type { MouseEvent } from 'react'
 const Index = (props: IPropsCalendarViewDay) => {
 	const {
 		container,
+		day_info,
 		day,
 		counts,
 		index,
 		tags,
-		today,
 		move_item,
 		updateTimeBlock,
 		removeTimeBlock,
@@ -67,7 +67,7 @@ const Index = (props: IPropsCalendarViewDay) => {
 
 	return (
 		<div
-			className={$cx('day_wrap h_100 border_box relative', styles.Day, today && styles.today)}
+			className={$cx('day_wrap h_100 border_box relative', styles.Day, day_info.is_today && styles.today)}
 			style={{ width: `calc(100% / ${counts})` }}
 			onContextMenu={onContextMenu}
 			ref={setNodeRef}

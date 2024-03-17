@@ -9,7 +9,7 @@ import styles from './index.css'
 import type { IPropsDateScale } from '../../types'
 
 const Index = (props: IPropsDateScale) => {
-	const { view, scale, days, show_time_scale, scrollToScanline } = props
+	const { view, scale, days, show_time_scale, scrollToScanline, jump } = props
 
 	const not_fixed = useMemo(() => view !== 'fixed', [view])
 	const timeline = useMemo(() => view === 'timeline', [view])
@@ -48,7 +48,7 @@ const Index = (props: IPropsDateScale) => {
 				{target_weekdays.map((item, index) => (
 					<div
 						className={$cx(
-							'weekday_item border_box flex align_center',
+							'weekday_item border_box flex align_center cursor_point',
 							item.is_today && 'today',
 							!show_time_scale && !timeline && 'hidden_time_scale',
 							!not_fixed && 'fixed_view',
@@ -56,6 +56,7 @@ const Index = (props: IPropsDateScale) => {
 							timeline_narrow && 'timeline_narrow'
 						)}
 						style={{ width: `calc(100% / ${show_time_scale || timeline ? days.length : 7})` }}
+						onClick={view === 'timeline' && scale === 'month' ? () => jump(item.value) : null}
 						key={index}
 					>
 						<div className='flex align_center'>
