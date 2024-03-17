@@ -1,3 +1,27 @@
+[data-theme='dark'] {
+	._local {
+		&.has_tag {
+			color: var(--color_text);
+
+			:global {
+				.timeblock_content_wrap {
+					background-color: rgba(var(--tag_color), 0.3) !important;
+
+					.text_wrap {
+						&:empty::after {
+							color: var(--color_text_light);
+						}
+					}
+
+					.time {
+						color: var(--color_text_light);
+					}
+				}
+			}
+		}
+	}
+}
+
 ._local {
 	font-size: 12px;
 	overflow: hidden;

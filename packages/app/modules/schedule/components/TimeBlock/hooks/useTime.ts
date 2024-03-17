@@ -20,8 +20,8 @@ export default (args: Args) => {
 			const months = end_time.diff(start_time, 'month')
 
 			return {
-				time: `${months}${$t(`translation:common.time.month${months > 1 ? 's' : ''}`)}`,
-				cross_time: ''
+				time: `${start_time.format('MMMM')} - ${end_time.format('MMMM')}`,
+				cross_time: `${months} ${$t(`translation:common.time.month${months > 1 ? 's' : ''}`)}`
 			}
 		}
 
