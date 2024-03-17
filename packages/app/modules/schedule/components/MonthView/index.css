@@ -36,7 +36,7 @@
 					height: 15px;
 					line-height: 15px;
 					text-align: center;
-					border-radius: 50%;
+					border-radius: 2px;
 					font-size: 10px;
 					font-weight: 500;
 					background-color: var(--color_text);

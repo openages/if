@@ -100,8 +100,8 @@
 
 		:global {
 			.timeblock_content_wrap {
-				border: none;
-				background-color: rgba(var(--tag_color), 0.15);
+				border-color: rgba(var(--tag_color), 0.18);
+				background-color: rgba(var(--tag_color), 0.12);
 
 				.text_wrap {
 					&:empty::after {
@@ -121,7 +121,7 @@
 	}
 
 	&.month_mode {
-		height: 18px;
+		height: 20px;
 		margin-bottom: 2px;
 		flex-direction: row;
 		align-items: center;
@@ -156,10 +156,9 @@
 
 			.timeblock_content_wrap {
 				padding: 0 4px;
-				border: none;
 				border-radius: 0;
+				background-color: var(--color_bg_1);
 				cursor: unset;
-				background-color: var(--color_bg_2);
 
 				.text_scroll_wrap {
 					&.has_status {
@@ -209,7 +208,6 @@
 			.timeblock_content_wrap {
 				padding: 2px 4px;
 				padding-top: 1px;
-				border: none;
 				background-color: var(--color_bg_1);
 
 				.text_wrap {

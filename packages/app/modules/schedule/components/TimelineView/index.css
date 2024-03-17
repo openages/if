@@ -19,6 +19,11 @@
 				.timeline_row {
 					height: 36px;
 					padding: 1.5px 0;
+					border-top: var(--border);
+
+					&:first-child {
+						border-top: none;
+					}
 				}
 			}
 		}
