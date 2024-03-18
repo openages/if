@@ -115,7 +115,7 @@ const Index = (props: IPropsDetail) => {
 			open={visible_detail_modal}
 			mask={Boolean(breakpoint)}
 			title={t('translation:todo.Detail.title')}
-			width={321}
+			width={300}
 			zIndex={100}
 			destroyOnClose
 			getContainer={false}

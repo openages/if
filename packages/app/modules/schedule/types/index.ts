@@ -123,7 +123,7 @@ export interface IPropsTimelineView {
 	scale: Model['scale']
 	days: Model['days']
 	setting_timeline_angles: Schedule.Setting['timeline_angles']
-	timeline_angles: Model['timeline_angles']
+	timeline_rows: Model['timeline_rows']
 	tags: Schedule.Setting['tags']
 	move_item: Model['move_item']
 	updateTimeBlock: Model['updateTimeBlock']
@@ -156,10 +156,6 @@ export interface IPropsTimelineViewRow {
 	changeTimeBlockLength: Model['changeTimeBlockLength']
 }
 
-export interface IPropsTimelineAngles {
-	timeline_angles: Schedule.Setting['timeline_angles']
-}
-
 export interface IPropsTimeBlock {
 	item: Schedule.CalendarItem
 	tags: Schedule.Setting['tags']
@@ -170,6 +166,7 @@ export interface IPropsTimeBlock {
 	step?: number
 	at_bottom?: boolean
 	year_scale?: boolean
+	dnd_data?: any
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
 	copyTimeBlock: IPropsCalendarView['copyTimeBlock']
@@ -199,4 +196,11 @@ export interface IPropsScanline {
 	scale?: Model['scale']
 	step?: number
 	scrollToScanline?: () => void
+}
+
+export interface IPropsTaskPanel {
+	schedule_ids: Model['schedule_ids']
+	task_panel_clear_mode: Model['task_panel_clear_mode']
+	toggleTaskPanelClearMode: () => void
+	updateTodoSchedule: Model['updateTodoSchedule']
 }

@@ -31,6 +31,9 @@ export default {
 		感恩节: 'Thanksgiving',
 		圣诞节: 'Christmas'
 	},
+	add: 'Add',
+	paste: 'Paste',
+	letter_space: ' ',
 	current_week: 'Current Week',
 	current_month: 'Current Month',
 	today: 'Today',
@@ -101,6 +104,7 @@ export default {
 		remove_confirm: 'This will remove {{counts}} items under this angle. Please confirm.'
 	},
 	tags: {
+		single_label: 'Tag',
 		label: 'Tags',
 		placeholder: 'Tag name',
 		remove_confirm: 'This will remove {{counts}} items under this tag. Please confirm.'

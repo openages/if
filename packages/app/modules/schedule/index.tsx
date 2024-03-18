@@ -1,12 +1,11 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
+import { useLayoutEffect, useRef, useState } from 'react'
 import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { match, P } from 'ts-pattern'
 import { container as model_container } from 'tsyringe'
 
-import { useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
+import { useSensor, useSensors, DndContext, PointerSensor } from '@dnd-kit/core'
 import { restrictToFirstScrollableAncestor } from '@dnd-kit/modifiers'
 
 import {
@@ -42,7 +41,8 @@ const Index = ({ id }: IProps) => {
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 12 } }))
 	const days = $copy(x.days)
 	const calendar_days = $copy(x.calendar_days)
-	const timeline_angles = $copy(x.timeline_angles)
+	const timeline_rows = $copy(x.timeline_rows)
+	const schedule_ids = $copy(x.schedule_ids)
 	const tags = $copy(x.setting?.setting?.tags || [])
 	const timeblock_copied = $copy(x.timeblock_copied)
 	const move_item = $copy(x.move_item)
@@ -119,7 +119,7 @@ const Index = ({ id }: IProps) => {
 		scale: x.scale,
 		days,
 		setting_timeline_angles: $copy(x.setting?.setting?.['timeline_angles'] || []),
-		timeline_angles,
+		timeline_rows,
 		tags,
 		move_item,
 		updateTimeBlock,
@@ -147,6 +147,8 @@ const Index = ({ id }: IProps) => {
 	const onDragMove = useMemoizedFn(args => x.onDragMove(container.current, args))
 	const onDragEnd = useMemoizedFn(x.onDragEnd)
 	const onDragCancel = useMemoizedFn(x.onDragCancel)
+	const toggleTaskPanelClearMode = useMemoizedFn(() => (x.task_panel_clear_mode = !x.task_panel_clear_mode))
+	const updateTodoSchedule = useMemoizedFn(x.updateTodoSchedule)
 
 	return (
 		<div className={$cx('w_100 h_100 border_box flex flex_column', styles._local)}>
@@ -157,9 +159,16 @@ const Index = ({ id }: IProps) => {
 					onDragEnd={onDragEnd}
 					onDragCancel={onDragCancel}
 					sensors={sensors}
-					modifiers={[restrictToFirstScrollableAncestor]}
+					modifiers={x.move_item ? [restrictToFirstScrollableAncestor] : []}
 				>
-					{x.visible_task_panel && <TaskPanel></TaskPanel>}
+					{x.visible_task_panel && (
+						<TaskPanel
+							schedule_ids={schedule_ids}
+							task_panel_clear_mode={x.task_panel_clear_mode}
+							toggleTaskPanelClearMode={toggleTaskPanelClearMode}
+							updateTodoSchedule={updateTodoSchedule}
+						></TaskPanel>
+					)}
 					<div
 						className={$cx(
 							'h_100 flex flex_column',
@@ -202,11 +211,6 @@ const Index = ({ id }: IProps) => {
 							</div>
 						</div>
 					</div>
-					{/* {x.active_item &&
-						createPortal(
-							<DragOverlay dropAnimation={null} zIndex={1001}></DragOverlay>,
-							document.body
-						)} */}
 				</DndContext>
 			</div>
 			<ContextMenu timeblock_copied={timeblock_copied} addTimeBlock={addTimeBlock}></ContextMenu>

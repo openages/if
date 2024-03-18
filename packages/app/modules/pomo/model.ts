@@ -32,7 +32,13 @@ export default class Index {
 	constructor(public file: File) {
 		makeAutoObservable(
 			this,
-			{ watcher: false, disable_watcher: false, record_timer: false, record_numbers: false },
+			{
+				id: false,
+				watcher: false,
+				disable_watcher: false,
+				record_timer: false,
+				record_numbers: false
+			},
 			{ autoBind: true }
 		)
 	}

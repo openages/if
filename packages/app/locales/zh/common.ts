@@ -31,6 +31,9 @@ export default {
 		感恩节: '感恩节',
 		圣诞节: '圣诞节'
 	},
+	add: '添加',
+	paste: '粘贴',
+	letter_space: '',
 	current_week: '本周',
 	current_month: '本月',
 	today: '今天',
@@ -101,6 +104,7 @@ export default {
 		remove_confirm: '你将删除该分类下的{{counts}}个记录，请确认是否执行删除？'
 	},
 	tags: {
+		single_label: '标签',
 		label: '标签',
 		placeholder: '标签名',
 		remove_confirm: '你将删除该标签下的{{counts}}个记录，请确认是否执行删除？'

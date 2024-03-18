@@ -10,23 +10,30 @@ import { getTodoItems, updateTodoItem } from './services'
 import type { Todo } from '@/types'
 import type { Subscription } from 'rxjs'
 import type { RxDocument } from 'rxdb'
-import type { DragEndEvent } from '@dnd-kit/core'
+import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core'
+import type { IProps } from './index'
 
 @injectable()
 export default class Index {
 	ids = [] as Array<string>
+	mode = 'view' as IProps['mode']
 	items = [] as Array<Todo.Todo>
+	active_item = null as Todo.Todo
 
 	watcher = null as Subscription
 
 	onChange = null as (ids: Array<string>) => void
 
 	constructor() {
-		makeAutoObservable(this, { watcher: false, onChange: false }, { autoBind: true })
+		makeAutoObservable(this, { ids: false, mode: false, watcher: false, onChange: false }, { autoBind: true })
 	}
 
-	init(ids: Index['ids'], onChange: Index['onChange']) {
+	init(args: Pick<IProps, 'ids' | 'mode' | 'onChange'>) {
+		const { ids, mode, onChange } = args
+
 		this.ids = ids
+		this.mode = mode
+
 		this.onChange = onChange
 
 		this.watchItems()
@@ -43,6 +50,8 @@ export default class Index {
 	}
 
 	onDragEnd({ active, over }: DragEndEvent) {
+		this.active_item = null
+
 		if (!over?.id) return
 		if (active.id === over.id) return
 
@@ -122,7 +131,7 @@ export default class Index {
 
 	watchItems() {
 		this.watcher = getTodoItems(this.ids).$.subscribe(doc => {
-			this.checkExsit(Array.from(doc.keys()))
+			if (!this.mode) this.checkExsit(Array.from(doc.keys()))
 
 			this.items = getDocItemsData(Array.from(doc.values())) as Array<Todo.Todo>
 		})

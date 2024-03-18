@@ -169,7 +169,7 @@ const Index = (props: IPropsArchive) => {
 			rootClassName={styles._local}
 			open={visible_archive_modal}
 			title={t('translation:todo.Archive.title')}
-			width={321}
+			width={300}
 			destroyOnClose
 			getContainer={false}
 			extra={Extra}

@@ -1,13 +1,16 @@
 .if-message {
 	top: initial !important;
-	bottom: 8px !important;
+	bottom: 0px !important;
 
 	.if-message-notice-wrapper {
-		padding: 0;
-
 		.if-message-notice {
-			padding: 3px 12px !important;
+			padding: 0 8px !important;
+			margin-top: -8px;
 			text-align: right !important;
+
+			.if-message-notice-content {
+				border: 1px solid var(--color_text);
+			}
 
 			&-success {
 				.if-message-notice-content {
@@ -29,16 +32,18 @@
 
 			.if-message-notice-content {
 				padding: 3px 6px;
-				border-radius: 36px;
+				border-radius: 4px;
 				color: white;
 				font-size: 12px;
+				font-weight: 500;
 
 				.if-message-custom-content {
 					display: flex;
 					align-items: center;
 
 					.if-icon {
-						margin-inline-end: 3px;
+						font-size: 12px;
+						margin-inline-end: 4px;
 						color: white;
 					}
 				}

@@ -13,7 +13,7 @@ const Index = (props: IPropsTimelineView) => {
 		scale,
 		days,
 		setting_timeline_angles,
-		timeline_angles,
+		timeline_rows,
 		tags,
 		move_item,
 		updateTimeBlock,
@@ -60,7 +60,7 @@ const Index = (props: IPropsTimelineView) => {
 										row_index={row_index}
 										angle_id={angle.id}
 										row_id={row_id}
-										timeblocks={timeline_angles?.[row_id] || []}
+										timeblocks={timeline_rows?.[row_id] || []}
 										move_item={
 											move_item?.angle_index === angle_index &&
 											move_item.row_index === row_index &&

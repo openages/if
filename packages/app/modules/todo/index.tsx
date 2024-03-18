@@ -139,7 +139,7 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
-		id: x.id,
+		id,
 		visible_settings_modal: x.visible_settings_modal,
 		setting: { ...$copy(x.setting?.setting), ...$copy(x.file.data) },
 		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false)),
@@ -248,7 +248,7 @@ const Index = ({ id }: IProps) => {
 			)}
 		>
 			<DataEmpty></DataEmpty>
-			{match(x.id && x.file.data.name && Boolean(angles))
+			{match(id && x.file.data.name && Boolean(angles))
 				.with(true, () => (
 					<Fragment>
 						<Header {...props_header}></Header>

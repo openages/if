@@ -1,11 +1,8 @@
-import { cloneElement, useMemo, Children } from 'react'
+import { cloneElement, useMemo } from 'react'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { useDeepMemo } from '@openages/stk/react'
 
-import type { DraggableAttributes } from '@dnd-kit/core'
-import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
-import type { Transform } from '@dnd-kit/utilities'
 import type { ReactElement } from 'react'
 
 interface IProps {
@@ -15,19 +12,8 @@ interface IProps {
 	disabled?: boolean
 }
 
-export interface SortableProps {
-	attributes: DraggableAttributes
-	transform: Transform
-	transition: string
-	isDragging: boolean
-	listeners: SyntheticListenerMap
-	setNodeRef: (node: HTMLElement) => void
-	setActivatorNodeRef: (element: HTMLElement) => void
-}
-
 const Index = (props: IProps) => {
 	const { children, id, data, disabled } = props
-
 	const {
 		attributes,
 		transform,

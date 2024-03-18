@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { When } from 'react-if'
 
 import { useInput } from '@/modules/todo/hooks'
-import { useDraggable } from '@dnd-kit/core'
+import { useDraggable, useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { Check, Info, X } from '@phosphor-icons/react'
 
@@ -27,6 +27,7 @@ const Index = (props: IPropsTimeBlock) => {
 		step,
 		at_bottom,
 		year_scale,
+		dnd_data,
 		updateTimeBlock,
 		removeTimeBlock,
 		copyTimeBlock,
@@ -59,6 +60,15 @@ const Index = (props: IPropsTimeBlock) => {
 		id: item.id,
 		disabled: month_mode,
 		data: { day_index, angle_row_id, timeblock_index }
+	})
+
+	const {
+		isOver,
+		active,
+		setNodeRef: setDropRef
+	} = useDroppable({
+		id: `drop_container_${item.id}`,
+		data: { signal: 'task_panel_drop_container', day_index, angle_row_id, timeblock_index, ...dnd_data }
 	})
 
 	const { drag_ref } = useDragLength({
@@ -98,9 +108,10 @@ const Index = (props: IPropsTimeBlock) => {
 					className={$cx(
 						'timeblock_item_wrap w_100 border_box flex flex_column',
 						styles._local,
-						tag_styles['--tag_color'] && styles.has_tag,
+						tag_styles['--tag_color'] ? styles.has_tag : styles.no_tag,
 						isDragging && styles.isDragging,
 						month_mode && visible_detail && styles.visible_detail,
+						active?.data?.current?.signal === 'task_panel' && isOver && styles.isOver,
 						...look.class
 					)}
 					style={{
@@ -108,7 +119,10 @@ const Index = (props: IPropsTimeBlock) => {
 						...look.style,
 						...tag_styles
 					}}
-					ref={setDragRef}
+					ref={ref => {
+						setDragRef(ref)
+						setDropRef(ref)
+					}}
 					{...attributes}
 					onContextMenu={stopPropagationContextMenu}
 				>
@@ -139,7 +153,7 @@ const Index = (props: IPropsTimeBlock) => {
 								className='text_wrap w_100 border_box'
 								ref={input}
 								contentEditable='plaintext-only'
-								data-placeholder='输入描述'
+								data-placeholder={t('translation:schedule.timeblock_placeholder')}
 								onInput={onInput}
 								onKeyDown={onKeyDown}
 							></div>
@@ -162,7 +176,9 @@ const Index = (props: IPropsTimeBlock) => {
 						)}
 					</div>
 					{month_mode && status && (
-						<span className='status flex justify_center align_center absolute'>{status}</span>
+						<span className='status flex justify_center align_center absolute'>
+							<Check weight='bold'></Check>
+						</span>
 					)}
 				</div>
 			</Dropdown>

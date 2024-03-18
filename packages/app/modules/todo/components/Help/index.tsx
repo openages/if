@@ -15,7 +15,7 @@ const Index = (props: IPropsHelp) => {
 			rootClassName={$cx('custom', styles._local)}
 			open={visible_help_modal}
 			title={t('translation:todo.Header.options.help')}
-			width={321}
+			width={300}
 			destroyOnClose
 			getContainer={false}
 			onClose={closeHelpModal}

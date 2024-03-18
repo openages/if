@@ -7,10 +7,10 @@ import { useTagColor } from '@/hooks'
 import { CSS } from '@dnd-kit/utilities'
 import { DotsSixVertical, Plus, Trash } from '@phosphor-icons/react'
 
-import type { SortableProps } from '@/components'
+import type { DndItemProps } from '@/components'
 
 interface IProps {
-	sortable_props?: SortableProps
+	sortable_props?: DndItemProps
 	item: { id: string; color: string; text: string }
 	index: number
 	limitMax: boolean

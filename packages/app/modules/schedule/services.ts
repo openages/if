@@ -16,6 +16,10 @@ export const getTimeBlocks = (
 	return $db.schedule_items.find({ selector: { file_id, ...selector } })
 }
 
+export const getScheduleItems = () => {
+	return $db.todo_items.find({ selector: { schedule: true }, index: 'file_id' })
+}
+
 export const addTimeBlock = (file_id: string, args: Partial<Schedule.Item>) => {
 	return $db.schedule_items.insert({
 		id: id(),

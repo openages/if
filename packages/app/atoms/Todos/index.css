@@ -7,6 +7,12 @@
 }
 
 .Item {
+	font-size: 12px;
+
+	&.isDragging {
+		color: var(--color_main);
+	}
+
 	&.done {
 		:global {
 			.action_wrap {

@@ -5,20 +5,24 @@ import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Case, Switch } from 'react-if'
 
-import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { CheckSquare, ListMagnifyingGlass, Square, Trash } from '@phosphor-icons/react'
 
 import ChildrenItem from './ChildrenItem'
 import styles from './index.css'
 
-import type { Todo } from '@/types'
+import type { Todo, DndItemProps } from '@/types'
 import type Model from './model'
 import type { MenuProps } from 'antd'
+import type { IProps as IPropsTodos } from './index'
 
 interface IProps {
+	sortable_props?: DndItemProps
+	draggable_props?: DndItemProps
+	mode: IPropsTodos['mode']
 	item: Todo.Todo
 	index: number
+	overlay?: boolean
 	updateTodoItem: Model['updateTodoItem']
 	changeStatus: Model['changeStatus']
 	check: Model['check']
@@ -26,16 +30,23 @@ interface IProps {
 }
 
 const Index = (props: IProps) => {
-	const { item, index, updateTodoItem, changeStatus, check, remove } = props
+	const {
+		sortable_props,
+		draggable_props,
+		mode,
+		item,
+		index,
+		overlay,
+		updateTodoItem,
+		changeStatus,
+		check,
+		remove
+	} = props
 	const { id, text, status, children } = item
 	const { t, i18n } = useTranslation()
 	const [open, setOpen] = useState(false)
-	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } = useSortable(
-		{
-			id: item.id,
-			data: { index }
-		}
-	)
+	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } =
+		sortable_props || draggable_props
 
 	useEffect(() => {
 		if (isDragging) setOpen(false)
@@ -108,10 +119,15 @@ const Index = (props: IProps) => {
 			className={$cx(
 				'w_100 flex flex_column',
 				styles.Item,
+				overlay && styles.overlay,
+				mode === 'draggable' && isDragging && styles.isDragging,
 				(status === 'checked' || status === 'closed') && styles.done
 			)}
 			ref={setNodeRef}
-			style={{ transform: CSS.Translate.toString(transform), transition }}
+			style={{
+				transform: mode === 'draggable' && isDragging ? undefined : CSS.Translate.toString(transform),
+				transition
+			}}
 		>
 			<div className='w_100 border_box flex'>
 				<div

@@ -1,4 +1,4 @@
-import type { SortableProps } from '@/components'
+import type { DndItemProps } from '@/components'
 import type { DirTree, RxDB, Todo } from '@/types'
 import type { MenuProps, SelectProps } from 'antd'
 import type Model from '../model'
@@ -128,7 +128,7 @@ export interface IPropsTodos {
 }
 
 export interface IPropsTodoItem {
-	sortable_props?: SortableProps
+	sortable_props?: DndItemProps
 	item: Todo.Todo
 	index: number
 	angles: Model['setting']['setting']['angles']
@@ -168,7 +168,7 @@ export interface IPropsChildren {
 }
 
 export interface IPropsChildrenItem {
-	sortable_props?: SortableProps
+	sortable_props?: DndItemProps
 	item: Todo.Todo['children'][number]
 	index: number
 	children_index: number
@@ -182,7 +182,7 @@ export interface IPropsChildrenItem {
 }
 
 export interface IPropsGroupTitle {
-	sortable_props?: SortableProps
+	sortable_props?: DndItemProps
 	item: Todo.Group
 	index: number
 	update: Model['update']

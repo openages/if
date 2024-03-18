@@ -1,3 +1,7 @@
+import type { DraggableAttributes } from '@dnd-kit/core'
+import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
+import type { Transform } from '@dnd-kit/utilities'
+
 export interface IPropsCustomFormItem<T> {
 	value?: T
 	onChange?: (v: T) => void
@@ -23,3 +27,13 @@ export interface Tag {
 }
 
 export type CleanTime = '1year' | '6month' | '3month' | '1month' | '15days' | '1week'
+
+export interface DndItemProps {
+	attributes: DraggableAttributes
+	transform: Transform
+	transition: string
+	isDragging: boolean
+	listeners: SyntheticListenerMap
+	setNodeRef: (node: HTMLElement) => void
+	setActivatorNodeRef: (element: HTMLElement) => void
+}

@@ -8,6 +8,7 @@ export { default as Logo } from './Logo'
 export { default as LogoWithBg } from './LogoWithBg'
 export { default as ModuleIcon } from './ModuleIcon'
 export { default as SortableWrap } from './SortableWrap'
+export { default as DraggableWrap } from './DraggableWrap'
 export { default as DirTree } from './DirTree'
 export { default as LeftIcon } from './LeftIcon'
 export { default as DataEmpty } from './DataEmpty'
@@ -27,7 +28,6 @@ export { default as FormEditable } from './FormEditable'
 export { default as FormTable } from './FormTable'
 
 export type { IProps as IPropsDirTree } from './DirTree/types'
-export type { SortableProps } from './SortableWrap'
 export type {
 	IProps as IPropsFormTable,
 	Column as IPropsFormTableColumn,

@@ -9,6 +9,7 @@
 			.hour_item {
 				height: 48px;
 				border-bottom: var(--border);
+				border-right: var(--border);
 			}
 		}
 	}

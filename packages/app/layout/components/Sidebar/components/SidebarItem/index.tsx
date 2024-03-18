@@ -51,6 +51,7 @@ const Index = (props: IPropsSidebarItem) => {
 		<Tooltip
 			title={t(`translation:modules.${item.title}`)}
 			placement='right'
+			mouseEnterDelay={0.9}
 			destroyTooltipOnHide
 			getTooltipContainer={() => document.body}
 		>

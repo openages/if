@@ -1,5 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { Item, Menu } from 'react-contexify'
+import { useTranslation } from 'react-i18next'
 
 import { Copy, Plus } from '@phosphor-icons/react'
 
@@ -10,6 +11,7 @@ import type { ItemProps } from 'react-contexify'
 
 const Index = (props: IPropsCalendarContextMenu) => {
 	const { timeblock_copied, addTimeBlock } = props
+	const { t } = useTranslation()
 
 	const onAddTimeBlock: ItemProps['onClick'] = useMemoizedFn(({ props }) => {
 		const { index, row_index, start, length } = props
@@ -36,13 +38,13 @@ const Index = (props: IPropsCalendarContextMenu) => {
 			<Item onClick={onAddTimeBlock}>
 				<div className='menu_item flex align_center'>
 					<Plus className='icon mr_6' size={14}></Plus>
-					<span className='text'>添加</span>
+					<span className='text'>{t('translation:common.add')}</span>
 				</div>
 			</Item>
 			<Item disabled={!timeblock_copied} onClick={onPasteTimeBlock}>
 				<div className='menu_item flex align_center'>
 					<Copy className='icon mr_6' size={14}></Copy>
-					<span className='text'>粘贴</span>
+					<span className='text'>{t('translation:common.paste')}</span>
 				</div>
 			</Item>
 		</Menu>

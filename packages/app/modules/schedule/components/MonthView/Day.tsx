@@ -11,7 +11,7 @@ import type { IPropsMonthViewDay } from '../../types'
 import type { MouseEvent } from 'react'
 
 const Index = (props: IPropsMonthViewDay) => {
-	const { day_info, day, index, tags, updateTimeBlock, removeTimeBlock, copyTimeBlock, jump } = props
+	const { day_info, day, index, tags, fixed_view, updateTimeBlock, removeTimeBlock, copyTimeBlock, jump } = props
 	const { show } = useContextMenu({ id: 'timeblock_context_menu' })
 
 	const onJump = useMemoizedFn(() => jump(day_info.value))
@@ -29,6 +29,7 @@ const Index = (props: IPropsMonthViewDay) => {
 			className={$cx(
 				'border_box',
 				styles.Day,
+				!fixed_view && styles.normal_view,
 				!day_info.is_current_month && styles.not_current_month,
 				day_info.is_today && styles.is_today
 			)}
@@ -49,15 +50,17 @@ const Index = (props: IPropsMonthViewDay) => {
 					)}
 					<DayExtra item={day_info}></DayExtra>
 				</div>
-				<div
-					className={$cx(
-						'none justify_center align_center border_box absolute top_0 right_0 cursor_point clickable',
-						styles.btn_jump
-					)}
-					onClick={onJump}
-				>
-					<ArrowRight size={10}></ArrowRight>
-				</div>
+				{!fixed_view && (
+					<div
+						className={$cx(
+							'none justify_center align_center border_box absolute top_0 right_0 cursor_point clickable',
+							styles.btn_jump
+						)}
+						onClick={onJump}
+					>
+						<ArrowRight size={10}></ArrowRight>
+					</div>
+				)}
 			</div>
 			{day.length > 0 && (
 				<div className={$cx('w_100 border_box', styles.timeblocks_wrap)}>

@@ -3,6 +3,7 @@ import { Form, Select } from 'antd'
 import { debounce, pick } from 'lodash-es'
 import { observer } from 'mobx-react-lite'
 import { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { Todos } from '@/atoms'
@@ -23,6 +24,7 @@ const Index = (props: IPropsTimeBlockDetail) => {
 	const [x] = useState(() => container.resolve(Model))
 	const [form] = useForm()
 	const searcher = useRef<HTMLInputElement>()
+	const { t } = useTranslation()
 	const { setFieldsValue, getFieldsValue } = form
 	const search_todos = $copy(x.search_todos)
 
@@ -102,17 +104,20 @@ const Index = (props: IPropsTimeBlockDetail) => {
 			onContextMenu={stopPropagation}
 			onValuesChange={onValuesChange}
 		>
-			<Item label='描述' name='text'>
-				<FormEditable className='text_wrap border_box' placeholder='输入描述'></FormEditable>
+			<Item label={t('translation:schedule.TimeBlockDetail.desc')} name='text'>
+				<FormEditable
+					className='text_wrap border_box'
+					placeholder={t('translation:schedule.timeblock_placeholder')}
+				></FormEditable>
 			</Item>
-			<Item label='标签' name='tag'>
+			<Item label={t('translation:common.tags.single_label')} name='tag'>
 				<Select
 					className='select'
 					variant='borderless'
 					popupClassName='small'
 					allowClear
 					suffixIcon={null}
-					placeholder='选择标签'
+					placeholder={t('translation:schedule.TimeBlockDetail.tag_placeholder')}
 					fieldNames={{ label: 'text', value: 'id' }}
 					options={tags}
 					optionRender={({ data: { color, text } }: any) => (
@@ -130,7 +135,11 @@ const Index = (props: IPropsTimeBlockDetail) => {
 					variant='borderless'
 					allowClear
 					suffixIcon={null}
-					placeholder='搜索待办'
+					placeholder={
+						t('translation:dirtree.search_placeholder') +
+						t('translation:common.letter_space') +
+						t('translation:modules.todo')
+					}
 					fieldNames={{ label: 'text', value: 'id' }}
 					filterOption={false}
 					showSearch
@@ -141,7 +150,7 @@ const Index = (props: IPropsTimeBlockDetail) => {
 					onSelect={onSelectTodo}
 				></Select>
 			) : (
-				<Todos ids={item.todos} onChange={onChangeTodos}></Todos>
+				<Todos show_placeholder mode='sortable' ids={item.todos} onChange={onChangeTodos}></Todos>
 			)}
 			<div className='tab_wrap w_100 border_box flex absolute bottom_0 left_0'>
 				<span

@@ -1,18 +1,19 @@
 .Day {
 	width: calc(100% / 7);
 	height: 20%;
-	border-right: var(--border);
 	border-bottom: var(--border);
 	font-size: 12px;
 	user-select: none;
 
-	&:hover {
-		.extra_wrap {
-			display: none;
-		}
+	&.normal_view {
+		&:hover {
+			.extra_wrap {
+				display: none;
+			}
 
-		.btn_jump {
-			display: flex;
+			.btn_jump {
+				display: flex;
+			}
 		}
 	}
 
@@ -34,13 +35,14 @@
 				.date {
 					width: 15px;
 					height: 15px;
-					line-height: 15px;
+					box-sizing: border-box;
+					line-height: 13px;
 					text-align: center;
-					border-radius: 2px;
+					border-bottom-left-radius: var(--radius_small);
+					border-top-right-radius: var(--radius_small);
 					font-size: 10px;
 					font-weight: 500;
-					background-color: var(--color_text);
-					color: var(--color_bg);
+					border: 1px solid var(--color_text);
 				}
 			}
 		}
@@ -80,6 +82,6 @@
 	.timeblocks_wrap {
 		height: calc(100% - 24px);
 		overflow-y: scroll;
-		padding: 0 2px;
+		padding: 0 1px;
 	}
 }
