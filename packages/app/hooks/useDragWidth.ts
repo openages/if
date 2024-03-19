@@ -1,7 +1,7 @@
 import { useEventListener, useMemoizedFn } from 'ahooks'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import type { MouseEvent, RefObject } from 'react'
+import type { RefObject } from 'react'
 
 interface Args {
 	ref: RefObject<HTMLDivElement>
@@ -29,7 +29,7 @@ export default (args: Args) => {
 		onResizeEnd?.()
 		setDraging(false)
 
-		document.body.style.cursor = 'unset'
+		document.body.style.removeProperty('cursor')
 	})
 
 	const overflow = useMemoizedFn((v: number) => {
@@ -55,8 +55,18 @@ export default (args: Args) => {
 	})
 
 	useEventListener('mousedown', start, { target: ref })
-	useEventListener('mousemove', setDirTreeWidth, { target: document })
-	useEventListener('mouseup', stop, { target: document })
+
+	useEffect(() => {
+		if (!draging) return
+
+		document.addEventListener('mousemove', setDirTreeWidth)
+		document.addEventListener('mouseup', stop)
+
+		return () => {
+			document.removeEventListener('mousemove', setDirTreeWidth)
+			document.removeEventListener('mouseup', stop)
+		}
+	}, [draging])
 
 	return draging
 }

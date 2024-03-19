@@ -29,6 +29,15 @@ importers:
       '@abraham/reflection':
         specifier: ^0.12.0
         version: 0.12.0
+      '@antv/x6':
+        specifier: ^2.18.1
+        version: 2.18.1
+      '@antv/x6-plugin-scroller':
+        specifier: ^2.0.10
+        version: 2.0.10(@antv/x6@2.18.1)
+      '@antv/x6-react-shape':
+        specifier: ^2.2.3
+        version: 2.2.3(@antv/x6@2.18.1)(react-dom@0.0.0-experimental-14898b6a9-20240318)(react@0.0.0-experimental-14898b6a9-20240318)
       '@dnd-kit/core':
         specifier: ^6.1.0
         version: 6.1.0(react-dom@0.0.0-experimental-14898b6a9-20240318)(react@0.0.0-experimental-14898b6a9-20240318)
@@ -482,6 +491,45 @@ packages:
       react: 0.0.0-experimental-14898b6a9-20240318
       resize-observer-polyfill: 1.5.1
       throttle-debounce: 5.0.0
+    dev: false
+
+  /@antv/x6-common@2.0.17:
+    resolution: {integrity: sha512-37g7vmRkNdYzZPdwjaMSZEGv/MMH0S4r70/Jwoab1mioycmuIBN73iyziX8m56BvJSDucZ3J/6DU07otWqzS6A==}
+    dependencies:
+      lodash-es: 4.17.21
+      utility-types: 3.11.0
+    dev: false
+
+  /@antv/x6-geometry@2.0.5:
+    resolution: {integrity: sha512-MId6riEQkxphBpVeTcL4ZNXL4lScyvDEPLyIafvWMcWNTGK0jgkK7N20XSzqt8ltJb0mGUso5s56mrk8ysHu2A==}
+    dev: false
+
+  /@antv/x6-plugin-scroller@2.0.10(@antv/x6@2.18.1):
+    resolution: {integrity: sha512-CrC5zCbtPe7LJEKK8ucLcDN+9lMtTJNApFmFObAiR/y2LO1QFCHz8GGLVeNOZaIEmJbR/Z/etpJkvc1LE7WhTg==}
+    peerDependencies:
+      '@antv/x6': ^2.x
+    dependencies:
+      '@antv/x6': 2.18.1
+    dev: false
+
+  /@antv/x6-react-shape@2.2.3(@antv/x6@2.18.1)(react-dom@0.0.0-experimental-14898b6a9-20240318)(react@0.0.0-experimental-14898b6a9-20240318):
+    resolution: {integrity: sha512-42PGxk3XLnx9bsHQiRPauai5UQCrsh0MbWI3MyHRpjQaC30FK1rqyjH/EJ8qH0p6/cAndszZzCaiPqBbs3FqLQ==}
+    peerDependencies:
+      '@antv/x6': ^2.x
+      react: '>=18.0.0'
+      react-dom: '>= 18.0.0'
+    dependencies:
+      '@antv/x6': 2.18.1
+      react: 0.0.0-experimental-14898b6a9-20240318
+      react-dom: 0.0.0-experimental-14898b6a9-20240318(react@0.0.0-experimental-14898b6a9-20240318)
+    dev: false
+
+  /@antv/x6@2.18.1:
+    resolution: {integrity: sha512-FkWdbLOpN9J7dfJ+kiBxzowSx2N6syBily13NMVdMs+wqC6Eo5sLXWCZjQHateTFWgFw7ZGi2y9o3Pmdov1sXw==}
+    dependencies:
+      '@antv/x6-common': 2.0.17
+      '@antv/x6-geometry': 2.0.5
+      utility-types: 3.11.0
     dev: false
 
   /@babel/code-frame@7.18.6:
@@ -8958,6 +9006,11 @@ packages:
       is-generator-function: 1.0.10
       is-typed-array: 1.1.13
       which-typed-array: 1.1.15
+    dev: false
+
+  /utility-types@3.11.0:
+    resolution: {integrity: sha512-6Z7Ma2aVEWisaL6TvBCy7P8rm2LQoPv6dJ7ecIaIixHcwfbJ0x7mWdbcwlIM5IGQxPZSFYeqRCqlOOeKoJYMkw==}
+    engines: {node: '>= 4'}
     dev: false
 
   /utils-merge@1.0.1:

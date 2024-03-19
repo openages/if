@@ -143,7 +143,7 @@ const Index = (props: IPropsHeader) => {
 					</When>
 					<div className='name flex justify_between align_center'>{name}</div>
 				</div>
-				<When condition={desc}>
+				<When condition={mode === 'list' && desc}>
 					<span className='desc'>{desc}</span>
 				</When>
 			</div>
@@ -216,7 +216,7 @@ const Index = (props: IPropsHeader) => {
 					<Dropdown
 						destroyPopupOnHide
 						trigger={['click']}
-						overlayStyle={{ width: 90 }}
+						overlayStyle={{ width: 99 }}
 						menu={{ items: options_mode, onClick: onModeContextMenu }}
 					>
 						<div>

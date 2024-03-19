@@ -31,7 +31,7 @@ export default (args: Args) => {
 	const stop = useMemoizedFn(() => {
 		setChanging(false)
 
-		document.body.style.cursor = 'unset'
+		document.body.style.removeProperty('cursor')
 	})
 
 	const setWidth = useMemoizedFn((e: MouseEvent) => {

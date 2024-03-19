@@ -1,7 +1,7 @@
 [data-theme='dark'] {
 	._local {
 		&.has_tag {
-			color: var(--color_text);
+			color: var(--color_text) !important;
 
 			:global {
 				.timeblock_content_wrap {

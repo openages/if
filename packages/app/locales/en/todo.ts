@@ -24,21 +24,23 @@ export default {
 	},
 	default_angles: ['Now', 'Plan', 'Idea', 'Wait', 'Circle', 'Trashbox'],
 	Header: {
-		kanban_mode: {
-			angle: 'Angle',
-			tag: 'Tag'
-		},
 		visible_mode: {
 			zen: 'Zen',
 			normal: 'Normal'
 		},
+		kanban_mode: {
+			angle: 'Angle',
+			tag: 'Tag'
+		},
 		table_mode: {
 			filter: 'Filter'
 		},
+		mindmap_mode: {},
 		mode: {
 			list: 'List',
 			kanban: 'Kanban',
-			table: 'Table'
+			table: 'Table',
+			mindmap: 'Mindmap'
 		},
 		options: {
 			archive: 'Archive',

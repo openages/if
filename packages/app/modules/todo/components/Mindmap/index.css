@@ -1,0 +1,12 @@
+._local {
+	height: calc(100% - 72px);
+	padding: 0 36px;
+
+	:global {
+		.mindmap_wrap {
+			height: calc(100% - 36px);
+			border: 1px dashed var(--color_border);
+			border-radius: var(--radius);
+		}
+	}
+}

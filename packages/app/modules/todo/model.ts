@@ -169,11 +169,11 @@ export default class Index {
 				this.table_sort = {}
 			}
 
-			if (v === 'kanban') {
+			if (v === 'kanban' || v === 'mindmap') {
 				this.kanban_mode = 'angle'
 			}
 
-			if (v !== 'kanban') {
+			if (v !== 'kanban' && v !== 'mindmap') {
 				this.kanban_mode = '' as KanbanMode
 			}
 		},
@@ -202,7 +202,9 @@ export default class Index {
 		if (!this.current_detail_index.id) return {} as CurrentDetailItem
 
 		const items =
-			this.mode === 'kanban' ? this.kanban_items[this.current_detail_index.dimension_id]?.items : this.items
+			this.mode === 'kanban' || this.mode === 'mindmap'
+				? this.kanban_items[this.current_detail_index.dimension_id]?.items
+				: this.items
 
 		if (!items) return {} as CurrentDetailItem
 
@@ -858,6 +860,8 @@ export default class Index {
 	}
 
 	watchItems() {
+		this.stopWatchItems()
+
 		if (this.mode === 'list') {
 			const current_angle_id = this.current_angle_id
 
@@ -897,6 +901,8 @@ export default class Index {
 	}
 
 	watchKanbanItems() {
+		this.stopWatchKanbanItems()
+
 		if (this.kanban_mode === 'angle') {
 			this.kanban_items_watcher = this.setting.setting.angles.map(item => {
 				this.kanban_items[item.id] = {

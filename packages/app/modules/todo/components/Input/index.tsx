@@ -112,7 +112,7 @@ const Index = (props: IPropsInput) => {
 					</div>
 					<When condition={input.type === 'todo'}>
 						<div className='flex align_center'>
-							<div className='star_wrap flex align_center mr_6 relative'>
+							<div className='level_wrap flex align_center mr_6 relative'>
 								<Level
 									value={(input as Todo.Todo).level}
 									onChangeLevel={v => setInput(input => ({ ...input, level: v }))}

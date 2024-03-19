@@ -66,8 +66,14 @@
 			}
 		}
 
-		.star_wrap {
+		.level_wrap {
 			border-radius: var(--radius);
+
+			.if-rate-star {
+				&:not(:last-child) {
+					margin-inline-end: 2px;
+				}
+			}
 		}
 
 		.schedule_wrap {

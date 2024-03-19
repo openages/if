@@ -1,5 +1,4 @@
-import type { DndItemProps } from '@/components'
-import type { DirTree, RxDB, Todo } from '@/types'
+import type { DirTree, RxDB, Todo, DndItemProps } from '@/types'
 import type { MenuProps, SelectProps } from 'antd'
 import type Model from '../model'
 import type { Icon } from '@phosphor-icons/react'
@@ -133,16 +132,16 @@ export interface IPropsTodoItem {
 	index: number
 	angles: Model['setting']['setting']['angles']
 	tags: Model['setting']['setting']['tags']
-	drag_disabled: boolean
-	zen_mode: Model['zen_mode']
-	open_items: Model['open_items']
+	drag_disabled?: boolean
+	zen_mode?: Model['zen_mode']
+	open_items?: Model['open_items']
 	kanban_mode?: Model['kanban_mode']
 	dimension_id?: string
 	drag_overlay?: boolean
-	makeLinkLine: (args: { active_id: string; y: number } | null) => void
-	renderLines: (id: string) => void
+	makeLinkLine?: (args: { active_id: string; y: number } | null) => void
+	renderLines?: (id: string) => void
 	check: Model['check']
-	updateRelations: Model['updateRelations']
+	updateRelations?: Model['updateRelations']
 	insert: Model['insert']
 	update: Model['update']
 	tab: Model['tab']
@@ -156,8 +155,8 @@ export interface IPropsChildren {
 	items: Todo.Todo['children']
 	index: number
 	open: boolean
-	isDragging: boolean
-	handled: boolean
+	isDragging?: boolean
+	handled?: boolean
 	useByDetail?: boolean
 	dimension_id?: string
 	ChildrenContextMenu: MenuProps['items']
@@ -211,6 +210,11 @@ export interface IPropsTableFilter {
 	angles: Model['setting']['setting']['angles']
 	tags: Model['setting']['setting']['tags']
 	onTableSearch: Model['onTableSearch']
+}
+
+export interface IPropsMindmap
+	extends Omit<IPropsTodos, 'items' | 'zen_mode' | 'kanban_mode' | 'drag_disabled' | 'open_items'> {
+	kanban_items: Model['kanban_items']
 }
 
 export interface IPropsSettingsModal {

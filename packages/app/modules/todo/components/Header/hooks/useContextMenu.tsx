@@ -8,6 +8,7 @@ import {
 	ArrowsDownUp,
 	CalendarPlus,
 	GearSix,
+	GitFork,
 	Kanban,
 	ListChecks,
 	Question,
@@ -72,6 +73,15 @@ export default (args: HookArgs) => {
 					<div className='menu_item_wrap flex align_center'>
 						<Table size={16}></Table>
 						<span className='text ml_6'>{t('translation:todo.Header.mode.table')}</span>
+					</div>
+				)
+			},
+			{
+				key: 'mindmap',
+				label: (
+					<div className='menu_item_wrap flex align_center'>
+						<GitFork size={16}></GitFork>
+						<span className='text ml_6'>{t('translation:todo.Header.mode.mindmap')}</span>
 					</div>
 				)
 			}

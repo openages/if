@@ -24,21 +24,23 @@ export default {
 	},
 	default_angles: ['此刻', '计划', '想法', '等待', '循环', '垃圾箱'],
 	Header: {
-		kanban_mode: {
-			angle: '分类模式',
-			tag: '标签模式'
-		},
 		visible_mode: {
 			zen: '禅意模式',
 			normal: '常规模式'
 		},
+		kanban_mode: {
+			angle: '分类模式',
+			tag: '标签模式'
+		},
 		table_mode: {
 			filter: '过滤器'
 		},
+		mindmap_mode: {},
 		mode: {
 			list: '列表',
 			kanban: '看板',
-			table: '表格'
+			table: '表格',
+			mindmap: '脑图'
 		},
 		options: {
 			archive: '归档',

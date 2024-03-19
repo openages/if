@@ -1,7 +1,7 @@
 import type { Todo, Tag } from '@/types'
 import type { Dayjs } from 'dayjs'
 
-export type Mode = 'list' | 'kanban' | 'table'
+export type Mode = 'list' | 'kanban' | 'table' | 'mindmap'
 export type KanbanMode = 'angle' | 'tag'
 
 export interface KanbanItems {

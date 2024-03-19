@@ -2,14 +2,14 @@ import { useMemoizedFn } from 'ahooks'
 import { omit, pick } from 'lodash-es'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useLayoutEffect, useMemo, useState, Fragment } from 'react'
-import { match } from 'ts-pattern'
+import { match, P } from 'ts-pattern'
 import { container } from 'tsyringe'
 
 import { DataEmpty, SortableWrap } from '@/components'
 import { useStackSelector } from '@/context/stack'
 import { pointerWithin, rectIntersection, DndContext, DragOverlay } from '@dnd-kit/core'
 
-import { Archive, Detail, Header, Help, Input, Kanban, SettingsModal, Table, Tabs, Todos } from './components'
+import { Archive, Detail, Header, Help, Input, Kanban, Mindmap, SettingsModal, Table, Tabs, Todos } from './components'
 import TodoItem from './components/TodoItem'
 import styles from './index.css'
 import Model from './model'
@@ -29,7 +29,8 @@ import type {
 	IPropsTable,
 	IPropsTabs,
 	IPropsTodoItem,
-	IPropsTodos
+	IPropsTodos,
+	IPropsMindmap
 } from './types'
 
 const Index = ({ id }: IProps) => {
@@ -136,6 +137,11 @@ const Index = ({ id }: IProps) => {
 		onTableSortChange: useMemoizedFn(x.onTableSortChange),
 		onTableSearch: useMemoizedFn(x.onTableSearch),
 		...pick(props_todos, ['relations', 'showDetailModal', 'remove'])
+	}
+
+	const props_mindmap: IPropsMindmap = {
+		kanban_items: $copy(x.kanban_items),
+		...omit(props_todos, ['items', 'zen_mode', 'kanban_mode', 'drag_disabled', 'open_items'])
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
@@ -252,43 +258,48 @@ const Index = ({ id }: IProps) => {
 				.with(true, () => (
 					<Fragment>
 						<Header {...props_header}></Header>
-						{x.mode !== 'table' ? (
-							<DndContext
-								collisionDetection={
-									x.mode === 'kanban' ? pointerWithin : rectIntersection
-								}
-								onDragStart={onDragStart}
-								onDragEnd={onDragEnd}
-							>
-								{match(x.mode)
-									.with('list', () => (
-										<Fragment>
-											<Tabs {...props_tabs}></Tabs>
-											<Todos {...props_todos}></Todos>
-											<Input {...props_input}></Input>
-										</Fragment>
-									))
-									.with('kanban', () => <Kanban {...props_kanban}></Kanban>)
-									.otherwise(() => null)}
-								{x.kanban_mode === 'angle' && (
-									<DragOverlay dropAnimation={null}>
-										{drag_todo_item && (
-											<SortableWrap
-												id={drag_todo_item.item.id}
-												data={{
-													index: drag_todo_item.index,
-													dimension_id: drag_todo_item.dimension_id
-												}}
-											>
-												<TodoItem {...props_drag_todo_item}></TodoItem>
-											</SortableWrap>
-										)}
-									</DragOverlay>
-								)}
-							</DndContext>
-						) : (
-							<Table {...props_table}></Table>
-						)}
+						{match(x.mode)
+							.with(P.union('list', 'kanban'), () => (
+								<DndContext
+									collisionDetection={
+										x.mode === 'kanban' ? pointerWithin : rectIntersection
+									}
+									onDragStart={onDragStart}
+									onDragEnd={onDragEnd}
+								>
+									{match(x.mode)
+										.with('list', () => (
+											<Fragment>
+												<Tabs {...props_tabs}></Tabs>
+												<Todos {...props_todos}></Todos>
+												<Input {...props_input}></Input>
+											</Fragment>
+										))
+										.with('kanban', () => <Kanban {...props_kanban}></Kanban>)
+										.otherwise(() => null)}
+									{x.mode === 'kanban' && x.kanban_mode === 'angle' && (
+										<DragOverlay dropAnimation={null}>
+											{drag_todo_item && (
+												<SortableWrap
+													id={drag_todo_item.item.id}
+													data={{
+														index: drag_todo_item.index,
+														dimension_id:
+															drag_todo_item.dimension_id
+													}}
+												>
+													<TodoItem
+														{...props_drag_todo_item}
+													></TodoItem>
+												</SortableWrap>
+											)}
+										</DragOverlay>
+									)}
+								</DndContext>
+							))
+							.with('table', () => <Table {...props_table}></Table>)
+							.with('mindmap', () => <Mindmap {...props_mindmap}></Mindmap>)
+							.exhaustive()}
 						<SettingsModal {...props_settings_modal}></SettingsModal>
 						<Archive {...props_archive}></Archive>
 						<Detail {...props_detail}></Detail>
