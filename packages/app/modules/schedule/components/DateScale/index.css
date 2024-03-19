@@ -27,6 +27,31 @@
 		}
 	}
 
+	&.timeline_month {
+		:global {
+			.weekday_items {
+				.weekday_item {
+					position: relative;
+					border-right: none;
+
+					&:hover {
+						background-color: var(--color_bg_2) !important;
+					}
+
+					&::after {
+						content: '';
+						position: absolute;
+						bottom: 0;
+						right: 0;
+						width: 1px;
+						height: 4px;
+						background-color: var(--color_border_light);
+					}
+				}
+			}
+		}
+	}
+
 	:global {
 		.btn_now_wrap {
 			width: 48px;
@@ -71,18 +96,6 @@
 				&.timeline_narrow {
 					.date {
 						color: var(--color_text);
-					}
-
-					&.today {
-						background-color: rgba(var(--color_text_rgb), 0.03);
-
-						.date {
-							padding: unset;
-							border: none;
-							border-radius: unset;
-							font-size: 12px;
-							font-weight: 500;
-						}
 					}
 				}
 

@@ -225,6 +225,16 @@
 			}
 		}
 
+		&.has_tag {
+			color: rgba(var(--tag_color), 1);
+
+			:global {
+				.timeblock_content_wrap {
+					background-color: rgba(var(--tag_color), 0.18);
+				}
+			}
+		}
+
 		:global {
 			.drag_line {
 				width: 6px;
@@ -233,9 +243,9 @@
 			}
 
 			.timeblock_content_wrap {
-				padding: 1px 4px;
-				padding-top: 0;
-				border-radius: var(--radius_small);
+				padding: 2px 4px;
+				padding-top: 1px;
+				border: none;
 
 				.text_wrap {
 					height: 20px;
@@ -311,7 +321,7 @@
 					width: 100%;
 
 					&.has_status {
-						width: calc(100% - 27px);
+						width: calc(100% - 21px);
 						overflow: scroll;
 					}
 				}

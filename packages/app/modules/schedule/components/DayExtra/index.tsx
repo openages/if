@@ -11,7 +11,7 @@ const Index = (props: IPropsDayExtra) => {
 	const is_zh = i18n.language === 'zh'
 
 	return (
-		<div className={$cx('ml_6', styles._local)}>
+		<div className={$cx((item.global_festival || is_zh) && 'ml_6', styles._local)}>
 			<If condition={item.global_festival}>
 				<Then>
 					<span className='holiday'>{item.global_festival}</span>

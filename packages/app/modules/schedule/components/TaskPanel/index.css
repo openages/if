@@ -2,7 +2,6 @@
 	width: 180px;
 	height: 100%;
 	border-right: var(--border);
-	font-size: 12px;
 
 	:global {
 		.panel_header {
@@ -10,6 +9,7 @@
 			border-bottom: var(--border);
 			padding: 0 15px;
 			font-weight: 500;
+			font-size: 12px;
 		}
 
 		.todo_items_wrap {

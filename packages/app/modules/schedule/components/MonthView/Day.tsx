@@ -48,7 +48,7 @@ const Index = (props: IPropsMonthViewDay) => {
 							{day.length}
 						</span>
 					)}
-					<DayExtra item={day_info}></DayExtra>
+					{!fixed_view && <DayExtra item={day_info}></DayExtra>}
 				</div>
 				{!fixed_view && (
 					<div

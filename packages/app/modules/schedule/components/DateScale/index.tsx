@@ -19,10 +19,12 @@ const Index = (props: IPropsDateScale) => {
 		[view, scale, days]
 	)
 
-	const timeline_narrow = useMemo(
-		() => view === 'timeline' && (scale === 'month' || scale === 'year'),
-		[view, scale]
-	)
+	const { timeline_month, timeline_narrow } = useMemo(() => {
+		return {
+			timeline_month: view === 'timeline' && scale === 'month',
+			timeline_narrow: view === 'timeline' && (scale === 'month' || scale === 'year')
+		}
+	}, [view, scale])
 
 	return (
 		<div
@@ -31,7 +33,8 @@ const Index = (props: IPropsDateScale) => {
 				styles._local,
 				!show_time_scale && styles.hidden_time_scale,
 				scale === 'day' && styles.day_scale,
-				view === 'timeline' && styles.timeline
+				view === 'timeline' && styles.timeline,
+				timeline_month && styles.timeline_month
 			)}
 		>
 			{(show_time_scale || view === 'timeline') && (
@@ -54,10 +57,10 @@ const Index = (props: IPropsDateScale) => {
 							!not_fixed && 'fixed_view',
 							!timeline_narrow ? 'justify_between' : 'justify_center',
 							timeline_narrow && 'timeline_narrow',
-							view === 'timeline' && scale === 'month' && 'cursor_point'
+							timeline_month && 'cursor_point'
 						)}
 						style={{ width: `calc(100% / ${show_time_scale || timeline ? days.length : 7})` }}
-						onClick={view === 'timeline' && scale === 'month' ? () => jump(item.value) : null}
+						onClick={timeline_month ? () => jump(item.value) : null}
 						key={index}
 					>
 						<div className='flex align_center'>
