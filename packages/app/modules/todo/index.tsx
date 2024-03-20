@@ -140,6 +140,8 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_mindmap: IPropsMindmap = {
+		file_id: x.id,
+		name: x.file.data?.name,
 		kanban_items: $copy(x.kanban_items),
 		...omit(props_todos, ['items', 'zen_mode', 'kanban_mode', 'drag_disabled', 'open_items'])
 	}

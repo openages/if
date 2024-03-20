@@ -150,12 +150,13 @@ export default class Index {
 
 			this.queryArchives(true)
 		},
-		['mode']: v => {
+		['mode']: (v, old_val) => {
 			this.visible_detail_modal = false
 			this.items = []
-			this.kanban_items = {}
 
-			this.stopWatchItems()
+			if (v !== 'kanban' || old_val !== 'mindmap') {
+				this.kanban_items = {}
+			}
 
 			if (v === 'table') {
 				this.kanban_mode = '' as KanbanMode
@@ -179,8 +180,6 @@ export default class Index {
 		},
 		['kanban_mode']: v => {
 			this.kanban_items = {}
-
-			this.stopWatchKanbanItems()
 
 			if (v) {
 				this.watchKanbanItems()
@@ -907,7 +906,8 @@ export default class Index {
 			this.kanban_items_watcher = this.setting.setting.angles.map(item => {
 				this.kanban_items[item.id] = {
 					dimension: { type: 'angle', value: item },
-					items: [] as Array<Todo.Todo>
+					items: [] as Array<Todo.Todo>,
+					loaded: false
 				}
 
 				return getQueryItems({
@@ -918,6 +918,7 @@ export default class Index {
 					if (this.disable_watcher) return
 
 					this.kanban_items[item.id].items = getDocItemsData(items) as Array<Todo.Todo>
+					this.kanban_items[item.id].loaded = true
 				})
 			})
 		} else {

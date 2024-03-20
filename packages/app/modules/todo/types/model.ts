@@ -8,6 +8,7 @@ export interface KanbanItems {
 	[key: string]: {
 		dimension: { type: 'angle'; value: Todo.Angle } | { type: 'tag'; value: Tag }
 		items: Array<Todo.Todo>
+		loaded?: boolean
 	}
 }
 

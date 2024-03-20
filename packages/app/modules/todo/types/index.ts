@@ -214,6 +214,8 @@ export interface IPropsTableFilter {
 
 export interface IPropsMindmap
 	extends Omit<IPropsTodos, 'items' | 'zen_mode' | 'kanban_mode' | 'drag_disabled' | 'open_items'> {
+	file_id: Model['id']
+	name: Model['file']['data']['name']
 	kanban_items: Model['kanban_items']
 }
 

@@ -1,5 +1,6 @@
 import '@antv/x6-react-shape'
 
+import { useDebounceEffect } from 'ahooks'
 import { useEffect, useRef, useState } from 'react'
 import { container } from 'tsyringe'
 
@@ -14,6 +15,8 @@ const Index = (props: IPropsMindmap) => {
 	const [x] = useState(() => container.resolve(Model))
 
 	const {
+		file_id,
+		name,
 		kanban_items,
 		tags,
 		angles,
@@ -31,12 +34,15 @@ const Index = (props: IPropsMindmap) => {
 	const ref = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
+		if (!angles.length) return
+		if (Object.keys(kanban_items).some(angle_id => !kanban_items[angle_id].loaded)) return
+
 		// register({ tags, angles, check, insert, update, tab, moveTo, remove, handleOpenItem, showDetailModal })
 
-		x.init({ container: ref.current })
+		x.init({ container: ref.current, file_id, name, kanban_items })
 
 		return () => x.off()
-	}, [tags, angles])
+	}, [kanban_items, tags, angles])
 
 	return (
 		<div className={$cx('flex', styles._local)}>
