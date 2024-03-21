@@ -1,4 +1,3 @@
-import type { Node, Edge } from '@antv/x6'
 import type { Node as NodeType } from '@openages/stk/graph'
 
 export default (node: NodeType) => {

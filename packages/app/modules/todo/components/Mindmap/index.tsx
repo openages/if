@@ -1,13 +1,8 @@
-import '@antv/x6-react-shape'
-
-import { useDebounceEffect } from 'ahooks'
 import { useEffect, useRef, useState } from 'react'
 import { container } from 'tsyringe'
 
-import { PortalProvider } from './components'
 import styles from './index.css'
 import Model from './model'
-import { register } from './utils'
 
 import type { IPropsMindmap } from '../../types'
 
@@ -37,8 +32,6 @@ const Index = (props: IPropsMindmap) => {
 		if (!angles.length) return
 		if (Object.keys(kanban_items).some(angle_id => !kanban_items[angle_id].loaded)) return
 
-		// register({ tags, angles, check, insert, update, tab, moveTo, remove, handleOpenItem, showDetailModal })
-
 		x.init({ container: ref.current, file_id, name, kanban_items })
 
 		return () => x.off()
@@ -46,7 +39,6 @@ const Index = (props: IPropsMindmap) => {
 
 	return (
 		<div className={$cx('flex', styles._local)}>
-			<PortalProvider />
 			<div className='mindmap_wrap w_100 h_100 border_box flex'>
 				<div className='w_100 h_100' ref={ref}></div>
 			</div>
