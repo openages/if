@@ -10,8 +10,6 @@ import type { IPropsTabs } from '../../types'
 const Index = (props: IPropsTabs) => {
 	const { angles, current_angle_id, setCurrentAngleId } = props
 
-	console.log(999129)
-
 	return (
 		<div className={$cx('w_100 border_box sticky top_0', styles._local)}>
 			<div className='tabs_wrap limited_content_wrap flex align_center relative'>
