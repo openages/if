@@ -2,7 +2,6 @@ import { useMemoizedFn } from 'ahooks'
 import { ConfigProvider, Dropdown, Tooltip } from 'antd'
 import { Shapes } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Else, If, Then, When } from 'react-if'
 
 import { Emoji } from '@/components'
 import {
@@ -116,14 +115,14 @@ const Index = (props: IPropsHeader) => {
 									)}
 								</span>
 								<span className='btn_order ml_2 flex justify_center align_center'>
-									<If condition={items_sort_param.order === 'desc'}>
-										<Then>
+									<Choose>
+										<When condition={items_sort_param.order === 'desc'}>
 											<CaretUp size={12} weight='bold'></CaretUp>
-										</Then>
-										<Else>
+										</When>
+										<Otherwise>
 											<CaretDown size={12} weight='bold'></CaretDown>
-										</Else>
-									</If>
+										</Otherwise>
+									</Choose>
 								</span>
 							</div>
 							<span
@@ -138,14 +137,14 @@ const Index = (props: IPropsHeader) => {
 			)}
 			<div className='left_wrap flex flex_column'>
 				<div className='flex align_center'>
-					<When condition={icon}>
+					<If condition={!!icon}>
 						<Emoji className='icon_emoji' shortcodes={icon} size={21} hue={icon_hue}></Emoji>
-					</When>
+					</If>
 					<div className='name flex justify_between align_center'>{name}</div>
 				</div>
-				<When condition={mode === 'list' && desc}>
+				<If condition={mode === 'list' && !!desc}>
 					<span className='desc'>{desc}</span>
-				</When>
+				</If>
 			</div>
 			<div className='actions_wrap flex justify_end align_center'>
 				{search_mode && (

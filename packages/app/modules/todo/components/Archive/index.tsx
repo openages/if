@@ -2,7 +2,6 @@ import { useMemoizedFn } from 'ahooks'
 import { DatePicker, Drawer, Form, Popover, Radio, Select } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { When } from 'react-if'
 
 import { SimpleEmpty } from '@/components'
 import { useArchiveOptions } from '@/hooks'
@@ -113,14 +112,14 @@ const Index = (props: IPropsArchive) => {
 
 	const Extra = (
 		<div className='flex align_center'>
-			<When condition={exsit_query_params}>
+			<If condition={exsit_query_params}>
 				<div
 					className='btn_clear btn flex justify_center align_center clickable absolute'
 					onClick={() => setArchiveQueryParams({})}
 				>
 					<ArrowCounterClockwise size={16} weight='bold'></ArrowCounterClockwise>
 				</div>
-			</When>
+			</If>
 			<Popover
 				rootClassName={styles.popover}
 				destroyTooltipOnHide
@@ -184,9 +183,9 @@ const Index = (props: IPropsArchive) => {
 					))}
 				</div>
 			)}
-			<When condition={!archives.length && end}>
+			<If condition={!archives.length && end}>
 				<SimpleEmpty></SimpleEmpty>
-			</When>
+			</If>
 			<div className={$cx('end w_100 text_center', !archives.length && end && 'hidden')} ref={setRef}>
 				{end && t('translation:todo.Archive.end')}
 			</div>

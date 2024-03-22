@@ -3,7 +3,6 @@ import dayjs from 'dayjs'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Case, Switch } from 'react-if'
 
 import { ArrowCounterClockwise, CheckSquare, Square, Trash } from '@phosphor-icons/react'
 
@@ -38,14 +37,14 @@ const Index = (props: IPropsArchiveItem) => {
 		return (
 			<div className={$cx('text_wrap w_100 relative', is_parent ? 'parent' : 'child')} key={id}>
 				<div className='status_wrap flex justify_center align_center absolute'>
-					<Switch>
-						<Case condition={status === 'unchecked' || status === 'closed'}>
+					<Choose>
+						<When condition={status === 'unchecked' || status === 'closed'}>
 							<Square size={icon_size} />
-						</Case>
-						<Case condition={status === 'checked'}>
+						</When>
+						<Otherwise>
 							<CheckSquare size={icon_size} />
-						</Case>
-					</Switch>
+						</Otherwise>
+					</Choose>
 				</div>
 				<span
 					className={$cx('text block', is_parent && data_children && 'has_children')}

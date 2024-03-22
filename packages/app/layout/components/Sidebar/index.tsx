@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import { When } from 'react-if'
 
 import { LogoWithBg } from '@/components'
 import { useAntdApp } from '@/hooks'
@@ -40,9 +39,9 @@ const Index = (props: IPropsSidebar) => {
 				)}
 			>
 				<div className='scroll_wrap w_100'>
-					<When condition={overflow}>
+					<If condition={overflow}>
 						<div className='scroll_mask top w_100 absolute top_0'></div>
-					</When>
+					</If>
 					<div className='sidebar_top_wrap flex flex_column align_center' ref={ref_items_wrap}>
 						{apps.map(item => (
 							<SidebarItem
@@ -52,9 +51,9 @@ const Index = (props: IPropsSidebar) => {
 							></SidebarItem>
 						))}
 					</div>
-					<When condition={overflow}>
+					<If condition={overflow}>
 						<div className='scroll_mask bottom w_100 sticky bottom_0'></div>
-					</When>
+					</If>
 				</div>
 				<div className='sidebar_bottom_wrap w_100 flex flex_column align_center'>
 					<Timer></Timer>

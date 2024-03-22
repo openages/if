@@ -1,6 +1,5 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Else, If, Then } from 'react-if'
 
 import { getTextColor } from '@/utils'
 
@@ -33,8 +32,8 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 				></TagSelect>
 			) : (
 				<div className={$cx(styles.RenderTagsViewer, 'w_100 flex justify_center')}>
-					<If condition={items !== undefined && items?.length > 0}>
-						<Then>
+					<Choose>
+						<When condition={items !== undefined && items?.length > 0}>
 							{items?.map(item => (
 								<span
 									className='tag_item'
@@ -47,13 +46,13 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 									{item.text}
 								</span>
 							))}
-						</Then>
-						<Else>
+						</When>
+						<Otherwise>
 							<span className='color_text_light'>
 								{t('translation:todo.Input.tag_placeholder')}
 							</span>
-						</Else>
-					</If>
+						</Otherwise>
+					</Choose>
 				</div>
 			)}
 		</div>

@@ -2,7 +2,6 @@ import { useMemoizedFn } from 'ahooks'
 import { Select, Tooltip } from 'antd'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { When } from 'react-if'
 
 import { useInput } from '@/modules/todo/hooks'
 import { id } from '@/utils'
@@ -100,7 +99,7 @@ const Index = (props: IPropsInput) => {
 								setInput(target)
 							}}
 						></Select>
-						<When condition={Boolean(tags) && tags?.length && input.type === 'todo'}>
+						<If condition={Boolean(tags) && tags?.length && input.type === 'todo'}>
 							<TagSelect
 								options={tags}
 								value={(input as Todo.Todo).tag_ids}
@@ -108,9 +107,9 @@ const Index = (props: IPropsInput) => {
 									setInput(input => ({ ...input, tag_ids: v }))
 								}}
 							></TagSelect>
-						</When>
+						</If>
 					</div>
-					<When condition={input.type === 'todo'}>
+					<If condition={input.type === 'todo'}>
 						<div className='flex align_center'>
 							<div className='level_wrap flex align_center mr_6 relative'>
 								<Level
@@ -166,7 +165,7 @@ const Index = (props: IPropsInput) => {
 								</div>
 							</Tooltip>
 						</div>
-					</When>
+					</If>
 				</div>
 				<div
 					className='input_add_todo w_100 border_box transition_normal'

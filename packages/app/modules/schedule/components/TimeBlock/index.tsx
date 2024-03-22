@@ -2,7 +2,6 @@ import { useMemoizedFn } from 'ahooks'
 import { Dropdown, Popover } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { When } from 'react-if'
 
 import { useInput } from '@/modules/todo/hooks'
 import { useDraggable, useDroppable } from '@dnd-kit/core'
@@ -126,9 +125,9 @@ const Index = (props: IPropsTimeBlock) => {
 					{...attributes}
 					onContextMenu={stopPropagationContextMenu}
 				>
-					<When condition={!month_mode}>
+					<If condition={!month_mode}>
 						<div className='drag_line w_100 absolute bottom_0 right_0' ref={drag_ref}></div>
-					</When>
+					</If>
 					<div
 						className={$cx(
 							'btn_detail none justify_center align_center absolute clickable',

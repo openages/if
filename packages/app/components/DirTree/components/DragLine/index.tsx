@@ -1,7 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { useRef } from 'react'
-import { Else, If, Then } from 'react-if'
 
 import { useGlobal } from '@/context/app'
 import { useDragWidth } from '@/hooks'
@@ -33,14 +32,14 @@ const Index = () => {
 				className='btn_hide_wrap border_box flex justify_center align_center transition_normal'
 				onClick={() => global.layout.toggleDirTreeVisible()}
 			>
-				<If condition={global.layout.dirtree_width !== 0}>
-					<Then>
+				<Choose>
+					<When condition={global.layout.dirtree_width !== 0}>
 						<CaretLeft size={18} weight='bold'></CaretLeft>
-					</Then>
-					<Else>
+					</When>
+					<Otherwise>
 						<CaretRight className='icon transition_normal' size={18} weight='bold'></CaretRight>
-					</Else>
-				</If>
+					</Otherwise>
+				</Choose>
 			</div>
 		</div>
 	)

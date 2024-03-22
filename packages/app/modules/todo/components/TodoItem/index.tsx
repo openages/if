@@ -2,7 +2,6 @@ import { useMemoizedFn } from 'ahooks'
 import { ConfigProvider, Dropdown } from 'antd'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
-import { Case, Else, If, Switch, Then } from 'react-if'
 
 import { todo } from '@/appdata'
 import { useDroppable } from '@dnd-kit/core'
@@ -261,14 +260,14 @@ const Index = (props: IPropsTodoItem) => {
 						className='action_wrap flex justify_center align_center cursor_point clickable'
 						onClick={onCheck}
 					>
-						<Switch>
-							<Case condition={status === 'unchecked' || status === 'closed'}>
+						<Choose>
+							<When condition={status === 'unchecked' || status === 'closed'}>
 								<Square size={16} />
-							</Case>
-							<Case condition={status === 'checked'}>
+							</When>
+							<When condition={status === 'checked'}>
 								<CheckSquare size={16} />
-							</Case>
-						</Switch>
+							</When>
+						</Choose>
 					</div>
 					<ConfigProvider getPopupContainer={() => document.body}>
 						<Dropdown
@@ -298,12 +297,12 @@ const Index = (props: IPropsTodoItem) => {
 				</div>
 			</div>
 			<Children {...props_children}></Children>
-			<If condition={kanban_mode}>
-				<Then>
+			<Choose>
+				<When condition={!!kanban_mode}>
 					{has_options ? OptionsWrap : <div className='date_wrap w_100 border_box'>{date}</div>}
-				</Then>
-				<Else>{!zen_mode && has_options && OptionsWrap}</Else>
-			</If>
+				</When>
+				<Otherwise>{!zen_mode && has_options && OptionsWrap}</Otherwise>
+			</Choose>
 		</div>
 	)
 }

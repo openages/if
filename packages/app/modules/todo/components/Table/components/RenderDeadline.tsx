@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
-import { Else, If, Then } from 'react-if'
 
 import { format } from '@/utils/date'
 
@@ -16,8 +15,8 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['end_time']>) => {
 
 	return (
 		<div className={$cx('w_100 flex justify_center', styles.DateTime)}>
-			<If condition={editing}>
-				<Then>
+			<Choose>
+				<When condition={editing}>
 					<DateTime
 						useByDetail
 						ignoreDetail
@@ -25,8 +24,8 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['end_time']>) => {
 						onFocus={onFocus}
 						onChange={onChange}
 					></DateTime>
-				</Then>
-				<Else>
+				</When>
+				<Otherwise>
 					{value ? (
 						<span className='viewer_wrap'>{format(dayjs(value), true)}</span>
 					) : (
@@ -34,8 +33,8 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['end_time']>) => {
 							{t('translation:common.unset')}
 						</span>
 					)}
-				</Else>
-			</If>
+				</Otherwise>
+			</Choose>
 		</div>
 	)
 }

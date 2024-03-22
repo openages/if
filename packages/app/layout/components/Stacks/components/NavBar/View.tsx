@@ -1,7 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { Button } from 'antd'
 import { useMemo } from 'react'
-import { Else, If, Then } from 'react-if'
 
 import { Emoji, LeftIcon, ModuleIcon, Wave } from '@/components'
 import { useScrollToItem } from '@/hooks'
@@ -57,22 +56,22 @@ const Index = (props: IPropsStacksNavBarView) => {
 				>
 					<div className='nav_bar_item w_100 h_100 border_box flex align_center'>
 						<div className='icon_wrap h_100 flex align_center'>
-							<If condition={view.file.icon}>
-								<Then>
+							<Choose>
+								<When condition={!!view.file.icon}>
 									<Emoji
 										shortcodes={view.file.icon}
 										size={12}
 										hue={view.file.icon_hue}
 									></Emoji>
-								</Then>
-								<Else>
+								</When>
+								<Otherwise>
 									<LeftIcon
 										module={view.module}
 										item={view.file}
 										size={12}
 									></LeftIcon>
-								</Else>
-							</If>
+								</Otherwise>
+							</Choose>
 						</div>
 						<span className='name_wrap ml_4'>{view.file.name}</span>
 						<div className='icon_module_wrap flex justify_center align_center ml_2'>

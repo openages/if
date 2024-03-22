@@ -1,6 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
 import { useEffect, useState } from 'react'
-import { Else, If, Then } from 'react-if'
 
 import { Logo } from '@/components'
 import { useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
@@ -69,8 +68,8 @@ const Index = (props: IPropsStacks) => {
 
 	return (
 		<div id='stacks_container' className={$cx('w_100 h_100vh border_box flex flex_column', styles._local)}>
-			<If condition={columns.length}>
-				<Then>
+			<Choose>
+				<When condition={columns.length > 0}>
 					<DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
 						<NavBar {...props_nav_bar}></NavBar>
 						<Content {...props_content}></Content>
@@ -86,13 +85,13 @@ const Index = (props: IPropsStacks) => {
 							)}
 						</DragOverlay>
 					</DndContext>
-				</Then>
-				<Else>
+				</When>
+				<Otherwise>
 					<div className={'w_100 h_100 flex justify_center align_center'}>
 						<Logo size={96}></Logo>
 					</div>
-				</Else>
-			</If>
+				</Otherwise>
+			</Choose>
 		</div>
 	)
 }

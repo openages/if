@@ -1,11 +1,11 @@
 import { useMemoizedFn } from 'ahooks'
-import { Case, Switch } from 'react-if'
 
 import { CheckSquare, Square } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
 import type { Todo } from '@/types'
+
 interface IProps {
 	item: Todo.Todo['children'][number]
 	index: number
@@ -26,14 +26,14 @@ const Index = (props: IProps) => {
 				className='action_wrap flex justify_center align_center cursor_point clickable'
 				onClick={onCheck}
 			>
-				<Switch>
-					<Case condition={status === 'unchecked'}>
+				<Choose>
+					<When condition={status === 'unchecked'}>
 						<Square size={14} />
-					</Case>
-					<Case condition={status === 'checked'}>
+					</When>
+					<When condition={status === 'checked'}>
 						<CheckSquare size={14} />
-					</Case>
-				</Switch>
+					</When>
+				</Choose>
 			</div>
 			<span className='todo_text'>{text}</span>
 		</div>

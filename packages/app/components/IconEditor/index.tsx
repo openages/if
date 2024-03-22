@@ -1,6 +1,5 @@
 import { Popover, Slider } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { Else, If, Then } from 'react-if'
 
 import { Emoji, EmojiPicker, LeftIcon } from '@/components'
 
@@ -48,17 +47,17 @@ const Index = (props: IProps) => {
 		>
 			<div>
 				<div className={$cx('border_box flex justify_center align_center clickable', styles._local)}>
-					<If condition={value?.icon}>
-						<Then>
+					<Choose>
+						<When condition={!!value?.icon}>
 							<Emoji shortcodes={value.icon} size={24} hue={value.icon_hue}></Emoji>
-						</Then>
-						<Else>
+						</When>
+						<Otherwise>
 							<LeftIcon
 								module={module}
 								item={left_icon_item ?? ({ type: 'file', icon: value } as any)}
 							></LeftIcon>
-						</Else>
-					</If>
+						</Otherwise>
+					</Choose>
 				</div>
 			</div>
 		</Popover>

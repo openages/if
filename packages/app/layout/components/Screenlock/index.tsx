@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite'
 import { useEffect, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
-import { Else, If, Then } from 'react-if'
 
 import { Logo, Show } from '@/components'
 import { useGlobal } from '@/context/app'
@@ -104,8 +103,8 @@ const Index = () => {
 				onFinish={onFinish}
 				onValuesChange={onValuesChange}
 			>
-				<If condition={global.screenlock.data.unlocking}>
-					<Then>
+				<Choose>
+					<When condition={global.screenlock.data.unlocking}>
 						<div className='input_wrap secret w_100 flex flex_column relative'>
 							<div
 								className='btn_copy flex justify_center align_center absolute clickable'
@@ -144,8 +143,8 @@ const Index = () => {
 								{t('translation:app.screenlock.in_lock_mode')}
 							</span>
 						</div>
-					</Then>
-					<Else>
+					</When>
+					<Otherwise>
 						{global.screenlock.password_mode ? (
 							<div className='input_wrap password relative'>
 								<Item name='password' noStyle>
@@ -196,8 +195,8 @@ const Index = () => {
 								? t('translation:app.screenlock.forget_password')
 								: t('translation:app.screenlock.use_password')}
 						</span>
-					</Else>
-				</If>
+					</Otherwise>
+				</Choose>
 			</Form>
 			<div className='actions_wrap flex align_center absolute'>
 				<div className='action_item flex flex_column align_center'>

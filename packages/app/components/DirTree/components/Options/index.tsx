@@ -2,7 +2,6 @@ import { useMemoizedFn } from 'ahooks'
 import { useState } from 'react'
 import { Menu } from 'react-contexify'
 import { useTranslation } from 'react-i18next'
-import { When } from 'react-if'
 
 import { ContextMenuItem } from '@/components'
 import { CirclesThreePlus, ListPlus, Pencil, Trash } from '@phosphor-icons/react'
@@ -47,7 +46,7 @@ const Index = (props: IPropsOptions) => {
 				Icon={Pencil}
 				text={t('translation:dirtree.options.rename')}
 			></ContextMenuItem>
-			<When condition={focusing_item.type === 'dir'}>
+			<If condition={focusing_item.type === 'dir'}>
 				<ContextMenuItem
 					itemProps={{ onClick: onAddFile }}
 					Icon={ListPlus}
@@ -58,7 +57,7 @@ const Index = (props: IPropsOptions) => {
 					Icon={CirclesThreePlus}
 					text={t('translation:dirtree.add') + t('translation:dirtree.dir')}
 				></ContextMenuItem>
-			</When>
+			</If>
 			<ContextMenuItem
 				itemProps={{ closeOnClick: false }}
 				className='red'

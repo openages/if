@@ -1,7 +1,6 @@
 import { useHover, useMemoizedFn } from 'ahooks'
 import { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Else, If, Then } from 'react-if'
 
 import { Emoji, LeftIcon } from '@/components'
 import { ArrowBendDownLeft } from '@phosphor-icons/react'
@@ -69,14 +68,14 @@ const Index = (props: IProps) => {
 			<div className='detail_wrap flex align_center mt_4'>
 				<div className='file_wrap flex align_center mr_8'>
 					<div className='icon_wrap flex justify_center align_center'>
-						<If condition={file.icon}>
-							<Then>
+						<Choose>
+							<When condition={!!file.icon}>
 								<Emoji shortcodes={file.icon} size={10} hue={file.icon_hue}></Emoji>
-							</Then>
-							<Else>
+							</When>
+							<Otherwise>
 								<LeftIcon module='todo' item={file} size={10}></LeftIcon>
-							</Else>
-						</If>
+							</Otherwise>
+						</Choose>
 					</div>
 					<span className='file_name ml_2'>{file.name}</span>
 				</div>

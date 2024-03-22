@@ -1,7 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { xxHash32 } from 'js-xxhash'
 import { useMemo } from 'react'
-import { Case, Switch } from 'react-if'
 import genColor from 'uniqolor'
 
 import { CheckCircle, CheckSquare, Circle, Square } from '@phosphor-icons/react'
@@ -42,14 +41,14 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['status']>) => {
 			style={style}
 			onClick={onCheck}
 		>
-			<Switch>
-				<Case condition={value === 'unchecked' || value === 'closed'}>
+			<Choose>
+				<When condition={value === 'unchecked' || value === 'closed'}>
 					{linked ? <Circle size={16} weight='duotone' /> : <Square size={16} weight='regular' />}
-				</Case>
-				<Case condition={value === 'checked'}>
+				</When>
+				<When condition={value === 'checked'}>
 					{linked ? <CheckCircle size={16} weight='duotone' /> : <CheckSquare size={16} />}
-				</Case>
-			</Switch>
+				</When>
+			</Choose>
 		</div>
 	)
 }

@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
 import { useContextMenu } from 'react-contexify'
 import { createPortal } from 'react-dom'
-import { When } from 'react-if'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
@@ -49,19 +48,19 @@ const Content = $app.memo((props: IPropsContent) => {
 			)}
 			style={!simple ? { width: dirtree_width, height } : {}}
 		>
-			<When condition={!simple && dirtree_width !== 0}>
+			<If condition={!simple && dirtree_width !== 0}>
 				<Search {...props_search}></Search>
-			</When>
-			<When condition={!simple}>
+			</If>
+			<If condition={!simple}>
 				<DragLine></DragLine>
-			</When>
+			</If>
 			<DirItems {...props_dir_items}></DirItems>
-			<When condition={!simple ? dirtree_width !== 0 : true}>
+			<If condition={!simple ? dirtree_width !== 0 : true}>
 				<Actions {...props_actions}></Actions>
-				<When condition={!simple}>
+				<If condition={!simple}>
 					<Modal {...props_modal}></Modal>
-				</When>
-			</When>
+				</If>
+			</If>
 			{createPortal(<Options {...props_options}></Options>, document.body)}
 		</div>
 	)

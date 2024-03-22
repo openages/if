@@ -1,7 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Else, If, Then, When } from 'react-if'
 
 import { SimpleEmpty } from '@/components'
 import { DirTree } from '@/types'
@@ -33,8 +32,8 @@ const Index = (props: IPropsDirItems) => {
 
 	return (
 		<div className={$cx('dir_tree_wrap w_100 border_box flex flex_column', !data.length && 'empty')}>
-			<If condition={data.length > 0}>
-				<Then>
+			<Choose>
+				<When condition={data.length > 0}>
 					<DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
 						{data.map((item, index) => (
 							<DirItem
@@ -72,13 +71,13 @@ const Index = (props: IPropsDirItems) => {
 								document.body
 							)}
 					</DndContext>
-				</Then>
-				<Else>
-					<When condition={!loading}>
+				</When>
+				<Otherwise>
+					<If condition={!loading}>
 						<SimpleEmpty></SimpleEmpty>
-					</When>
-				</Else>
-			</If>
+					</If>
+				</Otherwise>
+			</Choose>
 		</div>
 	)
 }

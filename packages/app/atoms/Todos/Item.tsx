@@ -3,7 +3,6 @@ import { Dropdown } from 'antd'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Case, Switch } from 'react-if'
 
 import { CSS } from '@dnd-kit/utilities'
 import { CheckSquare, ListMagnifyingGlass, Square, Trash } from '@phosphor-icons/react'
@@ -134,14 +133,14 @@ const Index = (props: IProps) => {
 					className='action_wrap flex justify_center align_center cursor_point clickable'
 					onClick={onChangeStatus}
 				>
-					<Switch>
-						<Case condition={status === 'unchecked' || status === 'closed'}>
+					<Choose>
+						<When condition={status === 'unchecked' || status === 'closed'}>
 							<Square size={14} />
-						</Case>
-						<Case condition={status === 'checked'}>
+						</When>
+						<When condition={status === 'checked'}>
 							<CheckSquare size={14} />
-						</Case>
-					</Switch>
+						</When>
+					</Choose>
 				</div>
 				<Dropdown
 					destroyPopupOnHide

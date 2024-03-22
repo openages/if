@@ -1,7 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { Tooltip } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { When } from 'react-if'
 import { NavLink } from 'react-router-dom'
 
 import { ModuleIcon } from '@/components'
@@ -39,9 +38,9 @@ const Index = (props: IPropsSidebarItem) => {
 				size={27}
 				weight={active ? 'duotone' : 'regular'}
 			></ModuleIcon>
-			<When condition={show_bar_title}>
+			<If condition={show_bar_title}>
 				<span className='sidebar_item_title'>{t(`translation:modules.${item.title}`)}</span>
-			</When>
+			</If>
 		</NavLink>
 	)
 

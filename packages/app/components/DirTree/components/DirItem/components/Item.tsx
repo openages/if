@@ -1,6 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
 import { Button } from 'antd'
-import { Else, If, Then, When } from 'react-if'
 
 import { Emoji, LeftIcon, Wave } from '@/components'
 import { CaretRight } from '@phosphor-icons/react'
@@ -38,14 +37,14 @@ const Index = (props: IPropsDirItem_Item) => {
 				onContextMenu={e => showDirTreeOptions(e, parent_index)}
 			>
 				<div className='left_icon_wrap flex justify_center align_center'>
-					<If condition={item.icon}>
-						<Then>
+					<Choose>
+						<When condition={!!item.icon}>
 							<Emoji shortcodes={item.icon} size={16} hue={item.icon_hue}></Emoji>
-						</Then>
-						<Else>
+						</When>
+						<Otherwise>
 							<LeftIcon module={module} item={item}></LeftIcon>
-						</Else>
-					</If>
+						</Otherwise>
+					</Choose>
 				</div>
 				<div
 					className={$cx(
@@ -64,11 +63,11 @@ const Index = (props: IPropsDirItem_Item) => {
 								'no_children'
 						)}
 					>
-						<When condition={(item as Extend.DirTree.TransformedItem)?.children?.length}>
+						<If condition={(item as Extend.DirTree.TransformedItem)?.children?.length > 0}>
 							<span className='children_count text_center'>
 								{(item as Extend.DirTree.TransformedItem)?.children?.length}
 							</span>
-						</When>
+						</If>
 						<CaretRight
 							className={$cx('icon_fold transition_normal', open && 'opened')}
 							size={14}

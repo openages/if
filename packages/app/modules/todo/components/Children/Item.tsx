@@ -1,6 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
 import { ConfigProvider, Dropdown } from 'antd'
-import { Case, Switch } from 'react-if'
 
 import { CSS } from '@dnd-kit/utilities'
 import { CheckSquare, DotsSixVertical, Square } from '@phosphor-icons/react'
@@ -86,14 +85,14 @@ const Index = (props: IPropsChildrenItem) => {
 				className='action_wrap flex justify_center align_center cursor_point clickable'
 				onClick={onCheck}
 			>
-				<Switch>
-					<Case condition={status === 'unchecked'}>
+				<Choose>
+					<When condition={status === 'unchecked'}>
 						<Square size={14} />
-					</Case>
-					<Case condition={status === 'checked'}>
+					</When>
+					<Otherwise>
 						<CheckSquare size={14} />
-					</Case>
-				</Switch>
+					</Otherwise>
+				</Choose>
 			</div>
 			<ConfigProvider getPopupContainer={() => document.body}>
 				<Dropdown

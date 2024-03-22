@@ -3,7 +3,6 @@ import { DatePicker, InputNumber, Popover, Radio, Select, Switch as AntdSwitch, 
 import dayjs from 'dayjs'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Case, Switch } from 'react-if'
 
 import { getCycleSpecificDesc } from '@/utils/modules/todo'
 import { Repeat } from '@phosphor-icons/react'
@@ -153,8 +152,8 @@ const Index = (props: IPropsCircle) => {
 	const Specific = useMemo(
 		() =>
 			cycle?.scale && (
-				<Switch>
-					<Case condition={cycle.scale === 'clock'}>
+				<Choose>
+					<When condition={cycle.scale === 'clock'}>
 						<TimePicker
 							popupClassName='clock_picker'
 							className='w_100'
@@ -164,8 +163,8 @@ const Index = (props: IPropsCircle) => {
 							value={cycle.value ? dayjs().hour(cycle.value) : undefined}
 							onChange={onChangeHour}
 						></TimePicker>
-					</Case>
-					<Case condition={cycle.scale === 'weekday'}>
+					</When>
+					<When condition={cycle.scale === 'weekday'}>
 						<Select
 							className='w_100'
 							size='small'
@@ -174,8 +173,8 @@ const Index = (props: IPropsCircle) => {
 							value={cycle.value !== undefined ? cycle.value : undefined}
 							onChange={onChangeValue}
 						></Select>
-					</Case>
-					<Case condition={cycle.scale === 'date' || cycle.scale === 'special'}>
+					</When>
+					<When condition={cycle.scale === 'date' || cycle.scale === 'special'}>
 						<DatePicker
 							className='w_100'
 							inputReadOnly
@@ -191,8 +190,8 @@ const Index = (props: IPropsCircle) => {
 							}
 							onChange={onChangeDay}
 						></DatePicker>
-					</Case>
-				</Switch>
+					</When>
+				</Choose>
 			),
 		[cycle?.scale, cycle?.value]
 	)
