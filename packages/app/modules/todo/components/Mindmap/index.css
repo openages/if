@@ -5,6 +5,17 @@
 	:global {
 		.mindmap_wrap {
 			height: calc(100% - 36px);
+			border-radius: var(--radius);
+			border: var(--border);
+
+			.react-flow__node {
+				padding: 0;
+				border: none;
+			}
+
+			.react-flow__handle {
+				opacity: 0;
+			}
 		}
 	}
 }

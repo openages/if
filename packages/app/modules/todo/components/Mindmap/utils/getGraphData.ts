@@ -1,36 +1,37 @@
-import { layoutByMindmap } from '@openages/stk/graph'
+import { graphlib, layout } from '@dagrejs/dagre'
+
+import getNodeEdge from './getNodeEdge'
+
+const graph = new graphlib.Graph()
+
+graph.setDefaultEdgeLabel(() => ({}))
 
 import type Model from '@/modules/todo/model'
-import type { G } from '@/types'
+import type { Position } from '@xyflow/react'
 
-export default (name: string, file_id: string, kanban_items: Model['kanban_items']) => {
-	const target = { id: file_id } as G.Node
+const width = 150
+const height = 18
 
-	target['children'] = Object.keys(kanban_items).reduce((total, angle_id) => {
-		total.push({
-			id: angle_id,
-			children: kanban_items[angle_id].items
-		})
+export default (file_id: string, name: string, kanban_items: Model['kanban_items']) => {
+	const { nodes, edges } = getNodeEdge(file_id, name, kanban_items)
 
-		return total
-	}, [])
+	graph.setGraph({ rankdir: 'LR', nodesep: 6 })
 
-	return layoutByMindmap(target, {
-		direction: 'LR',
-		indent: 12,
-		getWidth: () => 16,
-		getHeight: () => 16,
-		getHGap: () => 90,
-		getVGap: () => 6,
-		getSide: () => 'right'
+	nodes.forEach(item => graph.setNode(item.id, { width, height }))
+	edges.forEach(item => graph.setEdge(item.source, item.target))
+
+	layout(graph)
+
+	nodes.forEach(item => {
+		const graph_node = graph.node(item.id)
+
+		item.targetPosition = 'left' as Position.Left
+		item.sourcePosition = 'right' as Position.Right
+
+		item.position = { x: graph_node.x - width / 2, y: graph_node.y - height / 2 }
+
+		return item
 	})
 
-	// return layoutByMindmap(target, {
-	// 	direction: 'LR',
-	// 	getWidth: () => 16,
-	// 	getHeight: () => 16,
-	// 	getHGap: () => 60,
-	// 	getVGap: () => 6,
-	// 	getSide: () => 'right'
-	// })
+	return { nodes, edges }
 }
