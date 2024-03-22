@@ -7,7 +7,7 @@ import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
 
 const is_dev = process.env.NODE_ENV === 'development'
 const is_prod = process.env.NODE_ENV === 'production'
-const is_module = true
+const is_module = false
 
 const plugins_dev = [
 	new ReactRefreshPlugin({
@@ -49,7 +49,7 @@ module.exports = defineConfig({
 	experiments: {
 		outputModule: is_module,
 		rspackFuture: {
-			// newTreeshaking: true,
+			// newTreeshaking: true
 		}
 	},
 	plugins: [

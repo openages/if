@@ -36,6 +36,19 @@ const Index = (props: IPropsStacksView) => {
 			</div>
 		</StackContext.Provider>
 	)
+
+	return (
+		<StackContext.Provider value={{ module, id, width, container_width, breakpoint }}>
+			<div className={$cx('w_100 h_100 relative', styles.position_wrap)} onMouseDown={onMouseDown}>
+				<div
+					id={id}
+					className={$cx('w_100 h_100', styles._local, breakpoint === 390 && styles.breakpoint_390)}
+				>
+					<LazyElement type='modules' path={module} props={{ id }} />
+				</div>
+			</div>
+		</StackContext.Provider>
+	)
 }
 
 export default $app.memo(Index)

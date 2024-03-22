@@ -1,5 +1,4 @@
 import './window'
-import './axios'
 import './mobx'
 import './storage'
 import './rxdb'

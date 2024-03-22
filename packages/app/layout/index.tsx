@@ -144,15 +144,15 @@ const Index = () => {
 		clearSearchHistory: useMemoizedFn(global.search.clearSearchHistory)
 	}
 
-	if (global.screenlock.screenlock_open) {
-		return (
-			<GlobalContext.Provider value={global}>
-				<Screenlock></Screenlock>
-			</GlobalContext.Provider>
-		)
-	}
+	// if (global.screenlock.screenlock_open) {
+	// 	return (
+	// 		<GlobalContext.Provider value={global}>
+	// 			<Screenlock></Screenlock>
+	// 		</GlobalContext.Provider>
+	// 	)
+	// }
 
-	if (!global.db.ready) return <GlobalLoading visible></GlobalLoading>
+	// if (!global.db.ready) return <GlobalLoading visible></GlobalLoading>
 
 	return (
 		<GlobalContext.Provider value={global}>

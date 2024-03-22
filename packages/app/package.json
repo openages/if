@@ -15,7 +15,6 @@
 	"author": "1yasa",
 	"dependencies": {
 		"@abraham/reflection": "^0.12.0",
-		"@antv/hierarchy": "^0.6.11",
 		"@antv/layout": "^0.3.25",
 		"@antv/util": "^3.3.7",
 		"@dnd-kit/core": "^6.1.0",
@@ -31,7 +30,7 @@
 		"ahooks": "^3.7.10",
 		"antd": "^5.15.3",
 		"await-to-js": "^3.0.0",
-		"axios": "^1.6.8",
+		"ofetch": "^1.3.4",
 		"classix": "^2.1.36",
 		"color": "^4.2.3",
 		"console-ban": "^5.0.0",
