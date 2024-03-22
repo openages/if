@@ -300,6 +300,9 @@ importers:
       react-refresh:
         specifier: ^0.14.0
         version: 0.14.0
+      swc-plugin-jsx-control-statements:
+        specifier: ../stk/crates/swc-plugin-jsx-control-statements
+        version: link:../stk/crates/swc-plugin-jsx-control-statements
       ts-json-schema-generator:
         specifier: ^1.5.0
         version: 1.5.0

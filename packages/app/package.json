@@ -81,6 +81,7 @@
 		"zod": "^3.22.4"
 	},
 	"devDependencies": {
+		"swc-plugin-jsx-control-statements": "../stk/crates/swc-plugin-jsx-control-statements",
 		"@rsdoctor/rspack-plugin": "^0.1.6",
 		"@rspack/cli": "0.5.8",
 		"@rspack/core": "0.5.8",

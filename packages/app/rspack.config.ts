@@ -122,7 +122,10 @@ module.exports = defineConfig({
 									drop_console: is_prod
 								}
 							},
-							externalHelpers: true
+							externalHelpers: true,
+							experimental: {
+								plugins: [['swc-plugin-jsx-control-statements', {}]]
+							}
 						},
 						env: {
 							targets: 'chrome >= 120'

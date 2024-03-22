@@ -221,16 +221,15 @@
 			:global {
 				.timeblock_content_wrap {
 					background-color: var(--color_bg_1);
+					border-color: var(--color_border_light);
 				}
 			}
 		}
 
 		&.has_tag {
-			color: rgba(var(--tag_color), 1);
-
 			:global {
 				.timeblock_content_wrap {
-					background-color: rgba(var(--tag_color), 0.18);
+					border-color: rgba(var(--tag_color), 0.09);
 				}
 			}
 		}
@@ -243,9 +242,9 @@
 			}
 
 			.timeblock_content_wrap {
-				padding: 2px 4px;
-				padding-top: 1px;
-				border: none;
+				padding: 1px 4px;
+				padding-top: 0;
+				border-radius: var(--radius_small);
 
 				.text_wrap {
 					height: 20px;
