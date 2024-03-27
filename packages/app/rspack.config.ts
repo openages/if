@@ -22,7 +22,7 @@ const plugins_prod = [
 ]
 
 module.exports = defineConfig({
-	devtool: is_dev ? 'source-map' : false,
+	devtool: is_dev ? 'cheap-module-source-map' : false,
 	entry: {
 		main: './runtime/index.tsx'
 	},
@@ -111,8 +111,8 @@ module.exports = defineConfig({
 								legacyDecorator: true,
 								decoratorMetadata: true,
 								react: {
-									development: !is_prod,
-									refresh: !is_prod,
+									development: is_dev,
+									refresh: is_dev,
 									runtime: 'automatic',
 									useBuiltins: true
 								}
