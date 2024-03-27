@@ -21,10 +21,10 @@
 		"*.(j|t)s?(x)": ["biome format --write --changed ./packages"]
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^1.6.1",
+		"@biomejs/biome": "^1.6.3",
 		"lint-staged": "^15.2.2",
 		"prettier": "^3.2.5",
-		"turbo": "^1.12.5",
+		"turbo": "^1.13.0",
 		"yorkie": "^2.0.0"
 	}
 }
