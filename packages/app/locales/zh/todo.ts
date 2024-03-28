@@ -50,8 +50,7 @@ export default {
 				alphabetical: '字母顺序',
 				create_at: '创建时间'
 			},
-			tags: '标签',
-			help: '帮助'
+			tags: '标签'
 		}
 	},
 	SettingsModal: {
@@ -158,31 +157,5 @@ export default {
 			placeholder: '添加备注'
 		},
 		add_to_shcedule: '添加到日程'
-	},
-	Help: [
-		{
-			title: '快速插入',
-			desc: '光标聚焦按下Enter，插入下一个任务。'
-		},
-		{
-			title: '移为子任务',
-			desc: '光标聚焦按下Tab，将当前任务追加为上一个任务的子任务。'
-		},
-		{
-			title: '移为一级任务',
-			desc: '光标聚焦在子任务文字上时，按下Tab，讲当前子任务变更为下一个一级任务。'
-		},
-		{
-			title: '添加互斥任务',
-			desc: '拖拽任务前方的小圆点到目标任务的小圆点上，即可标记任务之间为互斥任务，支持多个同时互斥。'
-		},
-		{
-			title: '取消互斥任务',
-			desc: '通过再次拖拽小圆点到已经互斥的任务上取消互斥连接。'
-		},
-		{
-			title: '展开子任务',
-			desc: '点击小圆点即可展开子任务。'
-		}
-	]
+	}
 }

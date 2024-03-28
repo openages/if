@@ -1,41 +1,37 @@
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
-import { getGraphData } from './utils'
+import { getNodeEdge, layout } from './utils'
 
-import type Model from '../../model'
 import type { Node, Edge } from '@xyflow/react'
+import type { IPropsMindmap } from '@/modules/todo/types'
 
 @injectable()
 export default class Index {
-	file_id = '' as string
-	name = '' as string
-	kanban_items = {} as Model['kanban_items']
+	props = {} as IPropsMindmap
 	nodes = [] as Array<Node>
 	edges = [] as Array<Edge>
+	layouted = false
 
 	constructor() {
-		makeAutoObservable(this, { file_id: false, name: false, kanban_items: false }, { autoBind: true })
+		makeAutoObservable(this, { props: false }, { autoBind: true })
 	}
 
-	init(args: {
-		file_id: Index['file_id']
-		name: Index['name']
-		kanban_items: Index['kanban_items']
-	}) {
-		const { file_id, name, kanban_items } = args
+	init(props: Index['props']) {
+		this.props = props
 
-		this.file_id = file_id
-		this.name = name
-		this.kanban_items = kanban_items
-
-		this.load()
+		this.render()
 	}
 
-	load() {
-		const { nodes, edges } = getGraphData(this.file_id, this.name, this.kanban_items)
+	render() {
+		const { nodes, edges } = getNodeEdge(this.props)
 
 		this.nodes = nodes
 		this.edges = edges
+	}
+
+	layout(nodes: Array<Node>) {
+		this.nodes = layout(this.props, nodes)
+		this.layouted = true
 	}
 }

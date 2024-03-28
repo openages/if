@@ -37,13 +37,16 @@ export type ArchiveQueryParams = {
 	status?: 'unchecked' | 'closed'
 }
 
-export type Indexes = { index?: number; dimension_id?: string }
+export type Indexes = { index?: number; children_index?: number; dimension_id?: string }
 
 export type ArgsCheck = Indexes & { status: Todo.Todo['status'] }
 
 export type ArgsUpdate =
 	| (Indexes & { type: 'parent'; value: Partial<Omit<Todo.TodoItem, 'id'>> })
 	| (Indexes & { type: 'children'; value: Todo.Todo['children'] })
+	| (Indexes & { type: 'children_item'; value: Partial<Omit<Todo.Todo['children'][number], 'id'>> })
+	| (Indexes & { type: 'insert_children_item'; value: any })
+	| (Indexes & { type: 'remove_children_item'; value: any })
 
 export type ArgsMove = { active: Indexes; over: Indexes }
 

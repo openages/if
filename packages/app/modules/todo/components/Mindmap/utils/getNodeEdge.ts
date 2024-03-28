@@ -1,11 +1,13 @@
-import type Model from '@/modules/todo/model'
 import type { Node, Edge } from '@xyflow/react'
+
+import type Model from '../model'
 
 const position = { x: 0, y: 0 }
 const edge_type = 'smoothstep'
-const node_style = { with: 150, height: 18 }
 
-export default (file_id: string, name: string, kanban_items: Model['kanban_items']) => {
+export default (props: Model['props']) => {
+	const { file_id, name, kanban_items, tags, angles, check, insert, update, tab, moveTo, remove, showDetailModal } =
+		props
 	const nodes = [{ id: file_id, data: { label: name }, position }] as Array<Node>
 	const edges = [] as Array<Edge>
 
@@ -13,8 +15,7 @@ export default (file_id: string, name: string, kanban_items: Model['kanban_items
 		nodes.push({
 			id: angle_id,
 			data: { label: kanban_items[angle_id].dimension.value.text },
-			position,
-			style: node_style
+			position
 		})
 
 		edges.push({
@@ -25,12 +26,28 @@ export default (file_id: string, name: string, kanban_items: Model['kanban_items
 		})
 
 		if (kanban_items[angle_id].items.length) {
-			kanban_items[angle_id].items.forEach(item => {
+			kanban_items[angle_id].items.forEach((item, index) => {
 				nodes.push({
+					type: 'TodoItem',
 					id: item.id,
-					data: { label: item.text },
-					position,
-					style: node_style
+					data: {
+						file_id,
+						item,
+						index,
+						dimension_id: angle_id,
+						tags,
+						angles,
+						kanban_mode: 'angle',
+						useByMindmap: true,
+						check,
+						insert,
+						update,
+						tab,
+						moveTo,
+						remove,
+						showDetailModal
+					},
+					position
 				})
 
 				edges.push({
@@ -41,12 +58,20 @@ export default (file_id: string, name: string, kanban_items: Model['kanban_items
 				})
 
 				if (item.children?.length) {
-					item.children.forEach(child => {
+					item.children.forEach((child, children_index) => {
 						nodes.push({
+							type: 'ChildrenItem',
 							id: child.id,
-							data: { label: child.text },
-							position,
-							style: node_style
+							data: {
+								item: child,
+								index,
+								children_index,
+								dimension_id: angle_id,
+								useByMindmap: true,
+								update,
+								tab
+							},
+							position
 						})
 
 						edges.push({

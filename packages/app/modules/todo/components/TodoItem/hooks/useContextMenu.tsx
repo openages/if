@@ -9,7 +9,6 @@ import {
 	Plus,
 	Tag,
 	TextIndent,
-	TextOutdent,
 	Trash
 } from '@phosphor-icons/react'
 
@@ -17,18 +16,17 @@ import type { MenuProps } from 'antd'
 import type { IPropsTodoItem, IPropsDetail } from '../../../types'
 
 type HookArgs = {
-	kanban_mode: IPropsTodoItem['kanban_mode']
-	mode?: IPropsDetail['mode']
+	kanban_mode?: IPropsTodoItem['kanban_mode']
 	angles?: IPropsTodoItem['angles']
 	tags?: IPropsTodoItem['tags']
 	tag_ids?: IPropsTodoItem['item']['tag_ids']
 }
 
 export default (args: HookArgs) => {
-	const { kanban_mode, mode, angles, tags, tag_ids } = args
+	const { kanban_mode, angles, tags, tag_ids } = args
 	const { t, i18n } = useTranslation()
 
-	const TodoContextMenu = useMemo(
+	return useMemo(
 		() =>
 			[
 				{
@@ -136,46 +134,4 @@ export default (args: HookArgs) => {
 			] as MenuProps['items'],
 		[i18n.language, angles, tags, tag_ids, kanban_mode]
 	)
-
-	const ChildrenContextMenu = useMemo(
-		() =>
-			[
-				{
-					key: 'insert',
-					label: (
-						<div className='menu_item_wrap flex align_center'>
-							<Plus size={16}></Plus>
-							<span className='text ml_6'>{t('translation:todo.context_menu.insert')}</span>
-						</div>
-					)
-				},
-				{
-					key: 'move_out',
-					disabled: mode === 'table' || kanban_mode === 'tag',
-					label: (
-						<div className='menu_item_wrap flex align_center'>
-							<TextOutdent size={16}></TextOutdent>
-							<span className='text ml_6'>
-								{t('translation:todo.context_menu.move_out')}
-							</span>
-						</div>
-					)
-				},
-				{
-					type: 'divider'
-				},
-				{
-					key: 'remove',
-					label: (
-						<div className='menu_item_wrap flex align_center'>
-							<Trash size={16}></Trash>
-							<span className='text ml_6'>{t('translation:todo.context_menu.remove')}</span>
-						</div>
-					)
-				}
-			] as MenuProps['items'],
-		[i18n.language, mode, kanban_mode]
-	)
-
-	return { TodoContextMenu, ChildrenContextMenu }
 }

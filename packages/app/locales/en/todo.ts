@@ -50,8 +50,7 @@ export default {
 				alphabetical: 'Alphabetical',
 				create_at: 'Create Time'
 			},
-			tags: 'Tags',
-			help: 'Help'
+			tags: 'Tags'
 		}
 	},
 	SettingsModal: {
@@ -158,31 +157,5 @@ export default {
 			placeholder: 'Add Remark'
 		},
 		add_to_shcedule: 'Add To Schedule'
-	},
-	Help: [
-		{
-			title: 'Quick Insertion',
-			desc: 'With the cursor focused, press Enter to insert the next task.'
-		},
-		{
-			title: 'Move to Subtask',
-			desc: 'Focus the cursor and press Tab to append the current task as a subtask to the previous one.'
-		},
-		{
-			title: 'Move to Top-level Task',
-			desc: 'While focusing on the subtask text, press Tab to change the current subtask to the next top-level task.'
-		},
-		{
-			title: 'Add Mutex Task',
-			desc: 'Drag the small dot in front of a task to the dot of the target task to mark tasks as mutually exclusive. Supports marking multiple tasks as exclusive simultaneously.'
-		},
-		{
-			title: 'Cancel Mutex Task',
-			desc: 'Drag the dot again to the already mutually exclusive task to cancel the mutex connection.'
-		},
-		{
-			title: 'Expand Subtasks',
-			desc: 'Click the small dot to expand subtasks.'
-		}
-	]
+	}
 }

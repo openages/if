@@ -7,6 +7,7 @@ import type { IPropsKanban } from '../../types'
 
 const Index = (props: IPropsKanban) => {
 	const {
+		mode,
 		open_items,
 		zen_mode,
 		kanban_mode,
@@ -41,7 +42,7 @@ const Index = (props: IPropsKanban) => {
 						style={
 							item.dimension.type === 'tag'
 								? // @ts-ignore
-								  { '--color_tag': item.dimension.value.color }
+									{ '--color_tag': item.dimension.value.color }
 								: {}
 						}
 					>
@@ -67,6 +68,7 @@ const Index = (props: IPropsKanban) => {
 					</div>
 					<Todos
 						{...{
+							mode,
 							tags,
 							angles,
 							relations,

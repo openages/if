@@ -9,7 +9,7 @@ import { DataEmpty, SortableWrap } from '@/components'
 import { useStackSelector } from '@/context/stack'
 import { pointerWithin, rectIntersection, DndContext, DragOverlay } from '@dnd-kit/core'
 
-import { Archive, Detail, Header, Help, Input, Kanban, Mindmap, SettingsModal, Table, Tabs, Todos } from './components'
+import { Archive, Detail, Header, Input, Kanban, Mindmap, SettingsModal, Table, Tabs, Todos } from './components'
 import TodoItem from './components/TodoItem'
 import styles from './index.css'
 import Model from './model'
@@ -22,7 +22,6 @@ import type {
 	IPropsArchive,
 	IPropsDetail,
 	IPropsHeader,
-	IPropsHelp,
 	IPropsInput,
 	IPropsKanban,
 	IPropsSettingsModal,
@@ -98,6 +97,7 @@ const Index = ({ id }: IProps) => {
 	}, [angles, x.kanban_mode, x.current_angle_id])
 
 	const props_todos: IPropsTodos = {
+		mode: x.mode,
 		items,
 		angles: move_to_angles,
 		tags,
@@ -173,6 +173,7 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_detail: IPropsDetail = {
+		file_id: id,
 		breakpoint,
 		mode: x.mode,
 		kanban_mode: x.kanban_mode,
@@ -193,11 +194,6 @@ const Index = ({ id }: IProps) => {
 		})
 	}
 
-	const props_help: IPropsHelp = {
-		visible_help_modal: x.visible_help_modal,
-		closeHelpModal: useMemoizedFn(() => (x.visible_help_modal = false))
-	}
-
 	const props_drag_todo_item: IPropsTodoItem = drag_todo_item && {
 		item: drag_todo_item.item as Todo.Todo,
 		index: 0,
@@ -206,6 +202,7 @@ const Index = ({ id }: IProps) => {
 		drag_disabled: false,
 		zen_mode: props_todos.zen_mode,
 		open_items: props_todos.open_items,
+		mode: x.mode,
 		kanban_mode: x.kanban_mode,
 		dimension_id: drag_todo_item.dimension_id,
 		drag_overlay: true,
@@ -305,7 +302,6 @@ const Index = ({ id }: IProps) => {
 						<SettingsModal {...props_settings_modal}></SettingsModal>
 						<Archive {...props_archive}></Archive>
 						<Detail {...props_detail}></Detail>
-						<Help {...props_help}></Help>
 					</Fragment>
 				))
 				.otherwise(() => null)}

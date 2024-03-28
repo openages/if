@@ -11,7 +11,6 @@ import {
 	GitFork,
 	Kanban,
 	ListChecks,
-	Question,
 	Star,
 	Table,
 	Tag,
@@ -171,15 +170,6 @@ export default (args: HookArgs) => {
 					key: item.id,
 					label: <div className='menu_item_wrap'>{item.text}</div>
 				}))
-			},
-			{
-				key: 'help',
-				label: (
-					<div className='menu_item_wrap flex align_center'>
-						<Question size={16}></Question>
-						<span className='text ml_6'>{t('translation:todo.Header.options.help')}</span>
-					</div>
-				)
 			}
 		],
 		[i18n.language, mode, tags, items_filter_tags]

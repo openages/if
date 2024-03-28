@@ -4,41 +4,58 @@ import { ConfigProvider, Dropdown } from 'antd'
 import { CSS } from '@dnd-kit/utilities'
 import { CheckSquare, DotsSixVertical, Square } from '@phosphor-icons/react'
 
-import { useInput } from '../../hooks'
+import { useChildrenContextMenu, useInput } from '../../hooks'
 import styles from './index.css'
 
 import type { IPropsChildrenItem } from '../../types'
+import type { Todo } from '@/types'
 
 const Index = (props: IPropsChildrenItem) => {
 	const {
 		sortable_props,
+		mode,
+		kanban_mode,
 		item,
 		index,
 		children_index,
-		useByDetail,
-		ChildrenContextMenu,
 		dimension_id,
+		useByDetail,
+		useByMindmap,
 		update,
-		tab,
-		insertChildren,
-		removeChildren
+		tab
 	} = props
 	const { id, status, text } = item
+	const context_menu = useChildrenContextMenu({ mode, kanban_mode })
+	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = sortable_props || {}
+
+	const updateChildren = useMemoizedFn(
+		async (children_index: number, value: Partial<Omit<Todo.Todo['children'][number], 'id'>>) => {
+			await update({ type: 'children_item', index, children_index, dimension_id, value: value })
+		}
+	)
+
 	const { input, onInput } = useInput({
 		value: text,
-		update: useMemoizedFn(textContent => update(children_index, { text: textContent }))
+		update: useMemoizedFn(textContent => updateChildren(children_index, { text: textContent }))
 	})
-	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = sortable_props
 
 	const onCheck = useMemoizedFn(() => {
-		update(children_index, { status: status === 'unchecked' ? 'checked' : 'unchecked' })
+		updateChildren(children_index, { status: status === 'unchecked' ? 'checked' : 'unchecked' })
+	})
+
+	const insertChildren = useMemoizedFn(async () => {
+		await update({ type: 'insert_children_item', index, children_index, dimension_id, value: {} })
+	})
+
+	const removeChildren = useMemoizedFn(async () => {
+		await update({ type: 'remove_children_item', index, children_index, dimension_id, value: {} })
 	})
 
 	const onKeyDown = useMemoizedFn(e => {
 		if (e.key === 'Enter') {
 			e.preventDefault()
 
-			insertChildren(children_index)
+			insertChildren()
 		}
 
 		if (e.key === 'Tab') {
@@ -51,13 +68,13 @@ const Index = (props: IPropsChildrenItem) => {
 	const onContextMenu = useMemoizedFn(({ key }) => {
 		switch (key) {
 			case 'insert':
-				insertChildren(children_index)
+				insertChildren()
 				break
 			case 'move_out':
 				tab({ type: 'out', index, children_index, dimension_id })
 				break
 			case 'remove':
-				removeChildren(children_index)
+				removeChildren()
 				break
 		}
 	})
@@ -99,7 +116,7 @@ const Index = (props: IPropsChildrenItem) => {
 					destroyPopupOnHide
 					trigger={['contextMenu']}
 					overlayStyle={{ width: 102 }}
-					menu={{ items: ChildrenContextMenu, onClick: onContextMenu }}
+					menu={{ items: context_menu, onClick: onContextMenu }}
 				>
 					<div
 						id={`${useByDetail ? 'detail_' : ''}todo_${id}`}

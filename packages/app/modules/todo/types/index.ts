@@ -106,6 +106,7 @@ export interface IPropsCircleStatus {
 }
 
 export interface IPropsTodos {
+	mode: Model['mode']
 	items: Model['items']
 	tags: Model['setting']['setting']['tags']
 	angles: Model['setting']['setting']['angles']
@@ -127,6 +128,7 @@ export interface IPropsTodos {
 }
 
 export interface IPropsTodoItem {
+	mode: Model['mode']
 	sortable_props?: DndItemProps
 	item: Todo.Todo
 	index: number
@@ -138,6 +140,8 @@ export interface IPropsTodoItem {
 	kanban_mode?: Model['kanban_mode']
 	dimension_id?: string
 	drag_overlay?: boolean
+	useByMindmap?: boolean
+	data?: Omit<IPropsTodoItem, 'data'>
 	makeLinkLine?: (args: { active_id: string; y: number } | null) => void
 	renderLines?: (id: string) => void
 	check: Model['check']
@@ -147,23 +151,22 @@ export interface IPropsTodoItem {
 	tab: Model['tab']
 	moveTo: Model['moveTo']
 	remove: Model['remove']
-	handleOpenItem: Model['handleOpenItem']
+	handleOpenItem?: Model['handleOpenItem']
 	showDetailModal: IPropsTodos['showDetailModal']
 }
 
 export interface IPropsChildren {
+	mode: Model['mode']
+	kanban_mode: Model['kanban_mode']
 	items: Todo.Todo['children']
 	index: number
 	open: boolean
 	isDragging?: boolean
 	handled?: boolean
-	useByDetail?: boolean
 	dimension_id?: string
-	ChildrenContextMenu: MenuProps['items']
+	useByDetail?: boolean
 	update: Model['update']
 	tab: Model['tab']
-	insertChildren: (children_index?: number) => Promise<void>
-	removeChildren: (children_index: number) => Promise<void>
 }
 
 export interface IPropsChildrenItem {
@@ -171,13 +174,13 @@ export interface IPropsChildrenItem {
 	item: Todo.Todo['children'][number]
 	index: number
 	children_index: number
-	useByDetail: IPropsChildren['useByDetail']
-	ChildrenContextMenu: IPropsChildren['ChildrenContextMenu']
 	dimension_id?: string
-	update: (children_index: number, value: Partial<Omit<Todo.Todo['children'][number], 'id'>>) => Promise<void>
+	mode?: Model['mode']
+	kanban_mode?: Model['kanban_mode']
+	useByDetail: IPropsChildren['useByDetail']
+	useByMindmap?: boolean
+	update: Model['update']
 	tab: Model['tab']
-	insertChildren: (children_index?: number) => Promise<void>
-	removeChildren: (children_index: number) => Promise<void>
 }
 
 export interface IPropsGroupTitle {
@@ -213,7 +216,17 @@ export interface IPropsTableFilter {
 }
 
 export interface IPropsMindmap
-	extends Omit<IPropsTodos, 'items' | 'zen_mode' | 'kanban_mode' | 'drag_disabled' | 'open_items'> {
+	extends Omit<
+		IPropsTodos,
+		| 'items'
+		| 'zen_mode'
+		| 'kanban_mode'
+		| 'drag_disabled'
+		| 'open_items'
+		| 'relations'
+		| 'updateRelations'
+		| 'handleOpenItem'
+	> {
 	file_id: Model['id']
 	name: Model['file']['data']['name']
 	kanban_items: Model['kanban_items']
@@ -251,6 +264,7 @@ export interface IPropsArchiveItem extends Pick<IPropsArchive, 'restoreArchiveIt
 
 export interface IPropsDetail {
 	breakpoint?: number
+	file_id: Model['id']
 	mode: Model['mode']
 	kanban_mode: Model['kanban_mode']
 	visible_detail_modal: Model['visible_detail_modal']
@@ -269,9 +283,4 @@ export interface IPropsDetail {
 export interface IPropsDetailRemark {
 	remark: Todo.Todo['remark']
 	updateRemark: (v: Todo.Todo['remark']) => void
-}
-
-export interface IPropsHelp {
-	visible_help_modal: Model['visible_help_modal']
-	closeHelpModal: () => void
 }

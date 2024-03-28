@@ -156,6 +156,8 @@ export default class Index {
 
 			if (v !== 'kanban' || old_val !== 'mindmap') {
 				this.kanban_items = {}
+
+				this.stopWatchKanbanItems()
 			}
 
 			if (v === 'table') {
@@ -369,7 +371,7 @@ export default class Index {
 	}
 
 	async update(args: ArgsUpdate) {
-		const { index, dimension_id, type, value } = args
+		const { type, value, index, children_index, dimension_id } = args
 
 		const { item } = this.getItem({ index, dimension_id })
 
@@ -377,6 +379,49 @@ export default class Index {
 
 		if (type === 'children' && !(value?.length > 0)) {
 			data['children'] = undefined
+		}
+
+		if (type === 'children_item') {
+			const children = $copy(item.children)
+
+			children[children_index] = { ...children[children_index], ...value }
+
+			data['children'] = children
+		}
+
+		if (type === 'insert_children_item') {
+			const children = [...($copy(item.children) || [])]
+			const target = { id: id(), text: '', status: 'unchecked' } as const
+
+			if (children_index === undefined) {
+				children.push(target)
+			} else {
+				children.splice(children_index + 1, 0, target)
+			}
+
+			data['children'] = children
+
+			this.setItem(item, data)
+
+			await update(data)
+
+			setTimeout(
+				() =>
+					document
+						.getElementById(`${this.visible_detail_modal ? 'detail_' : ''}todo_${target.id}`)
+						?.focus(),
+				0
+			)
+
+			return
+		}
+
+		if (type === 'remove_children_item') {
+			const children = [...($copy(item.children) || [])]
+
+			children.splice(children_index, 1)
+
+			data['children'] = children
 		}
 
 		this.setItem(item, data)
@@ -846,6 +891,10 @@ export default class Index {
 		}
 	}
 
+	getVisibleDetailModal() {
+		return this.visible_detail_modal
+	}
+
 	watchSetting() {
 		this.setting_watcher = getQuerySetting(this.id).$.subscribe(setting => {
 			const todo_setting = getDocItem(setting)
@@ -963,6 +1012,7 @@ export default class Index {
 		this.timer_archive = setInterval(() => archive(this.id), 60 * 1000)
 
 		window.$app.Event.on(`todo/${this.id}/redirect`, this.redirect)
+		window.$app.Event.on(`todo/${this.id}/getVisibleDetailModal`, this.getVisibleDetailModal)
 	}
 
 	off() {
@@ -982,5 +1032,6 @@ export default class Index {
 		clearInterval(this.timer_archive)
 
 		window.$app.Event.off(`todo/${this.id}/redirect`, this.redirect)
+		window.$app.Event.off(`todo/${this.id}/getVisibleDetailModal`, this.getVisibleDetailModal)
 	}
 }

@@ -214,7 +214,7 @@ const Index = (props: IPropsHeader) => {
 				<ConfigProvider getPopupContainer={() => document.body}>
 					<Dropdown
 						destroyPopupOnHide
-						trigger={['click']}
+						trigger={['hover']}
 						overlayStyle={{ width: 99 }}
 						menu={{ items: options_mode, onClick: onModeContextMenu }}
 					>

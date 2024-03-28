@@ -1,8 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { useState } from 'react'
 
-import { id as genID } from '@/utils'
-
 import type { Todo } from '@/types'
 import type { IPropsTodoItem } from '../../../types'
 
@@ -11,7 +9,6 @@ interface HookArgs {
 	index: IPropsTodoItem['index']
 	kanban_mode: IPropsTodoItem['kanban_mode']
 	dimension_id?: IPropsTodoItem['dimension_id']
-	visible_detail_modal?: boolean
 	makeLinkLine?: IPropsTodoItem['makeLinkLine']
 	check?: IPropsTodoItem['check']
 	insert?: IPropsTodoItem['insert']
@@ -21,19 +18,7 @@ interface HookArgs {
 }
 
 export default (args: HookArgs) => {
-	const {
-		item,
-		index,
-		kanban_mode,
-		dimension_id,
-		visible_detail_modal,
-		makeLinkLine,
-		check,
-		insert,
-		update,
-		tab,
-		handleOpenItem
-	} = args
+	const { item, index, kanban_mode, dimension_id, makeLinkLine, check, insert, update, tab, handleOpenItem } = args
 	const { id, status, schedule, children } = item
 	const [open, _setOpen] = useState(false)
 
@@ -87,36 +72,14 @@ export default (args: HookArgs) => {
 		makeLinkLine({ active_id: id, y: clientY })
 	})
 
-	const insertChildren = useMemoizedFn(async (children_index?: number) => {
-		const children = [...(item.children || [])]
-		const target = { id: genID(), text: '', status: 'unchecked' } as const
-
-		if (children_index === undefined) {
-			children.push(target)
-		} else {
-			children.splice(children_index + 1, 0, target)
-		}
-
-		await update({ type: 'children', index, dimension_id, value: children })
-
-		setTimeout(
-			() => document.getElementById(`${visible_detail_modal ? 'detail_' : ''}todo_${target.id}`)?.focus(),
-			0
-		)
-	})
-
-	const removeChildren = useMemoizedFn(async (children_index: number) => {
-		const children = [...(item.children || [])]
-
-		children.splice(children_index, 1)
-
-		await update({ type: 'children', index, dimension_id, value: children })
-	})
-
 	const toggleChildren = useMemoizedFn(() => {
 		if (!children?.length) return
 
 		setOpen(!open)
+	})
+
+	const insertChildren = useMemoizedFn(async (children_index?: number) => {
+		await update({ type: 'insert_children_item', index, children_index, dimension_id, value: {} })
 	})
 
 	const onKeyDown = useMemoizedFn(e => {
@@ -150,7 +113,6 @@ export default (args: HookArgs) => {
 		onDrag,
 		toggleChildren,
 		insertChildren,
-		removeChildren,
 		onKeyDown
 	}
 }

@@ -30,9 +30,11 @@ const Index = (props: IPropsTodoItem) => {
 		drag_disabled,
 		zen_mode,
 		open_items,
+		mode,
 		kanban_mode,
 		dimension_id,
 		drag_overlay,
+		useByMindmap,
 		makeLinkLine,
 		renderLines,
 		check,
@@ -70,7 +72,7 @@ const Index = (props: IPropsTodoItem) => {
 		isDragging,
 		setNodeRef: setSortRef,
 		setActivatorNodeRef
-	} = sortable_props
+	} = sortable_props || {}
 
 	const {
 		isOver,
@@ -82,19 +84,18 @@ const Index = (props: IPropsTodoItem) => {
 		disabled: kanban_mode !== 'angle'
 	})
 
-	const { open, onCheck, onDrag, setOpen, toggleChildren, insertChildren, removeChildren, onKeyDown, updateTags } =
-		useHandlers({
-			item,
-			index,
-			kanban_mode,
-			dimension_id,
-			makeLinkLine,
-			check,
-			insert,
-			update,
-			tab,
-			handleOpenItem
-		})
+	const { open, onCheck, onDrag, setOpen, toggleChildren, insertChildren, onKeyDown, updateTags } = useHandlers({
+		item,
+		index,
+		kanban_mode,
+		dimension_id,
+		makeLinkLine,
+		check,
+		insert,
+		update,
+		tab,
+		handleOpenItem
+	})
 
 	const { linker, dragging, hovering } = useLink({ item, dimension_id, makeLinkLine, updateRelations })
 
@@ -106,7 +107,7 @@ const Index = (props: IPropsTodoItem) => {
 		)
 	})
 
-	const { TodoContextMenu, ChildrenContextMenu } = useContextMenu({ kanban_mode, angles, tags, tag_ids })
+	const context_menu = useContextMenu({ kanban_mode, angles, tags, tag_ids })
 
 	const { onContextMenu } = useOnContextMenu({
 		item,
@@ -127,17 +128,16 @@ const Index = (props: IPropsTodoItem) => {
 	const { remind } = useOptions({ item, input, zen_mode })
 
 	const props_children: IPropsChildren = {
+		mode,
+		kanban_mode,
 		items: children,
 		index,
 		open,
 		isDragging,
 		handled: item.status === 'checked' || item.status === 'closed',
 		dimension_id,
-		ChildrenContextMenu,
 		update,
-		tab,
-		insertChildren,
-		removeChildren
+		tab
 	}
 
 	const has_options = useMemo(
@@ -207,18 +207,24 @@ const Index = (props: IPropsTodoItem) => {
 				'w_100 border_box flex flex_column',
 				styles.todo_item_wrap,
 				zen_mode && styles.zen_mode,
-				kanban_mode && styles.kanban_mode,
+				!useByMindmap && kanban_mode && styles.kanban_mode,
 				kanban_mode === 'tag' && styles.tag_mode,
 				!children?.length && styles.no_children,
 				is_dragging && styles.is_dragging,
 				is_over && styles.is_over,
+				useByMindmap && styles.useByMindmap,
+				useByMindmap && 'nodrag',
 				drag_overlay && 'todo_item_drag_overlay',
-				kanban_mode && 'kanban_mode'
+				!useByMindmap && kanban_mode && 'kanban_mode'
 			)}
-			ref={ref => {
-				setSortRef(ref)
-				setDropRef(ref)
-			}}
+			ref={
+				setSortRef &&
+				setDropRef &&
+				(ref => {
+					setSortRef(ref)
+					setDropRef(ref)
+				})
+			}
 			style={{ transform: CSS.Translate.toString(transform), transition }}
 			onContextMenu={disableContextMenu}
 		>
@@ -230,7 +236,7 @@ const Index = (props: IPropsTodoItem) => {
 					styles[item.status]
 				)}
 			>
-				{!drag_disabled && (
+				{!useByMindmap && !drag_disabled && (
 					<div
 						id={id}
 						className={$cx(
@@ -243,7 +249,7 @@ const Index = (props: IPropsTodoItem) => {
 						onClick={toggleChildren}
 					></div>
 				)}
-				{!drag_disabled && (
+				{!useByMindmap && !drag_disabled && (
 					<div
 						className={$cx(
 							'drag_wrap todo border_box flex justify_center align_center absolute transition_normal cursor_point z_index_10'
@@ -275,7 +281,7 @@ const Index = (props: IPropsTodoItem) => {
 							trigger={['contextMenu']}
 							overlayStyle={{ width: 132 }}
 							menu={{
-								items: TodoContextMenu,
+								items: context_menu,
 								onClick: onContextMenu
 							}}
 						>
@@ -296,13 +302,19 @@ const Index = (props: IPropsTodoItem) => {
 					</ConfigProvider>
 				</div>
 			</div>
-			<Children {...props_children}></Children>
-			<Choose>
-				<When condition={!!kanban_mode}>
-					{has_options ? OptionsWrap : <div className='date_wrap w_100 border_box'>{date}</div>}
-				</When>
-				<Otherwise>{!zen_mode && has_options && OptionsWrap}</Otherwise>
-			</Choose>
+			{!useByMindmap && <Children {...props_children}></Children>}
+			<If condition={!useByMindmap}>
+				<Choose>
+					<When condition={!!kanban_mode}>
+						{has_options ? (
+							OptionsWrap
+						) : (
+							<div className='date_wrap w_100 border_box'>{date}</div>
+						)}
+					</When>
+					<Otherwise>{!zen_mode && has_options && OptionsWrap}</Otherwise>
+				</Choose>
+			</If>
 		</div>
 	)
 }

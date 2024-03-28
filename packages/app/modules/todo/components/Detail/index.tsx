@@ -13,7 +13,7 @@ import DateTime from '../DateTime'
 import Level from '../Level'
 import Remark from '../Remark'
 import TagSelect from '../TagSelect'
-import { useContextMenu, useHandlers } from '../TodoItem/hooks'
+import { useHandlers } from '../TodoItem/hooks'
 import styles from './index.css'
 
 import type { Todo } from '@/types'
@@ -22,6 +22,7 @@ import type { IPropsChildren, IPropsDetail } from '../../types'
 const Index = (props: IPropsDetail) => {
 	const {
 		breakpoint,
+		file_id,
 		mode,
 		kanban_mode,
 		visible_detail_modal,
@@ -73,22 +74,20 @@ const Index = (props: IPropsDetail) => {
 		updateCycle,
 		updateSchedule,
 		updateRemark,
-		insertChildren,
-		removeChildren
+		insertChildren
 	} = useHandlers({
 		item,
 		index: current_detail_index.index,
 		kanban_mode,
 		dimension_id: current_detail_index.dimension_id,
-		visible_detail_modal,
 		update
 	})
-
-	const { ChildrenContextMenu } = useContextMenu({ kanban_mode, mode })
 
 	const item_status = useMemo(() => getItemStatus({ relations, id, status }), [relations, id, status])
 
 	const props_children: IPropsChildren = {
+		mode,
+		kanban_mode,
 		items: children,
 		index: current_detail_index.index,
 		open: true,
@@ -96,11 +95,8 @@ const Index = (props: IPropsDetail) => {
 		useByDetail: true,
 		handled: status === 'checked' || status === 'closed',
 		dimension_id: current_detail_index.dimension_id,
-		ChildrenContextMenu,
 		update,
-		tab,
-		insertChildren,
-		removeChildren
+		tab
 	}
 
 	return (

@@ -20,6 +20,8 @@ export default (args: HookArgs) => {
 	useUpdateEffect(() => renderLines(id), [open, zen_mode])
 
 	useDeepEffect(() => {
+		if (!open_items) return
+
 		if (open_items.includes(id)) {
 			setOpen(true)
 		}

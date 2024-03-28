@@ -18,6 +18,7 @@ import type { IPropsTodos } from '../../types'
 
 const Index = (props: IPropsTodos) => {
 	const {
+		mode,
 		items,
 		angles: _angles,
 		tags,
@@ -189,6 +190,7 @@ const Index = (props: IPropsTodos) => {
 							>
 								<TodoItem
 									{...{
+										mode,
 										item,
 										index,
 										tags,
