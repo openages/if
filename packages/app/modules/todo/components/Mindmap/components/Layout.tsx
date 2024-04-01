@@ -18,7 +18,7 @@ export default (props: IPropsLayout) => {
 
 		layout(nodes)
 
-		window.requestAnimationFrame(() => fitView())
+		window.requestAnimationFrame(() => fitView({ minZoom: 0.6 }))
 	}, [rendered, nodes])
 
 	return null

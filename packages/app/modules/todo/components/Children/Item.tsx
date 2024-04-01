@@ -83,21 +83,25 @@ const Index = (props: IPropsChildrenItem) => {
 		<div
 			className={$cx(
 				'todo_child_item w_100 flex align_start relative',
-				item.status === 'checked' && styles.checked
+				item.status === 'checked' && styles.checked,
+				styles.todo_child_item,
+				useByMindmap && styles.useByMindmap
 			)}
 			ref={setNodeRef}
 			style={{ transform: CSS.Translate.toString(transform), transition }}
 		>
-			<div
-				className={$cx(
-					'drag_wrap children border_box flex justify_center align_center absolute transition_normal cursor_point z_index_10'
-				)}
-				ref={setActivatorNodeRef}
-				{...attributes}
-				{...listeners}
-			>
-				<DotsSixVertical size={10} weight='bold'></DotsSixVertical>
-			</div>
+			<If condition={!useByMindmap}>
+				<div
+					className={$cx(
+						'drag_wrap children border_box flex justify_center align_center absolute transition_normal cursor_point z_index_10'
+					)}
+					ref={setActivatorNodeRef}
+					{...attributes}
+					{...listeners}
+				>
+					<DotsSixVertical size={10} weight='bold'></DotsSixVertical>
+				</div>
+			</If>
 			<div
 				className='action_wrap flex justify_center align_center cursor_point clickable'
 				onClick={onCheck}

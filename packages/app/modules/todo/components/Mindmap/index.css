@@ -34,6 +34,29 @@
 				&-default {
 					width: unset;
 				}
+
+				&.root_node {
+					min-width: 90px;
+					height: 30px;
+					line-height: 30px;
+					background-color: var(--color_text);
+					color: var(--color_bg);
+					font-weight: bold;
+					border-radius: 30px;
+				}
+
+				&.angle_node {
+					min-width: 60px;
+					height: 24px;
+					line-height: 22px;
+					border: 1px solid var(--color_text);
+					border-radius: 24px;
+				}
+			}
+
+			.react-flow__edge-path {
+				stroke: var(--color_border);
+				stroke-dasharray: 3, 3;
 			}
 
 			.react-flow__handle {

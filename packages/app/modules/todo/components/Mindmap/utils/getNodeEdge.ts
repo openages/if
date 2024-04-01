@@ -8,14 +8,15 @@ const edge_type = 'smoothstep'
 export default (props: Model['props']) => {
 	const { file_id, name, kanban_items, tags, angles, check, insert, update, tab, moveTo, remove, showDetailModal } =
 		props
-	const nodes = [{ id: file_id, data: { label: name }, position }] as Array<Node>
+	const nodes = [{ id: file_id, data: { label: name }, position, className: 'root_node' }] as Array<Node>
 	const edges = [] as Array<Edge>
 
 	Object.keys(kanban_items).forEach(angle_id => {
 		nodes.push({
 			id: angle_id,
 			data: { label: kanban_items[angle_id].dimension.value.text },
-			position
+			position,
+			className: 'angle_node'
 		})
 
 		edges.push({

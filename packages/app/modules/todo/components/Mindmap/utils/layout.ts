@@ -8,7 +8,7 @@ import type Model from '../model'
 
 export default (props: Model['props'], nodes: Array<Node>) => {
 	const { file_id, kanban_items } = props
-	const raw_tree = { isRoot: () => true, id: file_id }
+	const raw_tree = { type: 'root', id: file_id, isRoot: () => true }
 
 	const nodes_map = nodes.reduce(
 		(total, item) => {
@@ -22,11 +22,13 @@ export default (props: Model['props'], nodes: Array<Node>) => {
 	raw_tree['children'] = Object.keys(kanban_items).map(angle_id => {
 		const angle_item = {}
 
+		angle_item['type'] = 'angle'
 		angle_item['id'] = angle_id
 
 		angle_item['children'] = kanban_items[angle_id].items.map(item => {
 			const todo_item = {}
 
+			todo_item['type'] = 'todo_item'
 			todo_item['id'] = item.id
 
 			if (item.children) todo_item['children'] = item.children
@@ -43,7 +45,12 @@ export default (props: Model['props'], nodes: Array<Node>) => {
 		getWidth: item => nodes_map[item.id].computed.width,
 		getHeight: item => nodes_map[item.id].computed.height,
 		getVGap: () => 3,
-		getHGap: () => 48
+		getHGap: () => 30,
+		getSubTreeSep: n => {
+			if (n.children) return 15
+
+			return 0
+		}
 	})
 
 	getPosition(target_tree, nodes_map)

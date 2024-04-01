@@ -215,7 +215,8 @@ const Index = (props: IPropsHeader) => {
 					<Dropdown
 						destroyPopupOnHide
 						trigger={['hover']}
-						overlayStyle={{ width: 99 }}
+						placement='bottom'
+						overlayStyle={{ width: 93 }}
 						menu={{ items: options_mode, onClick: onModeContextMenu }}
 					>
 						<div>
@@ -227,6 +228,7 @@ const Index = (props: IPropsHeader) => {
 					<Dropdown
 						destroyPopupOnHide
 						trigger={['click']}
+						placement='bottom'
 						overlayStyle={{ width: 90 }}
 						menu={{ items: options_menu, onClick: onOptionsContextMenu }}
 					>
