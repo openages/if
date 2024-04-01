@@ -9,6 +9,7 @@ import styles from './index.css'
 
 import type { IPropsChildrenItem } from '../../types'
 import type { Todo } from '@/types'
+import type { RefAttributes, HTMLAttributes } from 'react'
 
 const Index = (props: IPropsChildrenItem) => {
 	const {
@@ -79,16 +80,20 @@ const Index = (props: IPropsChildrenItem) => {
 		}
 	})
 
+	const sortable_attrs: RefAttributes<HTMLDivElement> & HTMLAttributes<HTMLDivElement> = !useByMindmap && {
+		ref: setNodeRef,
+		style: { transform: CSS.Translate.toString(transform), transition }
+	}
+
 	return (
 		<div
 			className={$cx(
-				'todo_child_item w_100 flex align_start relative',
+				'todo_child_item w_100 flex align_start relative nodrag',
 				item.status === 'checked' && styles.checked,
 				styles.todo_child_item,
 				useByMindmap && styles.useByMindmap
 			)}
-			ref={setNodeRef}
-			style={{ transform: CSS.Translate.toString(transform), transition }}
+			{...sortable_attrs}
 		>
 			<If condition={!useByMindmap}>
 				<div

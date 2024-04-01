@@ -216,6 +216,7 @@ const Index = (props: IPropsHeader) => {
 						destroyPopupOnHide
 						trigger={['hover']}
 						placement='bottom'
+						mouseEnterDelay={0}
 						overlayStyle={{ width: 93 }}
 						menu={{ items: options_mode, onClick: onModeContextMenu }}
 					>

@@ -104,6 +104,12 @@
 			border: none;
 			border-radius: unset;
 			white-space: nowrap;
+
+			:global {
+				.text_wrap {
+					width: unset;
+				}
+			}
 		}
 	}
 

@@ -69,6 +69,14 @@
 	&.useByMindmap {
 		padding: 0;
 		white-space: nowrap;
+
+		:global {
+			.text_wrap {
+				width: unset;
+				cursor: text;
+				pointer-events: all;
+			}
+		}
 	}
 
 	:global {
