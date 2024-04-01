@@ -1,52 +1,53 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
-import { ReactFlow } from '@xyflow/react'
+import { useHiddenReactflowROLoop } from '@/hooks'
+import { ReactFlowProvider } from '@xyflow/react'
 
-import { Layout, NodeChildrenItem, NodeTodoItem } from './components'
+import { Graph, Shadow } from './components'
 import styles from './index.css'
 import Model from './model'
 
 import type { IPropsMindmap } from '../../types'
-import type { IPropsLayout } from './types'
-
-const node_types = { TodoItem: NodeTodoItem, ChildrenItem: NodeChildrenItem }
+import type { IPropsShadow, IPropsGraph } from './types'
 
 const Index = (props: IPropsMindmap) => {
 	const [x] = useState(() => container.resolve(Model))
 	const { kanban_items, angles } = props
 	const global = useGlobal()
-	const nodes = $copy(x.nodes)
-	const edges = $copy(x.edges)
 
-	useEffect(() => {
+	useHiddenReactflowROLoop()
+
+	useLayoutEffect(() => {
 		if (!angles.length) return
 		if (Object.keys(kanban_items).some(angle_id => !kanban_items[angle_id].loaded)) return
 
 		x.init(props)
 	}, [props])
 
-	const props_layout: IPropsLayout = {
-		layouted: x.layouted,
+	const props_shadow: IPropsShadow = {
+		pure_nodes: $copy(x.pure_nodes),
 		layout: useMemoizedFn(x.layout)
 	}
 
+	const props_graph: IPropsGraph = {
+		theme: global.setting.theme,
+		nodes: $copy(x.nodes),
+		edges: $copy(x.edges),
+		setHandlers: useMemoizedFn(x.setHandlers)
+	}
+
 	return (
-		<div className={$cx('flex', styles._local, x.layouted && styles.layouted)}>
-			<div className='mindmap_wrap w_100 h_100 border_box flex'>
-				<ReactFlow
-					className={$cx('w_100 h_100', global.setting.theme === 'dark' && 'dark')}
-					minZoom={0.3}
-					nodeTypes={node_types}
-					nodes={nodes}
-					edges={edges}
-				>
-					<Layout {...props_layout} />
-				</ReactFlow>
-			</div>
+		<div className={$cx('flex relative', styles._local)}>
+			<Shadow {...props_shadow}></Shadow>
+			<If condition={x.nodes.length > 0}>
+				<ReactFlowProvider>
+					<Graph {...props_graph}></Graph>
+				</ReactFlowProvider>
+			</If>
 		</div>
 	)
 }

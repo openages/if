@@ -16,5 +16,6 @@ export { default as useTagColor } from './useTagColor'
 export { default as useChanging } from './useChanging'
 export { default as useOptions } from './useOptions'
 export { default as useArchiveOptions } from './useArchiveOptions'
+export { default as useHiddenReactflowROLoop } from './useHiddenReactflowROLoop'
 
 export * from './useAntdApp'

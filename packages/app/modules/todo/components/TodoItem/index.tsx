@@ -159,6 +159,8 @@ const Index = (props: IPropsTodoItem) => {
 		return `${dayjs().to(target)} ${target.format('dddd')}`
 	}, [create_at])
 
+	// console.log(props.item.text)
+
 	const OptionsWrap = useMemo(
 		() => (
 			<div className={$cx('options_wrap w_100 border_box flex align_center', open && 'open', status)}>

@@ -68,6 +68,9 @@ importers:
       '@xyflow/react':
         specifier: 12.0.0-next.12
         version: 12.0.0-next.12(@types/react@18.2.73)(react-dom@0.0.0-experimental-14898b6a9-20240318)(react@0.0.0-experimental-14898b6a9-20240318)
+      '@xyflow/system':
+        specifier: ^0.0.20
+        version: 0.0.20
       ahooks:
         specifier: ^3.7.11
         version: 3.7.11(react@0.0.0-experimental-14898b6a9-20240318)
@@ -125,6 +128,9 @@ importers:
       json-stable-stringify:
         specifier: ^1.1.1
         version: 1.1.1
+      just-diff:
+        specifier: ^6.0.2
+        version: 6.0.2
       konva:
         specifier: ^9.3.6
         version: 9.3.6
@@ -6464,6 +6470,10 @@ packages:
 
   /jsonschema-key-compression@1.6.1:
     resolution: {integrity: sha512-7SIbS09K7J40sd/hKCAOLQ1ss45aQ76pz99K1esBlgH/CkdCbetTEx6v+gPeCIXwnT1VHU5JKGjNbJO7ktZNFQ==}
+    dev: false
+
+  /just-diff@6.0.2:
+    resolution: {integrity: sha512-S59eriX5u3/QhMNq3v/gm8Kd0w8OS6Tz2FS1NG4blv+z0MuQcBRJyFWjdovM0Rad4/P4aUPFtnkNjMjyMlMSYA==}
     dev: false
 
   /konva@9.3.6:

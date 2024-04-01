@@ -1,67 +1,72 @@
 ._local {
 	height: calc(100% - 72px);
 	padding: 0 36px;
-	opacity: 0;
-	transition: opacity 0.3s ease;
-
-	&.layouted {
-		opacity: 1;
-	}
 
 	:global {
+		.react-flow__pane {
+			&.draggable {
+				cursor: unset;
+			}
+		}
+
+		.react-flow__node {
+			padding: 0;
+			border: none;
+			box-sizing: border-box;
+			background-color: transparent;
+
+			&.draggable {
+				cursor: unset;
+			}
+
+			&-default {
+				width: unset;
+			}
+
+			&.root_node {
+				min-width: 90px;
+				height: 30px;
+				line-height: 30px;
+				background-color: var(--color_text);
+				color: var(--color_bg);
+				font-weight: bold;
+				border-radius: 30px;
+			}
+
+			&.angle_node {
+				min-width: 60px;
+				height: 24px;
+				line-height: 22px;
+				border: 1px solid var(--color_text);
+				border-radius: 24px;
+			}
+		}
+
+		.react-flow__edge-path {
+			stroke: var(--color_border);
+			stroke-dasharray: 3, 3;
+		}
+
+		.react-flow__handle {
+			opacity: 0;
+		}
+
+		.shadow_wrap {
+			width: 0;
+			height: 0;
+			visibility: hidden;
+
+			.shadow_graph {
+				width: 1px !important;
+				height: 1px !important;
+			}
+		}
+
 		.mindmap_wrap {
 			height: calc(100% - 36px);
 			border-radius: var(--radius);
 			border: 1px dashed var(--color_border_light);
 			overflow: hidden;
-
-			.react-flow__pane {
-				&.draggable {
-					cursor: unset;
-				}
-			}
-
-			.react-flow__node {
-				padding: 0;
-				border: none;
-				box-sizing: border-box;
-				background-color: transparent;
-
-				&.draggable {
-					cursor: unset;
-				}
-
-				&-default {
-					width: unset;
-				}
-
-				&.root_node {
-					min-width: 90px;
-					height: 30px;
-					line-height: 30px;
-					background-color: var(--color_text);
-					color: var(--color_bg);
-					font-weight: bold;
-					border-radius: 30px;
-				}
-
-				&.angle_node {
-					min-width: 60px;
-					height: 24px;
-					line-height: 22px;
-					border: 1px solid var(--color_text);
-					border-radius: 24px;
-				}
-			}
-
-			.react-flow__edge-path {
-				stroke: var(--color_border);
-				stroke-dasharray: 3, 3;
-			}
-
-			.react-flow__handle {
-				opacity: 0;
-			}
 		}
 	}
 }

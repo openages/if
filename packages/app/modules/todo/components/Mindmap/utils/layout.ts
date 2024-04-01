@@ -12,11 +12,15 @@ export default (props: Model['props'], nodes: Array<Node>) => {
 
 	const nodes_map = nodes.reduce(
 		(total, item) => {
-			total[item.id] = item
+			total[item.id] = {
+				width: item.computed.width,
+				height: item.computed.height,
+				position: { x: 0, y: 0 }
+			}
 
 			return total
 		},
-		{} as Record<string, Node>
+		{} as Record<string, { width: number; height: number; position: { x: number; y: number } }>
 	)
 
 	raw_tree['children'] = Object.keys(kanban_items).map(angle_id => {
@@ -42,8 +46,14 @@ export default (props: Model['props'], nodes: Array<Node>) => {
 	const target_tree = layoutByMindmap(raw_tree, {
 		direction: 'LR',
 		getId: item => item.id,
-		getWidth: item => nodes_map[item.id].computed.width,
-		getHeight: item => nodes_map[item.id].computed.height,
+		getWidth: item => nodes_map[item.id].width,
+		getHeight: item => {
+			if (!nodes_map[item.id].height) {
+				// console.log(item)
+				// console.log(nodes.find(i => i.id === item.id))
+			}
+			return nodes_map[item.id].height
+		},
 		getVGap: () => 3,
 		getHGap: () => 30,
 		getSubTreeSep: n => {
@@ -53,13 +63,21 @@ export default (props: Model['props'], nodes: Array<Node>) => {
 		}
 	})
 
+	// if (Number.isNaN(target_tree.y)) {
+	// 	console.log($copy(raw_tree))
+	// 	// console.log($copy(nodes_map))
+	// } else {
+	// 	console.log('yes:', $copy(raw_tree))
+	// 	// console.log('yes:', $copy(nodes_map))
+	// }
+
 	getPosition(target_tree, nodes_map)
 
-	nodes.forEach(item => {
+	return nodes.map(item => {
 		item.position = nodes_map[item.id].position
 		item.targetPosition = Position.Left
 		item.sourcePosition = Position.Right
-	})
 
-	return nodes
+		return item
+	})
 }

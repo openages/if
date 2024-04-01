@@ -1,3 +1,7 @@
-export { default as NodeTodoItem } from './NodeTodoItem'
-export { default as NodeChildrenItem } from './NodeChildrenItem'
-export { default as Layout } from './Layout'
+import NodeChildrenItem from './NodeChildrenItem'
+import NodeTodoItem from './NodeTodoItem'
+
+export { default as Shadow } from './Shadow'
+export { default as Graph } from './Graph'
+
+export const node_types = { TodoItem: NodeTodoItem, ChildrenItem: NodeChildrenItem }
