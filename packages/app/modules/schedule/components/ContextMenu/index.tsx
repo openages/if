@@ -21,10 +21,10 @@ const Index = (props: IPropsCalendarContextMenu) => {
 	})
 
 	const onPasteTimeBlock = useMemoizedFn(({ props }) => {
-		const { index, row_index, start, length } = props
+		const { index, row_index, start, length, overflow } = props
 
 		onHidden(false)
-		addTimeBlock({ index, row_index, start, length, info: timeblock_copied })
+		addTimeBlock({ index, row_index, start, length, info: timeblock_copied, overflow })
 	})
 
 	const onHidden = useMemoizedFn((v: boolean) => {

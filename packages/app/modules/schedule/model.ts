@@ -247,14 +247,16 @@ export default class Index {
 		index: number
 		start: number
 		length: number
-		info?: Omit<Schedule.Item, 'id'>
+		info?: Omit<Schedule.CalendarItem, 'id'>
 		row_index?: number
+		overflow?: boolean
 	}) {
-		const { index, row_index, start, length, info } = args
+		const { index, row_index, start, length, info, overflow } = args
 		const timeline = this.view === 'timeline'
 		const year_scale = this.scale === 'year'
 		const date = this.days[timeline ? 0 : index].value
-		const { start_time, end_time } = getStartEnd(date, start, length, timeline, year_scale)
+		const target_length = info?.length && !overflow ? info.length : length
+		const { start_time, end_time } = getStartEnd(date, start, target_length, timeline, year_scale)
 		const target_info = info ? omit(info, ['start', 'length']) : {}
 
 		if (this.view === 'fixed') target_info['fixed_scale'] = this.scale

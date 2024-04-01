@@ -57,15 +57,22 @@ const Index = (props: IPropsTimelineViewRow) => {
 
 		$app.Event.emit('schedule/context_menu/hidden', row_id)
 
+		let length = limit
+		let overflow = false
+
 		const start = getStartByX(container.current, step, e.clientX)
-		const length = start + limit >= days_length * limit ? days_length * limit - start : limit
+
+		if (start + limit >= days_length * limit) {
+			length = days_length * limit - start
+			overflow = true
+		}
 
 		const target_length = collisionDetection(timeblocks, start, length)
 
 		if (!target_length) return
 
 		setSignal({ start, length: target_length })
-		show({ event: e, props: { index: angle_index, row_index, start, length: target_length } })
+		show({ event: e, props: { index: angle_index, row_index, start, length: target_length, overflow } })
 	})
 
 	return (

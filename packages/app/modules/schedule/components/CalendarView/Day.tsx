@@ -54,15 +54,22 @@ const Index = (props: IPropsCalendarViewDay) => {
 
 		$app.Event.emit('schedule/context_menu/hidden', index)
 
+		let length = 3
+		let overflow = false
+
 		const start = getStartByY(container.current, e.clientY)
-		const length = start + 3 >= 72 ? 72 - start : 3
+
+		if (start + 3 >= 72) {
+			length = 72 - start
+			overflow = true
+		}
 
 		const target_length = collisionDetection(day, start, length)
 
 		if (!target_length) return
 
 		setSignal({ start, length: target_length })
-		show({ event: e, props: { index, start, length: target_length } })
+		show({ event: e, props: { index, start, length: target_length, overflow } })
 	})
 
 	return (
