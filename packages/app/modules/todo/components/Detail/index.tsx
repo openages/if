@@ -22,7 +22,6 @@ import type { IPropsChildren, IPropsDetail } from '../../types'
 const Index = (props: IPropsDetail) => {
 	const {
 		breakpoint,
-		file_id,
 		mode,
 		kanban_mode,
 		visible_detail_modal,

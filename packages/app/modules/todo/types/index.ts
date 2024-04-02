@@ -264,7 +264,6 @@ export interface IPropsArchiveItem extends Pick<IPropsArchive, 'restoreArchiveIt
 
 export interface IPropsDetail {
 	breakpoint?: number
-	file_id: Model['id']
 	mode: Model['mode']
 	kanban_mode: Model['kanban_mode']
 	visible_detail_modal: Model['visible_detail_modal']

@@ -173,7 +173,6 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_detail: IPropsDetail = {
-		file_id: id,
 		breakpoint,
 		mode: x.mode,
 		kanban_mode: x.kanban_mode,

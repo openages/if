@@ -22,9 +22,9 @@ export default (args: HookArgs) => {
 	useLayoutEffect(() => {
 		const el = input.current
 
-		if (!el || !children || !children?.length) return
+		if (!el || !children || !children?.length) return el.removeAttribute('data-children')
 
-		const checked_children = children.filter(item => item.status === 'checked')
+		const checked_children = children.filter(item => item?.status === 'checked')
 
 		el.setAttribute('data-children', `${checked_children.length}/${children.length}`)
 	}, [children])
@@ -32,7 +32,7 @@ export default (args: HookArgs) => {
 	useLayoutEffect(() => {
 		const el = input.current
 
-		if (!el || !remind) return
+		if (!el || !remind) return el.removeAttribute('data-remind')
 
 		el.setAttribute('data-remind', dayjs().to(dayjs(remind_time)))
 	}, [remind])

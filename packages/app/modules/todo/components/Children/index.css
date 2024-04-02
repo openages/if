@@ -74,6 +74,8 @@
 		:global {
 			.text_wrap {
 				width: unset;
+				min-width: 60px;
+				padding-right: 12px;
 				cursor: text;
 				pointer-events: all;
 			}

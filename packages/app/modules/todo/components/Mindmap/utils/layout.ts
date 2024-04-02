@@ -35,7 +35,7 @@ export default (props: Model['props'], nodes: Array<Node>) => {
 			todo_item['type'] = 'todo_item'
 			todo_item['id'] = item.id
 
-			if (item.children) todo_item['children'] = item.children
+			if (item.children && item.children.length) todo_item['children'] = item.children
 
 			return todo_item
 		})
@@ -47,36 +47,29 @@ export default (props: Model['props'], nodes: Array<Node>) => {
 		direction: 'LR',
 		getId: item => item.id,
 		getWidth: item => nodes_map[item.id].width,
-		getHeight: item => {
-			if (!nodes_map[item.id].height) {
-				// console.log(item)
-				// console.log(nodes.find(i => i.id === item.id))
-			}
-			return nodes_map[item.id].height
-		},
+		getHeight: item => nodes_map[item.id].height,
 		getVGap: () => 3,
 		getHGap: () => 30,
 		getSubTreeSep: n => {
-			if (n.children) return 15
+			if (n.children && n.children.length) return 15
 
 			return 0
 		}
 	})
 
-	// if (Number.isNaN(target_tree.y)) {
-	// 	console.log($copy(raw_tree))
-	// 	// console.log($copy(nodes_map))
-	// } else {
-	// 	console.log('yes:', $copy(raw_tree))
-	// 	// console.log('yes:', $copy(nodes_map))
-	// }
-
 	getPosition(target_tree, nodes_map)
 
 	return nodes.map(item => {
 		item.position = nodes_map[item.id].position
+		item.computed.positionAbsolute = item.position
 		item.targetPosition = Position.Left
 		item.sourcePosition = Position.Right
+
+		const symbols = Object.getOwnPropertySymbols(item)
+
+		for (const symbol of symbols) {
+			delete item[symbol]
+		}
 
 		return item
 	})

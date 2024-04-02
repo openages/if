@@ -24,6 +24,10 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['children']>) => {
 			{match(value)
 				.with(P.nullish, () => <Minus size={14}></Minus>)
 				.with(
+					P.when(v => !v.length),
+					() => <Minus size={14}></Minus>
+				)
+				.with(
 					P.when(v => v.length <= 6),
 					() => (
 						<Progress

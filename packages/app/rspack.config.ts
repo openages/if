@@ -7,7 +7,7 @@ import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
 
 const is_dev = process.env.NODE_ENV === 'development'
 const is_prod = process.env.NODE_ENV === 'production'
-const is_module = true
+const is_module = false
 
 const plugins_dev = [
 	new ReactRefreshPlugin({
@@ -22,7 +22,7 @@ const plugins_prod = [
 ]
 
 module.exports = defineConfig({
-	devtool: is_dev ? 'cheap-module-source-map' : false,
+	devtool: is_dev ? 'source-map' : false,
 	entry: {
 		main: './runtime/index.tsx'
 	},

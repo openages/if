@@ -1,8 +1,8 @@
-import { diff } from 'just-diff'
-import { set } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
-import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
+
+import { setElements } from '@/utils'
+import { deepEqual } from '@openages/stk/react'
 
 import { getNodeEdge, layout } from './utils'
 
@@ -15,76 +15,79 @@ export default class Index {
 	pure_nodes = [] as Array<Node>
 	nodes = [] as Array<Node>
 	edges = [] as Array<Edge>
+	signal = false
 
-	handlers = {} as {
+	shadow_handlers = {} as {
+		setNodes: Instance.SetNodes
+	}
+
+	graph_handlers = {} as {
 		fitView: FitView
-		updateNode: Instance.UpdateNode
-		updateNodeData: Instance.UpdateNodeData
-		addNodes: Instance.AddNodes
-		addEdges: Instance.AddEdges
-		deleteElements: Instance.DeleteElements
+		setNodes: Instance.SetNodes
+		setEdges: Instance.SetEdges
 	}
 
 	constructor() {
-		makeAutoObservable(this, { props: false, handlers: false }, { autoBind: true })
+		makeAutoObservable(
+			this,
+			{
+				props: false,
+				pure_nodes: false,
+				nodes: false,
+				edges: false,
+				shadow_handlers: false,
+				graph_handlers: false
+			},
+			{ autoBind: true }
+		)
 	}
 
 	init(props: Index['props']) {
 		this.props = props
 
-		this.render()
+		this.getNodeEdge()
 	}
 
-	render() {
+	getNodeEdge(kanban_items?: IPropsMindmap['kanban_items']) {
+		if (kanban_items) this.props = { ...this.props, kanban_items }
+
 		const { nodes, edges } = getNodeEdge(this.props)
+
+		if (this.nodes.length) {
+			this.setNodes(nodes, true)
+			this.setEdges(edges)
+		}
 
 		this.pure_nodes = nodes
 		this.edges = edges
+
+		if (!this.nodes.length) this.signal = !this.signal
 	}
 
 	layout(v: Array<Node>) {
-		const { updateNode } = this.handlers
-
-		// console.log(v)
-		console.log(v.find(i => !i.computed.height))
-
-		const nodes = layout(this.props, v)
-		// console.log(v, $copy(nodes))
+		const new_nodes = $copy(v)
+		const nodes = layout(this.props, new_nodes)
 
 		if (this.nodes.length) {
-			const changes = diff($copy(this.nodes), nodes, path => ({
-				node: nodes.at(path[0] as number),
-				path: path
-			}))
+			this.setNodes(nodes)
 
-			// console.log(changes, nodes)
-
-			changes.forEach(change => {
-				match(change.op)
-					.with('replace', () => {
-						const path = change.path.path
-						const value = change.value
-						const node = $copy(change.path.node)
-
-						set(node, path, value)
-
-						if (path.length === 4) {
-							updateNode(change.path.node.id, node)
-						}
-
-						if (path.length === 6) {
-						}
-					})
-					.with('add', () => {})
-					.with('remove', () => {})
-					.exhaustive()
-			})
+			this.nodes = nodes
 		} else {
 			this.nodes = nodes
+			this.signal = !this.signal
 		}
 	}
 
-	setHandlers(v: Index['handlers']) {
-		this.handlers = v
+	setNodes(new_nodes: Array<Node>, shadow?: boolean) {
+		const { setNodes } = shadow ? this.shadow_handlers : this.graph_handlers
+		const prev_nodes = shadow ? this.pure_nodes : this.nodes
+
+		setElements(prev_nodes, new_nodes, setNodes)
+	}
+
+	setEdges(new_edges: Array<Edge>) {
+		const { setEdges } = this.graph_handlers
+
+		setElements(this.edges, new_edges, setEdges)
 	}
 }

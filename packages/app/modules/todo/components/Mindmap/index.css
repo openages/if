@@ -3,6 +3,17 @@
 	padding: 0 36px;
 
 	:global {
+		.signal_wrap {
+			display: none;
+		}
+
+		.mindmap_wrap {
+			height: calc(100% - 36px);
+			border-radius: var(--radius);
+			border: 1px dashed var(--color_border_light);
+			overflow: hidden;
+		}
+
 		.react-flow__pane {
 			&.draggable {
 				cursor: unset;
@@ -50,23 +61,38 @@
 		.react-flow__handle {
 			opacity: 0;
 		}
+	}
+}
 
-		.shadow_wrap {
-			width: 0;
-			height: 0;
-			visibility: hidden;
+.shadow {
+	width: 0;
+	height: 0;
+	visibility: hidden;
 
-			.shadow_graph {
-				width: 1px !important;
-				height: 1px !important;
-			}
+	:global {
+		.shadow_graph {
+			width: 1px !important;
+			height: 1px !important;
 		}
 
-		.mindmap_wrap {
-			height: calc(100% - 36px);
-			border-radius: var(--radius);
-			border: 1px dashed var(--color_border_light);
-			overflow: hidden;
+		.react-flow__node {
+			padding: 0;
+			border: none;
+			box-sizing: border-box;
+
+			&-default {
+				width: unset;
+			}
+
+			&.root_node {
+				min-width: 90px;
+				height: 30px;
+			}
+
+			&.angle_node {
+				min-width: 60px;
+				height: 24px;
+			}
 		}
 	}
 }

@@ -154,6 +154,12 @@ export default class Index {
 			this.visible_detail_modal = false
 			this.items = []
 
+			if (v !== 'list' || old_val !== 'table') {
+				this.kanban_items = {}
+
+				this.stopWatchItems()
+			}
+
 			if (v !== 'kanban' || old_val !== 'mindmap') {
 				this.kanban_items = {}
 
@@ -403,6 +409,8 @@ export default class Index {
 
 			this.setItem(item, data)
 
+			if (document.activeElement) (document.activeElement as HTMLDivElement).blur()
+
 			await update(data)
 
 			setTimeout(
@@ -410,7 +418,7 @@ export default class Index {
 					document
 						.getElementById(`${this.visible_detail_modal ? 'detail_' : ''}todo_${target.id}`)
 						?.focus(),
-				0
+				this.mode === 'mindmap' ? 60 : 0
 			)
 
 			return
@@ -535,7 +543,14 @@ export default class Index {
 			if (callback) callback()
 		})
 
-		if (!data) setTimeout(() => document.getElementById(`todo_${item.id}`)?.focus(), 0)
+		if (!data) {
+			if (document.activeElement) (document.activeElement as HTMLDivElement).blur()
+
+			setTimeout(
+				() => document.getElementById(`todo_${item.id}`)?.focus(),
+				this.mode === 'mindmap' ? 60 : 0
+			)
+		}
 
 		if (index !== -1) {
 			const { sort } = updateSort(items, index + 1)

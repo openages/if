@@ -8,11 +8,11 @@ import type { IPropsGraph } from '../types'
 
 const Index = (props: IPropsGraph) => {
 	const { theme, nodes, edges, setHandlers } = props
-	const { fitView, updateNode, updateNodeData, addNodes, addEdges, deleteElements } = useReactFlow()
+	const { fitView, setNodes, setEdges } = useReactFlow()
 
 	useEffect(() => {
 		fitView({ minZoom: 0.6 })
-		setHandlers({ fitView, updateNode, updateNodeData, addNodes, addEdges, deleteElements })
+		setHandlers({ fitView, setNodes, setEdges })
 	}, [])
 
 	return (

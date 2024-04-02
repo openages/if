@@ -26,7 +26,7 @@ const Index = (props: IPropsArchiveItem) => {
 	const data_children = useMemo(() => {
 		if (!item.children?.length) return
 
-		const checked_children = item.children.filter(item => item.status === 'checked')
+		const checked_children = item.children.filter(item => item?.status === 'checked')
 
 		return `${checked_children.length}/${item.children.length}`
 	}, [item.children])
