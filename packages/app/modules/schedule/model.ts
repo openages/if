@@ -82,8 +82,8 @@ export default class Index {
 	} as Watch<Index>
 
 	constructor(
-		public utils: Utils,
-		public file: File
+		public file: File,
+		public utils: Utils
 	) {
 		makeAutoObservable(
 			this,
@@ -683,6 +683,7 @@ export default class Index {
 	}
 
 	off() {
+		this.file.off()
 		this.utils.off()
 
 		this.setting_watcher?.unsubscribe?.()

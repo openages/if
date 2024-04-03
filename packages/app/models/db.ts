@@ -13,6 +13,7 @@ import {
 	schema_dirtree_items,
 	schema_kv,
 	schema_module_setting,
+	schema_note_items,
 	schema_pomo_items,
 	schema_schedule_items,
 	schema_todo_items
@@ -44,7 +45,7 @@ export default class Index {
 				storage: keyCompression
 					? wrappedKeyCompressionStorage({
 							storage: getRxStorageDexie()
-					  })
+						})
 					: getRxStorageDexie()
 			})
 		})
@@ -69,6 +70,11 @@ export default class Index {
 			todo_items: {
 				autoMigrate: false,
 				schema: schema_todo_items,
+				statics
+			},
+			note_items: {
+				autoMigrate: false,
+				schema: schema_note_items,
 				statics
 			},
 			pomo_items: {

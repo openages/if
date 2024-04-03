@@ -1,9 +1,10 @@
 import type {
+	DBKV,
 	DBActivityItems,
 	DBDirtreeItems,
 	DBModuleSetting,
 	DBTodoItems,
-	DBKV,
+	DBNoteItems,
 	DBPomoItems,
 	DBScheduleItems
 } from '@/schemas'
@@ -31,6 +32,7 @@ export namespace RxDB {
 		activity_items: DBActivityItems
 		dirtree_items: DBDirtreeItems
 		todo_items: DBTodoItems
+		note_items: DBNoteItems
 		pomo_items: DBPomoItems
 		schedule_items: DBScheduleItems
 	}>

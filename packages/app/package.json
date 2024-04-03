@@ -48,7 +48,6 @@
 		"i18next": "^23.10.1",
 		"js-xxhash": "^3.0.1",
 		"json-stable-stringify": "^1.1.1",
-		"just-diff": "^6.0.2",
 		"konva": "^9.3.6",
 		"lodash-es": "^4.17.21",
 		"lucide-react": "^0.293.0",
@@ -80,7 +79,9 @@
 		"tslib": "^2.6.2",
 		"tsyringe": "^4.8.0",
 		"uniqolor": "^1.1.1",
-		"zod": "^3.22.4"
+		"zod": "^3.22.4",
+		"lexical": "^0.14.2",
+		"@lexical/react": "^0.14.2"
 	},
 	"devDependencies": {
 		"@rsdoctor/rspack-plugin": "^0.1.8",

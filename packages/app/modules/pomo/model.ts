@@ -329,6 +329,8 @@ export default class Index {
 	}
 
 	off() {
+		this.file.off()
+
 		$app.Event.off(`pomo/${this.id}/stopRecord`, this.stopRecord)
 
 		this.stopWatch()
