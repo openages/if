@@ -94,12 +94,7 @@
 	}
 
 	&.useByMindmap {
-		width: 100%;
-		overflow-x: scroll;
-		cursor: unset;
-
 		.todo_item {
-			height: 100%;
 			padding: 0;
 			border: none;
 			border-radius: unset;

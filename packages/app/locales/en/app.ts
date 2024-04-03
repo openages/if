@@ -1,7 +1,7 @@
 export default {
 	migrating: 'Version updated, data Migrating, don`t close.',
 	free_mark: {
-		title: 'Trial VERSION',
+		title: 'Trial Version',
 		desc: 'Go to subscribe'
 	},
 	search: {

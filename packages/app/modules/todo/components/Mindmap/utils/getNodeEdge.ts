@@ -48,7 +48,8 @@ export default (props: Model['props']) => {
 						remove,
 						showDetailModal
 					},
-					position
+					position,
+					className: 'dynamic_node'
 				})
 
 				edges.push({
@@ -72,7 +73,8 @@ export default (props: Model['props']) => {
 								update,
 								tab
 							},
-							position
+							position,
+							className: 'dynamic_node'
 						})
 
 						edges.push({
