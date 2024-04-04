@@ -9,7 +9,7 @@ import { getDocItemsData } from '@/utils/rxdb'
 import { DirTree as NodeTree } from '@openages/stk/common'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 
-import { getQuery, insert, query, remove, update, updateItems } from './services'
+import { auth, getQuery, insert, query, remove, update, updateItems } from './services'
 
 import type { App, DirTree, Stack } from '@/types'
 import type { Active, Over } from '@dnd-kit/core'
@@ -88,6 +88,10 @@ export default class Index {
 	@loading
 	async insert(item: Partial<DirTree.Item>) {
 		if (!item.icon && item.type === 'file') item.icon = module_default_icon[this.module] || ''
+
+		const authed = await auth(this.module)
+
+		if (!authed) return
 
 		const { item: target, effect_items } = this.node_tree.insert(
 			{ ...item, id: id(), module: this.module } as DirTree.Item,

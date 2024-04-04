@@ -1,8 +1,7 @@
 export default {
 	migrating: 'Version updated, data Migrating, don`t close.',
-	free_mark: {
-		title: 'Trial Version',
-		desc: 'Go to subscribe'
+	auth: {
+		confirm: 'The trial usage limit has been reached. Go to subscribe?'
 	},
 	search: {
 		to_navigate: 'to navigate',

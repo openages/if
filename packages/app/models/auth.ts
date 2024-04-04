@@ -1,13 +1,36 @@
 import { makeAutoObservable } from 'mobx'
+import { injectable } from 'tsyringe'
 
-import type { Auth } from '@/types'
+import Utils from '@/models/utils'
+import { Auth } from '@/types'
+import { setStorageWhenChange } from '@openages/stk/mobx'
 
+@injectable()
 export default class Index {
-	user_type = 'golden_sponsor' as Auth.UserType
+	user_type = Auth.UserTypes.golden_sponsor as Auth.UserType
+	visible_pay_modal = false
 
-	constructor() {
+	constructor(public utils: Utils) {
 		makeAutoObservable(this, {}, { autoBind: true })
 	}
 
-	init() {}
+	init() {
+		this.utils.acts = [setStorageWhenChange(['user_type'], this)]
+
+		this.on()
+	}
+
+	showVisiblePayModal() {
+		this.visible_pay_modal = true
+	}
+
+	on() {
+		$app.Event.on('global.auth.showVisiblePayModal', this.showVisiblePayModal)
+	}
+
+	off() {
+		this.utils.off()
+
+		$app.Event.off('global.auth.showVisiblePayModal', this.showVisiblePayModal)
+	}
 }

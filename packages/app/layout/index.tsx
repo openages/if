@@ -15,14 +15,14 @@ import { GlobalContext, GlobalModel } from '@/context/app'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
 import { useDeepMemo } from '@openages/stk/react'
 
-import { AppMenu, AppSwitch, FreeMark, Screenlock, Search, Sidebar, Stacks } from './components'
+import { AppMenu, AppSwitch, PayModal, Screenlock, Search, Sidebar, Stacks } from './components'
 import { useGlobalNavigate, useGlobalTranslate, useLayout } from './hooks'
 import styles from './index.css'
 
 import type { IPropsOffscreenOutlet } from '@/components/OffscreenOutlet'
 import type { AppProps } from 'antd'
 import type { ConfigProviderProps } from 'antd/es/config-provider'
-import type { IPropsAppMenu, IPropsAppSwitch, IPropsSidebar, IPropsStacks, IPropsFreeMark, IPropsSearch } from './types'
+import type { IPropsAppMenu, IPropsAppSwitch, IPropsSidebar, IPropsStacks, IPropsPayModal, IPropsSearch } from './types'
 
 const Index = () => {
 	const { pathname } = useLocation()
@@ -126,8 +126,10 @@ const Index = () => {
 		handleAppSwitch: useMemoizedFn(global.app.handleAppSwitch)
 	}
 
-	const props_free_mark: IPropsFreeMark = {
-		user_type: global.auth.user_type
+	const props_pay_modal: IPropsPayModal = {
+		user_type: global.auth.user_type,
+		visible_pay_modal: global.auth.visible_pay_modal,
+		closeModal: useMemoizedFn(() => (global.auth.visible_pay_modal = false))
 	}
 
 	const props_search: IPropsSearch = {
@@ -144,15 +146,15 @@ const Index = () => {
 		clearSearchHistory: useMemoizedFn(global.search.clearSearchHistory)
 	}
 
-	// if (global.screenlock.screenlock_open) {
-	// 	return (
-	// 		<GlobalContext.Provider value={global}>
-	// 			<Screenlock></Screenlock>
-	// 		</GlobalContext.Provider>
-	// 	)
-	// }
+	if (global.screenlock.screenlock_open) {
+		return (
+			<GlobalContext.Provider value={global}>
+				<Screenlock></Screenlock>
+			</GlobalContext.Provider>
+		)
+	}
 
-	// if (!global.db.ready) return <GlobalLoading visible></GlobalLoading>
+	if (!global.db.ready) return <GlobalLoading visible></GlobalLoading>
 
 	return (
 		<GlobalContext.Provider value={global}>
@@ -177,7 +179,7 @@ const Index = () => {
 						</div>
 						<AppMenu {...props_app_menu}></AppMenu>
 						<AppSwitch {...props_app_switch}></AppSwitch>
-						<FreeMark {...props_free_mark}></FreeMark>
+						<PayModal {...props_pay_modal}></PayModal>
 						<Search {...props_search}></Search>
 						{process.env.NODE_ENV === 'development' && (
 							<LazyElement type='dev' path=''></LazyElement>

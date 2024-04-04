@@ -1,8 +1,10 @@
 import type { GlobalModel } from '@/context/app'
 import type { App, Auth } from '@/types'
 
-export interface IPropsFreeMark {
+export interface IPropsPayModal {
 	user_type: Auth.UserType
+	visible_pay_modal: GlobalModel['auth']['visible_pay_modal']
+	closeModal: () => void
 }
 
 export interface IPropsSidebar {

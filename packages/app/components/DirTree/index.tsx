@@ -13,6 +13,7 @@ import { List, X } from '@phosphor-icons/react'
 import { Actions, DirItems, DragLine, Modal, Options, Search } from './components'
 import styles from './index.css'
 import Model from './model'
+import { auth } from './services'
 
 import type { Extend } from '@/types'
 import type { MouseEvent } from 'react'
@@ -80,7 +81,13 @@ const Index = (props: IProps) => {
 		return () => x.off()
 	}, [module, simple])
 
-	const setModalOpen = useMemoizedFn((v: Model['modal_open'], type?: Model['modal_type']) => {
+	const setModalOpen = useMemoizedFn(async (v: Model['modal_open'], type?: Model['modal_type']) => {
+		if (v) {
+			const authed = await auth(x.module)
+
+			if (!authed) return
+		}
+
 		x.focusing_index = []
 		x.modal_open = v
 		x.modal_type = type || 'file'

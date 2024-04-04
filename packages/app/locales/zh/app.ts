@@ -1,8 +1,7 @@
 export default {
 	migrating: '版本更新，数据迁移中，切勿关闭应用',
-	free_mark: {
-		title: '试用版',
-		desc: '(¥3/月) 前往订阅'
+	auth: {
+		confirm: '已达到试用版使用上限，前往订阅？'
 	},
 	search: {
 		to_navigate: '切换',

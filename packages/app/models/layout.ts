@@ -12,13 +12,11 @@ export default class Index {
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, {}, { autoBind: true })
-
-		this.utils.acts = [setStorageWhenChange(['dirtree_prev', 'dirtree_width'], this)]
-
-		this.init()
 	}
 
 	init() {
+		this.utils.acts = [setStorageWhenChange(['dirtree_prev', 'dirtree_width'], this)]
+
 		if (this.dirtree_width === 0 && this.dirtree_prev === 0) {
 			this.setDirTreeWidth(getComputedStyleValue(document.documentElement, '--dirtree_width'))
 
