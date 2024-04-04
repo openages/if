@@ -1,30 +1,5 @@
-import { Auth } from '@/types'
-import { confirm } from '@/utils/antd'
-import { local } from '@openages/stk/storage'
-
 import type { App, DirTree } from '@/types'
 import type { ArgsInsert, ArgsRemove, ArgsUpdate } from './types/services'
-
-export const auth = async (module: App.ModuleType) => {
-	const user_type = local.user_type as Auth.UserType
-
-	if (user_type !== Auth.UserTypes.trial) return true
-
-	const counts = await $db.dirtree_items.count({ selector: { module, type: 'file' } }).exec()
-
-	if (counts === 0) return true
-
-	const res = await confirm({
-		title: $t('translation:common.notice'),
-		content: $t('translation:app.auth.confirm')
-	})
-
-	if (!res) return false
-
-	$app.Event.emit('global.auth.showVisiblePayModal')
-
-	return false
-}
 
 export const getQuery = (module: App.ModuleType) => {
 	return $db.dirtree_items.find({ selector: { module: module } })

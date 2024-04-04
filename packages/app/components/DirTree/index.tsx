@@ -7,13 +7,13 @@ import { createPortal } from 'react-dom'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
+import { auth } from '@/services'
 import { useDeepMemo } from '@openages/stk/react'
 import { List, X } from '@phosphor-icons/react'
 
 import { Actions, DirItems, DragLine, Modal, Options, Search } from './components'
 import styles from './index.css'
 import Model from './model'
-import { auth } from './services'
 
 import type { Extend } from '@/types'
 import type { MouseEvent } from 'react'

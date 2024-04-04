@@ -3,13 +3,14 @@ import { injectable } from 'tsyringe'
 
 import { module_default_icon } from '@/appdata'
 import { Utils } from '@/models'
+import { auth } from '@/services'
 import { id } from '@/utils'
 import { disableWatcher, loading } from '@/utils/decorators'
 import { getDocItemsData } from '@/utils/rxdb'
 import { DirTree as NodeTree } from '@openages/stk/common'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 
-import { auth, getQuery, insert, query, remove, update, updateItems } from './services'
+import { getQuery, insert, query, remove, update, updateItems } from './services'
 
 import type { App, DirTree, Stack } from '@/types'
 import type { Active, Over } from '@dnd-kit/core'
