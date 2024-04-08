@@ -25,6 +25,8 @@
 		"@emoji-mart/data": "^1.1.2",
 		"@emoji-mart/react": "^1.1.1",
 		"@lexical/react": "^0.14.3",
+		"@lexical/rich-text": "^0.14.3",
+		"@lexical/utils": "^0.14.3",
 		"@openages/stk": "workspace:*",
 		"@phosphor-icons/react": "^2.1.4",
 		"@swc/helpers": "^0.5.8",

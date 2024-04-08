@@ -18,3 +18,10 @@ declare module 'react' {
 		[key: string]: any
 	}
 }
+
+declare global {
+	interface DragEvent {
+		rangeParent?: Node
+		rangeOffset?: number
+	}
+}

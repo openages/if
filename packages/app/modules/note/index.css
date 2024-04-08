@@ -1,0 +1,10 @@
+._local {
+	min-height: 100%;
+	padding-top: 36px;
+	padding-bottom: 60px;
+
+	.title {
+		font-size: 21px;
+		font-weight: 500;
+	}
+}

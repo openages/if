@@ -16,7 +16,7 @@ const routes: Array<RouteObject> = [
 	},
 	{
 		path: '/note',
-		element: <LazyElement type='modules' path='note' />
+		element: <LazyElement type='modules' path='note/page' />
 	},
 	{
 		path: '/pomo',

@@ -93,6 +93,7 @@ const typed_nav_items = [
 export default typed_nav_items.map(item => item)
 
 export const module_default_icon = {
+	note: ':book-open-text-light:',
 	pomo: ':timer_clock:',
 	schedule: ':date:'
 }

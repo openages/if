@@ -8,7 +8,6 @@ import {
 	CheckCircle,
 	Clipboard,
 	Database,
-	FileText,
 	GearSix,
 	MicrosoftPowerpointLogo,
 	Note,
