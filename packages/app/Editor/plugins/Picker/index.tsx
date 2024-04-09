@@ -1,8 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useMemo, useState, Fragment } from 'react'
+import { useLayoutEffect, useMemo, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
 
+import { LazyElement, Modal } from '@/components'
+import { useStackSelector } from '@/context/stack'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useBasicTypeaheadTriggerMatch, LexicalTypeaheadMenuPlugin } from '@lexical/react/LexicalTypeaheadMenuPlugin'
 
@@ -17,16 +19,19 @@ import type { TypeaheadMenuPluginProps } from '@lexical/react/LexicalTypeaheadMe
 const Index = () => {
 	const [x] = useState(() => new Model())
 	const [editor] = useLexicalComposerContext()
+	const id = useStackSelector(v => v.id)
 
-	const checkForTriggerMatch = useBasicTypeaheadTriggerMatch('/', { minLength: 0 })
+	useLayoutEffect(() => {
+		x.init(editor)
+	}, [editor])
 
 	const showModal = useMemoizedFn((v: Model['modal']) => (x.modal = v))
 	const closeModal = useMemoizedFn(() => (x.modal = ''))
 	const setQuery = useMemoizedFn((v: Model['query']) => (x.query = v))
+	const onSelectOption = useMemoizedFn(x.onSelectOption)
+	const checkForTriggerMatch = useBasicTypeaheadTriggerMatch('/', { minLength: 0 })
 
 	const options = useMemo(() => getOptions(x.query, showModal), [editor, x.query])
-
-	const onSelectOption = useMemoizedFn(x.onSelectOption)
 
 	const render: TypeaheadMenuPluginProps<Option>['menuRenderFn'] = useMemoizedFn(
 		(anchorElementRef, { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex }) => {
@@ -43,8 +48,20 @@ const Index = () => {
 		}
 	)
 
+	const getModalContainer = useMemoizedFn(() => document.getElementById(id))
+
 	return (
 		<Fragment>
+			<Modal
+				open={x.modal !== ''}
+				title={`Insert ${x.modal}`}
+				width={300}
+				maskClosable
+				onCancel={closeModal}
+				getContainer={getModalContainer}
+			>
+				<LazyElement type='editor_modal' path={x.modal}></LazyElement>
+			</Modal>
 			<LexicalTypeaheadMenuPlugin
 				options={options}
 				menuRenderFn={render}

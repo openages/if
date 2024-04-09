@@ -30,6 +30,9 @@
 
 		.if-modal-close {
 			top: 14.5px;
+			right: 15px;
+			width: 21px;
+			height: 21px;
 
 			.if-modal-close-x {
 				font-size: 14px;

@@ -2,7 +2,7 @@ import { lazy, useMemo, Suspense } from 'react'
 import { match } from 'ts-pattern'
 
 interface IProps {
-	type: 'modules' | 'dev' | 'search'
+	type: 'modules' | 'dev' | 'search' | 'editor_modal'
 	path: string
 	props?: any
 }
@@ -15,6 +15,7 @@ const Index = (_props: IProps) => {
 			.with('dev', () => lazy(() => import(`@/dev/__Panel__`)))
 			.with('modules', () => lazy(() => import(`@/modules/${path}`)))
 			.with('search', () => lazy(() => import(`@/layout/components/Search/components/${path}`)))
+			.with('editor_modal', () => lazy(() => import(`@/Editor/modals/${path}`)))
 			.exhaustive()
 	}, [type, path])
 

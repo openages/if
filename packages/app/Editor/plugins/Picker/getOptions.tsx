@@ -11,7 +11,7 @@ export default (query_string: string, showModal: (v: Model['modal']) => void) =>
 		new Option('Image', {
 			icon: <Image />,
 			keywords: ['image', 'photo', 'picture', 'file'],
-			onSelect: () => showModal('image')
+			onSelect: () => showModal('Image')
 		})
 	].filter(option => regex.test(option.title) || option.keywords.some(keyword => regex.test(keyword)))
 }

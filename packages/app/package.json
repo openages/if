@@ -48,7 +48,6 @@
 		"echarts": "^5.5.0",
 		"emoji-mart": "^5.5.2",
 		"fast-equals": "^5.0.1",
-		"fflate": "^0.8.2",
 		"framer-motion": "^10.18.0",
 		"hotkeys-js": "^3.13.7",
 		"i18next": "^23.11.0",

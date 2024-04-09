@@ -1,0 +1,53 @@
+._local {
+	&.no_progress {
+		:global {
+			.if-upload-list-item-progress {
+				display: none;
+			}
+		}
+	}
+
+	:global {
+		.if-upload-drag {
+			height: 72px;
+			background-color: transparent;
+
+			&:hover {
+				border-color: var(--color_text) !important;
+			}
+
+			.if-upload-btn {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				.if-upload-drag-container {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+
+					.upload_placeholder_wrap {
+						color: var(--color_text_light);
+						line-height: 1;
+						font-size: 12px;
+					}
+				}
+			}
+		}
+
+		.if-upload-list-item {
+			padding-left: 6px;
+			border-radius: var(--radius_small);
+			color: var(--color_text_light);
+
+			.if-upload-list-item-name {
+				font-size: 12px;
+			}
+		}
+
+		.if-upload-list-item-actions {
+			width: 24px;
+			display: flex;
+		}
+	}
+}

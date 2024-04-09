@@ -26,6 +26,7 @@ export { default as Emoji } from './Emoji'
 export { default as SettingsModal } from './SettingsModal'
 export { default as FormEditable } from './FormEditable'
 export { default as FormTable } from './FormTable'
+export { default as FileUploader } from './FileUploader'
 
 export type { IProps as IPropsDirTree } from './DirTree/types'
 export type {
