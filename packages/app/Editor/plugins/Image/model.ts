@@ -11,9 +11,9 @@ import {
 } from 'lexical'
 import { makeAutoObservable } from 'mobx'
 
+import { INSERT_IMAGE_COMMAND } from '@/Editor/commands'
 import { $wrapNodeInElement, mergeRegister } from '@lexical/utils'
 
-import { INSERT_IMAGE_COMMAND } from './command'
 import { $createImageNode, onDragOver, onDragStart, onDrop } from './utils'
 
 import type { LexicalEditor } from 'lexical'

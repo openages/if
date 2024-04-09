@@ -1,6 +1,7 @@
 import { $createRangeSelection, $setSelection } from 'lexical'
 
-import { INSERT_IMAGE_COMMAND } from '../command'
+import { INSERT_IMAGE_COMMAND } from '@/Editor/commands'
+
 import { canDropImage, getDragImageData, getDragSelection, getImageNodeInSelection } from './index'
 
 import type { LexicalEditor } from 'lexical'

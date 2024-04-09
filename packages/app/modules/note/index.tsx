@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
 import { container } from 'tsyringe'
 
-import { Editor } from '@/components'
+import Editor from '@/Editor'
 
 import styles from './index.css'
 import Model from './model'

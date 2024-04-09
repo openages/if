@@ -35,9 +35,6 @@ importers:
       '@antv/util':
         specifier: ^3.3.7
         version: 3.3.7
-      '@dagrejs/dagre':
-        specifier: ^1.1.1
-        version: 1.1.1
       '@dnd-kit/core':
         specifier: ^6.1.0
         version: 6.1.0(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326)
@@ -56,10 +53,22 @@ importers:
       '@emoji-mart/react':
         specifier: ^1.1.1
         version: 1.1.1(emoji-mart@5.5.2)(react@0.0.0-experimental-c3048aab4-20240326)
+      '@lexical/code':
+        specifier: ^0.14.3
+        version: 0.14.3
+      '@lexical/list':
+        specifier: ^0.14.3
+        version: 0.14.3
       '@lexical/react':
         specifier: ^0.14.3
         version: 0.14.3(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326)(yjs@13.6.14)
       '@lexical/rich-text':
+        specifier: ^0.14.3
+        version: 0.14.3
+      '@lexical/selection':
+        specifier: ^0.14.3
+        version: 0.14.3
+      '@lexical/table':
         specifier: ^0.14.3
         version: 0.14.3
       '@lexical/utils':
@@ -119,9 +128,9 @@ importers:
       fast-equals:
         specifier: ^5.0.1
         version: 5.0.1
-      flexsearch:
-        specifier: 0.7.34
-        version: 0.7.34
+      fflate:
+        specifier: ^0.8.2
+        version: 0.8.2
       framer-motion:
         specifier: ^10.18.0
         version: 10.18.0(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326)
@@ -1990,17 +1999,6 @@ packages:
   /@ctrl/tinycolor@3.6.1:
     resolution: {integrity: sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==}
     engines: {node: '>=10'}
-    dev: false
-
-  /@dagrejs/dagre@1.1.1:
-    resolution: {integrity: sha512-AQfT6pffEuPE32weFzhS/u3UpX+bRXUARIXL7UqLaxz497cN8pjuBlX6axO4IIECE2gBV8eLFQkGCtKX5sDaUA==}
-    dependencies:
-      '@dagrejs/graphlib': 2.2.1
-    dev: false
-
-  /@dagrejs/graphlib@2.2.1:
-    resolution: {integrity: sha512-xJsN1v6OAxXk6jmNdM+OS/bBE8nDCwM0yDNprXR18ZNatL6to9ggod9+l2XtiLhXfLm0NkE7+Er/cpdlM+SkUA==}
-    engines: {node: '>17.0.0'}
     dev: false
 
   /@discoveryjs/json-ext@0.5.7:
@@ -5997,6 +5995,10 @@ packages:
     dependencies:
       websocket-driver: 0.7.4
 
+  /fflate@0.8.2:
+    resolution: {integrity: sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==}
+    dev: false
+
   /fill-range@7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
     engines: {node: '>=8'}
@@ -6065,10 +6067,6 @@ packages:
       '@firebase/util': 1.9.3
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
-    dev: false
-
-  /flexsearch@0.7.34:
-    resolution: {integrity: sha512-Z9jISJn78gHxU0wgI+v3a0hbbSQnJq0zJ7B7HnWFlKx6436HHO6zwa2D/UKfWEB8C7yI5z1lNhmalGtfh2mC4A==}
     dev: false
 
   /follow-redirects@1.15.6:

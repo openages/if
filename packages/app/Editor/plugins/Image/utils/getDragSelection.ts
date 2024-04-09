@@ -1,4 +1,4 @@
-import { getDomSelection } from '@/components/Editor/utils'
+import { getDomSelection } from '@/Editor/utils'
 
 export default (event: DragEvent) => {
 	let range = null

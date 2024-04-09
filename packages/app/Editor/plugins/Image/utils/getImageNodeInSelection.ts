@@ -1,6 +1,6 @@
 import { $getSelection, $isNodeSelection } from 'lexical'
 
-import { $isImageNode } from '../utils'
+import { $isImageNode } from './'
 
 export default () => {
 	const selection = $getSelection()

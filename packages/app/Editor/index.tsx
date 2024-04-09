@@ -6,6 +6,7 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 
 import { Placeholder } from './components'
 import styles from './index.css'
+import { Picker } from './plugins'
 import { onError } from './utils'
 
 const Index = () => {
@@ -18,6 +19,7 @@ const Index = () => {
 					ErrorBoundary={LexicalErrorBoundary}
 				/>
 				<AutoFocusPlugin />
+				<Picker />
 			</LexicalComposer>
 		</div>
 	)
