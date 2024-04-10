@@ -43,13 +43,13 @@ module.exports = defineConfig({
 	devServer: {
 		compress: false
 	},
+	node: {
+		global: false
+	},
 	experiments: {
 		outputModule: is_module,
-		rspackFuture: {
-			// newTreeshaking: false
-		}
+		rspackFuture: {}
 	},
-	ignoreWarnings: [/Conflicting order/],
 	plugins: [
 		new HtmlRspackPlugin({
 			title: 'IF - GTD for prefessionals.',
@@ -58,6 +58,7 @@ module.exports = defineConfig({
 		}),
 		...(is_dev ? plugins_dev : plugins_prod)
 	],
+	ignoreWarnings: [/Conflicting order/],
 	module: {
 		parser: {
 			css: { namedExports: false },
