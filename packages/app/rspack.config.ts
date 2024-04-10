@@ -49,6 +49,7 @@ module.exports = defineConfig({
 			// newTreeshaking: false
 		}
 	},
+	ignoreWarnings: [/Conflicting order/],
 	plugins: [
 		new HtmlRspackPlugin({
 			title: 'IF - GTD for prefessionals.',
@@ -60,7 +61,6 @@ module.exports = defineConfig({
 	module: {
 		parser: {
 			css: { namedExports: false },
-			'css/auto': { namedExports: false },
 			'css/module': { namedExports: false }
 		},
 		rules: [
