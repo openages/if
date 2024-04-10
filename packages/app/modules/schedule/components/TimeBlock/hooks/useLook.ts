@@ -16,8 +16,8 @@ export default (args: Args) => {
 			return {
 				class: ['absolute', styles.timeline],
 				style: {
-					left: `calc(${item.start * step}px + 1.5px)`,
-					width: `calc(${item.length * step}px - 3px)`
+					left: `calc(${item.start * step}px + 1px)`,
+					width: `calc(${item.length * step}px - 2px)`
 				}
 			}
 		}
@@ -39,10 +39,10 @@ export default (args: Args) => {
 				item.past && styles.past
 			],
 			style: {
-				top: `calc(${item.start * 16}px + 1.5px)`,
-				left: 2,
-				width: `calc(100% - 3px)`,
-				height: `calc(${item.length * 16}px - 3px)`
+				top: `calc(${item.start * 16}px + 1px)`,
+				left: 1,
+				width: `calc(100% - 2px)`,
+				height: `calc(${item.length * 16}px - 2px)`
 			}
 		}
 	}, [item, month_mode, step, timeline])
