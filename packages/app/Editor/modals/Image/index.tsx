@@ -30,7 +30,7 @@ const Index = () => {
 					</When>
 					<When condition={x.type === 'File'}>
 						<Item label='File' name='file'>
-							<FileUploader accept='image/*' maxCount={1}></FileUploader>
+							<FileUploader accept='image/*' maxCount={1} maxSize={1}></FileUploader>
 						</Item>
 					</When>
 				</Choose>

@@ -9,19 +9,20 @@ import styles from './index.css'
 
 import type { UploadProps } from 'antd'
 
-const { Dragger } = Upload
+const { Dragger, LIST_IGNORE } = Upload
 
 interface IProps {
 	value?: UploadProps['fileList']
 	accept?: UploadProps['accept']
 	multiple?: UploadProps['multiple']
 	maxCount?: UploadProps['maxCount']
+	maxSize?: number
 	showProgress?: boolean
 	onChange?: (v: UploadProps['fileList']) => void
 }
 
 const Index = (props: IProps) => {
-	const { value, accept, multiple, maxCount, showProgress, onChange } = props
+	const { value, accept, multiple, maxCount, maxSize, showProgress, onChange } = props
 	const { t } = useTranslation()
 
 	const props_dragger: UploadProps = {
@@ -30,10 +31,6 @@ const Index = (props: IProps) => {
 		multiple,
 		maxCount,
 		onChange: useMemoizedFn(({ file, fileList }) => {
-			const { status } = file
-
-			if (status !== 'done') return
-
 			onChange(fileList)
 		}),
 		onRemove: useMemoizedFn(file => {
@@ -45,6 +42,17 @@ const Index = (props: IProps) => {
 			const base64 = await fileToBase64(file as Blob)
 
 			onSuccess(base64)
+		})
+	}
+
+	if (maxSize) {
+		props_dragger['beforeUpload'] = useMemoizedFn(file => {
+			if (file.size > maxSize * 1024 * 1024) {
+				// @ts-ignore
+				$message.error(t('translation:components.FileUploader.over_size', { maxSize }))
+
+				return LIST_IGNORE
+			}
 		})
 	}
 

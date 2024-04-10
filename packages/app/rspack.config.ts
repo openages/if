@@ -43,13 +43,10 @@ module.exports = defineConfig({
 	devServer: {
 		compress: false
 	},
-	node: {
-		global: false
-	},
 	experiments: {
 		outputModule: is_module,
 		rspackFuture: {
-			// newTreeshaking: true
+			// newTreeshaking: false
 		}
 	},
 	plugins: [
@@ -61,6 +58,11 @@ module.exports = defineConfig({
 		...(is_dev ? plugins_dev : plugins_prod)
 	],
 	module: {
+		parser: {
+			css: { namedExports: false },
+			'css/auto': { namedExports: false },
+			'css/module': { namedExports: false }
+		},
 		rules: [
 			{
 				test: /\.ts$/,

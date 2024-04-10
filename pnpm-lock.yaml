@@ -135,8 +135,8 @@ importers:
         specifier: ^3.13.7
         version: 3.13.7
       i18next:
-        specifier: ^23.11.0
-        version: 23.11.0
+        specifier: ^23.11.1
+        version: 23.11.1
       js-xxhash:
         specifier: ^3.0.1
         version: 3.0.1
@@ -196,7 +196,7 @@ importers:
         version: 4.1.4(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326)
       react-i18next:
         specifier: ^13.5.0
-        version: 13.5.0(i18next@23.11.0)(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326)
+        version: 13.5.0(i18next@23.11.1)(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326)
       react-icons:
         specifier: ^4.12.0
         version: 4.12.0(react@0.0.0-experimental-c3048aab4-20240326)
@@ -280,8 +280,8 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2
       '@types/node':
-        specifier: ^20.12.6
-        version: 20.12.6
+        specifier: ^20.12.7
+        version: 20.12.7
       '@types/react':
         specifier: ^18.2.75
         version: 18.2.75
@@ -329,7 +329,7 @@ importers:
         version: 1.5.1
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@types/node@20.12.6)(typescript@5.4.4)
+        version: 10.9.2(@types/node@20.12.7)(typescript@5.4.4)
       typescript:
         specifier: ^5.4.4
         version: 5.4.4
@@ -2547,7 +2547,7 @@ packages:
     engines: {node: ^8.13.0 || >=10.10.0}
     dependencies:
       '@grpc/proto-loader': 0.7.12
-      '@types/node': 20.12.6
+      '@types/node': 20.12.7
     dev: false
 
   /@grpc/proto-loader@0.7.12:
@@ -3723,7 +3723,7 @@ packages:
   /@types/bonjour@3.5.13:
     resolution: {integrity: sha512-z9fJ5Im06zvUL548KvYNecEVlA7cVDkGUi6kZusb04mpyEFKCIZJvloCcmpmLaIahDpOQGHaHmG6imtPMmPXGQ==}
     dependencies:
-      '@types/node': 20.12.6
+      '@types/node': 20.12.7
     dev: true
 
   /@types/clone@2.1.4:
@@ -3760,7 +3760,7 @@ packages:
   /@types/connect@3.4.35:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
-      '@types/node': 20.12.6
+      '@types/node': 20.12.7
     dev: true
 
   /@types/connect@3.4.38:
@@ -3775,7 +3775,7 @@ packages:
   /@types/cors@2.8.17:
     resolution: {integrity: sha512-8CGDvrBj1zgo2qE+oS3pOCyYNqCPryMWY2bGfwA0dcfopWGgxs+78df0Rs3rc9THP4JkOhLsAa+15VdpAqkcUA==}
     dependencies:
-      '@types/node': 20.12.6
+      '@types/node': 20.12.7
 
   /@types/crypto-js@4.2.2:
     resolution: {integrity: sha512-sDOLlVbHhXpAUAL0YHDUUwDZf3iN4Bwi4W6a0W0b+QcAezUbRtH4FVb+9J4h+XFPW7l/gQ9F8qC7P+Ec4k8QVQ==}
@@ -4034,7 +4034,7 @@ packages:
   /@types/http-proxy@1.17.14:
     resolution: {integrity: sha512-SSrD0c1OQzlFX7pGu1eXxSEjemej64aaNPRhhVYUGqXh0BtldAAx37MG8btcumvpgKyZp1F5Gn3JkktdxiFv6w==}
     dependencies:
-      '@types/node': 20.12.6
+      '@types/node': 20.12.7
     dev: true
 
   /@types/json-schema@7.0.11:
@@ -4082,7 +4082,7 @@ packages:
   /@types/node-forge@1.3.11:
     resolution: {integrity: sha512-FQx220y22OKNTqaByeBGqHWYz4cl94tpcxeFdvBo3wjG6XPBuZ0BNgNZRV5J5TFmmcsJ4IzsLkmGRiQbnYsBEQ==}
     dependencies:
-      '@types/node': 20.12.6
+      '@types/node': 20.11.30
     dev: true
 
   /@types/node@20.11.30:
@@ -4096,8 +4096,8 @@ packages:
       undici-types: 5.26.5
     dev: true
 
-  /@types/node@20.12.6:
-    resolution: {integrity: sha512-3KurE8taB8GCvZBPngVbp0lk5CKi8M9f9k1rsADh0Evdz5SzJ+Q+Hx9uHoFGsLnLnd1xmkDQr2hVhlA0Mn0lKQ==}
+  /@types/node@20.12.7:
+    resolution: {integrity: sha512-wq0cICSkRLVaf3UGLMGItu/PtdY7oaXaI/RVU+xliKVOtRna3PRY57ZDfztpDL0n11vfymMUnXv8QwYCO7L1wg==}
     dependencies:
       undici-types: 5.26.5
 
@@ -4192,13 +4192,13 @@ packages:
   /@types/simple-peer@9.11.8:
     resolution: {integrity: sha512-rvqefdp2rvIA6wiomMgKWd2UZNPe6LM2EV5AuY3CPQJF+8TbdrL5TjYdMf0VAjGczzlkH4l1NjDkihwbj3Xodw==}
     dependencies:
-      '@types/node': 20.12.6
+      '@types/node': 20.12.7
     dev: false
 
   /@types/sockjs@0.3.36:
     resolution: {integrity: sha512-MK9V6NzAS1+Ud7JV9lJLFqW85VbC9dq3LmwZCuBe4wBDgKC0Kj/jd8Xl+nSviU+Qc3+m7umHHyHg//2KSa0a0Q==}
     dependencies:
-      '@types/node': 20.12.6
+      '@types/node': 20.12.7
     dev: true
 
   /@types/tapable@2.2.2:
@@ -4218,7 +4218,7 @@ packages:
   /@types/webpack@5.28.0:
     resolution: {integrity: sha512-8cP0CzcxUiFuA9xGJkfeVpqmWTk9nx6CWwamRGCj95ph1SmlRRk9KlCZ6avhCbZd4L68LvYT6l1kpdEnQXrF8w==}
     dependencies:
-      '@types/node': 20.12.6
+      '@types/node': 20.12.7
       tapable: 2.2.1
       webpack: 5.91.0
     transitivePeerDependencies:
@@ -4654,7 +4654,7 @@ packages:
       copy-to-clipboard: 3.3.3
       dayjs: 1.11.10
       qrcode.react: 3.1.0(react@0.0.0-experimental-c3048aab4-20240326)
-      rc-cascader: 3.24.0(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326)
+      rc-cascader: 3.24.1(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326)
       rc-checkbox: 3.2.0(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326)
       rc-collapse: 3.7.3(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326)
       rc-dialog: 9.4.0(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326)
@@ -5728,7 +5728,7 @@ packages:
     dependencies:
       '@types/cookie': 0.4.1
       '@types/cors': 2.8.17
-      '@types/node': 20.12.6
+      '@types/node': 20.12.7
       accepts: 1.3.8
       base64id: 2.0.0
       cookie: 0.4.2
@@ -5746,7 +5746,7 @@ packages:
     resolution: {integrity: sha512-QHTXI/sZQmko1cbDoNAa3mJ5qhWUUNAq3vR0/YiD379fWQrcfuoX1+HW2S0MTt7XmoPLapdaDKUtelUSPic7hQ==}
     engines: {node: '>=10.13.0'}
     dependencies:
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       tapable: 2.2.1
     dev: true
 
@@ -6445,8 +6445,8 @@ packages:
     engines: {node: '>=16.17.0'}
     dev: true
 
-  /i18next@23.11.0:
-    resolution: {integrity: sha512-VwFtlgy2LDbY0Qs6VfekIm6mv5/JmSJrtBf4aszl7Vby8+GcBlri0/7dkMZXmzTfiBMPUPBOmYCdQK7K4emkGQ==}
+  /i18next@23.11.1:
+    resolution: {integrity: sha512-mXw4A24BiPZKRsbb9ewgSvjYd6fxFCNwJyfK6nYfSTIAX2GkCWcb598m3DFkDZmqADatvuASrKo6qwORz3VwTQ==}
     dependencies:
       '@babel/runtime': 7.24.4
     dev: false
@@ -6692,11 +6692,12 @@ packages:
     resolution: {integrity: sha512-PIeMbHqMt4DnUP3MA/Flc0HElYjMXArsw1qwJZcm9sqR8mq3l8NYizFMty0pWwE/tzIGH3EKK5+jes5mAr85yw==}
     dev: false
 
-  /its-fine@1.1.3(react@0.0.0-experimental-c3048aab4-20240326):
-    resolution: {integrity: sha512-mncCA+yb6tuh5zK26cHqKlsSyxm4zdm4YgJpxycyx6p9fgxgK5PLu3iDVpKhzTn57Yrv3jk/r0aK0RFTT1OjFw==}
+  /its-fine@1.2.0(react@0.0.0-experimental-c3048aab4-20240326):
+    resolution: {integrity: sha512-518vLgHK/dgGxyZj4MdLrDRryziqR1M+JbVtjw1tmdgvZQYsJvB2Leoe2qFOHPalZ5KiAOK18wTmIC0XszYc0w==}
     peerDependencies:
-      react: '>=18.0'
+      react: '>=16.8'
     dependencies:
+      '@types/react': 18.2.75
       '@types/react-reconciler': 0.28.8
       react: 0.0.0-experimental-c3048aab4-20240326
     dev: false
@@ -7656,7 +7657,7 @@ packages:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 20.12.6
+      '@types/node': 20.12.7
       long: 5.2.3
     dev: false
 
@@ -7725,8 +7726,8 @@ packages:
       unpipe: 1.0.0
     dev: true
 
-  /rc-cascader@3.24.0(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326):
-    resolution: {integrity: sha512-NwkYsVULA61S085jbOYbq8Z7leyIxVmLwf+71mWLjA3kCfUf/rAKC0WfjQbqBDaLGlU9d4z1EzyPaHBKLYWv6A==}
+  /rc-cascader@3.24.1(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326):
+    resolution: {integrity: sha512-RgKuYgEGPx+6wCgguYFHjMsDZdCyydZd58YJRCfYQ8FObqLnZW0x/vUcEyPjhWIj1EhjV958IcR+NFPDbbj9kg==}
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
@@ -8292,7 +8293,7 @@ packages:
       smooth-scroll-into-view-if-needed: 1.1.33
     dev: false
 
-  /react-i18next@13.5.0(i18next@23.11.0)(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326):
+  /react-i18next@13.5.0(i18next@23.11.1)(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326):
     resolution: {integrity: sha512-CFJ5NDGJ2MUyBohEHxljOq/39NQ972rh1ajnadG9BjTk+UXbHLq4z5DKEbEQBDoIhUmmbuS/fIMJKo6VOax1HA==}
     peerDependencies:
       i18next: '>= 23.2.3'
@@ -8307,7 +8308,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.24.4
       html-parse-stringify: 3.0.1
-      i18next: 23.11.0
+      i18next: 23.11.1
       react: 0.0.0-experimental-c3048aab4-20240326
       react-dom: 0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326)
     dev: false
@@ -8336,7 +8337,7 @@ packages:
       react-dom: '>=18.0.0'
     dependencies:
       '@types/react-reconciler': 0.28.8
-      its-fine: 1.1.3(react@0.0.0-experimental-c3048aab4-20240326)
+      its-fine: 1.2.0(react@0.0.0-experimental-c3048aab4-20240326)
       konva: 9.3.6
       react: 0.0.0-experimental-c3048aab4-20240326
       react-dom: 0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326)
@@ -9320,7 +9321,7 @@ packages:
       yn: 3.1.1
     dev: true
 
-  /ts-node@10.9.2(@types/node@20.12.6)(typescript@5.4.4):
+  /ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.4):
     resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
     hasBin: true
     peerDependencies:
@@ -9339,7 +9340,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.12.6
+      '@types/node': 20.12.7
       acorn: 8.11.3
       acorn-walk: 8.3.2
       arg: 4.1.3
@@ -9598,7 +9599,7 @@ packages:
     engines: {node: '>=10.13.0'}
     dependencies:
       glob-to-regexp: 0.4.1
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
     dev: true
 
   /wbuf@1.7.3:
@@ -9784,7 +9785,7 @@ packages:
       '@types/connect-history-api-fallback': 1.5.4
       '@types/express': 4.17.21
       '@types/serve-index': 1.9.4
-      '@types/serve-static': 1.15.5
+      '@types/serve-static': 1.15.7
       '@types/sockjs': 0.3.36
       '@types/ws': 8.5.10
       ansi-html-community: 0.0.8

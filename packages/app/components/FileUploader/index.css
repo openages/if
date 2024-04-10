@@ -12,7 +12,8 @@
 			height: 72px;
 			background-color: transparent;
 
-			&:hover {
+			&:hover,
+			&-hover {
 				border-color: var(--color_text) !important;
 			}
 
@@ -41,6 +42,7 @@
 			color: var(--color_text_light);
 
 			.if-upload-list-item-name {
+				padding: 0 4px !important;
 				font-size: 12px;
 			}
 		}
