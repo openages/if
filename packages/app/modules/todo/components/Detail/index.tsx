@@ -1,10 +1,24 @@
 import { useMemoizedFn } from 'ahooks'
-import { Drawer } from 'antd'
+import { Drawer, Tooltip } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { getItemStatus } from '@/utils/modules/todo'
-import { Bell, Calendar, CaretDown, CaretUp, FireSimple, Plus, Repeat, Sun, Tag, X } from '@phosphor-icons/react'
+import {
+	Bell,
+	BoxArrowDown,
+	Broom,
+	Calendar,
+	CaretDown,
+	CaretUp,
+	CircleDashed,
+	FireSimple,
+	Plus,
+	Repeat,
+	Sun,
+	Tag,
+	X
+} from '@phosphor-icons/react'
 
 import { useInput } from '../../hooks'
 import Children from '../Children'
@@ -37,6 +51,8 @@ const Index = (props: IPropsDetail) => {
 	} = props
 	const { t } = useTranslation()
 	const { item = {} as Todo.Todo, prev_id, next_id } = current_detail_item
+	const { index, dimension_id } = current_detail_index
+
 	const {
 		id,
 		status,
@@ -57,8 +73,8 @@ const Index = (props: IPropsDetail) => {
 		update: useMemoizedFn(textContent =>
 			update({
 				type: 'parent',
-				index: current_detail_index.index,
-				dimension_id: current_detail_index.dimension_id,
+				index: index,
+				dimension_id: dimension_id,
 				value: { text: textContent }
 			})
 		)
@@ -76,24 +92,52 @@ const Index = (props: IPropsDetail) => {
 		insertChildren
 	} = useHandlers({
 		item,
-		index: current_detail_index.index,
+		index,
 		kanban_mode,
-		dimension_id: current_detail_index.dimension_id,
+		dimension_id,
 		update
 	})
 
 	const item_status = useMemo(() => getItemStatus({ relations, id, status }), [relations, id, status])
 
+	const close = useMemoizedFn(() => {
+		update({ type: 'close', index, dimension_id, value: {} })
+	})
+
+	const unclose = useMemoizedFn(() => {
+		update({ type: 'unclose', index, dimension_id, value: {} })
+	})
+
+	const archive = useMemoizedFn(() => {
+		update({ type: 'archive', index, dimension_id, value: {} })
+	})
+
+	const prev = useMemoizedFn(() => {
+		setCurrentDetailIndex({
+			id: prev_id,
+			index: index - 1,
+			dimension_id
+		})
+	})
+
+	const next = useMemoizedFn(() => {
+		setCurrentDetailIndex({
+			id: next_id,
+			index: index + 1,
+			dimension_id
+		})
+	})
+
 	const props_children: IPropsChildren = {
 		mode,
 		kanban_mode,
 		items: children,
-		index: current_detail_index.index,
+		index,
 		open: true,
 		isDragging: false,
 		useByDetail: true,
 		handled: status === 'checked' || status === 'closed',
-		dimension_id: current_detail_index.dimension_id,
+		dimension_id,
 		update,
 		tab
 	}
@@ -117,34 +161,52 @@ const Index = (props: IPropsDetail) => {
 			onClose={closeDetailModal}
 			afterOpenChange={clearCurrentDetail}
 		>
-			<div className='toggle_wrap flex absolute'>
+			<div className='actions_wrap flex absolute'>
+				<If condition={status === 'unchecked'}>
+					<Tooltip title={t('translation:todo.common.close')} destroyTooltipOnHide>
+						<div
+							className={$cx('btn_action flex justify_center align_center clickable mr_6')}
+							onClick={close}
+						>
+							<Broom size={14}></Broom>
+						</div>
+					</Tooltip>
+				</If>
+				<If condition={status === 'closed'}>
+					<Tooltip title={t('translation:todo.common.unclose')} destroyTooltipOnHide>
+						<div
+							className={$cx('btn_action flex justify_center align_center clickable mr_6')}
+							onClick={unclose}
+						>
+							<CircleDashed size={14}></CircleDashed>
+						</div>
+					</Tooltip>
+				</If>
+				<Tooltip title={t('translation:todo.Header.options.archive')} destroyTooltipOnHide>
+					<If condition={status === 'checked' || status === 'closed'}>
+						<div
+							className={$cx('btn_action flex justify_center align_center clickable mr_6')}
+							onClick={archive}
+						>
+							<BoxArrowDown size={14}></BoxArrowDown>
+						</div>
+					</If>
+				</Tooltip>
 				<div
 					className={$cx(
-						'btn_toggle flex justify_center align_center clickable mr_6',
+						'btn_action flex justify_center align_center clickable mr_6',
 						!prev_id && 'disabled'
 					)}
-					onClick={() =>
-						setCurrentDetailIndex({
-							id: prev_id,
-							index: current_detail_index.index - 1,
-							dimension_id: current_detail_index.dimension_id
-						})
-					}
+					onClick={prev}
 				>
 					<CaretUp size={16}></CaretUp>
 				</div>
 				<div
 					className={$cx(
-						'btn_toggle flex justify_center align_center clickable',
+						'btn_action flex justify_center align_center clickable',
 						!current_detail_item.next_id && 'disabled'
 					)}
-					onClick={() =>
-						setCurrentDetailIndex({
-							id: next_id,
-							index: current_detail_index.index + 1,
-							dimension_id: current_detail_index.dimension_id
-						})
-					}
+					onClick={next}
 				>
 					<CaretDown size={16}></CaretDown>
 				</div>

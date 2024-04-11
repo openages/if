@@ -43,6 +43,9 @@ export type ArgsCheck = Indexes & { status: Todo.Todo['status'] }
 
 export type ArgsUpdate =
 	| (Indexes & { type: 'parent'; value: Partial<Omit<Todo.TodoItem, 'id'>> })
+	| (Indexes & { type: 'close'; value: Partial<Omit<Todo.TodoItem, 'id'>> })
+	| (Indexes & { type: 'unclose'; value: Partial<Omit<Todo.TodoItem, 'id'>> })
+	| (Indexes & { type: 'archive'; value: Partial<Omit<Todo.TodoItem, 'id'>> })
 	| (Indexes & { type: 'children'; value: Todo.Todo['children'] })
 	| (Indexes & { type: 'children_item'; value: Partial<Omit<Todo.Todo['children'][number], 'id'>> })
 	| (Indexes & { type: 'insert_children_item'; value: any })

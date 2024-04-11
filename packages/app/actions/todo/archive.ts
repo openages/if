@@ -4,25 +4,28 @@ import { difference } from 'lodash-es'
 import { getDocItemsData } from '@/utils'
 
 import type { Todo } from '@/types'
+import type { MangoQuerySelector } from 'rxdb'
 
-export default async (file_id: string) => {
-	const archive_items = await $db.todo_items
-		.find({
-			selector: {
-				file_id: file_id,
-				type: 'todo',
-				archive: false,
-				status: {
-					$ne: 'unchecked'
-				},
-				archive_time: {
-					$exists: true,
-					$ne: undefined,
-					$lte: new Date().valueOf()
+export default async (file_id: string, todo_id?: string) => {
+	const selector = (
+		todo_id
+			? { id: todo_id }
+			: {
+					file_id: file_id,
+					type: 'todo',
+					archive: false,
+					status: {
+						$ne: 'unchecked'
+					},
+					archive_time: {
+						$exists: true,
+						$ne: undefined,
+						$lte: new Date().valueOf()
+					}
 				}
-			}
-		})
-		.exec()
+	) as MangoQuerySelector<Todo.Todo>
+
+	const archive_items = await $db.todo_items.find({ selector }).exec()
 
 	const archive_items_data = getDocItemsData(archive_items)
 

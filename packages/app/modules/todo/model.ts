@@ -355,17 +355,17 @@ export default class Index {
 			status
 		})
 
-		if (this.setting.setting.auto_archiving === '0m') {
-			await archive(this.id)
-		}
-
 		const todo_item = (await queryItem(item.id)) as RxDocument<Todo.Todo>
 
-		if (todo_item.remind_time) {
-			await todo_item.updateCRDT({ ifMatch: { $set: { remind_time: undefined } } })
-		}
+		if (status === 'checked' || status === 'closed') {
+			if (this.setting.setting.auto_archiving === '0m') {
+				await archive(this.id)
+			}
 
-		if (args.status === 'checked') {
+			if (todo_item.remind_time) {
+				await todo_item.updateCRDT({ ifMatch: { $unset: { remind_time: '' } } })
+			}
+
 			recycle(todo_item)
 		} else {
 			if (todo_item.cycle_enabled && todo_item.cycle && todo_item.cycle.value !== undefined) {
@@ -373,7 +373,7 @@ export default class Index {
 			}
 		}
 
-		await this.setActivity('check')
+		await this.setActivity(status)
 	}
 
 	async update(args: ArgsUpdate) {
@@ -381,7 +381,19 @@ export default class Index {
 
 		const { item } = this.getItem({ index, dimension_id })
 
-		const data = type === 'parent' ? { id: item.id, ...value } : { id: item.id, children: value }
+		let data = type === 'parent' ? { id: item.id, ...value } : { id: item.id, children: value }
+
+		if (type === 'close') {
+			return this.check({ index, dimension_id, status: 'closed' })
+		}
+
+		if (type === 'unclose') {
+			return this.check({ index, dimension_id, status: 'unchecked' })
+		}
+
+		if (type === 'archive') {
+			return archive(this.id, item.id)
+		}
 
 		if (type === 'children' && !(value?.length > 0)) {
 			data['children'] = undefined
@@ -679,7 +691,7 @@ export default class Index {
 		await cycle(this.id)
 	}
 
-	async setActivity(action: 'insert' | 'check') {
+	async setActivity(action: string) {
 		return $db.activity_items.insert({
 			id: id(),
 			module: 'setting',

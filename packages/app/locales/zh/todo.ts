@@ -10,7 +10,9 @@ export default {
 		text: '文本',
 		children: '子任务',
 		options: '操作',
-		archived: '已归档'
+		archived: '已归档',
+		close: '关闭',
+		unclose: '取消关闭'
 	},
 	context_menu: {
 		detail: '查看详情',

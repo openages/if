@@ -10,7 +10,9 @@ export default {
 		text: 'Text',
 		children: 'Children',
 		options: 'Options',
-		archived: 'Archived'
+		archived: 'Archived',
+		close: 'Close',
+		unclose: 'Unclose'
 	},
 	context_menu: {
 		detail: 'Detail',

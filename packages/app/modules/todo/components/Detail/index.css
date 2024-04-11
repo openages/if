@@ -3,7 +3,7 @@
 
 	&.breakpoint {
 		:global {
-			.toggle_wrap {
+			.actions_wrap {
 				top: 24px;
 				right: 54px;
 			}
@@ -25,11 +25,11 @@
 	}
 
 	:global {
-		.toggle_wrap {
+		.actions_wrap {
 			top: 12px;
 			right: 42px;
 
-			.btn_toggle {
+			.btn_action {
 				width: 21px;
 				height: 21px;
 				border-radius: var(--radius_small);
