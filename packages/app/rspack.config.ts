@@ -43,9 +43,6 @@ module.exports = defineConfig({
 	devServer: {
 		compress: false
 	},
-	node: {
-		global: false
-	},
 	experiments: {
 		outputModule: is_module,
 		rspackFuture: {}
