@@ -369,7 +369,7 @@ export default class Index {
 			recycle(todo_item)
 		} else {
 			if (todo_item.cycle_enabled && todo_item.cycle && todo_item.cycle.value !== undefined) {
-				await todo_item.updateCRDT({ ifMatch: { $unset: { recycle_time: '' } } })
+				await todo_item.updateCRDT({ ifMatch: { $unset: { recycle_time: '', archive_time: '' } } })
 			}
 		}
 
