@@ -3,11 +3,12 @@ import { Position } from '@xyflow/react'
 
 import getPosition from './getPosition'
 
-import type { Node } from '@xyflow/react'
-import type Model from '../model'
+import type { IPropsMindmap } from '@/modules/todo/types'
 
-export default (props: Model['props'], nodes: Array<Node>) => {
-	const { file_id, kanban_items } = props
+import type { Node } from '@xyflow/react'
+
+export default (args: Pick<IPropsMindmap, 'file_id' | 'kanban_items'>, nodes: Array<Node>) => {
+	const { file_id, kanban_items } = args
 	const raw_tree = { type: 'root', id: file_id, isRoot: () => true }
 
 	const nodes_map = nodes.reduce(

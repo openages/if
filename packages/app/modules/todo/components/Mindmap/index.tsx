@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import { pick } from 'lodash-es'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -9,15 +10,17 @@ import { useHiddenReactflowROLoop } from '@/hooks'
 import { ReactFlowProvider } from '@xyflow/react'
 
 import { Graph, Shadow } from './components'
+import { Context } from './context'
 import styles from './index.css'
 import Model from './model'
 
 import type { IPropsMindmap } from '../../types'
 import type { IPropsShadow, IPropsGraph } from './types'
+import type { IPropsContext } from './context'
 
 const Index = (props: IPropsMindmap) => {
 	const [x] = useState(() => container.resolve(Model))
-	const { kanban_items, angles } = props
+	const { file_id, kanban_items, tags, angles, check, insert, update, tab, moveTo, remove, showDetailModal } = props
 	const global = useGlobal()
 
 	useHiddenReactflowROLoop()
@@ -27,7 +30,7 @@ const Index = (props: IPropsMindmap) => {
 		if (Object.keys(kanban_items).some(angle_id => !kanban_items[angle_id].loaded)) return
 		if (x.nodes.length) return x.getNodeEdge(props.kanban_items)
 
-		x.init(props)
+		x.init(pick(props, ['file_id', 'name', 'kanban_items']))
 	}, [props])
 
 	const props_shadow: IPropsShadow = {
@@ -43,23 +46,37 @@ const Index = (props: IPropsMindmap) => {
 		setHandlers: useMemoizedFn(v => (x.graph_handlers = v))
 	}
 
+	const props_context: IPropsContext = {
+		file_id,
+		tags,
+		angles,
+		check,
+		insert,
+		update,
+		tab,
+		moveTo,
+		remove,
+		showDetailModal
+	}
+
 	return (
 		<div className={$cx('flex relative', styles._local)}>
 			<span className='signal_wrap absolute top_0 left_0'>{x.signal}</span>
 			<If condition={x.pure_nodes.length > 0}>
-				{/* <ReactFlowProvider>
-					<Shadow {...props_shadow}></Shadow>
-				</ReactFlowProvider> */}
 				{createPortal(
 					<ReactFlowProvider>
-						<Shadow {...props_shadow}></Shadow>
+						<Context.Provider value={props_context}>
+							<Shadow {...props_shadow}></Shadow>
+						</Context.Provider>
 					</ReactFlowProvider>,
 					document.body
 				)}
 			</If>
 			<If condition={x.nodes.length > 0}>
 				<ReactFlowProvider>
-					<Graph {...props_graph}></Graph>
+					<Context.Provider value={props_context}>
+						<Graph {...props_graph}></Graph>
+					</Context.Provider>
 				</ReactFlowProvider>
 			</If>
 		</div>

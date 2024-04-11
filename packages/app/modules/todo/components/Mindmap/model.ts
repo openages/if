@@ -2,7 +2,6 @@ import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { setElements } from '@/utils'
-import { deepEqual } from '@openages/stk/react'
 
 import { getNodeEdge, layout } from './utils'
 
@@ -11,7 +10,7 @@ import type { IPropsMindmap } from '@/modules/todo/types'
 
 @injectable()
 export default class Index {
-	props = {} as IPropsMindmap
+	args = {} as Pick<IPropsMindmap, 'file_id' | 'name' | 'kanban_items'>
 	pure_nodes = [] as Array<Node>
 	nodes = [] as Array<Node>
 	edges = [] as Array<Edge>
@@ -31,7 +30,7 @@ export default class Index {
 		makeAutoObservable(
 			this,
 			{
-				props: false,
+				args: false,
 				pure_nodes: false,
 				nodes: false,
 				edges: false,
@@ -42,16 +41,16 @@ export default class Index {
 		)
 	}
 
-	init(props: Index['props']) {
-		this.props = props
+	init(args: Index['args']) {
+		this.args = args
 
 		this.getNodeEdge()
 	}
 
 	getNodeEdge(kanban_items?: IPropsMindmap['kanban_items']) {
-		if (kanban_items) this.props = { ...this.props, kanban_items }
+		if (kanban_items) this.args = { ...this.args, kanban_items }
 
-		const { nodes, edges } = getNodeEdge(this.props)
+		const { nodes, edges } = getNodeEdge(this.args)
 
 		if (this.nodes.length) {
 			this.setNodes(nodes, true)
@@ -66,7 +65,7 @@ export default class Index {
 
 	layout(v: Array<Node>) {
 		const new_nodes = $copy(v)
-		const nodes = layout(this.props, new_nodes)
+		const nodes = layout(this.args, new_nodes)
 
 		if (this.nodes.length) {
 			this.setNodes(nodes)
