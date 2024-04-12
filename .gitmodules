@@ -1,3 +1,10 @@
 [submodule "packages/stk"]
 	path = packages/stk
 	url = git@1yasa:openages/stk.git
+
+[submodule "packages/editor"]
+	path = packages/editor
+	url = git@1yasa:openages/editor.git
+[submodule "packages/localserver"]
+	path = packages/localserver
+	url = git@1yasa:openages/localserver.git
