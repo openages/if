@@ -1,7 +1,3 @@
 [submodule "packages/stk"]
 	path = packages/stk
 	url = git@1yasa:openages/stk.git
-
-[submodule "packages/mindkit"]
-	path = packages/mindkit
-	url = git@1yasa:openages/mindkit.git
