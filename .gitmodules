@@ -5,6 +5,15 @@
 [submodule "packages/editor"]
 	path = packages/editor
 	url = git@1yasa:openages/editor.git
+      
 [submodule "packages/localserver"]
 	path = packages/localserver
 	url = git@1yasa:openages/localserver.git
+
+[submodule "packages/if_server"]
+	path = packages/if_server
+	url = git@1yasa:openages/if_server.git
+
+[submodule "packages/if_website"]
+	path = packages/if_website
+	url = git@1yasa:openages/if_website.git
