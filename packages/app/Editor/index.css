@@ -1,7 +1,0 @@
-._local {
-	:global {
-		div[contenteditable='true'] {
-			outline: none;
-		}
-	}
-}
