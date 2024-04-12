@@ -12,6 +12,7 @@ npm-debug.log*
 .vscode
 .svn
 .swc
+@mf-types
 
 # temp
 **/.tmp

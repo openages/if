@@ -8,7 +8,7 @@ export namespace Pomo {
 	}
 
 	export type Item = {
-		/** @maxLength 120 */
+		/** @maxLength 30 */
 		file_id: string
 		sessions: Array<Session>
 		index: number

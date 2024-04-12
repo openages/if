@@ -14,6 +14,7 @@ export namespace DirTree {
 		icon_hue?: number
 		update_at?: number
 		backup_at?: number
+		projects?: Array<string>
 	}
 
 	export type Items = Array<Item>
