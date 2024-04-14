@@ -14,6 +14,7 @@ import Model from './model'
 
 import type Option from './option'
 import type { IPropsMenu } from './types'
+import type { IPropsModal } from '../../types'
 import type { TypeaheadMenuPluginProps } from '@lexical/react/LexicalTypeaheadMenuPlugin'
 
 const Index = () => {
@@ -60,7 +61,11 @@ const Index = () => {
 				onCancel={closeModal}
 				getContainer={getModalContainer}
 			>
-				<LazyElement type='editor_modal' path={x.modal}></LazyElement>
+				<LazyElement
+					type='editor_modal'
+					path={x.modal}
+					props={{ onClose: closeModal } as IPropsModal}
+				></LazyElement>
 			</Modal>
 			<LexicalTypeaheadMenuPlugin
 				options={options}

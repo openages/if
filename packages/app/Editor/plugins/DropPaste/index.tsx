@@ -33,7 +33,7 @@ export default function DragDropPaste(): null {
 					for (const { file, result } of filesResult) {
 						if (isMimeType(file, ACCEPTABLE_IMAGE_TYPES)) {
 							editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
-								altText: file.name,
+								alt: file.name,
 								src: result
 							})
 						}

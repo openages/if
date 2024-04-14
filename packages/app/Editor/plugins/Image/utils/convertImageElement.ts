@@ -5,9 +5,9 @@ export default (domNode: Node) => {
 
 	if (img.src.startsWith('file:///')) return null
 
-	const { alt: altText, src, width, height } = img
+	const { alt: alt, src, width, height } = img
 
-	const node = $createImageNode({ altText, height, src, width })
+	const node = $createImageNode({ alt, height, src, width })
 
 	return { node }
 }

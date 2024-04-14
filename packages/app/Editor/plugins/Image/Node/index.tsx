@@ -5,54 +5,33 @@ import { lazy, Suspense } from 'react'
 
 import { $createImageNode, convertImageElement } from '../utils'
 
-import type { DOMConversionMap, DOMExportOutput, EditorConfig, LexicalEditor, NodeKey } from 'lexical'
+import type { DOMConversionMap, DOMExportOutput, EditorConfig } from 'lexical'
 
-const ImageComponent = lazy(() => import('./Content'))
+const Component = lazy(() => import('./Component'))
 
 export default class ImageNode extends DecoratorNode<JSX.Element> {
-	__src: string
-	__altText: string
-	__width: 'inherit' | number
-	__height: 'inherit' | number
-	__maxWidth: number
-	__showCaption: boolean
-	__caption: LexicalEditor
+	src: string
+	width: number | string
+	height: number | string
+	alt: string
 
 	static getType(): string {
 		return 'image'
 	}
 
 	static clone(node: ImageNode): ImageNode {
-		return new ImageNode(
-			node.__src,
-			node.__altText,
-			node.__maxWidth,
-			node.__width,
-			node.__height,
-			node.__showCaption,
-			node.__caption,
-			node.__key
-		)
+		return new ImageNode(node.src, node.width, node.height, node.alt)
 	}
 
 	static importJSON(serializedNode: SerializedImageNode): ImageNode {
-		const { altText, height, width, maxWidth, caption, src, showCaption } = serializedNode
+		const { src, height, width, alt } = serializedNode
 
 		const node = $createImageNode({
-			altText,
-			height,
-			maxWidth,
-			showCaption,
 			src,
-			width
+			width,
+			height,
+			alt
 		}) as ImageNode
-
-		const nestedEditor = node.__caption
-		const editorState = nestedEditor.parseEditorState(caption.editorState)
-
-		if (!editorState.isEmpty()) {
-			nestedEditor.setEditorState(editorState)
-		}
 
 		return node
 	}
@@ -61,52 +40,31 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 		return { img: () => ({ conversion: convertImageElement, priority: 0 }) }
 	}
 
-	constructor(
-		src: string,
-		altText: string,
-		maxWidth: number,
-		width?: 'inherit' | number,
-		height?: 'inherit' | number,
-		showCaption?: boolean,
-		caption?: LexicalEditor,
-		key?: NodeKey
-	) {
-		super(key)
+	constructor(src: string, width?: number | string, height?: number | string, alt?: string) {
+		super()
 
-		this.__src = src
-		this.__altText = altText
-		this.__maxWidth = maxWidth
-		this.__width = width || 'inherit'
-		this.__height = height || 'inherit'
-		this.__showCaption = showCaption || false
-		this.__caption = caption
+		this.src = src
+		this.width = width
+		this.height = height
+		this.alt = alt
 	}
 
 	exportJSON() {
 		return {
-			altText: this.getAltText(),
-			caption: this.__caption.toJSON(),
-			height: this.__height === 'inherit' ? 0 : this.__height,
-			maxWidth: this.__maxWidth,
-			showCaption: this.__showCaption,
-			src: this.getSrc(),
 			type: 'image',
 			version: 1,
-			width: this.__width === 'inherit' ? 0 : this.__width
+			src: this.src,
+			width: this.width,
+			height: this.height,
+			alt: this.alt
 		} as SerializedImageNode
 	}
 
-	setWidthAndHeight(width: 'inherit' | number, height: 'inherit' | number) {
+	setWidthAndHeight(width: number | string, height: number | string) {
 		const writable = this.getWritable()
 
-		writable.__width = width
-		writable.__height = height
-	}
-
-	setShowCaption(showCaption: boolean) {
-		const writable = this.getWritable()
-
-		writable.__showCaption = showCaption
+		writable.width = width
+		writable.height = height
 	}
 
 	createDOM(config: EditorConfig) {
@@ -124,10 +82,10 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 	exportDOM(): DOMExportOutput {
 		const element = document.createElement('img')
 
-		element.setAttribute('src', this.__src)
-		element.setAttribute('alt', this.__altText)
-		element.setAttribute('width', this.__width.toString())
-		element.setAttribute('height', this.__height.toString())
+		element.setAttribute('src', this.src)
+		element.setAttribute('alt', this.alt)
+		element.setAttribute('width', this.width.toString())
+		element.setAttribute('height', this.height.toString())
 
 		return { element }
 	}
@@ -137,25 +95,18 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 	}
 
 	getSrc() {
-		return this.__src
-	}
-
-	getAltText() {
-		return this.__altText
+		return this.src
 	}
 
 	decorate() {
 		return (
 			<Suspense fallback={null}>
-				<ImageComponent
-					src={this.__src}
-					altText={this.__altText}
-					width={this.__width}
-					height={this.__height}
-					maxWidth={this.__maxWidth}
-					nodeKey={this.getKey()}
-					showCaption={this.__showCaption}
-					caption={this.__caption}
+				<Component
+					src={this.src}
+					width={this.width}
+					height={this.height}
+					alt={this.alt}
+					node_key={this.__key}
 				/>
 			</Suspense>
 		)

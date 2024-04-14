@@ -2,6 +2,7 @@ import app from './app'
 import common from './common'
 import components from './components'
 import dirtree from './dirtree'
+import editor from './editor'
 import layout from './layout'
 import modules from './modules'
 import pomo from './pomo'
@@ -20,6 +21,7 @@ export default {
 		shortcuts,
 		dirtree,
 		components,
+		editor,
 		todo,
 		pomo,
 		schedule

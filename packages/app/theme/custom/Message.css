@@ -4,13 +4,9 @@
 
 	.if-message-notice-wrapper {
 		.if-message-notice {
-			padding: 0 8px !important;
+			padding: 0 !important;
 			margin-top: -8px;
 			text-align: right !important;
-
-			.if-message-notice-content {
-				border: 1px solid var(--color_text);
-			}
 
 			&-success {
 				.if-message-notice-content {

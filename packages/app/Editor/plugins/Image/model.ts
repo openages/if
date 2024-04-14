@@ -3,18 +3,15 @@ import {
 	$insertNodes,
 	$isRootOrShadowRoot,
 	COMMAND_PRIORITY_EDITOR,
-	COMMAND_PRIORITY_HIGH,
-	COMMAND_PRIORITY_LOW,
-	DRAGOVER_COMMAND,
-	DRAGSTART_COMMAND,
-	DROP_COMMAND
+	COMMAND_PRIORITY_LOW
 } from 'lexical'
 import { makeAutoObservable } from 'mobx'
 
 import { INSERT_IMAGE_COMMAND } from '@/Editor/commands'
+import { DRAG_DROP_PASTE } from '@lexical/rich-text'
 import { $wrapNodeInElement, mergeRegister } from '@lexical/utils'
 
-import { $createImageNode, onDragOver, onDragStart, onDrop } from './utils'
+import { $createImageNode, dragInsert } from './utils'
 
 import type { LexicalEditor } from 'lexical'
 import type { IPropsImage } from './types'
@@ -25,11 +22,17 @@ export default class Index {
 	unregister = null as () => void
 
 	constructor() {
-		makeAutoObservable(this, { editor: false, unregister: false }, { autoBind: true })
+		makeAutoObservable(
+			this,
+			{ editor: false, unregister: false, init: false, register: false },
+			{ autoBind: true }
+		)
 	}
 
 	init(editor: Index['editor']) {
 		this.editor = editor
+
+		this.register()
 	}
 
 	register() {
@@ -37,38 +40,26 @@ export default class Index {
 			this.editor.registerCommand<IPropsImage>(
 				INSERT_IMAGE_COMMAND,
 				payload => {
-					const imageNode = $createImageNode(payload)
+					const node = $createImageNode(payload)
 
-					$insertNodes([imageNode])
+					$insertNodes([node])
 
-					if ($isRootOrShadowRoot(imageNode.getParentOrThrow())) {
-						$wrapNodeInElement(imageNode, $createParagraphNode).selectEnd()
+					if ($isRootOrShadowRoot(node.getParentOrThrow())) {
+						$wrapNodeInElement(node, $createParagraphNode).selectEnd()
 					}
 
 					return true
 				},
 				COMMAND_PRIORITY_EDITOR
 			),
-			this.editor.registerCommand<DragEvent>(
-				DRAGSTART_COMMAND,
-				event => {
-					return onDragStart(event)
-				},
-				COMMAND_PRIORITY_HIGH
-			),
-			this.editor.registerCommand<DragEvent>(
-				DRAGOVER_COMMAND,
-				event => {
-					return onDragOver(event)
+			this.editor.registerCommand(
+				DRAG_DROP_PASTE,
+				files => {
+					dragInsert(this.editor, files)
+
+					return true
 				},
 				COMMAND_PRIORITY_LOW
-			),
-			this.editor.registerCommand<DragEvent>(
-				DROP_COMMAND,
-				event => {
-					return onDrop(event, this.editor)
-				},
-				COMMAND_PRIORITY_HIGH
 			)
 		)
 	}

@@ -18,7 +18,7 @@ import { $isImageNode } from '../utils'
 import type { LexicalEditor, BaseSelection } from 'lexical'
 
 export default class Index {
-	nodeKey = ''
+	key = ''
 	editor = null as LexicalEditor
 	active_editor = null as LexicalEditor
 	ref = null as HTMLImageElement
@@ -39,7 +39,7 @@ export default class Index {
 		makeAutoObservable(
 			this,
 			{
-				nodeKey: false,
+				key: false,
 				editor: false,
 				active_editor: false,
 				ref: false,
@@ -57,13 +57,15 @@ export default class Index {
 		this.editor = editor
 		this.setSelected = setSelected
 		this.clearSelection = clearSelection
+
+		this.register()
 	}
 
 	onDelete(e: KeyboardEvent) {
 		if (this.selected && $isNodeSelection($getSelection())) {
 			e.preventDefault()
 
-			const node = $getNodeByKey(this.nodeKey)
+			const node = $getNodeByKey(this.key)
 
 			if ($isImageNode(node)) {
 				node.remove()

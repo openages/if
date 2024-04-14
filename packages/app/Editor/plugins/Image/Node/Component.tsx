@@ -1,19 +1,18 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useLayoutEffect, useState, Suspense } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection'
 
 import { IPropsImage } from '../types'
-import Element from './Element'
 import Model from './model'
 
 const Index = (props: IPropsImage) => {
-	const { src, altText, nodeKey, width, height, maxWidth, showCaption } = props
+	const { src, width = '100%', height, alt, node_key } = props
 	const [x] = useState(() => new Model())
 	const [editor] = useLexicalComposerContext()
-	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey)
+	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(node_key)
 
 	useLayoutEffect(() => {
 		x.init(editor, setSelected, clearSelection)
@@ -28,21 +27,11 @@ const Index = (props: IPropsImage) => {
 	const setRef = useMemoizedFn(v => (x.ref = v))
 
 	return (
-		<Suspense fallback={null}>
-			<div className='flex flex_column'>
-				<div draggable={x.draggable}>
-					<Element
-						src={src}
-						altText={altText}
-						width={width}
-						height={height}
-						maxWidth={maxWidth}
-						setRef={setRef}
-					/>
-				</div>
-				{showCaption && <div className='image-caption-container'></div>}
+		<div className='flex flex_column'>
+			<div draggable={x.draggable}>
+				<img src={src} style={{ width, height }} alt={alt} draggable='false' ref={v => setRef(v)} />
 			</div>
-		</Suspense>
+		</div>
 	)
 }
 
