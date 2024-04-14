@@ -1,12 +1,9 @@
 import { resolve } from 'path'
 
-import { ModuleFederationPlugin } from '@module-federation/enhanced/rspack'
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
 import { defineConfig } from '@rspack/cli'
 import { CopyRspackPlugin, HtmlRspackPlugin } from '@rspack/core'
 import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
-
-import mf_config from './mf.config'
 
 const is_dev = process.env.NODE_ENV === 'development'
 const is_prod = process.env.NODE_ENV === 'production'
@@ -43,16 +40,13 @@ module.exports = defineConfig({
 		}
 	},
 	devServer: {
-		compress: false,
-		allowedHosts: ['2001'],
-		proxy: {}
+		compress: false
 	},
 	experiments: {
 		outputModule: is_module,
 		rspackFuture: {}
 	},
 	plugins: [
-		new ModuleFederationPlugin(mf_config),
 		new HtmlRspackPlugin({
 			title: 'IF - GTD for prefessionals.',
 			template: './public/index.html',
