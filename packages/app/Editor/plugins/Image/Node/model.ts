@@ -1,10 +1,8 @@
 import {
-	$getNodeByKey,
 	$getSelection,
 	$isNodeSelection,
 	CLICK_COMMAND,
 	COMMAND_PRIORITY_LOW,
-	DRAGSTART_COMMAND,
 	KEY_BACKSPACE_COMMAND,
 	KEY_DELETE_COMMAND,
 	SELECTION_CHANGE_COMMAND
@@ -13,19 +11,20 @@ import { makeAutoObservable } from 'mobx'
 
 import { mergeRegister } from '@lexical/utils'
 
-import { $isImageNode } from '../utils'
+import { IPropsComponent } from '../types'
 
 import type { LexicalEditor, BaseSelection } from 'lexical'
+import type { MouseEvent, FocusEvent, CSSProperties } from 'react'
 
 export default class Index {
 	key = ''
 	editor = null as LexicalEditor
-	active_editor = null as LexicalEditor
 	ref = null as HTMLImageElement
+	mounted = false
+	node = null as IPropsComponent['node']
 
 	selection = null as BaseSelection
 	selected = false
-	mounted = false
 
 	setSelected = null as (v: boolean) => void
 	clearSelection = null as () => void
@@ -41,43 +40,38 @@ export default class Index {
 			{
 				key: false,
 				editor: false,
-				active_editor: false,
 				ref: false,
+				mounted: false,
+				node: false,
 				setSelected: false,
 				clearSelection: false,
-				onDelete: false,
-				onClick: false,
 				unregister: false
 			},
 			{ autoBind: true }
 		)
 	}
 
-	init(editor: Index['editor'], setSelected: Index['setSelected'], clearSelection: Index['clearSelection']) {
+	init(
+		editor: Index['editor'],
+		node: IPropsComponent['node'],
+		key: Index['key'],
+		setSelected: Index['setSelected'],
+		clearSelection: Index['clearSelection']
+	) {
 		this.editor = editor
+		this.node = node
+		this.key = key
 		this.setSelected = setSelected
 		this.clearSelection = clearSelection
 
 		this.register()
+
+		this.mounted = true
 	}
 
-	onDelete(e: KeyboardEvent) {
-		if (this.selected && $isNodeSelection($getSelection())) {
-			e.preventDefault()
+	onClick(e: MouseEvent<HTMLImageElement>) {
+		if (this.selected) return true
 
-			const node = $getNodeByKey(this.key)
-
-			if ($isImageNode(node)) {
-				node.remove()
-
-				return true
-			}
-		}
-
-		return false
-	}
-
-	onClick(e: MouseEvent) {
 		if (e.target === this.ref) {
 			if (e.shiftKey) {
 				this.setSelected(!this.selected)
@@ -92,6 +86,68 @@ export default class Index {
 		return false
 	}
 
+	onDelete(e: KeyboardEvent | MouseEvent) {
+		if ((e as MouseEvent).nativeEvent instanceof PointerEvent) {
+			this.editor.update(() => this.node.remove())
+
+			return
+		}
+
+		if (this.selected && $isNodeSelection($getSelection())) {
+			e.preventDefault()
+
+			this.node.remove()
+
+			return true
+		}
+
+		return false
+	}
+
+	onChangeAlt(e: FocusEvent<HTMLInputElement>) {
+		this.editor.update(() => {
+			const target = this.node.getWritable()
+
+			target.__alt = e.target.value
+		})
+	}
+
+	onChangeAlign(v: CSSProperties['justifyContent']) {
+		this.editor.update(() => {
+			const target = this.node.getWritable()
+
+			target.__align = v
+		})
+	}
+
+	onChangeObjectFit(v: CSSProperties['objectFit']) {
+		this.editor.update(() => {
+			const target = this.node.getWritable()
+
+			target.__object_fit = v
+		})
+	}
+
+	onChangeSize(type: 'width' | 'height', v: string) {
+		this.editor.update(() => {
+			const target = this.node.getWritable()
+
+			if (type === 'width') target.__width = v.indexOf('%') !== -1 ? v : Number(v)
+			if (type === 'height') target.__height = v.indexOf('%') !== -1 ? v : Number(v)
+		})
+	}
+
+	onReset() {
+		this.editor.update(() => {
+			const target = this.node.getWritable()
+
+			target.__width = undefined
+			target.__height = undefined
+			target.__align = undefined
+			target.__object_fit = undefined
+		})
+	}
+
 	register() {
 		this.unregister = mergeRegister(
 			this.editor.registerUpdateListener(({ editorState }) => {
@@ -102,25 +158,13 @@ export default class Index {
 			this.editor.registerCommand(
 				SELECTION_CHANGE_COMMAND,
 				(_, active_editor) => {
-					this.active_editor = active_editor
+					this.editor = active_editor
 
 					return false
 				},
 				COMMAND_PRIORITY_LOW
 			),
 			this.editor.registerCommand<MouseEvent>(CLICK_COMMAND, this.onClick, COMMAND_PRIORITY_LOW),
-			this.editor.registerCommand(
-				DRAGSTART_COMMAND,
-				event => {
-					if (event.target === this.ref) {
-						event.preventDefault()
-
-						return true
-					}
-					return false
-				},
-				COMMAND_PRIORITY_LOW
-			),
 			this.editor.registerCommand(KEY_DELETE_COMMAND, this.onDelete, COMMAND_PRIORITY_LOW),
 			this.editor.registerCommand(KEY_BACKSPACE_COMMAND, this.onDelete, COMMAND_PRIORITY_LOW)
 		)

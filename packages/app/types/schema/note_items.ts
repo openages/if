@@ -4,8 +4,6 @@ export namespace Note {
 		id: string
 		/** @maxLength 30 */
 		file_id: string
-		/** @maxLength 150 */
 		content: string
-		sort: number
 	}
 }

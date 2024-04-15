@@ -3,7 +3,7 @@ export default {
 		modal: {
 			placeholder: {
 				url: 'Image URL',
-				alt: 'Image Alt Text'
+				alt: 'Image alt text'
 			}
 		}
 	}

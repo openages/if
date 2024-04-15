@@ -5,107 +5,96 @@ import { lazy, Suspense } from 'react'
 
 import { $createImageNode, convertImageElement } from '../utils'
 
-import type { DOMConversionMap, DOMExportOutput, EditorConfig } from 'lexical'
+import type { DOMConversionMap, DOMExportOutput } from 'lexical'
+import type { IPropsImage } from '../types'
+import type { CSSProperties } from 'react'
 
 const Component = lazy(() => import('./Component'))
 
 export default class ImageNode extends DecoratorNode<JSX.Element> {
-	src: string
-	width: number | string
-	height: number | string
-	alt: string
+	__src: string
+	__width: number | string
+	__height: number | string
+	__alt: string
+	__align: CSSProperties['justifyContent']
+	__object_fit: CSSProperties['objectFit']
 
-	static getType(): string {
+	constructor(props: IPropsImage) {
+		super()
+
+		const { src, width, height, alt, align, object_fit } = props
+
+		this.__src = src
+		this.__width = width
+		this.__height = height
+		this.__alt = alt
+		this.__align = align
+		this.__object_fit = object_fit
+	}
+
+	static getType() {
 		return 'image'
 	}
 
 	static clone(node: ImageNode): ImageNode {
-		return new ImageNode(node.src, node.width, node.height, node.alt)
+		return new ImageNode({
+			src: node.__src,
+			width: node.__width,
+			height: node.__height,
+			alt: node.__alt,
+			align: node.__align,
+			object_fit: node.__object_fit
+		})
 	}
 
 	static importJSON(serializedNode: SerializedImageNode): ImageNode {
-		const { src, height, width, alt } = serializedNode
-
-		const node = $createImageNode({
-			src,
-			width,
-			height,
-			alt
-		}) as ImageNode
-
-		return node
+		return $createImageNode(serializedNode)
 	}
 
 	static importDOM(): DOMConversionMap | null {
 		return { img: () => ({ conversion: convertImageElement, priority: 0 }) }
 	}
 
-	constructor(src: string, width?: number | string, height?: number | string, alt?: string) {
-		super()
-
-		this.src = src
-		this.width = width
-		this.height = height
-		this.alt = alt
-	}
-
 	exportJSON() {
 		return {
 			type: 'image',
-			version: 1,
-			src: this.src,
-			width: this.width,
-			height: this.height,
-			alt: this.alt
+			src: this.__src,
+			width: this.__width,
+			height: this.__height,
+			alt: this.__alt
 		} as SerializedImageNode
 	}
 
-	setWidthAndHeight(width: number | string, height: number | string) {
-		const writable = this.getWritable()
-
-		writable.width = width
-		writable.height = height
-	}
-
-	createDOM(config: EditorConfig) {
-		const span = document.createElement('span')
-		const theme = config.theme
-		const className = theme.image
-
-		if (className !== undefined) {
-			span.className = className
-		}
-
-		return span
+	createDOM() {
+		return document.createElement('p')
 	}
 
 	exportDOM(): DOMExportOutput {
 		const element = document.createElement('img')
 
-		element.setAttribute('src', this.src)
-		element.setAttribute('alt', this.alt)
-		element.setAttribute('width', this.width.toString())
-		element.setAttribute('height', this.height.toString())
+		element.setAttribute('src', this.__src)
+		element.setAttribute('width', this.__width.toString())
+		element.setAttribute('height', this.__height.toString())
+		element.setAttribute('alt', this.__alt)
 
 		return { element }
 	}
 
-	updateDOM() {
-		return false
-	}
-
-	getSrc() {
-		return this.src
+	updateDOM(update?: boolean) {
+		return update ?? false
 	}
 
 	decorate() {
 		return (
 			<Suspense fallback={null}>
 				<Component
-					src={this.src}
-					width={this.width}
-					height={this.height}
-					alt={this.alt}
+					src={this.__src}
+					width={this.__width}
+					height={this.__height}
+					alt={this.__alt}
+					align={this.__align}
+					object_fit={this.__object_fit}
+					node={this}
 					node_key={this.__key}
 				/>
 			</Suspense>
