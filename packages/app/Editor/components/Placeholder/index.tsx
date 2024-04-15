@@ -1,7 +1,11 @@
+import { useTranslation } from 'react-i18next'
+
 import styles from './index.css'
 
 const Index = () => {
-	return <div className={$cx('absolute', styles._local)}>Show your minds</div>
+	const { t } = useTranslation()
+
+	return <div className={$cx('absolute', styles._local)}>{t('translation:editor.placeholder')}</div>
 }
 
 export default $app.memo(Index)

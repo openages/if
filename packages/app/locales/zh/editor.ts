@@ -1,4 +1,5 @@
 export default {
+	placeholder: `写点什么，按'/'选择块`,
 	Image: {
 		modal: {
 			placeholder: {

@@ -1,4 +1,7 @@
 ._local {
+	font-family: 'Rubik';
+	font-size: 16px;
+
 	:global {
 		div[contenteditable='true'] {
 			outline: none;

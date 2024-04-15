@@ -1,3 +1,4 @@
+/** OutFit */
 @font-face {
 	font-weight: 100;
 	font-style: normal;
@@ -79,6 +80,7 @@
 		url('./font/Outfit/Outfit-Black.ttf') format('truetype');
 }
 
+/** RedditSans */
 @font-face {
 	font-weight: 300;
 	font-style: normal;
@@ -169,6 +171,44 @@
 		url('./font/RedditSans/RedditSans-ExtraBoldItalic.woff2') format('woff2');
 }
 
+/** Rubik */
+@font-face {
+	font-weight: 400;
+	font-style: normal;
+	font-family: 'Rubik';
+	src:
+		local('Rubik'),
+		url('./font/Rubik/Rubik-Regular.ttf') format('truetype');
+}
+
+@font-face {
+	font-weight: 400;
+	font-style: italic;
+	font-family: 'Rubik';
+	src:
+		local('Rubik'),
+		url('./font/Rubik/Rubik-Italic.ttf') format('truetype');
+}
+
+@font-face {
+	font-weight: 500;
+	font-style: normal;
+	font-family: 'Rubik';
+	src:
+		local('Rubik'),
+		url('./font/Rubik/Rubik-Bold.ttf') format('truetype');
+}
+
+@font-face {
+	font-weight: 500;
+	font-style: italic;
+	font-family: 'Rubik';
+	src:
+		local('Rubik'),
+		url('./font/Rubik/Rubik-BoldItalic.ttf') format('truetype');
+}
+
+/** Material Design Icon */
 @font-face {
 	font-weight: 400;
 	font-style: normal;
@@ -187,6 +227,7 @@
 		url('./icon/md_icon_filled.ttf') format('truetype');
 }
 
+/** Feather Icon */
 @font-face {
 	font-weight: 400;
 	font-style: normal;
