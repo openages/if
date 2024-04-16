@@ -217,15 +217,6 @@
 		z-index: 2;
 		border-radius: var(--radius_small);
 
-		&.no_tag {
-			:global {
-				.timeblock_content_wrap {
-					background-color: var(--color_bg_1);
-					border-color: var(--color_border_light);
-				}
-			}
-		}
-
 		&.has_tag {
 			:global {
 				.timeblock_content_wrap {
@@ -244,7 +235,6 @@
 			.timeblock_content_wrap {
 				padding: 1px 4px;
 				padding-top: 0;
-				border-radius: var(--radius_small);
 
 				.text_wrap {
 					height: 20px;

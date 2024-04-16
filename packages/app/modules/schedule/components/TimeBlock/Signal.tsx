@@ -11,14 +11,14 @@ const Index = (props: IPropsCalendarViewTimeBlockSignal) => {
 		const target = {}
 
 		if (!timeline) {
-			target['left'] = 1.5
-			target['width'] = `calc(100% - 3px)`
+			target['left'] = 1
+			target['width'] = `calc(100% - 2px)`
 			target['height'] = item.length * step
 
 			return target
 		}
 
-		target['top'] = 1.5
+		target['top'] = 1
 		target['width'] = item.length * step
 		target['height'] = 36
 

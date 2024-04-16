@@ -3,13 +3,13 @@
 
 	:global {
 		.timeline_angle {
-			border-bottom: var(--border_dashed);
+			border-bottom: var(--border);
 			padding-left: 90px;
 
 			.angle_header {
 				width: 90px;
 				padding: 0 12px;
-				border-right: var(--border_dashed);
+				border-right: var(--border);
 				font-size: 12px;
 				font-weight: 500;
 				line-height: 1.2;
@@ -18,7 +18,7 @@
 			.angle_rows {
 				.timeline_row {
 					height: 36px;
-					padding: 1.5px 0;
+					padding: 1px 0;
 				}
 			}
 		}
