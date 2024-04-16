@@ -7,7 +7,7 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { Placeholder } from './components'
 import styles from './index.css'
 import nodes from './nodes'
-import { Image, Picker } from './plugins'
+import { AutoLink, Image, LinkEditor, Picker } from './plugins'
 import { onError } from './utils'
 
 const Index = () => {
@@ -22,6 +22,8 @@ const Index = () => {
 				<AutoFocusPlugin />
 				<Picker />
 				<Image />
+				<AutoLink />
+				<LinkEditor />
 			</LexicalComposer>
 		</div>
 	)

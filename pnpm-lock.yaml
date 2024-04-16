@@ -56,7 +56,13 @@ importers:
       '@lexical/code':
         specifier: ^0.14.3
         version: 0.14.3
+      '@lexical/link':
+        specifier: ^0.14.3
+        version: 0.14.3
       '@lexical/list':
+        specifier: ^0.14.3
+        version: 0.14.3
+      '@lexical/mark':
         specifier: ^0.14.3
         version: 0.14.3
       '@lexical/react':

@@ -1,10 +1,21 @@
 ._local {
 	font-family: 'Inter';
-	font-size: 16px;
+	font-size: 15px;
 
 	:global {
 		div[contenteditable='true'] {
 			outline: none;
+		}
+
+		a {
+			text-decoration-line: underline;
+			text-decoration-thickness: 1px;
+			text-underline-offset: 2px;
+			font-family: 'Rubik';
+
+			&:hover {
+				color: var(--color_main);
+			}
 		}
 	}
 }

@@ -52,7 +52,7 @@ const Index = (props: IPropsComponent) => {
 		<span className={$cx('flex', styles.wrap)} style={style_wrap}>
 			<span className='__editor_image_wrap flex flex_column relative' style={{ width }}>
 				<img
-					className={$cx('__editor_image w_100', styles._local, selected && styles.selected)}
+					className={$cx('__editor_image w_100', styles._local, x.selected && styles.selected)}
 					src={src}
 					height={height + 'px'}
 					alt={alt}

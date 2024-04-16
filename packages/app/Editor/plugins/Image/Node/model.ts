@@ -1,4 +1,5 @@
 import {
+	$getNodeByKey,
 	$getSelection,
 	$isNodeSelection,
 	CLICK_COMMAND,
@@ -13,8 +14,9 @@ import { mergeRegister } from '@lexical/utils'
 
 import { IPropsComponent } from '../types'
 
-import type { LexicalEditor, BaseSelection } from 'lexical'
+import type { LexicalEditor, EditorState } from 'lexical'
 import type { MouseEvent, FocusEvent, CSSProperties } from 'react'
+import type ImageNode from './index'
 
 export default class Index {
 	key = ''
@@ -23,7 +25,6 @@ export default class Index {
 	mounted = false
 	node = null as IPropsComponent['node']
 
-	selection = null as BaseSelection
 	selected = false
 
 	setSelected = null as (v: boolean) => void
@@ -65,8 +66,24 @@ export default class Index {
 		this.mounted = true
 	}
 
+	getSelected(active_editor?: EditorState) {
+		const editor = active_editor || this.editor.getEditorState()
+
+		return editor.read(() => {
+			const selection = $getSelection()
+
+			if (!selection) return
+
+			const node = selection.getNodes().at(0) as ImageNode
+
+			if (!node) return
+
+			return node.getKey() === this.key
+		})
+	}
+
 	onClick(e: MouseEvent<HTMLImageElement>) {
-		if (this.selected) return true
+		if (this.getSelected()) return true
 
 		if (e.target === this.ref) {
 			if (e.shiftKey) {
@@ -149,7 +166,7 @@ export default class Index {
 			this.editor.registerUpdateListener(({ editorState }) => {
 				if (!this.mounted) return
 
-				this.selection = editorState.read(() => $getSelection())
+				this.selected = this.getSelected(editorState)
 			}),
 			this.editor.registerCommand(
 				SELECTION_CHANGE_COMMAND,
