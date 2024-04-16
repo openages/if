@@ -1,5 +1,5 @@
 export default {
-	placeholder: `Write something, '/' to choose block`,
+	placeholder: `Write something, '/' for commands`,
 	Image: {
 		modal: {
 			placeholder: {

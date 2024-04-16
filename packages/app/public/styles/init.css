@@ -6,7 +6,8 @@ body {
 	color: var(--color_text);
 	font-size: 14px;
 	font-family:
-		'RedditSans',
+		'Rubik',
+		'Inter',
 		-apple-system,
 		BlinkMacSystemFont,
 		'Segoe UI',
@@ -60,7 +61,7 @@ a:hover {
 }
 
 input {
-	font-family: 'RedditSans';
+	font-family: 'Rubik';
 }
 
 button {

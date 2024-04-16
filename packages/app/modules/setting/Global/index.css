@@ -17,7 +17,6 @@
 
 	:global {
 		.setting_items {
-			font-weight: 500;
 			padding: 6px 0;
 			margin-bottom: 36px;
 
@@ -43,6 +42,10 @@
 
 					.text_wrap {
 						margin-left: 16px;
+
+						.title {
+							font-weight: 500;
+						}
 
 						.desc {
 							margin-top: 8px;

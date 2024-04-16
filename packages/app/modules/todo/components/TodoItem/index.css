@@ -281,7 +281,6 @@
 			padding-left: 9.6px;
 			padding-right: 12px;
 			transition: padding ease 0.3s;
-			font-family: 'RedditSans';
 
 			&.checked,
 			&.closed {

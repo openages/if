@@ -15,7 +15,6 @@
 ._local {
 	top: 12px;
 	right: 12px;
-	font-family: 'OutFit' !important;
 	line-height: 1;
 	user-select: none;
 	color: rgba(var(--color_main_rgb), 0.72);
