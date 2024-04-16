@@ -1,17 +1,31 @@
 ._local {
-	background-color: var(--color_bg);
+	padding: 3px;
 	line-height: 1;
 	font-size: 12px;
 	border-radius: var(--radius_small);
 	box-shadow: var(--shadow);
 	border: var(--border);
+	background-color: var(--color_bg);
 
 	:global {
 		.picker_menu_item {
-			padding: 6px 12px;
+			padding: 6px 9px;
+			border-radius: var(--radius_small);
 
 			&:hover {
 				background-color: var(--color_bg_1);
+			}
+
+			.left_wrap {
+				width: 78px;
+
+				.icon_wrap {
+					font-size: 16px;
+				}
+			}
+
+			.shortcut {
+				color: var(--color_text_light);
 			}
 		}
 	}

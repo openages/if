@@ -30,10 +30,6 @@ export default class Index {
 	clearSelection = null as () => void
 	unregister = null as () => void
 
-	get draggable() {
-		return this.selected && $isNodeSelection(this.selection)
-	}
-
 	constructor() {
 		makeAutoObservable(
 			this,

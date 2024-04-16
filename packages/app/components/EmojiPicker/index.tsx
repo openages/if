@@ -1,6 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useMemo, useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { useGlobal } from '@/context/app'
 import data from '@emoji-mart/data'
@@ -12,11 +12,12 @@ import category_icons from './category'
 import { feather_icons, ionicons, phosphor_icons } from './customs'
 
 interface IProps {
-	onEmojiSelect: ({ shortcodes }: { shortcodes: string }) => void
+	disableCustom?: boolean
+	onEmojiSelect: (args: { shortcodes: string; native: string }) => void
 }
 
 const Index = (props: IProps) => {
-	const { onEmojiSelect } = props
+	const { disableCustom, onEmojiSelect } = props
 	const global = useGlobal()
 
 	const i18n = useMemo(() => {
@@ -75,39 +76,47 @@ const Index = (props: IProps) => {
 		}
 	}, [global.setting.theme])
 
+	const onSelect = useMemoizedFn((target: { shortcodes: string; native: string }) => {
+		onEmojiSelect(target)
+		delaymakeImgColor()
+	})
+
+	const props_dynamic = {}
+
+	if (!disableCustom) {
+		props_dynamic['custom'] = [
+			{
+				id: 'feather_icons',
+				name: 'Feather Icons',
+				emojis: feather_icons.icon_array
+			},
+			{
+				id: 'ionicons',
+				name: 'Ionicons',
+				emojis: ionicons.icon_array
+			},
+			{
+				id: 'phosphor_icons',
+				name: 'Phosphor Icons',
+				emojis: phosphor_icons.icon_array
+			}
+		]
+	}
+
 	return (
 		<Picker
 			data={data}
 			i18n={i18n}
 			theme={global.setting.theme}
 			categoryIcons={category_icons}
-			custom={[
-				{
-					id: 'feather_icons',
-					name: 'Feather Icons',
-					emojis: feather_icons.icon_array
-				},
-				{
-					id: 'ionicons',
-					name: 'Ionicons',
-					emojis: ionicons.icon_array
-				},
-				{
-					id: 'phosphor_icons',
-					name: 'Phosphor Icons',
-					emojis: phosphor_icons.icon_array
-				}
-			]}
 			previewPosition='none'
 			noCountryFlags={true}
 			emojiButtonSize={42}
 			emojiSize={24}
 			emojiButtonRadius='6px'
 			dynamicWidth
-			onEmojiSelect={(target: { shortcodes: string }) => {
-				onEmojiSelect(target)
-				delaymakeImgColor()
-			}}
+			{...props_dynamic}
+			onEmojiSelect={onSelect}
 		/>
 	)
 }

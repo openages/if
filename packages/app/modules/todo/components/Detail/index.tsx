@@ -7,14 +7,14 @@ import { getItemStatus } from '@/utils/modules/todo'
 import {
 	Bell,
 	BoxArrowDown,
-	Broom,
 	Calendar,
 	CaretDown,
 	CaretUp,
-	CircleDashed,
 	FireSimple,
 	Plus,
 	Repeat,
+	SignIn,
+	SignOut,
 	Sun,
 	Tag,
 	X
@@ -168,7 +168,7 @@ const Index = (props: IPropsDetail) => {
 							className={$cx('btn_action flex justify_center align_center clickable mr_6')}
 							onClick={close}
 						>
-							<Broom size={14}></Broom>
+							<SignOut size={14}></SignOut>
 						</div>
 					</Tooltip>
 				</If>
@@ -178,7 +178,7 @@ const Index = (props: IPropsDetail) => {
 							className={$cx('btn_action flex justify_center align_center clickable mr_6')}
 							onClick={unclose}
 						>
-							<CircleDashed size={14}></CircleDashed>
+							<SignIn size={14}></SignIn>
 						</div>
 					</Tooltip>
 				</If>

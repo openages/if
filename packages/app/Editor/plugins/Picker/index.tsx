@@ -10,6 +10,7 @@ import { useBasicTypeaheadTriggerMatch, LexicalTypeaheadMenuPlugin } from '@lexi
 
 import { Menu } from './components'
 import getOptions from './getOptions'
+import styles from './index.css'
 import Model from './model'
 
 import type Option from './option'
@@ -54,6 +55,7 @@ const Index = () => {
 	return (
 		<Fragment>
 			<Modal
+				className={x.modal && styles[x.modal]}
 				open={x.modal !== ''}
 				title={`Insert ${x.modal}`}
 				width={300}

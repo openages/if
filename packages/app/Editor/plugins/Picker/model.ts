@@ -6,7 +6,7 @@ import type Option from './option'
 
 export default class Index {
 	editor = null as LexicalEditor
-	modal = '' as '' | 'Image'
+	modal = '' as '' | 'Image' | 'Emoji'
 	query = ''
 
 	constructor() {

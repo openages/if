@@ -1,4 +1,4 @@
-import { Image } from '@phosphor-icons/react'
+import { Image, Smiley } from '@phosphor-icons/react'
 
 import Option from './option'
 
@@ -10,8 +10,13 @@ export default (query_string: string, showModal: (v: Model['modal']) => void) =>
 	return [
 		new Option('Image', {
 			icon: <Image />,
-			keywords: ['image', 'photo', 'picture', 'file'],
+			shortcut: 'img',
 			onSelect: () => showModal('Image')
+		}),
+		new Option('Emoji', {
+			icon: <Smiley />,
+			shortcut: 'emo',
+			onSelect: () => showModal('Emoji')
 		})
-	].filter(option => regex.test(option.title) || option.keywords.some(keyword => regex.test(keyword)))
+	].filter(option => regex.test(option.title.toLowerCase()) || regex.test(option.shortcut))
 }
