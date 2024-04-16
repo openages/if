@@ -2,6 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
+import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { DraggableWrap, SortableWrap } from '@/components'
@@ -24,6 +25,7 @@ const Index = (props: IProps) => {
 	const { ids, mode, dnd_data, show_placeholder, onChange } = props
 	const [x] = useState(() => container.resolve(Model))
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
+	const { t } = useTranslation()
 
 	const items = $copy(x.items)
 
@@ -107,7 +109,10 @@ const Index = (props: IProps) => {
 		)
 	})
 
-	if (show_placeholder && !ids.length) return <div className={$cx('w_100 pt_6 pb_6', styles.empty)}>未添加待办</div>
+	if (show_placeholder && !ids.length)
+		return (
+			<div className={$cx('w_100 pt_6 pb_6', styles.empty)}>{t('translation:atoms.Todos.placeholder')}</div>
+		)
 
 	return (
 		<div className={$cx('w_100 flex flex_column', styles._local)}>

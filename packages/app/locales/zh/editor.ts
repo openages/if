@@ -1,5 +1,10 @@
 export default {
 	placeholder: `写点什么，按'/'选择块`,
+	insert: '插入',
+	name: {
+		Image: '图片',
+		Emoji: '表情'
+	},
 	Image: {
 		modal: {
 			placeholder: {

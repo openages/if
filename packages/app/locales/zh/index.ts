@@ -1,4 +1,5 @@
 import app from './app'
+import atoms from './atoms'
 import common from './common'
 import components from './components'
 import dirtree from './dirtree'
@@ -17,6 +18,7 @@ export default {
 		common,
 		setting,
 		modules,
+		atoms,
 		layout,
 		shortcuts,
 		dirtree,

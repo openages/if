@@ -2,6 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useMemo, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
+import { useTranslation } from 'react-i18next'
 
 import { LazyElement, Modal } from '@/components'
 import { useStackSelector } from '@/context/stack'
@@ -22,13 +23,14 @@ const Index = () => {
 	const [x] = useState(() => new Model())
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
+	const { t } = useTranslation()
 
 	useLayoutEffect(() => {
 		x.init(editor)
 	}, [editor])
 
 	const showModal = useMemoizedFn((v: Model['modal']) => (x.modal = v))
-	const closeModal = useMemoizedFn(() => (x.modal = ''))
+	const closeModal = useMemoizedFn(() => (x.modal = '' as Model['modal']))
 	const setQuery = useMemoizedFn((v: Model['query']) => (x.query = v))
 	const onSelectOption = useMemoizedFn(x.onSelectOption)
 	const checkForTriggerMatch = useBasicTypeaheadTriggerMatch('/', { minLength: 0 })
@@ -56,8 +58,10 @@ const Index = () => {
 		<Fragment>
 			<Modal
 				className={x.modal && styles[x.modal]}
-				open={x.modal !== ''}
-				title={`Insert ${x.modal}`}
+				open={x.modal !== ('' as Model['modal'])}
+				title={`${t('translation:editor.insert')}${t('translation:common.letter_space')}${t(
+					`translation:editor.name.${x.modal}`
+				)}`}
 				width={300}
 				maskClosable
 				onCancel={closeModal}
