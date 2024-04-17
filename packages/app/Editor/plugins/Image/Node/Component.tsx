@@ -20,7 +20,7 @@ import { IPropsComponent } from '../types'
 import styles from './index.css'
 import Model from './model'
 
-import type { CSSProperties } from 'react'
+import type { CSSProperties, KeyboardEvent } from 'react'
 
 const Index = (props: IPropsComponent) => {
 	const { src, width = '100%', height = '100%', alt, align, object_fit, node, node_key } = props
@@ -43,7 +43,7 @@ const Index = (props: IPropsComponent) => {
 	}, [selected])
 
 	const setRef = useMemoizedFn(v => (x.ref = v))
-	const stopPropagation = useMemoizedFn(e => e.stopPropagation())
+	const stopPropagation = useMemoizedFn((e: KeyboardEvent<HTMLInputElement>) => e.stopPropagation())
 
 	if (align) style_wrap['justifyContent'] = align
 	if (object_fit) style_img['objectFit'] = object_fit
@@ -65,6 +65,7 @@ const Index = (props: IPropsComponent) => {
 					defaultValue={alt}
 					placeholder={t('translation:editor.Image.modal.placeholder.alt')}
 					maxLength={60}
+					onKeyDown={stopPropagation}
 					onBlur={x.onChangeAlt}
 				></input>
 				<span
@@ -83,7 +84,7 @@ const Index = (props: IPropsComponent) => {
 								maxLength={4}
 								autoComplete='off'
 								defaultValue={width || 'auto'}
-								onChange={stopPropagation}
+								onKeyDown={stopPropagation}
 								onBlur={({ target: { value } }) => x.onChangeSize('width', value)}
 							/>
 						</span>
@@ -96,7 +97,7 @@ const Index = (props: IPropsComponent) => {
 								maxLength={4}
 								autoComplete='off'
 								defaultValue={height || 'auto'}
-								onChange={stopPropagation}
+								onKeyDown={stopPropagation}
 								onBlur={({ target: { value } }) => x.onChangeSize('height', value)}
 							/>
 						</span>
