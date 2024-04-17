@@ -4,6 +4,7 @@
 
 ._local {
 	overflow: scroll;
+	outline: none;
 
 	&.breakpoint_390 {
 		--limited_padding: 48px;

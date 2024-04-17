@@ -49,7 +49,7 @@ const Index = (props: IPropsComponent) => {
 	if (object_fit) style_img['objectFit'] = object_fit
 
 	return (
-		<span className={$cx('flex', styles.wrap)} style={style_wrap}>
+		<span className={$cx('flex', styles.wrap)} style={style_wrap} ref={v => setRef(v)}>
 			<span className='__editor_image_wrap flex flex_column relative' style={{ width }}>
 				<img
 					className={$cx('__editor_image w_100', styles._local, x.selected && styles.selected)}
@@ -58,7 +58,6 @@ const Index = (props: IPropsComponent) => {
 					alt={alt}
 					style={style_img}
 					draggable={false}
-					ref={v => setRef(v)}
 					onClick={x.onClick}
 				/>
 				<input

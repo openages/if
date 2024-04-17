@@ -1,3 +1,4 @@
+import { Popover } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
 
@@ -8,7 +9,7 @@ import Model from './model'
 import type { IProps } from './types'
 
 const Index = (props: IProps) => {
-	const { readonly } = props
+	const {} = props
 	const [x] = useState(() => new Model())
 	const [editor] = useLexicalComposerContext()
 
@@ -18,7 +19,16 @@ const Index = (props: IProps) => {
 		return () => x.off()
 	}, [editor])
 
-	return null
+	const content = <div>123</div>
+
+	return (
+		<Popover
+			open={x.visible}
+			content={content}
+			destroyTooltipOnHide
+			getPopupContainer={() => document.body}
+		></Popover>
+	)
 }
 
 export default new $app.handle(Index).by(observer).by($app.memo).get()

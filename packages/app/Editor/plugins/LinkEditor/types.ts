@@ -1,3 +1,1 @@
-export interface IProps {
-	readonly?: boolean
-}
+export interface IProps {}

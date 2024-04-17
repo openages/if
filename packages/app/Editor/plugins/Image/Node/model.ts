@@ -1,11 +1,12 @@
 import {
-	$getNodeByKey,
+	$createParagraphNode,
 	$getSelection,
 	$isNodeSelection,
 	CLICK_COMMAND,
 	COMMAND_PRIORITY_LOW,
 	KEY_BACKSPACE_COMMAND,
 	KEY_DELETE_COMMAND,
+	KEY_ENTER_COMMAND,
 	SELECTION_CHANGE_COMMAND
 } from 'lexical'
 import { makeAutoObservable } from 'mobx'
@@ -14,7 +15,7 @@ import { mergeRegister } from '@lexical/utils'
 
 import { IPropsComponent } from '../types'
 
-import type { LexicalEditor, EditorState } from 'lexical'
+import type { LexicalEditor, ParagraphNode } from 'lexical'
 import type { MouseEvent, FocusEvent, CSSProperties } from 'react'
 import type ImageNode from './index'
 
@@ -22,7 +23,6 @@ export default class Index {
 	key = ''
 	editor = null as LexicalEditor
 	ref = null as HTMLImageElement
-	mounted = false
 	node = null as IPropsComponent['node']
 
 	selected = false
@@ -38,7 +38,6 @@ export default class Index {
 				key: false,
 				editor: false,
 				ref: false,
-				mounted: false,
 				node: false,
 				setSelected: false,
 				clearSelection: false,
@@ -62,30 +61,12 @@ export default class Index {
 		this.clearSelection = clearSelection
 
 		this.register()
-
-		this.mounted = true
-	}
-
-	getSelected(active_editor?: EditorState) {
-		const editor = active_editor || this.editor.getEditorState()
-
-		return editor.read(() => {
-			const selection = $getSelection()
-
-			if (!selection) return
-
-			const node = selection.getNodes().at(0) as ImageNode
-
-			if (!node) return
-
-			return node.getKey() === this.key
-		})
 	}
 
 	onClick(e: MouseEvent<HTMLImageElement>) {
-		if (this.getSelected()) return true
+		if (this.selected) return true
 
-		if (e.target === this.ref) {
+		if (e.target === this.ref || this.ref.contains(e.target as HTMLElement)) {
 			if (e.shiftKey) {
 				this.setSelected(!this.selected)
 			} else {
@@ -118,8 +99,12 @@ export default class Index {
 	}
 
 	onChangeAlt(e: FocusEvent<HTMLInputElement>) {
+		e.preventDefault()
+
 		this.editor.update(() => {
 			const target = this.node.getWritable()
+
+			if (e.target.value === target.__alt) return
 
 			target.__alt = e.target.value
 		})
@@ -161,23 +146,48 @@ export default class Index {
 		})
 	}
 
+	onEnter() {
+		if (!this.selected) return false
+
+		const target = this.node.insertAfter($createParagraphNode()) as ParagraphNode
+
+		window.requestAnimationFrame(() => this.editor.update(() => target.selectStart()))
+
+		return true
+	}
+
+	checkSelected() {
+		if (this.selected) return
+
+		const selection = $getSelection()
+
+		if (!selection) return
+
+		const nodes = selection.getNodes()
+		const node = nodes.at(0) as ImageNode
+
+		if (nodes.length !== 1 || !node) return
+
+		if (this.node.is(node)) {
+			this.setSelected(true)
+		}
+	}
+
 	register() {
 		this.unregister = mergeRegister(
-			this.editor.registerUpdateListener(({ editorState }) => {
-				if (!this.mounted) return
-
-				this.selected = this.getSelected(editorState)
-			}),
 			this.editor.registerCommand(
 				SELECTION_CHANGE_COMMAND,
 				(_, active_editor) => {
 					this.editor = active_editor
+
+					this.checkSelected()
 
 					return false
 				},
 				COMMAND_PRIORITY_LOW
 			),
 			this.editor.registerCommand<MouseEvent>(CLICK_COMMAND, this.onClick, COMMAND_PRIORITY_LOW),
+			this.editor.registerCommand(KEY_ENTER_COMMAND, this.onEnter, COMMAND_PRIORITY_LOW),
 			this.editor.registerCommand(KEY_DELETE_COMMAND, this.onDelete, COMMAND_PRIORITY_LOW),
 			this.editor.registerCommand(KEY_BACKSPACE_COMMAND, this.onDelete, COMMAND_PRIORITY_LOW)
 		)
