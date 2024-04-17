@@ -1,6 +1,7 @@
 ._local {
 	font-family: 'Inter';
 	font-size: 15px;
+	padding-bottom: 36vh;
 
 	:global {
 		div[contenteditable='true'] {

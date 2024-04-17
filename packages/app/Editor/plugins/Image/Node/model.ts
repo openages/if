@@ -82,9 +82,14 @@ export default class Index {
 
 	onDelete(e: KeyboardEvent | MouseEvent) {
 		if ((e as MouseEvent).nativeEvent instanceof PointerEvent) {
+			e.preventDefault()
+
+			this.clearSelection()
+			this.setSelected(true)
+
 			this.editor.update(() => this.node.remove())
 
-			return
+			return true
 		}
 
 		if (this.selected && $isNodeSelection($getSelection())) {
