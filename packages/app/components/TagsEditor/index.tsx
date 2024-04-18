@@ -32,7 +32,7 @@ const Index = (props: IProps) => {
 
 		items.splice(index + 1, 0, {
 			id: id(),
-			color: genColor.random().color,
+			color: genColor.random({ lightness: [24, 72] }).color,
 			text: ''
 		})
 
