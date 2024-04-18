@@ -68,8 +68,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 	createDOM() {
 		const el = document.createElement('span')
 
-		el.style.cursor = 'default'
-		el.style.display = 'inline-block'
+		el.style.display = 'inline-flex'
 
 		return el
 	}

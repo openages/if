@@ -1,6 +1,5 @@
 ._local {
-	font-family: 'Inter';
-	font-size: 15px;
+	font-size: 16px;
 	padding-bottom: 36vh;
 
 	:global {
@@ -12,11 +11,15 @@
 			text-decoration-line: underline;
 			text-decoration-thickness: 1px;
 			text-underline-offset: 2px;
-			font-family: 'Rubik';
 
 			&:hover {
 				color: var(--color_main);
 			}
+		}
+
+		p {
+			margin-block-start: 1.5em;
+			margin-block-end: 1.5em;
 		}
 	}
 }

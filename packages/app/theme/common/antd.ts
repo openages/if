@@ -12,7 +12,7 @@ export default {
 		controlHeightSM: 32,
 		controlHeightXS: 26,
 		lineType: 'dashed',
-		fontFamily: `'Rubik', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+		fontFamily: `'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
 		Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
 		'Noto Color Emoji'`,
 		controlOutline: 'none'

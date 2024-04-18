@@ -53,25 +53,6 @@
 		url('./font/Rubik/Rubik-SemiBoldItalic.ttf') format('truetype');
 }
 
-/** Inter */
-@font-face {
-	font-weight: 400;
-	font-style: normal;
-	font-family: 'Inter';
-	src:
-		local('Inter'),
-		url('./font/Inter/Inter-Regular.ttf') format('truetype');
-}
-
-@font-face {
-	font-weight: 500;
-	font-style: normal;
-	font-family: 'Inter';
-	src:
-		local('Inter'),
-		url('./font/Inter/Inter-SemiBold.ttf') format('truetype');
-}
-
 /** Material Design Icon */
 @font-face {
 	font-weight: 400;
