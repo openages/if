@@ -18,8 +18,6 @@ const Index = (props: IPropsSidebar) => {
 
 	useAntdApp()
 
-	const icon_weight = useMemo(() => (theme === 'light' ? 'duotone' : 'regular'), [theme])
-
 	return (
 		<div
 			className={$cx(

@@ -7,6 +7,7 @@ export namespace App {
 		id: App.ModuleType
 		title: App.ModuleType
 		path: string
+		short?: number
 		fixed?: boolean
 	}
 

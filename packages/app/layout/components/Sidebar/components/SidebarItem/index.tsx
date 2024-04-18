@@ -11,15 +11,18 @@ import type { IPropsSidebarItem } from '../../../../types'
 const Index = (props: IPropsSidebarItem) => {
 	const { current_module, show_bar_title, item, active } = props
 	const { t } = useTranslation()
+	const current = current_module === item.title
 
 	const exitApp = useMemoizedFn((e: MouseEvent<HTMLAnchorElement>) => {
 		e.preventDefault()
 
 		if (!active) return
-		if (current_module === item.title) return
+		if (current) return
 
 		$app.Event.emit('global.app.exitApp', item.title)
 	})
+
+	const title = t(`translation:modules.${item.title}`) as string
 
 	const LinkItem = (
 		<NavLink
@@ -27,7 +30,7 @@ const Index = (props: IPropsSidebarItem) => {
 				'sidebar_item clickable flex flex_column justify_center align_center transition_normal',
 				show_bar_title && 'show_bar_title',
 				active && 'active',
-				current_module === item.title && 'current'
+				current && 'current'
 			)}
 			to={item.path}
 			onContextMenu={exitApp}
@@ -39,7 +42,9 @@ const Index = (props: IPropsSidebarItem) => {
 				weight={active ? 'duotone' : 'regular'}
 			></ModuleIcon>
 			<If condition={show_bar_title}>
-				<span className='sidebar_item_title'>{t(`translation:modules.${item.title}`)}</span>
+				<span className='sidebar_item_title'>
+					{current && item.short ? title.slice(0, item.short) : title}
+				</span>
 			</If>
 		</NavLink>
 	)

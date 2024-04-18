@@ -93,6 +93,8 @@ export default class Index {
 	}
 
 	show() {
+		if (!this.link) return
+
 		const selection = $getSelection()
 		const native_selection = window.getSelection()
 		const active_element = document.activeElement

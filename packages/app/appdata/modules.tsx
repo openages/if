@@ -45,6 +45,7 @@ const typed_nav_items = [
 		id: 'schedule',
 		title: 'schedule',
 		path: '/schedule',
+		short: 5,
 		fixed: true
 	},
 	{
