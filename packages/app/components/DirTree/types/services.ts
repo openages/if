@@ -8,7 +8,7 @@ export type ArgsInsert = {
 }
 
 export type ArgsUpdate = {
-	focusing_item: DirTree.Item
+	focusing_item?: DirTree.Item
 	item: Partial<DirTree.Item>
 }
 

@@ -48,7 +48,7 @@ export const remove = async (args: ArgsRemove) => {
 
 export const update = async (args: ArgsUpdate) => {
 	const { focusing_item, item } = args
-	const target_id = item.id ?? focusing_item.id
+	const target_id = item.id ?? focusing_item?.id
 
 	const doc = await $db.dirtree_items.findOne(target_id).exec()
 
