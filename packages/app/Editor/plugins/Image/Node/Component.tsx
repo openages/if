@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { stopPropagation } from '@/Editor/utils'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection'
 import {
@@ -20,7 +21,7 @@ import { IPropsComponent } from '../types'
 import styles from './index.css'
 import Model from './model'
 
-import type { CSSProperties, KeyboardEvent } from 'react'
+import type { CSSProperties } from 'react'
 
 const Index = (props: IPropsComponent) => {
 	const { src, width = '100%', height = '100%', alt, align, object_fit, node, node_key } = props
@@ -43,7 +44,6 @@ const Index = (props: IPropsComponent) => {
 	}, [selected])
 
 	const setRef = useMemoizedFn(v => (x.ref = v))
-	const stopPropagation = useMemoizedFn((e: KeyboardEvent<HTMLInputElement>) => e.stopPropagation())
 
 	if (align) style_wrap['justifyContent'] = align
 	if (object_fit) style_img['objectFit'] = object_fit

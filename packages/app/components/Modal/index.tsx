@@ -38,15 +38,15 @@ const Index = (props: IProps) => {
 	const ref_content_wrap = useRef<HTMLDivElement>(null)
 	const ref_content = useRef<HTMLDivElement>(null)
 	const [on_body, setOnbody] = useState(false)
-	const [self_open, setSelfOpen] = useState(false)
+	const [exsit, setExsit] = useState(false)
 	const container = getContainer?.()
 
 	useEffect(() => {
 		if (open) {
-			setSelfOpen(true)
+			setExsit(true)
 		} else {
 			const timer = setTimeout(() => {
-				setSelfOpen(false)
+				setExsit(false)
 			}, 180)
 
 			return () => clearTimeout(timer)
@@ -63,6 +63,8 @@ const Index = (props: IProps) => {
 	useEffect(() => {
 		setOnbody(container === document.body)
 	}, [container])
+
+	if (!exsit) return null
 
 	const Content = (
 		<Fragment>
@@ -137,10 +139,10 @@ const Index = (props: IProps) => {
 	)
 
 	if (container) {
-		return self_open ? createPortal(Content, container) : null
+		return createPortal(Content, container)
 	}
 
-	return self_open ? Content : null
+	return Content
 }
 
 export default $app.memo(Index)

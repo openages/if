@@ -4,29 +4,36 @@ import {
 	$isRangeSelection,
 	CLICK_COMMAND,
 	COMMAND_PRIORITY_CRITICAL,
-	COMMAND_PRIORITY_HIGH,
 	COMMAND_PRIORITY_LOW,
-	KEY_ESCAPE_COMMAND,
 	SELECTION_CHANGE_COMMAND
 } from 'lexical'
 import { makeAutoObservable } from 'mobx'
 
 import { getSelectedNode } from '@/Editor/utils'
-import { $createLinkNode, $isAutoLinkNode, $isLinkNode } from '@lexical/link'
+import { $isAutoLinkNode, $isLinkNode } from '@lexical/link'
 import { $findMatchingParent, mergeRegister } from '@lexical/utils'
 
 import type { LexicalEditor } from 'lexical'
+import type { LinkNode } from '@lexical/link'
+import type { FocusEvent } from 'react'
 
 export default class Index {
 	editor = null as LexicalEditor
+	node = null as LinkNode
+	dom = null as HTMLAnchorElement
+
 	visible = false
+	position = null as { x: number; y: number }
 	link = ''
-	rect = null as DOMRect
 
 	unregister = null as () => void
 
 	constructor() {
-		makeAutoObservable(this, { editor: false, unregister: false, init: false }, { autoBind: true })
+		makeAutoObservable(
+			this,
+			{ editor: false, node: false, dom: false, unregister: false, init: false },
+			{ autoBind: true }
+		)
 	}
 
 	init(editor: Index['editor']) {
@@ -36,9 +43,12 @@ export default class Index {
 	}
 
 	reset() {
+		this.node = null
+		this.dom = null
+
 		this.visible = false
+		this.position = null
 		this.link = ''
-		this.rect = null
 
 		return false
 	}
@@ -68,9 +78,10 @@ export default class Index {
 				})
 
 			if (focus_link_node) {
+				this.node = focus_link_node
+
+				this.dom = this.editor.getElementByKey(focus_link_node.__key) as HTMLAnchorElement
 				this.link = focus_link_node.getURL()
-			} else if ($isLinkNode(selected_node)) {
-				this.link = selected_node.getURL()
 			} else {
 				this.link = ''
 			}
@@ -82,8 +93,6 @@ export default class Index {
 	}
 
 	show() {
-		if (!this.check()) return
-
 		const selection = $getSelection()
 		const native_selection = window.getSelection()
 		const active_element = document.activeElement
@@ -96,35 +105,28 @@ export default class Index {
 			root.contains(native_selection.anchorNode) &&
 			this.editor.isEditable()
 		) {
-			const target_rect = native_selection.focusNode?.parentElement?.getBoundingClientRect()
+			const rect = native_selection.focusNode?.parentElement?.getBoundingClientRect()
 
-			if (target_rect) {
-				this.rect = target_rect
+			if (rect) {
 				this.visible = true
+				this.position = { x: rect.x, y: rect.y + rect.height }
 			}
 		} else if (!active_element) {
-			this.visible = false
-			this.link = ''
+			this.reset()
 		}
 	}
 
-	submit() {
+	onChange(e: FocusEvent<HTMLInputElement>) {
+		e.preventDefault()
+
+		if (!this.node) return
+
 		this.editor.update(() => {
-			const selection = $getSelection()
+			const target = this.node.getWritable()
 
-			if ($isRangeSelection(selection)) {
-				const parent = getSelectedNode(selection).getParent()
+			if (e.target.value === target.__url) return
 
-				if ($isAutoLinkNode(parent)) {
-					const link_node = $createLinkNode(parent.getURL(), {
-						target: parent.__target,
-						title: parent.__title,
-						rel: parent.__rel
-					})
-
-					parent.replace(link_node, true)
-				}
-			}
+			target.__url = e.target.value
 		})
 	}
 
@@ -140,19 +142,6 @@ export default class Index {
 					return false
 				},
 				COMMAND_PRIORITY_CRITICAL
-			),
-			this.editor.registerCommand(
-				KEY_ESCAPE_COMMAND,
-				() => {
-					if (this.visible) {
-						this.visible = false
-
-						return true
-					}
-
-					return false
-				},
-				COMMAND_PRIORITY_HIGH
 			),
 			this.editor.registerCommand(
 				CLICK_COMMAND,
