@@ -8,6 +8,7 @@ export default class Index {
 	editor = null as LexicalEditor
 	modal = '' as 'Image' | 'Emoji'
 	query = ''
+	index = null as number
 
 	constructor() {
 		makeAutoObservable(this, { editor: false }, { autoBind: true })

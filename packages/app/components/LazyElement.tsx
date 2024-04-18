@@ -1,14 +1,17 @@
 import { lazy, useMemo, Suspense } from 'react'
 import { match } from 'ts-pattern'
 
+import type { ReactNode } from 'react'
+
 interface IProps {
 	type: 'modules' | 'dev' | 'search' | 'editor_modal'
 	path: string
 	props?: any
+	placeholder?: ReactNode
 }
 
 const Index = (_props: IProps) => {
-	const { type, path, props } = _props
+	const { type, path, props, placeholder } = _props
 
 	const Component = useMemo(() => {
 		return match(type)
@@ -20,7 +23,7 @@ const Index = (_props: IProps) => {
 	}, [type, path])
 
 	return (
-		<Suspense>
+		<Suspense fallback={placeholder}>
 			<Component {...props} />
 		</Suspense>
 	)

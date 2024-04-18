@@ -2,6 +2,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useLayoutEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import { useStackSelector } from '@/context/stack'
+
 import styles from './index.css'
 
 import type { ReactNode } from 'react'
@@ -15,6 +17,7 @@ interface IProps {
 const Index = (props: IProps) => {
 	const { open, position, children } = props
 	const [exist, setExsit] = useState(false)
+	const id = useStackSelector(v => v.id)
 
 	useLayoutEffect(() => {
 		if (open) return setExsit(true)
@@ -45,7 +48,7 @@ const Index = (props: IProps) => {
 		</AnimatePresence>
 	)
 
-	return createPortal(Content, document.body)
+	return createPortal(Content, document.getElementById(id))
 }
 
 export default $app.memo(Index)

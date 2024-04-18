@@ -2,7 +2,7 @@
 	padding: 3px;
 	line-height: 1;
 	font-size: 12px;
-	border-radius: var(--radius_small);
+	border-radius: var(--radius);
 	box-shadow: var(--shadow);
 	border: var(--border);
 	background-color: var(--color_bg);
@@ -12,7 +12,8 @@
 			padding: 6px 9px;
 			border-radius: var(--radius_small);
 
-			&:hover {
+			&:hover,
+			&.selected {
 				background-color: var(--color_bg_1);
 			}
 

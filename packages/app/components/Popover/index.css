@@ -3,7 +3,6 @@
 	font-size: 12px;
 	margin-top: 9px;
 	border-radius: var(--radius);
-	border: var(--border);
 	box-shadow: var(--shadow);
 	background-color: var(--color_text_sub);
 	color: var(--color_bg);

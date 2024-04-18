@@ -1,4 +1,5 @@
 .Emoji {
+	min-width: 321px;
 	width: auto !important;
 	padding: 0 !important;
 }

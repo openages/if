@@ -4,7 +4,7 @@ import { useLayoutEffect, useMemo, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 
-import { LazyElement, Modal } from '@/components'
+import { LazyElement, LoadingCircle, Modal } from '@/components'
 import { useStackSelector } from '@/context/stack'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useBasicTypeaheadTriggerMatch, LexicalTypeaheadMenuPlugin } from '@lexical/react/LexicalTypeaheadMenuPlugin'
@@ -69,6 +69,11 @@ const Index = () => {
 			>
 				<LazyElement
 					type='editor_modal'
+					placeholder={
+						<div className='w_100 flex justify_center align_center' style={{ height: 180 }}>
+							<LoadingCircle></LoadingCircle>
+						</div>
+					}
 					path={x.modal}
 					props={{ onClose: closeModal } as IPropsModal}
 				></LazyElement>
