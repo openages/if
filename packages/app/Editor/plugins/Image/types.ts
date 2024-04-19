@@ -17,8 +17,4 @@ export interface IPropsComponent extends IPropsImage {
 	node: ImageNode
 }
 
-export interface IPropsLazyImage extends IPropsImage {
-	setRef: (v: HTMLImageElement) => void
-}
-
 export type SerializedImageNode = Spread<IPropsImage, SerializedLexicalNode>

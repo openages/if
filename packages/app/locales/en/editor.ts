@@ -3,14 +3,32 @@ export default {
 	insert: 'Insert',
 	name: {
 		Image: 'Image',
-		Emoji: 'Emoji'
+		Emoji: 'Emoji',
+		Katex: 'Katex'
 	},
 	Image: {
 		modal: {
+			label: {
+				url: '链接',
+				file: '文件',
+				alt: '说明'
+			},
 			placeholder: {
 				url: 'Image URL',
 				alt: 'Image alt text'
 			}
+		}
+	},
+	Katex: {
+		modal: {
+			label: {
+				equation: 'Equation',
+				inline: 'Inline'
+			},
+			placeholder: {
+				equation: 'Equation expression'
+			},
+			preview: 'Preview'
 		}
 	}
 }

@@ -2,12 +2,13 @@ import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
+import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 
 import { Placeholder } from './components'
 import styles from './index.css'
 import nodes from './nodes'
-import { AutoLink, Image, LinkEditor, Picker } from './plugins'
+import { AutoLink, Image, Katex, LinkEditor, MarkdownShortCut, Picker } from './plugins'
 import { onError } from './utils'
 
 const Index = () => {
@@ -19,11 +20,15 @@ const Index = () => {
 					placeholder={<Placeholder />}
 					ErrorBoundary={LexicalErrorBoundary}
 				/>
+				<HistoryPlugin />
 				<AutoFocusPlugin />
 				<Picker />
+				<MarkdownShortCut />
+
 				<Image />
 				<AutoLink />
 				<LinkEditor />
+				<Katex />
 			</LexicalComposer>
 		</div>
 	)

@@ -1,5 +1,36 @@
-.Emoji {
-	min-width: 321px;
-	width: auto !important;
-	padding: 0 !important;
+.modal {
+	min-width: 300px;
+
+	.Emoji {
+		padding: 0 !important;
+	}
+
+	:global {
+		.if-segmented {
+			margin-bottom: 9px;
+
+			.if-segmented-item-label {
+				justify-content: center;
+			}
+		}
+
+		.if-form {
+			.if-form-item {
+				margin-bottom: 9px;
+
+				&:first-child {
+					margin-top: 0;
+				}
+
+				.if-form-item-label {
+					padding-bottom: 3px;
+
+					label {
+						font-size: 12px;
+						color: var(--color_text_light);
+					}
+				}
+			}
+		}
+	}
 }

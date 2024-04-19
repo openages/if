@@ -1,13 +1,11 @@
 import { useMemoizedFn } from 'ahooks'
 import { useTranslation } from 'react-i18next'
-import { useRouteError } from 'react-router'
 
 import { clearStorage } from '@/actions/global'
 
 import styles from './index.css'
 
 const Index = () => {
-	const error = useRouteError()
 	const { t } = useTranslation()
 
 	const reload = useMemoizedFn(() => window.location.reload())

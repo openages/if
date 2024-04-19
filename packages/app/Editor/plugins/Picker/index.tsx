@@ -10,6 +10,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { useBasicTypeaheadTriggerMatch, LexicalTypeaheadMenuPlugin } from '@lexical/react/LexicalTypeaheadMenuPlugin'
 
 import { Menu } from './components'
+import config from './config'
 import getOptions from './getOptions'
 import styles from './index.css'
 import Model from './model'
@@ -27,10 +28,12 @@ const Index = () => {
 
 	useLayoutEffect(() => {
 		x.init(editor)
+
+		return () => x.off()
 	}, [editor])
 
-	const showModal = useMemoizedFn((v: Model['modal']) => (x.modal = v))
-	const closeModal = useMemoizedFn(() => (x.modal = '' as Model['modal']))
+	const showModal = useMemoizedFn(x.show)
+	const closeModal = useMemoizedFn(x.close)
 	const setQuery = useMemoizedFn((v: Model['query']) => (x.query = v))
 	const onSelectOption = useMemoizedFn(x.onSelectOption)
 	const checkForTriggerMatch = useBasicTypeaheadTriggerMatch('/', { minLength: 0 })
@@ -57,12 +60,12 @@ const Index = () => {
 	return (
 		<Fragment>
 			<Modal
-				className={x.modal && styles[x.modal]}
+				className={$cx(styles.modal, x.modal && styles[x.modal])}
 				open={x.modal !== ('' as Model['modal'])}
-				title={`${t('translation:editor.insert')}${t('translation:common.letter_space')}${t(
-					`translation:editor.name.${x.modal}`
-				)}`}
-				width={300}
+				title={`${t(x.node_key ? 'translation:common.update' : 'translation:editor.insert')}${t(
+					'translation:common.letter_space'
+				)}${t(`translation:editor.name.${x.modal}`)}`}
+				width={config[x.modal]?.width || 300}
 				maskClosable
 				onCancel={closeModal}
 				getContainer={getModalContainer}
@@ -75,7 +78,7 @@ const Index = () => {
 						</div>
 					}
 					path={x.modal}
-					props={{ onClose: closeModal } as IPropsModal}
+					props={{ node_key: x.node_key, onClose: closeModal } as IPropsModal}
 				></LazyElement>
 			</Modal>
 			<LexicalTypeaheadMenuPlugin

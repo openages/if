@@ -32,6 +32,7 @@ export default {
 		感恩节: 'Thanksgiving',
 		圣诞节: 'Christmas'
 	},
+	update: 'Update',
 	add: 'Add',
 	paste: 'Paste',
 	letter_space: ' ',

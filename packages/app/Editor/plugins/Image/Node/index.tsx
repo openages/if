@@ -36,7 +36,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 		return 'image'
 	}
 
-	static clone(node: ImageNode): ImageNode {
+	static clone(node: ImageNode) {
 		return new ImageNode({
 			src: node.__src,
 			width: node.__width,
@@ -47,7 +47,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 		})
 	}
 
-	static importJSON(serializedNode: SerializedImageNode): ImageNode {
+	static importJSON(serializedNode: SerializedImageNode) {
 		return $createImageNode(serializedNode)
 	}
 

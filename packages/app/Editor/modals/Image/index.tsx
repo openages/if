@@ -57,7 +57,7 @@ const Index = (props: IPropsModal) => {
 	})
 
 	return (
-		<div className={$cx(styles._local)}>
+		<div className='w_100 flex flex_column'>
 			<Segmented className='w_100' block options={options} onChange={x.onChangeType}></Segmented>
 			<Form
 				form={form}
@@ -68,19 +68,19 @@ const Index = (props: IPropsModal) => {
 			>
 				<Choose>
 					<When condition={x.type === 'URL'}>
-						<Item label='URL' name='src'>
+						<Item label={t('translation:editor.Image.modal.label.url')} name='src'>
 							<Input
 								placeholder={t('translation:editor.Image.modal.placeholder.url')}
 							></Input>
 						</Item>
 					</When>
 					<When condition={x.type === 'File'}>
-						<Item label='File' name='file'>
+						<Item label={t('translation:editor.Image.modal.label.file')} name='file'>
 							<FileUploader accept='image/*' maxCount={1} maxSize={MAX_SIZE}></FileUploader>
 						</Item>
 					</When>
 				</Choose>
-				<Item label='Alt' name='alt'>
+				<Item label={t('translation:editor.Image.modal.label.alt')} name='alt'>
 					<Input placeholder={t('translation:editor.Image.modal.placeholder.alt')}></Input>
 				</Item>
 				<Button className='w_100 mt_4' htmlType='submit' type='primary'>

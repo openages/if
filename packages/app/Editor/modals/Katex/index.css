@@ -1,0 +1,51 @@
+._local {
+	:global {
+		.inline_wrap {
+			right: 0;
+			z-index: 10;
+			margin-bottom: 0;
+
+			.if-row {
+				flex-direction: row;
+				flex-wrap: nowrap;
+
+				.if-form-item-label {
+					padding-bottom: 0;
+					margin-right: 4px;
+
+					label {
+						&::after {
+							display: none;
+						}
+					}
+				}
+
+				.if-form-item-control {
+					display: flex;
+					width: unset;
+
+					.if-form-item-control-input {
+						min-height: unset;
+					}
+				}
+			}
+		}
+
+		.prewview_wrap {
+			min-height: 60px;
+			padding: 24px;
+			margin-bottom: 12px;
+			border: var(--border_dashed);
+			border-radius: var(--radius);
+
+			&:hover {
+				border-color: var(--color_text);
+			}
+
+			.preview {
+				font-size: 18px;
+				color: var(--color_text_light);
+			}
+		}
+	}
+}

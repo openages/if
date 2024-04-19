@@ -1,0 +1,8 @@
+@import 'katex/dist/katex.css';
+
+.katex-display {
+	display: inline-block;
+	margin: 0;
+	padding: 0 0.6em;
+	font-size: 14px;
+}

@@ -65,6 +65,9 @@ importers:
       '@lexical/mark':
         specifier: ^0.14.5
         version: 0.14.5
+      '@lexical/markdown':
+        specifier: ^0.14.5
+        version: 0.14.5
       '@lexical/react':
         specifier: ^0.14.5
         version: 0.14.5(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326)(yjs@13.6.14)
@@ -149,6 +152,9 @@ importers:
       json-stable-stringify:
         specifier: ^1.1.1
         version: 1.1.1
+      katex:
+        specifier: ^0.16.10
+        version: 0.16.10
       konva:
         specifier: ^9.3.6
         version: 9.3.6
@@ -197,6 +203,9 @@ importers:
       react-dom:
         specifier: 0.0.0-experimental-c3048aab4-20240326
         version: 0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326)
+      react-error-boundary:
+        specifier: ^4.0.13
+        version: 4.0.13(react@0.0.0-experimental-c3048aab4-20240326)
       react-horizontal-scrolling-menu:
         specifier: ^4.1.4
         version: 4.1.4(react-dom@0.0.0-experimental-c3048aab4-20240326)(react@0.0.0-experimental-c3048aab4-20240326)
@@ -282,6 +291,9 @@ importers:
       '@types/json-stable-stringify':
         specifier: ^1.0.36
         version: 1.0.36
+      '@types/katex':
+        specifier: ^0.16.7
+        version: 0.16.7
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -4287,6 +4299,10 @@ packages:
       '@types/node': 20.12.7
     dev: true
 
+  /@types/katex@0.16.7:
+    resolution: {integrity: sha512-HMwFiRujE5PjrgwHQ25+bsLJgowjGjm5Z8FVSf0N6PwgJrwxH0QxzHYDcKsTfV3wva0vzrpqMTJS2jXPr5BMEQ==}
+    dev: true
+
   /@types/lodash-es@4.17.12:
     resolution: {integrity: sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==}
     dependencies:
@@ -5358,6 +5374,11 @@ packages:
     resolution: {integrity: sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==}
     engines: {node: '>= 10'}
     dev: true
+
+  /commander@8.3.0:
+    resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
+    engines: {node: '>= 12'}
+    dev: false
 
   /common-tags@1.8.2:
     resolution: {integrity: sha512-gk/Z852D2Wtb//0I+kRFNKKE9dIIVirjoqPoA1wJU+XePVXZfGeBpk45+A1rKO4Q43prqWBNY/MiIeRLbPWUaA==}
@@ -7147,6 +7168,13 @@ packages:
     resolution: {integrity: sha512-7SIbS09K7J40sd/hKCAOLQ1ss45aQ76pz99K1esBlgH/CkdCbetTEx6v+gPeCIXwnT1VHU5JKGjNbJO7ktZNFQ==}
     dev: false
 
+  /katex@0.16.10:
+    resolution: {integrity: sha512-ZiqaC04tp2O5utMsl2TEZTXxa6WSC4yo0fv5ML++D3QZv/vx2Mct0mTlRx3O+uUkjfuAgOkzsCmq5MiUEsDDdA==}
+    hasBin: true
+    dependencies:
+      commander: 8.3.0
+    dev: false
+
   /keygrip@1.1.0:
     resolution: {integrity: sha512-iYSchDJ+liQ8iwbSI2QqsQOvqv58eJCEanyJPJi+Khyu8smkcKSFUCbPwzFcL7YVtZ6eONjqRX/38caJ7QjRAQ==}
     engines: {node: '>= 0.6'}
@@ -8684,6 +8712,15 @@ packages:
   /react-error-boundary@3.1.4(react@0.0.0-experimental-c3048aab4-20240326):
     resolution: {integrity: sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==}
     engines: {node: '>=10', npm: '>=6'}
+    peerDependencies:
+      react: '>=16.13.1'
+    dependencies:
+      '@babel/runtime': 7.24.4
+      react: 0.0.0-experimental-c3048aab4-20240326
+    dev: false
+
+  /react-error-boundary@4.0.13(react@0.0.0-experimental-c3048aab4-20240326):
+    resolution: {integrity: sha512-b6PwbdSv8XeOSYvjt8LpgpKrZ0yGdtZokYwkwV2wlcZbxgopHX/hgPl5VgpnoVOWd868n1hktM8Qm4b+02MiLQ==}
     peerDependencies:
       react: '>=16.13.1'
     dependencies:
