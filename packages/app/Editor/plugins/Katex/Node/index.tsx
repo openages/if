@@ -1,5 +1,4 @@
-import type { SerializedKatexNode } from '../types'
-
+import katex from 'katex'
 import { DecoratorNode } from 'lexical'
 import { lazy, Suspense } from 'react'
 
@@ -7,6 +6,7 @@ import { $createKatexNode, convertKatexElement } from '../utils'
 
 import type { DOMConversionMap, DOMExportOutput } from 'lexical'
 import type { IPropsKatex } from '../types'
+import type { SerializedKatexNode } from '../types'
 
 const Component = lazy(() => import('./Component'))
 
@@ -84,15 +84,13 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 		element.setAttribute('data-lexical-katex', btoa(this.__value))
 		element.setAttribute('data-lexical-inline', `${this.__inline}`)
 
-		import('katex').then(({ default: katex }) => {
-			katex.render(this.__value, element, {
-				displayMode: !this.__inline,
-				errorColor: '#cc0000',
-				output: 'html',
-				strict: 'warn',
-				throwOnError: false,
-				trust: false
-			})
+		katex.render(this.__value, element, {
+			displayMode: !this.__inline,
+			errorColor: '#cc0000',
+			output: 'html',
+			strict: 'warn',
+			throwOnError: false,
+			trust: false
 		})
 
 		return { element }

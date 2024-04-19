@@ -1,3 +1,4 @@
+import katex from 'katex'
 import { useLayoutEffect, useRef, Fragment } from 'react'
 
 import type { IPropsRender } from '../types'
@@ -11,15 +12,13 @@ const Index = (props: IPropsRender) => {
 
 		if (!el || !value) return
 
-		import('katex').then(({ default: katex }) => {
-			katex.render(value, el, {
-				displayMode: !inline,
-				errorColor: 'var(--color_danger)',
-				output: 'html',
-				strict: 'warn',
-				throwOnError: false,
-				trust: false
-			})
+		katex.render(value, el, {
+			displayMode: !inline,
+			errorColor: 'var(--color_danger)',
+			output: 'html',
+			strict: 'warn',
+			throwOnError: false,
+			trust: false
 		})
 	}, [value, inline])
 

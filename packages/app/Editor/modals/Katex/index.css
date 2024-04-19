@@ -34,7 +34,6 @@
 		.prewview_wrap {
 			min-height: 60px;
 			padding: 24px;
-			margin-bottom: 12px;
 			border: var(--border_dashed);
 			border-radius: var(--radius);
 

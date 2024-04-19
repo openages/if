@@ -7,6 +7,7 @@ import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
 
 const is_dev = process.env.NODE_ENV === 'development'
 const is_prod = process.env.NODE_ENV === 'production'
+const is_doctor = process.env.DOCTOR === 'true'
 const is_module = false
 
 const plugins_dev = [
@@ -15,7 +16,7 @@ const plugins_dev = [
 	})
 ]
 const plugins_prod = [
-	new RsdoctorRspackPlugin(),
+	is_doctor && new RsdoctorRspackPlugin(),
 	new CopyRspackPlugin({
 		patterns: [{ from: './public', to: './', globOptions: { ignore: ['**/index.html'] } }]
 	})
