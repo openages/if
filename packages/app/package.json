@@ -33,7 +33,7 @@
 		"@lexical/table": "^0.14.5",
 		"@lexical/utils": "^0.14.5",
 		"@openages/stk": "workspace:*",
-		"@phosphor-icons/react": "^2.1.4",
+		"@phosphor-icons/react": "^2.1.5",
 		"@swc/helpers": "^0.5.10",
 		"@xyflow/react": "12.0.0-next.12",
 		"@xyflow/system": "^0.0.20",
@@ -87,7 +87,7 @@
 		"tslib": "^2.6.2",
 		"tsyringe": "^4.8.0",
 		"uniqolor": "^1.1.1",
-		"zod": "^3.22.4"
+		"zod": "^3.22.5"
 	},
 	"devDependencies": {
 		"@module-federation/enhanced": "^0.1.7",

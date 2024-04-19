@@ -9,5 +9,12 @@ export default {
 	TimeBlockDetail: {
 		desc: '描述',
 		tag_placeholder: '选择标签'
+	},
+	Header: {
+		view: {
+			calendar: '日程表',
+			timeline: '时间线',
+			fixed: '固定日程'
+		}
 	}
 }

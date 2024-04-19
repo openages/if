@@ -15,7 +15,8 @@ export default {
 		month: 'month',
 		months: 'months',
 		x_unit_ago: '{{x}} {{unit}} ago',
-		x_unit: '{{x}} {{unit}}'
+		x_unit: '{{x}} {{unit}}',
+		year: 'year'
 	},
 	days: {
 		元旦节: 'New Year',

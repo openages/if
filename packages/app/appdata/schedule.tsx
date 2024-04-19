@@ -22,7 +22,7 @@ export const views = [
 		value: 'fixed',
 		icon: <Compass data-key='fixed' />
 	}
-]
+] as const
 
 export const scales = [
 	{

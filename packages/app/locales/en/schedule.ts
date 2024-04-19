@@ -9,5 +9,12 @@ export default {
 	TimeBlockDetail: {
 		desc: 'Desc',
 		tag_placeholder: 'Select Tag'
+	},
+	Header: {
+		view: {
+			calendar: 'calendar',
+			timeline: 'timeline',
+			fixed: 'fixed'
+		}
 	}
 }
