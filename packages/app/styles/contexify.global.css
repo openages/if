@@ -26,9 +26,9 @@
 }
 
 .contexify {
+	box-sizing: border-box;
 	box-shadow: var(--shadow);
 	font-size: 12px;
-	box-sizing: border-box;
 
 	&_separator {
 		margin: 3px 0;
@@ -38,9 +38,9 @@
 		border-radius: 0;
 
 		&Content {
-			padding: 0;
-			box-sizing: border-box;
 			display: flex;
+			box-sizing: border-box;
+			padding: 0;
 		}
 	}
 }

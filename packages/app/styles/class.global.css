@@ -8,19 +8,19 @@
 }
 
 .limited_content_wrap {
-	box-sizing: border-box;
-	max-width: var(--limited_width);
 	width: 100%;
-	margin: 0 auto;
+	max-width: var(--limited_width);
+	box-sizing: border-box;
 	padding: 0 var(--limited_padding);
+	margin: 0 auto;
 }
 
 .limited_unchanged_content_wrap {
-	box-sizing: border-box;
-	max-width: var(--limited_width_unchanged);
 	width: 100%;
-	margin: 0 auto;
+	max-width: var(--limited_width_unchanged);
+	box-sizing: border-box;
 	padding: 0 var(--limited_padding);
+	margin: 0 auto;
 }
 
 .color_bg {
@@ -62,23 +62,23 @@
 }
 
 .btn_main {
-	outline: none;
 	border-style: solid;
 	border-color: var(--color_text) !important;
-	background-color: var(--color_text);
+	outline: none;
 	color: var(--color_bg);
+	background-color: var(--color_text);
+
+	&:hover {
+		outline: 3px solid var(--color_border);
+		background-color: var(--color_text);
+	}
 
 	&.if-btn-default {
 		&:hover {
-			color: var(--color_bg) !important;
 			border-color: var(--color_text) !important;
-			background-color: var(--color_text) !important;
 			outline: 3px solid var(--color_border);
+			color: var(--color_bg) !important;
+			background-color: var(--color_text) !important;
 		}
-	}
-
-	&:hover {
-		background-color: var(--color_text);
-		outline: 3px solid var(--color_border);
 	}
 }

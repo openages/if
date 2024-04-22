@@ -1,9 +1,9 @@
 .react-horizontal-scrolling-menu--scroll-container {
-	display: flex;
-	height: max-content;
-	overflow-y: hidden;
 	position: relative;
+	display: flex;
+	overflow-y: hidden;
 	width: 100%;
+	height: max-content;
       height: 100%;
 }
 .react-horizontal-scrolling-menu--scroll-container.rtl {
