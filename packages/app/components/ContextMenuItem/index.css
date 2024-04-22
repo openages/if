@@ -1,7 +1,7 @@
 ._local {
+	line-height: 1;
 	padding: 6px;
 	border-radius: var(--radius);
-	line-height: 1;
 
 	:global {
 		.bg_danger_wrap {

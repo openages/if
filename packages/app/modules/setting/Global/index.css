@@ -21,11 +21,11 @@
 			margin-bottom: 36px;
 
 			.setting_item {
+				min-height: 66px;
 				padding: 0 15px;
 				margin-bottom: 6px;
-				min-height: 66px;
-				background-color: var(--color_bg_1);
 				border-radius: var(--radius_large);
+				background-color: var(--color_bg_1);
 
 				&:last-child {
 					margin-bottom: 0;
@@ -49,8 +49,8 @@
 
 						.desc {
 							margin-top: 8px;
-							font-size: 12px;
 							color: rgba(var(--color_text_rgb), 0.6);
+							font-size: 12px;
 						}
 					}
 				}
@@ -59,13 +59,13 @@
 					min-height: 30px;
 
 					.btn {
-						border: none;
-						box-shadow: none;
-						outline: none;
 						width: 120px;
-						background-color: var(--color_bg);
 						height: 38px;
+						border: none;
 						border-radius: 17px;
+						outline: none;
+						background-color: var(--color_bg);
+						box-shadow: none;
 						cursor: pointer;
 
 						&:hover {
@@ -119,8 +119,8 @@
 				.color_item_wrap {
 					width: 24px;
 					height: 24px;
-					border-radius: 50%;
 					padding: 1px;
+					border-radius: 50%;
 
 					&.active {
 						outline: 1px solid var(--color_main);
@@ -140,11 +140,11 @@
 		:global {
 			.if-modal-footer {
 				.if-btn-primary {
-					cursor: not-allowed;
 					border: 1px dashed var(--color_border_light);
 					color: var(--color_text_light);
 					background: var(--color_bg_1);
 					box-shadow: none;
+					cursor: not-allowed;
 					pointer-events: none;
 				}
 			}
@@ -166,8 +166,8 @@
 					padding-top: 0;
 
 					.password_key {
-						height: 150px;
 						overflow: scroll;
+						height: 150px;
 						cursor: initial;
 					}
 
@@ -181,11 +181,11 @@
 				padding-top: 12px;
 
 				.password_key {
+					overflow: hidden;
 					height: 72px;
 					resize: none;
-					font-size: 12px;
-					overflow: hidden;
 					cursor: pointer;
+					font-size: 12px;
 
 					&.unverified {
 						:local {
@@ -195,16 +195,16 @@
 				}
 
 				.btn_copy {
-					right: 0;
 					z-index: 10000;
+					right: 0;
+					overflow: hidden;
 					width: 21px;
 					height: 21px;
 					border: 1px dashed var(--color_border_light);
-					border-top-right-radius: var(--radius);
-					border-bottom-left-radius: var(--radius);
 					border-top: none;
 					border-right: none;
-					overflow: hidden;
+					border-top-right-radius: var(--radius);
+					border-bottom-left-radius: var(--radius);
 					background-color: var(--color_bg);
 
 					&:hover {
@@ -215,8 +215,8 @@
 				.desc {
 					width: 93%;
 					margin-top: 12px;
-					font-size: 12px;
 					color: var(--color_text_light);
+					font-size: 12px;
 				}
 			}
 		}

@@ -1,10 +1,10 @@
 html,
 body {
-	margin: 0;
+	line-height: 1.5;
 	padding: 0;
-	background-color: var(--color_bg);
+	margin: 0;
 	color: var(--color_text);
-	font-size: 14px;
+	background-color: var(--color_bg);
 	font-family:
 		'Rubik',
 		-apple-system,
@@ -19,12 +19,12 @@ body {
 		'Segoe UI Emoji',
 		'Segoe UI Symbol',
 		'Noto Color Emoji';
-	line-height: 1.5;
+	font-size: 14px;
+	text-rendering: optimizeLegibility;
+	text-size-adjust: 100%;
 
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	text-rendering: optimizeLegibility;
-	text-size-adjust: 100%;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -47,8 +47,8 @@ input:-internal-autofill-selected {
 }
 
 ::selection {
-	background-color: rgba(var(--color_main_rgb), 0.06);
 	color: var(--color_main);
+	background-color: rgba(var(--color_main_rgb), 0.06);
 }
 
 a {
@@ -64,8 +64,8 @@ input {
 }
 
 button {
-	outline: none;
 	border: none;
-	box-shadow: none;
+	outline: none;
 	color: var(--color_text);
+	box-shadow: none;
 }

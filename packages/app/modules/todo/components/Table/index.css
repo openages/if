@@ -37,8 +37,8 @@
 				tr {
 					td {
 						&:first-child {
-							padding-left: 0 !important;
 							padding-right: 0 !important;
+							padding-left: 0 !important;
 						}
 
 						&:nth-of-type(2) {
@@ -106,9 +106,9 @@
 	.RenderChildren,
 	.RenderRemark,
 	.RenderCreateAt {
+		opacity: var(--disable_opacity);
 		color: var(--color_text_light);
 		pointer-events: none;
-		opacity: var(--disable_opacity);
 	}
 
 	.RenderStatus {
@@ -145,14 +145,14 @@
 	.DateTime,
 	.RenderCycle,
 	.RenderSchedule {
+		opacity: var(--disable_opacity);
 		color: var(--color_text_light);
 		pointer-events: none;
-		opacity: var(--disable_opacity);
 	}
 
 	.RenderStatus {
-		color: var(--color_relation_group);
 		border-radius: 50%;
+		color: var(--color_relation_group);
 	}
 
 	.RenderAngle {
@@ -178,9 +178,9 @@
 	padding: 0;
 	border: none;
 	outline: none;
-	font-size: 12px;
-	text-overflow: ellipsis;
 	background-color: transparent;
+	text-overflow: ellipsis;
+	font-size: 12px;
 }
 
 .RenderAngle {
@@ -200,9 +200,9 @@
 			line-height: 14px;
 			padding: 0 4px;
 			margin: 0 1px;
+			border-radius: var(--radius_small);
 			font-size: 10px;
 			font-weight: 500;
-			border-radius: var(--radius_small);
 		}
 	}
 }
@@ -308,10 +308,10 @@
 .RenderRemarkPopover {
 	:global {
 		.if-popover-inner {
+			overflow-y: scroll;
 			width: 300px;
 			height: 150px;
 			padding: 18px;
-			overflow-y: scroll;
 		}
 	}
 }

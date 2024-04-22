@@ -7,8 +7,8 @@
 			width: 60px;
 			height: 18px;
 			padding: 0;
-			font-size: 12px;
 			text-align: right;
+			font-size: 12px;
 		}
 
 		.time_picker {
@@ -52,20 +52,20 @@
 			}
 
 			.if-form-item-control {
+				flex: unset;
 				width: 60px !important;
 				height: 18px;
-				flex: unset;
 
 				.if-form-item-control-input {
 					width: 60px !important;
-					min-height: 18px;
 					height: 18px;
+					min-height: 18px;
 
 					.if-form-item-control-input-content {
-						height: 100%;
 						display: flex;
 						align-items: center;
 						justify-content: flex-end;
+						height: 100%;
 					}
 				}
 			}

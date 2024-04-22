@@ -4,9 +4,9 @@
 	border-right: var(--border);
 
 	&.hide {
+		z-index: 1001;
 		width: 0;
 		border: none;
-		z-index: 1001;
 	}
 
 	&.simple {
@@ -24,9 +24,9 @@
 
 			.item_wrap {
 				height: 30px;
-				border-radius: var(--radius);
-				padding-left: 6px !important;
 				padding-right: 6px !important;
+				padding-left: 6px !important;
+				border-radius: var(--radius);
 			}
 
 			.actions_wrap {
@@ -46,9 +46,9 @@
 
 	:global {
 		.dir_tree_wrap {
+			overflow-y: scroll;
 			height: calc(100% - 36px - 36px);
 			padding-bottom: 60px;
-			overflow-y: scroll;
 
 			&.empty {
 				padding-bottom: 0;
@@ -58,17 +58,17 @@
 }
 
 .btn_dirtree {
+	z-index: 1000;
 	bottom: 12px;
 	left: calc(var(--sidebar_width) + 12px);
-	z-index: 1000;
 
 	:global {
 		.btn_dirtree {
 			width: 30px;
 			height: 30px;
+			border-radius: var(--radius);
 			background-color: var(--color_bg);
 			box-shadow: var(--shadow);
-			border-radius: var(--radius);
 		}
 	}
 }

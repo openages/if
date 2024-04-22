@@ -21,8 +21,8 @@
 
 				label {
 					height: 30px;
-					font-size: 12px;
 					color: var(--color_text_light);
+					font-size: 12px;
 
 					&::after {
 						display: none;
@@ -40,20 +40,20 @@
 		}
 
 		.text_wrap {
-			outline: none;
 			min-height: 30px;
-			padding: 6px 0;
-			font-size: 12px;
 			line-height: 1.5;
+			padding: 6px 0;
+			outline: none;
+			font-size: 12px;
 		}
 
 		.select {
 			height: 30px;
 
 			.if-select-selector {
+				align-items: center;
 				padding: 0;
 				font-size: 12px;
-				align-items: center;
 
 				.if-select-selection-search {
 					inset-inline-start: unset;
@@ -66,8 +66,8 @@
 				}
 
 				input {
-					font-size: 12px;
 					height: 30px !important;
+					font-size: 12px;
 				}
 			}
 
@@ -89,22 +89,22 @@
 		}
 
 		.tab_wrap {
-			margin-top: 6px;
 			height: 30px;
-			color: var(--color_text_light);
-			border-bottom-left-radius: var(--radius);
-			border-bottom-right-radius: var(--radius);
+			margin-top: 6px;
 			border-top: var(--border);
+			border-bottom-right-radius: var(--radius);
+			border-bottom-left-radius: var(--radius);
+			color: var(--color_text_light);
 			background-color: var(--color_bg);
 
 			&::before {
-				content: '';
 				position: absolute;
 				top: 0;
 				left: calc(50% - 0.5px);
 				width: 1px;
 				height: 100%;
 				background-color: var(--color_border_light);
+				content: '';
 			}
 
 			.tab_item {
@@ -116,11 +116,11 @@
 				}
 
 				.counts {
-					padding: 1px 3px;
-					border-radius: 50%;
-					border: var(--border);
-					font-size: 10px;
 					line-height: 1;
+					padding: 1px 3px;
+					border: var(--border);
+					border-radius: 50%;
+					font-size: 10px;
 				}
 			}
 		}

@@ -19,17 +19,17 @@
 
 			.if-upload-btn {
 				display: flex;
-				justify-content: center;
 				align-items: center;
+				justify-content: center;
 
 				.if-upload-drag-container {
 					display: flex;
-					justify-content: center;
 					align-items: center;
+					justify-content: center;
 
 					.upload_placeholder_wrap {
-						color: var(--color_text_light);
 						line-height: 1;
+						color: var(--color_text_light);
 						font-size: 12px;
 					}
 				}
@@ -48,8 +48,8 @@
 		}
 
 		.if-upload-list-item-actions {
-			width: 24px;
 			display: flex;
+			width: 24px;
 		}
 	}
 }

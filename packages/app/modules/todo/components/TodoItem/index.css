@@ -1,9 +1,9 @@
 .todo_item_wrap {
 	&.kanban_mode {
 		padding-top: 3px;
+		margin-bottom: 6px;
 		border: var(--border);
 		border-radius: var(--radius_small);
-		margin-bottom: 6px;
 		box-shadow: var(--shadow_card);
 
 		&.is_dragging {
@@ -15,20 +15,20 @@
 
 			:global {
 				.over_line {
-					height: 1px;
-					left: 0;
 					bottom: -5px;
+					left: 0;
+					height: 1px;
 					background-color: var(--color_text);
 
 					&::before,
 					&::after {
-						content: '';
 						position: absolute;
 						width: 4px;
 						height: 4px;
-						border-radius: 50%;
 						box-sizing: border-box;
 						border: 1px solid var(--color_text);
+						border-radius: 50%;
+						content: '';
 					}
 
 					&::before {
@@ -45,8 +45,8 @@
 		.todo_item {
 			:global {
 				.drag_wrap {
-					left: unset;
 					right: -9px;
+					left: unset;
 				}
 			}
 		}
@@ -57,13 +57,13 @@
 			}
 
 			.date_wrap {
+				line-height: 1;
 				padding: 9px;
 				padding-top: 3px;
 				padding-left: 11px;
-				font-size: 10px;
-				line-height: 1;
 				color: var(--color_text_light);
 				white-space: nowrap;
+				font-size: 10px;
 
 				&.in_options {
 					padding: 0;
@@ -172,8 +172,8 @@
 				width: 14px;
 				height: 14px;
 				border-radius: 50%;
-				background-color: rgba(var(--color_text_rgb), 0.12);
 				opacity: 0;
+				background-color: rgba(var(--color_text_rgb), 0.12);
 
 				&:hover {
 					opacity: 1;
@@ -188,17 +188,17 @@
 				}
 
 				&::after {
-					content: '';
 					width: 4px;
 					height: 4px;
 					border-radius: 50%;
 					background-color: rgba(var(--color_text_rgb), 0.48);
+					content: '';
 				}
 
 				&.dragging,
 				&.hovering {
-					opacity: 1;
 					border: 1px solid var(--color_text);
+					opacity: 1;
 					background-color: var(--color_bg);
 
 					&::after {
@@ -236,17 +236,17 @@
 
 				&.has_children {
 					&::after {
-						content: attr(data-children);
-						box-sizing: border-box;
 						height: 14px;
+						line-height: 12px;
+						box-sizing: border-box;
 						padding: 0 3px;
 						margin-left: 3px;
-						line-height: 12px;
-						font-size: 10px;
-						background-color: var(--color_bg_1);
-						border-radius: 8px;
 						border: var(--border);
+						border-radius: 8px;
+						background-color: var(--color_bg_1);
+						content: attr(data-children);
 						vertical-align: 1.6px;
+						font-size: 10px;
 					}
 				}
 
@@ -256,18 +256,18 @@
 
 				&.remind {
 					&::before {
-						content: attr(data-remind);
-						box-sizing: border-box;
 						height: 14px;
+						line-height: 12px;
+						box-sizing: border-box;
 						padding: 0 3px;
 						margin-right: 3px;
-						line-height: 12px;
-						font-size: 10px;
-						color: var(--color_warning);
-						border-radius: 8px;
 						border: var(--border);
 						border: 1px solid var(--color_warning);
+						border-radius: 8px;
+						color: var(--color_warning);
+						content: attr(data-remind);
 						vertical-align: 1.6px;
+						font-size: 10px;
 					}
 				}
 			}
@@ -277,9 +277,9 @@
 	:global {
 		.options_wrap {
 			padding-top: 3px;
+			padding-right: 12px;
 			padding-bottom: 9px;
 			padding-left: 9.6px;
-			padding-right: 12px;
 			transition: padding ease 0.3s;
 
 			&.checked,
@@ -292,14 +292,14 @@
 			}
 
 			.other_wrap {
+				z-index: 1;
+				line-height: 1;
 				margin-right: 6px;
 				margin-bottom: -1px;
 				border-radius: 7px;
-				z-index: 1;
-				line-height: 1;
-				font-size: 10px;
 				color: var(--color_text_grey);
 				white-space: nowrap;
+				font-size: 10px;
 
 				&:last-child {
 					margin-right: 0;

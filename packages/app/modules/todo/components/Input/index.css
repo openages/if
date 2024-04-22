@@ -7,9 +7,9 @@
 		.input_add_todo {
 			padding: 7px 12px;
 			border: 1px dashed var(--color_border);
-			border-radius: var(--radius);
 			border-bottom-width: 2px;
 			border-bottom-style: solid;
+			border-radius: var(--radius);
 			outline: none;
 
 			&:focus {
@@ -18,8 +18,8 @@
 
 			&:empty {
 				&::after {
-					content: attr(data-placeholder);
 					color: var(--color_text_light);
+					content: attr(data-placeholder);
 				}
 			}
 		}
@@ -83,8 +83,8 @@
 			color: rgba(var(--color_text_rgb), 0.24);
 
 			&:hover {
-				background-color: var(--color_bg_2);
 				color: var(--color_text);
+				background-color: var(--color_bg_2);
 			}
 
 			&.active {

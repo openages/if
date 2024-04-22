@@ -15,8 +15,8 @@
 
 		&.if-btn-dangerous {
 			&:hover {
-				background-color: var(--color_danger) !important;
 				outline: 3px solid var(--color_border);
+				background-color: var(--color_danger) !important;
 			}
 		}
 	}

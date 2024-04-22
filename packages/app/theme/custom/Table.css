@@ -59,13 +59,13 @@
 				tr {
 					th {
 						padding: 3px 6px !important;
-						text-transform: capitalize;
-						font-weight: normal;
-						font-size: 12px;
-						white-space: nowrap;
 						color: var(--color_text_light);
 						background-color: var(--color_bg);
 						user-select: none;
+						text-transform: capitalize;
+						white-space: nowrap;
+						font-size: 12px;
+						font-weight: normal;
 
 						&::before {
 							display: none;
@@ -77,8 +77,8 @@
 					}
 
 					td {
-						background-color: var(--color_bg);
 						border-start-start-radius: 0 !important;
+						background-color: var(--color_bg);
 
 						&::before {
 							display: none;
@@ -146,23 +146,23 @@
 		position: unset;
 
 		.if-spin {
+			z-index: 10000;
 			display: flex;
-			justify-content: center;
 			align-items: center;
+			justify-content: center;
 			min-height: unset;
 			max-height: unset;
 			padding: 0;
-			z-index: 10000;
 			background-color: var(--color_bg);
 
 			.if-spin-dot {
 				position: unset;
-				margin: unset;
-				inset-inline-start: unset;
 				display: flex;
 				width: unset;
 				height: unset;
+				margin: unset;
 				margin-top: -48px;
+				inset-inline-start: unset;
 			}
 		}
 	}

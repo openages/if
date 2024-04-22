@@ -5,9 +5,9 @@
 	margin: 12px 0;
 
 	.if-pagination-item {
-		outline: none !important;
 		border: none;
 		border-radius: 50%;
+		outline: none !important;
 
 		&-active {
 			pointer-events: none;
@@ -25,11 +25,11 @@
 	}
 
 	.if-pagination-item-link {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		border: none !important;
 		border-radius: 50% !important;
-		display: flex;
-		justify-content: center;
-		align-items: center;
 
 		&:disabled {
 			opacity: 0.3;

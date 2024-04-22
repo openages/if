@@ -21,12 +21,12 @@
 		}
 
 		.group_title {
-			padding: 0 11px;
-			font-size: 12px;
-			line-height: 1;
-			color: var(--color_text_grey);
 			min-height: unset;
+			line-height: 1;
+			padding: 0 11px;
 			outline: none;
+			color: var(--color_text_grey);
+			font-size: 12px;
 		}
 	}
 }

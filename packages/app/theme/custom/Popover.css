@@ -1,60 +1,6 @@
 .if-popover {
-	.if-popover-arrow::after {
-		box-shadow: var(--shadow);
-	}
-
-	.if-popover-inner {
-		padding: 0;
-		border-radius: var(--radius);
-		box-shadow: var(--shadow);
-	}
 
 	&.border_popover {
-		.if-popover-content {
-			.if-popover-inner {
-				border: var(--border);
-			}
-		}
-
-		.if-popover-arrow {
-			width: 0;
-			height: 0;
-			overflow: visible;
-
-			&::before {
-				clip-path: unset;
-				inset-inline-start: unset;
-				position: absolute;
-				z-index: 1;
-				right: -7px;
-				bottom: -7px;
-				width: 0;
-				height: 0;
-				border-style: solid;
-				border-width: 0 6px 8px 6px;
-				border-color: transparent transparent var(--color_border_light) transparent;
-				background-color: unset;
-			}
-
-			&::after {
-				clip-path: unset;
-				inset-inline: unset;
-				position: absolute;
-				margin: unset;
-				transform: unset;
-				border-radius: unset;
-				z-index: 1;
-				right: -7px;
-				bottom: -8px;
-				width: 0;
-				height: 0;
-				border-style: solid;
-				border-width: 0 6px 8px 6px;
-				border-color: transparent transparent var(--color_bg) transparent;
-				background-color: unset;
-				box-shadow: unset;
-			}
-		}
 
 		&.if-popover-placement-top {
 			.if-popover-arrow {
@@ -87,5 +33,59 @@
 				bottom: 18px !important;
 			}
 		}
+		.if-popover-content {
+			.if-popover-inner {
+				border: var(--border);
+			}
+		}
+
+		.if-popover-arrow {
+			overflow: visible;
+			width: 0;
+			height: 0;
+
+			&::before {
+				position: absolute;
+				z-index: 1;
+				right: -7px;
+				bottom: -7px;
+				width: 0;
+				height: 0;
+				inset-inline-start: unset;
+				border-width: 0 6px 8px 6px;
+				border-style: solid;
+				border-color: transparent transparent var(--color_border_light) transparent;
+				background-color: unset;
+				clip-path: unset;
+			}
+
+			&::after {
+				position: absolute;
+				z-index: 1;
+				right: -7px;
+				bottom: -8px;
+				width: 0;
+				height: 0;
+				margin: unset;
+				inset-inline: unset;
+				border-width: 0 6px 8px 6px;
+				border-style: solid;
+				border-color: transparent transparent var(--color_bg) transparent;
+				border-radius: unset;
+				background-color: unset;
+				box-shadow: unset;
+				transform: unset;
+				clip-path: unset;
+			}
+		}
+	}
+	.if-popover-arrow::after {
+		box-shadow: var(--shadow);
+	}
+
+	.if-popover-inner {
+		padding: 0;
+		border-radius: var(--radius);
+		box-shadow: var(--shadow);
 	}
 }

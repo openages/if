@@ -15,13 +15,6 @@
 				}
 			}
 
-			.dot {
-				width: 6px;
-				height: 6px;
-				border-radius: 50%;
-				background-color: var(--color_bg_2);
-			}
-
 			&.active {
 				.dot {
 					background-color: var(--color_text);
@@ -40,6 +33,13 @@
 				.dot {
 					background-color: var(--color_text_light);
 				}
+			}
+
+			.dot {
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background-color: var(--color_bg_2);
 			}
 		}
 	}

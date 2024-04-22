@@ -6,16 +6,16 @@
 	:global {
 		.panel_header {
 			height: 36px;
-			border-bottom: var(--border_dashed);
 			padding: 0 15px;
-			font-weight: 500;
+			border-bottom: var(--border_dashed);
 			font-size: 12px;
+			font-weight: 500;
 		}
 
 		.todo_items_wrap {
+			overflow-y: scroll;
 			height: calc(100% - 36px);
 			padding: 3px 12px;
-			overflow-y: scroll;
 		}
 	}
 }

@@ -14,11 +14,11 @@
 				width: 54px;
 				height: 54px;
 				padding: 0;
-				border-radius: 50%;
-				box-shadow: var(--shadow);
 				margin-bottom: 12px;
 				border: none;
+				border-radius: 50%;
 				outline: none;
+				box-shadow: var(--shadow);
 
 				&:hover {
 					outline: 3px solid var(--color_border_light);

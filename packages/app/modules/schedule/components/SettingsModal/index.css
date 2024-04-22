@@ -3,11 +3,11 @@
 		.archive_select {
 			.if-select-selector {
 				border: none;
-				text-align: center;
-				background-color: var(--color_danger);
 				outline: 3px solid transparent;
 				color: white !important;
+				background-color: var(--color_danger);
 				transition: transform ease 0.12s;
+				text-align: center;
 
 				&:hover {
 					outline: 3px solid var(--color_border);

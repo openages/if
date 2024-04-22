@@ -23,11 +23,11 @@
 }
 
 ._local {
-	font-size: 12px;
 	overflow: hidden;
-	background-color: var(--color_bg);
 	border-radius: var(--radius);
 	outline: none;
+	background-color: var(--color_bg);
+	font-size: 12px;
 
 	&:hover {
 		:global {
@@ -53,8 +53,8 @@
 				right: 0;
 				width: 12px;
 				height: 12px;
-				border-radius: 0;
 				border: none;
+				border-radius: 0;
 				background-color: unset;
 			}
 
@@ -62,9 +62,9 @@
 				.text_wrap {
 					height: 12px;
 					line-height: 12px;
-					font-size: 10px;
 					padding: 0 2px;
 					white-space: nowrap;
+					font-size: 10px;
 				}
 			}
 		}
@@ -94,8 +94,8 @@
 				padding: 6px;
 
 				.text_wrap {
-					padding: 0;
 					line-height: 16px;
+					padding: 0;
 					white-space: nowrap;
 				}
 			}
@@ -108,8 +108,8 @@
 				padding: 6px;
 
 				.text_wrap {
-					padding: 0;
 					line-height: 16px;
+					padding: 0;
 				}
 			}
 		}
@@ -149,25 +149,25 @@
 	}
 
 	&.month_mode {
+		align-items: center;
+		flex-direction: row;
 		height: 20px;
 		margin-bottom: 1px;
-		flex-direction: row;
-		align-items: center;
 		border-radius: var(--radius_small_1);
-
-		&.no_tag {
-			:global {
-				.timeblock_content_wrap {
-					background-color: var(--color_bg_1);
-				}
-			}
-		}
 
 		&:hover,
 		&.visible_detail {
 			:global {
 				.status {
 					opacity: 0;
+				}
+			}
+		}
+
+		&.no_tag {
+			:global {
+				.timeblock_content_wrap {
+					background-color: var(--color_bg_1);
 				}
 			}
 		}
@@ -204,17 +204,17 @@
 				right: 0px;
 				width: 18px;
 				height: 100%;
-				font-size: 10px;
 				line-height: 1;
 				color: var(--color_text_light);
 				user-select: none;
+				font-size: 10px;
 			}
 		}
 	}
 
 	&.timeline {
-		height: 36px;
 		z-index: 2;
+		height: 36px;
 		border-radius: var(--radius_small);
 
 		&.has_tag {
@@ -253,18 +253,18 @@
 
 	:global {
 		.drag_line {
-			height: 6px;
-			user-select: none;
 			z-index: 1;
+			height: 6px;
 			cursor: row-resize;
+			user-select: none;
 		}
 
 		.btn_detail {
+			z-index: 1;
 			top: 1px;
 			right: 1px;
 			width: 16px;
 			height: 16px;
-			z-index: 1;
 
 			&.visible_detail {
 				display: flex;
@@ -284,34 +284,34 @@
 
 			.text_wrap {
 				line-height: 14px;
-				font-size: 12px;
 				outline: none;
-				font-weight: 500;
 				cursor: text;
+				font-size: 12px;
+				font-weight: 500;
 
 				&:empty {
 					&::after {
-						content: attr(data-placeholder);
 						color: var(--color_text_light);
+						content: attr(data-placeholder);
 						font-weight: normal;
 					}
 				}
 			}
 
 			.time {
-				margin-top: 6px;
-				font-size: 10px;
 				line-height: 1;
+				margin-top: 6px;
 				color: var(--color_text_light);
 				user-select: none;
 				white-space: nowrap;
+				font-size: 10px;
 
 				.time_value {
 					width: 100%;
 
 					&.has_status {
-						width: calc(100% - 21px);
 						overflow: scroll;
+						width: calc(100% - 21px);
 					}
 				}
 

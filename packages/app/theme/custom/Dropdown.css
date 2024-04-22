@@ -1,7 +1,7 @@
 [data-theme='dark'] {
 	.if-dropdown-menu {
-		box-shadow: 0 0 30px rgba(var(--color_std_rgb), 0.72) !important;
 		border: var(--border);
+		box-shadow: 0 0 30px rgba(var(--color_std_rgb), 0.72) !important;
 	}
 }
 
@@ -14,9 +14,9 @@
 	}
 
 	&-submenu-title {
-		padding: 4px 6px !important;
 		display: flex;
 		align-items: center;
+		padding: 4px 6px !important;
 
 		.if-dropdown-menu-submenu-expand-icon {
 			line-height: 1;

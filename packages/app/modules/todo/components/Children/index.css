@@ -1,6 +1,6 @@
 ._local {
-	padding-left: 17px;
 	overflow-y: hidden;
+	padding-left: 17px;
 
 	&.handled {
 		:global {
@@ -19,8 +19,8 @@
 	}
 
 	&.useByDetail {
-		padding-left: 0;
 		overflow: visible;
+		padding-left: 0;
 
 		:global {
 			.children_wrap {
@@ -28,8 +28,8 @@
 				border-left: none;
 
 				.todo_child_item {
-					padding-left: 0;
 					padding-right: 0;
+					padding-left: 0;
 				}
 			}
 		}
@@ -69,8 +69,8 @@
 	&.useByMindmap {
 		padding: 0;
 		border: none;
-		white-space: nowrap;
 		border-radius: unset;
+		white-space: nowrap;
 
 		:global {
 			.text_wrap {

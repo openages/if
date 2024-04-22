@@ -4,18 +4,18 @@
 	:global {
 		.textarea {
 			min-height: 150px;
+			line-height: 1.8;
 			padding: 0;
 			border-radius: 0;
-			font-size: 12px;
-			line-height: 1.8;
 			outline: none;
 			color: rgba(var(--color_text_rgb), 0.6) !important;
 			white-space: pre-wrap;
+			font-size: 12px;
 
 			&:empty {
 				&::after {
-					content: attr(data-placeholder);
 					color: var(--color_text_light);
+					content: attr(data-placeholder);
 				}
 			}
 		}

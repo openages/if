@@ -37,9 +37,9 @@
 		.bg_wrap {
 			top: calc((100vw - 100vh) * -1 / 2);
 			height: 100vw;
-			transform-origin: center center;
 
 			background-image: radial-gradient(circle at 0% 0%, red, orange, yellow, green, cyan, blue, purple);
+			transform-origin: center center;
 
 			:local {
 				animation: gradient 30s linear infinite;
@@ -58,8 +58,8 @@
 
 		.time_wrap {
 			top: 60px;
-			padding: 3px 6px;
 			line-height: 1;
+			padding: 3px 6px;
 			font-family: 'Avenir';
 			font-weight: bold;
 
@@ -78,73 +78,37 @@
 		}
 
 		.content_wrap {
-			bottom: 60px;
-			width: 210px;
 
 			--height: 36px;
 			--padding: 12px;
 			--btn_size: calc(var(--height) - var(--padding) * 2);
+			bottom: 60px;
+			width: 210px;
 
 			.input_wrap {
-				.input {
-					border: none;
-					outline: none;
-					box-shadow: none;
-					background-color: transparent;
-					color: white;
-					font-size: 12px;
-
-					&::placeholder {
-						color: white !important;
-					}
-
-					&:focus {
-						background-color: rgba(0, 0, 0, 0.12);
-					}
-
-					&.unverified {
-						:local {
-							animation: shake 0.3s ease-in-out;
-						}
-					}
-				}
-
-				.btn_confirm {
-					border: none;
-					outline: none;
-					box-shadow: none;
-					color: white;
-					background-color: transparent;
-					font-size: 12px;
-
-					&:disabled {
-						opacity: 0.3;
-						pointer-events: none;
-					}
-				}
 
 				&.password {
 					.input {
 						height: var(--height);
-						padding-left: calc(var(--padding));
-						padding-right: calc(var(--padding) * 2 + var(--btn_size));
 						line-height: var(--height);
-						border-radius: calc(var(--height) / 2);
+						padding-right: calc(var(--padding) * 2 + var(--btn_size));
+						padding-left: calc(var(--padding));
 						border: 1px solid rgba(255, 255, 255, 0.12);
+						border-radius: calc(var(--height) / 2);
 					}
 
 					.btn_confirm {
-						padding: 2px;
 						top: calc(var(--padding) - 3px);
 						right: calc(var(--padding) - 3px);
 						width: calc(var(--btn_size) + 6px);
 						height: calc(var(--btn_size) + 6px);
-						border-radius: 50%;
+						padding: 2px;
 						border: 1px solid white;
+						border-radius: 50%;
 
 						&:hover {
-							background-color: white;
 							color: black;
+							background-color: white;
 						}
 
 						svg {
@@ -156,14 +120,14 @@
 
 				&.secret {
 					.input {
+						overflow: scroll;
 						height: 72px;
+						line-height: 1.2;
 						padding: 6px 9px;
 						margin-bottom: 12px;
-						line-height: 1.2;
 						border-radius: 6px;
-						overflow: scroll;
-						resize: none;
 						background-color: rgba(0, 0, 0, 0.12);
+						resize: none;
 
 						&:focus {
 							background-color: rgba(0, 0, 0, 0.3);
@@ -184,11 +148,47 @@
 						}
 					}
 				}
+				.input {
+					border: none;
+					outline: none;
+					color: white;
+					background-color: transparent;
+					box-shadow: none;
+					font-size: 12px;
+
+					&:focus {
+						background-color: rgba(0, 0, 0, 0.12);
+					}
+
+					&::placeholder {
+						color: white !important;
+					}
+
+					&.unverified {
+						:local {
+							animation: shake 0.3s ease-in-out;
+						}
+					}
+				}
+
+				.btn_confirm {
+					border: none;
+					outline: none;
+					color: white;
+					background-color: transparent;
+					box-shadow: none;
+					font-size: 12px;
+
+					&:disabled {
+						opacity: 0.3;
+						pointer-events: none;
+					}
+				}
 			}
 
 			.text_normal {
-				font-size: 12px;
 				color: rgba(255, 255, 255, 0.3);
+				font-size: 12px;
 
 				&:hover {
 					color: white;
@@ -204,9 +204,9 @@
 				right: 0px;
 				width: 21px;
 				height: 21px;
-				color: white;
 				border-top-right-radius: var(--radius);
 				border-bottom-left-radius: var(--radius);
+				color: white;
 				background-color: rgba(0, 0, 0, 0.24);
 				backdrop-filter: var(--blur);
 
@@ -217,10 +217,10 @@
 		}
 
 		.actions_wrap {
-			bottom: 15px;
 			right: 18px;
-			font-size: 12px;
+			bottom: 15px;
 			line-height: 1;
+			font-size: 12px;
 
 			.action_item {
 				width: 24px;
@@ -239,8 +239,8 @@
 				}
 
 				.icon_wrap {
-					margin-top: 3px;
 					padding: 1px;
+					margin-top: 3px;
 					border-radius: 50%;
 					opacity: 0.3;
 				}

@@ -4,8 +4,8 @@
 			right: 15px;
 			width: 21px;
 			height: 21px;
-			font-size: 13px;
 			background-color: var(--color_bg);
+			font-size: 13px;
 		}
 
 		.if-input-affix-wrapper {

@@ -1,13 +1,13 @@
 ._local {
+
+	--logo_height: 42px;
+	--logo_padding_top: 15px;
+	--logo_padding_bottom: 12px;
 	width: var(--sidebar_width);
 	background-color: var(--color_bg);
 	box-shadow: var(--shadow);
 
 	-webkit-app-region: drag;
-
-	--logo_height: 42px;
-	--logo_padding_top: 15px;
-	--logo_padding_bottom: 12px;
 
 	&.is_mac_electron {
 		--logo_padding_top: 36px;
@@ -36,12 +36,12 @@
 			}
 
 			.scroll_wrap {
-				height: calc(100% - 64px);
 				overflow-y: scroll;
+				height: calc(100% - 64px);
 
 				.scroll_mask {
-					height: 18px;
 					z-index: 1;
+					height: 18px;
 
 					&.top {
 						background: linear-gradient(to bottom, var(--color_bg), transparent);
@@ -54,14 +54,14 @@
 			}
 
 			.sidebar_item {
-				-webkit-app-region: none;
 
 				width: 42px;
 				height: 42px;
 				margin-bottom: 9px;
-				text-decoration: none;
-				opacity: 0.36;
 				border-radius: var(--radius);
+				opacity: 0.36;
+				text-decoration: none;
+				-webkit-app-region: none;
 
 				&:first-child {
 					margin-top: 3px;

@@ -15,10 +15,10 @@
 		:global {
 			.left_wrap {
 				.desc {
-					margin-top: 6px;
-					white-space: nowrap;
 					overflow: hidden;
+					margin-top: 6px;
 					text-overflow: ellipsis;
+					white-space: nowrap;
 				}
 			}
 		}
@@ -35,14 +35,14 @@
 
 			.filter_item {
 				height: 25px;
-				padding: 3px;
-				border-bottom-left-radius: var(--radius_small);
-				border-bottom-right-radius: var(--radius_small);
-				font-size: 12px;
 				line-height: 1;
+				padding: 3px;
 				border: var(--border);
 				border-top: none;
+				border-bottom-right-radius: var(--radius_small);
+				border-bottom-left-radius: var(--radius_small);
 				user-select: none;
+				font-size: 12px;
 
 				&.filter_tags {
 					padding: 0 3px;
@@ -67,8 +67,8 @@
 			}
 
 			.type_wrap {
-				padding: 0 6px;
 				height: 16px;
+				padding: 0 6px;
 				border-radius: var(--radius_small_1);
 
 				&:hover {
@@ -93,10 +93,10 @@
 			}
 
 			.name {
-				font-size: 24px;
-				font-weight: 500;
 				line-height: 1;
 				user-select: none;
+				font-size: 24px;
+				font-weight: 500;
 			}
 
 			.desc {
@@ -113,8 +113,8 @@
 			.icon_wrap {
 				width: 30px;
 				height: 30px;
-				border-radius: var(--radius);
 				border: none;
+				border-radius: var(--radius);
 				outline: none;
 				box-shadow: none;
 

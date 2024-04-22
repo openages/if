@@ -14,8 +14,8 @@
 	:global {
 		.bg_progress {
 			border-radius: 7px;
-			transition: width ease 0.18s;
 			background-color: rgba(var(--color_text_rgb), 0.09);
+			transition: width ease 0.18s;
 
 			&.no_right_radius {
 				border-top-right-radius: 0;

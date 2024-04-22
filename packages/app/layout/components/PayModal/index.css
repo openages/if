@@ -16,23 +16,23 @@
 	top: 12px;
 	right: 12px;
 	line-height: 1;
-	user-select: none;
 	color: rgba(var(--color_main_rgb), 0.72);
+	background-color: transparent;
+	user-select: none;
 	transition: color ease 0.3s;
 	font-weight: 600;
-	background-color: transparent;
-
-	:local {
-		animation: gradient ease 18s infinite;
-	}
 
 	&:hover {
 		color: var(--color_main) !important;
 	}
 
+	:local {
+		animation: gradient ease 18s infinite;
+	}
+
 	.title {
-		font-size: 21px;
 		margin-bottom: 6px;
 		text-align: right;
+		font-size: 21px;
 	}
 }

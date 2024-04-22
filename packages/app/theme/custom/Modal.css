@@ -18,9 +18,9 @@
 			background-color: transparent;
 
 			.if-modal-title {
+				line-height: 1;
 				font-size: 15px;
 				font-weight: 500;
-				line-height: 1;
 			}
 		}
 
@@ -35,14 +35,14 @@
 			height: 21px;
 
 			.if-modal-close-x {
-				font-size: 14px;
 				line-height: 1;
+				font-size: 14px;
 			}
 		}
 
 		.if-modal-footer {
-			text-align: center;
 			display: flex;
+			text-align: center;
 
 			.if-btn {
 				flex: 1;
@@ -59,8 +59,8 @@
 		.if-modal-body {
 			.if-modal-confirm-body {
 				display: flex;
-				flex-direction: column;
 				align-items: center;
+				flex-direction: column;
 				text-align: center;
 
 				.if-icon {
@@ -72,10 +72,10 @@
 				}
 
 				.if-modal-confirm-title {
+					line-height: 1;
 					margin-top: 12px;
 					margin-bottom: 12px;
 					font-size: 21px;
-					line-height: 1;
 				}
 
 				.if-modal-confirm-content {
@@ -86,9 +86,9 @@
 			}
 
 			.if-modal-confirm-btns {
-				text-align: center;
 				display: flex;
 				margin-top: 18px;
+				text-align: center;
 
 				.if-btn {
 					flex: 1;

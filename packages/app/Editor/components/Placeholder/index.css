@@ -1,6 +1,6 @@
 ._local {
 	top: 1.2em;
+	color: var(--color_text_light);
 	user-select: none;
 	pointer-events: none;
-	color: var(--color_text_light);
 }

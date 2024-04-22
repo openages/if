@@ -14,14 +14,14 @@
 			}
 
 			.input_search {
-				border: none;
-				outline: none;
-				box-shadow: none;
 				height: 46px;
-				padding-left: 39px;
 				padding-right: 39px;
+				padding-left: 39px;
+				border: none;
 				border-bottom: var(--border);
+				outline: none;
 				background-color: transparent;
+				box-shadow: none;
 			}
 
 			.btn_clear {
@@ -37,9 +37,9 @@
 		}
 
 		.search_items_wrap {
+			overflow-y: scroll;
 			min-height: 300px;
 			max-height: 360px;
-			overflow-y: scroll;
 			padding: 0 12px;
 			padding-top: 0;
 			color: var(--color_text_sub);
@@ -73,8 +73,8 @@
 		}
 
 		.search_history {
-			font-size: 12px;
 			line-height: 1;
+			font-size: 12px;
 
 			.search_history_header {
 				padding: 9px 0;
@@ -95,8 +95,8 @@
 
 			.search_history_item {
 				padding: 2px 4px;
-				border-radius: 30px;
 				border: var(--border);
+				border-radius: 30px;
 
 				&:hover {
 					border-color: var(--color_text_softlight);
@@ -106,20 +106,20 @@
 
 		.hotkey_wrap {
 			padding: 9px 12px;
+			color: var(--color_text_light);
 			background-color: var(--color_bg_1);
 			font-size: 12px;
-			color: var(--color_text_light);
 
 			.key_item {
 				.icon_key_wrap {
 					width: 18px;
 					height: 18px;
 					margin-right: 3px;
-					background-color: var(--color_bg);
-					font-size: 10px;
-					border-radius: var(--radius_small);
 					border: var(--border);
 					border-bottom: 2px solid var(--color_border);
+					border-radius: var(--radius_small);
+					background-color: var(--color_bg);
+					font-size: 10px;
 
 					&.esc_wrap {
 						width: 21px;

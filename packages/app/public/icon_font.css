@@ -1,53 +1,53 @@
 /** Rubik */
 @font-face {
-	font-weight: 400;
-	font-style: normal;
 	font-family: 'Rubik';
+	font-style: normal;
+	font-weight: 400;
 	src:
 		local('Rubik'),
 		url('./font/Rubik/Rubik-Regular.ttf') format('truetype');
 }
 
 @font-face {
-	font-weight: 400;
-	font-style: italic;
 	font-family: 'Rubik';
+	font-style: italic;
+	font-weight: 400;
 	src:
 		local('Rubik'),
 		url('./font/Rubik/Rubik-Italic.ttf') format('truetype');
 }
 
 @font-face {
-	font-weight: 500;
-	font-style: normal;
 	font-family: 'Rubik';
+	font-style: normal;
+	font-weight: 500;
 	src:
 		local('Rubik'),
 		url('./font/Rubik/Rubik-Medium.ttf') format('truetype');
 }
 
 @font-face {
-	font-weight: 500;
-	font-style: italic;
 	font-family: 'Rubik';
+	font-style: italic;
+	font-weight: 500;
 	src:
 		local('Rubik'),
 		url('./font/Rubik/Rubik-MediumItalic.ttf') format('truetype');
 }
 
 @font-face {
-	font-weight: 600;
-	font-style: normal;
 	font-family: 'Rubik';
+	font-style: normal;
+	font-weight: 600;
 	src:
 		local('Rubik'),
 		url('./font/Rubik/Rubik-SemiBold.ttf') format('truetype');
 }
 
 @font-face {
-	font-weight: 600;
-	font-style: italic;
 	font-family: 'Rubik';
+	font-style: italic;
+	font-weight: 600;
 	src:
 		local('Rubik'),
 		url('./font/Rubik/Rubik-SemiBoldItalic.ttf') format('truetype');
@@ -55,18 +55,18 @@
 
 /** Material Design Icon */
 @font-face {
-	font-weight: 400;
-	font-style: normal;
 	font-family: 'md_icon_outline';
+	font-style: normal;
+	font-weight: 400;
 	src:
 		local('md_icon'),
 		url('./icon/md_icon_outline.otf') format('opentype');
 }
 
 @font-face {
-	font-weight: 400;
-	font-style: normal;
 	font-family: 'md_icon_filled';
+	font-style: normal;
+	font-weight: 400;
 	src:
 		local('md_icon'),
 		url('./icon/md_icon_filled.ttf') format('truetype');
@@ -74,9 +74,9 @@
 
 /** Feather Icon */
 @font-face {
-	font-weight: 400;
-	font-style: normal;
 	font-family: 'fa_icon';
+	font-style: normal;
+	font-weight: 400;
 	src:
 		local('fa_icon'),
 		url('./icon/fa_icon.woff') format('woff');

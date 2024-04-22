@@ -26,8 +26,8 @@
 					padding-bottom: 3px;
 
 					label {
-						font-size: 12px;
 						color: var(--color_text_light);
+						font-size: 12px;
 					}
 				}
 			}

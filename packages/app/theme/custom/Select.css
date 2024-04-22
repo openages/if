@@ -1,8 +1,8 @@
 .if-select {
 	&.borderless {
-		border: none !important;
 
 		--height: 22px;
+		border: none !important;
 
 		.if-select-selector {
 			height: var(--height) !important;
@@ -31,8 +31,8 @@
 
 	&.no_suffix {
 		.if-select-selector {
-			padding-left: 1px;
 			padding-right: 0;
+			padding-left: 1px;
 
 			&::after {
 				display: none;
@@ -44,15 +44,15 @@
 			}
 
 			.if-select-selection-overflow {
+				align-items: center;
 				width: 100%;
 				height: 24px;
-				align-items: center;
 
 				&-item {
-					height: 100%;
 					display: inline-block;
 					overflow: hidden;
 					align-self: unset;
+					height: 100%;
 				}
 			}
 		}

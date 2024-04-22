@@ -1,11 +1,11 @@
 ._local {
-	padding: 3px;
 	line-height: 1;
-	font-size: 12px;
-	border-radius: var(--radius);
-	box-shadow: var(--shadow);
+	padding: 3px;
 	border: var(--border);
+	border-radius: var(--radius);
 	background-color: var(--color_bg);
+	box-shadow: var(--shadow);
+	font-size: 12px;
 
 	:global {
 		.picker_menu_item {

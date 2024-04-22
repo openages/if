@@ -8,10 +8,10 @@
 		}
 
 		.mindmap_wrap {
-			height: calc(100% - 36px);
-			border-radius: var(--radius);
-			border: 1px dashed var(--color_border_light);
 			overflow: hidden;
+			height: calc(100% - 36px);
+			border: 1px dashed var(--color_border_light);
+			border-radius: var(--radius);
 		}
 
 		.react-flow__pane {
@@ -21,9 +21,9 @@
 		}
 
 		.react-flow__node {
+			box-sizing: border-box;
 			padding: 0;
 			border: none;
-			box-sizing: border-box;
 			background-color: transparent;
 
 			&.draggable {
@@ -38,10 +38,10 @@
 				min-width: 90px;
 				height: 30px;
 				line-height: 30px;
-				background-color: var(--color_text);
-				color: var(--color_bg);
-				font-weight: bold;
 				border-radius: 30px;
+				color: var(--color_bg);
+				background-color: var(--color_text);
+				font-weight: bold;
 			}
 
 			&.angle_node {
@@ -65,10 +65,10 @@
 }
 
 .shadow {
-	width: 0;
-	height: 0;
 	visibility: hidden;
 	overflow: hidden;
+	width: 0;
+	height: 0;
 
 	:global {
 		.shadow_graph {
@@ -77,9 +77,9 @@
 		}
 
 		.react-flow__node {
+			box-sizing: border-box;
 			padding: 0;
 			border: none;
-			box-sizing: border-box;
 
 			&-default {
 				width: unset;

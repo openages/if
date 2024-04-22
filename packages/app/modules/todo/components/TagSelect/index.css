@@ -18,15 +18,15 @@
 		--height: 14px;
 
 		min-width: unset;
-		margin-left: 0;
 		margin-right: 4px;
+		margin-left: 0;
 
 		:global {
 			.tag {
 				padding: 0 4px;
 				margin: 0 1px;
-				font-size: 10px;
 				border-radius: 7px;
+				font-size: 10px;
 			}
 		}
 	}
@@ -61,14 +61,14 @@
 		}
 
 		.if-select-selector {
-			width: unset !important;
 			flex-wrap: unset !important;
+			width: unset !important;
 			border: none !important;
 			background-color: transparent !important;
 
 			.if-select-selection-overflow {
-				flex-wrap: nowrap;
 				position: relative;
+				flex-wrap: nowrap;
 				list-style: none !important;
 
 				&-item-suffix {
@@ -78,8 +78,8 @@
 			}
 
 			.if-select-selection-placeholder {
-				inset-inline: 0 !important;
 				padding-left: 1px;
+				inset-inline: 0 !important;
 			}
 		}
 
@@ -89,11 +89,11 @@
 			line-height: 1;
 			padding: 3px 6px;
 			padding-right: 4px;
+			margin: 0 2px;
 			border-radius: var(--radius_small);
+			background-color: var(--color_bg);
 			font-size: 12px;
 			font-weight: 500;
-			margin: 0 2px;
-			background-color: var(--color_bg);
 
 			.btn_close {
 				padding: 0px 3px;

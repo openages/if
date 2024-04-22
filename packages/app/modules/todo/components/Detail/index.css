@@ -17,8 +17,8 @@
 				box-sizing: border-box !important;
 
 				.if-drawer-content {
-					border: none;
 					width: 100% !important;
+					border: none;
 				}
 			}
 		}
@@ -55,13 +55,13 @@
 			}
 
 			.drag_wrap {
-				width: 12px;
-				height: 12px;
 				top: 7px;
 				left: -14px;
+				width: 12px;
+				height: 12px;
 				border-radius: var(--radius_small_1);
-				background-color: var(--color_bg_2);
 				opacity: 0;
+				background-color: var(--color_bg_2);
 
 				&:hover {
 					background-color: rgba(var(--color_text_rgb), 0.12);
@@ -81,10 +81,10 @@
 
 					&.schedule_wrap {
 						.value_wrap {
-							padding-left: 1px;
 							overflow: unset;
-							font-size: 12px;
 							line-height: 1;
+							padding-left: 1px;
+							font-size: 12px;
 
 							&:hover {
 								.btn_remove {
@@ -105,8 +105,8 @@
 								width: 12px;
 								height: 12px;
 								border-radius: 50%;
-								background-color: rgba(var(--color_text_rgb), 0.24);
 								color: var(--color_bg);
+								background-color: rgba(var(--color_text_rgb), 0.24);
 
 								&:hover {
 									background-color: rgba(var(--color_text_rgb), 0.45);
@@ -119,17 +119,17 @@
 						width: 90px;
 
 						.name {
-							margin-left: 6px;
-							font-size: 12px;
 							line-height: 1;
+							margin-left: 6px;
 							text-transform: capitalize;
+							font-size: 12px;
 						}
 					}
 
 					.value_wrap {
+						overflow-x: scroll;
 						width: calc(100% - 90px);
 						min-height: 30px;
-						overflow-x: scroll;
 					}
 				}
 			}
@@ -145,7 +145,6 @@
 
 					&::before,
 					&::after {
-						content: '';
 						position: absolute;
 						left: calc(var(--padding) + 2px);
 						width: calc(100% - (var(--padding) + 2px) * 2);
@@ -156,6 +155,7 @@
 							transparent 50%
 						);
 						background-size: 8px 100%;
+						content: '';
 					}
 
 					&::before {

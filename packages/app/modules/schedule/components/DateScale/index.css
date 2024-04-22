@@ -1,10 +1,10 @@
 ._local {
 	height: 36px;
-	background-color: var(--color_bg);
-	border-bottom: var(--border);
-	font-size: 12px;
 	line-height: 1;
+	border-bottom: var(--border);
+	background-color: var(--color_bg);
 	user-select: none;
+	font-size: 12px;
 
 	&.hidden_time_scale {
 		:global {
@@ -39,13 +39,13 @@
 					}
 
 					&::after {
-						content: '';
 						position: absolute;
-						bottom: 0;
 						right: 0;
+						bottom: 0;
 						width: 1px;
 						height: 4px;
 						background-color: var(--color_border_light);
+						content: '';
 					}
 				}
 			}
@@ -62,10 +62,10 @@
 			width: calc(100% - 48px);
 
 			.weekday_item {
+				overflow: hidden;
 				padding: 0 9px;
 				border-right: var(--border);
 				white-space: nowrap;
-				overflow: hidden;
 
 				&.today {
 					background-color: rgba(var(--color_text_rgb), 0.018);
@@ -73,14 +73,14 @@
 					.date {
 						width: 15px;
 						height: 15px;
-						box-sizing: border-box;
 						line-height: 13px;
-						text-align: center;
+						box-sizing: border-box;
+						border: 1px solid var(--color_text);
 						border-radius: 3px;
+						color: var(--color_text);
+						text-align: center;
 						font-size: 10px;
 						font-weight: 500;
-						border: 1px solid var(--color_text);
-						color: var(--color_text);
 					}
 				}
 

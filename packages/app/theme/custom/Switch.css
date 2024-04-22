@@ -1,6 +1,6 @@
 .if-switch {
-	outline: 1px solid var(--color_text_softlight);
 	box-sizing: border-box;
+	outline: 1px solid var(--color_text_softlight);
 	background-color: transparent;
 	box-shadow: none;
 
@@ -37,8 +37,8 @@
 
 	.if-switch-handle {
 		&::before {
-			box-shadow: none;
 			background-color: var(--color_text_softlight);
+			box-shadow: none;
 		}
 	}
 }

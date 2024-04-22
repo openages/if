@@ -40,18 +40,18 @@
 				}
 
 				.tag {
-					font-size: 12px;
-					font-weight: bold;
 					overflow: hidden;
 					border-radius: var(--radius_small);
+					font-size: 12px;
+					font-weight: bold;
 				}
 			}
 
 			.btn {
 				width: 36px;
 				height: 36px;
-				border-radius: var(--radius);
 				border: 1px dashed var(--color_border);
+				border-radius: var(--radius);
 
 				&:hover {
 					border-color: var(--color_text_grey);
@@ -63,8 +63,8 @@
 
 .btn_make {
 	height: 36px;
-	border-radius: var(--radius);
 	border: 1px dashed var(--color_border);
+	border-radius: var(--radius);
 
 	&:hover {
 		border-color: var(--color_text_grey);

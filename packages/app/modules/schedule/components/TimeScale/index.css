@@ -1,15 +1,15 @@
 ._local {
 	width: 48px;
+	line-height: 1;
 	font-family: 'Avenir';
 	font-size: 12px;
-	line-height: 1;
 
 	:global {
 		.hours_wrap {
 			.hour_item {
 				height: 48px;
-				border-bottom: var(--border);
 				border-right: var(--border);
+				border-bottom: var(--border);
 			}
 		}
 	}

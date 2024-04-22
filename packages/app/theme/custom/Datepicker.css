@@ -38,9 +38,9 @@
 
 	.if-picker-panel-container {
 		padding: 0;
+		border: var(--border);
 		border-radius: var(--radius);
 		box-shadow: var(--shadow);
-		border: var(--border);
 		font-size: 12px;
 
 		.if-picker-panel {
@@ -75,14 +75,6 @@
 								height: 24px !important;
 							}
 
-							.if-picker-cell-inner {
-								display: flex;
-								justify-content: center;
-								align-items: center;
-								line-height: 1;
-								border: 1px solid transparent;
-							}
-
 							&.if-picker-cell-disabled {
 								opacity: 0.3;
 
@@ -103,9 +95,9 @@
 
 							&.if-picker-cell-selected {
 								.if-picker-cell-inner {
-									background-color: transparent;
-									color: var(--color_text);
 									border: 1px solid var(--color_text);
+									color: var(--color_text);
+									background-color: transparent;
 									font-weight: bold;
 								}
 							}
@@ -135,6 +127,14 @@
 									border-left: none;
 									background-color: var(--color_bg_2);
 								}
+							}
+
+							.if-picker-cell-inner {
+								display: flex;
+								align-items: center;
+								justify-content: center;
+								line-height: 1;
+								border: 1px solid transparent;
 							}
 						}
 					}
@@ -186,18 +186,18 @@
 
 							&.if-picker-cell-selected {
 								.if-picker-cell-inner {
-									background-color: transparent;
-									color: var(--color_text);
 									border: 1px solid var(--color_text);
+									color: var(--color_text);
+									background-color: transparent;
 									font-weight: bold;
 								}
 							}
 
 							.if-picker-cell-inner {
 								width: unset;
+								line-height: 22px;
 								padding: 0 6px;
 								border: 1px solid transparent;
-								line-height: 22px;
 							}
 						}
 					}
@@ -232,8 +232,8 @@
 				}
 
 				.if-picker-time-panel-cell {
-					margin-inline: 0;
 					padding: 1px 0;
+					margin-inline: 0;
 
 					&:first-child {
 						padding: 0;
@@ -246,8 +246,8 @@
 
 					&.if-picker-time-panel-cell-selected {
 						.if-picker-time-panel-cell-inner {
-							background-color: transparent;
 							border-bottom: 1px solid var(--color_text);
+							background-color: transparent;
 							font-weight: bold;
 						}
 					}
@@ -255,16 +255,16 @@
 					.if-picker-time-panel-cell-inner {
 						width: 24px;
 						height: 24px;
+						box-sizing: border-box !important;
 						padding: 0;
 						margin: 0 auto;
-						text-align: center;
-						border-radius: 0;
 						border-bottom: 1px solid transparent;
-						box-sizing: border-box !important;
+						border-radius: 0;
+						text-align: center;
 
 						&:hover {
-							background-color: transparent;
 							border-bottom-color: var(--color_text_grey);
+							background-color: transparent;
 						}
 					}
 				}
@@ -273,29 +273,29 @@
 	}
 
 	.if-picker-footer {
-		min-height: unset;
 		display: flex;
-		justify-content: center;
 		align-items: center;
+		justify-content: center;
+		min-height: unset;
 
 		.if-picker-today-btn {
+			line-height: 1;
 			padding-top: 6px;
 			padding-bottom: 3px;
-			line-height: 1;
 			color: var(--color_text);
 			font-weight: 500;
 		}
 
 		.if-picker-ranges {
+			align-items: center;
 			width: 100%;
 			padding: 3px 9px;
 			margin-top: 3px;
-			align-items: center;
 
 			.if-picker-now {
-				line-height: 1;
 				display: flex;
 				align-items: center;
+				line-height: 1;
 				margin-left: -2px;
 			}
 
@@ -305,25 +305,25 @@
 
 				button {
 					display: flex;
-					justify-content: center;
 					align-items: center;
-					line-height: 1;
-					font-size: 12px;
+					justify-content: center;
 					height: 18px;
+					line-height: 1;
 					border: 1px solid var(--color_text);
 					border-bottom-width: 2px;
-					background-color: var(--color_text);
-					color: var(--color_bg);
 					border-radius: 9px;
+					color: var(--color_bg);
+					background-color: var(--color_text);
+					font-size: 12px;
 
 					&:disabled {
 						opacity: 0.3;
 					}
 
 					&:hover {
-						background-color: var(--color_text) !important;
-						color: var(--color_bg);
 						outline: 3px solid var(--color_border);
+						color: var(--color_bg);
+						background-color: var(--color_text) !important;
 					}
 				}
 			}
@@ -332,8 +332,8 @@
 
 	.if-picker-presets {
 		min-width: unset !important;
-		font-size: 12px;
 		background-color: var(--color_bg_1);
+		font-size: 12px;
 
 		ul {
 			padding: 6px !important;

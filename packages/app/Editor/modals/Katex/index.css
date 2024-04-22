@@ -1,8 +1,8 @@
 ._local {
 	:global {
 		.inline_wrap {
-			right: 0;
 			z-index: 10;
+			right: 0;
 			margin-bottom: 0;
 
 			.if-row {
@@ -42,8 +42,8 @@
 			}
 
 			.preview {
-				font-size: 18px;
 				color: var(--color_text_light);
+				font-size: 18px;
 			}
 		}
 	}

@@ -4,9 +4,9 @@
 	padding-bottom: 36vh;
 
 	.title {
-		font-size: 21px;
-		font-weight: 500;
 		border: none;
 		outline: none;
+		font-size: 21px;
+		font-weight: 500;
 	}
 }

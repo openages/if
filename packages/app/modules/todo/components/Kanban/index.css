@@ -1,9 +1,9 @@
 ._local {
-	height: calc(100% - 72px);
-	outline: none;
-	padding: 0 18px;
 	overflow-x: scroll;
+	height: calc(100% - 72px);
+	padding: 0 18px;
 	scroll-behavior: smooth;
+	outline: none;
 
 	&.tag_mode {
 		.kanban_item_wrap {
@@ -11,13 +11,13 @@
 				padding-left: 24px;
 
 				&::before {
-					content: '';
 					position: absolute;
 					left: 9px;
 					width: 9px;
 					height: 9px;
 					border-radius: 50%;
 					background-color: var(--color_tag);
+					content: '';
 				}
 			}
 		}
@@ -29,8 +29,8 @@
 
 		.kanban_item_header {
 			height: 30px;
-			padding: 0 9px;
 			line-height: 1;
+			padding: 0 9px;
 
 			:global {
 				.left_wrap {
@@ -40,10 +40,10 @@
 
 					.count {
 						padding: 2px 4px;
-						background-color: var(--color_bg_1);
 						border-radius: 30px;
-						font-size: 10px;
 						color: var(--color_text_grey);
+						background-color: var(--color_bg_1);
+						font-size: 10px;
 					}
 				}
 

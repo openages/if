@@ -5,10 +5,10 @@
 
 			.image_wrap {
 				top: 30px;
+				overflow: hidden;
 				width: 48px;
 				height: 48px;
 				border-radius: 30px;
-				overflow: hidden;
 
 				img {
 					width: 72px;
@@ -25,9 +25,9 @@
 			}
 
 			.times {
-				font-size: 12px;
 				color: var(--color_text_light);
 				font-family: 'Avenir';
+				font-size: 12px;
 			}
 		}
 	}

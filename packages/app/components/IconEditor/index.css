@@ -37,11 +37,11 @@
 }
 
 .hue_wrap {
+	line-height: 1;
+	padding: 4px 12px;
 	margin-top: 12px;
 	border-radius: var(--radius);
 	background-color: var(--color_bg);
-	padding: 4px 12px;
-	line-height: 1;
 	box-shadow: var(--shadow);
 
 	:global {

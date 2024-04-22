@@ -98,17 +98,17 @@
 		}
 
 		.table_loading_wrap {
+			z-index: 101;
 			min-height: 300px;
 			background-color: rgba(var(--color_std_rgb), 0.9);
-			z-index: 101;
 		}
 
 		.table_wrap {
-			border-collapse: collapse;
-			table-layout: fixed;
-			font-size: 12px;
 
 			--test: 1;
+			table-layout: fixed;
+			border-collapse: collapse;
+			font-size: 12px;
 
 			thead,
 			tbody {
@@ -117,13 +117,13 @@
 					td {
 						&.shadow {
 							&::after {
-								content: '';
 								position: absolute;
 								top: 0;
 								width: 12px;
 								height: 100%;
-								pointer-events: none;
+								content: '';
 								transition: box-shadow 0.3s;
+								pointer-events: none;
 							}
 
 							&.shadow_end {
@@ -148,16 +148,16 @@
 				tr {
 					th {
 						height: 30px;
-						padding: 0px 6px;
-						text-transform: capitalize;
-						font-size: 12px;
-						font-weight: normal;
-						white-space: nowrap;
-						user-select: none;
 						box-sizing: border-box;
+						padding: 0px 6px;
+						border-bottom: 1px dashed var(--color_border_light);
 						color: var(--color_text_light);
 						background-color: var(--color_bg);
-						border-bottom: 1px dashed var(--color_border_light);
+						user-select: none;
+						text-transform: capitalize;
+						white-space: nowrap;
+						font-size: 12px;
+						font-weight: normal;
 
 						&.showSort {
 							&:hover {
@@ -175,12 +175,12 @@
 							.sort_item {
 								width: 0;
 								height: 0;
-								border-left: 3px solid transparent;
 								border-right: 3px solid transparent;
+								border-left: 3px solid transparent;
 
 								&.asc {
-									border-bottom: 3px solid var(--color_border);
 									margin-bottom: 2px;
+									border-bottom: 3px solid var(--color_border);
 
 									&.active {
 										border-bottom-color: var(--color_text);
@@ -205,8 +205,8 @@
 					td {
 						height: 36px;
 						padding: 0px 6px;
-						background-color: var(--color_bg);
 						border-bottom: 1px dashed var(--color_border_light);
+						background-color: var(--color_bg);
 
 						&.sorting {
 							background-color: var(--color_bg_1);

@@ -1,6 +1,6 @@
 ._local {
-	background-color: var(--color_bg);
 	z-index: 1000000;
+	background-color: var(--color_bg);
 
 	:global {
 		.error_wrap {
@@ -12,8 +12,8 @@
 			}
 
 			.title {
-				font-size: 16px;
 				margin-bottom: 9px;
+				font-size: 16px;
 			}
 
 			.desc {
@@ -24,9 +24,9 @@
 				.btn {
 					width: 90px;
 					height: 30px;
+					border: var(--border);
 					border-radius: var(--radius);
 					background-color: transparent;
-					border: var(--border);
 
 					&:hover {
 						border-color: var(--color_text);

@@ -17,9 +17,9 @@
 				}
 
 				input {
-					opacity: 0;
 					width: 1px !important;
 					margin-right: -1px;
+					opacity: 0;
 				}
 			}
 
@@ -63,8 +63,8 @@
 			width: 180px;
 
 			input {
-				font-size: 12px;
 				line-height: 1;
+				font-size: 12px;
 			}
 		}
 

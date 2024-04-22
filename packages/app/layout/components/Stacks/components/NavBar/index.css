@@ -8,13 +8,13 @@
 	}
 
 	&::after {
-		content: '';
 		position: absolute;
-		display: block;
 		z-index: 0;
 		bottom: 0;
+		display: block;
 		width: 100%;
 		border-bottom: var(--border);
+		content: '';
 	}
 
 	&.resizing {
@@ -32,17 +32,17 @@
 
 		.nav_bar_item_wrap {
 			position: relative;
+			line-height: 1;
 			padding: 0 12px;
 			border: none;
 			border-right: var(--border);
-			font-style: italic;
-			line-height: 1;
-			user-select: none;
 			border-radius: 0;
-			box-shadow: none;
 			outline: none !important;
-			transition: none;
 			background-color: var(--color_bg);
+			box-shadow: none;
+			user-select: none;
+			transition: none;
+			font-style: italic;
 
 			&:hover {
 				border-right-color: var(--color_border_light) !important;
@@ -94,10 +94,10 @@
 			}
 
 			.name_wrap {
-				max-width: 90px;
-				font-size: 12px;
 				overflow: scroll;
+				max-width: 90px;
 				outline: none;
+				font-size: 12px;
 			}
 
 			.icon_module_wrap {

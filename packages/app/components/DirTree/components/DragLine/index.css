@@ -1,9 +1,9 @@
 ._local {
-	opacity: 0;
+	overflow-x: visible;
 	width: 4px;
+	opacity: 0;
 	background-color: var(--color_border);
 	cursor: col-resize;
-	overflow-x: visible;
 
 	&:hover {
 		opacity: 1;
@@ -14,16 +14,16 @@
 	}
 
 	&.hide {
-		opacity: 1;
-		width: 0;
 		justify-content: flex-start;
+		width: 0;
+		opacity: 1;
 
 		:global {
 			.btn_hide_wrap {
+				border: none;
 				border-radius: 0;
 				border-top-right-radius: var(--radius);
 				border-bottom-right-radius: var(--radius);
-				border: none;
 				box-shadow: var(--shadow_right);
 
 				&:hover {
@@ -45,11 +45,11 @@
 		.btn_hide_wrap {
 			width: 18px;
 			height: 32px;
-			border-radius: 18px;
-			background-color: var(--color_bg);
 			border: 2px solid var(--color_border);
-			cursor: pointer;
+			border-radius: 18px;
 			color: var(--color_text_grey);
+			background-color: var(--color_bg);
+			cursor: pointer;
 
 			&:hover {
 				background-color: var(--color_bg_1);

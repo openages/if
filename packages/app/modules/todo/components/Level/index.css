@@ -4,15 +4,11 @@
 
 	:global {
 		.if-rate-star {
-			font-size: 15px;
 			height: 15px;
+			font-size: 15px;
 
 			&:not(:last-child) {
 				margin-inline-end: 0;
-			}
-
-			div[role='radio'] {
-				height: 15px;
 			}
 
 			&-second {
@@ -24,6 +20,10 @@
 				.if-rate-star-second {
 					color: var(--color_star);
 				}
+			}
+
+			div[role='radio'] {
+				height: 15px;
 			}
 		}
 	}

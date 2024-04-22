@@ -13,8 +13,8 @@
 }
 
 .droppable_container {
-	width: 50%;
 	z-index: 100;
+	width: 50%;
 
 	&.isOver {
 		background-color: rgba(var(--color_text_rgb), 0.09);
@@ -23,8 +23,8 @@
 
 .drag_line {
 	left: -2px;
-	opacity: 0;
 	width: 3px;
+	opacity: 0;
 	background-color: var(--color_border);
 	cursor: col-resize;
 
