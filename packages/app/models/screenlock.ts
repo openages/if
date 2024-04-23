@@ -41,7 +41,7 @@ export default class Index {
 		public utils: Utils,
 		public idle: Idle
 	) {
-		makeAutoObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, { utils: false, idle: false }, { autoBind: true })
 
 		this.utils.acts = [setStorageWhenChange([{ screenlock_data: 'data' }], this)]
 		this.screenlock_open = this.data.password ? true : false
@@ -161,7 +161,7 @@ export default class Index {
 		const { code, err } = await (await import('@openages/stk/creep')).getFingerprint()
 
 		if (!code && err) {
-			$message.error('指纹生成失败，请联系openages@gmail.com以提供帮助')
+			$message.error($t('translation:setting.Screenlock.getFingerprint.error'))
 
 			return ''
 		}

@@ -29,7 +29,7 @@ export default class Index {
 	} as Watch<Index>
 
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, { observer: false, watch: false }, { autoBind: true })
+		makeAutoObservable(this, { utils: false, observer: false, watch: false }, { autoBind: true })
 	}
 
 	init() {

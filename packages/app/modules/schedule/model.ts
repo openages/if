@@ -88,6 +88,8 @@ export default class Index {
 		makeAutoObservable(
 			this,
 			{
+				file: false,
+				utils: false,
 				id: false,
 				disable_watcher: false,
 				setting_watcher: false,

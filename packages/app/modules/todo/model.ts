@@ -235,6 +235,10 @@ export default class Index {
 		makeAutoObservable(
 			this,
 			{
+				global: false,
+				utils: false,
+				file: false,
+				loadmore: false,
 				id: false,
 				timer_cycle: false,
 				timer_archive: false,

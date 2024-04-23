@@ -17,7 +17,7 @@ export default class Index {
 	lang = 'en' as Lang
 
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, { utils: false }, { autoBind: true })
 
 		this.utils.acts = [setStorageWhenChange(['lang'], this)]
 

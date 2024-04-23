@@ -54,6 +54,9 @@ export default {
 		autolock: {
 			title: '自动锁屏',
 			desc: '不活跃时锁定屏幕'
+		},
+		getFingerprint: {
+			error: '指纹生成失败，请联系开发商'
 		}
 	}
 }

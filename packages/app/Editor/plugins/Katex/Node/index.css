@@ -1,0 +1,7 @@
+._local {
+	border-radius: var(--radius);
+
+	&.selected {
+		outline: 3px solid var(--color_border);
+	}
+}

@@ -1,35 +1,18 @@
 import { makeAutoObservable } from 'mobx'
+import { injectable } from 'tsyringe'
 
 import { SHOW_MODAL_COMMAND } from '@/Editor/commands'
+import { Block } from '@/Editor/models'
 
-import { IPropsComponent } from '../types'
+import type KatexNode from './index'
 
-import type { LexicalEditor } from 'lexical'
-
+@injectable()
 export default class Index {
-	key = ''
-	editor = null as LexicalEditor
-	node = null as IPropsComponent['node']
-
-	constructor() {
-		makeAutoObservable(
-			this,
-			{
-				key: false,
-				editor: false,
-				node: false
-			},
-			{ autoBind: true }
-		)
+	constructor(public block: Block<KatexNode>) {
+		makeAutoObservable(this, { block: false }, { autoBind: true })
 	}
 
-	init(editor: Index['editor'], node: IPropsComponent['node'], key: Index['key']) {
-		this.editor = editor
-		this.node = node
-		this.key = key
-	}
-
-	onClick() {
-		this.editor.dispatchCommand(SHOW_MODAL_COMMAND, { type: 'Katex', node_key: this.key })
+	onEdit() {
+		this.block.editor.dispatchCommand(SHOW_MODAL_COMMAND, { type: 'Katex', node_key: this.block.key })
 	}
 }

@@ -25,7 +25,7 @@ export default class Index {
 	}
 
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, { utils: false }, { autoBind: true })
 
 		this.utils.acts = [setStorageWhenChange(['search_history'], this)]
 	}

@@ -11,7 +11,7 @@ export default class Index {
 	visible_pay_modal = false
 
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, { utils: false }, { autoBind: true })
 	}
 
 	init() {

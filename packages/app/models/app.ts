@@ -28,7 +28,7 @@ export default class Index {
 	} as Watch<Index & { 'visible_app_menu|visible_app_switch': any }>
 
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, { watch: false }, { autoBind: true })
+		makeAutoObservable(this, { utils: false, watch: false }, { autoBind: true })
 	}
 
 	get apps() {

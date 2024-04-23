@@ -18,7 +18,23 @@ export default class GlobalModel {
 		public search: Search,
 		public timer: Timer
 	) {
-		makeAutoObservable(this, {}, { autoBind: true })
+		makeAutoObservable(
+			this,
+			{
+				locale: false,
+				stack: false,
+				setting: false,
+				db: false,
+				screenlock: false,
+				auth: false,
+				layout: false,
+				app: false,
+				shortcuts: false,
+				search: false,
+				timer: false
+			},
+			{ autoBind: true }
+		)
 	}
 
 	async init(unlock?: boolean) {

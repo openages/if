@@ -13,7 +13,7 @@ export default class Index {
 	module = '' as App.ModuleType
 
 	constructor(public file: File) {
-		makeAutoObservable(this, { id: false, module: false }, { autoBind: true })
+		makeAutoObservable(this, { file: false, id: false, module: false }, { autoBind: true })
 	}
 
 	init(args: { id: string }) {

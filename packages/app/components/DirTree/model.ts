@@ -49,7 +49,7 @@ export default class Index {
 	) {
 		makeAutoObservable(
 			this,
-			{ actions: false, items_watcher: false, disable_watcher: false },
+			{ utils: false, node_tree: false, actions: false, items_watcher: false, disable_watcher: false },
 			{ autoBind: true }
 		)
 	}

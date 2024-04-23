@@ -11,7 +11,7 @@ export default class Index {
 	dirtree_prev = 0
 
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, { utils: false }, { autoBind: true })
 	}
 
 	init() {

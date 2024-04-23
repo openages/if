@@ -54,6 +54,9 @@ export default {
 		autolock: {
 			title: 'Autolock',
 			desc: 'Lock the screen when inactive'
+		},
+		getFingerprint: {
+			error: 'Fingerprint generation failed, please contact the developer.'
 		}
 	}
 }

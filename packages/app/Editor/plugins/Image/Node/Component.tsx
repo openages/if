@@ -1,7 +1,7 @@
-import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { container } from 'tsyringe'
 
 import { stopPropagation } from '@/Editor/utils'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
@@ -25,7 +25,7 @@ import type { CSSProperties } from 'react'
 
 const Index = (props: IPropsComponent) => {
 	const { src, width = '100%', height = '100%', alt, align, object_fit, node, node_key } = props
-	const [x] = useState(() => new Model())
+	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(node_key)
 	const { t } = useTranslation()
@@ -34,31 +34,33 @@ const Index = (props: IPropsComponent) => {
 	const style_img = {} as CSSProperties
 
 	useLayoutEffect(() => {
-		x.init(editor, node, node_key, setSelected, clearSelection)
+		x.block.init(editor, node, node_key, setSelected, clearSelection)
 
-		return () => x.off()
+		return () => x.block.off()
 	}, [editor, node, node_key, setSelected, clearSelection])
 
 	useEffect(() => {
-		x.selected = selected
+		x.block.selected = selected
 	}, [selected])
-
-	const setRef = useMemoizedFn(v => (x.ref = v))
 
 	if (align) style_wrap['justifyContent'] = align
 	if (object_fit) style_img['objectFit'] = object_fit
 
 	return (
-		<span className={$cx('flex', styles.wrap)} style={style_wrap} ref={v => setRef(v)}>
+		<span className={$cx('flex', styles.wrap)} style={style_wrap}>
 			<span className='__editor_image_wrap flex flex_column relative' style={{ width }}>
 				<img
-					className={$cx('__editor_image w_100', styles._local, x.selected && styles.selected)}
+					className={$cx(
+						'__editor_image w_100',
+						styles._local,
+						x.block.selected && styles.selected
+					)}
 					src={src}
 					height={height + 'px'}
 					alt={alt}
 					style={style_img}
 					draggable={false}
-					onClick={x.onClick}
+					onClick={x.block.onClick}
 				/>
 				<input
 					className={$cx('w_100 border_box', styles.alt)}
@@ -185,7 +187,7 @@ const Index = (props: IPropsComponent) => {
 						'options_wrap btn_single border_box none justify_center align_center absolute cursor_point clickable',
 						styles.btn_remove
 					)}
-					onClick={x.onDelete}
+					onClick={x.block.onDelete}
 				>
 					<Trash></Trash>
 				</span>

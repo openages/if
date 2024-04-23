@@ -17,7 +17,7 @@ export default class Index {
 	page_width = '780px'
 
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, { utils: false }, { autoBind: true })
 
 		this.init()
 	}

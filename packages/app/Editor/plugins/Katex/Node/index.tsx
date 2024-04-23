@@ -72,7 +72,8 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 
 			el.style.width = '100%'
 			el.style.justifyContent = 'center'
-			el.style.paddingTop = '0.6em'
+			el.style.paddingTop = '1em'
+			el.style.paddingBottom = '1em'
 		}
 
 		return el

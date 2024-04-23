@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { container } from 'tsyringe'
 
-import Editor from '@/Editor'
+import { Note } from '@/Editor'
 import { useCurrentModule } from '@/hooks'
 
 import styles from './index.css'
@@ -29,7 +29,7 @@ const Index = ({ id }: IProps) => {
 	return (
 		<div className={$cx('w_100 border_box flex flex_column limited_content_wrap', styles._local)}>
 			<input className={styles.title} defaultValue={x.file.data.name} onBlur={x.onChangeFileName}></input>
-			<Editor></Editor>
+			<Note></Note>
 		</div>
 	)
 }

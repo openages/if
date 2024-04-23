@@ -1,23 +1,41 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
+import { container } from 'tsyringe'
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection'
 
 import { IPropsComponent } from '../types'
+import styles from './index.css'
 import Model from './model'
 import Render from './Render'
 
 const Index = (props: IPropsComponent) => {
 	const { value, inline, node, node_key } = props
-	const [x] = useState(() => new Model())
+	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
+	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(node_key)
 
 	useLayoutEffect(() => {
-		x.init(editor, node, node_key)
-	}, [editor, node, node_key])
+		x.block.init(editor, node, node_key, setSelected, clearSelection)
 
-	const onClick = useMemoizedFn(x.onClick)
+		x.block.ref.className = styles._local
+
+		return () => x.block.off()
+	}, [editor, node, node_key, setSelected, clearSelection])
+
+	useEffect(() => {
+		x.block.selected = selected
+
+		if (selected) {
+			x.block.ref.classList.add(styles.selected)
+		} else {
+			x.block.ref.classList.remove(styles.selected)
+		}
+	}, [selected])
+
+	const onClick = useMemoizedFn(x.onEdit)
 
 	return <Render value={value} inline={inline} onClick={onClick}></Render>
 }
