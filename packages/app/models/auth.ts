@@ -7,7 +7,7 @@ import { setStorageWhenChange } from '@openages/stk/mobx'
 
 @injectable()
 export default class Index {
-	user_type = Auth.UserTypes.golden_sponsor as Auth.UserType
+	user_type = Auth.UserTypes.gold_sponsor as Auth.UserType
 	visible_pay_modal = false
 
 	constructor(public utils: Utils) {
