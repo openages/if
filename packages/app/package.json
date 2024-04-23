@@ -39,7 +39,7 @@
 		"@xyflow/react": "12.0.0-next.12",
 		"@xyflow/system": "^0.0.20",
 		"ahooks": "^3.7.11",
-		"antd": "^5.16.2",
+		"antd": "^5.16.4",
 		"await-to-js": "^3.0.0",
 		"classix": "^2.1.37",
 		"color": "^4.2.3",
@@ -90,10 +90,10 @@
 		"tslib": "^2.6.2",
 		"tsyringe": "^4.8.0",
 		"uniqolor": "^1.1.1",
-		"zod": "^3.22.5"
+		"zod": "^3.23.3"
 	},
 	"devDependencies": {
-		"@module-federation/enhanced": "^0.1.8",
+		"@module-federation/enhanced": "^0.1.9",
 		"@rsdoctor/rspack-plugin": "^0.1.10",
 		"@rspack/cli": "0.6.2",
 		"@rspack/core": "0.6.2",
