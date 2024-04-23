@@ -1,0 +1,18 @@
+._local {
+	display: flex;
+	padding: 1em 0;
+	border-radius: var(--radius);
+
+	&.selected {
+		outline: 3px solid var(--color_border);
+	}
+
+	span {
+		display: inline-flex;
+		width: 99%;
+		height: 1px;
+		margin-left: 0.5%;
+		background-image: linear-gradient(to right, var(--color_border) 50%, transparent 50%);
+		background-size: 8px 100%;
+	}
+}

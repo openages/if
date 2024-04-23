@@ -1,7 +1,8 @@
-import { $createParagraphNode, $insertNodes, COMMAND_PRIORITY_EDITOR, COMMAND_PRIORITY_LOW } from 'lexical'
+import { $insertNodes, COMMAND_PRIORITY_EDITOR, COMMAND_PRIORITY_LOW } from 'lexical'
 import { makeAutoObservable } from 'mobx'
 
 import { INSERT_IMAGE_COMMAND } from '@/Editor/commands'
+import { insertAfter } from '@/Editor/utils'
 import { DRAG_DROP_PASTE } from '@lexical/rich-text'
 import { mergeRegister } from '@lexical/utils'
 
@@ -37,18 +38,7 @@ export default class Index {
 					const node = $createImageNode(payload)
 
 					$insertNodes([node])
-
-					const parent = node.getParent()
-
-					if (!parent.__next) {
-						const p = $createParagraphNode()
-
-						parent.insertAfter(p)
-
-						p.selectStart()
-					} else {
-						parent.getNextSibling().selectEnd()
-					}
+					insertAfter(node)
 
 					return true
 				},

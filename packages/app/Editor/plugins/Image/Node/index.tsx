@@ -76,9 +76,12 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 	exportDOM(): DOMExportOutput {
 		const element = document.createElement('img')
 
+		const width = typeof this.__width === 'number' ? this.__width.toString() + 'px' : this.__width
+		const height = typeof this.__height === 'number' ? this.__height.toString() + 'px' : this.__height
+
 		element.setAttribute('src', this.__src)
-		element.setAttribute('width', this.__width.toString())
-		element.setAttribute('height', this.__height.toString())
+		element.setAttribute('width', width)
+		element.setAttribute('height', height)
 		element.setAttribute('alt', this.__alt)
 
 		return { element }

@@ -1,5 +1,5 @@
 export { default as Picker } from './Picker'
-export { default as MarkdownShortCut } from './MarkdownShortCut'
+export { default as Transform } from './Transform'
 
 export { default as Image } from './Image'
 export { default as AutoLink } from './AutoLink'

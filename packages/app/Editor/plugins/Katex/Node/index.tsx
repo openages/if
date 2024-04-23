@@ -42,7 +42,7 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 
 				return {
 					conversion: convertKatexElement,
-					priority: 2
+					priority: 0
 				}
 			},
 			span: dom => {
@@ -50,7 +50,7 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 
 				return {
 					conversion: convertKatexElement,
-					priority: 1
+					priority: 0
 				}
 			}
 		}

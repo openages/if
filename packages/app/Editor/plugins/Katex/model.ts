@@ -2,6 +2,7 @@ import { $insertNodes, COMMAND_PRIORITY_EDITOR } from 'lexical'
 import { makeAutoObservable } from 'mobx'
 
 import { INSERT_KATEX_COMMAND } from '@/Editor/commands'
+import { insertAfter } from '@/Editor/utils'
 import { mergeRegister } from '@lexical/utils'
 
 import { $createKatexNode } from './utils'
@@ -33,9 +34,10 @@ export default class Index {
 			this.editor.registerCommand<IPropsKatex>(
 				INSERT_KATEX_COMMAND,
 				payload => {
-					const equationNode = $createKatexNode(payload)
+					const node = $createKatexNode(payload)
 
-					$insertNodes([equationNode])
+					$insertNodes([node])
+					insertAfter(node)
 
 					return true
 				},

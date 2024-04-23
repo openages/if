@@ -1,6 +1,7 @@
 import {
 	$createParagraphNode,
 	$getSelection,
+	$insertNodes,
 	$isNodeSelection,
 	CLICK_COMMAND,
 	COMMAND_PRIORITY_LOW,
@@ -83,7 +84,7 @@ export default class Index<T extends LexicalNode = any> {
 	onEnter() {
 		if (!this.selected) return false
 
-		const target = this.node.insertAfter($createParagraphNode()) as ParagraphNode
+		const target = this.node.getTopLevelElement().insertAfter($createParagraphNode()) as ParagraphNode
 
 		window.requestAnimationFrame(() => this.editor.update(() => target.selectStart()))
 
@@ -105,7 +106,11 @@ export default class Index<T extends LexicalNode = any> {
 		if (this.selected && $isNodeSelection($getSelection())) {
 			e.preventDefault()
 
+			const alone = !this.node.__prev && !this.node.__next
+
 			this.node.remove()
+
+			if (alone) $insertNodes([$createParagraphNode()])
 
 			return true
 		}
