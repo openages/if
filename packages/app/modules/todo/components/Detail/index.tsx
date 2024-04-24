@@ -1,10 +1,13 @@
 import { useMemoizedFn } from 'ahooks'
 import { Drawer, Tooltip } from 'antd'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { Modal } from '@/components'
+import { useStackSelector } from '@/context/stack'
 import { getItemStatus } from '@/utils/modules/todo'
 import {
+	ArrowsOutSimple,
 	Bell,
 	BoxArrowDown,
 	Calendar,
@@ -50,6 +53,8 @@ const Index = (props: IPropsDetail) => {
 		setCurrentDetailIndex
 	} = props
 	const { t } = useTranslation()
+	const [visible_remark_modal, setVisibleRemarkModal] = useState(false)
+	const container_id = useStackSelector(v => v.id)
 	const { item = {} as Todo.Todo, prev_id, next_id } = current_detail_item
 	const { index, dimension_id } = current_detail_index
 
@@ -140,6 +145,15 @@ const Index = (props: IPropsDetail) => {
 		dimension_id,
 		update,
 		tab
+	}
+
+	const props_remark_modal = {
+		open: visible_remark_modal,
+		title: t('translation:todo.Detail.remark.title'),
+		width: 540,
+		minHeight: '72vh',
+		onCancel: useMemoizedFn(() => setVisibleRemarkModal(false)),
+		getContainer: useMemoizedFn(() => document.getElementById(container_id))
 	}
 
 	return (
@@ -356,7 +370,20 @@ const Index = (props: IPropsDetail) => {
 							<Children {...props_children}></Children>
 						)}
 					</div>
-					<Remark remark={remark} updateRemark={updateRemark}></Remark>
+					<Modal {...props_remark_modal}>
+						<Remark remark={remark} updateRemark={updateRemark}></Remark>
+					</Modal>
+					<div className='remark_wrap w_100 relative'>
+						<div
+							className='btn_remark_modal absolute flex z_index_10 justify_center align_center clickable cursor_point'
+							onClick={() => setVisibleRemarkModal(true)}
+						>
+							<ArrowsOutSimple></ArrowsOutSimple>
+						</div>
+						<If condition={!visible_remark_modal}>
+							<Remark remark={remark} updateRemark={updateRemark}></Remark>
+						</If>
+					</div>
 				</div>
 			)}
 		</Drawer>

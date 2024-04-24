@@ -183,5 +183,36 @@
 				}
 			}
 		}
+
+		.remark_wrap {
+			&:hover {
+				.btn_remark_modal {
+					opacity: 1;
+				}
+			}
+
+			&:focus-within {
+				.btn_remark_modal {
+					opacity: 0;
+				}
+			}
+
+			.btn_remark_modal {
+				top: 0;
+				right: 18px;
+				width: 21px;
+				height: 21px;
+				border-radius: var(--radius_small);
+				opacity: 0;
+				color: var(--color_text_light);
+				background-color: var(--color_bg);
+
+				&:hover {
+					opacity: 1;
+					color: var(--color_text);
+					background-color: var(--color_bg_2);
+				}
+			}
+		}
 	}
 }

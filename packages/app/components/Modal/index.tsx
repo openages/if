@@ -14,7 +14,8 @@ interface IProps {
 	open: boolean
 	className?: HTMLDivElement['className']
 	title?: string | number
-	width?: number
+	width?: string | number
+	minHeight?: string | number
 	maskClosable?: boolean
 	disableOverflow?: boolean
 	hideClose?: boolean
@@ -29,6 +30,7 @@ const Index = (props: IProps) => {
 		className,
 		title,
 		width,
+		minHeight,
 		maskClosable,
 		disableOverflow,
 		hideClose,
@@ -100,7 +102,7 @@ const Index = (props: IProps) => {
 								className,
 								'if_modal_content border_box flex flex_column'
 							)}
-							style={{ width: width ?? 360 }}
+							style={{ width: width ?? 360, minHeight }}
 							ref={ref_content}
 						>
 							{title && (
