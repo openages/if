@@ -20,7 +20,6 @@ import type { MouseEvent } from 'react'
 export default class Index<T extends LexicalNode = any> {
 	key = ''
 	editor = null as LexicalEditor
-	ref = null as HTMLElement
 	node = null as T
 
 	selected = false
@@ -35,7 +34,6 @@ export default class Index<T extends LexicalNode = any> {
 			{
 				key: false,
 				editor: false,
-				ref: false,
 				node: false,
 				setSelected: false,
 				clearSelection: false,
@@ -56,8 +54,6 @@ export default class Index<T extends LexicalNode = any> {
 		this.node = node
 		this.key = key
 
-		this.ref = this.editor.getElementByKey(key)
-
 		this.setSelected = setSelected
 		this.clearSelection = clearSelection
 
@@ -67,7 +63,9 @@ export default class Index<T extends LexicalNode = any> {
 	onClick(e: MouseEvent<HTMLSpanElement>) {
 		if (this.selected) return true
 
-		if (e.target === this.ref || this.ref.contains(e.target as HTMLElement)) {
+		const ref = this.editor.getElementByKey(this.key)
+
+		if (e.target === ref || ref.contains(e.target as HTMLElement)) {
 			if (e.shiftKey) {
 				this.setSelected(!this.selected)
 			} else {

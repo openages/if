@@ -1,0 +1,52 @@
+import { $insertNodes, COMMAND_PRIORITY_EDITOR } from 'lexical'
+import { makeAutoObservable } from 'mobx'
+
+import { INSERT_CODE_COMMAND } from '@/Editor/commands'
+import { insertAfter } from '@/Editor/utils'
+import { mergeRegister } from '@lexical/utils'
+
+import { $createCodeNode } from './utils'
+
+import type { LexicalEditor } from 'lexical'
+import type { IPropsCode } from './types'
+
+export default class Index {
+	editor = null as LexicalEditor
+
+	unregister = null as () => void
+
+	constructor() {
+		makeAutoObservable(
+			this,
+			{ editor: false, unregister: false, init: false, register: false },
+			{ autoBind: true }
+		)
+	}
+
+	init(editor: Index['editor']) {
+		this.editor = editor
+
+		this.register()
+	}
+
+	register() {
+		this.unregister = mergeRegister(
+			this.editor.registerCommand<IPropsCode>(
+				INSERT_CODE_COMMAND,
+				payload => {
+					const node = $createCodeNode(payload)
+
+					$insertNodes([node])
+					insertAfter(node)
+
+					return true
+				},
+				COMMAND_PRIORITY_EDITOR
+			)
+		)
+	}
+
+	off() {
+		this.unregister()
+	}
+}

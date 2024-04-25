@@ -8,13 +8,14 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { Placeholder } from './components'
 import styles from './index.css'
 import nodes from './nodes'
-import { AutoLink, Divider, Image, Katex, LinkEditor, Picker, Transform } from './plugins'
+import { AutoLink, Code, Divider, Image, Katex, LinkEditor, Picker, Transform } from './plugins'
+import { style, token } from './theme'
 import { onError } from './utils'
 
 const Index = () => {
 	return (
-		<div className={$cx('w_100 relative', styles._local)}>
-			<LexicalComposer initialConfig={{ namespace: 'editor', nodes, onError }}>
+		<div className={$cx('w_100 relative', styles._local, ...style)}>
+			<LexicalComposer initialConfig={{ namespace: 'editor', nodes, theme: token, onError }}>
 				<RichTextPlugin
 					contentEditable={<ContentEditable />}
 					placeholder={<Placeholder />}
@@ -24,6 +25,8 @@ const Index = () => {
 				<AutoFocusPlugin />
 				<Picker />
 				<Transform />
+
+				<Code />
 
 				<Image />
 				<AutoLink />

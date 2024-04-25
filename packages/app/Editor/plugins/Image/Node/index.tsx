@@ -88,8 +88,8 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 		return { element }
 	}
 
-	updateDOM(update?: boolean) {
-		return update ?? false
+	updateDOM() {
+		return false
 	}
 
 	decorate() {
