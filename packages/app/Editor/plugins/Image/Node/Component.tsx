@@ -47,7 +47,7 @@ const Index = (props: IPropsComponent) => {
 	if (object_fit) style_img['objectFit'] = object_fit
 
 	return (
-		<span className={$cx('flex', styles.wrap)} style={style_wrap}>
+		<span className={$cx('flex w_100', styles.wrap)} style={style_wrap}>
 			<span className='__editor_image_wrap flex flex_column relative' style={{ width }}>
 				<img
 					className={$cx(
@@ -64,12 +64,29 @@ const Index = (props: IPropsComponent) => {
 				/>
 				<input
 					className={$cx('w_100 border_box', styles.alt)}
+					autoComplete='off'
 					defaultValue={alt}
 					placeholder={t('translation:editor.Image.modal.placeholder.alt')}
 					maxLength={60}
 					onKeyDown={stopPropagation}
 					onBlur={x.onChangeAlt}
 				></input>
+				<span
+					className={$cx(
+						'options_wrap border_box none justify_between align_center absolute',
+						styles.src_wrap
+					)}
+				>
+					<input
+						className='w_100 border_box'
+						name='width'
+						type='text'
+						autoComplete='off'
+						defaultValue={src}
+						onKeyDown={stopPropagation}
+						onBlur={x.onChangeSrc}
+					/>
+				</span>
 				<span
 					className={$cx(
 						'options_wrap border_box none justify_between align_center absolute',

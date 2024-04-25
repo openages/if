@@ -12,6 +12,20 @@ export default class Index {
 		makeAutoObservable(this, { block: false }, { autoBind: true })
 	}
 
+	onChangeSrc(e: FocusEvent<HTMLInputElement>) {
+		e.preventDefault()
+
+		if (!e.target.value) return
+
+		this.block.editor.update(() => {
+			const target = this.block.node.getWritable()
+
+			if (e.target.value === target.__src) return
+
+			target.__src = e.target.value
+		})
+	}
+
 	onChangeAlt(e: FocusEvent<HTMLInputElement>) {
 		e.preventDefault()
 

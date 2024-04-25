@@ -69,6 +69,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 		const el = document.createElement('span')
 
 		el.style.display = 'inline-flex'
+		el.style.width = '100%'
 
 		return el
 	}

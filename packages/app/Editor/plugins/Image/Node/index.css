@@ -63,9 +63,31 @@
 	font-size: 12px;
 }
 
+.src_wrap {
+	top: 12px;
+	right: 12px;
+	width: 240px;
+	padding: 0 9px;
+	font-size: 12px;
+
+	:global {
+		input {
+			height: 14px;
+			line-height: 14px;
+			border: none;
+			outline: none;
+			opacity: 0.6;
+			color: var(--color_bg);
+			background-color: transparent;
+			text-align: center;
+			font-size: 10px;
+		}
+	}
+}
+
 .size_wrap {
 	top: 12px;
-	left: calc(50% - 54px);
+	left: 12px;
 	width: 108px;
 	padding: 0 9px;
 	font-size: 12px;
