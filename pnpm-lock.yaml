@@ -90,8 +90,8 @@ importers:
         specifier: ^2.1.5
         version: 2.1.5(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       '@swc/helpers':
-        specifier: ^0.5.10
-        version: 0.5.10
+        specifier: ^0.5.11
+        version: 0.5.11
       '@xyflow/react':
         specifier: 12.0.0-next.12
         version: 12.0.0-next.12(@types/react@18.2.79)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
@@ -263,13 +263,13 @@ importers:
         version: 0.1.9(typescript@5.4.5)(vue-tsc@1.8.27(typescript@5.4.5))(webpack@5.91.0)
       '@rsdoctor/rspack-plugin':
         specifier: ^0.1.10
-        version: 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))
+        version: 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))
       '@rspack/cli':
         specifier: 0.6.3
-        version: 0.6.3(@rspack/core@0.6.3(@swc/helpers@0.5.10))(@types/express@4.17.21)(webpack@5.91.0)
+        version: 0.6.3(@rspack/core@0.6.3(@swc/helpers@0.5.11))(@types/express@4.17.21)(webpack@5.91.0)
       '@rspack/core':
         specifier: 0.6.3
-        version: 0.6.3(@swc/helpers@0.5.10)
+        version: 0.6.3(@swc/helpers@0.5.11)
       '@rspack/plugin-react-refresh':
         specifier: 0.6.3
         version: 0.6.3(react-refresh@0.14.0)
@@ -2053,8 +2053,8 @@ packages:
     resolution: {integrity: sha512-LnhVjMWyMQV9ZmeEy26maJk+8HTIbd59cH4F2MJ439k9DqejRisfFNGAPvRYlKETuh9LrImlS8aKsBgKjMA8WA==}
     engines: {node: '>=14'}
 
-  '@swc/helpers@0.5.10':
-    resolution: {integrity: sha512-CU+RF9FySljn7HVSkkjiB84hWkvTaI3rtLvF433+jRSBL2hMu3zX5bGhHS8C80SM++h4xy8hBSnUHFQHmRXSBw==}
+  '@swc/helpers@0.5.11':
+    resolution: {integrity: sha512-YNlnKRWF2sVojTpIyzwou9XoTNbzbzONwRhOoniEioF1AtaitTvVZblaQRrAzChWQ1bLYyYSWzM18y4WwgzJ+A==}
 
   '@swc/helpers@0.5.9':
     resolution: {integrity: sha512-XI76sLwMJoLjJTOK5RblBZkouOJG3X3hjxLCzLnyN1ifAiKQc6Hck3uvnU4Z/dV/Dyk36Ffj8FLvDLV2oWvKTw==}
@@ -2345,11 +2345,11 @@ packages:
   '@volar/typescript@1.11.1':
     resolution: {integrity: sha512-iU+t2mas/4lYierSnoFOeRFQUhAEMgsFuQxoxvwn5EdQopw43j+J27a4lt9LMInx1gLJBC6qL14WYGlgymaSMQ==}
 
-  '@vue/compiler-core@3.4.24':
-    resolution: {integrity: sha512-vbW/tgbwJYj62N/Ww99x0zhFTkZDTcGh3uwJEuadZ/nF9/xuFMC4693P9r+3sxGXISABpDKvffY5ApH9pmdd1A==}
+  '@vue/compiler-core@3.4.25':
+    resolution: {integrity: sha512-Y2pLLopaElgWnMNolgG8w3C5nNUVev80L7hdQ5iIKPtMJvhVpG0zhnBG/g3UajJmZdvW0fktyZTotEHD1Srhbg==}
 
-  '@vue/compiler-dom@3.4.24':
-    resolution: {integrity: sha512-4XgABML/4cNndVsQndG6BbGN7+EoisDwi3oXNovqL/4jdNhwvP8/rfRMTb6FxkxIxUUtg6AI1/qZvwfSjxJiWA==}
+  '@vue/compiler-dom@3.4.25':
+    resolution: {integrity: sha512-Ugz5DusW57+HjllAugLci19NsDK+VyjGvmbB2TXaTcSlQxwL++2PETHx/+Qv6qFwNLzSt7HKepPe4DcTE3pBWg==}
 
   '@vue/language-core@1.8.27':
     resolution: {integrity: sha512-L8Kc27VdQserNaCUNiSFdDl9LWT24ly8Hpwf1ECy3aFb9m6bDhBGQYOujDm21N7EW3moKIOKEanQwe1q5BK+mA==}
@@ -2359,8 +2359,8 @@ packages:
       typescript:
         optional: true
 
-  '@vue/shared@3.4.24':
-    resolution: {integrity: sha512-BW4tajrJBM9AGAknnyEw5tO2xTmnqgup0VTnDAMcxYmqOX0RG0b9aSUGAbEKolD91tdwpA6oCwbltoJoNzpItw==}
+  '@vue/shared@3.4.25':
+    resolution: {integrity: sha512-k0yappJ77g2+KNrIaF0FFnzwLvUBLUYr8VOwz+/6vLsmItFp51AcxLL7Ey3iPd7BIRyWPOcqUjMnm7OkahXllA==}
 
   '@webassemblyjs/ast@1.12.1':
     resolution: {integrity: sha512-EKfMUOPRRUTy5UII4qJDGPpqfwjOmZ5jeGFwid9mnoqIFK+e0vqoi1qH56JpmZSzEL53jKnNzScdmftJyG5xWg==}
@@ -7405,11 +7405,11 @@ snapshots:
 
   '@rsdoctor/client@0.1.10': {}
 
-  '@rsdoctor/core@0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))':
+  '@rsdoctor/core@0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))':
     dependencies:
-      '@rsdoctor/graph': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))
-      '@rsdoctor/sdk': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))
-      '@rsdoctor/utils': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))
+      '@rsdoctor/graph': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))
+      '@rsdoctor/sdk': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))
       axios: 1.6.8
       bytes: 3.1.2
       enhanced-resolve: 5.12.0
@@ -7431,10 +7431,10 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/graph@0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))':
+  '@rsdoctor/graph@0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))':
     dependencies:
-      '@rsdoctor/types': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))
-      '@rsdoctor/utils': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))
+      '@rsdoctor/types': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))
       lodash: 4.17.21
       socket.io: 4.7.2
       source-map: 0.7.4
@@ -7448,13 +7448,13 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/rspack-plugin@0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))':
+  '@rsdoctor/rspack-plugin@0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))':
     dependencies:
-      '@rsdoctor/core': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))
-      '@rsdoctor/graph': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))
-      '@rsdoctor/sdk': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))
-      '@rsdoctor/utils': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))
-      '@rspack/core': 0.6.3(@swc/helpers@0.5.10)
+      '@rsdoctor/core': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))
+      '@rsdoctor/graph': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))
+      '@rsdoctor/sdk': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))
+      '@rspack/core': 0.6.3(@swc/helpers@0.5.11)
       loader-utils: 2.0.4
       lodash: 4.17.21
     transitivePeerDependencies:
@@ -7467,12 +7467,12 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/sdk@0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))':
+  '@rsdoctor/sdk@0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))':
     dependencies:
       '@rsdoctor/client': 0.1.10
-      '@rsdoctor/graph': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))
-      '@rsdoctor/types': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))
-      '@rsdoctor/utils': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))
+      '@rsdoctor/graph': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))
+      '@rsdoctor/types': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))
       body-parser: 1.20.1
       cors: 2.8.5
       dayjs: 1.11.6
@@ -7493,7 +7493,7 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/types@0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))':
+  '@rsdoctor/types@0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))':
     dependencies:
       '@types/connect': 3.4.35
       '@types/estree': 1.0.0
@@ -7501,17 +7501,17 @@ snapshots:
       '@types/webpack': 5.28.0
       source-map: 0.7.4
     optionalDependencies:
-      '@rspack/core': 0.6.3(@swc/helpers@0.5.10)
+      '@rspack/core': 0.6.3(@swc/helpers@0.5.11)
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild
       - uglify-js
       - webpack-cli
 
-  '@rsdoctor/utils@0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))':
+  '@rsdoctor/utils@0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))':
     dependencies:
       '@babel/code-frame': 7.24.2
-      '@rsdoctor/types': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.10))
+      '@rsdoctor/types': 0.1.10(@rspack/core@0.6.3(@swc/helpers@0.5.11))
       '@types/estree': 1.0.0
       acorn: 8.11.3
       acorn-import-assertions: 1.9.0(acorn@8.11.3)
@@ -7635,11 +7635,11 @@ snapshots:
       - webpack
       - webpack-cli
 
-  '@rspack/cli@0.6.3(@rspack/core@0.6.3(@swc/helpers@0.5.10))(@types/express@4.17.21)(webpack@5.91.0)':
+  '@rspack/cli@0.6.3(@rspack/core@0.6.3(@swc/helpers@0.5.11))(@types/express@4.17.21)(webpack@5.91.0)':
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
-      '@rspack/core': 0.6.3(@swc/helpers@0.5.10)
-      '@rspack/dev-server': 0.6.3(@rspack/core@0.6.3(@swc/helpers@0.5.10))(@types/express@4.17.21)(webpack@5.91.0)
+      '@rspack/core': 0.6.3(@swc/helpers@0.5.11)
+      '@rspack/dev-server': 0.6.3(@rspack/core@0.6.3(@swc/helpers@0.5.11))(@types/express@4.17.21)(webpack@5.91.0)
       colorette: 2.0.19
       exit-hook: 3.2.0
       interpret: 3.1.1
@@ -7674,7 +7674,7 @@ snapshots:
     optionalDependencies:
       '@swc/helpers': 0.5.9
 
-  '@rspack/core@0.6.3(@swc/helpers@0.5.10)':
+  '@rspack/core@0.6.3(@swc/helpers@0.5.11)':
     dependencies:
       '@module-federation/runtime-tools': 0.1.6
       '@rspack/binding': 0.6.3
@@ -7690,7 +7690,7 @@ snapshots:
       zod: 3.23.4
       zod-validation-error: 1.3.1(zod@3.23.4)
     optionalDependencies:
-      '@swc/helpers': 0.5.10
+      '@swc/helpers': 0.5.11
 
   '@rspack/dev-server@0.5.9(@rspack/core@0.5.9(@swc/helpers@0.5.9))(@types/express@4.17.21)(webpack@5.91.0)':
     dependencies:
@@ -7712,9 +7712,9 @@ snapshots:
       - webpack
       - webpack-cli
 
-  '@rspack/dev-server@0.6.3(@rspack/core@0.6.3(@swc/helpers@0.5.10))(@types/express@4.17.21)(webpack@5.91.0)':
+  '@rspack/dev-server@0.6.3(@rspack/core@0.6.3(@swc/helpers@0.5.11))(@types/express@4.17.21)(webpack@5.91.0)':
     dependencies:
-      '@rspack/core': 0.6.3(@swc/helpers@0.5.10)
+      '@rspack/core': 0.6.3(@swc/helpers@0.5.11)
       chokidar: 3.5.3
       connect-history-api-fallback: 2.0.0
       express: 4.18.1
@@ -7833,7 +7833,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@swc/helpers@0.5.10':
+  '@swc/helpers@0.5.11':
     dependencies:
       tslib: 2.6.2
 
@@ -8183,25 +8183,25 @@ snapshots:
       '@volar/language-core': 1.11.1
       path-browserify: 1.0.1
 
-  '@vue/compiler-core@3.4.24':
+  '@vue/compiler-core@3.4.25':
     dependencies:
       '@babel/parser': 7.24.4
-      '@vue/shared': 3.4.24
+      '@vue/shared': 3.4.25
       entities: 4.5.0
       estree-walker: 2.0.2
       source-map-js: 1.2.0
 
-  '@vue/compiler-dom@3.4.24':
+  '@vue/compiler-dom@3.4.25':
     dependencies:
-      '@vue/compiler-core': 3.4.24
-      '@vue/shared': 3.4.24
+      '@vue/compiler-core': 3.4.25
+      '@vue/shared': 3.4.25
 
   '@vue/language-core@1.8.27(typescript@5.4.5)':
     dependencies:
       '@volar/language-core': 1.11.1
       '@volar/source-map': 1.11.1
-      '@vue/compiler-dom': 3.4.24
-      '@vue/shared': 3.4.24
+      '@vue/compiler-dom': 3.4.25
+      '@vue/shared': 3.4.25
       computeds: 0.0.1
       minimatch: 9.0.4
       muggle-string: 0.3.1
@@ -8210,7 +8210,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.4.5
 
-  '@vue/shared@3.4.24': {}
+  '@vue/shared@3.4.25': {}
 
   '@webassemblyjs/ast@1.12.1':
     dependencies:

@@ -35,7 +35,7 @@
 		"@lexical/utils": "^0.14.5",
 		"@openages/stk": "workspace:*",
 		"@phosphor-icons/react": "^2.1.5",
-		"@swc/helpers": "^0.5.10",
+		"@swc/helpers": "^0.5.11",
 		"@xyflow/react": "12.0.0-next.12",
 		"@xyflow/system": "^0.0.20",
 		"ahooks": "^3.7.11",
