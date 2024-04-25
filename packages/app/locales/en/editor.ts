@@ -4,7 +4,8 @@ export default {
 	name: {
 		Image: 'Image',
 		Emoji: 'Emoji',
-		Katex: 'Katex'
+		Katex: 'Katex',
+		Divider: 'Divider'
 	},
 	Image: {
 		modal: {

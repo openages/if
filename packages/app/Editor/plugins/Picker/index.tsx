@@ -9,9 +9,9 @@ import { useStackSelector } from '@/context/stack'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useBasicTypeaheadTriggerMatch, LexicalTypeaheadMenuPlugin } from '@lexical/react/LexicalTypeaheadMenuPlugin'
 
+import getOptions from '../../options'
 import { Menu } from './components'
 import config from './config'
-import getOptions from './getOptions'
 import styles from './index.css'
 import Model from './model'
 
@@ -38,7 +38,7 @@ const Index = () => {
 	const onSelectOption = useMemoizedFn(x.onSelectOption)
 	const checkForTriggerMatch = useBasicTypeaheadTriggerMatch('/', { minLength: 0 })
 
-	const options = useMemo(() => getOptions(x.query, showModal), [editor, x.query])
+	const options = useMemo(() => getOptions({ query_string: x.query, editor, showModal }), [editor, x.query])
 
 	const render: TypeaheadMenuPluginProps<Option>['menuRenderFn'] = useMemoizedFn(
 		(anchorElementRef, { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex }) => {

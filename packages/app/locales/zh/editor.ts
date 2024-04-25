@@ -4,7 +4,8 @@ export default {
 	name: {
 		Image: '图片',
 		Emoji: '表情',
-		Katex: '公式'
+		Katex: '公式',
+		Divider: '分割线'
 	},
 	Image: {
 		modal: {
