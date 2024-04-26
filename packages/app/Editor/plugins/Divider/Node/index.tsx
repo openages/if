@@ -9,16 +9,16 @@ import type { SerializedDividerNode } from '../types'
 const Component = lazy(() => import('./Component'))
 
 export default class DividerNode extends DecoratorNode<JSX.Element> {
-	constructor() {
-		super()
+	constructor(key?: string) {
+		super(key)
 	}
 
 	static getType() {
 		return 'divider'
 	}
 
-	static clone() {
-		return new DividerNode()
+	static clone(node: DividerNode) {
+		return new DividerNode(node.__key)
 	}
 
 	static importJSON() {

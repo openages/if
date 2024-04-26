@@ -1,9 +1,9 @@
 import { $applyNodeReplacement } from 'lexical'
 
-import KatexNode from '../Node'
+import CodeNode from '../Node'
 
 import type { IPropsCode } from '../types'
 
 export default (args: IPropsCode) => {
-	return $applyNodeReplacement(new KatexNode(args)) as KatexNode
+	return $applyNodeReplacement(new CodeNode(args)) as CodeNode
 }

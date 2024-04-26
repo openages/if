@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
 
+import { useGlobal } from '@/context/app'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 
 import Model from './model'
@@ -8,12 +9,14 @@ import Model from './model'
 const Index = () => {
 	const [x] = useState(() => new Model())
 	const [editor] = useLexicalComposerContext()
+	const global = useGlobal()
+	const theme = global.setting.theme
 
 	useLayoutEffect(() => {
-		x.init(editor)
+		x.init(theme, editor)
 
 		return () => x.off()
-	}, [editor])
+	}, [theme, editor])
 
 	return null
 }

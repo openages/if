@@ -20,7 +20,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 	__object_fit: CSSProperties['objectFit']
 
 	constructor(props: IPropsImage) {
-		super()
+		super(props.node_key)
 
 		const { src, width, height, alt, align, object_fit } = props
 
@@ -43,7 +43,8 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 			height: node.__height,
 			alt: node.__alt,
 			align: node.__align,
-			object_fit: node.__object_fit
+			object_fit: node.__object_fit,
+			node_key: node.__key
 		})
 	}
 

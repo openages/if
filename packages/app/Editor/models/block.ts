@@ -18,9 +18,10 @@ import type { LexicalEditor, ParagraphNode, LexicalNode } from 'lexical'
 import type { MouseEvent } from 'react'
 
 export default class Index<T extends LexicalNode = any> {
-	key = ''
 	editor = null as LexicalEditor
 	node = null as T
+	key = ''
+	ref = null as HTMLElement
 
 	selected = false
 
@@ -32,9 +33,10 @@ export default class Index<T extends LexicalNode = any> {
 		makeAutoObservable(
 			this,
 			{
-				key: false,
 				editor: false,
 				node: false,
+				key: false,
+				ref: false,
 				setSelected: false,
 				clearSelection: false,
 				unregister: false
@@ -53,6 +55,7 @@ export default class Index<T extends LexicalNode = any> {
 		this.editor = editor
 		this.node = node
 		this.key = key
+		this.ref = this.editor.getElementByKey(this.key)
 
 		this.setSelected = setSelected
 		this.clearSelection = clearSelection
@@ -63,9 +66,7 @@ export default class Index<T extends LexicalNode = any> {
 	onClick(e: MouseEvent<HTMLSpanElement>) {
 		if (this.selected) return true
 
-		const ref = this.editor.getElementByKey(this.key)
-
-		if (e.target === ref || ref.contains(e.target as HTMLElement)) {
+		if (e.target === this.ref || this.ref.contains(e.target as HTMLElement)) {
 			if (e.shiftKey) {
 				this.setSelected(!this.selected)
 			} else {

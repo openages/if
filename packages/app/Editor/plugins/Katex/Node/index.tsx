@@ -15,7 +15,7 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 	__inline: boolean
 
 	constructor(props: IPropsKatex) {
-		super()
+		super(props.node_key)
 
 		const { value, inline } = props
 
@@ -28,7 +28,7 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 	}
 
 	static clone(node: KatexNode) {
-		return new KatexNode({ value: node.__value, inline: node.__inline })
+		return new KatexNode({ value: node.__value, inline: node.__inline, node_key: node.__key })
 	}
 
 	static importJSON(serializedNode: SerializedKatexNode) {

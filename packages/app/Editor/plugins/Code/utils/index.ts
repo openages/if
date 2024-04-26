@@ -1,3 +1,6 @@
 export { default as $createCodeNode } from './$createCodeNode'
 export { default as $isCodeNode } from './$isCodeNode'
 export { default as convertCodeElement } from './convertCodeElement'
+export { default as $createTextNode } from './$createTextNode'
+export { default as $isTextNode } from './$isTextNode'
+export { default as getCodeNodeOfLine } from './getCodeNodeOfLine'
