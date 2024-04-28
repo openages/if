@@ -29,7 +29,7 @@ const Index = ({ id }: IProps) => {
 	return (
 		<div className={$cx('w_100 border_box flex flex_column limited_content_wrap', styles._local)}>
 			<input className={styles.title} defaultValue={x.file.data.name} onBlur={x.onChangeFileName}></input>
-			<Note></Note>
+			{/* <Note></Note> */}
 		</div>
 	)
 }
