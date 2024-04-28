@@ -24,9 +24,15 @@
 
 		code {
 			display: block;
+			box-sizing: border-box;
+			padding: 12px 15px;
 			margin-block-start: 1.2em;
 			margin-block-end: 1.2em;
+			border-radius: var(--radius);
 			background-color: var(--color_bg_1);
+			font-family: 'CascadiaCode';
+			font-size: 14px;
+			tab-size: 4;
 		}
 	}
 }

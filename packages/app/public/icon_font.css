@@ -53,6 +53,16 @@
 		url('./font/Rubik/Rubik-SemiBoldItalic.ttf') format('truetype');
 }
 
+/** Rubik */
+@font-face {
+	font-family: 'CascadiaCode';
+	font-style: normal;
+	font-weight: 400;
+	src:
+		local('CascadiaCode'),
+		url('./font/CascadiaCode.woff2') format('woff2');
+}
+
 /** Material Design Icon */
 @font-face {
 	font-family: 'md_icon_outline';

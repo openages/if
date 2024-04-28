@@ -4,16 +4,14 @@ import { useLayoutEffect } from 'react'
 import { useGlobal } from '@/context/app'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 
-import { registerCodeHighlighting } from './CodeHighlighter'
+import { register } from './utils'
 
 const Index = () => {
 	const [editor] = useLexicalComposerContext()
 	const global = useGlobal()
 	const theme = global.setting.theme
 
-	useLayoutEffect(() => {
-		return registerCodeHighlighting(editor)
-	}, [theme, editor])
+	useLayoutEffect(() => register(editor), [theme, editor])
 
 	return null
 }

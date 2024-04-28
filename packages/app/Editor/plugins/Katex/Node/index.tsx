@@ -38,7 +38,7 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 	static importDOM(): DOMConversionMap | null {
 		return {
 			div: dom => {
-				if (!dom.hasAttribute('data-lexical-katex')) return null
+				if (!dom.hasAttribute('lexical-katex-value')) return null
 
 				return {
 					conversion: convertKatexElement,
@@ -46,7 +46,7 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 				}
 			},
 			span: dom => {
-				if (!dom.hasAttribute('data-lexical-katex')) return null
+				if (!dom.hasAttribute('lexical-katex-value')) return null
 
 				return {
 					conversion: convertKatexElement,
@@ -82,8 +82,8 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 	exportDOM(): DOMExportOutput {
 		const element = document.createElement(this.__inline ? 'span' : 'div')
 
-		element.setAttribute('data-lexical-katex', btoa(this.__value))
-		element.setAttribute('data-lexical-inline', `${this.__inline}`)
+		element.setAttribute('lexical-katex-value', btoa(this.__value))
+		element.setAttribute('lexical-katex-inline', `${this.__inline}`)
 
 		katex.render(this.__value, element, {
 			displayMode: !this.__inline,

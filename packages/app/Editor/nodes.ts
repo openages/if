@@ -2,8 +2,8 @@ import { AutoLinkNode, LinkNode } from '@lexical/link'
 import { ListItemNode, ListNode } from '@lexical/list'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text'
 
-import { CodeHighlightNode } from './plugins/Code/CodeHighlightNode'
-import { CodeNode } from './plugins/Code/CodeNode'
+import CodeNode from './plugins/Code/CodeNode'
+import CodeTextNode from './plugins/Code/CodeTextNode'
 import DividerNode from './plugins/Divider/Node'
 import ImageNode from './plugins/Image/Node'
 import KatexNode from './plugins/Katex/Node'
@@ -14,8 +14,8 @@ export default [
 	ImageNode,
 	KatexNode,
 	DividerNode,
-	CodeHighlightNode,
 	CodeNode,
+	CodeTextNode,
 
 	AutoLinkNode,
 	LinkNode,

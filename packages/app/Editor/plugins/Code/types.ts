@@ -3,16 +3,15 @@ import type { SerializedElementNode, SerializedTextNode as _SerializedTextNode, 
 import type { BundledLanguage } from 'shiki'
 
 export interface IPropsCode {
-	value: string
 	lang?: BundledLanguage
 	node_key?: string
 }
 
-export interface IPropsText {
+export interface IPropsCodeText {
 	text: string
 	color?: string
 	node_key?: string
 }
 
 export type SerializedCodeNode = Spread<IPropsCode, SerializedElementNode>
-export type SerializedTextNode = Spread<IPropsText, _SerializedTextNode>
+export type SerializedCodeTextNode = Spread<IPropsCodeText, _SerializedTextNode>

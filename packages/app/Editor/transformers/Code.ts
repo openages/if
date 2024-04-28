@@ -1,6 +1,5 @@
-import { $createCodeNode, $isCodeNode, CodeNode } from '../plugins/Code/CodeNode'
-
-// import { $createCodeNode, $isCodeNode } from '../plugins/Code/utils'
+import CodeNode from '../plugins/Code/CodeNode'
+import { $createCodeNode, $isCodeNode } from '../plugins/Code/utils'
 
 import type { ElementTransformer } from '@lexical/markdown'
 import type { BundledLanguage } from 'shiki'
@@ -17,7 +16,7 @@ export default {
 		return '```' + (node.__lang || '') + (text ? '\n' + text : '') + '\n' + '```'
 	},
 	replace(parent, _children, match) {
-		const node = $createCodeNode((match ? match[1] : '') as BundledLanguage)
+		const node = $createCodeNode({ lang: (match ? match[1] : '') as BundledLanguage })
 
 		parent.replace(node)
 	}
