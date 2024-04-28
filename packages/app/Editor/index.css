@@ -21,5 +21,12 @@
 			margin-block-start: 1.2em;
 			margin-block-end: 1.2em;
 		}
+
+		code {
+			display: block;
+			margin-block-start: 1.2em;
+			margin-block-end: 1.2em;
+			background-color: var(--color_bg_1);
+		}
 	}
 }

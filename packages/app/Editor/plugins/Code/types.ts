@@ -10,7 +10,7 @@ export interface IPropsCode {
 
 export interface IPropsText {
 	text: string
-	styles?: string
+	color?: string
 	node_key?: string
 }
 

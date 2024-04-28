@@ -1,21 +1,18 @@
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect } from 'react'
 
 import { useGlobal } from '@/context/app'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 
-import Model from './model'
+import { registerCodeHighlighting } from './CodeHighlighter'
 
 const Index = () => {
-	const [x] = useState(() => new Model())
 	const [editor] = useLexicalComposerContext()
 	const global = useGlobal()
 	const theme = global.setting.theme
 
 	useLayoutEffect(() => {
-		x.init(theme, editor)
-
-		return () => x.off()
+		return registerCodeHighlighting(editor)
 	}, [theme, editor])
 
 	return null

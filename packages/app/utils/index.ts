@@ -5,6 +5,7 @@ export { default as setFavicon } from './setFavicon'
 export { default as setGlobalAnimation } from './setGlobalAnimation'
 export { default as onWheel } from './onWheel'
 export { default as isShowEmpty } from './isShowEmpty'
+export { default as highlighter } from './highlighter'
 
 export * from './is'
 export * from './filter'

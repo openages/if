@@ -26,13 +26,12 @@ const Index = () => {
 				<Picker />
 				<Transform />
 
-				<Code />
-
 				<Image />
 				<AutoLink />
 				<LinkEditor />
 				<Katex />
 				<Divider />
+				<Code />
 			</LexicalComposer>
 		</div>
 	)
