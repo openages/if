@@ -69,7 +69,6 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 
 		if (!this.__inline) {
 			el.style.display = 'inline-flex'
-
 			el.style.width = '100%'
 			el.style.justifyContent = 'center'
 			el.style.paddingTop = '1em'

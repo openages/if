@@ -18,10 +18,11 @@ import {
 
 import type { IPropsCode, SerializedCodeNode } from './types'
 import type { BundledLanguage } from 'shiki'
-import type { DOMExportOutput, EditorConfig, RangeSelection, DOMConversionMap } from 'lexical'
+import type { DOMExportOutput, RangeSelection, DOMConversionMap } from 'lexical'
 
 export default class CodeNode extends ElementNode {
 	__lang: BundledLanguage
+	__fold = false
 
 	static getType() {
 		return 'code'
@@ -32,13 +33,7 @@ export default class CodeNode extends ElementNode {
 	}
 
 	static importJSON(serializedNode: SerializedCodeNode): CodeNode {
-		const node = $createCodeNode({ lang: serializedNode.lang })
-
-		node.setFormat(serializedNode.format)
-		node.setIndent(serializedNode.indent)
-		node.setDirection(serializedNode.direction)
-
-		return node
+		return $createCodeNode({ lang: serializedNode.lang })
 	}
 
 	static importDOM(): DOMConversionMap {
@@ -54,26 +49,13 @@ export default class CodeNode extends ElementNode {
 	}
 
 	createDOM() {
-		const element = document.createElement('code')
+		const el = document.createElement('code')
 
-		element.setAttribute('spellcheck', 'false')
-		element.setAttribute('lexical-code-lang', this.__lang)
+		el.setAttribute('spellcheck', 'false')
 
-		return element
-	}
+		el.style.position = 'relative'
 
-	updateDOM(prevNode: CodeNode, dom: HTMLElement, config: EditorConfig): boolean {
-		const lang = this.__lang
-		const prevLanguage = prevNode.__lang
-
-		if (lang) {
-			if (lang !== prevLanguage) {
-				dom.setAttribute('lexical-code-lang', lang)
-			}
-		} else if (prevLanguage) {
-			dom.removeAttribute('lexical-code-lang')
-		}
-		return false
+		return el
 	}
 
 	exportDOM(): DOMExportOutput {
@@ -83,6 +65,10 @@ export default class CodeNode extends ElementNode {
 		element.setAttribute('lexical-code-lang', this.__lang)
 
 		return { element }
+	}
+
+	updateDOM() {
+		return false
 	}
 
 	exportJSON(): SerializedCodeNode {
@@ -95,60 +81,73 @@ export default class CodeNode extends ElementNode {
 
 	insertNewAfter(selection: RangeSelection, restoreSelection = true) {
 		const children = this.getChildren()
-		const childrenLength = children.length
+		const children_length = children.length
 
 		if (
-			childrenLength >= 2 &&
-			children[childrenLength - 1].getTextContent() === '\n' &&
-			children[childrenLength - 2].getTextContent() === '\n' &&
+			children_length >= 2 &&
+			children[children_length - 1].getTextContent() === '\n' &&
+			children[children_length - 2].getTextContent() === '\n' &&
 			selection.isCollapsed() &&
 			selection.anchor.key === this.__key &&
-			selection.anchor.offset === childrenLength
+			selection.anchor.offset === children_length
 		) {
-			children[childrenLength - 1].remove()
-			children[childrenLength - 2].remove()
-			const newElement = $createParagraphNode()
-			this.insertAfter(newElement, restoreSelection)
-			return newElement
+			children[children_length - 1].remove()
+			children[children_length - 2].remove()
+
+			const node = $createParagraphNode()
+
+			this.insertAfter(node, restoreSelection)
+
+			return node
 		}
 
 		const { anchor, focus } = selection
-		const firstPoint = anchor.isBefore(focus) ? anchor : focus
-		const firstSelectionNode = firstPoint.getNode()
+		const first_point = anchor.isBefore(focus) ? anchor : focus
+		const first_selection_node = first_point.getNode()
 
-		if ($isTextNode(firstSelectionNode)) {
-			let node = getFirstCodeNodeOfLine(firstSelectionNode)
-			const insertNodes = []
+		if ($isTextNode(first_selection_node)) {
+			let node = getFirstCodeNodeOfLine(first_selection_node)
+
+			const insert_nodes = []
 
 			while (true) {
 				if ($isTabNode(node)) {
-					insertNodes.push($createTabNode())
+					insert_nodes.push($createTabNode())
 					node = node.getNextSibling()
 				} else if ($isCodeTextNode(node)) {
 					let spaces = 0
+
 					const text = node.getTextContent()
 					const textSize = node.getTextContentSize()
+
 					while (spaces < textSize && text[spaces] === ' ') {
 						spaces++
 					}
+
 					if (spaces !== 0) {
-						insertNodes.push($createCodeTextNode({ text: ' '.repeat(spaces) }))
+						insert_nodes.push($createCodeTextNode({ text: ' '.repeat(spaces) }))
 					}
+
 					if (spaces !== textSize) {
 						break
 					}
+
 					node = node.getNextSibling()
 				} else {
 					break
 				}
 			}
-			const split = firstSelectionNode.splitText(anchor.offset)[0]
+
+			const split = first_selection_node.splitText(anchor.offset)[0]
 			const x = anchor.offset === 0 ? 0 : 1
 			const index = split.getIndexWithinParent() + x
-			const codeNode = firstSelectionNode.getParentOrThrow()
-			const nodesToInsert = [$createLineBreakNode(), ...insertNodes]
-			codeNode.splice(index, 0, nodesToInsert)
-			const last = insertNodes[insertNodes.length - 1]
+			const code_node = first_selection_node.getParentOrThrow()
+			const nodes_to_insert = [$createLineBreakNode(), ...insert_nodes]
+
+			code_node.splice(index, 0, nodes_to_insert)
+
+			const last = insert_nodes[insert_nodes.length - 1]
+
 			if (last) {
 				last.select()
 			} else if (anchor.offset === 0) {
@@ -158,9 +157,9 @@ export default class CodeNode extends ElementNode {
 			}
 		}
 
-		if ($isCodeNode(firstSelectionNode)) {
+		if ($isCodeNode(first_selection_node)) {
 			const { offset } = selection.anchor
-			const target = firstSelectionNode as CodeNode
+			const target = first_selection_node as CodeNode
 
 			target.splice(offset, 0, [$createLineBreakNode()])
 			target.select(offset + 1, offset + 1)
@@ -169,7 +168,7 @@ export default class CodeNode extends ElementNode {
 		return null
 	}
 
-	canIndent(): false {
+	canIndent() {
 		return false
 	}
 
@@ -182,5 +181,15 @@ export default class CodeNode extends ElementNode {
 		this.replace(paragraph)
 
 		return true
+	}
+
+	copy() {}
+
+	fold() {}
+
+	async toggleLang() {}
+
+	async format() {
+		const { format } = await import('prettier/standalone')
 	}
 }

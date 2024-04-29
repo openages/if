@@ -45,10 +45,11 @@
 }
 
 ._local {
+	max-width: 100%;
 	border-radius: var(--radius);
 
 	&.selected {
-		outline: 3px solid var(--color_border);
+		outline: 1px dashed var(--color_text);
 	}
 }
 

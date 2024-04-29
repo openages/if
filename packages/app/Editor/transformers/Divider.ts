@@ -11,14 +11,14 @@ export default {
 		return $isDividerNode(node) ? '***' : null
 	},
 	replace(parent, _children, _match, is_import) {
-		const line = $createDividerNode()
+		const node = $createDividerNode()
 
 		if (is_import || parent.getNextSibling() !== null) {
-			parent.replace(line)
+			parent.replace(node)
 		} else {
-			parent.insertBefore(line)
+			parent.insertBefore(node)
 		}
 
-		line.selectNext()
+		node.selectNext()
 	}
 } as ElementTransformer

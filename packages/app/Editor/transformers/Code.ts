@@ -6,7 +6,7 @@ import type { BundledLanguage } from 'shiki'
 
 export default {
 	type: 'element',
-	regExp: /^[ \t]*```(\w{1,10})?\s/,
+	regExp: /^[ \t]*```(\w{1,10})?\s$/,
 	dependencies: [CodeNode],
 	export(node: CodeNode) {
 		if (!$isCodeNode(node)) return null

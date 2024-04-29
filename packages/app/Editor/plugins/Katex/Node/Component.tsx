@@ -33,6 +33,12 @@ const Index = (props: IPropsComponent) => {
 		} else {
 			x.block.ref.classList.remove(styles.selected)
 		}
+
+		if (x.block.node.__inline) {
+			x.block.ref.classList.add(styles.inline)
+		} else {
+			x.block.ref.classList.remove(styles.inline)
+		}
 	}, [selected])
 
 	const onClick = useMemoizedFn(x.onEdit)

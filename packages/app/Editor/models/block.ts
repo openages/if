@@ -63,6 +63,14 @@ export default class Index<T extends LexicalNode = any> {
 		this.register()
 	}
 
+	onSelection(_: void, active_editor: LexicalEditor) {
+		this.editor = active_editor
+
+		this.checkSelected()
+
+		return false
+	}
+
 	onClick(e: MouseEvent<HTMLSpanElement>) {
 		if (this.selected) return true
 
@@ -136,17 +144,7 @@ export default class Index<T extends LexicalNode = any> {
 
 	register() {
 		this.unregister = mergeRegister(
-			this.editor.registerCommand(
-				SELECTION_CHANGE_COMMAND,
-				(_, active_editor) => {
-					this.editor = active_editor
-
-					this.checkSelected()
-
-					return false
-				},
-				COMMAND_PRIORITY_LOW
-			),
+			this.editor.registerCommand(SELECTION_CHANGE_COMMAND, this.onSelection, COMMAND_PRIORITY_LOW),
 			this.editor.registerCommand<MouseEvent>(CLICK_COMMAND, this.onClick, COMMAND_PRIORITY_LOW),
 			this.editor.registerCommand(KEY_ENTER_COMMAND, this.onEnter, COMMAND_PRIORITY_LOW),
 			this.editor.registerCommand(KEY_DELETE_COMMAND, this.onDelete, COMMAND_PRIORITY_LOW),

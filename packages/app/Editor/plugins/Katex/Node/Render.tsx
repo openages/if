@@ -1,5 +1,5 @@
 import katex from 'katex'
-import { useLayoutEffect, useRef, Fragment } from 'react'
+import { useEffect, useRef, Fragment } from 'react'
 
 import type { IPropsRender } from '../types'
 
@@ -7,7 +7,7 @@ const Index = (props: IPropsRender) => {
 	const { value, inline, onClick } = props
 	const ref = useRef(null)
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		const el = ref.current
 
 		if (!el || !value) return

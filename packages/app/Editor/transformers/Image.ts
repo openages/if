@@ -5,8 +5,8 @@ import type { TextMatchTransformer } from '@lexical/markdown'
 
 export default {
 	type: 'text-match',
-	regExp: /!(?:\[([^[]*)\])(?:\(([^(]+)\))$/,
-	importRegExp: /!(?:\[([^[]*)\])(?:\(([^(]+)\))/,
+	regExp: /^!(?:\[([^[]*)\])(?:\(([^(]+)\))$/,
+	importRegExp: /^!(?:\[([^[]*)\])(?:\(([^(]+)\))/,
 	trigger: ')',
 	dependencies: [ImageNode],
 	export(node: ImageNode) {
