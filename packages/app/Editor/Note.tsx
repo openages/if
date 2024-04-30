@@ -8,7 +8,7 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { Placeholder } from './components'
 import styles from './index.css'
 import nodes from './nodes'
-import { AutoLink, Code, Divider, Image, Katex, LinkEditor, Picker, Transform } from './plugins'
+import { AutoLink, Code, CodeActions, Divider, Image, Katex, LinkEditor, Picker, Transform } from './plugins'
 import { style, token } from './theme'
 import { onError } from './utils'
 
@@ -32,6 +32,7 @@ const Index = () => {
 				<Katex />
 				<Divider />
 				<Code />
+				<CodeActions />
 			</LexicalComposer>
 		</div>
 	)

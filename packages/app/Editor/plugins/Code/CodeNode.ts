@@ -7,6 +7,8 @@ import {
 	ElementNode
 } from 'lexical'
 
+import { shiki_langs } from '@/Editor/utils'
+
 import {
 	$createCodeNode,
 	$createCodeTextNode,
@@ -45,15 +47,14 @@ export default class CodeNode extends ElementNode {
 
 		super(node_key)
 
-		this.__lang = lang
+		this.__lang = lang as BundledLanguage
 	}
 
 	createDOM() {
 		const el = document.createElement('code')
 
 		el.setAttribute('spellcheck', 'false')
-
-		el.style.position = 'relative'
+		el.setAttribute('data-lang', shiki_langs[this.__lang].name)
 
 		return el
 	}
@@ -67,7 +68,11 @@ export default class CodeNode extends ElementNode {
 		return { element }
 	}
 
-	updateDOM() {
+	updateDOM(prev: CodeNode, dom: HTMLElement) {
+		if (prev.__lang !== this.__lang) {
+			dom.setAttribute('data-lang', shiki_langs[this.__lang].name)
+		}
+
 		return false
 	}
 
@@ -183,11 +188,7 @@ export default class CodeNode extends ElementNode {
 		return true
 	}
 
-	copy() {}
-
 	fold() {}
-
-	async toggleLang() {}
 
 	async format() {
 		const { format } = await import('prettier/standalone')

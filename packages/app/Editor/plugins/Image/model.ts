@@ -17,11 +17,7 @@ export default class Index {
 	unregister = null as () => void
 
 	constructor() {
-		makeAutoObservable(
-			this,
-			{ editor: false, unregister: false, init: false, register: false },
-			{ autoBind: true }
-		)
+		makeAutoObservable(this, { editor: false, unregister: false }, { autoBind: true })
 	}
 
 	init(editor: Index['editor']) {

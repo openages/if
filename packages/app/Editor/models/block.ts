@@ -38,8 +38,7 @@ export default class Index<T extends LexicalNode = any> {
 				key: false,
 				ref: false,
 				setSelected: false,
-				clearSelection: false,
-				unregister: false
+				clearSelection: false
 			},
 			{ autoBind: true }
 		)

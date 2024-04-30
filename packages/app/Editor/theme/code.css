@@ -1,17 +1,27 @@
 .code {
 	:global {
 		code {
+			position: relative;
 			display: block;
 			box-sizing: border-box;
-			padding: 12px 15px;
+			padding: 15px 18px;
 			margin-block-start: 1.2em;
 			margin-block-end: 1.2em;
-			border: var(--border);
 			border-radius: var(--radius);
+			background-color: var(--color_bg_1);
 			font-family: 'CascadiaCode';
 			font-size: 14px;
 			tab-size: 4;
 			caret-color: var(--color_text);
+
+			&::after {
+				position: absolute;
+				top: 18px;
+				right: 18px;
+				color: var(--color_text_light);
+				content: attr(data-lang);
+				font-size: 10px;
+			}
 		}
 	}
 }

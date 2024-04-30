@@ -32,6 +32,7 @@ export default {
 		感恩节: '感恩节',
 		圣诞节: '圣诞节'
 	},
+	error: '错误',
 	update: '更新',
 	add: '添加',
 	paste: '粘贴',

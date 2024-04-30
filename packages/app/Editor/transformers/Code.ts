@@ -1,3 +1,5 @@
+import { getLangName, shiki_langs } from '@/Editor/utils'
+
 import CodeNode from '../plugins/Code/CodeNode'
 import { $createCodeNode, $isCodeNode } from '../plugins/Code/utils'
 
@@ -16,7 +18,12 @@ export default {
 		return '```' + (node.__lang || '') + (text ? '\n' + text : '') + '\n' + '```'
 	},
 	replace(parent, _children, match) {
-		const node = $createCodeNode({ lang: (match ? match[1] : '') as BundledLanguage })
+		const lang = (match ? match[1] : 'js') as BundledLanguage
+		const target = getLangName(lang)
+
+		if (!shiki_langs[target]) return
+
+		const node = $createCodeNode({ lang: target as BundledLanguage })
 
 		parent.replace(node)
 	}

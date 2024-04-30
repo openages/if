@@ -3,5 +3,8 @@ export { default as getFileAlt } from './getFileAlt'
 export { default as getSelectedNode } from './getSelectedNode'
 export { default as stopPropagation } from './stopPropagation'
 export { default as insertAfter } from './insertAfter'
+export { default as getLangName } from './getLangName'
+export { default as shiki_langs } from './shiki_langs'
+export { default as prettier_langs } from './prettier_langs'
 
 export * from './handlers'

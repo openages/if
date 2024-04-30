@@ -8,28 +8,10 @@
 			margin-top: -8px;
 			text-align: right !important;
 
-			&-success {
-				.if-message-notice-content {
-					background-color: var(--color_success);
-				}
-			}
-
-			&-warning {
-				.if-message-notice-content {
-					background-color: var(--color_warning);
-				}
-			}
-
-			&-error {
-				.if-message-notice-content {
-					background-color: var(--color_danger);
-				}
-			}
-
 			.if-message-notice-content {
 				padding: 3px 6px;
 				border-radius: 4px;
-				color: white;
+				outline: 1px dashed var(--color_border_light);
 				font-size: 12px;
 				font-weight: 500;
 
@@ -39,7 +21,6 @@
 
 					.if-icon {
 						margin-inline-end: 4px;
-						color: white;
 						font-size: 12px;
 					}
 				}
