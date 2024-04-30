@@ -53,7 +53,7 @@
 		"fast-equals": "^5.0.1",
 		"framer-motion": "^10.18.0",
 		"hotkeys-js": "^3.13.7",
-		"i18next": "^23.11.2",
+		"i18next": "^23.11.3",
 		"js-xxhash": "^3.0.1",
 		"json-stable-stringify": "^1.1.1",
 		"katex": "^0.16.10",
@@ -92,10 +92,10 @@
 		"tslib": "^2.6.2",
 		"tsyringe": "^4.8.0",
 		"uniqolor": "^1.1.1",
-		"zod": "^3.23.4"
+		"zod": "^3.23.5"
 	},
 	"devDependencies": {
-		"@module-federation/enhanced": "^0.1.10",
+		"@module-federation/enhanced": "^0.1.11",
 		"@rsdoctor/rspack-plugin": "^0.1.10",
 		"@rspack/cli": "0.6.3",
 		"@rspack/core": "0.6.3",
