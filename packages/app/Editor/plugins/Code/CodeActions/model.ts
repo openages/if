@@ -7,9 +7,12 @@ import {
 	SELECTION_CHANGE_COMMAND
 } from 'lexical'
 import { makeAutoObservable } from 'mobx'
+import { injectable } from 'tsyringe'
 
 import { prettier_langs } from '@/Editor/utils'
+import Utils from '@/models/utils'
 import { mergeRegister } from '@lexical/utils'
+import { useInstanceWatch, Watch } from '@openages/stk/mobx'
 
 import CodeNode from '../CodeNode'
 import { $isCodeNode, $isCodeTextNode } from '../utils'
@@ -17,23 +20,39 @@ import { $isCodeNode, $isCodeTextNode } from '../utils'
 import type { LexicalEditor } from 'lexical'
 import type { BundledLanguage } from 'shiki'
 
+@injectable()
 export default class Index {
 	id = ''
 	editor = null as LexicalEditor
 	key = ''
 
 	lang = '' as BundledLanguage
+	fold = false
 	formatable = false
 	position = { left: 0, top: 0 }
 	visible = false
 
-	unregister = null as () => void
+	watch = {
+		visible: v => {
+			if (v) {
+				document.getElementById(this.id).addEventListener('scroll', this.onScroll)
+			} else {
+				document.getElementById(this.id).removeEventListener('scroll', this.onScroll)
+			}
+		}
+	} as Watch<Index>
 
-	constructor() {
-		makeAutoObservable(this, { id: false, editor: false, key: false, unregister: false }, { autoBind: true })
+	constructor(public utils: Utils) {
+		makeAutoObservable(
+			this,
+			{ utils: false, id: false, editor: false, key: false, watch: false },
+			{ autoBind: true }
+		)
 	}
 
 	init(id: Index['id'], editor: Index['editor']) {
+		this.utils.acts = useInstanceWatch(this)
+
 		this.id = id
 		this.editor = editor
 
@@ -43,9 +62,17 @@ export default class Index {
 	reset() {
 		this.key = ''
 		this.lang = '' as BundledLanguage
+		this.fold = false
 		this.formatable = false
 		this.position = { left: 0, top: 0 }
 		this.visible = false
+	}
+
+	getPosition(key: string) {
+		const el = this.editor.getElementByKey(key)
+		const { right, top } = el.getBoundingClientRect()
+
+		this.position = { left: right - (78 + 76), top: top - 32 }
 	}
 
 	onSelection() {
@@ -67,13 +94,12 @@ export default class Index {
 
 		if (this.key === node.__key) return false
 
-		const el = this.editor.getElementByKey(node.__key)
-		const { right, top } = el.getBoundingClientRect()
+		this.getPosition(node.__key)
+		this.onFold(false)
 
 		this.key = node.__key
 		this.lang = node.__lang
 		this.formatable = prettier_langs[node.__lang] ? true : false
-		this.position = { left: right - (78 + 76), top: top - 32 }
 		this.visible = true
 
 		return false
@@ -81,8 +107,6 @@ export default class Index {
 
 	onChangeLang(v: BundledLanguage) {
 		if (!this.key) return
-
-		console.log(v)
 
 		this.editor.update(() => {
 			const node = $getNodeByKey(this.key) as CodeNode
@@ -106,6 +130,26 @@ export default class Index {
 				$message.success($t('translation:common.copied'))
 			})
 		})
+	}
+
+	onFold(fold?: Index['fold']) {
+		this.editor.update(() => {
+			const node = $getNodeByKey(this.key)
+			const latest = node.getLatest() as CodeNode
+			const target = node.getWritable() as CodeNode
+
+			const v = fold ?? !latest.__fold
+
+			target.__fold = v
+
+			this.fold = v
+		})
+	}
+
+	onScroll() {
+		if (!this.key) return
+
+		this.getPosition(this.key)
 	}
 
 	async onFormat() {
@@ -148,12 +192,14 @@ export default class Index {
 	}
 
 	register() {
-		this.unregister = mergeRegister(
+		const unregister = mergeRegister(
 			this.editor.registerCommand(SELECTION_CHANGE_COMMAND, this.onSelection, COMMAND_PRIORITY_LOW)
 		)
+
+		this.utils.acts.push(unregister)
 	}
 
 	off() {
-		this.unregister()
+		this.utils.off()
 	}
 }

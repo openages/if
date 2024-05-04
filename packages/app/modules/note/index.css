@@ -6,6 +6,7 @@
 	.title {
 		border: none;
 		outline: none;
+		background-color: transparent;
 		font-size: 21px;
 		font-weight: 500;
 	}

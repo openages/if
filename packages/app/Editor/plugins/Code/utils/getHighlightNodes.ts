@@ -10,12 +10,12 @@ export default (tokens: Array<Array<ThemedToken>>) => {
 
 	tokens.forEach((line, index) => {
 		line.forEach(token => {
-			const { content, color } = token
+			const { content, htmlStyle } = token
 
 			if (content === '\t') {
 				nodes.push($createTabNode())
 			} else {
-				nodes.push($createCodeTextNode({ text: content, color }))
+				nodes.push($createCodeTextNode({ text: content, color: htmlStyle }))
 			}
 		})
 

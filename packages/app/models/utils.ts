@@ -7,7 +7,7 @@ export default class Utils {
 	loading = {} as Record<string, boolean>
 
 	constructor() {
-		makeAutoObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, { acts: false }, { autoBind: true })
 	}
 
 	off() {

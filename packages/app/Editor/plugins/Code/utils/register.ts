@@ -27,10 +27,6 @@ import {
 import type { LexicalEditor } from 'lexical'
 
 export default (editor: LexicalEditor) => {
-	if (!editor.hasNodes([CodeNode, CodeTextNode])) {
-		throw new Error('CodeHighlightPlugin: CodeNode or CodeTextNode not registered on editor')
-	}
-
 	return mergeRegister(
 		editor.registerMutationListener(CodeNode, mutations => onMutation(editor, mutations)),
 		editor.registerNodeTransform(CodeNode, node => onCodeNodeTransform(node, editor)),
@@ -57,15 +53,7 @@ export default (editor: LexicalEditor) => {
 			payload => onShiftLines(KEY_ARROW_DOWN_COMMAND, payload),
 			COMMAND_PRIORITY_LOW
 		),
-		editor.registerCommand(
-			MOVE_TO_END,
-			(payload): boolean => onMoveTo(MOVE_TO_END, payload),
-			COMMAND_PRIORITY_LOW
-		),
-		editor.registerCommand(
-			MOVE_TO_START,
-			(payload): boolean => onMoveTo(MOVE_TO_START, payload),
-			COMMAND_PRIORITY_LOW
-		)
+		editor.registerCommand(MOVE_TO_END, payload => onMoveTo(MOVE_TO_END, payload), COMMAND_PRIORITY_LOW),
+		editor.registerCommand(MOVE_TO_START, payload => onMoveTo(MOVE_TO_START, payload), COMMAND_PRIORITY_LOW)
 	)
 }

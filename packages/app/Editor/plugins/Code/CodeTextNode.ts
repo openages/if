@@ -28,12 +28,12 @@ export default class CodeTextNode extends TextNode {
 		return $createCodeTextNode({ text: serializedNode.text, color: serializedNode.color })
 	}
 
-	createDOM(config: EditorConfig): HTMLElement {
-		const element = super.createDOM(config)
+	createDOM(config: EditorConfig) {
+		const el = super.createDOM(config)
 
-		element.style.color = this.__color
+		el.style.cssText = this.__color
 
-		return element
+		return el
 	}
 
 	updateDOM(prev: CodeTextNode, dom: HTMLElement, config: EditorConfig): boolean {

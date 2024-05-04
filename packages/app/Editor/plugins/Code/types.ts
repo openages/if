@@ -5,6 +5,7 @@ import type { BundledLanguage } from 'shiki'
 export interface IPropsCode {
 	lang?: BundledLanguage
 	node_key?: string
+	fold?: boolean
 }
 
 export interface IPropsCodeText {

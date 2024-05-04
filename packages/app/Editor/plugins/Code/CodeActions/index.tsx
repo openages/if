@@ -5,10 +5,11 @@ import { useLayoutEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { SiPrettier } from 'react-icons/si'
 import { bundledLanguagesInfo } from 'shiki'
+import { container } from 'tsyringe'
 
 import { useStackSelector } from '@/context/stack'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { CaretLineUp, Check, Copy } from '@phosphor-icons/react'
+import { ArrowsInSimple, ArrowsOutSimple, Check, Copy } from '@phosphor-icons/react'
 
 import styles from './index.css'
 import Model from './model'
@@ -16,7 +17,7 @@ import Model from './model'
 const options = bundledLanguagesInfo.map(item => ({ label: item.name, value: item.id }))
 
 const Index = () => {
-	const [x] = useState(() => new Model())
+	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
 	const [exist, setExsit] = useState(false)
@@ -78,10 +79,13 @@ const Index = () => {
 							)}
 							onClick={x.onFormat}
 						>
-							<SiPrettier size={11}></SiPrettier>
+							<SiPrettier size={10}></SiPrettier>
 						</div>
-						<div className='btn_action flex justify_center align_center clickable'>
-							<CaretLineUp></CaretLineUp>
+						<div
+							className='btn_action flex justify_center align_center clickable'
+							onClick={() => x.onFold()}
+						>
+							{x.fold ? <ArrowsOutSimple /> : <ArrowsInSimple />}
 						</div>
 						<div
 							className='btn_action flex justify_center align_center clickable'

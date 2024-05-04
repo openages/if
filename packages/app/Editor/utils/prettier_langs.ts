@@ -1,14 +1,14 @@
 import type { Options } from 'prettier'
 
 const common_options = {
-	// singleQuote: true,
-	// trailingComma: 'none',
-	// printWidth: 120,
-	// useTabs: false,
-	// semi: false,
-	tabWidth: 4
-	// jsxSingleQuote: true,
-	// bracketSpacing: true
+	singleQuote: true,
+	trailingComma: 'none',
+	printWidth: 120,
+	useTabs: false,
+	semi: false,
+	tabWidth: 4,
+	jsxSingleQuote: true,
+	bracketSpacing: true
 } as Options
 
 export default {

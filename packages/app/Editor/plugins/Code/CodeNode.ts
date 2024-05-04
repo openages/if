@@ -31,7 +31,7 @@ export default class CodeNode extends ElementNode {
 	}
 
 	static clone(node: CodeNode): CodeNode {
-		return new CodeNode({ lang: node.__lang, node_key: node.__key })
+		return new CodeNode({ lang: node.__lang, node_key: node.__key, fold: node.__fold })
 	}
 
 	static importJSON(serializedNode: SerializedCodeNode): CodeNode {
@@ -43,15 +43,18 @@ export default class CodeNode extends ElementNode {
 	}
 
 	constructor(props: IPropsCode) {
-		const { lang, node_key } = props
+		const { lang, fold, node_key } = props
 
 		super(node_key)
 
 		this.__lang = lang as BundledLanguage
+		this.__fold = fold
 	}
 
 	createDOM() {
 		const el = document.createElement('code')
+
+		el.className = 'shiki'
 
 		el.setAttribute('spellcheck', 'false')
 		el.setAttribute('data-lang', shiki_langs[this.__lang].name)
@@ -60,17 +63,27 @@ export default class CodeNode extends ElementNode {
 	}
 
 	exportDOM(): DOMExportOutput {
-		const element = document.createElement('pre')
+		const el = document.createElement('pre')
 
-		element.setAttribute('spellcheck', 'false')
-		element.setAttribute('lexical-code-lang', this.__lang)
+		el.setAttribute('spellcheck', 'false')
+		el.setAttribute('lexical-code-lang', this.__lang)
 
-		return { element }
+		return { element: el }
 	}
 
 	updateDOM(prev: CodeNode, dom: HTMLElement) {
 		if (prev.__lang !== this.__lang) {
 			dom.setAttribute('data-lang', shiki_langs[this.__lang].name)
+		}
+
+		if (this.__fold) {
+			dom.classList.add('fold')
+
+			dom.setAttribute('data-fold', $t('translation:common.folded'))
+		} else {
+			dom.classList.remove('fold')
+
+			dom.removeAttribute('data-fold')
 		}
 
 		return false
@@ -80,7 +93,8 @@ export default class CodeNode extends ElementNode {
 		return {
 			...super.exportJSON(),
 			type: 'code',
-			lang: this.__lang
+			lang: this.__lang,
+			fold: this.__fold
 		}
 	}
 
@@ -177,7 +191,7 @@ export default class CodeNode extends ElementNode {
 		return false
 	}
 
-	collapseAtStart(): boolean {
+	collapseAtStart() {
 		const paragraph = $createParagraphNode()
 		const children = this.getChildren()
 
@@ -186,11 +200,5 @@ export default class CodeNode extends ElementNode {
 		this.replace(paragraph)
 
 		return true
-	}
-
-	fold() {}
-
-	async format() {
-		const { format } = await import('prettier/standalone')
 	}
 }

@@ -6,6 +6,7 @@ import { $isCodeNode, getDiffRange, getHighlightNodes, updateAndRetainSelection 
 
 import type { LexicalEditor } from 'lexical'
 import type CodeNode from '../CodeNode'
+import type { BundledLanguage } from 'shiki'
 
 const nodes_currently_highlighting = new Set()
 
@@ -26,11 +27,11 @@ export default (node: CodeNode, editor: LexicalEditor) => {
 				const code = current_node.getTextContent()
 
 				const { tokens } = highlighter.codeToTokens(code, {
-					lang: current_node.__lang as any,
-					theme: 'github-light'
+					lang: current_node.__lang as BundledLanguage,
+					themes: { light: 'github-light', dark: 'github-dark-dimmed' }
 				})
 
-				const highlight_nodes = getHighlightNodes(tokens as any)
+				const highlight_nodes = getHighlightNodes(tokens)
 				const diff_range = getDiffRange(current_node.getChildren(), highlight_nodes)
 
 				const { from, to, nodes_for_replacement } = diff_range
