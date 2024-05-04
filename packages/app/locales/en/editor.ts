@@ -4,6 +4,7 @@ export default {
 	name: {
 		Image: 'Image',
 		Emoji: 'Emoji',
+		Code: 'Code',
 		Katex: 'Katex',
 		Divider: 'Divider'
 	},

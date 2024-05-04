@@ -1,6 +1,6 @@
-import { Divide, Function, Image, Smiley } from '@phosphor-icons/react'
+import { CodeSimple, Divide, Function, Image, Smiley } from '@phosphor-icons/react'
 
-import { INSERT_DIVIDER_COMMAND } from './commands'
+import { INSERT_CODE_COMMAND, INSERT_DIVIDER_COMMAND } from './commands'
 import Option from './plugins/Picker/option'
 
 import type Model from './plugins/Picker/model'
@@ -26,6 +26,11 @@ export default (args: Args) => {
 			icon: <Smiley />,
 			shortcut: 'emo',
 			onSelect: () => showModal('Emoji')
+		}),
+		new Option($t('translation:editor.name.Code'), {
+			icon: <CodeSimple />,
+			shortcut: 'co',
+			onSelect: () => editor.dispatchCommand(INSERT_CODE_COMMAND, null)
 		}),
 		new Option($t('translation:editor.name.Katex'), {
 			icon: <Function />,

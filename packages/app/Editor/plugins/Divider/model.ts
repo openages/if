@@ -1,8 +1,8 @@
-import { $getSelection, $insertNodes, $isRangeSelection, COMMAND_PRIORITY_EDITOR } from 'lexical'
+import { $getSelection, $isRangeSelection, COMMAND_PRIORITY_EDITOR } from 'lexical'
 import { makeAutoObservable } from 'mobx'
 
 import { INSERT_DIVIDER_COMMAND } from '@/Editor/commands'
-import { getSelectedNode, insertAfter } from '@/Editor/utils'
+import { getSelectedNode } from '@/Editor/utils'
 import { mergeRegister } from '@lexical/utils'
 
 import { $createDividerNode } from './utils'

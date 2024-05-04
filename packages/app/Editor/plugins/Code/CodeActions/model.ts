@@ -187,7 +187,7 @@ export default class Index {
 
 			const selection = node.select(0)
 
-			selection.insertText(target)
+			selection.insertText(target.slice(0, -1))
 		})
 	}
 

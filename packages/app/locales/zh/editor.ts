@@ -4,6 +4,7 @@ export default {
 	name: {
 		Image: '图片',
 		Emoji: '表情',
+		Code: '代码',
 		Katex: '公式',
 		Divider: '分割线'
 	},
