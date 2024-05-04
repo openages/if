@@ -5,6 +5,9 @@ export default {
 		Image: 'Image',
 		Emoji: 'Emoji',
 		Code: 'Code',
+		UnorderedList: 'Bullet List',
+		OrderedList: 'Order List',
+		TodoList: 'Todo List',
 		Katex: 'Katex',
 		Divider: 'Divider'
 	},

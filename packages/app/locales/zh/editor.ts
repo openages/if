@@ -5,6 +5,9 @@ export default {
 		Image: '图片',
 		Emoji: '表情',
 		Code: '代码',
+		UnorderedList: '无序列表',
+		OrderedList: '有序列表',
+		TodoList: '任务列表',
 		Katex: '公式',
 		Divider: '分割线'
 	},

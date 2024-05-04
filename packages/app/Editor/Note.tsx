@@ -1,9 +1,12 @@
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
+import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
+import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
+import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin'
 
 import { Placeholder } from './components'
 import styles from './index.css'
@@ -24,6 +27,9 @@ const Index = () => {
 				<HistoryPlugin />
 				<AutoFocusPlugin />
 				<Picker />
+				<TabIndentationPlugin />
+				<ListPlugin />
+				<CheckListPlugin />
 				<Transform />
 
 				<Image />

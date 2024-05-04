@@ -1,0 +1,103 @@
+.list {
+	:global {
+		.__editor_list_ul,
+		.__editor_list_ol {
+			padding-inline-start: 15px;
+			margin-block-start: 1.2em;
+			margin-block-end: 1.2em;
+
+			::marker {
+				color: rgba(var(--color_text_rgb), 0.72);
+			}
+		}
+
+		.__editor_list_ol {
+			padding-inline-start: 18px;
+		}
+
+		.__editor_list_item {
+			margin-bottom: 0.15em;
+		}
+
+		.__editor_list_item_nested {
+			margin-bottom: 0.6em;
+			list-style-type: none;
+
+			&::before,
+			&::after {
+				display: none !important;
+			}
+
+			.__editor_list_ul,
+			.__editor_list_ol {
+				padding-inline-start: 16px;
+				margin-block-start: 0;
+				margin-block-end: 0;
+			}
+
+			.__editor_list_ol {
+				padding-inline-start: 19px;
+			}
+
+			.__editor_list_checklist {
+				padding-inline-start: 3px !important;
+			}
+		}
+
+		.__editor_list_checklist {
+			padding-inline-start: 0;
+
+			.__editor_list_item {
+				position: relative;
+				padding-left: 18px;
+				outline: none;
+				list-style-type: none;
+
+				&::before {
+					position: absolute;
+					top: 6px;
+					left: 0;
+					display: block;
+					width: 10px;
+					height: 10px;
+					background-size: cover;
+					content: '';
+					cursor: pointer;
+				}
+
+				&.__editor_list_item_checked {
+					color: rgba(var(--color_text_rgb), 0.3);
+
+					&::before {
+						border: 1px solid var(--color_blue);
+						border-radius: 2px;
+						background-color: var(--color_blue);
+						background-repeat: no-repeat;
+					}
+
+					&::after {
+						position: absolute;
+						top: 7px;
+						left: 3.5px;
+						display: block;
+						width: 3px;
+						height: 6px;
+						border-width: 0 2px 2px 0;
+						border-style: solid;
+						border-color: #fff;
+						content: '';
+						cursor: pointer;
+						transform: rotate(45deg);
+					}
+				}
+
+				&.__editor_list_item_unchecked {
+					&::before {
+						border: 1px solid #999;
+						border-radius: 2px;
+					}
+				}
+			}
+		}
+	}
+}

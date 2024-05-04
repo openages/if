@@ -1,4 +1,14 @@
-import { CodeSimple, Divide, Function, Image, Smiley } from '@phosphor-icons/react'
+import { INSERT_CHECK_LIST_COMMAND, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from '@lexical/list'
+import {
+	CodeSimple,
+	Divide,
+	Function,
+	Image,
+	ListBullets,
+	ListChecks,
+	ListNumbers,
+	Smiley
+} from '@phosphor-icons/react'
 
 import { INSERT_CODE_COMMAND, INSERT_DIVIDER_COMMAND } from './commands'
 import Option from './plugins/Picker/option'
@@ -29,8 +39,23 @@ export default (args: Args) => {
 		}),
 		new Option($t('translation:editor.name.Code'), {
 			icon: <CodeSimple />,
-			shortcut: 'co',
+			shortcut: 'cd',
 			onSelect: () => editor.dispatchCommand(INSERT_CODE_COMMAND, null)
+		}),
+		new Option($t('translation:editor.name.UnorderedList'), {
+			icon: <ListBullets />,
+			shortcut: 'ul',
+			onSelect: () => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, null)
+		}),
+		new Option($t('translation:editor.name.OrderedList'), {
+			icon: <ListNumbers />,
+			shortcut: 'ol',
+			onSelect: () => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, null)
+		}),
+		new Option($t('translation:editor.name.TodoList'), {
+			icon: <ListChecks />,
+			shortcut: 'tl',
+			onSelect: () => editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, null)
 		}),
 		new Option($t('translation:editor.name.Katex'), {
 			icon: <Function />,

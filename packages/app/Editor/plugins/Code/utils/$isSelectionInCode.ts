@@ -1,10 +1,12 @@
-import { $isRangeSelection } from 'lexical'
+import { $getSelection, $isRangeSelection } from 'lexical'
 
 import { $isCodeNode } from './index'
 
 import type { BaseSelection } from 'lexical'
 
-export default (selection: null | BaseSelection): boolean => {
+export default (selection?: BaseSelection) => {
+	selection = selection ?? $getSelection()
+
 	if (!$isRangeSelection(selection)) return false
 
 	const anchor_node = selection.anchor.getNode()
