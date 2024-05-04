@@ -33,7 +33,7 @@
 		.header_wrap {
 			:global {
 				.date {
-					width: 15px;
+					width: 18px;
 					height: 15px;
 					line-height: 13px;
 					box-sizing: border-box;

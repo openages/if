@@ -156,9 +156,9 @@ export default class Index {
 	getDays() {
 		this.days = match(this.scale)
 			.with('day', () => [
+				getDayDetails(this.current.subtract(1, 'day')),
 				getDayDetails(this.current),
-				getDayDetails(this.current.add(1, 'day')),
-				getDayDetails(this.current.add(2, 'day'))
+				getDayDetails(this.current.add(1, 'day'))
 			])
 			.with('week', () => getWeekdays(this.current))
 			.with('month', () => getMonthDays(this.current, this.view === 'fixed' || this.view === 'timeline'))

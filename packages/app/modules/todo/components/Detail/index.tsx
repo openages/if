@@ -182,7 +182,7 @@ const Index = (props: IPropsDetail) => {
 							className={$cx('btn_action flex justify_center align_center clickable mr_6')}
 							onClick={close}
 						>
-							<SignOut size={14}></SignOut>
+							<SignIn size={14}></SignIn>
 						</div>
 					</Tooltip>
 				</If>
@@ -192,7 +192,7 @@ const Index = (props: IPropsDetail) => {
 							className={$cx('btn_action flex justify_center align_center clickable mr_6')}
 							onClick={unclose}
 						>
-							<SignIn size={14}></SignIn>
+							<SignOut size={14}></SignOut>
 						</div>
 					</Tooltip>
 				</If>

@@ -187,6 +187,10 @@
 	:global {
 		.if-select {
 			--height: 32px;
+
+			.if-select-selector {
+				transform: translateY(-0.5px);
+			}
 		}
 	}
 }
@@ -227,6 +231,8 @@
 		}
 
 		.if-picker-input {
+			transform: translateY(0.5px);
+
 			input {
 				text-align: center;
 			}
