@@ -1,6 +1,10 @@
 .code {
 	:global {
 		code {
+			font-family: 'CascadiaCode';
+		}
+
+		.__editor_code {
 			position: relative;
 			display: block;
 			box-sizing: border-box;

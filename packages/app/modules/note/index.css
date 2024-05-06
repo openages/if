@@ -4,6 +4,7 @@
 	padding-bottom: 36vh;
 
 	.title {
+		padding: 0;
 		border: none;
 		outline: none;
 		background-color: transparent;

@@ -1,0 +1,26 @@
+.text {
+	:global {
+		.__editor_text_bold {
+			font-weight: bold;
+		}
+
+		.__editor_text_code {
+			padding: 2px 4px;
+			border-radius: var(--radius_small);
+			background-color: var(--color_bg_2);
+			font-size: 12px;
+		}
+
+		.__editor_text_italic {
+			font-style: italic;
+		}
+
+		.__editor_text_strikethrough {
+			text-decoration: line-through;
+		}
+
+		.__editor_text_underline {
+			text-decoration: underline;
+		}
+	}
+}

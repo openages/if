@@ -3,24 +3,25 @@ import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useRef, useState } from 'react'
 
 import { Popover } from '@/components'
-import { stopPropagation } from '@/Editor/utils'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { ShareFat } from '@phosphor-icons/react'
 
 import styles from './index.css'
 import Model from './model'
 
-const Index = () => {
+import type { IPropsCommon } from '@/Editor/types'
+
+const Index = (props: IPropsCommon) => {
+	const { markdown } = props
 	const [x] = useState(() => new Model())
 	const [editor] = useLexicalComposerContext()
 	const ref = useRef()
 	const position = $copy(x.position)
 
 	useLayoutEffect(() => {
-		x.init(editor)
+		x.init(editor, markdown)
 
 		return () => x.off()
-	}, [editor])
+	}, [editor, markdown])
 
 	useClickAway(() => x.reset(), [ref])
 

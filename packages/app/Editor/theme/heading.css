@@ -1,0 +1,27 @@
+.heading {
+	:global {
+		.__editor_heading_h1,
+		.__editor_heading_h2,
+		.__editor_heading_h3,
+		.__editor_heading_h4,
+		.__editor_heading_h5,
+		.__editor_heading_h6 {
+			margin-block-start: 1em;
+			margin-block-end: 0.72em;
+			font-weight: 500;
+		}
+
+		.__editor_heading_h1,
+		.__editor_heading_h2,
+		.__editor_heading_h3 {
+			border-bottom: var(--border);
+		}
+
+		.__editor_heading_h4,
+		.__editor_heading_h5,
+		.__editor_heading_h6 {
+			line-height: 1;
+			margin-block-start: 1.5em;
+		}
+	}
+}

@@ -67,6 +67,8 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 	createDOM() {
 		const el = document.createElement('span')
 
+		el.className = '__editor_katex'
+
 		if (!this.__inline) {
 			el.style.display = 'inline-flex'
 			el.style.width = '100%'

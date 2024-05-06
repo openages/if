@@ -34,7 +34,11 @@ export default class DividerNode extends DecoratorNode<JSX.Element> {
 	}
 
 	createDOM() {
-		return document.createElement('p')
+		const el = document.createElement('p')
+
+		el.className = '__editor_divider'
+
+		return el
 	}
 
 	exportDOM(): DOMExportOutput {

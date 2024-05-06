@@ -1,3 +1,4 @@
+import { Input } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { container } from 'tsyringe'
@@ -9,6 +10,8 @@ import styles from './index.css'
 import Model from './model'
 
 import type { IProps } from './types'
+
+const { TextArea } = Input
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
@@ -28,7 +31,14 @@ const Index = ({ id }: IProps) => {
 
 	return (
 		<div className={$cx('w_100 border_box flex flex_column limited_content_wrap', styles._local)}>
-			<input className={styles.title} defaultValue={x.file.data.name} onBlur={x.onChangeFileName}></input>
+			<TextArea
+				className={styles.title}
+				value={x.file.data.name}
+				autoSize
+				onChange={x.onChangeFileName}
+				onBlur={x.onBlurFileName}
+				onKeyDown={x.onKeyDown}
+			></TextArea>
 			<Note></Note>
 		</div>
 	)

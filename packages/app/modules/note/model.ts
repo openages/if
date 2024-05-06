@@ -4,7 +4,7 @@ import { injectable } from 'tsyringe'
 import { update } from '@/components/DirTree/services'
 import { File } from '@/models'
 
-import type { FocusEvent } from 'react'
+import type { FocusEvent, ChangeEvent, KeyboardEvent } from 'react'
 import type { App } from '@/types'
 
 @injectable()
@@ -26,7 +26,15 @@ export default class Index {
 		this.on()
 	}
 
-	onChangeFileName(e: FocusEvent<HTMLInputElement>) {
+	onChangeFileName(e: ChangeEvent<HTMLTextAreaElement>) {
+		const name = e.target.value
+
+		if (!name) return
+
+		this.file.data = { ...this.file.data, name }
+	}
+
+	onBlurFileName(e: FocusEvent<HTMLTextAreaElement>) {
 		const name = e.target.value
 
 		if (!name) return
@@ -37,6 +45,12 @@ export default class Index {
 			$app.Event.emit('note/dirtree/update', item)
 		} else {
 			update({ item })
+		}
+	}
+
+	onKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
+		if (e.key === 'Enter') {
+			e.preventDefault()
 		}
 	}
 

@@ -4,43 +4,36 @@ import { makeAutoObservable } from 'mobx'
 import { mergeRegister } from '@lexical/utils'
 
 import type { LexicalEditor } from 'lexical'
-import type { LinkNode } from '@lexical/link'
 
 export default class Index {
 	editor = null as LexicalEditor
-	node = null as LinkNode
-	dom = null as HTMLAnchorElement
+	markdown = false
 
 	visible = false
 	position = null as { x: number; y: number }
-	link = ''
+	type = null as 'bold' | 'italic' | 'strikethrough' | 'underline' | 'code'
 
 	unregister = null as () => void
 
 	constructor() {
-		makeAutoObservable(this, { editor: false, node: false, dom: false, unregister: false }, { autoBind: true })
+		makeAutoObservable(this, { editor: false, markdown: false, unregister: false }, { autoBind: true })
 	}
 
-	init(editor: Index['editor']) {
+	init(editor: Index['editor'], markdown: boolean) {
 		this.editor = editor
+		this.markdown = markdown
 
 		this.register()
 	}
 
 	reset() {
-		this.node = null
-		this.dom = null
-
 		this.visible = false
 		this.position = null
-		this.link = ''
 
 		return false
 	}
 
 	show() {
-		if (!this.link) return
-
 		const selection = $getSelection()
 		const native_selection = window.getSelection()
 		const active_element = document.activeElement
@@ -71,10 +64,15 @@ export default class Index {
 				(_, active_editor) => {
 					this.editor = active_editor
 
+					this.show()
+
 					return false
 				},
 				COMMAND_PRIORITY_CRITICAL
-			)
+			),
+			this.editor.registerUpdateListener(() => {
+				this.show()
+			})
 		)
 	}
 
