@@ -22,26 +22,12 @@ const Index = () => {
 		return () => x.off()
 	}, [editor])
 
-	useClickAway(() => x.reset(), [x.dom, ref])
+	useClickAway(() => x.reset(), [ref])
 
 	return (
 		<Popover open={x.visible} position={position}>
 			<div className={$cx('flex align_center', styles._local)} ref={ref}>
-				<input
-					className='input_link'
-					type='text'
-					maxLength={120}
-					defaultValue={x.link}
-					onKeyDown={stopPropagation}
-					onBlur={x.onChange}
-				/>
-				<a
-					className='btn_open flex justify_center align_center clickable'
-					target='_blank'
-					href={x.link}
-				>
-					<ShareFat></ShareFat>
-				</a>
+				123
 			</div>
 		</Popover>
 	)

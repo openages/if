@@ -60,41 +60,29 @@
 					display: block;
 					width: 10px;
 					height: 10px;
+					border: 1px solid var(--color_text);
+					border-radius: 1px;
 					background-size: cover;
 					content: '';
 					cursor: pointer;
 				}
 
 				&.__editor_list_item_checked {
-					color: rgba(var(--color_text_rgb), 0.3);
-
-					&::before {
-						border: 1px solid var(--color_blue);
-						border-radius: 2px;
-						background-color: var(--color_blue);
-						background-repeat: no-repeat;
-					}
+					opacity: 0.3;
 
 					&::after {
 						position: absolute;
-						top: 7px;
-						left: 3.5px;
+						top: 8.5px;
+						left: 4.5px;
 						display: block;
-						width: 3px;
-						height: 6px;
-						border-width: 0 2px 2px 0;
+						width: 2px;
+						height: 5px;
+						border-width: 0 1px 1px 0;
 						border-style: solid;
-						border-color: #fff;
+						border-color: var(--color_text);
 						content: '';
 						cursor: pointer;
 						transform: rotate(45deg);
-					}
-				}
-
-				&.__editor_list_item_unchecked {
-					&::before {
-						border: 1px solid #999;
-						border-radius: 2px;
 					}
 				}
 			}
