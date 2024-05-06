@@ -4,5 +4,5 @@ export interface IPropsModal {
 }
 
 export interface IPropsCommon {
-	markdown?: boolean
+	md?: boolean
 }

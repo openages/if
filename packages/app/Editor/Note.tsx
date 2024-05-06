@@ -11,7 +11,7 @@ import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin
 import { Placeholder } from './components'
 import styles from './index.css'
 import nodes from './nodes'
-import { AutoLink, Code, CodeActions, Divider, Image, Katex, LinkEditor, Picker, Transform } from './plugins'
+import { AutoLink, Code, CodeActions, Divider, Image, Katex, LinkEditor, Picker, TextBar, Transform } from './plugins'
 import { style, token } from './theme'
 import { onError } from './utils'
 
@@ -26,14 +26,16 @@ const Index = () => {
 				/>
 				<HistoryPlugin />
 				<AutoFocusPlugin />
-				<Picker />
+				<Transform />
+				<AutoLink />
 				<TabIndentationPlugin />
+
+				<Picker />
+				<TextBar md />
 				<ListPlugin />
 				<CheckListPlugin />
-				<Transform />
 
 				<Image />
-				<AutoLink />
 				<LinkEditor />
 				<Katex />
 				<Divider />

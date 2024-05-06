@@ -92,25 +92,23 @@ export default class Index {
 		if (!this.link) return
 
 		const selection = $getSelection()
+		const root = this.editor.getRootElement()
 		const native_selection = window.getSelection()
 		const active_element = document.activeElement
-		const root = this.editor.getRootElement()
 
-		if (
-			selection !== null &&
-			native_selection !== null &&
-			root !== null &&
-			root.contains(native_selection.anchorNode) &&
-			this.editor.isEditable()
-		) {
-			const rect = native_selection.focusNode?.parentElement?.getBoundingClientRect()
+		const is_range_selection = $isRangeSelection(selection)
+		const is_contain = root?.contains(native_selection?.anchorNode)
+		const is_editable = this.editor.isEditable()
 
-			if (rect) {
-				this.visible = true
-				this.position = { x: rect.x, y: rect.y + rect.height }
-			}
-		} else if (!active_element) {
-			this.reset()
+		if (!is_range_selection || !native_selection || !active_element || !root || !is_contain || !is_editable) {
+			return this.reset()
+		}
+
+		const rect = native_selection.focusNode?.parentElement?.getBoundingClientRect()
+
+		if (rect) {
+			this.visible = true
+			this.position = { x: rect.x, y: rect.y + rect.height }
 		}
 	}
 

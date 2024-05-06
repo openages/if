@@ -1,5 +1,6 @@
 export { default as Picker } from './Picker'
 export { default as Transform } from './Transform'
+export { default as TextBar } from './TextBar'
 
 export { default as Image } from './Image'
 export { default as AutoLink } from './AutoLink'

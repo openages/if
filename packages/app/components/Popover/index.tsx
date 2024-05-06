@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { useStackSelector } from '@/context/stack'
@@ -12,10 +12,11 @@ interface IProps {
 	open: boolean
 	position: { x: number; y: number }
 	children: ReactNode
+	top?: boolean
 }
 
 const Index = (props: IProps) => {
-	const { open, position, children } = props
+	const { open, position, children, top } = props
 	const [exist, setExsit] = useState(false)
 	const id = useStackSelector(v => v.id)
 
@@ -35,7 +36,7 @@ const Index = (props: IProps) => {
 		<AnimatePresence>
 			{open && (
 				<motion.div
-					className={$cx('fixed z_index_100', styles._local)}
+					className={$cx('fixed z_index_100', styles._local, top && styles.top)}
 					style={{ top: position.y, left: position.x }}
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}

@@ -1,35 +1,38 @@
 import { useClickAway } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
+import { container } from 'tsyringe'
 
 import { Popover } from '@/components'
+import { useStackSelector } from '@/context/stack'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 
-import styles from './index.css'
+import Formats from './Formats'
 import Model from './model'
 
 import type { IPropsCommon } from '@/Editor/types'
+import type { IPropsFormats } from './types'
 
 const Index = (props: IPropsCommon) => {
-	const { markdown } = props
-	const [x] = useState(() => new Model())
+	const { md } = props
+	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
-	const ref = useRef()
+	const id = useStackSelector(v => v.id)
 	const position = $copy(x.position)
 
 	useLayoutEffect(() => {
-		x.init(editor, markdown)
+		x.init(id, editor, md)
 
 		return () => x.off()
-	}, [editor, markdown])
+	}, [id, editor, md])
 
-	useClickAway(() => x.reset(), [ref])
+	const props_formats: IPropsFormats = {
+		md
+	}
 
 	return (
-		<Popover open={x.visible} position={position}>
-			<div className={$cx('flex align_center', styles._local)} ref={ref}>
-				123
-			</div>
+		<Popover open={x.visible} position={position} top>
+			<Formats {...props_formats}></Formats>
 		</Popover>
 	)
 }

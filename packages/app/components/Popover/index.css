@@ -1,6 +1,23 @@
+[data-theme='dark'] {
+	._local {
+		color: var(--color_text);
+		background-color: var(--color_bg_1);
+
+		&::before {
+			border-bottom: 6px solid var(--color_bg_1);
+		}
+
+		&.top {
+			&::before {
+				border-top: 6px solid var(--color_bg_1);
+			}
+		}
+	}
+}
+
 ._local {
 	padding: 4px 12px;
-	margin-top: 12px;
+	margin-top: 9px;
 	border-radius: var(--radius);
 	color: var(--color_bg);
 	background-color: var(--color_text_sub);
@@ -9,11 +26,26 @@
 
 	&::before {
 		position: absolute;
-		top: -6px;
-		left: 12px;
+		top: -4px;
+		left: 15px;
 		border-right: 6px solid transparent;
 		border-bottom: 6px solid var(--color_text_sub);
 		border-left: 6px solid transparent;
 		content: '';
+	}
+
+	&.top {
+		padding: 0;
+		margin-top: 0;
+
+		&::before {
+			top: unset;
+			bottom: -4px;
+			left: 15px;
+			border: none;
+			border-top: 6px solid var(--color_text_sub);
+			border-right: 6px solid transparent;
+			border-left: 6px solid transparent;
+		}
 	}
 }
