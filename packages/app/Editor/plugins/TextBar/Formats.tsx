@@ -1,6 +1,15 @@
 import { Select } from 'antd'
 
-import { Link, List, TextB, TextH, TextItalic, TextStrikethrough, TextUnderline } from '@phosphor-icons/react'
+import {
+	CodeSimple,
+	Link,
+	List,
+	TextB,
+	TextH,
+	TextItalic,
+	TextStrikethrough,
+	TextUnderline
+} from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -26,6 +35,9 @@ const Index = (props: IPropsFormats) => {
 						<TextUnderline weight='bold' />
 					</div>
 				</If>
+				<div className='btn_format flex justify_center align_center clickable'>
+					<CodeSimple weight='bold' />
+				</div>
 				<div className='btn_format flex justify_center align_center clickable'>
 					<Link weight='bold' />
 				</div>

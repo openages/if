@@ -94,7 +94,6 @@
 		"zod": "^3.23.6"
 	},
 	"devDependencies": {
-		"@module-federation/enhanced": "^0.1.11",
 		"@rsdoctor/rspack-plugin": "^0.1.10",
 		"@rspack/cli": "0.6.3",
 		"@rspack/core": "0.6.3",
@@ -107,7 +106,7 @@
 		"@types/katex": "^0.16.7",
 		"@types/lodash-es": "^4.17.12",
 		"@types/nice-try": "^2.1.2",
-		"@types/node": "^20.12.8",
+		"@types/node": "^20.12.10",
 		"@types/react": "^18.3.1",
 		"@types/react-dom": "^18.3.0",
 		"@types/scheduler": "^0.16.8",
