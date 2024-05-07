@@ -1,26 +1,23 @@
 import { $getSelection, $isRangeSelection, COMMAND_PRIORITY_CRITICAL, SELECTION_CHANGE_COMMAND } from 'lexical'
 import { makeAutoObservable } from 'mobx'
-import { injectable } from 'tsyringe'
 
 import { getSelectedNode } from '@/Editor/utils'
-import Utils from '@/models/utils'
 import { $isLinkNode } from '@lexical/link'
 import { $isListItemNode } from '@lexical/list'
 import { $isHeadingNode } from '@lexical/rich-text'
 import { $findMatchingParent, mergeRegister } from '@lexical/utils'
-import { useInstanceWatch, Watch } from '@openages/stk/mobx'
 
 import type { LexicalEditor, LexicalNode } from 'lexical'
 import type { HeadingTagType } from '@lexical/rich-text'
 import type { Formats, Format } from './types'
 
-@injectable()
 export default class Index {
 	id = ''
 	editor = null as LexicalEditor
 	md = false
 	ref = null as HTMLElement
 	node = null as LexicalNode
+	oveflow_x = 0
 
 	visible = false
 	position = null as { x: number; y: number }
@@ -28,25 +25,17 @@ export default class Index {
 	heading_type = '' as HeadingTagType
 	list_type = ''
 
-	watch = {
-		visible: v => {
-			if (v) {
-				document.getElementById(this.id).addEventListener('scroll', this.onChangePosition)
-				document.getElementById(this.id).addEventListener('mouseup', this.onMouseUp)
-			} else {
-				document.getElementById(this.id).removeEventListener('scroll', this.onChangePosition)
-				document.getElementById(this.id).removeEventListener('mouseup', this.onMouseUp)
-			}
-		}
-	} as Watch<Index>
+	unregister = null as () => void
 
-	constructor(public utils: Utils) {
-		makeAutoObservable(this, { editor: false, md: false, ref: false, node: false }, { autoBind: true })
+	constructor() {
+		makeAutoObservable(
+			this,
+			{ editor: false, md: false, ref: false, node: false, oveflow_x: false, unregister: false },
+			{ autoBind: true }
+		)
 	}
 
 	init(id: Index['id'], editor: Index['editor'], md: Index['md']) {
-		this.utils.acts = useInstanceWatch(this)
-
 		this.id = id
 		this.editor = editor
 		this.md = md
@@ -56,6 +45,7 @@ export default class Index {
 
 	reset() {
 		this.node = null
+		this.oveflow_x = 0
 		this.visible = false
 		this.position = null
 		this.formats = {} as Index['formats']
@@ -65,13 +55,11 @@ export default class Index {
 		return false
 	}
 
-	onChangePosition() {
+	updatePosition() {
 		const native_selection = window.getSelection()
 		const rect = native_selection.getRangeAt(0)?.getBoundingClientRect?.()
 
-		if (rect) {
-			this.position = { x: rect.left, y: rect.y - 42 }
-		}
+		if (rect) this.position = { x: rect.left, y: rect.y - 42 }
 	}
 
 	onMouseUp(e: MouseEvent) {
@@ -136,7 +124,7 @@ export default class Index {
 	}
 
 	register() {
-		const unregister = mergeRegister(
+		this.unregister = mergeRegister(
 			this.editor.registerCommand(
 				SELECTION_CHANGE_COMMAND,
 				(_, active_editor) => {
@@ -149,11 +137,9 @@ export default class Index {
 				COMMAND_PRIORITY_CRITICAL
 			)
 		)
-
-		this.utils.acts.push(unregister)
 	}
 
 	off() {
-		this.utils.off()
+		this.unregister()
 	}
 }

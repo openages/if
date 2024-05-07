@@ -1,7 +1,6 @@
-import { useClickAway, useMemoizedFn } from 'ahooks'
+import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
-import { container } from 'tsyringe'
 
 import { Popover } from '@/components'
 import { useStackSelector } from '@/context/stack'
@@ -15,7 +14,7 @@ import type { IPropsFormats } from './types'
 
 const Index = (props: IPropsCommon) => {
 	const { md } = props
-	const [x] = useState(() => container.resolve(Model))
+	const [x] = useState(() => new Model())
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
 	const position = $copy(x.position)
@@ -33,8 +32,10 @@ const Index = (props: IPropsCommon) => {
 		onFormat: useMemoizedFn(x.onFormat)
 	}
 
+	const updatePosition = useMemoizedFn(x.updatePosition)
+
 	return (
-		<Popover open={x.visible} position={position} top>
+		<Popover open={x.visible} position={position} top updatePosition={updatePosition}>
 			<Formats {...props_formats}></Formats>
 		</Popover>
 	)

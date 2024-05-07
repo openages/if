@@ -48,4 +48,16 @@
 			border-left: 6px solid transparent;
 		}
 	}
+
+	&.oveflow {
+		&::before {
+			left: calc(50% - 3px);
+		}
+
+		&.top {
+			&::before {
+				left: calc(50% - 3px);
+			}
+		}
+	}
 }

@@ -88,6 +88,12 @@ export default class Index {
 		return this.reset()
 	}
 
+	updatePosition() {
+		const rect = window.getSelection().focusNode?.parentElement?.getBoundingClientRect()
+
+		this.position = { x: rect.x, y: rect.y + rect.height }
+	}
+
 	show() {
 		if (!this.link) return
 

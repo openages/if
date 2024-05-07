@@ -1,4 +1,4 @@
-import { useClickAway } from 'ahooks'
+import { useClickAway, useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useRef, useState } from 'react'
 
@@ -24,8 +24,10 @@ const Index = () => {
 
 	useClickAway(() => x.reset(), [x.dom, ref])
 
+	const updatePosition = useMemoizedFn(x.updatePosition)
+
 	return (
-		<Popover open={x.visible} position={position}>
+		<Popover open={x.visible} position={position} updatePosition={updatePosition}>
 			<div className={$cx('flex align_center', styles._local)} ref={ref}>
 				<input
 					className='input_link'
