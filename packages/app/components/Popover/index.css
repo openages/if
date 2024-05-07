@@ -22,6 +22,7 @@
 	color: var(--color_bg);
 	background-color: var(--color_text_sub);
 	box-shadow: var(--shadow);
+	user-select: none;
 	font-size: 12px;
 
 	&::before {

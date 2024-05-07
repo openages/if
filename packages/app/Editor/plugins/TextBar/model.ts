@@ -1,15 +1,24 @@
-import { $getSelection, $isRangeSelection, COMMAND_PRIORITY_CRITICAL, SELECTION_CHANGE_COMMAND } from 'lexical'
+import {
+	$getSelection,
+	$isRangeSelection,
+	COMMAND_PRIORITY_CRITICAL,
+	FORMAT_TEXT_COMMAND,
+	SELECTION_CHANGE_COMMAND
+} from 'lexical'
 import { makeAutoObservable } from 'mobx'
 
 import { getSelectedNode } from '@/Editor/utils'
-import { $isLinkNode } from '@lexical/link'
-import { $isListItemNode } from '@lexical/list'
-import { $isHeadingNode } from '@lexical/rich-text'
+import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link'
+import { $isListNode } from '@lexical/list'
+import { $createHeadingNode, $isHeadingNode } from '@lexical/rich-text'
+import { $setBlocksType } from '@lexical/selection'
 import { $findMatchingParent, mergeRegister } from '@lexical/utils'
 
-import type { LexicalEditor, LexicalNode } from 'lexical'
+import type { LexicalEditor, LexicalNode, TextFormatType } from 'lexical'
 import type { HeadingTagType } from '@lexical/rich-text'
-import type { Formats, Format } from './types'
+import type { Formats, Format, ListType } from './types'
+
+const text_formats = ['bold', 'italic', 'strikethrough', 'underline', 'code']
 
 export default class Index {
 	id = ''
@@ -23,7 +32,7 @@ export default class Index {
 	position = null as { x: number; y: number }
 	formats = {} as Formats
 	heading_type = '' as HeadingTagType
-	list_type = ''
+	list_type = '' as ListType
 
 	unregister = null as () => void
 
@@ -68,7 +77,29 @@ export default class Index {
 		this.editor.getEditorState().read(() => this.check())
 	}
 
-	onFormat(type: Format, v?: string) {}
+	onFormat(type: Format, v?: string) {
+		if (text_formats.includes(type)) {
+			this.editor.dispatchCommand(FORMAT_TEXT_COMMAND, type as TextFormatType)
+		} else {
+			if (type === 'link') {
+				if (this.formats['link']) {
+					delete this.formats['link']
+
+					this.editor.dispatchCommand(TOGGLE_LINK_COMMAND, null)
+				} else {
+					this.formats['link'] = true
+
+					this.editor.dispatchCommand(TOGGLE_LINK_COMMAND, 'https://')
+				}
+			}
+
+			if (type === 'heading') {
+			}
+
+			if (type === 'list') {
+			}
+		}
+	}
 
 	check() {
 		const selection = $getSelection()
@@ -93,6 +124,7 @@ export default class Index {
 			return this.reset()
 		}
 
+		this.formats = {} as Formats
 		this.node = getSelectedNode(selection)
 
 		if (selection.hasFormat('bold')) this.formats['bold'] = true
@@ -105,14 +137,17 @@ export default class Index {
 			this.formats['link'] = true
 		}
 
-		if ($isHeadingNode(this.node)) {
+		const parent_heading_node = $findMatchingParent(this.node, $isHeadingNode)
+		const parent_list_node = $findMatchingParent(this.node, $isListNode)
+
+		if (parent_heading_node) {
 			this.formats['heading'] = true
-			this.heading_type = this.node.getTag()
+			this.heading_type = parent_heading_node.getTag()
 		}
 
-		if ($isListItemNode($findMatchingParent(this.node, $isListItemNode))) {
+		if (parent_list_node) {
 			this.formats['list'] = true
-			this.list_type = this.node.getType()
+			this.list_type = parent_list_node.getListType() as ListType
 		}
 
 		const rect = native_selection.getRangeAt(0)?.getBoundingClientRect?.()
@@ -135,7 +170,10 @@ export default class Index {
 					return false
 				},
 				COMMAND_PRIORITY_CRITICAL
-			)
+			),
+			this.editor.registerUpdateListener(() => {
+				this.editor.getEditorState().read(() => this.check())
+			})
 		)
 	}
 

@@ -3,7 +3,7 @@
 		:global {
 			.btn_format {
 				&:hover,
-				.active {
+				&.active {
 					background-color: rgba(var(--color_std_rgb), 0.3);
 				}
 			}
@@ -48,7 +48,7 @@
 			font-size: 15px;
 
 			&:hover,
-			.active {
+			&.active {
 				background-color: rgba(var(--color_std_rgb), 0.15);
 			}
 		}
@@ -62,6 +62,27 @@
 			&.active {
 				.if-select-selector {
 					background-color: rgba(var(--color_std_rgb), 0.15);
+				}
+
+				.if-select-arrow {
+					display: none;
+				}
+			}
+
+			&.if-select-focused {
+				.if-select-arrow {
+				}
+			}
+
+			&.select_list {
+				.if-select-item {
+					.if-select-item-option-content {
+						font-size: 15px;
+					}
+				}
+
+				.if-select-selection-item {
+					font-size: 15px;
 				}
 			}
 
@@ -79,6 +100,18 @@
 				input {
 					height: 24px !important;
 				}
+
+				.if-select-selection-search {
+					display: none;
+				}
+
+				.if-select-selection-item {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					padding-right: 0 !important;
+					color: var(--color_bg) !important;
+				}
 			}
 
 			.if-select-arrow {
@@ -90,6 +123,7 @@
 				width: 100%;
 				height: 100%;
 				margin-top: unset;
+				opacity: 1 !important;
 				color: var(--color_bg) !important;
 				font-size: 15px;
 			}
@@ -100,6 +134,39 @@
 			height: 32px;
 			background-color: rgba(var(--color_text_rgb), 1);
 			box-shadow: 0.2px 0 0 rgba(var(--color_bg_rgb), 0.3);
+		}
+	}
+}
+
+.dropdown {
+	padding: 3px 4px;
+	border: none !important;
+	border-radius: var(--radius);
+	background-color: var(--color_text_sub);
+	box-shadow: var(--shadow);
+
+	:global {
+		.if-select-item {
+			width: 24px;
+			height: 24px;
+			padding: 0 !important;
+			margin: 1px 0;
+			border-radius: var(--radius_small);
+			color: var(--color_bg);
+
+			&.if-select-item-option-active,
+			&.if-select-item-option-selected {
+				color: var(--color_bg);
+				background-color: rgba(var(--color_std_rgb), 0.15) !important;
+			}
+
+			.if-select-item-option-content {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 10px;
+				font-weight: 500;
+			}
 		}
 	}
 }

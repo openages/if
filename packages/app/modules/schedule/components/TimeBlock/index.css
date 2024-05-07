@@ -47,6 +47,8 @@
 	}
 
 	&.small {
+		border-radius: var(--radius_small_1);
+
 		:global {
 			.btn_detail {
 				top: 0.5px;
@@ -59,6 +61,8 @@
 			}
 
 			.timeblock_content_wrap {
+				border-radius: var(--radius_small_1);
+
 				.text_wrap {
 					height: 12px;
 					line-height: 12px;
@@ -71,9 +75,12 @@
 	}
 
 	&.middle {
+		border-radius: var(--radius_small);
+
 		:global {
 			.timeblock_content_wrap {
 				padding: 1px 2px;
+				border-radius: var(--radius_small);
 
 				.text_wrap {
 					height: 12px;

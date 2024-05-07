@@ -1,5 +1,24 @@
 .heading {
 	:global {
+		.__editor_heading {
+			a {
+				text-decoration: unset;
+
+				&:hover {
+					position: relative;
+					color: var(--color_blue);
+
+					&::after {
+						position: absolute;
+						top: 0;
+						right: -15px;
+						content: '↗️';
+						font-size: 12px;
+					}
+				}
+			}
+		}
+
 		.__editor_heading_h1,
 		.__editor_heading_h2,
 		.__editor_heading_h3,

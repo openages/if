@@ -27,6 +27,8 @@ const Index = (props: IPropsCommon) => {
 
 	const props_formats: IPropsFormats = {
 		md,
+		heading_type: x.heading_type,
+		list_type: x.list_type,
 		formats: $copy(x.formats),
 		setRef: useMemoizedFn(v => (x.ref = v)),
 		onFormat: useMemoizedFn(x.onFormat)

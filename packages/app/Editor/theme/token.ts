@@ -2,12 +2,12 @@ import type { EditorThemeClasses } from 'lexical'
 
 export default {
 	heading: {
-		h1: '__editor_heading_h1',
-		h2: '__editor_heading_h2',
-		h3: '__editor_heading_h3',
-		h4: '__editor_heading_h4',
-		h5: '__editor_heading_h5',
-		h6: '__editor_heading_h6'
+		h1: '__editor_heading __editor_heading_h1',
+		h2: '__editor_heading __editor_heading_h2',
+		h3: '__editor_heading __editor_heading_h3',
+		h4: '__editor_heading __editor_heading_h4',
+		h5: '__editor_heading __editor_heading_h5',
+		h6: '__editor_heading __editor_heading_h6'
 	},
 	text: {
 		bold: '__editor_text_bold',
@@ -25,5 +25,6 @@ export default {
 		listitemUnchecked: '__editor_list_item_unchecked',
 		nested: { listitem: '__editor_list_item_nested' }
 	},
+	link: '__editor_link',
 	code: '__editor_code'
 } as EditorThemeClasses

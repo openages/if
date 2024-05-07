@@ -1,5 +1,5 @@
 ._local {
-	padding-bottom: 36vh;
+	padding-bottom: 60vh;
 	font-size: 15px;
 
 	:global {
@@ -14,7 +14,7 @@
 			text-underline-offset: 2px;
 
 			&:hover {
-				color: var(--color_main);
+				color: var(--color_blue);
 				text-decoration-color: transparent;
 			}
 		}
