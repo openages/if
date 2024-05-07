@@ -35,9 +35,9 @@
 			}
 
 			&.root_node {
-				min-width: 90px;
 				height: 30px;
 				line-height: 30px;
+				padding: 0 12px;
 				border-radius: 30px;
 				color: var(--color_bg);
 				background-color: var(--color_text);
@@ -45,9 +45,10 @@
 			}
 
 			&.angle_node {
-				min-width: 60px;
+				width: auto;
 				height: 24px;
 				line-height: 22px;
+				padding: 0 12px;
 				border: 1px solid var(--color_text);
 				border-radius: 24px;
 			}

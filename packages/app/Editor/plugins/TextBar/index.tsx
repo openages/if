@@ -1,4 +1,4 @@
-import { useClickAway } from 'ahooks'
+import { useClickAway, useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
 import { container } from 'tsyringe'
@@ -27,7 +27,10 @@ const Index = (props: IPropsCommon) => {
 	}, [id, editor, md])
 
 	const props_formats: IPropsFormats = {
-		md
+		md,
+		formats: $copy(x.formats),
+		setRef: useMemoizedFn(v => (x.ref = v)),
+		onFormat: useMemoizedFn(x.onFormat)
 	}
 
 	return (

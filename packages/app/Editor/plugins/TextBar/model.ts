@@ -12,13 +12,14 @@ import { useInstanceWatch, Watch } from '@openages/stk/mobx'
 
 import type { LexicalEditor, LexicalNode } from 'lexical'
 import type { HeadingTagType } from '@lexical/rich-text'
-import type { Formats } from './types'
+import type { Formats, Format } from './types'
 
 @injectable()
 export default class Index {
 	id = ''
 	editor = null as LexicalEditor
 	md = false
+	ref = null as HTMLElement
 	node = null as LexicalNode
 
 	visible = false
@@ -40,7 +41,7 @@ export default class Index {
 	} as Watch<Index>
 
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, { editor: false, md: false, node: false }, { autoBind: true })
+		makeAutoObservable(this, { editor: false, md: false, ref: false, node: false }, { autoBind: true })
 	}
 
 	init(id: Index['id'], editor: Index['editor'], md: Index['md']) {
@@ -73,9 +74,13 @@ export default class Index {
 		}
 	}
 
-	onMouseUp() {
+	onMouseUp(e: MouseEvent) {
+		if (this.ref === e.target || this.ref.contains(e.target as HTMLElement)) return
+
 		this.editor.getEditorState().read(() => this.check())
 	}
+
+	onFormat(type: Format, v?: string) {}
 
 	check() {
 		const selection = $getSelection()

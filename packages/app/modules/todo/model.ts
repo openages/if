@@ -180,6 +180,8 @@ export default class Index {
 
 			if (v === 'kanban' || v === 'mindmap') {
 				this.kanban_mode = 'angle'
+
+				this.watchKanbanItems()
 			}
 
 			if (v !== 'kanban' && v !== 'mindmap') {

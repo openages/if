@@ -50,7 +50,26 @@ export default (args: Pick<IPropsMindmap, 'file_id' | 'kanban_items'>, nodes: Ar
 		getWidth: item => nodes_map[item.id].width,
 		getHeight: item => nodes_map[item.id].height,
 		getVGap: () => 3,
-		getHGap: () => 30,
+		getHGap: item => {
+			if (nodes_map[item.id].width > 57 && item.type !== 'todo_item') {
+				const width = nodes_map[item.id].width
+				const overflow = width - 57
+
+				if (item.type === 'root' && overflow > 30) {
+					if (overflow >= 54) return 54
+
+					return overflow
+				}
+
+				if (overflow > 30) {
+					return overflow + width * 0.1
+				} else {
+					return 36
+				}
+			}
+
+			return 30
+		},
 		getSubTreeSep: n => {
 			if (n.children && n.children.length) return 15
 
