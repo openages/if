@@ -91,13 +91,13 @@
 		"tslib": "^2.6.2",
 		"tsyringe": "^4.8.0",
 		"uniqolor": "^1.1.1",
-		"zod": "^3.23.6"
+		"zod": "^3.23.7"
 	},
 	"devDependencies": {
 		"@rsdoctor/rspack-plugin": "^0.1.10",
-		"@rspack/cli": "0.6.3",
-		"@rspack/core": "0.6.3",
-		"@rspack/plugin-react-refresh": "0.6.3",
+		"@rspack/cli": "0.6.4",
+		"@rspack/core": "0.6.4",
+		"@rspack/plugin-react-refresh": "0.6.4",
 		"@svgr/webpack": "^8.1.0",
 		"@types/color": "^3.0.6",
 		"@types/crypto-js": "^4.2.2",
