@@ -31,9 +31,13 @@
 		}
 
 		.__editor_heading_h1,
-		.__editor_heading_h2,
-		.__editor_heading_h3 {
+		.__editor_heading_h2 {
 			border-bottom: var(--border);
+		}
+
+		.__editor_heading_h3 {
+			line-height: 1;
+			margin-block-start: 1.8em;
 		}
 
 		.__editor_heading_h4,

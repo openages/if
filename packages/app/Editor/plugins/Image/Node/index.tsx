@@ -52,7 +52,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 		return $createImageNode(serializedNode)
 	}
 
-	static importDOM(): DOMConversionMap | null {
+	static importDOM(): DOMConversionMap {
 		return { img: () => ({ conversion: convertImageElement, priority: 0 }) }
 	}
 

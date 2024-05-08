@@ -22,8 +22,6 @@ import type { IPropsFormats } from './types'
 const Index = (props: IPropsFormats) => {
 	const { md, formats, heading_type, list_type, setRef, onFormat } = props
 
-	console.log(formats, heading_type, list_type)
-
 	const getRef = useMemoizedFn(v => setRef(v))
 	const onBold = useMemoizedFn(() => onFormat('bold'))
 	const onItalic = useMemoizedFn(() => onFormat('italic'))
@@ -113,7 +111,7 @@ const Index = (props: IPropsFormats) => {
 						{ label: 'H6', value: 'h6' }
 					]}
 					value={heading_type}
-					onChange={onHeading}
+					onSelect={onHeading}
 				></Select>
 			</div>
 			<span className='d_line'></span>
@@ -132,7 +130,7 @@ const Index = (props: IPropsFormats) => {
 						{ label: <ListChecks weight='bold' />, value: 'check' }
 					]}
 					value={list_type}
-					onChange={onList}
+					onSelect={onList}
 				></Select>
 			</div>
 		</div>

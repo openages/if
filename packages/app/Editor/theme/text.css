@@ -20,7 +20,7 @@
 			padding: 2px 4px;
 			border-radius: var(--radius_small);
 			background-color: var(--color_bg_2);
-			font-size: 12px;
+			font-size: 0.81em;
 		}
 	}
 }

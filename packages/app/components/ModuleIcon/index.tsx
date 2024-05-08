@@ -9,9 +9,9 @@ import {
 	Clipboard,
 	Database,
 	GearSix,
+	MarkdownLogo,
 	MicrosoftPowerpointLogo,
-	Note,
-	Notebook,
+	NoteBlank,
 	Table,
 	TextColumns,
 	Timer,
@@ -31,8 +31,10 @@ const Index = (props: IProps) => {
 
 	return match(type)
 		.with('todo', () => <CheckCircle {...icon_props} />)
-		.with('memo', () => <Note {...icon_props} />)
-		.with('note', () => <Notebook {...icon_props} />)
+		.with('memo', () => <NoteBlank {...icon_props} />)
+		.with('note', () => (
+			<MarkdownLogo {...icon_props} size={icon_props.size ? Number(icon_props.size) - 3 : '1em'} />
+		))
 		.with('page', () => <AppWindow {...icon_props} />)
 		.with('whiteboard', () => <Clipboard {...icon_props} />)
 		.with('ppt', () => <MicrosoftPowerpointLogo {...icon_props} />)

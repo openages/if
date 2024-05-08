@@ -32,6 +32,23 @@
 			}
 		}
 	}
+
+	.dropdown {
+		border-radius: var(--radius);
+		background-color: var(--color_bg_1);
+
+		:global {
+			.if-select-item {
+				color: var(--color_text);
+
+				&.if-select-item-option-active,
+				&.if-select-item-option-selected {
+					color: var(--color_text);
+					background-color: rgba(var(--color_std_rgb), 0.3) !important;
+				}
+			}
+		}
+	}
 }
 
 ._local {
@@ -66,11 +83,6 @@
 
 				.if-select-arrow {
 					display: none;
-				}
-			}
-
-			&.if-select-focused {
-				.if-select-arrow {
 				}
 			}
 

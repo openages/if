@@ -13,7 +13,7 @@
 			height: 24px;
 			border-radius: 12px;
 			color: var(--color_bg);
-			background-color: rgba(var(--color_text_rgb), 0.3);
+			background-color: rgba(var(--color_text_rgb), 0.48);
 			backdrop-filter: var(--blur);
 
 			.option_item {
@@ -60,6 +60,7 @@
 	border: none;
 	outline: none;
 	color: var(--color_text_light);
+	background-color: transparent;
 	text-align: center;
 	font-size: 12px;
 }

@@ -1,4 +1,5 @@
 import {
+	$createParagraphNode,
 	$getSelection,
 	$isRangeSelection,
 	COMMAND_PRIORITY_CRITICAL,
@@ -9,7 +10,12 @@ import { makeAutoObservable } from 'mobx'
 
 import { getSelectedNode } from '@/Editor/utils'
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link'
-import { $isListNode } from '@lexical/list'
+import {
+	$isListNode,
+	INSERT_CHECK_LIST_COMMAND,
+	INSERT_ORDERED_LIST_COMMAND,
+	INSERT_UNORDERED_LIST_COMMAND
+} from '@lexical/list'
 import { $createHeadingNode, $isHeadingNode } from '@lexical/rich-text'
 import { $setBlocksType } from '@lexical/selection'
 import { $findMatchingParent, mergeRegister } from '@lexical/utils'
@@ -94,11 +100,45 @@ export default class Index {
 			}
 
 			if (type === 'heading') {
+				if (v === this.heading_type) {
+					this.unFormat()
+
+					this.heading_type = '' as HeadingTagType
+				} else {
+					this.editor.update(() => {
+						const selection = $getSelection()
+
+						$setBlocksType(selection, () => $createHeadingNode(v as HeadingTagType))
+					})
+				}
 			}
 
 			if (type === 'list') {
+				if (v === this.list_type) {
+					this.unFormat()
+
+					this.list_type = '' as ListType
+				} else {
+					const commands = {
+						bullet: INSERT_UNORDERED_LIST_COMMAND,
+						number: INSERT_ORDERED_LIST_COMMAND,
+						check: INSERT_CHECK_LIST_COMMAND
+					}
+
+					this.editor.dispatchCommand(commands[v], null)
+				}
 			}
 		}
+	}
+
+	unFormat() {
+		this.editor.update(() => {
+			const selection = $getSelection()
+
+			console.log(123)
+
+			$setBlocksType(selection, () => $createParagraphNode())
+		})
 	}
 
 	check() {

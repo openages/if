@@ -1,0 +1,15 @@
+.link {
+	:global {
+		a {
+			text-decoration-color: var(--color_text_light);
+			text-decoration-line: underline;
+			text-decoration-thickness: 1px;
+			text-underline-offset: 2px;
+
+			&:hover {
+				color: var(--color_blue);
+				text-decoration-color: transparent;
+			}
+		}
+	}
+}
