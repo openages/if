@@ -26,7 +26,7 @@ export default class Index {
 		this.on()
 	}
 
-	onChangeFileName(e: ChangeEvent<HTMLTextAreaElement>) {
+	onChangeFileName(e: ChangeEvent<HTMLInputElement>) {
 		const name = e.target.value
 
 		if (!name) return
@@ -34,7 +34,7 @@ export default class Index {
 		this.file.data = { ...this.file.data, name }
 	}
 
-	onBlurFileName(e: FocusEvent<HTMLTextAreaElement>) {
+	onBlurFileName(e: FocusEvent<HTMLInputElement>) {
 		const name = e.target.value
 
 		if (!name) return
@@ -45,12 +45,6 @@ export default class Index {
 			$app.Event.emit('note/dirtree/update', item)
 		} else {
 			update({ item })
-		}
-	}
-
-	onKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
-		if (e.key === 'Enter') {
-			e.preventDefault()
 		}
 	}
 

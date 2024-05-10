@@ -48,22 +48,12 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 		})
 	}
 
-	static importJSON(serializedNode: SerializedImageNode) {
-		return $createImageNode(serializedNode)
-	}
-
 	static importDOM(): DOMConversionMap {
 		return { img: () => ({ conversion: convertImageElement, priority: 0 }) }
 	}
 
-	exportJSON() {
-		return {
-			type: 'image',
-			src: this.__src,
-			width: this.__width,
-			height: this.__height,
-			alt: this.__alt
-		} as SerializedImageNode
+	static importJSON(serializedNode: SerializedImageNode) {
+		return $createImageNode(serializedNode)
 	}
 
 	createDOM() {
@@ -91,6 +81,16 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 
 	updateDOM() {
 		return false
+	}
+
+	exportJSON() {
+		return {
+			type: 'image',
+			src: this.__src,
+			width: this.__width,
+			height: this.__height,
+			alt: this.__alt
+		} as SerializedImageNode
 	}
 
 	decorate() {

@@ -9,7 +9,7 @@ import { container } from 'tsyringe'
 
 import { useStackSelector } from '@/context/stack'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { ArrowsInSimple, ArrowsOutSimple, Check, Copy } from '@phosphor-icons/react'
+import { Check, Copy } from '@phosphor-icons/react'
 
 import styles from './index.css'
 import Model from './model'
@@ -80,12 +80,6 @@ const Index = () => {
 							onClick={x.onFormat}
 						>
 							<SiPrettier size={10}></SiPrettier>
-						</div>
-						<div
-							className='btn_action flex justify_center align_center clickable'
-							onClick={() => x.onFold()}
-						>
-							{x.fold ? <ArrowsOutSimple /> : <ArrowsInSimple />}
 						</div>
 						<div
 							className='btn_action flex justify_center align_center clickable'

@@ -1,5 +1,5 @@
 ._local {
-	width: calc(78px + 76px);
+	width: calc(78px + 52px);
 	color: var(--color_text_grey);
 
 	:global {
@@ -40,7 +40,7 @@
 		}
 
 		.btn_actions_wrap {
-			width: 76px;
+			width: 52px;
 			height: 28px;
 			padding: 2px;
 			border-radius: var(--radius);

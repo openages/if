@@ -31,10 +31,6 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 		return new KatexNode({ value: node.__value, inline: node.__inline, node_key: node.__key })
 	}
 
-	static importJSON(serializedNode: SerializedKatexNode) {
-		return $createKatexNode(serializedNode)
-	}
-
 	static importDOM(): DOMConversionMap | null {
 		return {
 			div: dom => {
@@ -56,12 +52,8 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 		}
 	}
 
-	exportJSON() {
-		return {
-			type: 'katex',
-			value: this.__value,
-			inline: this.__inline
-		} as SerializedKatexNode
+	static importJSON(serializedNode: SerializedKatexNode) {
+		return $createKatexNode(serializedNode)
 	}
 
 	createDOM() {
@@ -100,6 +92,14 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 
 	updateDOM() {
 		return false
+	}
+
+	exportJSON() {
+		return {
+			type: 'katex',
+			value: this.__value,
+			inline: this.__inline
+		} as SerializedKatexNode
 	}
 
 	decorate() {

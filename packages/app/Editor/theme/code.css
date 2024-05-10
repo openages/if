@@ -26,24 +26,6 @@
 				content: attr(data-lang);
 				font-size: 10px;
 			}
-
-			&.fold {
-				overflow: hidden;
-				height: 52px;
-
-				&::before {
-					position: absolute;
-					top: 18px;
-					left: 18px;
-					color: var(--color_text_light);
-					content: attr(data-fold);
-					font-size: 10px;
-				}
-
-				> * {
-					display: none;
-				}
-			}
 		}
 	}
 }

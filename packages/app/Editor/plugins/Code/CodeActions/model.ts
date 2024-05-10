@@ -27,7 +27,6 @@ export default class Index {
 	key = ''
 
 	lang = '' as BundledLanguage
-	fold = false
 	formatable = false
 	position = { left: 0, top: 0 }
 	visible = false
@@ -62,7 +61,6 @@ export default class Index {
 	reset() {
 		this.key = ''
 		this.lang = '' as BundledLanguage
-		this.fold = false
 		this.formatable = false
 		this.position = { left: 0, top: 0 }
 		this.visible = false
@@ -72,7 +70,7 @@ export default class Index {
 		const el = this.editor.getElementByKey(key)
 		const { right, top } = el.getBoundingClientRect()
 
-		this.position = { left: right - (78 + 76), top: top - 32 }
+		this.position = { left: right - (78 + 52), top: top - 32 }
 	}
 
 	onSelection() {
@@ -95,7 +93,6 @@ export default class Index {
 		if (this.key === node.__key) return false
 
 		this.getPosition(node.__key)
-		this.onFold(false)
 
 		this.key = node.__key
 		this.lang = node.__lang
@@ -129,20 +126,6 @@ export default class Index {
 			navigator.clipboard.writeText(text).then(() => {
 				$message.success($t('translation:common.copied'))
 			})
-		})
-	}
-
-	onFold(fold?: Index['fold']) {
-		this.editor.update(() => {
-			const node = $getNodeByKey(this.key)
-			const latest = node.getLatest() as CodeNode
-			const target = node.getWritable() as CodeNode
-
-			const v = fold ?? !latest.__fold
-
-			target.__fold = v
-
-			this.fold = v
 		})
 	}
 

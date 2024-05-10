@@ -7,6 +7,9 @@ import CodeTextNode from './plugins/Code/CodeTextNode'
 import DividerNode from './plugins/Divider/Node'
 import ImageNode from './plugins/Image/Node'
 import KatexNode from './plugins/Katex/Node'
+import ToggleBodyNode from './plugins/Toggle/ToggleBodyNode'
+import ToggleHeadNode from './plugins/Toggle/ToggleHeadNode'
+import ToggleNode from './plugins/Toggle/ToggleNode'
 
 import type { Klass, LexicalNode } from 'lexical'
 
@@ -16,6 +19,9 @@ export default [
 	DividerNode,
 	CodeNode,
 	CodeTextNode,
+	ToggleNode,
+	ToggleHeadNode,
+	ToggleBodyNode,
 
 	AutoLinkNode,
 	LinkNode,

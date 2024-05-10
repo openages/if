@@ -10,7 +10,8 @@ export default {
 		TodoList: 'Todo List',
 		Katex: 'Katex',
 		Divider: 'Divider',
-		Detail: 'Detail'
+		Quote: 'Quote',
+		Toggle: 'Toggle'
 	},
 	Image: {
 		modal: {

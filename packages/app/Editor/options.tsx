@@ -1,6 +1,10 @@
+import { $getSelection, $isRangeSelection } from 'lexical'
+
 import { INSERT_CHECK_LIST_COMMAND, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from '@lexical/list'
+import { $createQuoteNode } from '@lexical/rich-text'
+import { $setBlocksType } from '@lexical/selection'
 import {
-	ArrowSquareIn,
+	CaretDown,
 	CodeSimple,
 	Divide,
 	Function,
@@ -8,10 +12,11 @@ import {
 	ListBullets,
 	ListChecks,
 	ListNumbers,
+	Quotes,
 	Smiley
 } from '@phosphor-icons/react'
 
-import { INSERT_CODE_COMMAND, INSERT_DETAIL_COMMAND, INSERT_DIVIDER_COMMAND } from './commands'
+import { INSERT_CODE_COMMAND, INSERT_DIVIDER_COMMAND, INSERT_TOGGLE_COMMAND } from './commands'
 import Option from './plugins/Picker/option'
 
 import type Model from './plugins/Picker/model'
@@ -68,10 +73,23 @@ export default (args: Args) => {
 			shortcut: 'dv',
 			onSelect: () => editor.dispatchCommand(INSERT_DIVIDER_COMMAND, null)
 		}),
-		new Option($t('translation:editor.name.Detail'), {
-			icon: <ArrowSquareIn />,
-			shortcut: 'dt',
-			onSelect: () => editor.dispatchCommand(INSERT_DETAIL_COMMAND, null)
+		new Option($t('translation:editor.name.Quote'), {
+			icon: <Quotes />,
+			shortcut: 'qt',
+			onSelect: () => {
+				editor.update(() => {
+					const selection = $getSelection()
+
+					if (!$isRangeSelection(selection)) return
+
+					$setBlocksType(selection, () => $createQuoteNode())
+				})
+			}
+		}),
+		new Option($t('translation:editor.name.Toggle'), {
+			icon: <CaretDown />,
+			shortcut: 'tg',
+			onSelect: () => editor.dispatchCommand(INSERT_TOGGLE_COMMAND, null)
 		})
 	].filter(option => regex.test(option.title.toLowerCase()) || regex.test(option.shortcut))
 }

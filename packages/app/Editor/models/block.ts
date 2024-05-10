@@ -12,6 +12,7 @@ import {
 } from 'lexical'
 import { makeAutoObservable } from 'mobx'
 
+import { removeAndCheck } from '@/Editor/utils'
 import { mergeRegister } from '@lexical/utils'
 
 import type { LexicalEditor, ParagraphNode, LexicalNode } from 'lexical'
@@ -112,11 +113,7 @@ export default class Index<T extends LexicalNode = any> {
 		if (this.selected && $isNodeSelection($getSelection())) {
 			e.preventDefault()
 
-			const alone = !this.node.__prev && !this.node.__next
-
-			this.node.remove()
-
-			if (alone) $insertNodes([$createParagraphNode()])
+			removeAndCheck(this.node)
 
 			return true
 		}

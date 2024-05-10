@@ -12,7 +12,19 @@ import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin
 import { Placeholder } from './components'
 import styles from './index.css'
 import nodes from './nodes'
-import { AutoLink, Code, CodeActions, Divider, Image, Katex, LinkEditor, Picker, TextBar, Transform } from './plugins'
+import {
+	AutoLink,
+	Code,
+	CodeActions,
+	Divider,
+	Image,
+	Katex,
+	LinkEditor,
+	Picker,
+	TextBar,
+	Toggle,
+	Transform
+} from './plugins'
 import { style, token } from './theme'
 import { onError } from './utils'
 
@@ -43,6 +55,7 @@ const Index = () => {
 				<Divider />
 				<Code />
 				<CodeActions />
+				<Toggle />
 			</LexicalComposer>
 		</div>
 	)

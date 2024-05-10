@@ -24,31 +24,29 @@ import type { DOMExportOutput, RangeSelection, DOMConversionMap } from 'lexical'
 
 export default class CodeNode extends ElementNode {
 	__lang: BundledLanguage
-	__fold = false
+
+	constructor(props: IPropsCode) {
+		const { lang, node_key } = props
+
+		super(node_key)
+
+		this.__lang = lang as BundledLanguage
+	}
 
 	static getType() {
 		return 'code'
 	}
 
-	static clone(node: CodeNode): CodeNode {
-		return new CodeNode({ lang: node.__lang, node_key: node.__key, fold: node.__fold })
-	}
-
-	static importJSON(serializedNode: SerializedCodeNode): CodeNode {
-		return $createCodeNode({ lang: serializedNode.lang })
+	static clone(node: CodeNode) {
+		return new CodeNode({ lang: node.__lang, node_key: node.__key })
 	}
 
 	static importDOM(): DOMConversionMap {
 		return { code: () => ({ conversion: convertCodeElement, priority: 0 }) }
 	}
 
-	constructor(props: IPropsCode) {
-		const { lang, fold, node_key } = props
-
-		super(node_key)
-
-		this.__lang = lang as BundledLanguage
-		this.__fold = fold
+	static importJSON(serializedNode: SerializedCodeNode) {
+		return $createCodeNode({ lang: serializedNode.lang })
 	}
 
 	createDOM() {
@@ -76,16 +74,6 @@ export default class CodeNode extends ElementNode {
 			dom.setAttribute('data-lang', shiki_langs[this.__lang].name)
 		}
 
-		if (this.__fold) {
-			dom.classList.add('fold')
-
-			dom.setAttribute('data-fold', $t('translation:common.folded'))
-		} else {
-			dom.classList.remove('fold')
-
-			dom.removeAttribute('data-fold')
-		}
-
 		return false
 	}
 
@@ -93,8 +81,7 @@ export default class CodeNode extends ElementNode {
 		return {
 			...super.exportJSON(),
 			type: 'code',
-			lang: this.__lang,
-			fold: this.__fold
+			lang: this.__lang
 		}
 	}
 

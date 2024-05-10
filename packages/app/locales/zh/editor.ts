@@ -10,7 +10,8 @@ export default {
 		TodoList: '任务列表',
 		Katex: '公式',
 		Divider: '分割线',
-		Detail: '详情摘要'
+		Quote: '引言',
+		Toggle: '折叠'
 	},
 	Image: {
 		modal: {

@@ -11,8 +11,6 @@ import Model from './model'
 
 import type { IProps } from './types'
 
-const { TextArea } = Input
-
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const module = useCurrentModule()
@@ -31,14 +29,12 @@ const Index = ({ id }: IProps) => {
 
 	return (
 		<div className={$cx('w_100 border_box flex flex_column limited_content_wrap', styles._local)}>
-			<TextArea
+			<Input
 				className={styles.title}
 				value={x.file.data.name}
-				autoSize
 				onChange={x.onChangeFileName}
 				onBlur={x.onBlurFileName}
-				onKeyDown={x.onKeyDown}
-			></TextArea>
+			></Input>
 			<Note></Note>
 		</div>
 	)
