@@ -9,7 +9,8 @@ export default {
 		OrderedList: '有序列表',
 		TodoList: '任务列表',
 		Katex: '公式',
-		Divider: '分割线'
+		Divider: '分割线',
+		Detail: '详情摘要'
 	},
 	Image: {
 		modal: {

@@ -135,8 +135,6 @@ export default class Index {
 		this.editor.update(() => {
 			const selection = $getSelection()
 
-			console.log(123)
-
 			$setBlocksType(selection, () => $createParagraphNode())
 		})
 	}

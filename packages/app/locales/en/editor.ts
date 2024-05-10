@@ -9,7 +9,8 @@ export default {
 		OrderedList: 'Order List',
 		TodoList: 'Todo List',
 		Katex: 'Katex',
-		Divider: 'Divider'
+		Divider: 'Divider',
+		Detail: 'Detail'
 	},
 	Image: {
 		modal: {

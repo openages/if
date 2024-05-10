@@ -1,5 +1,6 @@
 import { INSERT_CHECK_LIST_COMMAND, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from '@lexical/list'
 import {
+	ArrowSquareIn,
 	CodeSimple,
 	Divide,
 	Function,
@@ -10,7 +11,7 @@ import {
 	Smiley
 } from '@phosphor-icons/react'
 
-import { INSERT_CODE_COMMAND, INSERT_DIVIDER_COMMAND } from './commands'
+import { INSERT_CODE_COMMAND, INSERT_DETAIL_COMMAND, INSERT_DIVIDER_COMMAND } from './commands'
 import Option from './plugins/Picker/option'
 
 import type Model from './plugins/Picker/model'
@@ -66,6 +67,11 @@ export default (args: Args) => {
 			icon: <Divide />,
 			shortcut: 'dv',
 			onSelect: () => editor.dispatchCommand(INSERT_DIVIDER_COMMAND, null)
+		}),
+		new Option($t('translation:editor.name.Detail'), {
+			icon: <ArrowSquareIn />,
+			shortcut: 'dt',
+			onSelect: () => editor.dispatchCommand(INSERT_DETAIL_COMMAND, null)
 		})
 	].filter(option => regex.test(option.title.toLowerCase()) || regex.test(option.shortcut))
 }
