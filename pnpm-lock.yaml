@@ -94,7 +94,7 @@ importers:
         version: 0.5.11
       '@xyflow/react':
         specifier: 12.0.0-next.12
-        version: 12.0.0-next.12(@types/react@18.3.1)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
+        version: 12.0.0-next.12(@types/react@18.3.2)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       '@xyflow/system':
         specifier: ^0.0.20
         version: 0.0.20
@@ -141,8 +141,8 @@ importers:
         specifier: ^3.13.7
         version: 3.13.7
       i18next:
-        specifier: ^23.11.3
-        version: 23.11.3
+        specifier: ^23.11.4
+        version: 23.11.4
       js-xxhash:
         specifier: ^3.0.1
         version: 3.0.1
@@ -211,7 +211,7 @@ importers:
         version: 4.1.4(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       react-i18next:
         specifier: ^13.5.0
-        version: 13.5.0(i18next@23.11.3)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
+        version: 13.5.0(i18next@23.11.4)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       react-icons:
         specifier: ^4.12.0
         version: 4.12.0(react@0.0.0-experimental-c3048aab4-20240326)
@@ -222,11 +222,11 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0(react@0.0.0-experimental-c3048aab4-20240326)
       react-router:
-        specifier: ^6.23.0
-        version: 6.23.0(react@0.0.0-experimental-c3048aab4-20240326)
+        specifier: ^6.23.1
+        version: 6.23.1(react@0.0.0-experimental-c3048aab4-20240326)
       react-router-dom:
-        specifier: ^6.23.0
-        version: 6.23.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
+        specifier: ^6.23.1
+        version: 6.23.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       rfdc:
         specifier: ^1.3.1
         version: 1.3.1
@@ -301,8 +301,8 @@ importers:
         specifier: ^20.12.11
         version: 20.12.11
       '@types/react':
-        specifier: ^18.3.1
-        version: 18.3.1
+        specifier: ^18.3.2
+        version: 18.3.2
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
@@ -310,11 +310,11 @@ importers:
         specifier: ^0.16.8
         version: 0.16.8
       bun:
-        specifier: ^1.1.7
-        version: 1.1.7
+        specifier: ^1.1.8
+        version: 1.1.8
       bun-types:
-        specifier: ^1.1.7
-        version: 1.1.7
+        specifier: ^1.1.8
+        version: 1.1.8
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -1546,8 +1546,8 @@ packages:
   '@module-federation/webpack-bundler-runtime@0.1.6':
     resolution: {integrity: sha512-K5WhKZ4RVNaMEtfHsd/9CNCgGKB0ipbm/tgweNNeC11mEuBTNxJ09Y630vg3WPkKv9vfMCuXg2p2Dk+Q/KWTSA==}
 
-  '@mongodb-js/saslprep@1.1.6':
-    resolution: {integrity: sha512-jqTTXQ46H8cAxmXBu8wm1HTSIMBMrIcoVrsjdQkKdMBj3il/fSCgWyya4P2I1xjPBl69mw+nRphrPlcIqBd20Q==}
+  '@mongodb-js/saslprep@1.1.7':
+    resolution: {integrity: sha512-dCHW/oEX0KJ4NjDULBo3JiOaK5+6axtpBbS+ao2ZInoAL9/YRQLhXzSNAFz7hP4nzLkIqsfYAK/PDE3+XHny0Q==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -1566,8 +1566,18 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
+  '@oven/bun-darwin-aarch64@1.1.8':
+    resolution: {integrity: sha512-M9qPzCYbSsQOsPNhyr8h8hIyZ1T7fgeg8QJPIIXppWHzL6nqqOn+12ombFuDy0EdetVjrUSDmSPO8cR8j3Kv0Q==}
+    cpu: [arm64]
+    os: [darwin]
+
   '@oven/bun-darwin-x64-baseline@1.1.7':
     resolution: {integrity: sha512-oMKWmT5lqrnew/cmB+Mmuy/X7X0dBXnyJgsPp1RmV665u7UlNgRGncXhaW/EXlPJk4vaXh6UQQ8bLlg6mnQNgg==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@oven/bun-darwin-x64-baseline@1.1.8':
+    resolution: {integrity: sha512-YV7pETCt3k5Xc4soR3kFx3AxbPco3w/17JhDHTDajkw033aSqCMWLvd2fHLUA0xPn46ktOMhe/aESULymvvo5w==}
     cpu: [x64]
     os: [darwin]
 
@@ -1576,8 +1586,18 @@ packages:
     cpu: [x64]
     os: [darwin]
 
+  '@oven/bun-darwin-x64@1.1.8':
+    resolution: {integrity: sha512-al0V8PlWWFRprptwAQTdhMYacc0K1RyaoW+FvLtwZis1Lzl8o+NDHnxOhRzfzafttYIjssPOEz9zGTYuACBn8w==}
+    cpu: [x64]
+    os: [darwin]
+
   '@oven/bun-linux-aarch64@1.1.7':
     resolution: {integrity: sha512-/oVeD+f4S2tfIoKXVALuQv68k9O/91aMRCJ8+TlnVvZgZEpE6xdtbrSa+iP1wbAvBUy9ags0AgQOJg1QJzK/ow==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@oven/bun-linux-aarch64@1.1.8':
+    resolution: {integrity: sha512-C/QL5vgmBXWm0JsHWEKXlwG/gSB+MiOdvgfbnADRDaGPgZMGRK7uXFj/TLtw9CBRXugfty/lLkzY+18fQ8LVfw==}
     cpu: [arm64]
     os: [linux]
 
@@ -1586,8 +1606,18 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@oven/bun-linux-x64-baseline@1.1.8':
+    resolution: {integrity: sha512-RlWLFVvSbHkpNyorzeapfYUKuZYfhBgQV5N7EwiG8Kul8BPiRKAW+uOK6BuwJyA0vduF7Z4/cBeIO4XygXb5QQ==}
+    cpu: [x64]
+    os: [linux]
+
   '@oven/bun-linux-x64@1.1.7':
     resolution: {integrity: sha512-b+yTqZREacwPXcsg6/ps+qAZ/rlyuRztzptX6oNnc42+xd7BpdvKpdu2p8hbN0IoKBMqlAqFedffxFimIOMWFA==}
+    cpu: [x64]
+    os: [linux]
+
+  '@oven/bun-linux-x64@1.1.8':
+    resolution: {integrity: sha512-Z6Lyd8oH8EjER4rpC3L+B7G4ub7DW6IjPqmaov445jByOK/KZktzlNEJgdrcrPVocAA/xZ+eYtzeyQ/z4ITdhg==}
     cpu: [x64]
     os: [linux]
 
@@ -1596,8 +1626,18 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@oven/bun-windows-x64-baseline@1.1.8':
+    resolution: {integrity: sha512-RXoCcY5DnVaF5HAGZ8Hms8Izo6yTHgTZsy/rqmaZLjfntOf4Gn8vw3YVE4Pa0AqW6oQYTSmSlgxM47kVWOv3+w==}
+    cpu: [x64]
+    os: [win32]
+
   '@oven/bun-windows-x64@1.1.7':
     resolution: {integrity: sha512-y8qrlwv09UIYKEm9+X1KzHHtaudWWWn7GGwSqCT6c7XYfR70fbnriyCm2i0qUAUTmgtuhY7dwFtAKf1UkQJ2SQ==}
+    cpu: [x64]
+    os: [win32]
+
+  '@oven/bun-windows-x64@1.1.8':
+    resolution: {integrity: sha512-svZHc2sGLqJrzXiD/6XaJNvJ0PE+WpdZv/pRkn9tXgA2j0gOawN3oAiHXUOWoYS5kQQ7GiksEJlYVPA4JyJY0A==}
     cpu: [x64]
     os: [win32]
 
@@ -1698,8 +1738,8 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
 
-  '@remix-run/router@1.16.0':
-    resolution: {integrity: sha512-Quz1KOffeEf/zwkCBM3kBtH4ZoZ+pT3xIXBG4PPW/XFtDP7EGhtTiC2+gpL9GnR7+Qdet5Oa6cYSvwKYg6kN9Q==}
+  '@remix-run/router@1.16.1':
+    resolution: {integrity: sha512-es2g3dq6Nb07iFxGk5GuHN20RwBZOsuDQN7izWIisUcv9r+d2C5jQxqmgkdebXgReWfiyUabcki6Fg77mSNrig==}
     engines: {node: '>=14.0.0'}
 
   '@rsdoctor/client@0.1.10':
@@ -2133,8 +2173,8 @@ packages:
   '@types/react@18.2.42':
     resolution: {integrity: sha512-c1zEr96MjakLYus/wPnuWDo1/zErfdU9rNsIGmE+NV71nx88FG9Ttgo5dqorXTu/LImX2f63WBP986gJkMPNbA==}
 
-  '@types/react@18.3.1':
-    resolution: {integrity: sha512-V0kuGBX3+prX+DQ/7r2qsv1NsdfnCLnTgnRJ1pYnxykBhGMz+qj+box5lq7XsO5mtZsBqpjwwTu/7wszPfMBcw==}
+  '@types/react@18.3.2':
+    resolution: {integrity: sha512-Btgg89dAnqD4vV7R3hlwOxgqobUQKgx3MmrQRi0yYbs/P0ym8XozIAlkqVilPqHQwXs4e9Tf63rrCgl58BcO4w==}
 
   '@types/retry@0.12.0':
     resolution: {integrity: sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==}
@@ -2441,8 +2481,17 @@ packages:
   bun-types@1.1.7:
     resolution: {integrity: sha512-9L1w3dxXrJ5dg9ERd8cc8IJTHZ+0WpSDB9kIo6tVl1s3msNsotsTeh02Wwy8cvd3a4XWEz9+TrJsqhT0dJ6XCQ==}
 
+  bun-types@1.1.8:
+    resolution: {integrity: sha512-dwhfuUKSGK8hm5Llcvb5+ejRh+4mIt8ibObJVKhZBsi0ScpXmt+AlaS1eDW6uRXCHj084Qt0kIqAJ08/7ZGC9Q==}
+
   bun@1.1.7:
     resolution: {integrity: sha512-4Q/ySjXfSTOsehxektQuo376FfI/QMPSjnsBAwQAZsRFW37Hb8IdctOABDEBQcrYmiwgDGKlgdWTQ8/5H0N2ww==}
+    cpu: [arm64, x64]
+    os: [darwin, linux, win32]
+    hasBin: true
+
+  bun@1.1.8:
+    resolution: {integrity: sha512-TSL3POeJspEvIsfVqQZ/Sbl81kkzuUYCdE5fPdaDw0V6uU1j9d6JzfjYwNyDRnaacAAPnz3ZJukwGz3d6qJNzw==}
     cpu: [arm64, x64]
     os: [darwin, linux, win32]
     hasBin: true
@@ -2867,8 +2916,8 @@ packages:
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
-  electron-to-chromium@1.4.762:
-    resolution: {integrity: sha512-rrFvGweLxPwwSwJOjIopy3Vr+J3cIPtZzuc74bmlvmBIgQO3VYJDvVrlj94iKZ3ukXUH64Ex31hSfRTLqvjYJQ==}
+  electron-to-chromium@1.4.763:
+    resolution: {integrity: sha512-k4J8NrtJ9QrvHLRo8Q18OncqBCB7tIUyqxRcJnlonQ0ioHKYB988GcDFF3ZePmnb8eHEopDs/wPHR/iGAFgoUQ==}
 
   emoji-mart@5.6.0:
     resolution: {integrity: sha512-eJp3QRe79pjwa+duv+n7+5YsNhRcMl812EcFVwrnRvYKoNPoQb5qxU8DG6Bgwji0akHdp6D4Ln6tYLG58MFSow==}
@@ -3266,8 +3315,8 @@ packages:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
 
-  i18next@23.11.3:
-    resolution: {integrity: sha512-Pq/aSKowir7JM0rj+Wa23Kb6KKDUGno/HjG+wRQu0PxoTbpQ4N89MAT0rFGvXmLkRLNMb1BbBOKGozl01dabzg==}
+  i18next@23.11.4:
+    resolution: {integrity: sha512-CCUjtd5TfaCl+mLUzAA0uPSN+AVn4fP/kWCYt/hocPUwusTpMVczdrRyOBUwk6N05iH40qiKx6q1DoNJtBIwdg==}
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -3707,8 +3756,8 @@ packages:
   mobx@6.12.3:
     resolution: {integrity: sha512-c8NKkO4R2lShkSXZ2Ongj1ycjugjzFFo/UswHBnS62y07DMcTc9Rvo03/3nRyszIvwPNljlkd4S828zIBv/piw==}
 
-  mongodb-connection-string-url@3.0.0:
-    resolution: {integrity: sha512-t1Vf+m1I5hC2M5RJx/7AtxgABy1cZmIPQRMXw+gEIPn/cZNF3Oiy+l0UIypUwVB5trcWHq3crg2g3uAR9aAwsQ==}
+  mongodb-connection-string-url@3.0.1:
+    resolution: {integrity: sha512-XqMGwRX0Lgn05TDB4PyG2h2kKO/FfWJyCzYQbIhXUxz7ETt0I/FqHjUeqj37irJ+Dl1ZtU82uYyj14u2XsZKfg==}
 
   mongodb@6.3.0:
     resolution: {integrity: sha512-tt0KuGjGtLUhLoU263+xvQmPHEGTw5LbcNC73EoFRYgSHwZt5tsoJC110hDyO1kjQzpgNrpdcSza9PknWN4LrA==}
@@ -4016,8 +4065,8 @@ packages:
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
 
-  protobufjs@7.2.6:
-    resolution: {integrity: sha512-dgJaEDDL6x8ASUZ1YqWciTRrdOuYNzoOf27oHNfdyvKqHr5i0FV7FSLU+aIeFjyFgVxrpTOtQUi0BLLBymZaBw==}
+  protobufjs@7.3.0:
+    resolution: {integrity: sha512-YWD03n3shzV9ImZRX3ccbjqLxj7NokGN0V/ESiBV5xWqrommYHYiihuIyavq03pWSGqlyvYUFmfoMKd+1rPA/g==}
     engines: {node: '>=12.0.0'}
 
   proxy-addr@2.0.7:
@@ -4373,15 +4422,15 @@ packages:
     resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
     engines: {node: '>=0.10.0'}
 
-  react-router-dom@6.23.0:
-    resolution: {integrity: sha512-Q9YaSYvubwgbal2c9DJKfx6hTNoBp3iJDsl+Duva/DwxoJH+OTXkxGpql4iUK2sla/8z4RpjAm6EWx1qUDuopQ==}
+  react-router-dom@6.23.1:
+    resolution: {integrity: sha512-utP+K+aSTtEdbWpC+4gxhdlPFwuEfDKq8ZrPFU65bbRJY+l706qjR7yaidBpo3MSeA/fzwbXWbKBI6ftOnP3OQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
       react-dom: '>=16.8'
 
-  react-router@6.23.0:
-    resolution: {integrity: sha512-wPMZ8S2TuPadH0sF5irFGjkNLIcRvOSaEe7v+JER8508dyJumm6XZB1u5kztlX0RVq6AzRVndzqcUh6sFIauzA==}
+  react-router@6.23.1:
+    resolution: {integrity: sha512-fzcOaRF69uvqbbM7OhvQyBTFDVrrGlsFdS3AL+1KfIBtGETibHzi3FkoTRyiDJnWNc2VxrfvR+657ROHjaNjqQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
@@ -6507,7 +6556,7 @@ snapshots:
     dependencies:
       lodash.camelcase: 4.3.0
       long: 5.2.3
-      protobufjs: 7.2.6
+      protobufjs: 7.3.0
       yargs: 17.7.2
 
   '@jridgewell/gen-mapping@0.3.5':
@@ -6700,7 +6749,7 @@ snapshots:
       '@module-federation/runtime': 0.1.6
       '@module-federation/sdk': 0.1.6
 
-  '@mongodb-js/saslprep@1.1.6':
+  '@mongodb-js/saslprep@1.1.7':
     dependencies:
       sparse-bitfield: 3.0.3
 
@@ -6719,25 +6768,49 @@ snapshots:
   '@oven/bun-darwin-aarch64@1.1.7':
     optional: true
 
+  '@oven/bun-darwin-aarch64@1.1.8':
+    optional: true
+
   '@oven/bun-darwin-x64-baseline@1.1.7':
+    optional: true
+
+  '@oven/bun-darwin-x64-baseline@1.1.8':
     optional: true
 
   '@oven/bun-darwin-x64@1.1.7':
     optional: true
 
+  '@oven/bun-darwin-x64@1.1.8':
+    optional: true
+
   '@oven/bun-linux-aarch64@1.1.7':
+    optional: true
+
+  '@oven/bun-linux-aarch64@1.1.8':
     optional: true
 
   '@oven/bun-linux-x64-baseline@1.1.7':
     optional: true
 
+  '@oven/bun-linux-x64-baseline@1.1.8':
+    optional: true
+
   '@oven/bun-linux-x64@1.1.7':
+    optional: true
+
+  '@oven/bun-linux-x64@1.1.8':
     optional: true
 
   '@oven/bun-windows-x64-baseline@1.1.7':
     optional: true
 
+  '@oven/bun-windows-x64-baseline@1.1.8':
+    optional: true
+
   '@oven/bun-windows-x64@1.1.7':
+    optional: true
+
+  '@oven/bun-windows-x64@1.1.8':
     optional: true
 
   '@phosphor-icons/react@2.1.5(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)':
@@ -6844,7 +6917,7 @@ snapshots:
       react: 0.0.0-experimental-c3048aab4-20240326
       react-dom: 0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326)
 
-  '@remix-run/router@1.16.0': {}
+  '@remix-run/router@1.16.1': {}
 
   '@rsdoctor/client@0.1.10': {}
 
@@ -7379,7 +7452,7 @@ snapshots:
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 20.12.10
+      '@types/node': 20.12.11
 
   '@types/geojson@7946.0.14': {}
 
@@ -7431,11 +7504,11 @@ snapshots:
 
   '@types/react-dom@18.3.0':
     dependencies:
-      '@types/react': 18.3.1
+      '@types/react': 18.2.42
 
   '@types/react-reconciler@0.28.8':
     dependencies:
-      '@types/react': 18.3.1
+      '@types/react': 18.3.2
 
   '@types/react@18.2.42':
     dependencies:
@@ -7443,7 +7516,7 @@ snapshots:
       '@types/scheduler': 0.16.8
       csstype: 3.1.3
 
-  '@types/react@18.3.1':
+  '@types/react@18.3.2':
     dependencies:
       '@types/prop-types': 15.7.12
       csstype: 3.1.3
@@ -7580,13 +7653,13 @@ snapshots:
 
   '@xtuc/long@4.2.2': {}
 
-  '@xyflow/react@12.0.0-next.12(@types/react@18.3.1)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)':
+  '@xyflow/react@12.0.0-next.12(@types/react@18.3.2)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)':
     dependencies:
       '@xyflow/system': 0.0.20
       classcat: 5.0.5
       react: 0.0.0-experimental-c3048aab4-20240326
       react-dom: 0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326)
-      zustand: 4.5.2(@types/react@18.3.1)(react@0.0.0-experimental-c3048aab4-20240326)
+      zustand: 4.5.2(@types/react@18.3.2)(react@0.0.0-experimental-c3048aab4-20240326)
     transitivePeerDependencies:
       - '@types/react'
       - immer
@@ -7873,7 +7946,7 @@ snapshots:
   browserslist@4.23.0:
     dependencies:
       caniuse-lite: 1.0.30001617
-      electron-to-chromium: 1.4.762
+      electron-to-chromium: 1.4.763
       node-releases: 2.0.14
       update-browserslist-db: 1.0.15(browserslist@4.23.0)
 
@@ -7891,6 +7964,11 @@ snapshots:
       '@types/node': 20.12.10
       '@types/ws': 8.5.10
 
+  bun-types@1.1.8:
+    dependencies:
+      '@types/node': 20.12.11
+      '@types/ws': 8.5.10
+
   bun@1.1.7:
     optionalDependencies:
       '@oven/bun-darwin-aarch64': 1.1.7
@@ -7901,6 +7979,17 @@ snapshots:
       '@oven/bun-linux-x64-baseline': 1.1.7
       '@oven/bun-windows-x64': 1.1.7
       '@oven/bun-windows-x64-baseline': 1.1.7
+
+  bun@1.1.8:
+    optionalDependencies:
+      '@oven/bun-darwin-aarch64': 1.1.8
+      '@oven/bun-darwin-x64': 1.1.8
+      '@oven/bun-darwin-x64-baseline': 1.1.8
+      '@oven/bun-linux-aarch64': 1.1.8
+      '@oven/bun-linux-x64': 1.1.8
+      '@oven/bun-linux-x64-baseline': 1.1.8
+      '@oven/bun-windows-x64': 1.1.8
+      '@oven/bun-windows-x64-baseline': 1.1.8
 
   bytes@3.0.0: {}
 
@@ -8289,7 +8378,7 @@ snapshots:
 
   ee-first@1.1.1: {}
 
-  electron-to-chromium@1.4.762: {}
+  electron-to-chromium@1.4.763: {}
 
   emoji-mart@5.6.0: {}
 
@@ -8755,7 +8844,7 @@ snapshots:
 
   human-signals@5.0.0: {}
 
-  i18next@23.11.3:
+  i18next@23.11.4:
     dependencies:
       '@babel/runtime': 7.24.5
 
@@ -9132,16 +9221,16 @@ snapshots:
 
   mobx@6.12.3: {}
 
-  mongodb-connection-string-url@3.0.0:
+  mongodb-connection-string-url@3.0.1:
     dependencies:
       '@types/whatwg-url': 11.0.4
       whatwg-url: 13.0.0
 
   mongodb@6.3.0:
     dependencies:
-      '@mongodb-js/saslprep': 1.1.6
+      '@mongodb-js/saslprep': 1.1.7
       bson: 6.7.0
-      mongodb-connection-string-url: 3.0.0
+      mongodb-connection-string-url: 3.0.1
 
   mrmime@1.0.1: {}
 
@@ -9376,7 +9465,7 @@ snapshots:
       object-assign: 4.1.1
       react-is: 16.13.1
 
-  protobufjs@7.2.6:
+  protobufjs@7.3.0:
     dependencies:
       '@protobufjs/aspromise': 1.1.2
       '@protobufjs/base64': 1.1.2
@@ -9785,11 +9874,11 @@ snapshots:
       react-dom: 0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326)
       smooth-scroll-into-view-if-needed: 1.1.33
 
-  react-i18next@13.5.0(i18next@23.11.3)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
+  react-i18next@13.5.0(i18next@23.11.4)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
       '@babel/runtime': 7.24.5
       html-parse-stringify: 3.0.1
-      i18next: 23.11.3
+      i18next: 23.11.4
       react: 0.0.0-experimental-c3048aab4-20240326
     optionalDependencies:
       react-dom: 0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326)
@@ -9827,16 +9916,16 @@ snapshots:
 
   react-refresh@0.14.2: {}
 
-  react-router-dom@6.23.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
+  react-router-dom@6.23.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
-      '@remix-run/router': 1.16.0
+      '@remix-run/router': 1.16.1
       react: 0.0.0-experimental-c3048aab4-20240326
       react-dom: 0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326)
-      react-router: 6.23.0(react@0.0.0-experimental-c3048aab4-20240326)
+      react-router: 6.23.1(react@0.0.0-experimental-c3048aab4-20240326)
 
-  react-router@6.23.0(react@0.0.0-experimental-c3048aab4-20240326):
+  react-router@6.23.1(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
-      '@remix-run/router': 1.16.0
+      '@remix-run/router': 1.16.1
       react: 0.0.0-experimental-c3048aab4-20240326
 
   react@0.0.0-experimental-c3048aab4-20240326: {}
@@ -10774,9 +10863,9 @@ snapshots:
     dependencies:
       tslib: 2.3.0
 
-  zustand@4.5.2(@types/react@18.3.1)(react@0.0.0-experimental-c3048aab4-20240326):
+  zustand@4.5.2(@types/react@18.3.2)(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
       use-sync-external-store: 1.2.0(react@0.0.0-experimental-c3048aab4-20240326)
     optionalDependencies:
-      '@types/react': 18.3.1
+      '@types/react': 18.3.2
       react: 0.0.0-experimental-c3048aab4-20240326
