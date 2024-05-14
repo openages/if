@@ -1,3 +1,5 @@
+export { default as Watcher } from './__Watcher__'
+
 export { default as Picker } from './Picker'
 export { default as Transform } from './Transform'
 export { default as TextBar } from './TextBar'

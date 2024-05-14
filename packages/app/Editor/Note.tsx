@@ -23,7 +23,8 @@ import {
 	Picker,
 	TextBar,
 	Toggle,
-	Transform
+	Transform,
+	Watcher
 } from './plugins'
 import { style, token } from './theme'
 import { onError } from './utils'
@@ -44,6 +45,7 @@ const Index = () => {
 				<LinkPlugin />
 				<TabIndentationPlugin />
 
+				<Watcher />
 				<Picker />
 				<TextBar md />
 				<ListPlugin />
