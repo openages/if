@@ -58,8 +58,8 @@ export default class Index {
 		this.block.editor.update(() => {
 			const target = this.block.node.getWritable()
 
-			if (type === 'width') target.__width = v.indexOf('%') !== -1 ? v : Number(v)
-			if (type === 'height') target.__height = v.indexOf('%') !== -1 ? v : Number(v)
+			if (type === 'width') target.__width = typeof Number(v) === 'number' ? Number(v) : v
+			if (type === 'height') target.__height = typeof Number(v) === 'number' ? Number(v) : v
 		})
 	}
 
@@ -69,7 +69,7 @@ export default class Index {
 
 			target.__width = undefined
 			target.__height = undefined
-			target.__align = undefined
+			target.__align = 'center'
 			target.__object_fit = undefined
 		})
 	}

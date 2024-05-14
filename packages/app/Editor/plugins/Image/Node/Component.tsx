@@ -24,7 +24,7 @@ import Model from './model'
 import type { CSSProperties } from 'react'
 
 const Index = (props: IPropsComponent) => {
-	const { src, width = '100%', height = '100%', alt, align, object_fit, node, node_key } = props
+	const { src, width = 'auto', height = 'auto', alt, align, object_fit, node, node_key } = props
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(node_key)
@@ -48,15 +48,12 @@ const Index = (props: IPropsComponent) => {
 
 	return (
 		<span className={$cx('flex w_100', styles.wrap)} style={style_wrap}>
-			<span className='__editor_image_wrap flex flex_column relative' style={{ width }}>
+			<span className='__editor_image_wrap relative' style={{ width }}>
 				<img
-					className={$cx(
-						'__editor_image w_100',
-						styles._local,
-						x.block.selected && styles.selected
-					)}
+					className={$cx('__editor_image', styles._local, x.block.selected && styles.selected)}
 					src={src}
-					height={height + 'px'}
+					width={width}
+					height={height}
 					alt={alt}
 					style={style_img}
 					draggable={false}

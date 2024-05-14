@@ -28,7 +28,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 		this.__width = width
 		this.__height = height
 		this.__alt = alt
-		this.__align = align
+		this.__align = align || 'center'
 		this.__object_fit = object_fit
 	}
 
@@ -61,6 +61,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 
 		el.style.display = 'inline-flex'
 		el.style.width = '100%'
+		el.style.caretColor = 'transparent'
 
 		return el
 	}
