@@ -1,10 +1,22 @@
-import { $getSelection, $isRangeSelection, COMMAND_PRIORITY_CRITICAL, SELECTION_CHANGE_COMMAND } from 'lexical'
+import {
+	$createNodeSelection,
+	$getSelection,
+	$isNodeSelection,
+	$isRangeSelection,
+	$setSelection,
+	COMMAND_PRIORITY_CRITICAL,
+	DELETE_CHARACTER_COMMAND,
+	INSERT_LINE_BREAK_COMMAND,
+	LineBreakNode,
+	SELECTION_CHANGE_COMMAND
+} from 'lexical'
 
+import blocks from '@/Editor/blocks'
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
 import { mergeRegister } from '@lexical/utils'
 import { deepEqual } from '@openages/stk/react'
 
-import type { LexicalEditor } from 'lexical'
+import type { LexicalEditor, LexicalNode } from 'lexical'
 
 export default class Index {
 	editor = null as LexicalEditor
@@ -17,15 +29,26 @@ export default class Index {
 	watcher() {
 		const selection = $getSelection()
 
-		if (!$isRangeSelection(selection)) return
+		if (!$isNodeSelection(selection) && !$isRangeSelection(selection)) return
 
-		const anchor = selection.anchor
-		const focus = selection.focus
+		let nodes: Array<LexicalNode>
 
-		if (anchor.offset !== focus.offset) return
+		if ($isNodeSelection(selection)) {
+			nodes = selection.getNodes()
+		}
 
-		const parents = anchor.getNode().getParents()
-		const path = parents.map(item => ({ type: item.getType(), key: item.getKey() }))
+		if ($isRangeSelection(selection)) {
+			const anchor = selection.anchor
+			const focus = selection.focus
+
+			if (anchor.offset !== focus.offset) return
+
+			nodes = anchor.getNode().getParents()
+		}
+
+		const path = nodes.map(item => ({ type: item.getType(), key: item.getKey() }))
+
+		console.log('path: ', path, nodes)
 
 		if (deepEqual(path, this.path)) return
 
@@ -36,11 +59,43 @@ export default class Index {
 		return false
 	}
 
+	onDelete() {
+		const selection = $getSelection()
+
+		if (!$isRangeSelection(selection)) return
+
+		const nodes = selection.getNodes()
+
+		if (nodes.length === 1) {
+			const node = nodes[0]
+			const key = node.getKey()
+
+			if (!blocks.includes(node.getType())) return false
+
+			this.editor.update(() => {
+				const selection = $createNodeSelection()
+
+				selection.add(key)
+
+				$setSelection(selection)
+			})
+
+			return true
+		}
+
+		return false
+	}
+
 	register() {
 		return mergeRegister(
 			this.editor.registerCommand(
 				SELECTION_CHANGE_COMMAND,
 				this.watcher.bind(this),
+				COMMAND_PRIORITY_CRITICAL
+			),
+			this.editor.registerCommand(
+				DELETE_CHARACTER_COMMAND,
+				this.onDelete.bind(this),
 				COMMAND_PRIORITY_CRITICAL
 			)
 		)

@@ -1,8 +1,6 @@
-import { $insertNodes } from 'lexical'
-
 import KatexNode from '@/Editor/plugins/Katex/Node'
 import { $createKatexNode, $isKatexNode } from '@/Editor/plugins/Katex/utils'
-import { insertAfter } from '@/Editor/utils'
+import { insertBlock } from '@/Editor/utils'
 
 import type { TextMatchTransformer, ElementTransformer } from '@lexical/markdown'
 
@@ -36,7 +34,6 @@ export const Katex_block = {
 	replace(_parent, _children, match, _is_import) {
 		const node = $createKatexNode({ value: match[1], inline: false })
 
-		$insertNodes([node])
-		insertAfter(node)
+		insertBlock(node)
 	}
 } as ElementTransformer

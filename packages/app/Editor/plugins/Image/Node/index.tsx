@@ -57,13 +57,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 	}
 
 	createDOM() {
-		const el = document.createElement('span')
-
-		el.style.display = 'inline-flex'
-		el.style.width = '100%'
-		el.style.caretColor = 'transparent'
-
-		return el
+		return document.createElement('p')
 	}
 
 	exportDOM(): DOMExportOutput {
@@ -104,7 +98,6 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 					alt={this.__alt}
 					align={this.__align}
 					object_fit={this.__object_fit}
-					node={this}
 					node_key={this.__key}
 				/>
 			</Suspense>

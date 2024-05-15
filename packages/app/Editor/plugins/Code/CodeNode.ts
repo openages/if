@@ -69,9 +69,9 @@ export default class CodeNode extends ElementNode {
 		return { element: el }
 	}
 
-	updateDOM(prev: CodeNode, dom: HTMLElement) {
+	updateDOM(prev: CodeNode, el: HTMLElement) {
 		if (prev.__lang !== this.__lang) {
-			dom.setAttribute('data-lang', shiki_langs[this.__lang].name)
+			el.setAttribute('data-lang', shiki_langs[this.__lang].name)
 		}
 
 		return false

@@ -36,8 +36,8 @@ export default class CodeTextNode extends TextNode {
 		return el
 	}
 
-	updateDOM(prev: CodeTextNode, dom: HTMLElement, config: EditorConfig): boolean {
-		return super.updateDOM(prev, dom, config)
+	updateDOM(prev: CodeTextNode, el: HTMLElement, config: EditorConfig): boolean {
+		return super.updateDOM(prev, el, config)
 	}
 
 	exportJSON() {

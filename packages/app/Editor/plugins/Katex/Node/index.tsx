@@ -3,6 +3,7 @@ import { DecoratorNode } from 'lexical'
 import { lazy, Suspense } from 'react'
 
 import { $createKatexNode, convertKatexElement } from '../utils'
+import styles from './index.css'
 
 import type { DOMConversionMap, DOMExportOutput } from 'lexical'
 import type { IPropsKatex } from '../types'
@@ -57,16 +58,24 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 	}
 
 	createDOM() {
-		const el = document.createElement('span')
+		const el = document.createElement(this.__inline ? 'span' : 'p')
 
-		el.className = '__editor_katex'
+		el.classList.add('__editor_katex', styles._local)
 
 		if (!this.__inline) {
-			el.style.display = 'inline-flex'
-			el.style.width = '100%'
+			el.classList.remove(styles.inline)
+
+			el.style.display = 'flex'
 			el.style.justifyContent = 'center'
-			el.style.paddingTop = '1em'
-			el.style.paddingBottom = '1em'
+			el.style.paddingTop = '1.2em'
+			el.style.paddingBottom = '1.2em'
+		} else {
+			el.classList.add(styles.inline)
+
+			el.style.display = 'inline-block'
+			el.style.justifyContent = 'unset'
+			el.style.paddingTop = 'unset'
+			el.style.paddingBottom = 'unset'
 		}
 
 		return el
@@ -90,7 +99,11 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 		return { element }
 	}
 
-	updateDOM() {
+	updateDOM(prev: KatexNode) {
+		if (prev.__inline !== this.__inline) {
+			return true
+		}
+
 		return false
 	}
 

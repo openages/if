@@ -50,9 +50,9 @@ export default class ToggleNode extends ElementNode {
 		return dom
 	}
 
-	updateDOM(prev_node: ToggleNode, dom: HTMLDetailsElement) {
+	updateDOM(prev_node: ToggleNode, el: HTMLDetailsElement) {
 		if (prev_node.__open !== this.__open) {
-			dom.open = this.__open
+			el.open = this.__open
 		}
 
 		return false

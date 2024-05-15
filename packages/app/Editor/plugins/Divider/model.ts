@@ -2,7 +2,7 @@ import { $getSelection, $isRangeSelection, COMMAND_PRIORITY_EDITOR } from 'lexic
 import { makeAutoObservable } from 'mobx'
 
 import { INSERT_DIVIDER_COMMAND } from '@/Editor/commands'
-import { getSelectedNode } from '@/Editor/utils'
+import { insertBlock } from '@/Editor/utils'
 import { mergeRegister } from '@lexical/utils'
 
 import { $createDividerNode } from './utils'
@@ -29,24 +29,7 @@ export default class Index {
 			this.editor.registerCommand(
 				INSERT_DIVIDER_COMMAND,
 				_ => {
-					const selection = $getSelection()
-
-					if (!$isRangeSelection(selection)) return
-
-					const selected_node = getSelectedNode(selection)
-					const node = $createDividerNode()
-
-					if (selected_node.getTextContentSize()) {
-						selected_node.getTopLevelElement().insertAfter(node)
-					} else {
-						selected_node.replace(node)
-
-						const next = selected_node.getNextSibling()
-
-						if (next) next.selectStart()
-					}
-
-					return true
+					return insertBlock($createDividerNode())
 				},
 				COMMAND_PRIORITY_EDITOR
 			)

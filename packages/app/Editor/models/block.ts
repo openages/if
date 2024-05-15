@@ -1,26 +1,29 @@
 import {
 	$createParagraphNode,
+	$getNodeByKey,
 	$getSelection,
-	$insertNodes,
 	$isNodeSelection,
 	CLICK_COMMAND,
+	COMMAND_PRIORITY_HIGH,
 	COMMAND_PRIORITY_LOW,
 	KEY_BACKSPACE_COMMAND,
 	KEY_DELETE_COMMAND,
-	KEY_ENTER_COMMAND,
-	SELECTION_CHANGE_COMMAND
+	KEY_ENTER_COMMAND
 } from 'lexical'
 import { makeAutoObservable } from 'mobx'
+import { injectable } from 'tsyringe'
 
+import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
 import { removeAndCheck } from '@/Editor/utils'
+import Utils from '@/models/utils'
 import { mergeRegister } from '@lexical/utils'
 
-import type { LexicalEditor, ParagraphNode, LexicalNode } from 'lexical'
+import type { LexicalEditor, LexicalNode } from 'lexical'
 import type { MouseEvent } from 'react'
 
+@injectable()
 export default class Index<T extends LexicalNode = any> {
 	editor = null as LexicalEditor
-	node = null as T
 	key = ''
 	ref = null as HTMLElement
 
@@ -30,12 +33,12 @@ export default class Index<T extends LexicalNode = any> {
 	clearSelection = null as () => void
 	unregister = null as () => void
 
-	constructor() {
+	constructor(public utils: Utils) {
 		makeAutoObservable(
 			this,
 			{
+				utils: false,
 				editor: false,
-				node: false,
 				key: false,
 				ref: false,
 				setSelected: false,
@@ -47,28 +50,18 @@ export default class Index<T extends LexicalNode = any> {
 
 	init(
 		editor: Index['editor'],
-		node: T,
 		key: Index['key'],
 		setSelected: Index['setSelected'],
 		clearSelection: Index['clearSelection']
 	) {
 		this.editor = editor
-		this.node = node
 		this.key = key
 		this.ref = this.editor.getElementByKey(this.key)
 
 		this.setSelected = setSelected
 		this.clearSelection = clearSelection
 
-		this.register()
-	}
-
-	onSelection(_: void, active_editor: LexicalEditor) {
-		this.editor = active_editor
-
-		this.checkSelected()
-
-		return false
+		this.on()
 	}
 
 	onClick(e: MouseEvent<HTMLSpanElement>) {
@@ -91,21 +84,26 @@ export default class Index<T extends LexicalNode = any> {
 	onEnter() {
 		if (!this.selected) return false
 
-		const target = this.node.getTopLevelElement().insertAfter($createParagraphNode()) as ParagraphNode
+		const node = $getNodeByKey(this.key)
+		const p = $createParagraphNode()
 
-		window.requestAnimationFrame(() => this.editor.update(() => target.selectStart()))
+		node.insertAfter(p)
+
+		window.requestAnimationFrame(() => this.editor.update(() => p.selectEnd()))
 
 		return true
 	}
 
 	onDelete(e: KeyboardEvent | MouseEvent) {
+		const node = $getNodeByKey(this.key)
+
 		if ((e as MouseEvent).nativeEvent instanceof PointerEvent) {
 			e.preventDefault()
 
 			this.clearSelection()
 			this.setSelected(true)
 
-			this.editor.update(() => this.node.remove())
+			this.editor.update(() => node.remove())
 
 			return true
 		}
@@ -113,7 +111,7 @@ export default class Index<T extends LexicalNode = any> {
 		if (this.selected && $isNodeSelection($getSelection())) {
 			e.preventDefault()
 
-			removeAndCheck(this.node)
+			removeAndCheck(node)
 
 			return true
 		}
@@ -121,26 +119,20 @@ export default class Index<T extends LexicalNode = any> {
 		return false
 	}
 
-	checkSelected() {
-		if (this.selected) return
-
-		const selection = $getSelection()
-
-		if (!selection) return
-
-		const nodes = selection.getNodes()
-		const node = nodes.at(0)
-
-		if (nodes.length !== 1 || !node) return
-
-		if (this.node.is(node)) {
-			this.setSelected(true)
+	checkSelection(path: Array<{ type: string; key: string }>) {
+		if (path.find(item => item.key === this.key) !== undefined) {
+			this.register()
+		} else {
+			this.unregister?.()
 		}
+
+		return false
 	}
 
 	register() {
+		if (this.unregister) this.unregister()
+
 		this.unregister = mergeRegister(
-			this.editor.registerCommand(SELECTION_CHANGE_COMMAND, this.onSelection, COMMAND_PRIORITY_LOW),
 			this.editor.registerCommand<MouseEvent>(CLICK_COMMAND, this.onClick, COMMAND_PRIORITY_LOW),
 			this.editor.registerCommand(KEY_ENTER_COMMAND, this.onEnter, COMMAND_PRIORITY_LOW),
 			this.editor.registerCommand(KEY_DELETE_COMMAND, this.onDelete, COMMAND_PRIORITY_LOW),
@@ -148,7 +140,17 @@ export default class Index<T extends LexicalNode = any> {
 		)
 	}
 
+	on() {
+		this.utils.acts.push(
+			this.editor.registerCommand(SELECTION_ELEMENTS_CHANGE, this.checkSelection, COMMAND_PRIORITY_HIGH)
+		)
+	}
+
 	off() {
-		this.unregister()
+		this.utils.off()
+
+		this.unregister?.()
+
+		this.unregister = null
 	}
 }

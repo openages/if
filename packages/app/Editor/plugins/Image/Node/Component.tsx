@@ -17,14 +17,14 @@ import {
 	Trash
 } from '@phosphor-icons/react'
 
-import { IPropsComponent } from '../types'
+import { IPropsImage } from '../types'
 import styles from './index.css'
 import Model from './model'
 
 import type { CSSProperties } from 'react'
 
-const Index = (props: IPropsComponent) => {
-	const { src, width = 'auto', height = 'auto', alt, align, object_fit, node, node_key } = props
+const Index = (props: IPropsImage) => {
+	const { src, width = 'auto', height = 'auto', alt, align, object_fit, node_key } = props
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(node_key)
@@ -34,10 +34,10 @@ const Index = (props: IPropsComponent) => {
 	const style_img = {} as CSSProperties
 
 	useLayoutEffect(() => {
-		x.block.init(editor, node, node_key, setSelected, clearSelection)
+		x.block.init(editor, node_key, setSelected, clearSelection)
 
 		return () => x.block.off()
-	}, [editor, node, node_key, setSelected, clearSelection])
+	}, [editor, node_key, setSelected, clearSelection])
 
 	useEffect(() => {
 		x.block.selected = selected

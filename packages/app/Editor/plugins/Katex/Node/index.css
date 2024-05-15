@@ -1,24 +1,24 @@
 ._local {
 	border-radius: var(--radius);
+}
 
-	&.inline {
-		border-radius: var(--radius_small_1);
+.selected {
+	outline: 1px dashed var(--color_text);
+}
 
-		&.selected {
-			outline: none;
-			background-color: var(--color_bg_2);
-		}
-
-		:global {
-			.katex-display {
-				padding: 0 0.3em;
-				transform: translateY(-1px);
-				font-size: 12px;
-			}
-		}
-	}
+.inline {
+	border-radius: var(--radius_small_1);
 
 	&.selected {
-		outline: 1px dashed var(--color_text);
+		outline: none;
+		background-color: var(--color_bg_2);
+	}
+
+	:global {
+		.katex-display {
+			padding: 0 0.3em;
+			transform: translateY(-1px);
+			font-size: 12px !important;
+		}
 	}
 }

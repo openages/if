@@ -1,8 +1,8 @@
-import { $insertNodes, COMMAND_PRIORITY_EDITOR, COMMAND_PRIORITY_LOW } from 'lexical'
+import { COMMAND_PRIORITY_LOW } from 'lexical'
 import { makeAutoObservable } from 'mobx'
 
 import { INSERT_IMAGE_COMMAND } from '@/Editor/commands'
-import { insertAfter } from '@/Editor/utils'
+import { insertBlock } from '@/Editor/utils'
 import { DRAG_DROP_PASTE } from '@lexical/rich-text'
 import { mergeRegister } from '@lexical/utils'
 
@@ -33,12 +33,11 @@ export default class Index {
 				payload => {
 					const node = $createImageNode(payload)
 
-					$insertNodes([node])
-					insertAfter(node)
+					insertBlock(node)
 
 					return true
 				},
-				COMMAND_PRIORITY_EDITOR
+				COMMAND_PRIORITY_LOW
 			),
 			this.editor.registerCommand(
 				DRAG_DROP_PASTE,

@@ -1,6 +1,6 @@
 import type { SerializedLexicalNode, Spread } from 'lexical'
 
-import type KatexNode from './Node'
+import type { MouseEvent } from 'react'
 
 export interface IPropsKatex {
 	value: string
@@ -8,12 +8,8 @@ export interface IPropsKatex {
 	node_key?: string
 }
 
-export interface IPropsComponent extends IPropsKatex {
-	node: KatexNode
-}
-
 export interface IPropsRender extends IPropsKatex {
-	onClick?: () => void
+	onClick?: (e: MouseEvent<HTMLSpanElement>) => void
 }
 
 export type SerializedKatexNode = Spread<IPropsKatex, SerializedLexicalNode>
