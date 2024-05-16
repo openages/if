@@ -1,20 +1,14 @@
-import {
-	$createParagraphNode,
-	$isElementNode,
-	DOMConversionMap,
-	ElementNode,
-	RangeSelection,
-	SerializedElementNode
-} from 'lexical'
+import { $createParagraphNode, $isElementNode, ElementNode } from 'lexical'
 
-import { $createToggleHeadNode, convertToggleTitleElement } from './utils'
+import { $createToggleHeadNode, convertToggleHeadElement } from './utils'
 
 import type ToggleNode from './ToggleNode'
+import type { DOMConversionMap, RangeSelection, SerializedElementNode } from 'lexical'
 import type ToggleBodyNode from './ToggleBodyNode'
 
 export default class ToggleHeadNode extends ElementNode {
 	static getType() {
-		return 'toggle_title'
+		return 'toggle_head'
 	}
 
 	static clone(node: ToggleHeadNode) {
@@ -22,7 +16,7 @@ export default class ToggleHeadNode extends ElementNode {
 	}
 
 	static importDOM(): DOMConversionMap | null {
-		return { summary: () => ({ conversion: convertToggleTitleElement, priority: 0 }) }
+		return { div: () => ({ conversion: convertToggleHeadElement, priority: 0 }) }
 	}
 
 	static importJSON() {
@@ -30,9 +24,9 @@ export default class ToggleHeadNode extends ElementNode {
 	}
 
 	createDOM(): HTMLElement {
-		const el = document.createElement('summary')
+		const el = document.createElement('div')
 
-		el.classList.add('__editor_toggle_title')
+		el.classList.add('__editor_toggle_head')
 
 		return el
 	}
@@ -44,7 +38,7 @@ export default class ToggleHeadNode extends ElementNode {
 	exportJSON(): SerializedElementNode {
 		return {
 			...super.exportJSON(),
-			type: 'toggle_title'
+			type: 'toggle_head'
 		}
 	}
 

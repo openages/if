@@ -1,9 +1,9 @@
 .clickable {
 	cursor: pointer;
-	transition: transform ease 0.12s;
+	transition: scale ease 0.12s;
 
 	&:active {
-		transform: scale(0.9);
+		scale: 0.9;
 	}
 }
 

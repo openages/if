@@ -56,7 +56,7 @@
     "js-xxhash": "^3.0.1",
     "json-stable-stringify": "^1.1.1",
     "katex": "^0.16.10",
-    "konva": "^9.3.6",
+    "konva": "^9.3.8",
     "lexical": "^0.15.0",
     "lodash-es": "^4.17.21",
     "lucide-react": "^0.293.0",

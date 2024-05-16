@@ -54,7 +54,7 @@ export default class DividerNode extends DecoratorNode<JSX.Element> {
 	decorate() {
 		return (
 			<Suspense fallback={null}>
-				<Component node={this} node_key={this.__key} />
+				<Component node_key={this.__key} />
 			</Suspense>
 		)
 	}

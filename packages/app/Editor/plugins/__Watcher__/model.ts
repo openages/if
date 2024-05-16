@@ -6,8 +6,6 @@ import {
 	$setSelection,
 	COMMAND_PRIORITY_CRITICAL,
 	DELETE_CHARACTER_COMMAND,
-	INSERT_LINE_BREAK_COMMAND,
-	LineBreakNode,
 	SELECTION_CHANGE_COMMAND
 } from 'lexical'
 
@@ -47,8 +45,6 @@ export default class Index {
 		}
 
 		const path = nodes.map(item => ({ type: item.getType(), key: item.getKey() }))
-
-		console.log('path: ', path, nodes)
 
 		if (deepEqual(path, this.path)) return
 

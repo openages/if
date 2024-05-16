@@ -8,6 +8,7 @@ import DividerNode from './plugins/Divider/Node'
 import ImageNode from './plugins/Image/Node'
 import KatexNode from './plugins/Katex/Node'
 import ToggleBodyNode from './plugins/Toggle/ToggleBodyNode'
+import ToggleBtnNode from './plugins/Toggle/ToggleBtnNode'
 import ToggleHeadNode from './plugins/Toggle/ToggleHeadNode'
 import ToggleNode from './plugins/Toggle/ToggleNode'
 
@@ -20,6 +21,7 @@ export default [
 	CodeNode,
 	CodeTextNode,
 	ToggleNode,
+	ToggleBtnNode,
 	ToggleHeadNode,
 	ToggleBodyNode,
 

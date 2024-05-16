@@ -4,13 +4,11 @@ import type { DOMConversionOutput } from 'lexical'
 import type { BundledLanguage } from 'shiki'
 
 export default (dom: HTMLElement): DOMConversionOutput | null => {
-	const lang = (dom.getAttribute('lexical-code-lang') || 'js') as BundledLanguage
+	const lang = dom.getAttribute('lexical-code-lang') as BundledLanguage
 
-	if (lang) {
-		const node = $createCodeNode({ lang })
+	if (!lang) return null
 
-		return { node }
-	}
+	const node = $createCodeNode({ lang })
 
-	return null
+	return { node }
 }

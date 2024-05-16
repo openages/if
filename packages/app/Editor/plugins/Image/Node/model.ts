@@ -1,15 +1,16 @@
-import { makeAutoObservable } from 'mobx'
+import { $getNodeByKey } from 'lexical'
+import { makeObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { Block } from '@/Editor/models'
 
-import type { FocusEvent, CSSProperties } from 'react'
 import type ImageNode from './index'
+import type { FocusEvent, CSSProperties } from 'react'
 
 @injectable()
 export default class Index {
-	constructor(public block: Block<ImageNode>) {
-		makeAutoObservable(this, { block: false }, { autoBind: true })
+	constructor(public block: Block) {
+		makeObservable(this, {}, { autoBind: true })
 	}
 
 	onChangeSrc(e: FocusEvent<HTMLInputElement>) {
@@ -18,7 +19,8 @@ export default class Index {
 		if (!e.target.value) return
 
 		this.block.editor.update(() => {
-			const target = this.block.node.getWritable()
+			const node = $getNodeByKey(this.block.key)
+			const target = node.getWritable() as ImageNode
 
 			if (e.target.value === target.__src) return
 
@@ -30,7 +32,8 @@ export default class Index {
 		e.preventDefault()
 
 		this.block.editor.update(() => {
-			const target = this.block.node.getWritable()
+			const node = $getNodeByKey(this.block.key)
+			const target = node.getWritable() as ImageNode
 
 			if (e.target.value === target.__alt) return
 
@@ -40,7 +43,8 @@ export default class Index {
 
 	onChangeAlign(v: CSSProperties['justifyContent']) {
 		this.block.editor.update(() => {
-			const target = this.block.node.getWritable()
+			const node = $getNodeByKey(this.block.key)
+			const target = node.getWritable() as ImageNode
 
 			target.__align = v
 		})
@@ -48,7 +52,8 @@ export default class Index {
 
 	onChangeObjectFit(v: CSSProperties['objectFit']) {
 		this.block.editor.update(() => {
-			const target = this.block.node.getWritable()
+			const node = $getNodeByKey(this.block.key)
+			const target = node.getWritable() as ImageNode
 
 			target.__object_fit = v
 		})
@@ -56,7 +61,8 @@ export default class Index {
 
 	onChangeSize(type: 'width' | 'height', v: string) {
 		this.block.editor.update(() => {
-			const target = this.block.node.getWritable()
+			const node = $getNodeByKey(this.block.key)
+			const target = node.getWritable() as ImageNode
 
 			if (type === 'width') target.__width = typeof Number(v) === 'number' ? Number(v) : v
 			if (type === 'height') target.__height = typeof Number(v) === 'number' ? Number(v) : v
@@ -65,7 +71,8 @@ export default class Index {
 
 	onReset() {
 		this.block.editor.update(() => {
-			const target = this.block.node.getWritable()
+			const node = $getNodeByKey(this.block.key)
+			const target = node.getWritable() as ImageNode
 
 			target.__width = undefined
 			target.__height = undefined

@@ -1,5 +1,5 @@
-import { $getSelection, $isRangeSelection, COMMAND_PRIORITY_EDITOR } from 'lexical'
-import { makeAutoObservable } from 'mobx'
+import { COMMAND_PRIORITY_EDITOR } from 'lexical'
+import { makeObservable } from 'mobx'
 
 import { INSERT_DIVIDER_COMMAND } from '@/Editor/commands'
 import { insertBlock } from '@/Editor/utils'
@@ -15,7 +15,7 @@ export default class Index {
 	unregister = null as () => void
 
 	constructor() {
-		makeAutoObservable(this, { editor: false, unregister: false }, { autoBind: true })
+		makeObservable(this, {}, { autoBind: true })
 	}
 
 	init(editor: Index['editor']) {

@@ -10,18 +10,18 @@ import styles from './index.css'
 import Model from './model'
 
 const Index = (props: IPropsComponent) => {
-	const { node, node_key } = props
+	const { node_key } = props
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(node_key)
 
 	useLayoutEffect(() => {
-		x.block.init(editor, node, node_key, setSelected, clearSelection)
+		x.block.init(editor, node_key, setSelected, clearSelection)
 
 		x.block.ref.className = styles._local
 
 		return () => x.block.off()
-	}, [editor, node, node_key, setSelected, clearSelection])
+	}, [editor, node_key, setSelected, clearSelection])
 
 	useEffect(() => {
 		x.block.selected = selected

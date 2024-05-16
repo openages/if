@@ -26,7 +26,7 @@ export default class CodeNode extends ElementNode {
 	__lang: BundledLanguage
 
 	constructor(props: IPropsCode) {
-		const { lang, node_key } = props
+		const { lang = 'js', node_key } = props
 
 		super(node_key)
 

@@ -1,6 +1,8 @@
-import { DOMConversionMap, DOMExportOutput, ElementNode, SerializedElementNode } from 'lexical'
+import { ElementNode } from 'lexical'
 
 import { $createToggleBodyNode, convertToggleBodyElement } from './utils'
+
+import type { DOMConversionMap, DOMExportOutput, SerializedElementNode } from 'lexical'
 
 export default class ToggleBodyNode extends ElementNode {
 	static getType() {

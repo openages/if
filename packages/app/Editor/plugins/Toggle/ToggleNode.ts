@@ -1,4 +1,4 @@
-import { DOMConversionMap, DOMExportOutput, EditorConfig, ElementNode, LexicalEditor } from 'lexical'
+import { DOMConversionMap, DOMExportOutput, ElementNode } from 'lexical'
 
 import { $createToggleNode, convertToggleElement } from './utils'
 
@@ -10,7 +10,7 @@ export default class ToggleNode extends ElementNode {
 	constructor(props: IPropsToggle) {
 		super(props.node_key)
 
-		this.__open = props.open || true
+		this.__open = props.open
 	}
 
 	static getType() {
@@ -29,41 +29,30 @@ export default class ToggleNode extends ElementNode {
 		return $createToggleNode({ open: serializedNode.open })
 	}
 
-	createDOM(_: EditorConfig, editor: LexicalEditor): HTMLElement {
-		const dom = document.createElement('details')
+	createDOM(): HTMLElement {
+		const el = document.createElement('div')
 
-		dom.classList.add('__editor_toggle')
-		dom.open = this.__open
+		el.classList.add('__editor_toggle')
 
-		this.updateDomClass(dom)
+		this.updateClass(el)
 
-		dom.addEventListener('toggle', () => {
-			const open = editor.getEditorState().read(() => this.getLatest().__open)
-
-			this.updateDomClass(dom)
-
-			if (open === dom.open) return
-
-			editor.update(() => this.toggleOpen())
-		})
-
-		return dom
+		return el
 	}
 
-	updateDOM(prev_node: ToggleNode, el: HTMLDetailsElement) {
+	updateDOM(prev_node: ToggleNode, el: HTMLDivElement) {
 		if (prev_node.__open !== this.__open) {
-			el.open = this.__open
+			this.updateClass(el)
 		}
 
 		return false
 	}
 
 	exportDOM(): DOMExportOutput {
-		const el = document.createElement('details')
+		const el = document.createElement('div')
 
 		el.classList.add('__editor_toggle')
 
-		el.setAttribute('open', this.__open.toString())
+		el.setAttribute('lexical-toggle-open', this.__open.toString())
 
 		return { element: el }
 	}
@@ -76,19 +65,19 @@ export default class ToggleNode extends ElementNode {
 		}
 	}
 
-	updateDomClass(dom: HTMLDetailsElement) {
-		if (dom.open) {
-			dom.classList.remove('__editor_toggle_close')
-			dom.classList.add('__editor_toggle_open')
+	updateClass(el: HTMLDivElement) {
+		if (this.__open) {
+			el.classList.remove('__editor_toggle_close')
+			el.classList.add('__editor_toggle_open')
 		} else {
-			dom.classList.add('__editor_toggle_close')
-			dom.classList.remove('__editor_toggle_open')
+			el.classList.add('__editor_toggle_close')
+			el.classList.remove('__editor_toggle_open')
 		}
 	}
 
 	toggleOpen(v?: boolean) {
 		const writable = this.getWritable()
 
-		writable.__open = v ?? !this.getLatest().__open
+		writable.__open = v ?? !this.__open
 	}
 }

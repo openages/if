@@ -118,7 +118,7 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 	decorate() {
 		return (
 			<Suspense fallback={null}>
-				<Component value={this.__value} node={this} node_key={this.__key} />
+				<Component value={this.__value} node_key={this.__key} />
 			</Suspense>
 		)
 	}

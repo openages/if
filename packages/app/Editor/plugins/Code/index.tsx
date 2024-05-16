@@ -1,38 +1,18 @@
-import { $getSelection, $isRangeSelection, COMMAND_PRIORITY_EDITOR } from 'lexical'
-import { useLayoutEffect } from 'react'
+import { useLayoutEffect, useState } from 'react'
+import { container } from 'tsyringe'
 
-import { INSERT_CODE_COMMAND } from '@/Editor/commands'
-import { getSelectedNode } from '@/Editor/utils'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { mergeRegister } from '@lexical/utils'
 
-import { $createCodeNode } from '../Code/utils'
-import { register } from './utils'
+import Model from './model'
 
 const Index = () => {
+	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 
 	useLayoutEffect(() => {
-		return mergeRegister(
-			register(editor),
-			editor.registerCommand(
-				INSERT_CODE_COMMAND,
-				_ => {
-					const selection = $getSelection()
+		x.init(editor)
 
-					if (!$isRangeSelection(selection)) return
-
-					const selected_node = getSelectedNode(selection)
-
-					const node = $createCodeNode({ lang: 'javascript' })
-
-					selected_node.replace(node)
-
-					return true
-				},
-				COMMAND_PRIORITY_EDITOR
-			)
-		)
+		return () => x.off()
 	}, [editor])
 
 	return null

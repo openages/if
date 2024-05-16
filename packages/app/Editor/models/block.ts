@@ -10,7 +10,7 @@ import {
 	KEY_DELETE_COMMAND,
 	KEY_ENTER_COMMAND
 } from 'lexical'
-import { makeAutoObservable } from 'mobx'
+import { makeObservable, observable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
@@ -18,11 +18,11 @@ import { removeAndCheck } from '@/Editor/utils'
 import Utils from '@/models/utils'
 import { mergeRegister } from '@lexical/utils'
 
-import type { LexicalEditor, LexicalNode } from 'lexical'
+import type { LexicalEditor } from 'lexical'
 import type { MouseEvent } from 'react'
 
 @injectable()
-export default class Index<T extends LexicalNode = any> {
+export default class Index {
 	editor = null as LexicalEditor
 	key = ''
 	ref = null as HTMLElement
@@ -34,18 +34,7 @@ export default class Index<T extends LexicalNode = any> {
 	unregister = null as () => void
 
 	constructor(public utils: Utils) {
-		makeAutoObservable(
-			this,
-			{
-				utils: false,
-				editor: false,
-				key: false,
-				ref: false,
-				setSelected: false,
-				clearSelection: false
-			},
-			{ autoBind: true }
-		)
+		makeObservable(this, { selected: observable }, { autoBind: true })
 	}
 
 	init(
@@ -121,36 +110,44 @@ export default class Index<T extends LexicalNode = any> {
 
 	checkSelection(path: Array<{ type: string; key: string }>) {
 		if (path.find(item => item.key === this.key) !== undefined) {
-			this.register()
+			this.addListeners()
 		} else {
-			this.unregister?.()
+			this.removeListeners()
 		}
 
 		return false
 	}
 
-	register() {
-		if (this.unregister) this.unregister()
-
+	addListeners() {
 		this.unregister = mergeRegister(
-			this.editor.registerCommand<MouseEvent>(CLICK_COMMAND, this.onClick, COMMAND_PRIORITY_LOW),
-			this.editor.registerCommand(KEY_ENTER_COMMAND, this.onEnter, COMMAND_PRIORITY_LOW),
-			this.editor.registerCommand(KEY_DELETE_COMMAND, this.onDelete, COMMAND_PRIORITY_LOW),
-			this.editor.registerCommand(KEY_BACKSPACE_COMMAND, this.onDelete, COMMAND_PRIORITY_LOW)
+			this.editor.registerCommand<MouseEvent>(CLICK_COMMAND, this.onClick.bind(this), COMMAND_PRIORITY_LOW),
+			this.editor.registerCommand(KEY_ENTER_COMMAND, this.onEnter.bind(this), COMMAND_PRIORITY_LOW),
+			this.editor.registerCommand(KEY_DELETE_COMMAND, this.onDelete.bind(this), COMMAND_PRIORITY_LOW),
+			this.editor.registerCommand(KEY_BACKSPACE_COMMAND, this.onDelete.bind(this), COMMAND_PRIORITY_LOW)
 		)
+	}
+
+	removeListeners() {
+		if (!this.unregister) return
+
+		this.unregister()
+
+		this.unregister = null
 	}
 
 	on() {
 		this.utils.acts.push(
-			this.editor.registerCommand(SELECTION_ELEMENTS_CHANGE, this.checkSelection, COMMAND_PRIORITY_HIGH)
+			this.editor.registerCommand(
+				SELECTION_ELEMENTS_CHANGE,
+				this.checkSelection.bind(this),
+				COMMAND_PRIORITY_HIGH
+			)
 		)
 	}
 
 	off() {
 		this.utils.off()
 
-		this.unregister?.()
-
-		this.unregister = null
+		this.removeListeners()
 	}
 }
