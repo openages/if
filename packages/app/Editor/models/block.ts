@@ -10,7 +10,7 @@ import {
 	KEY_DELETE_COMMAND,
 	KEY_ENTER_COMMAND
 } from 'lexical'
-import { makeObservable, observable } from 'mobx'
+import { action, makeAutoObservable, observable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
@@ -34,7 +34,19 @@ export default class Index {
 	unregister = null as () => void
 
 	constructor(public utils: Utils) {
-		makeObservable(this, { selected: observable }, { autoBind: true })
+		makeAutoObservable(
+			this,
+			{
+				utils: false,
+				editor: false,
+				key: false,
+				ref: false,
+				setSelected: false,
+				clearSelection: false,
+				unregister: false
+			},
+			{ autoBind: true }
+		)
 	}
 
 	init(
