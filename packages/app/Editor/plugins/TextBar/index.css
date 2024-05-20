@@ -19,6 +19,10 @@
 					&:hover {
 						background-color: rgba(var(--color_std_rgb), 0.3);
 					}
+
+					.if-select-selection-item {
+						color: var(--color_text) !important;
+					}
 				}
 
 				.if-select-arrow {

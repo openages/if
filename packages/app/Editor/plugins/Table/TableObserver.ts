@@ -14,7 +14,7 @@ import {
 import { getDomSelection } from '@/Editor/utils'
 
 import TableSelection from './TableSelection'
-import { $createTableSelection, $findTableNode, $isTableCellNode, $updateDOMForSelection, getTable } from './utils'
+import { $createTableSelection, $findTableNode, $isTableCellNode, getTable } from './utils'
 
 import type { Cell, Table } from './types'
 import type { ElementNode, LexicalEditor, NodeKey, TextFormatType } from 'lexical'
@@ -97,8 +97,6 @@ export default class TableObserver {
 
 		if (selection.table_key === this.table_node_key) {
 			this.table_selection = selection
-
-			$updateDOMForSelection(this.editor, this.table, this.table_selection)
 		} else {
 			this.table_node_key = selection.table_key
 
@@ -151,8 +149,6 @@ export default class TableObserver {
 				$setSelection(this.table_selection)
 
 				editor.dispatchCommand(SELECTION_CHANGE_COMMAND, undefined)
-
-				$updateDOMForSelection(editor, this.table, this.table_selection)
 			}
 		})
 	}
@@ -230,7 +226,6 @@ export default class TableObserver {
 				}
 			})
 
-			$updateDOMForSelection(editor, this.table, null)
 			$setSelection(null)
 
 			editor.dispatchCommand(SELECTION_CHANGE_COMMAND, undefined)

@@ -1,39 +1,23 @@
 import { $createTableNode, $createTableRowNode } from './index'
 
-export default (rowCount: number, columnCount: number, includeHeaders: InsertTableCommandPayloadHeaders = true) => {
-	const tableNode = $createTableNode()
+export default (row_count: number, col_count: number) => {
+	const table = $createTableNode()
 
-	for (let iRow = 0; iRow < rowCount; iRow++) {
-		const tableRowNode = $createTableRowNode()
+	for (let row_index = 0; row_index < row_count; row_index++) {
+		const row = $createTableRowNode()
 
-		for (let iColumn = 0; iColumn < columnCount; iColumn++) {
-			let headerState = TableCellHeaderStates.NO_STATUS
+		for (let col_index = 0; col_index < col_count; col_index++) {
+			const cell = $createTableCellNode()
+			const p = $createParagraphNode()
 
-			if (typeof includeHeaders === 'object') {
-				if (iRow === 0 && includeHeaders.rows) {
-					headerState |= TableCellHeaderStates.ROW
-				}
-				if (iColumn === 0 && includeHeaders.columns) {
-					headerState |= TableCellHeaderStates.COLUMN
-				}
-			} else if (includeHeaders) {
-				if (iRow === 0) {
-					headerState |= TableCellHeaderStates.ROW
-				}
-				if (iColumn === 0) {
-					headerState |= TableCellHeaderStates.COLUMN
-				}
-			}
+			p.append($createTextNode())
 
-			const tableCellNode = $createTableCellNode(headerState)
-			const paragraphNode = $createParagraphNode()
-			paragraphNode.append($createTextNode())
-			tableCellNode.append(paragraphNode)
-			tableRowNode.append(tableCellNode)
+			cell.append(paragraphNode)
+			row.append(cell)
 		}
 
-		tableNode.append(tableRowNode)
+		table.append(row)
 	}
 
-	return tableNode
+	return table
 }

@@ -14,8 +14,8 @@
 	:global {
 		.__editor_quote {
 			padding: 15px 18px;
-			margin-block-start: 1.2em;
-			margin-block-end: 1.2em;
+			margin-block-start: var(--editor_padding);
+			margin-block-end: var(--editor_padding);
 			margin-inline-start: 0;
 			margin-inline-end: 0;
 			border-radius: var(--radius);

@@ -9,8 +9,8 @@
 			display: block;
 			box-sizing: border-box;
 			padding: 15px 18px;
-			margin-block-start: 1.2em;
-			margin-block-end: 1.2em;
+			margin-block-start: var(--editor_padding);
+			margin-block-end: var(--editor_padding);
 			border-radius: var(--radius);
 			background-color: var(--color_bg_1);
 			font-family: 'CascadiaCode';

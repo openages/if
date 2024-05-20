@@ -8,8 +8,8 @@
 		}
 
 		p {
-			margin-block-start: 1.2em;
-			margin-block-end: 1.2em;
+			margin-block-start: var(--editor_padding);
+			margin-block-end: var(--editor_padding);
 		}
 	}
 }

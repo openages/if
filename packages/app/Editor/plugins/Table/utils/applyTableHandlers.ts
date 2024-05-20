@@ -36,20 +36,29 @@ import { $findMatchingParent } from '@lexical/utils'
 
 import TableObserver from '../TableObserver'
 import {
+	$computeTableMap,
 	$createTableSelection,
+	$findCellNode,
+	$findTableNode,
+	$getTableEdgeCursorPosition,
+	$handleArrowKey,
+	$insertParagraphAtTableEdge,
+	$isSelectionInTable,
 	$isTableCellNode,
 	$isTableNode,
 	$isTableRowNode,
 	$isTableSelection,
 	createMouseHandlers,
 	getDOMCellFromTarget,
+	selectTableNodeInDirection,
 	LEXICAL_ELEMENT_KEY
 } from './index'
 
+import type TableRowNode from '../TableRowNode'
 import type TableNode from '../TableNode'
 import type TableCellNode from '../TableCellNode'
 import type TableSelection from '../TableSelection'
-import type { HTMLTableElementWithWithTableSelectionState } from '../types'
+import type { HTMLTableElementWithWithTableSelectionState, Rows } from '../types'
 import type { ElementFormatType, LexicalCommand, LexicalEditor, TextFormatType, NodeKey } from 'lexical'
 
 export default (
@@ -82,62 +91,6 @@ export default (
 			window.addEventListener('mousemove', onMouseMove)
 		}, 0)
 	})
-
-	observer.listeners.add(
-		editor.registerCommand<KeyboardEvent>(
-			KEY_ARROW_DOWN_COMMAND,
-			event => $handleArrowKey(editor, event, 'down', table_node, observer),
-			COMMAND_PRIORITY_HIGH
-		)
-	)
-
-	observer.listeners.add(
-		editor.registerCommand<KeyboardEvent>(
-			KEY_ARROW_UP_COMMAND,
-			event => $handleArrowKey(editor, event, 'up', table_node, observer),
-			COMMAND_PRIORITY_HIGH
-		)
-	)
-
-	observer.listeners.add(
-		editor.registerCommand<KeyboardEvent>(
-			KEY_ARROW_LEFT_COMMAND,
-			event => $handleArrowKey(editor, event, 'backward', table_node, observer),
-			COMMAND_PRIORITY_HIGH
-		)
-	)
-
-	observer.listeners.add(
-		editor.registerCommand<KeyboardEvent>(
-			KEY_ARROW_RIGHT_COMMAND,
-			event => $handleArrowKey(editor, event, 'forward', table_node, observer),
-			COMMAND_PRIORITY_HIGH
-		)
-	)
-
-	observer.listeners.add(
-		editor.registerCommand<KeyboardEvent>(
-			KEY_ESCAPE_COMMAND,
-			event => {
-				const selection = $getSelection() as TableSelection
-
-				if ($isTableSelection(selection)) {
-					const focus_cell_node = $findMatchingParent(selection.focus.getNode(), $isTableCellNode)
-
-					if ($isTableCellNode(focus_cell_node)) {
-						stopEvent(event)
-
-						focus_cell_node.selectEnd()
-
-						return true
-					}
-				}
-
-				return false
-			},
-			COMMAND_PRIORITY_HIGH
-		)
-	)
 
 	const delete_text_handler = (command: LexicalCommand<boolean>) => () => {
 		const selection = $getSelection()
@@ -221,6 +174,62 @@ export default (
 
 	observer.listeners.add(
 		editor.registerCommand<KeyboardEvent>(
+			KEY_ARROW_DOWN_COMMAND,
+			event => $handleArrowKey(editor, event, 'down', table_node, observer),
+			COMMAND_PRIORITY_HIGH
+		)
+	)
+
+	observer.listeners.add(
+		editor.registerCommand<KeyboardEvent>(
+			KEY_ARROW_UP_COMMAND,
+			event => $handleArrowKey(editor, event, 'up', table_node, observer),
+			COMMAND_PRIORITY_HIGH
+		)
+	)
+
+	observer.listeners.add(
+		editor.registerCommand<KeyboardEvent>(
+			KEY_ARROW_LEFT_COMMAND,
+			event => $handleArrowKey(editor, event, 'backward', table_node, observer),
+			COMMAND_PRIORITY_HIGH
+		)
+	)
+
+	observer.listeners.add(
+		editor.registerCommand<KeyboardEvent>(
+			KEY_ARROW_RIGHT_COMMAND,
+			event => $handleArrowKey(editor, event, 'forward', table_node, observer),
+			COMMAND_PRIORITY_HIGH
+		)
+	)
+
+	observer.listeners.add(
+		editor.registerCommand<KeyboardEvent>(
+			KEY_ESCAPE_COMMAND,
+			event => {
+				const selection = $getSelection() as TableSelection
+
+				if ($isTableSelection(selection)) {
+					const focus_cell_node = $findMatchingParent(selection.focus.getNode(), $isTableCellNode)
+
+					if ($isTableCellNode(focus_cell_node)) {
+						stopEvent(event)
+
+						focus_cell_node.selectEnd()
+
+						return true
+					}
+				}
+
+				return false
+			},
+			COMMAND_PRIORITY_HIGH
+		)
+	)
+
+	observer.listeners.add(
+		editor.registerCommand<KeyboardEvent>(
 			KEY_BACKSPACE_COMMAND,
 			$delete_cell_handler,
 			COMMAND_PRIORITY_CRITICAL
@@ -271,8 +280,8 @@ export default (
 					return false
 				}
 
-				const anchor_node = selection.anchor.getNode()
-				const focus_node = selection.focus.getNode()
+				const anchor_node = selection.anchor.getNode() as TableCellNode
+				const focus_node = selection.focus.getNode() as TableCellNode
 
 				if (!$isTableCellNode(anchor_node) || !$isTableCellNode(focus_node)) {
 					return false
@@ -284,17 +293,19 @@ export default (
 					focus_node
 				)
 
-				const max_row = Math.max(anchor_cell.startRow, focus_cell.startRow)
-				const max_column = Math.max(anchor_cell.startColumn, focus_cell.startColumn)
-				const min_row = Math.min(anchor_cell.startRow, focus_cell.startRow)
-				const min_column = Math.min(anchor_cell.startColumn, focus_cell.startColumn)
+				const max_row = Math.max(anchor_cell.start_row, focus_cell.start_row)
+				const max_column = Math.max(anchor_cell.start_column, focus_cell.start_column)
+				const min_row = Math.min(anchor_cell.start_row, focus_cell.start_row)
+				const min_column = Math.min(anchor_cell.start_column, focus_cell.start_column)
 
 				for (let i = min_row; i <= max_row; i++) {
 					for (let j = min_column; j <= max_column; j++) {
 						const cell = table_map[i][j].cell
+
 						cell.setFormat(format_type)
 
 						const cell_children = cell.getChildren()
+
 						for (let k = 0; k < cell_children.length; k++) {
 							const child = cell_children[k]
 							if ($isElementNode(child) && !child.isInline()) {
@@ -303,6 +314,7 @@ export default (
 						}
 					}
 				}
+
 				return true
 			},
 			COMMAND_PRIORITY_CRITICAL
@@ -332,10 +344,12 @@ export default (
 
 					if (typeof payload === 'string') {
 						const edge_position = $getTableEdgeCursorPosition(editor, selection, table_node)
+
 						if (edge_position) {
 							$insertParagraphAtTableEdge(edge_position, table_node, [
 								$createTextNode(payload)
 							])
+
 							return true
 						}
 					}
@@ -369,6 +383,7 @@ export default (
 					stopEvent(event)
 
 					const current_cords = table_node.getCordsFromCellNode(table_cell_node, observer.table)
+
 					selectTableNodeInDirection(
 						observer,
 						table_node,
@@ -416,16 +431,18 @@ export default (
 				) {
 					return false
 				}
-				const [anchor] = anchor_and_focus
 
-				const new_grid = nodes[0]
-				const new_grid_rows = new_grid.getChildren()
+				const [anchor] = anchor_and_focus
+				const new_grid = nodes[0] as TableNode
+				const new_grid_rows = new_grid.getChildren() as Array<TableRowNode>
 				const new_column_count = new_grid.getFirstChildOrThrow<TableNode>().getChildrenSize()
 				const new_row_count = new_grid.getChildrenSize()
 				const grid_cell_node = $findMatchingParent(anchor.getNode(), n => $isTableCellNode(n))
 				const grid_row_node =
-					grid_cell_node && $findMatchingParent(grid_cell_node, n => $isTableRowNode(n))
-				const grid_node = grid_row_node && $findMatchingParent(grid_row_node, n => $isTableNode(n))
+					grid_cell_node &&
+					($findMatchingParent(grid_cell_node, n => $isTableRowNode(n)) as TableRowNode)
+				const grid_node =
+					grid_row_node && ($findMatchingParent(grid_row_node, n => $isTableNode(n)) as TableNode)
 
 				if (
 					!$isTableCellNode(grid_cell_node) ||
@@ -443,7 +460,7 @@ export default (
 				const from_y = Math.min(start_y, stop_y)
 				const to_x = Math.max(start_x, stop_x)
 				const to_y = Math.max(start_y, stop_y)
-				const grid_row_nodes = grid_node.getChildren()
+				const grid_row_nodes = grid_node.getChildren() as Array<TableRowNode>
 				let new_row_idx = 0
 				let new_anchor_cell_key: NodeKey
 				let new_focus_cell_key: NodeKey
@@ -466,13 +483,13 @@ export default (
 					let new_column_idx = 0
 
 					for (let c = from_x; c <= to_x; c++) {
-						const current_grid_cell_node = grid_cell_nodes[c]
+						const current_grid_cell_node = grid_cell_nodes[c] as TableCellNode
 
 						if (!$isTableCellNode(current_grid_cell_node)) {
 							return false
 						}
 
-						const new_grid_cell_node = new_grid_cell_nodes[new_column_idx]
+						const new_grid_cell_node = new_grid_cell_nodes[new_column_idx] as TableCellNode
 
 						if (!$isTableCellNode(new_grid_cell_node)) {
 							return false
@@ -485,6 +502,7 @@ export default (
 						}
 
 						const original_children = current_grid_cell_node.getChildren()
+
 						new_grid_cell_node.getChildren().forEach(child => {
 							if ($isTextNode(child)) {
 								const paragraph_node = $createParagraphNode()
@@ -494,17 +512,22 @@ export default (
 								current_grid_cell_node.append(child)
 							}
 						})
+
 						original_children.forEach(n => n.remove())
 						new_column_idx++
 					}
 
 					new_row_idx++
 				}
+
 				if (new_anchor_cell_key && new_focus_cell_key) {
 					const new_table_selection = $createTableSelection()
+
 					new_table_selection.set(nodes[0].getKey(), new_anchor_cell_key, new_focus_cell_key)
+
 					$setSelection(new_table_selection)
 				}
+
 				return true
 			},
 			COMMAND_PRIORITY_CRITICAL

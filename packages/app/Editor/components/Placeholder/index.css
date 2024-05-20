@@ -1,5 +1,5 @@
 ._local {
-	top: 1.2em;
+	top: var(--editor_padding);
 	color: var(--color_text_light);
 	user-select: none;
 	pointer-events: none;

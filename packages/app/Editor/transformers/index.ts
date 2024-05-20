@@ -6,7 +6,7 @@ import Image from './Image'
 import { Katex_block, Katex_inline } from './Latex'
 
 export default [
-	...ELEMENT_TRANSFORMERS.filter(item => item.regExp.source !== '^```(\\w{1,10})?\\s'),
+	...ELEMENT_TRANSFORMERS.filter(item => item.regExp.source !== '^[ \\t]*```(\\w{1,10})?\\s'),
 	...TEXT_FORMAT_TRANSFORMERS,
 	Image,
 	Divider,

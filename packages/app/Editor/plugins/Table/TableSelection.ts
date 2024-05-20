@@ -7,6 +7,8 @@ import { $computeTableMap, $getTableCellNodeRect, $isTableCellNode, $isTableSele
 
 import type { TableMapValue } from './types'
 import type { ElementNode, LexicalNode, NodeKey, PointType } from 'lexical'
+import type TableNode from './TableNode'
+import type TableCellNode from './TableCellNode'
 
 export default class TableSelection implements BaseSelection {
 	table_key: NodeKey
@@ -86,9 +88,9 @@ export default class TableSelection implements BaseSelection {
 	}
 
 	getShape() {
-		const anchor_cell_node = $getNodeByKey(this.anchor.key)
+		const anchor_cell_node = $getNodeByKey(this.anchor.key) as TableCellNode
 		const anchor_cell_node_rect = $getTableCellNodeRect(anchor_cell_node)
-		const focus_cell_node = $getNodeByKey(this.focus.key)
+		const focus_cell_node = $getNodeByKey(this.focus.key) as TableCellNode
 		const focus_cell_node_rect = $getTableCellNodeRect(focus_cell_node)
 		const start_x = Math.min(anchor_cell_node_rect.column_index, focus_cell_node_rect.column_index)
 		const stop_x = Math.max(anchor_cell_node_rect.column_index, focus_cell_node_rect.column_index)
@@ -110,10 +112,10 @@ export default class TableSelection implements BaseSelection {
 
 		const anchor_node = this.anchor.getNode()
 		const focus_node = this.focus.getNode()
-		const anchor_cell = $findMatchingParent(anchor_node, $isTableCellNode)
-		const focus_cell = $findMatchingParent(focus_node, $isTableCellNode)
+		const anchor_cell = $findMatchingParent(anchor_node, $isTableCellNode) as TableCellNode
+		const focus_cell = $findMatchingParent(focus_node, $isTableCellNode) as TableCellNode
 		const anchor_row = anchor_cell.getParent()
-		const table_node = anchor_row.getParent()
+		const table_node = anchor_row.getParent() as TableNode
 
 		const focus_cell_grid = focus_cell.getParents()[1]
 

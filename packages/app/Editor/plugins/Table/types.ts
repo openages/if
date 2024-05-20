@@ -47,3 +47,10 @@ export type SerializedTableCellNode = Spread<IPropsTableCellNode, SerializedElem
 export type HTMLTableElementWithWithTableSelectionState = HTMLTableElement & Record<string, TableObserver>
 
 export type Direction = 'backward' | 'forward' | 'up' | 'down'
+
+export interface TableCellSiblings {
+	above?: TableCellNode
+	below?: TableCellNode
+	left?: TableCellNode
+	right?: TableCellNode
+}

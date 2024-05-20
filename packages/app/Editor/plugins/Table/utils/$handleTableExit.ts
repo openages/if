@@ -1,35 +1,36 @@
 import { stopEvent } from '@/Editor/utils'
 import { $findMatchingParent } from '@lexical/utils'
 
-import { $isTableCellNode, $isTableNode } from './index'
+import { $computeTableMap, $getExitingToNode, $isTableCellNode, $isTableNode, isExitingCell } from './index'
 
 import type { LexicalNode } from 'lexical'
 import type TableNode from '../TableNode'
+import type TableCellNode from '../TableCellNode'
 
 export default (
 	event: KeyboardEvent,
-	anchorNode: LexicalNode,
-	tableNode: TableNode,
+	anchor_node: LexicalNode,
+	table_node: TableNode,
 	direction: 'backward' | 'forward'
 ) => {
-	const anchorCellNode = $findMatchingParent(anchorNode, $isTableCellNode)
+	const anchor_cell_node = $findMatchingParent(anchor_node, $isTableCellNode) as TableCellNode
 
-	if (!$isTableCellNode(anchorCellNode)) return false
+	if (!$isTableCellNode(anchor_cell_node)) return false
 
-	const [tableMap, cellValue] = $computeTableMap(tableNode, anchorCellNode, anchorCellNode)
+	const [table_map, cell_value] = $computeTableMap(table_node, anchor_cell_node, anchor_cell_node)
 
-	if (!isExitingCell(tableMap, cellValue, direction)) return false
+	if (!isExitingCell(table_map, cell_value, direction)) return false
 
-	const toNode = $getExitingToNode(anchorNode, direction, tableNode)
+	const to_node = $getExitingToNode(anchor_node, direction, table_node)
 
-	if (!toNode || $isTableNode(toNode)) return false
+	if (!to_node || $isTableNode(to_node)) return false
 
 	stopEvent(event)
 
 	if (direction === 'backward') {
-		toNode.selectEnd()
+		to_node.selectEnd()
 	} else {
-		toNode.selectStart()
+		to_node.selectStart()
 	}
 
 	return true

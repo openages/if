@@ -5,178 +5,189 @@ import { $findMatchingParent } from '@lexical/utils'
 
 import {
 	$findTableNode,
+	$handleTableExit,
 	$isSelectionInTable,
 	$isTableCellNode,
 	$isTableNode,
 	$isTableSelection,
+	adjustFocusNodeInDirection,
 	getTable,
-	isExitingTableAnchor
+	isExitingTableAnchor,
+	selectTableNodeInDirection
 } from './index'
 
 import type { LexicalEditor } from 'lexical'
 import type { Direction } from '../types'
+import type TableSelection from '../TableSelection'
 import type TableNode from '../TableNode'
+import type TableCellNode from '../TableCellNode'
 import type TableObserver from '../TableObserver'
 
 const Index = (
 	editor: LexicalEditor,
 	event: KeyboardEvent,
 	direction: Direction,
-	tableNode: TableNode,
-	tableObserver: TableObserver
+	table_node: TableNode,
+	table_observer: TableObserver
 ) => {
-	if ((direction === 'up' || direction === 'down') && isPickerInView(editor)) {
-		return false
-	}
+	if ((direction === 'up' || direction === 'down') && isPickerInView(editor)) return false
 
-	const selection = $getSelection()
+	const selection = $getSelection() as TableSelection
 
-	if (!$isSelectionInTable(selection, tableNode)) {
+	if (!$isSelectionInTable(selection, table_node)) {
 		if (direction === 'backward' && $isRangeSelection(selection) && selection.isCollapsed()) {
-			const anchorType = selection.anchor.type
-			const anchorOffset = selection.anchor.offset
+			const anchor_type = selection.anchor.type
+			const anchor_offset = selection.anchor.offset
 
-			if (anchorType !== 'element' && !(anchorType === 'text' && anchorOffset === 0)) {
+			if (anchor_type !== 'element' && !(anchor_type === 'text' && anchor_offset === 0)) {
 				return false
 			}
 
-			const anchorNode = selection.anchor.getNode()
+			const anchor_node = selection.anchor.getNode()
 
-			if (!anchorNode) {
-				return false
-			}
+			if (!anchor_node) return false
 
-			const parentNode = $findMatchingParent(anchorNode, n => $isElementNode(n) && !n.isInline())
-			if (!parentNode) {
-				return false
-			}
-			const siblingNode = parentNode.getPreviousSibling()
-			if (!siblingNode || !$isTableNode(siblingNode)) {
-				return false
-			}
+			const parent_node = $findMatchingParent(anchor_node, n => $isElementNode(n) && !n.isInline())
+
+			if (!parent_node) return false
+
+			const sibling_node = parent_node.getPreviousSibling()
+
+			if (!sibling_node || !$isTableNode(sibling_node)) return false
+
 			stopEvent(event)
-			siblingNode.selectEnd()
+
+			sibling_node.selectEnd()
+
 			return true
 		}
+
 		return false
 	}
 
 	if ($isRangeSelection(selection) && selection.isCollapsed()) {
 		const { anchor, focus } = selection
-		const anchorCellNode = $findMatchingParent(anchor.getNode(), $isTableCellNode)
-		const focusCellNode = $findMatchingParent(focus.getNode(), $isTableCellNode)
+		const anchor_cell_node = $findMatchingParent(anchor.getNode(), $isTableCellNode) as TableCellNode
+		const focus_cell_node = $findMatchingParent(focus.getNode(), $isTableCellNode) as TableCellNode
 
-		if (!$isTableCellNode(anchorCellNode) || !anchorCellNode.is(focusCellNode)) {
-			return false
-		}
-		const anchorCellTable = $findTableNode(anchorCellNode) as TableNode
+		if (!$isTableCellNode(anchor_cell_node) || !anchor_cell_node.is(focus_cell_node)) return false
 
-		if (anchorCellTable !== tableNode && anchorCellTable != null) {
-			const anchorCellTableElement = editor.getElementByKey(anchorCellTable.getKey())
+		const anchor_cell_table = $findTableNode(anchor_cell_node) as TableNode
 
-			if (anchorCellTableElement != null) {
-				tableObserver.table = getTable(anchorCellTableElement)
+		if (anchor_cell_table !== table_node && anchor_cell_table != null) {
+			const anchor_cell_table_element = editor.getElementByKey(anchor_cell_table.getKey())
 
-				return Index(editor, event, direction, anchorCellTable, tableObserver)
+			if (anchor_cell_table_element != null) {
+				table_observer.table = getTable(anchor_cell_table_element)
+
+				return Index(editor, event, direction, anchor_cell_table, table_observer)
 			}
 		}
 
 		if (direction === 'backward' || direction === 'forward') {
-			const anchorType = anchor.type
-			const anchorOffset = anchor.offset
-			const anchorNode = anchor.getNode()
-			if (!anchorNode) {
-				return false
-			}
+			const anchor_type = anchor.type
+			const anchor_offset = anchor.offset
+			const anchor_node = anchor.getNode()
 
-			if (isExitingTableAnchor(anchorType, anchorOffset, anchorNode, direction)) {
-				return $handleTableExit(event, anchorNode, tableNode, direction)
+			if (!anchor_node) return false
+
+			if (isExitingTableAnchor(anchor_type, anchor_offset, anchor_node, direction)) {
+				return $handleTableExit(event, anchor_node, table_node, direction)
 			}
 
 			return false
 		}
 
-		const anchorCellDom = editor.getElementByKey(anchorCellNode.__key)
-		const anchorDOM = editor.getElementByKey(anchor.key)
+		const anchor_cell_dom = editor.getElementByKey(anchor_cell_node.__key)
+		const anchor_dom = editor.getElementByKey(anchor.key)
 
-		if (anchorDOM == null || anchorCellDom == null) {
-			return false
-		}
+		if (anchor_dom == null || anchor_cell_dom == null) return false
 
-		let edgeSelectionRect
+		let edge_selection_rect: DOMRect
+
 		if (anchor.type === 'element') {
-			edgeSelectionRect = anchorDOM.getBoundingClientRect()
+			edge_selection_rect = anchor_dom.getBoundingClientRect()
 		} else {
-			const domSelection = window.getSelection()
-			if (domSelection === null || domSelection.rangeCount === 0) {
-				return false
-			}
+			const dom_selection = window.getSelection()
 
-			const range = domSelection.getRangeAt(0)
-			edgeSelectionRect = range.getBoundingClientRect()
+			if (dom_selection === null || dom_selection.rangeCount === 0) return false
+
+			const range = dom_selection.getRangeAt(0)
+
+			edge_selection_rect = range.getBoundingClientRect()
 		}
 
-		const edgeChild = direction === 'up' ? anchorCellNode.getFirstChild() : anchorCellNode.getLastChild()
-		if (edgeChild == null) {
+		const edge_child = direction === 'up' ? anchor_cell_node.getFirstChild() : anchor_cell_node.getLastChild()
+		if (edge_child == null) {
 			return false
 		}
 
-		const edgeChildDOM = editor.getElementByKey(edgeChild.__key)
+		const edge_child_dom = editor.getElementByKey(edge_child.__key)
 
-		if (edgeChildDOM == null) {
+		if (edge_child_dom == null) {
 			return false
 		}
 
-		const edgeRect = edgeChildDOM.getBoundingClientRect()
-		const isExiting =
+		const edge_rect = edge_child_dom.getBoundingClientRect()
+		const is_exiting =
 			direction === 'up'
-				? edgeRect.top > edgeSelectionRect.top - edgeSelectionRect.height
-				: edgeSelectionRect.bottom + edgeSelectionRect.height > edgeRect.bottom
+				? edge_rect.top > edge_selection_rect.top - edge_selection_rect.height
+				: edge_selection_rect.bottom + edge_selection_rect.height > edge_rect.bottom
 
-		if (isExiting) {
+		if (is_exiting) {
 			stopEvent(event)
 
-			const cords = tableNode.getCordsFromCellNode(anchorCellNode, tableObserver.table)
+			const cords = table_node.getCordsFromCellNode(anchor_cell_node, table_observer.table)
 
 			if (event.shiftKey) {
-				const cell = tableNode.getDOMCellFromCordsOrThrow(cords.x, cords.y, tableObserver.table)
-				tableObserver.setAnchorCellForSelection(cell)
-				tableObserver.setFocusCellForSelection(cell, true)
+				const cell = table_node.getDOMCellFromCordsOrThrow(cords.x, cords.y, table_observer.table)
+
+				table_observer.setAnchorCellForSelection(cell)
+				table_observer.setFocusCellForSelection(cell)
 			} else {
-				return selectTableNodeInDirection(tableObserver, tableNode, cords.x, cords.y, direction)
+				return selectTableNodeInDirection(table_observer, table_node, cords.x, cords.y, direction)
 			}
 
 			return true
 		}
 	} else if ($isTableSelection(selection)) {
 		const { anchor, focus } = selection
-		const anchorCellNode = $findMatchingParent(anchor.getNode(), $isTableCellNode)
-		const focusCellNode = $findMatchingParent(focus.getNode(), $isTableCellNode)
+		const anchor_cell_node = $findMatchingParent(anchor.getNode(), $isTableCellNode) as TableCellNode
+		const focus_cell_node = $findMatchingParent(focus.getNode(), $isTableCellNode) as TableCellNode
 
-		const [tableNodeFromSelection] = selection.getNodes()
-		const tableElement = editor.getElementByKey(tableNodeFromSelection.getKey())
+		const [table_node_from_selection] = selection.getNodes()
+		const table_element = editor.getElementByKey(table_node_from_selection.getKey())
+
 		if (
-			!$isTableCellNode(anchorCellNode) ||
-			!$isTableCellNode(focusCellNode) ||
-			!$isTableNode(tableNodeFromSelection) ||
-			tableElement == null
+			!$isTableCellNode(anchor_cell_node) ||
+			!$isTableCellNode(focus_cell_node) ||
+			!$isTableNode(table_node_from_selection) ||
+			table_element == null
 		) {
 			return false
 		}
-		tableObserver.updateTableTableSelection(selection)
 
-		const grid = getTable(tableElement)
-		const cordsAnchor = tableNode.getCordsFromCellNode(anchorCellNode, grid)
-		const anchorCell = tableNode.getDOMCellFromCordsOrThrow(cordsAnchor.x, cordsAnchor.y, grid)
-		tableObserver.setAnchorCellForSelection(anchorCell)
+		table_observer.updateTableTableSelection(selection)
+
+		const grid = getTable(table_element)
+		const cords_anchor = table_node.getCordsFromCellNode(anchor_cell_node, grid)
+		const anchor_cell = table_node.getDOMCellFromCordsOrThrow(cords_anchor.x, cords_anchor.y, grid)
+		table_observer.setAnchorCellForSelection(anchor_cell)
 
 		stopEvent(event)
 
 		if (event.shiftKey) {
-			const cords = tableNode.getCordsFromCellNode(focusCellNode, grid)
-			return adjustFocusNodeInDirection(tableObserver, tableNodeFromSelection, cords.x, cords.y, direction)
+			const cords = table_node.getCordsFromCellNode(focus_cell_node, grid)
+
+			return adjustFocusNodeInDirection(
+				table_observer,
+				table_node_from_selection,
+				cords.x,
+				cords.y,
+				direction
+			)
 		} else {
-			focusCellNode.selectEnd()
+			focus_cell_node.selectEnd()
 		}
 
 		return true

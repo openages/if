@@ -2,12 +2,11 @@ import { $getNearestNodeFromDOMNode, ElementNode } from 'lexical'
 
 import { isHTMLElement } from '@lexical/utils'
 
-import { $isTableCellNode } from './LexicalTableCellNode'
-import { TableDOMTable } from './LexicalTableObserver'
-import { $isTableRowNode, TableRowNode } from './LexicalTableRowNode'
-import { $convertTableElement, $createTableNode } from './utils'
+import { $convertTableElement, $createTableNode, $isTableCellNode } from './utils'
 
-import type { TableCellNode } from './LexicalTableCellNode'
+import type TableRowNode from './TableRowNode'
+import type TableCellNode from './TableCellNode'
+import type { Table } from './types'
 import type { DOMConversionMap, DOMExportOutput, LexicalEditor, NodeKey, SerializedElementNode } from 'lexical'
 
 export default class TableNode extends ElementNode {
@@ -54,10 +53,6 @@ export default class TableNode extends ElementNode {
 
 					const first_row = this.getFirstChildOrThrow<TableRowNode>()
 
-					if (!$isTableRowNode(first_row)) {
-						throw new Error('Expected to find row node.')
-					}
-
 					for (let i = 0; i < first_row.getChildrenSize(); i++) {
 						const col = document.createElement('col')
 
@@ -84,23 +79,23 @@ export default class TableNode extends ElementNode {
 		return true
 	}
 
-	getCordsFromCellNode(tableCellNode: TableCellNode, table: TableDOMTable): { x: number; y: number } {
-		const { rows, domRows } = table
+	getCordsFromCellNode(table_cell_node: TableCellNode, table: Table): { x: number; y: number } {
+		const { rows, row_counts } = table
 
-		for (let y = 0; y < rows; y++) {
-			const row = domRows[y]
+		for (let y = 0; y < row_counts; y++) {
+			const row = rows[y]
 
 			if (row == null) {
 				continue
 			}
 
 			const x = row.findIndex(cell => {
-				if (!cell) {
-					return
-				}
-				const { elem } = cell
-				const cellNode = $getNearestNodeFromDOMNode(elem)
-				return cellNode === tableCellNode
+				if (!cell) return
+
+				const { el } = cell
+				const node = $getNearestNodeFromDOMNode(el)
+
+				return node === table_cell_node
 			})
 
 			if (x !== -1) {
@@ -111,10 +106,10 @@ export default class TableNode extends ElementNode {
 		throw new Error('Cell not found in table.')
 	}
 
-	getDOMCellFromCords(x: number, y: number, table: TableDOMTable) {
-		const { domRows } = table
+	getDOMCellFromCords(x: number, y: number, table: Table) {
+		const { rows } = table
 
-		const row = domRows[y]
+		const row = rows[y]
 
 		if (row == null) return null
 
@@ -125,7 +120,7 @@ export default class TableNode extends ElementNode {
 		return cell
 	}
 
-	getDOMCellFromCordsOrThrow(x: number, y: number, table: TableDOMTable) {
+	getDOMCellFromCordsOrThrow(x: number, y: number, table: Table) {
 		const cell = this.getDOMCellFromCords(x, y, table)
 
 		if (!cell) {
@@ -135,20 +130,20 @@ export default class TableNode extends ElementNode {
 		return cell
 	}
 
-	getCellNodeFromCords(x: number, y: number, table: TableDOMTable) {
+	getCellNodeFromCords(x: number, y: number, table: Table) {
 		const cell = this.getDOMCellFromCords(x, y, table)
 
 		if (!cell) return null
 
-		const node = $getNearestNodeFromDOMNode(cell.elem)
+		const node = $getNearestNodeFromDOMNode(cell.el)
 
-		if ($isTableCellNode(node)) return node
+		if ($isTableCellNode(node)) return node as TableCellNode
 
 		return null
 	}
 
-	getCellNodeFromCordsOrThrow(x: number, y: number, table: TableDOMTable) {
-		const node = this.getCellNodeFromCords(x, y, table)
+	getCellNodeFromCordsOrThrow(x: number, y: number, table: Table) {
+		const node = this.getCellNodeFromCords(x, y, table) as TableCellNode
 
 		if (!node) {
 			throw new Error('Node at cords not TableCellNode.')
