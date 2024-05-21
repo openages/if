@@ -38,6 +38,7 @@ export { default as $deleteTableRowAtSelection } from './$deleteTableRowAtSelect
 export { default as $unmergeCell } from './$unmergeCell'
 export { default as $getTableCellNodeRect } from './$getTableCellNodeRect'
 export { default as $forEachTableCell } from './$forEachTableCell'
+export { default as $createTableNodeWithDimensions } from './$createTableNodeWithDimensions'
 export { default as isExitingCell } from './isExitingCell'
 export { default as getTable } from './getTable'
 export { default as applyTableHandlers } from './applyTableHandlers'

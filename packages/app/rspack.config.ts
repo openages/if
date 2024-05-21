@@ -44,8 +44,7 @@ module.exports = defineConfig({
 		compress: false
 	},
 	experiments: {
-		outputModule: is_module,
-		rspackFuture: {}
+		outputModule: is_module
 	},
 	plugins: [
 		new HtmlRspackPlugin({

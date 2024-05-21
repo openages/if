@@ -3,7 +3,7 @@ import { ELEMENT_TRANSFORMERS, TEXT_FORMAT_TRANSFORMERS } from '@lexical/markdow
 import Code from './Code'
 import Divider from './Divider'
 import Image from './Image'
-import { Katex_block, Katex_inline } from './Latex'
+import { Katex_block, Katex_inline } from './Katex'
 
 export default [
 	...ELEMENT_TRANSFORMERS.filter(item => item.regExp.source !== '^[ \\t]*```(\\w{1,10})?\\s'),

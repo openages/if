@@ -59,6 +59,8 @@ export default class Index {
 	}
 
 	reset() {
+		if (!this.visible) return
+
 		this.node = null
 		this.oveflow_x = 0
 		this.visible = false
@@ -141,23 +143,28 @@ export default class Index {
 
 	check() {
 		const selection = $getSelection()
+
+		if (!$isRangeSelection(selection)) return
+
 		const root = this.editor.getRootElement()
 		const native_selection = window.getSelection()
 		const active_element = document.activeElement
 
-		const is_range_selection = $isRangeSelection(selection)
 		const is_contain = root?.contains(native_selection?.anchorNode)
 		const is_editable = this.editor.isEditable()
+		const is_not_select = selection.anchor.offset === selection.focus.offset
 		const is_collapsed = native_selection?.isCollapsed
+		const is_composing = this.editor.isComposing()
 
 		if (
-			!is_range_selection ||
 			!native_selection ||
 			!active_element ||
 			!root ||
 			!is_contain ||
 			!is_editable ||
-			is_collapsed
+			is_not_select ||
+			is_collapsed ||
+			is_composing
 		) {
 			return this.reset()
 		}

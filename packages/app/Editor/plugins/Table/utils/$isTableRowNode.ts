@@ -1,4 +1,4 @@
-import { TableRowNode } from '../TableRowNode'
+import TableRowNode from '../TableRowNode'
 
 import type { LexicalNode } from 'lexical'
 

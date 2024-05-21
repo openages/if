@@ -13,7 +13,7 @@ export default (
 	let cell_a_value: TableMapValue = null
 	let cell_b_value: TableMapValue = null
 
-	function write(start_row: number, start_column: number, cell: TableCellNode) {
+	const write = (start_row: number, start_column: number, cell: TableCellNode) => {
 		const value = { cell, start_row, start_column } as TableMapValue
 		const row_span = cell.__row_span
 		const col_span = cell.__col_span
@@ -30,7 +30,7 @@ export default (
 		if (cell_b !== null && cell_b.is(cell)) cell_b_value = value
 	}
 
-	function is_empty(row: number, column: number) {
+	const is_empty = (row: number, column: number) => {
 		return table_map[row] === undefined || table_map[row][column] === undefined
 	}
 
@@ -43,7 +43,7 @@ export default (
 		let j = 0
 
 		for (const cell of row_children) {
-			while (is_empty(i, j)) {
+			while (!is_empty(i, j)) {
 				j++
 			}
 

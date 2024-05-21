@@ -8,6 +8,7 @@ export default {
 		UnorderedList: 'Bullet List',
 		OrderedList: 'Order List',
 		TodoList: 'Todo List',
+		Table: 'Table',
 		Katex: 'Katex',
 		Divider: 'Divider',
 		Quote: 'Quote',

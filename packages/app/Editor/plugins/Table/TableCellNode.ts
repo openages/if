@@ -7,8 +7,8 @@ import type { IPropsTableCellNode, SerializedTableCellNode } from './types'
 
 export default class TableCellNode extends ElementNode {
 	__is_header: boolean
-	__row_span: number
-	__col_span: number
+	__row_span: number = 0
+	__col_span: number = 0
 
 	constructor(props: IPropsTableCellNode) {
 		const { is_header, row_span, col_span, node_key } = props
@@ -50,6 +50,8 @@ export default class TableCellNode extends ElementNode {
 
 	createDOM() {
 		const el = document.createElement(this.__is_header ? 'th' : 'td') as HTMLTableCellElement
+
+		el.className = `__editor_table_td${this.__is_header ? ' __editor_table_th' : ''}`
 
 		if (this.__row_span > 1) el.rowSpan = this.__row_span
 		if (this.__col_span > 1) el.colSpan = this.__col_span

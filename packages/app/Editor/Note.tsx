@@ -21,6 +21,7 @@ import {
 	Katex,
 	LinkEditor,
 	Picker,
+	Table,
 	TextBar,
 	Toggle,
 	Transform,
@@ -58,6 +59,7 @@ const Index = () => {
 				<Code />
 				<CodeActions />
 				<Toggle />
+				<Table />
 			</LexicalComposer>
 		</div>
 	)

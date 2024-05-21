@@ -8,6 +8,7 @@ export default {
 		UnorderedList: '无序列表',
 		OrderedList: '有序列表',
 		TodoList: '任务列表',
+		Table: '表格',
 		Katex: '公式',
 		Divider: '分割线',
 		Quote: '引言',

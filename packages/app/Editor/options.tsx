@@ -13,10 +13,11 @@ import {
 	ListChecks,
 	ListNumbers,
 	Quotes,
-	Smiley
+	Smiley,
+	Table
 } from '@phosphor-icons/react'
 
-import { INSERT_CODE_COMMAND, INSERT_DIVIDER_COMMAND, INSERT_TOGGLE_COMMAND } from './commands'
+import { INSERT_CODE_COMMAND, INSERT_DIVIDER_COMMAND, INSERT_TABLE_COMMAND, INSERT_TOGGLE_COMMAND } from './commands'
 import Option from './plugins/Picker/option'
 
 import type Model from './plugins/Picker/model'
@@ -62,6 +63,11 @@ export default (args: Args) => {
 			icon: <ListChecks />,
 			shortcut: 'tl',
 			onSelect: () => editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, null)
+		}),
+		new Option($t('translation:editor.name.Table'), {
+			icon: <Table />,
+			shortcut: 'tb',
+			onSelect: () => editor.dispatchCommand(INSERT_TABLE_COMMAND, null)
 		}),
 		new Option($t('translation:editor.name.Katex'), {
 			icon: <Function />,

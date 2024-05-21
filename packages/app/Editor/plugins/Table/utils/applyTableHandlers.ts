@@ -58,39 +58,24 @@ import type TableRowNode from '../TableRowNode'
 import type TableNode from '../TableNode'
 import type TableCellNode from '../TableCellNode'
 import type TableSelection from '../TableSelection'
-import type { HTMLTableElementWithWithTableSelectionState, Rows } from '../types'
+import type { HTMLTableElementWithWithTableSelectionState } from '../types'
 import type { ElementFormatType, LexicalCommand, LexicalEditor, TextFormatType, NodeKey } from 'lexical'
 
 export default (
 	table_node: TableNode,
 	table_element: HTMLTableElementWithWithTableSelectionState,
-	editor: LexicalEditor,
-	has_tab_handler: boolean
+	editor: LexicalEditor
 ) => {
 	const observer = new TableObserver(editor, table_node.getKey())
+	const commands = [DELETE_WORD_COMMAND, DELETE_LINE_COMMAND, DELETE_CHARACTER_COMMAND]
 
 	table_element[LEXICAL_ELEMENT_KEY] = observer
 
-	table_element.addEventListener('mousedown', (event: MouseEvent) => {
-		setTimeout(() => {
-			if (event.button !== 0) return
+	const getObserverCellFromCellNode = (table_cell_node: TableCellNode) => {
+		const current_cords = table_node.getCordsFromCellNode(table_cell_node, observer.table)
 
-			const anchor_cell = getDOMCellFromTarget(event.target as Node)
-
-			if (anchor_cell !== null) {
-				stopEvent(event)
-
-				observer.setAnchorCellForSelection(anchor_cell)
-			}
-
-			const { onMouseMove, onMouseUp } = createMouseHandlers(observer)
-
-			observer.selecting = true
-
-			window.addEventListener('mouseup', onMouseUp)
-			window.addEventListener('mousemove', onMouseMove)
-		}, 0)
-	})
+		return table_node.getDOMCellFromCordsOrThrow(current_cords.x, current_cords.y, observer.table)
+	}
 
 	const delete_text_handler = (command: LexicalCommand<boolean>) => () => {
 		const selection = $getSelection()
@@ -140,14 +125,6 @@ export default (
 		return false
 	}
 
-	const commands = [DELETE_WORD_COMMAND, DELETE_LINE_COMMAND, DELETE_CHARACTER_COMMAND]
-
-	commands.forEach(command => {
-		observer.listeners.add(
-			editor.registerCommand(command, delete_text_handler(command), COMMAND_PRIORITY_CRITICAL)
-		)
-	})
-
 	const $delete_cell_handler = (event: KeyboardEvent): boolean => {
 		const selection = $getSelection()
 
@@ -171,6 +148,33 @@ export default (
 
 		return false
 	}
+
+	table_element.addEventListener('mousedown', (event: MouseEvent) => {
+		setTimeout(() => {
+			if (event.button !== 0) return
+
+			const anchor_cell = getDOMCellFromTarget(event.target as Node)
+
+			if (anchor_cell !== null) {
+				stopEvent(event)
+
+				observer.setAnchorCellForSelection(anchor_cell)
+			}
+
+			const { onMouseMove, onMouseUp } = createMouseHandlers(observer)
+
+			observer.selecting = true
+
+			window.addEventListener('mouseup', onMouseUp)
+			window.addEventListener('mousemove', onMouseMove)
+		}, 0)
+	})
+
+	commands.forEach(command => {
+		observer.listeners.add(
+			editor.registerCommand(command, delete_text_handler(command), COMMAND_PRIORITY_CRITICAL)
+		)
+	})
 
 	observer.listeners.add(
 		editor.registerCommand<KeyboardEvent>(
@@ -361,51 +365,44 @@ export default (
 		)
 	)
 
-	if (has_tab_handler) {
-		observer.listeners.add(
-			editor.registerCommand<KeyboardEvent>(
-				KEY_TAB_COMMAND,
-				event => {
-					const selection = $getSelection()
-					if (
-						!$isRangeSelection(selection) ||
-						!selection.isCollapsed() ||
-						!$isSelectionInTable(selection, table_node)
-					) {
-						return false
-					}
+	observer.listeners.add(
+		editor.registerCommand<KeyboardEvent>(
+			KEY_TAB_COMMAND,
+			event => {
+				const selection = $getSelection()
+				if (
+					!$isRangeSelection(selection) ||
+					!selection.isCollapsed() ||
+					!$isSelectionInTable(selection, table_node)
+				) {
+					return false
+				}
 
-					const table_cell_node = $findCellNode(selection.anchor.getNode())
-					if (table_cell_node === null) {
-						return false
-					}
+				const table_cell_node = $findCellNode(selection.anchor.getNode())
 
-					stopEvent(event)
+				if (table_cell_node === null) {
+					return false
+				}
 
-					const current_cords = table_node.getCordsFromCellNode(table_cell_node, observer.table)
+				stopEvent(event)
 
-					selectTableNodeInDirection(
-						observer,
-						table_node,
-						current_cords.x,
-						current_cords.y,
-						!event.shiftKey ? 'forward' : 'backward'
-					)
+				const current_cords = table_node.getCordsFromCellNode(table_cell_node, observer.table)
 
-					return true
-				},
-				COMMAND_PRIORITY_CRITICAL
-			)
+				selectTableNodeInDirection(
+					observer,
+					table_node,
+					current_cords.x,
+					current_cords.y,
+					!event.shiftKey ? 'forward' : 'backward'
+				)
+
+				return true
+			},
+			COMMAND_PRIORITY_CRITICAL
 		)
-	}
+	)
 
 	observer.listeners.add(editor.registerCommand(FOCUS_COMMAND, _ => table_node.isSelected(), COMMAND_PRIORITY_HIGH))
-
-	function getObserverCellFromCellNode(table_cell_node: TableCellNode) {
-		const current_cords = table_node.getCordsFromCellNode(table_cell_node, observer.table)
-
-		return table_node.getDOMCellFromCordsOrThrow(current_cords.x, current_cords.y, observer.table)
-	}
 
 	observer.listeners.add(
 		editor.registerCommand(

@@ -26,7 +26,11 @@ export default class TableRowNode extends ElementNode {
 	}
 
 	createDOM() {
-		return document.createElement('tr')
+		const el = document.createElement('tr')
+
+		el.className = '__editor_table_tr'
+
+		return el
 	}
 
 	exportJSON() {

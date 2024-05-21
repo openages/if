@@ -156,8 +156,8 @@ importers:
         specifier: ^0.16.10
         version: 0.16.10
       konva:
-        specifier: ^9.3.8
-        version: 9.3.8
+        specifier: ^9.3.9
+        version: 9.3.9
       lexical:
         specifier: ^0.15.0
         version: 0.15.0
@@ -220,7 +220,7 @@ importers:
         version: 4.12.0(react@0.0.0-experimental-c3048aab4-20240326)
       react-konva:
         specifier: ^18.2.10
-        version: 18.2.10(konva@9.3.8)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
+        version: 18.2.10(konva@9.3.9)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       react-nice-avatar:
         specifier: ^1.5.0
         version: 1.5.0(react@0.0.0-experimental-c3048aab4-20240326)
@@ -3569,8 +3569,8 @@ packages:
     resolution: {integrity: sha512-ZiqaC04tp2O5utMsl2TEZTXxa6WSC4yo0fv5ML++D3QZv/vx2Mct0mTlRx3O+uUkjfuAgOkzsCmq5MiUEsDDdA==}
     hasBin: true
 
-  konva@9.3.8:
-    resolution: {integrity: sha512-acfS9hSBI0186DVjP4hnCgVQUGg5USn2I9U18skbOG+wFaVB2d84CmUNBfBAPTqsYjO5A0+qHZh7nj20UMNUEA==}
+  konva@9.3.9:
+    resolution: {integrity: sha512-0ACsA2kCGilptQqosTVdu5g1jAeONZI/W/L5U7afeRhoWqSV+HjcuBB+vsFzs64oL/02y+4/jd3K5RL0sLCxbQ==}
 
   launch-editor@2.6.1:
     resolution: {integrity: sha512-eB/uXmFVpY4zezmGp5XtU21kwo7GBbKB+EQ+UZeWtGb9yAM5xt/Evk+lYH3eRNAtId+ej4u7TYPFZ07w4s7rRw==}
@@ -9065,7 +9065,7 @@ snapshots:
     dependencies:
       commander: 8.3.0
 
-  konva@9.3.8: {}
+  konva@9.3.9: {}
 
   launch-editor@2.6.1:
     dependencies:
@@ -9923,11 +9923,11 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-konva@18.2.10(konva@9.3.8)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
+  react-konva@18.2.10(konva@9.3.9)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
       '@types/react-reconciler': 0.28.8
       its-fine: 1.2.5(react@0.0.0-experimental-c3048aab4-20240326)
-      konva: 9.3.8
+      konva: 9.3.9
       react: 0.0.0-experimental-c3048aab4-20240326
       react-dom: 0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326)
       react-reconciler: 0.29.2(react@0.0.0-experimental-c3048aab4-20240326)

@@ -1,4 +1,6 @@
-import { $createTableNode, $createTableRowNode } from './index'
+import { $createParagraphNode, $createTextNode } from 'lexical'
+
+import { $createTableCellNode, $createTableNode, $createTableRowNode } from './index'
 
 export default (row_count: number, col_count: number) => {
 	const table = $createTableNode()
@@ -7,12 +9,12 @@ export default (row_count: number, col_count: number) => {
 		const row = $createTableRowNode()
 
 		for (let col_index = 0; col_index < col_count; col_index++) {
-			const cell = $createTableCellNode()
+			const cell = $createTableCellNode({ is_header: row_index === 0 })
 			const p = $createParagraphNode()
 
 			p.append($createTextNode())
 
-			cell.append(paragraphNode)
+			cell.append(p)
 			row.append(cell)
 		}
 

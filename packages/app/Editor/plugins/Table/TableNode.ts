@@ -31,7 +31,11 @@ export default class TableNode extends ElementNode {
 	}
 
 	createDOM() {
-		return document.createElement('table')
+		const el = document.createElement('table')
+
+		el.className = '__editor_table'
+
+		return el
 	}
 
 	updateDOM() {
