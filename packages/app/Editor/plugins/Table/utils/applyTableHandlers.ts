@@ -699,6 +699,7 @@ export default (
 				const is_last_row = table_node.getChildren().at(-1).getKey() === table_row_node.getKey()
 				const is_last_column = table_row_node.getChildren().at(-1).getKey() === table_cell_node.getKey()
 				const children = table_cell_node.getChildren()
+				const children_length = children.length
 
 				if (
 					is_last_row &&
@@ -720,7 +721,10 @@ export default (
 
 					editor.update(() => {
 						children.at(-1).remove()
-						children.at(-2).remove()
+
+						if (children_length > 2) {
+							children.at(-2).remove()
+						}
 
 						table_node.selectNext()
 					})

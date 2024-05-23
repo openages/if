@@ -1,38 +1,29 @@
 import {
 	$createParagraphNode,
 	$getNodeByKey,
-	$getSelection,
 	$insertNodes,
-	$isRangeSelection,
 	$isTextNode,
 	COMMAND_PRIORITY_EDITOR,
-	COMMAND_PRIORITY_HIGH,
-	COMMAND_PRIORITY_LOW,
-	KEY_ENTER_COMMAND
+	COMMAND_PRIORITY_HIGH
 } from 'lexical'
 import { injectable } from 'tsyringe'
 
 import { INSERT_TABLE_COMMAND, SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
-import { $getMatchingParent } from '@/Editor/utils'
 import Utils from '@/models/utils'
-import { $findMatchingParent, $insertFirst, mergeRegister } from '@lexical/utils'
+import { $insertFirst, mergeRegister } from '@lexical/utils'
 
 import TableNode from './TableNode'
 import {
 	$computeTableMap,
 	$createTableCellNode,
 	$createTableNodeWithDimensions,
-	$isTableCellNode,
 	$isTableNode,
-	$isTableRowNode,
 	applyTableHandlers
 } from './utils'
 
 import type { HTMLTableElementWithWithTableSelectionState } from './types'
 import type TableObserver from './TableObserver'
-import type { LexicalEditor, NodeMutation, LexicalNode } from 'lexical'
-import type TableRowNode from './TableRowNode'
-import type TableCellNode from './TableCellNode'
+import type { LexicalEditor, NodeMutation } from 'lexical'
 
 @injectable()
 export default class Index {

@@ -10,7 +10,7 @@ import {
 	KEY_DELETE_COMMAND,
 	KEY_ENTER_COMMAND
 } from 'lexical'
-import { action, makeAutoObservable, observable } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
@@ -131,6 +131,8 @@ export default class Index {
 	}
 
 	addListeners() {
+		if (this.unregister) this.unregister()
+
 		this.unregister = mergeRegister(
 			this.editor.registerCommand<MouseEvent>(CLICK_COMMAND, this.onClick.bind(this), COMMAND_PRIORITY_LOW),
 			this.editor.registerCommand(KEY_ENTER_COMMAND, this.onEnter.bind(this), COMMAND_PRIORITY_LOW),

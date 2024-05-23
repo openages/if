@@ -284,6 +284,8 @@ export default class Index {
 	}
 
 	addListeners() {
+		if (this.unregister) this.unregister()
+
 		this.unregister = mergeRegister(
 			this.editor.registerNodeTransform(ToggleNode, this.toggleNodeTranform),
 			this.editor.registerNodeTransform(ToggleHeadNode, this.toggleHeadNodeTransform),

@@ -22,6 +22,7 @@ import {
 	LinkEditor,
 	Picker,
 	Table,
+	TableActions,
 	TextBar,
 	Toggle,
 	Transform,
@@ -60,6 +61,7 @@ const Index = () => {
 				<CodeActions />
 				<Toggle />
 				<Table />
+				<TableActions />
 			</LexicalComposer>
 		</div>
 	)
