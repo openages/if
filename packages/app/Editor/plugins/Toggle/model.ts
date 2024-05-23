@@ -35,7 +35,7 @@ import {
 	$isToggleNode
 } from './utils'
 
-import type { LexicalEditor } from 'lexical'
+import type { LexicalEditor, LexicalNode } from 'lexical'
 
 @injectable()
 export default class Index {
@@ -175,22 +175,24 @@ export default class Index {
 			if (children.at(-1)?.getTextContentSize() === 0 && children.at(-2)?.getTextContentSize() === 0) {
 				const next_node = toggle_node.getNextSibling()
 
+				let p: LexicalNode
+
 				if (next_node) {
-					next_node.selectEnd()
+					p = next_node
 				} else {
-					const p = $createParagraphNode()
+					p = $createParagraphNode()
 
 					toggle_node.insertAfter(p)
-
-					window.requestAnimationFrame(() =>
-						this.editor.update(() => {
-							children.at(-1).remove()
-							children.at(-2).remove()
-
-							p.selectStart()
-						})
-					)
 				}
+
+				window.requestAnimationFrame(() =>
+					this.editor.update(() => {
+						children.at(-1).remove()
+						children.at(-2).remove()
+
+						p.selectEnd()
+					})
+				)
 
 				return true
 			}

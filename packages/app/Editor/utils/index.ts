@@ -11,5 +11,6 @@ export { default as isMouseDownOnEvent } from './isMouseDownOnEvent'
 export { default as stopEvent } from './stopEvent'
 export { default as isPickerInView } from './isPickerInView'
 export { default as $getChildrenRecursively } from './$getChildrenRecursively'
+export { default as $getMatchingParent } from './$getMatchingParent'
 
 export * from './handlers'

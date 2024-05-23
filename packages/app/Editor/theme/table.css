@@ -46,7 +46,7 @@
 			.__editor_table_td {
 				min-width: 120px;
 				box-sizing: border-box;
-				padding: 6px 12px;
+				padding: 3px 12px;
 				border-bottom: var(--border);
 				border-left: var(--border);
 				vertical-align: unset;

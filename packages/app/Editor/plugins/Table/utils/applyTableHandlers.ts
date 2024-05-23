@@ -9,8 +9,7 @@ import {
 	$isRangeSelection,
 	$isTextNode,
 	$setSelection,
-	COMMAND_PRIORITY_CRITICAL,
-	COMMAND_PRIORITY_HIGH,
+	COMMAND_PRIORITY_LOW,
 	CONTROLLED_TEXT_INSERTION_COMMAND,
 	DELETE_CHARACTER_COMMAND,
 	DELETE_LINE_COMMAND,
@@ -31,7 +30,7 @@ import {
 	SELECTION_INSERT_CLIPBOARD_NODES_COMMAND
 } from 'lexical'
 
-import { getDomSelection, stopEvent } from '@/Editor/utils'
+import { $getMatchingParent, getDomSelection, stopEvent } from '@/Editor/utils'
 import { $findMatchingParent } from '@lexical/utils'
 
 import TableObserver from '../TableObserver'
@@ -59,7 +58,7 @@ import type TableNode from '../TableNode'
 import type TableCellNode from '../TableCellNode'
 import type TableSelection from '../TableSelection'
 import type { HTMLTableElementWithWithTableSelectionState } from '../types'
-import type { ElementFormatType, LexicalCommand, LexicalEditor, TextFormatType, NodeKey } from 'lexical'
+import type { ElementFormatType, LexicalCommand, LexicalEditor, TextFormatType, NodeKey, LexicalNode } from 'lexical'
 
 export default (
 	table_node: TableNode,
@@ -128,7 +127,39 @@ export default (
 	const $delete_cell_handler = (event: KeyboardEvent): boolean => {
 		const selection = $getSelection()
 
-		if (!$isSelectionInTable(selection, table_node)) {
+		if (!$isSelectionInTable(selection, table_node) || !$isRangeSelection(selection)) {
+			return false
+		}
+
+		const anchor = selection.anchor.getNode()
+		const table_row_node = $getMatchingParent(anchor, $isTableRowNode) as TableRowNode
+		const table_cell_node = $getMatchingParent(anchor, $isTableCellNode) as TableCellNode
+
+		if (!table_row_node || !table_cell_node) return false
+
+		const is_first_row = table_node.getChildren().at(0).getKey() === table_row_node.getKey()
+		const is_first_column = table_row_node.getChildren().at(0).getKey() === table_cell_node.getKey()
+
+		if (is_first_row && is_first_column && table_cell_node.getTextContentSize() === 0) {
+			const prev = table_node.getPreviousSibling()
+			const next = table_node.getNextSibling()
+
+			if (!prev && !next) {
+				const p = $createParagraphNode()
+
+				editor.update(() => {
+					table_node.insertAfter(p)
+
+					table_node.remove()
+
+					p.select()
+				})
+			} else {
+				editor.update(() => {
+					table_node.remove()
+				})
+			}
+
 			return false
 		}
 
@@ -171,16 +202,14 @@ export default (
 	})
 
 	commands.forEach(command => {
-		observer.listeners.add(
-			editor.registerCommand(command, delete_text_handler(command), COMMAND_PRIORITY_CRITICAL)
-		)
+		observer.listeners.add(editor.registerCommand(command, delete_text_handler(command), COMMAND_PRIORITY_LOW))
 	})
 
 	observer.listeners.add(
 		editor.registerCommand<KeyboardEvent>(
 			KEY_ARROW_DOWN_COMMAND,
 			event => $handleArrowKey(editor, event, 'down', table_node, observer),
-			COMMAND_PRIORITY_HIGH
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -188,7 +217,7 @@ export default (
 		editor.registerCommand<KeyboardEvent>(
 			KEY_ARROW_UP_COMMAND,
 			event => $handleArrowKey(editor, event, 'up', table_node, observer),
-			COMMAND_PRIORITY_HIGH
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -196,7 +225,7 @@ export default (
 		editor.registerCommand<KeyboardEvent>(
 			KEY_ARROW_LEFT_COMMAND,
 			event => $handleArrowKey(editor, event, 'backward', table_node, observer),
-			COMMAND_PRIORITY_HIGH
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -204,7 +233,7 @@ export default (
 		editor.registerCommand<KeyboardEvent>(
 			KEY_ARROW_RIGHT_COMMAND,
 			event => $handleArrowKey(editor, event, 'forward', table_node, observer),
-			COMMAND_PRIORITY_HIGH
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -228,20 +257,16 @@ export default (
 
 				return false
 			},
-			COMMAND_PRIORITY_HIGH
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
 	observer.listeners.add(
-		editor.registerCommand<KeyboardEvent>(
-			KEY_BACKSPACE_COMMAND,
-			$delete_cell_handler,
-			COMMAND_PRIORITY_CRITICAL
-		)
+		editor.registerCommand<KeyboardEvent>(KEY_BACKSPACE_COMMAND, $delete_cell_handler, COMMAND_PRIORITY_LOW)
 	)
 
 	observer.listeners.add(
-		editor.registerCommand<KeyboardEvent>(KEY_DELETE_COMMAND, $delete_cell_handler, COMMAND_PRIORITY_CRITICAL)
+		editor.registerCommand<KeyboardEvent>(KEY_DELETE_COMMAND, $delete_cell_handler, COMMAND_PRIORITY_LOW)
 	)
 
 	observer.listeners.add(
@@ -270,7 +295,7 @@ export default (
 
 				return false
 			},
-			COMMAND_PRIORITY_CRITICAL
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -321,7 +346,7 @@ export default (
 
 				return true
 			},
-			COMMAND_PRIORITY_CRITICAL
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -361,7 +386,7 @@ export default (
 
 				return false
 			},
-			COMMAND_PRIORITY_CRITICAL
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -398,11 +423,11 @@ export default (
 
 				return true
 			},
-			COMMAND_PRIORITY_CRITICAL
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
-	observer.listeners.add(editor.registerCommand(FOCUS_COMMAND, _ => table_node.isSelected(), COMMAND_PRIORITY_HIGH))
+	observer.listeners.add(editor.registerCommand(FOCUS_COMMAND, _ => table_node.isSelected(), COMMAND_PRIORITY_LOW))
 
 	observer.listeners.add(
 		editor.registerCommand(
@@ -527,7 +552,7 @@ export default (
 
 				return true
 			},
-			COMMAND_PRIORITY_CRITICAL
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -647,7 +672,7 @@ export default (
 
 				return false
 			},
-			COMMAND_PRIORITY_CRITICAL
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -665,6 +690,44 @@ export default (
 					return false
 				}
 
+				const anchor = selection.anchor.getNode()
+				const table_row_node = $getMatchingParent(anchor, $isTableRowNode) as TableRowNode
+				const table_cell_node = $getMatchingParent(anchor, $isTableCellNode) as TableCellNode
+
+				if (!table_row_node || !table_cell_node) return false
+
+				const is_last_row = table_node.getChildren().at(-1).getKey() === table_row_node.getKey()
+				const is_last_column = table_row_node.getChildren().at(-1).getKey() === table_cell_node.getKey()
+				const children = table_cell_node.getChildren()
+
+				if (
+					is_last_row &&
+					is_last_column &&
+					children.at(-1)?.getTextContentSize() === 0 &&
+					children.at(-2)?.getTextContentSize() === 0
+				) {
+					const next_node = table_node.getNextSibling()
+
+					let p: LexicalNode
+
+					if (next_node) {
+						p = next_node
+					} else {
+						p = $createParagraphNode()
+
+						table_node.insertAfter(p)
+					}
+
+					editor.update(() => {
+						children.at(-1).remove()
+						children.at(-2).remove()
+
+						table_node.selectNext()
+					})
+
+					return true
+				}
+
 				const edge_position = $getTableEdgeCursorPosition(editor, selection, table_node)
 
 				if (edge_position) {
@@ -675,7 +738,7 @@ export default (
 
 				return false
 			},
-			COMMAND_PRIORITY_CRITICAL
+			COMMAND_PRIORITY_LOW
 		)
 	)
 

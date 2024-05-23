@@ -1,29 +1,38 @@
 import {
 	$createParagraphNode,
 	$getNodeByKey,
+	$getSelection,
 	$insertNodes,
+	$isRangeSelection,
 	$isTextNode,
 	COMMAND_PRIORITY_EDITOR,
-	COMMAND_PRIORITY_HIGH
+	COMMAND_PRIORITY_HIGH,
+	COMMAND_PRIORITY_LOW,
+	KEY_ENTER_COMMAND
 } from 'lexical'
 import { injectable } from 'tsyringe'
 
 import { INSERT_TABLE_COMMAND, SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
+import { $getMatchingParent } from '@/Editor/utils'
 import Utils from '@/models/utils'
-import { $insertFirst, mergeRegister } from '@lexical/utils'
+import { $findMatchingParent, $insertFirst, mergeRegister } from '@lexical/utils'
 
 import TableNode from './TableNode'
 import {
 	$computeTableMap,
 	$createTableCellNode,
 	$createTableNodeWithDimensions,
+	$isTableCellNode,
 	$isTableNode,
+	$isTableRowNode,
 	applyTableHandlers
 } from './utils'
 
 import type { HTMLTableElementWithWithTableSelectionState } from './types'
 import type TableObserver from './TableObserver'
-import type { LexicalEditor, NodeMutation } from 'lexical'
+import type { LexicalEditor, NodeMutation, LexicalNode } from 'lexical'
+import type TableRowNode from './TableRowNode'
+import type TableCellNode from './TableCellNode'
 
 @injectable()
 export default class Index {
@@ -76,6 +85,37 @@ export default class Index {
 		}
 	}
 
+	onTransform(node: TableNode) {
+		const [grid_map] = $computeTableMap(node, null, null)
+
+		const max_row_length = grid_map.reduce((cur_length, row) => {
+			return Math.max(cur_length, row.length)
+		}, 0)
+
+		for (let i = 0; i < grid_map.length; ++i) {
+			const row_length = grid_map[i].length
+
+			if (row_length === max_row_length) {
+				continue
+			}
+
+			const last_cell_map = grid_map[i][row_length - 1]
+			const last_row_cell = last_cell_map.cell
+
+			for (let j = row_length; j < max_row_length; ++j) {
+				const new_cell = $createTableCellNode({})
+
+				new_cell.append($createParagraphNode())
+
+				if (last_row_cell !== null) {
+					last_row_cell.insertAfter(new_cell)
+				} else {
+					$insertFirst(last_row_cell, new_cell)
+				}
+			}
+		}
+	}
+
 	checkSelection(path: Array<{ type: string; key: string }>) {
 		if (path.find(item => item.type === 'table') !== undefined) {
 			this.addListeners()
@@ -116,38 +156,7 @@ export default class Index {
 	addListeners() {
 		if (this.unregister) this.unregister()
 
-		this.unregister = mergeRegister(
-			this.editor.registerNodeTransform(TableNode, node => {
-				const [grid_map] = $computeTableMap(node, null, null)
-
-				const max_row_length = grid_map.reduce((cur_length, row) => {
-					return Math.max(cur_length, row.length)
-				}, 0)
-
-				for (let i = 0; i < grid_map.length; ++i) {
-					const row_length = grid_map[i].length
-
-					if (row_length === max_row_length) {
-						continue
-					}
-
-					const last_cell_map = grid_map[i][row_length - 1]
-					const last_row_cell = last_cell_map.cell
-
-					for (let j = row_length; j < max_row_length; ++j) {
-						const new_cell = $createTableCellNode({})
-
-						new_cell.append($createParagraphNode())
-
-						if (last_row_cell !== null) {
-							last_row_cell.insertAfter(new_cell)
-						} else {
-							$insertFirst(last_row_cell, new_cell)
-						}
-					}
-				}
-			})
-		)
+		this.unregister = mergeRegister(this.editor.registerNodeTransform(TableNode, this.onTransform.bind(this)))
 	}
 
 	removeListeners() {
