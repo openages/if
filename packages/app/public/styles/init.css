@@ -1,13 +1,36 @@
+[data-theme='light'] {
+	--from: 100% 0 0 0;
+}
+
 [data-theme='dark'] {
+	--from: 0 0 100% 0;
+
 	::selection {
 		color: rgba(var(--color_bg_rgb), 1);
 		background-color: rgba(var(--color_text_rgb), 0.81);
 	}
 }
 
+@keyframes reveal {
+	from {
+		clip-path: inset(var(--from));
+	}
+}
+
+::view-transition-new(root) {
+	z-index: 1000;
+	animation: reveal 0.6s ease !important;
+	clip-path: inset(0 0 0 0);
+}
+
+::view-transition-old(root) {
+	z-index: -1;
+	animation: none;
+}
+
 html,
 body {
-	line-height: 1.8;
+	line-height: 1.71;
 	padding: 0;
 	margin: 0;
 	color: var(--color_text);

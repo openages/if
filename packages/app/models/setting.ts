@@ -36,12 +36,20 @@ export default class Index {
 	}
 
 	setTheme(v: Theme, initial?: boolean) {
-		if (!initial) setGlobalAnimation()
+		const change = () => {
+			this.theme = v
 
-		this.theme = v
+			document.documentElement.setAttribute('data-theme', v)
+			document.documentElement.style.colorScheme = v
+		}
 
-		document.documentElement.setAttribute('data-theme', v)
-		document.documentElement.style.colorScheme = v
+		if (!initial) {
+			setGlobalAnimation()
+
+			document.startViewTransition(change)
+		} else {
+			change()
+		}
 	}
 
 	toggleAutoTheme() {

@@ -69,21 +69,23 @@ export default class Index {
 	}
 
 	getPosition() {
-		const [table_node, table_row_node, table_cell_node] = this.nodes
-		const col_index = $getTableColumnIndexFromTableCellNode(table_cell_node)
-		const first_row_node = table_node.getChildren().at(0) as TableRowNode
-		const target_col_node = first_row_node.getChildren().at(col_index)
+		this.editor.getEditorState().read(() => {
+			const [table_node, table_row_node, table_cell_node] = this.nodes
+			const col_index = $getTableColumnIndexFromTableCellNode(table_cell_node)
+			const first_row_node = table_node.getChildren().at(0) as TableRowNode
+			const target_col_node = first_row_node.getChildren().at(col_index)
 
-		const table_row_node_el = this.editor.getElementByKey(table_row_node.getKey())
-		const table_cell_node_el = this.editor.getElementByKey(table_cell_node.getKey())
-		const target_col_node_el = this.editor.getElementByKey(target_col_node.getKey())
+			const table_row_node_el = this.editor.getElementByKey(table_row_node.getKey())
+			const table_cell_node_el = this.editor.getElementByKey(table_cell_node.getKey())
+			const target_col_node_el = this.editor.getElementByKey(target_col_node.getKey())
 
-		const rect_row = table_row_node_el.getBoundingClientRect()
-		const rect_cell = table_cell_node_el.getBoundingClientRect()
-		const rect_col = target_col_node_el.getBoundingClientRect()
+			const rect_row = table_row_node_el.getBoundingClientRect()
+			const rect_cell = table_cell_node_el.getBoundingClientRect()
+			const rect_col = target_col_node_el.getBoundingClientRect()
 
-		this.position_row = { left: rect_row.x - 0.5, top: rect_row.y + rect_row.height / 2 - 5 }
-		this.position_col = { left: rect_cell.x + rect_cell.width / 2 - 5, top: rect_col.y - 0.5 }
+			this.position_row = { left: rect_row.x - 0.5, top: rect_row.y + rect_row.height / 2 - 5 }
+			this.position_col = { left: rect_cell.x + rect_cell.width / 2 - 5, top: rect_col.y - 0.5 }
+		})
 	}
 
 	onSelection() {

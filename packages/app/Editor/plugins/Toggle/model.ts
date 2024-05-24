@@ -2,6 +2,7 @@ import {
 	$createParagraphNode,
 	$getSelection,
 	$insertNodes,
+	$isParagraphNode,
 	$isRangeSelection,
 	COMMAND_PRIORITY_EDITOR,
 	COMMAND_PRIORITY_HIGH,
@@ -60,6 +61,12 @@ export default class Index {
 			$isToggleHeadNode(children[1]) &&
 			$isToggleBodyNode(children[2])
 		) {
+			const toggle_body_node = children[2] as ToggleBodyNode
+
+			if (!toggle_body_node.getChildren().length) {
+				toggle_body_node.append($createParagraphNode())
+			}
+
 			return true
 		}
 
@@ -143,6 +150,12 @@ export default class Index {
 		}
 
 		if ($isToggleBodyNode(node) && !node.getTextContentSize()) {
+			if (!$isParagraphNode(anchor)) {
+				anchor.remove()
+
+				node.append($createParagraphNode())
+			}
+
 			node.getPreviousSibling().selectEnd()
 
 			return true

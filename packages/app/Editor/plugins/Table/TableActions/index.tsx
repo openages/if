@@ -8,6 +8,7 @@ import { container } from 'tsyringe'
 import { useStackSelector } from '@/context/stack'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import {
+	ArrowsCounterClockwise,
 	ArrowFatDown,
 	ArrowFatLeft,
 	ArrowFatRight,
@@ -30,21 +31,10 @@ const Index = () => {
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
-	const [exist, setExsit] = useState(false)
 
 	useLayoutEffect(() => {
 		x.init(id, editor)
 	}, [id, editor])
-
-	useLayoutEffect(() => {
-		if (x.visible) return setExsit(true)
-
-		const timer = setTimeout(() => {
-			setExsit(false)
-		}, 180)
-
-		return () => clearTimeout(timer)
-	}, [x.visible])
 
 	const menu_common = useMemo(
 		() =>
@@ -92,11 +82,6 @@ const Index = () => {
 	const menu_col = useMemo(() => {
 		return [
 			{
-				label: 'Header Col',
-				icon: <SquareHalfBottom />,
-				key: 'header_col'
-			},
-			{
 				label: 'Align',
 				icon: <TextAlignCenter />,
 				key: 'align',
@@ -119,6 +104,11 @@ const Index = () => {
 				]
 			},
 			{
+				label: 'Header Col',
+				icon: <SquareHalfBottom />,
+				key: 'header_col'
+			},
+			{
 				label: 'Insert Left',
 				icon: <ArrowFatLeft />,
 				key: 'insert_left'
@@ -128,6 +118,11 @@ const Index = () => {
 				icon: <ArrowFatRight />,
 				key: 'insert_right'
 			},
+			{
+				label: 'Reset Width',
+				icon: <ArrowsCounterClockwise />,
+				key: 'reset_width'
+			},
 			...menu_common
 		] as MenuProps['items']
 	}, [])
@@ -135,9 +130,9 @@ const Index = () => {
 	const onRowOpenChange = useMemoizedFn(v => (x.visible_menu_type = (v ? 'row' : '') as Model['visible_menu_type']))
 	const onColOpenChange = useMemoizedFn(v => (x.visible_menu_type = (v ? 'col' : '') as Model['visible_menu_type']))
 
-	if (!exist) return null
+	if (!x.visible) return null
 
-	const Content = x.visible && (
+	const Content = (
 		<Fragment>
 			<div
 				className={$cx(
