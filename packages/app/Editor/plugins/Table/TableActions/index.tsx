@@ -1,32 +1,19 @@
 import { useMemoizedFn } from 'ahooks'
 import { ConfigProvider, Dropdown } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useMemo, useState, Fragment } from 'react'
+import { useLayoutEffect, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
 import { container } from 'tsyringe'
 
 import { useStackSelector } from '@/context/stack'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import {
-	ArrowsCounterClockwise,
-	ArrowFatDown,
-	ArrowFatLeft,
-	ArrowFatRight,
-	ArrowFatUp,
-	Broom,
-	Copy,
-	SquareHalf,
-	SquareHalfBottom,
-	TextAlignCenter,
-	TextAlignLeft,
-	TextAlignRight,
-	Trash
-} from '@phosphor-icons/react'
 
 import styles from './index.css'
 import Model from './model'
+import { menu_col, menu_row } from './options'
 
 import type { MenuProps } from 'antd'
+
 const Index = () => {
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
@@ -36,99 +23,12 @@ const Index = () => {
 		x.init(id, editor)
 	}, [id, editor])
 
-	const menu_common = useMemo(
-		() =>
-			[
-				{
-					label: 'Clone',
-					icon: <Copy />,
-					key: 'clone'
-				},
-				{
-					label: 'Clear',
-					icon: <Broom />,
-					key: 'clear'
-				},
-				{
-					label: 'Remove',
-					icon: <Trash />,
-					key: 'remove'
-				}
-			] as MenuProps['items'],
-		[]
-	)
-
-	const menu_row = useMemo(() => {
-		return [
-			{
-				label: 'Header Row',
-				icon: <SquareHalf />,
-				key: 'header_row'
-			},
-			{
-				label: 'Insert Above',
-				icon: <ArrowFatUp />,
-				key: 'insert_above'
-			},
-			{
-				label: 'Insert Below',
-				icon: <ArrowFatDown />,
-				key: 'insert_below'
-			},
-			...menu_common
-		] as MenuProps['items']
-	}, [])
-
-	const menu_col = useMemo(() => {
-		return [
-			{
-				label: 'Align',
-				icon: <TextAlignCenter />,
-				key: 'align',
-				children: [
-					{
-						label: 'Left',
-						icon: <TextAlignLeft />,
-						key: 'left'
-					},
-					{
-						label: 'Center',
-						icon: <TextAlignCenter />,
-						key: 'center'
-					},
-					{
-						label: 'Right',
-						icon: <TextAlignRight />,
-						key: 'right'
-					}
-				]
-			},
-			{
-				label: 'Header Col',
-				icon: <SquareHalfBottom />,
-				key: 'header_col'
-			},
-			{
-				label: 'Insert Left',
-				icon: <ArrowFatLeft />,
-				key: 'insert_left'
-			},
-			{
-				label: 'Insert Right',
-				icon: <ArrowFatRight />,
-				key: 'insert_right'
-			},
-			{
-				label: 'Reset Width',
-				icon: <ArrowsCounterClockwise />,
-				key: 'reset_width'
-			},
-			...menu_common
-		] as MenuProps['items']
-	}, [])
-
 	const onRowOpenChange = useMemoizedFn(v => (x.visible_menu_type = (v ? 'row' : '') as Model['visible_menu_type']))
 	const onColOpenChange = useMemoizedFn(v => (x.visible_menu_type = (v ? 'col' : '') as Model['visible_menu_type']))
+
+	const onClick: MenuProps['onClick'] = useMemoizedFn(e => {
+		editor.update(() => x.onClick(e))
+	})
 
 	if (!x.visible) return null
 
@@ -145,7 +45,7 @@ const Index = () => {
 				<Dropdown
 					destroyPopupOnHide
 					trigger={['click']}
-					menu={{ items: menu_row, rootClassName: styles.dropdown_menu }}
+					menu={{ items: menu_row, rootClassName: styles.dropdown_menu, onClick }}
 					onOpenChange={onRowOpenChange}
 				>
 					<div
@@ -172,7 +72,7 @@ const Index = () => {
 					<Dropdown
 						destroyPopupOnHide
 						trigger={['click']}
-						menu={{ items: menu_col, rootClassName: styles.dropdown_menu }}
+						menu={{ items: menu_col, rootClassName: styles.dropdown_menu, onClick }}
 						onOpenChange={onColOpenChange}
 					>
 						<div

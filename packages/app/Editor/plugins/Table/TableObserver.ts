@@ -68,7 +68,12 @@ export default class TableObserver {
 					const target = record.target
 					const node_name = target.nodeName
 
-					if (node_name === 'TABLE' || node_name === 'TR') {
+					if (
+						node_name === 'TABLE' ||
+						node_name === 'TBODY' ||
+						node_name === 'THEAD' ||
+						node_name === 'TR'
+					) {
 						grid_needs_redraw = true
 
 						break

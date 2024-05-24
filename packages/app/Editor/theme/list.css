@@ -19,12 +19,7 @@
 			padding-inline-start: 18px;
 		}
 
-		.__editor_list_item {
-			margin-bottom: 0.15em;
-		}
-
 		.__editor_list_item_nested {
-			margin-bottom: 0.6em;
 			list-style-type: none;
 
 			&::before,

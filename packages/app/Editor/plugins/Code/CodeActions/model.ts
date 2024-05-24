@@ -25,6 +25,7 @@ export default class Index {
 	id = ''
 	editor = null as LexicalEditor
 	key = ''
+	resize_observer = null as ResizeObserver
 
 	lang = '' as BundledLanguage
 	formatable = false
@@ -33,10 +34,21 @@ export default class Index {
 
 	watch = {
 		visible: v => {
+			const container = document.getElementById(this.id)
+
 			if (v) {
-				document.getElementById(this.id).addEventListener('scroll', this.onScroll)
+				container.addEventListener('scroll', this.onScroll)
+
+				this.resize_observer = new ResizeObserver(this.onScroll)
+
+				this.resize_observer.observe(container)
 			} else {
 				document.getElementById(this.id).removeEventListener('scroll', this.onScroll)
+
+				this.resize_observer.unobserve(container)
+				this.resize_observer.disconnect()
+
+				this.resize_observer = null
 			}
 		}
 	} as Watch<Index>
@@ -44,7 +56,7 @@ export default class Index {
 	constructor(public utils: Utils) {
 		makeAutoObservable(
 			this,
-			{ utils: false, id: false, editor: false, key: false, watch: false },
+			{ utils: false, id: false, editor: false, key: false, resize_observer: false, watch: false },
 			{ autoBind: true }
 		)
 	}

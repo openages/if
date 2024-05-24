@@ -201,7 +201,11 @@ const Index = (props: IPropsImage) => {
 						'options_wrap btn_single border_box none justify_center align_center absolute cursor_point clickable',
 						styles.btn_remove
 					)}
-					onClick={x.block.onDelete}
+					onClick={e => {
+						editor.update(() => {
+							x.block.onDelete(e)
+						})
+					}}
 				>
 					<Trash></Trash>
 				</span>

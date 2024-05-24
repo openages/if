@@ -5,6 +5,8 @@ import { App, Auth, DB, Layout, Locale, Screenlock, Search, Setting, Shortcuts, 
 
 @singleton()
 export default class GlobalModel {
+	unlistner = null as NodeJS.Timeout
+
 	constructor(
 		public locale: Locale,
 		public stack: Stack,
@@ -31,7 +33,8 @@ export default class GlobalModel {
 				app: false,
 				shortcuts: false,
 				search: false,
-				timer: false
+				timer: false,
+				unlistner: false
 			},
 			{ autoBind: true }
 		)
@@ -65,6 +68,12 @@ export default class GlobalModel {
 	}
 
 	on() {
+		this.unlistner = setInterval(() => {
+			requestIdleCallback(() => {
+				this.setting.checkTheme()
+			})
+		}, 1000 * 60)
+
 		$app.Event.on('global.app.lock', this.lock)
 		$app.Event.on('global.app.unlock', this.unlock)
 	}
@@ -81,6 +90,8 @@ export default class GlobalModel {
 		this.shortcuts.off()
 		this.search.off()
 		this.timer.off()
+
+		clearInterval(this.unlistner)
 
 		$app.Event.off('global.app.lock', this.lock)
 		$app.Event.off('global.app.unlock', this.unlock)

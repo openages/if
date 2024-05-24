@@ -59,13 +59,18 @@ const Index = (props: IProps) => {
 		const container = document.getElementById(id)
 
 		container.addEventListener('scroll', updatePosition)
-		window.addEventListener('resize', onResize)
+
+		const resize_observer = new ResizeObserver(onResize)
+
+		resize_observer.observe(container)
 
 		return () => {
 			setOverflow(0)
 
 			container.removeEventListener('scroll', updatePosition)
-			window.removeEventListener('resize', onResize)
+
+			resize_observer.unobserve(container)
+			resize_observer.disconnect()
 		}
 	}, [exist])
 

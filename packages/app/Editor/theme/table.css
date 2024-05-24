@@ -44,6 +44,8 @@
 			}
 
 			.__editor_table_td {
+				--editor_padding: 0;
+
 				min-width: 120px;
 				box-sizing: border-box;
 				padding: 3px 12px;
@@ -56,11 +58,6 @@
 					text-align: unset;
 					font-weight: 500;
 				}
-			}
-
-			p {
-				margin-block-start: 0;
-				margin-block-end: 0;
 			}
 		}
 	}

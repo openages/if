@@ -12,5 +12,8 @@ export { default as stopEvent } from './stopEvent'
 export { default as isPickerInView } from './isPickerInView'
 export { default as $getChildrenRecursively } from './$getChildrenRecursively'
 export { default as $getMatchingParent } from './$getMatchingParent'
+export { default as $updateTextNodeProperties } from './$updateTextNodeProperties'
+export { default as $updateParagraphNodeProperties } from './$updateParagraphNodeProperties'
+export { default as $cloneNode } from './$cloneNode'
 
 export * from './handlers'
