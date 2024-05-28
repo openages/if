@@ -27,8 +27,8 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.7.3-nightly.d74b584",
-    "lint-staged": "^15.2.2",
+    "@biomejs/biome": "^1.7.4-nightly.125f34b",
+    "lint-staged": "^15.2.5",
     "prettier": "^3.2.5",
     "turbo": "^1.13.3",
     "yorkie": "^2.0.0"
