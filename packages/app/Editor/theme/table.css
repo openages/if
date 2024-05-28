@@ -53,10 +53,26 @@
 				border-left: var(--border);
 				vertical-align: unset;
 
+				&[width] {
+					min-width: 60px;
+				}
+
 				&.__editor_table_th {
 					background-color: var(--color_bg_1);
 					text-align: unset;
 					font-weight: 500;
+
+					&[align='left'] {
+						text-align: left;
+					}
+
+					&[align='center'] {
+						text-align: center;
+					}
+
+					&[align='right'] {
+						text-align: right;
+					}
 				}
 			}
 		}

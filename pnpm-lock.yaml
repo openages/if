@@ -265,8 +265,8 @@ importers:
         version: 3.23.8
     devDependencies:
       '@rsdoctor/rspack-plugin':
-        specifier: ^0.1.10
-        version: 0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+        specifier: ^0.2.4
+        version: 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
       '@rspack/cli':
         specifier: 0.6.5
         version: 0.6.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))(@types/express@4.17.21)(webpack@5.91.0)
@@ -1756,33 +1756,33 @@ packages:
     resolution: {integrity: sha512-es2g3dq6Nb07iFxGk5GuHN20RwBZOsuDQN7izWIisUcv9r+d2C5jQxqmgkdebXgReWfiyUabcki6Fg77mSNrig==}
     engines: {node: '>=14.0.0'}
 
-  '@rsdoctor/client@0.1.10':
-    resolution: {integrity: sha512-lV1XkhIHJXr+KWfAi2TauWFjwaAouQgP3kJlTaHpDAd0y0i/ZePhJq8IP8+bDRWh8bjkuxFDSNZbvxjE9Vi5kA==}
+  '@rsdoctor/client@0.2.4':
+    resolution: {integrity: sha512-SeIpajDzyhyrepVg5BWbO1/6UGB+ROcoMw0S9jgSAI91LhoWMI6JsMBtpIuapg1EiakFuuzRjIrnQQrogCK7mg==}
 
-  '@rsdoctor/core@0.1.10':
-    resolution: {integrity: sha512-CwQNiCKdXtrrh/zjL4PjTCAKPQdtbyojIPa9yR7Yi8OTChV9zWa2cVDULOyTDGkl5EIOfsvNT2CTVYyGAbLXQg==}
+  '@rsdoctor/core@0.2.4':
+    resolution: {integrity: sha512-cp94z495H5UJAuLer4vIVNUGKbqXYuwRbaFThDnJlGFa48bc/vh0vBxuTQoFIek69QIMQdVKcs0lumuVxPPh8g==}
 
-  '@rsdoctor/graph@0.1.10':
-    resolution: {integrity: sha512-nlTxltFbkpcZaOrtokyY4R3YeY3M1XSwyVyn9EosZnX34sObPVrBwwQVhfV8bqmOqXWdW/tUe6YnM4tPHsVVbg==}
+  '@rsdoctor/graph@0.2.4':
+    resolution: {integrity: sha512-as5lsKEMolwoipmWYaC0SFfoASG7MzoAmvI6kjmDAXz+Su4nOIV1o4/oiaNrMXUVNXocd/ibYeBnZRdngL8GWA==}
 
-  '@rsdoctor/rspack-plugin@0.1.10':
-    resolution: {integrity: sha512-aOn6lYGv1jK48HGHWhI8VyaZLj7KNjgweSOLSmZX2QqH6nkgHeMDm2jrAFJcFvTGgtprK9dclpQYtpXKDrOXbw==}
+  '@rsdoctor/rspack-plugin@0.2.4':
+    resolution: {integrity: sha512-NP6DVjYcFEVrDSyRyL+xwrjAxBnExsuwn4jECEYOfyjTp0RVkVzVtaEhxs4lVa2M3E0gB4bUqpsiKqa6beimew==}
     peerDependencies:
       '@rspack/core': ^0.5.1
 
-  '@rsdoctor/sdk@0.1.10':
-    resolution: {integrity: sha512-l+I1psO3Auhl9cY8f/F34MajycuZLgLB2kz42VNk3dD1m3936mnJGcxp+dBqhOEt5DLUnrUsp2sEe5Ko7THVew==}
+  '@rsdoctor/sdk@0.2.4':
+    resolution: {integrity: sha512-hVoobVOif03rkavizjhYX8vmWnaQAkbvBgnlag4bTvuz51dA52ri9/oJFvsNgmLquJNF7XljBLyvAZeE8teckA==}
 
-  '@rsdoctor/types@0.1.10':
-    resolution: {integrity: sha512-22djLVRiWP64HXyAqdtL/c/TbZyKdfe5ylrDEb8H40WSRXel4OjoakC8/q62FBYt8aAuH1wGAmYzoZ2ifexa+w==}
+  '@rsdoctor/types@0.2.4':
+    resolution: {integrity: sha512-XvTwj6JFh0r+7iNqlv9vGeh7/y/Tu3/2+E4JmmPipmxsPI1cDJe65RTKj/eTgbpLH1W/TINDw2czAiol8m/ouA==}
     peerDependencies:
       '@rspack/core': ^0.5.1
     peerDependenciesMeta:
       '@rspack/core':
         optional: true
 
-  '@rsdoctor/utils@0.1.10':
-    resolution: {integrity: sha512-kDw81F5ls76mtGuizN9vToZkhLkaPwP1urI2U1SsZClnA+qiFkWN0ZsWhn7A/MKzCQAQMzuiHGBei+AWavutdQ==}
+  '@rsdoctor/utils@0.2.4':
+    resolution: {integrity: sha512-iztfgAyRMtqNW7juiY77gOdVuVDWi4Jc9tA3BqHPUg+31PIZmUB1dujvr6tfm4VnfGZy5gu4UMJn/8IG32d4/g==}
 
   '@rspack/binding-darwin-arm64@0.6.5':
     resolution: {integrity: sha512-5Zbs3buzF80MZoWnnpm/ZqQ2ZLKWjmmy94gDMeJhG39lKcpK2J2NyDXVis2ZSg7uUvKyJ662BEgIE1AnTWjnYg==}
@@ -2979,8 +2979,8 @@ packages:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
     engines: {node: '>=0.12'}
 
-  envinfo@7.12.0:
-    resolution: {integrity: sha512-Iw9rQJBGpJRd3rwXm9ft/JiGoAZmLxxJZELYDQoPRZ4USVhkKtIcNBPw6U+/K2mBpaqM25JSV6Yl4Az9vO2wJg==}
+  envinfo@7.13.0:
+    resolution: {integrity: sha512-cvcaMr7KqXVh4nyzGTVqTum+gAiL265x5jUWQIDLq//zOGbW+gSW/C+OWLleY/rs9Qole6AZLMXPbtIFQbqu+Q==}
     engines: {node: '>=4'}
     hasBin: true
 
@@ -6973,13 +6973,14 @@ snapshots:
 
   '@remix-run/router@1.16.1': {}
 
-  '@rsdoctor/client@0.1.10': {}
+  '@rsdoctor/client@0.2.4': {}
 
-  '@rsdoctor/core@0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
+  '@rsdoctor/core@0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
     dependencies:
-      '@rsdoctor/graph': 0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/sdk': 0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/utils': 0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/graph': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/sdk': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/types': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
       axios: 1.7.2
       bytes: 3.1.2
       enhanced-resolve: 5.12.0
@@ -7001,10 +7002,10 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/graph@0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
+  '@rsdoctor/graph@0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
     dependencies:
-      '@rsdoctor/types': 0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/utils': 0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/types': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
       lodash: 4.17.21
       socket.io: 4.7.2
       source-map: 0.7.4
@@ -7018,12 +7019,12 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/rspack-plugin@0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
+  '@rsdoctor/rspack-plugin@0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
     dependencies:
-      '@rsdoctor/core': 0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/graph': 0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/sdk': 0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/utils': 0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/core': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/graph': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/sdk': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
       '@rspack/core': 0.6.5(@swc/helpers@0.5.11)
       loader-utils: 2.0.4
       lodash: 4.17.21
@@ -7037,12 +7038,12 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/sdk@0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
+  '@rsdoctor/sdk@0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
     dependencies:
-      '@rsdoctor/client': 0.1.10
-      '@rsdoctor/graph': 0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/types': 0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/utils': 0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/client': 0.2.4
+      '@rsdoctor/graph': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/types': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
       body-parser: 1.20.1
       cors: 2.8.5
       dayjs: 1.11.6
@@ -7063,7 +7064,7 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/types@0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
+  '@rsdoctor/types@0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
     dependencies:
       '@types/connect': 3.4.35
       '@types/estree': 1.0.0
@@ -7078,10 +7079,10 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@rsdoctor/utils@0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
+  '@rsdoctor/utils@0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
     dependencies:
       '@babel/code-frame': 7.24.2
-      '@rsdoctor/types': 0.1.10(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/types': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
       '@types/estree': 1.0.0
       acorn: 8.11.3
       acorn-import-assertions: 1.9.0(acorn@8.11.3)
@@ -7090,7 +7091,7 @@ snapshots:
       chalk: 4.1.2
       connect: 3.7.0
       deep-eql: 4.1.0
-      envinfo: 7.12.0
+      envinfo: 7.13.0
       fs-extra: 11.2.0
       get-port: 5.1.1
       json-stream-stringify: 3.0.1
@@ -8492,7 +8493,7 @@ snapshots:
 
   entities@4.5.0: {}
 
-  envinfo@7.12.0: {}
+  envinfo@7.13.0: {}
 
   err-code@3.0.1: {}
 
@@ -8903,7 +8904,7 @@ snapshots:
       http-proxy: 1.18.1
       is-glob: 4.0.3
       is-plain-obj: 3.0.0
-      micromatch: 4.0.5
+      micromatch: 4.0.7
     optionalDependencies:
       '@types/express': 4.17.21
     transitivePeerDependencies:

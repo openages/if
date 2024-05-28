@@ -11,9 +11,9 @@
 			.if-message-notice-content {
 				padding: 3px 6px;
 				border-radius: 4px;
-				outline: 1px dashed var(--color_border_light);
+				outline: var(--border);
+				background-color: var(--color_bg_1);
 				font-size: 12px;
-				font-weight: 500;
 
 				.if-message-custom-content {
 					display: flex;

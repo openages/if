@@ -1,0 +1,17 @@
+[data-theme='dark'] {
+	._local {
+		:global {
+			path {
+				fill: rgba(var(--color_text_rgb), 0.2);
+			}
+		}
+	}
+}
+
+._local {
+	:global {
+		path {
+			fill: rgba(var(--color_main_rgb), 0.2);
+		}
+	}
+}

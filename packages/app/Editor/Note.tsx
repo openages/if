@@ -23,6 +23,7 @@ import {
 	Picker,
 	Table,
 	TableActions,
+	TableResizer,
 	TextBar,
 	Toggle,
 	Transform,
@@ -62,6 +63,7 @@ const Index = () => {
 				<Toggle />
 				<Table />
 				<TableActions />
+				<TableResizer />
 			</LexicalComposer>
 		</div>
 	)

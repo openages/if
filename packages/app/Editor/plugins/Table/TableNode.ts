@@ -1,4 +1,4 @@
-import { $getNearestNodeFromDOMNode, ElementNode } from 'lexical'
+import { $getEditor, $getNearestNodeFromDOMNode, ElementNode } from 'lexical'
 
 import { isHTMLElement } from '@lexical/utils'
 
@@ -6,12 +6,18 @@ import { $convertTableElement, $createTableNode, $isTableCellNode } from './util
 
 import type TableRowNode from './TableRowNode'
 import type TableCellNode from './TableCellNode'
-import type { Table } from './types'
-import type { DOMConversionMap, DOMExportOutput, LexicalEditor, NodeKey, SerializedElementNode } from 'lexical'
+import type { Table, IPropsTableNode, SerializedTableNode, IPropsTableCol } from './types'
+import type { DOMConversionMap, DOMExportOutput, LexicalEditor } from 'lexical'
 
 export default class TableNode extends ElementNode {
-	constructor(key?: NodeKey) {
-		super(key)
+	__cols = {} as IPropsTableNode['cols']
+
+	constructor(props: IPropsTableNode) {
+		const { cols, node_key } = props
+
+		super(node_key)
+
+		if (cols) this.__cols = cols
 	}
 
 	static getType() {
@@ -19,21 +25,44 @@ export default class TableNode extends ElementNode {
 	}
 
 	static clone(node: TableNode) {
-		return new TableNode(node.__key)
+		return new TableNode({ cols: node.__cols, node_key: node.__key })
 	}
 
 	static importDOM(): DOMConversionMap {
 		return { table: () => ({ conversion: $convertTableElement, priority: 0 }) }
 	}
 
-	static importJSON() {
-		return $createTableNode()
+	static importJSON(serializedNode: SerializedTableNode) {
+		return $createTableNode({ cols: serializedNode.cols })
 	}
 
 	createDOM() {
 		const el = document.createElement('table')
 
 		el.className = '__editor_table'
+
+		const col_keys = Object.keys(this.__cols)
+
+		if (col_keys.length) {
+			const editor = $getEditor()
+			const rows = this.getChildren() as Array<TableRowNode>
+
+			col_keys.forEach(key => {
+				const target_key = Number(key)
+				const target_value = this.__cols[target_key]
+				const row = rows[target_key]
+				const cells = row.getChildren() as Array<TableCellNode>
+
+				cells.forEach((item, index) => {
+					if (target_key !== index) return
+
+					const el = editor.getElementByKey(item.getKey()) as HTMLTableCellElement
+
+					if (target_value.align) el.setAttribute('align', target_value.align)
+					if (target_value.width) el.setAttribute('width', String(target_value.width))
+				})
+			})
+		}
 
 		return el
 	}
@@ -71,16 +100,54 @@ export default class TableNode extends ElementNode {
 		}
 	}
 
-	exportJSON(): SerializedElementNode {
-		return { ...super.exportJSON(), type: 'table' }
+	exportJSON(): SerializedTableNode {
+		return { ...super.exportJSON(), type: 'table', cols: this.__cols }
 	}
 
-	canBeEmpty(): false {
+	canBeEmpty() {
 		return false
 	}
 
-	isShadowRoot(): boolean {
+	isShadowRoot() {
 		return true
+	}
+
+	canSelectBefore() {
+		return true
+	}
+
+	canIndent() {
+		return false
+	}
+
+	cloneCol(col_index: number) {
+		const target = this.getWritable()
+		const col_value = target.__cols[col_index]
+
+		target.__cols[col_index + 1] = col_value
+	}
+
+	updateCol(col_index: number, v: IPropsTableCol) {
+		const target = this.getWritable()
+		const col_value = target.__cols[col_index]
+
+		if (col_value) {
+			target.__cols[col_index] = { ...col_value, ...v }
+		} else {
+			target.__cols[col_index] = v
+		}
+	}
+
+	resetColAttr(col_index: number, attr: 'align' | 'width') {
+		const target = this.getWritable()
+
+		if (!target.__cols[col_index]?.[attr]) return
+
+		if (Object.keys(target.__cols[col_index]).length === 1) {
+			delete target.__cols[col_index]
+		} else {
+			delete target.__cols[col_index][attr]
+		}
 	}
 
 	getCordsFromCellNode(table_cell_node: TableCellNode, table: Table): { x: number; y: number } {
@@ -154,13 +221,5 @@ export default class TableNode extends ElementNode {
 		}
 
 		return node
-	}
-
-	canSelectBefore() {
-		return true
-	}
-
-	canIndent() {
-		return false
 	}
 }

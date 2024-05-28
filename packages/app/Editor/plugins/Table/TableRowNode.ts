@@ -37,12 +37,12 @@ export default class TableRowNode extends ElementNode {
 		return { ...super.exportJSON(), type: 'table_row' }
 	}
 
-	isShadowRoot() {
-		return true
-	}
-
 	updateDOM() {
 		return false
+	}
+
+	isShadowRoot() {
+		return true
 	}
 
 	canBeEmpty() {

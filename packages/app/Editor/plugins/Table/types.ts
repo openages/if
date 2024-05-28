@@ -1,7 +1,7 @@
 import type TableCellNode from './TableCellNode'
 import type TableObserver from './TableObserver'
 
-import type { DOMConversionMap, DOMExportOutput, LexicalEditor, NodeKey, SerializedElementNode, Spread } from 'lexical'
+import type { SerializedElementNode, Spread } from 'lexical'
 
 export interface Cell {
 	el: HTMLElement
@@ -42,6 +42,17 @@ export interface IPropsTableCellNode {
 	node_key?: string
 }
 
+export interface IPropsTableCol {
+	align?: string
+	width?: number
+}
+
+export interface IPropsTableNode {
+	cols?: Record<number, IPropsTableCol>
+	node_key?: string
+}
+
+export type SerializedTableNode = Spread<IPropsTableNode, SerializedElementNode>
 export type SerializedTableCellNode = Spread<IPropsTableCellNode, SerializedElementNode>
 
 export type HTMLTableElementWithWithTableSelectionState = HTMLTableElement & Record<string, TableObserver>

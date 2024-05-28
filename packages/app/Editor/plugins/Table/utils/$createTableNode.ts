@@ -2,6 +2,8 @@ import { $applyNodeReplacement } from 'lexical'
 
 import TableNode from '../TableNode'
 
-export default () => {
-	return $applyNodeReplacement(new TableNode()) as TableNode
+import type { IPropsTableNode } from '../types'
+
+export default (args?: IPropsTableNode) => {
+	return $applyNodeReplacement(new TableNode(args || {})) as TableNode
 }

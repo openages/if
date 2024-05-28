@@ -18,6 +18,7 @@ import {
 	$createTableCellNode,
 	$createTableNodeWithDimensions,
 	$isTableNode,
+	$updateTableCols,
 	applyTableHandlers
 } from './utils'
 
@@ -78,6 +79,8 @@ export default class Index {
 
 	onTransform(node: TableNode) {
 		const [grid_map] = $computeTableMap(node, null, null)
+
+		$updateTableCols(this.editor, node)
 
 		const max_row_length = grid_map.reduce((cur_length, row) => {
 			return Math.max(cur_length, row.length)

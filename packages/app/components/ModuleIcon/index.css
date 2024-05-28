@@ -1,0 +1,17 @@
+[data-theme='dark'] {
+	._local {
+		:global {
+			path:first-child {
+				fill: inherit;
+			}
+		}
+	}
+}
+
+._local {
+	:global {
+		path:first-child {
+			fill: var(--color_main);
+		}
+	}
+}

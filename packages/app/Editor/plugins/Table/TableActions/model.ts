@@ -1,5 +1,4 @@
 import {
-	$copyNode,
 	$createParagraphNode,
 	$getSelection,
 	$isRangeSelection,
@@ -117,7 +116,11 @@ export default class Index {
 		const col_index = $getTableColumnIndexFromTableCellNode(table_cell_node)
 
 		if (keyPath.length === 2) {
-			const [_, align] = keyPath
+			if (key === 'left') {
+				table_node.resetColAttr(col_index, 'align')
+			} else {
+				table_node.updateCol(col_index, { align: key })
+			}
 		} else {
 			if (key === 'header_row') {
 				const cells = table_row_node.getChildren() as Array<TableCellNode>
@@ -198,11 +201,21 @@ export default class Index {
 			}
 
 			if (key === 'remove_row') {
+				if (table_row_node.isLastChild()) return
+
 				table_row_node.remove()
+			}
+
+			if (key === 'reset_width') {
+				table_node.resetColAttr(col_index, 'width')
 			}
 
 			if (key === 'clone_col' || key === 'clear_col' || key === 'remove_col') {
 				const rows = table_node.getChildren() as Array<TableRowNode>
+				const cols = rows[0].getChildren()
+
+				if (key === 'clone_col') table_node.cloneCol(col_index)
+				if (key === 'remove_col' && col_index === cols.length - 1) return
 
 				rows.forEach((row, _row_index) => {
 					const cells = row.getChildren() as Array<TableCellNode>

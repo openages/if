@@ -14,10 +14,13 @@ import {
 import { getDomSelection } from '@/Editor/utils'
 
 import TableSelection from './TableSelection'
-import { $createTableSelection, $findTableNode, $isTableCellNode, getTable } from './utils'
+import { $createTableSelection, $findTableNode, $isTableCellNode, $updateTableCols, getTable } from './utils'
 
 import type { Cell, Table } from './types'
 import type { ElementNode, LexicalEditor, NodeKey, TextFormatType } from 'lexical'
+import type TableNode from './TableNode'
+import type TableRowNode from './TableRowNode'
+import type TableCellNode from './TableCellNode'
 
 export default class TableObserver {
 	editor: LexicalEditor
@@ -85,6 +88,8 @@ export default class TableObserver {
 				const table = this.editor.getElementByKey(this.table_node_key)
 
 				this.table = getTable(table)
+
+				$updateTableCols(this.editor, $getNodeByKey(this.table_node_key) as TableNode)
 			})
 		})
 
@@ -211,8 +216,11 @@ export default class TableObserver {
 			if (selected_nodes.length === this.table.col_counts * this.table.row_counts) {
 				table_node.selectPrevious()
 				table_node.remove()
+
 				const root_node = $getRoot()
+
 				root_node.selectStart()
+
 				return
 			}
 
@@ -223,6 +231,7 @@ export default class TableObserver {
 
 					paragraph_node.append(text_node)
 					cell_node.append(paragraph_node)
+
 					cell_node.getChildren().forEach(child => {
 						if (child !== paragraph_node) {
 							child.remove()

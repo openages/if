@@ -1,5 +1,6 @@
 import { match } from 'ts-pattern'
 
+import { Memo } from '@/icons'
 import {
 	AppWindow,
 	Barbell,
@@ -11,13 +12,14 @@ import {
 	GearSix,
 	MarkdownLogo,
 	MicrosoftPowerpointLogo,
-	NoteBlank,
 	Table,
 	TextColumns,
 	Timer,
 	TreeStructure,
 	WebhooksLogo
 } from '@phosphor-icons/react'
+
+import styles from './index.css'
 
 import type { IconProps } from '@phosphor-icons/react'
 import type { App } from '@/types'
@@ -27,27 +29,30 @@ interface IProps extends IconProps {
 }
 
 const Index = (props: IProps) => {
-	const { type, ...icon_props } = props
+	const { type, className, ...icon_props } = props
+
+	const target_class = $cx(icon_props?.weight === 'duotone' && styles._local, className)
+	const target_props = { ...icon_props, className: target_class }
 
 	return match(type)
-		.with('todo', () => <CheckCircle {...icon_props} />)
-		.with('memo', () => <NoteBlank {...icon_props} />)
+		.with('todo', () => <CheckCircle {...target_props} />)
+		.with('memo', () => <Memo {...target_props} />)
 		.with('note', () => (
-			<MarkdownLogo {...icon_props} size={icon_props.size ? Number(icon_props.size) - 3 : '1em'} />
+			<MarkdownLogo {...target_props} size={target_props.size ? Number(target_props.size) - 3 : '1em'} />
 		))
-		.with('page', () => <AppWindow {...icon_props} />)
-		.with('whiteboard', () => <Clipboard {...icon_props} />)
-		.with('ppt', () => <MicrosoftPowerpointLogo {...icon_props} />)
-		.with('pomo', () => <Timer {...icon_props} />)
-		.with('schedule', () => <CalendarCheck {...icon_props} />)
-		.with('flag', () => <Barbell {...icon_props} />)
-		.with('table', () => <Table {...icon_props} />)
-		.with('form', () => <TextColumns {...icon_props} />)
-		.with('chart', () => <ChartBarHorizontal {...icon_props} />)
-		.with('api', () => <WebhooksLogo {...icon_props} />)
-		.with('dataflow', () => <TreeStructure {...icon_props} />)
-		.with('database', () => <Database {...icon_props} />)
-		.with('setting', () => <GearSix {...icon_props} />)
+		.with('page', () => <AppWindow {...target_props} />)
+		.with('whiteboard', () => <Clipboard {...target_props} />)
+		.with('ppt', () => <MicrosoftPowerpointLogo {...target_props} />)
+		.with('pomo', () => <Timer {...target_props} />)
+		.with('schedule', () => <CalendarCheck {...target_props} />)
+		.with('flag', () => <Barbell {...target_props} />)
+		.with('table', () => <Table {...target_props} />)
+		.with('form', () => <TextColumns {...target_props} />)
+		.with('chart', () => <ChartBarHorizontal {...target_props} />)
+		.with('api', () => <WebhooksLogo {...target_props} />)
+		.with('dataflow', () => <TreeStructure {...target_props} />)
+		.with('database', () => <Database {...target_props} />)
+		.with('setting', () => <GearSix {...target_props} />)
 		.exhaustive()
 }
 

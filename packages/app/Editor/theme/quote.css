@@ -18,7 +18,6 @@
 			margin-block-end: var(--editor_padding);
 			margin-inline-start: 0;
 			margin-inline-end: 0;
-			border: var(--border);
 			border-radius: var(--radius);
 			color: var(--color_text_grey);
 			background-color: var(--color_bg_1);

@@ -50,11 +50,11 @@ export default class TableSelection implements BaseSelection {
 		this._cachedNodes = null
 	}
 
-	isBackward(): boolean {
+	isBackward() {
 		return this.focus.isBefore(this.anchor)
 	}
 
-	isCollapsed(): boolean {
+	isCollapsed() {
 		return false
 	}
 

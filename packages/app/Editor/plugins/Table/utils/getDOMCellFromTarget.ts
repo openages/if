@@ -1,6 +1,6 @@
 import type { Cell, CellNode } from '../types'
 
-export default (n: Node) => {
+export default (n: HTMLElement) => {
 	let node = n as CellNode
 
 	while (node != null) {

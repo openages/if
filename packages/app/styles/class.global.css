@@ -43,24 +43,6 @@
 	color: var(--color_warning);
 }
 
-[data-theme='dark'] {
-	.module_icon {
-		svg {
-			path:first-child {
-				fill: inherit;
-			}
-		}
-	}
-}
-
-.module_icon {
-	svg {
-		path:first-child {
-			fill: var(--color_main);
-		}
-	}
-}
-
 .btn_main {
 	border-style: solid;
 	border-color: var(--color_text) !important;

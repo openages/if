@@ -1,21 +1,3 @@
-[data-theme='dark'] {
-	._local {
-		:global {
-			.menu_items_wrap {
-				.menu_item_wrap {
-					.menu_item {
-						svg {
-							path:first-child {
-								fill: inherit;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
 ._local {
 	&.no_dirtree {
 		:global {
@@ -65,7 +47,7 @@
 			width: calc(var(--sidebar_width) + var(--dirtree_width)) !important;
 			padding: 0;
 			box-shadow: var(--shadow) !important;
-                  backdrop-filter: var(--blur);
+			backdrop-filter: var(--blur);
 
 			.if-drawer-content {
 				padding: 0;
@@ -126,12 +108,6 @@
 							height: 36px;
 							border-radius: var(--radius);
 							background-color: rgba(var(--color_text_rgb), 0.06);
-
-							svg {
-								path:first-child {
-									fill: var(--color_main);
-								}
-							}
 						}
 
 						.app_name {

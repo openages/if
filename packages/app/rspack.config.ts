@@ -44,7 +44,8 @@ module.exports = defineConfig({
 		compress: false
 	},
 	experiments: {
-		outputModule: is_module
+		outputModule: is_module,
+		lazyCompilation: false
 	},
 	plugins: [
 		new HtmlRspackPlugin({
@@ -58,6 +59,7 @@ module.exports = defineConfig({
 	module: {
 		parser: {
 			css: { namedExports: false },
+			'css/auto': { namedExports: false },
 			'css/module': { namedExports: false }
 		},
 		rules: [

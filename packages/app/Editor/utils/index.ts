@@ -1,4 +1,6 @@
+export { default as $cloneNode } from './$cloneNode'
 export { default as getLangName } from './getLangName'
+export { default as $copyAttributes } from './$copyAttributes'
 export { default as shiki_langs } from './shiki_langs'
 export { default as prettier_langs } from './prettier_langs'
 export { default as getDomSelection } from './getDomSelection'
@@ -14,6 +16,5 @@ export { default as $getChildrenRecursively } from './$getChildrenRecursively'
 export { default as $getMatchingParent } from './$getMatchingParent'
 export { default as $updateTextNodeProperties } from './$updateTextNodeProperties'
 export { default as $updateParagraphNodeProperties } from './$updateParagraphNodeProperties'
-export { default as $cloneNode } from './$cloneNode'
 
 export * from './handlers'

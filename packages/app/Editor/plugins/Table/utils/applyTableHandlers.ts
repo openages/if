@@ -9,7 +9,7 @@ import {
 	$isRangeSelection,
 	$isTextNode,
 	$setSelection,
-	COMMAND_PRIORITY_EDITOR,
+	COMMAND_PRIORITY_LOW,
 	CONTROLLED_TEXT_INSERTION_COMMAND,
 	DELETE_CHARACTER_COMMAND,
 	DELETE_LINE_COMMAND,
@@ -184,7 +184,7 @@ export default (
 		setTimeout(() => {
 			if (event.button !== 0) return
 
-			const anchor_cell = getDOMCellFromTarget(event.target as Node)
+			const anchor_cell = getDOMCellFromTarget(event.target as HTMLElement)
 
 			if (anchor_cell !== null) {
 				stopEvent(event)
@@ -202,16 +202,14 @@ export default (
 	})
 
 	commands.forEach(command => {
-		observer.listeners.add(
-			editor.registerCommand(command, delete_text_handler(command), COMMAND_PRIORITY_EDITOR)
-		)
+		observer.listeners.add(editor.registerCommand(command, delete_text_handler(command), COMMAND_PRIORITY_LOW))
 	})
 
 	observer.listeners.add(
 		editor.registerCommand<KeyboardEvent>(
 			KEY_ARROW_DOWN_COMMAND,
 			event => $handleArrowKey(editor, event, 'down', table_node, observer),
-			COMMAND_PRIORITY_EDITOR
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -219,7 +217,7 @@ export default (
 		editor.registerCommand<KeyboardEvent>(
 			KEY_ARROW_UP_COMMAND,
 			event => $handleArrowKey(editor, event, 'up', table_node, observer),
-			COMMAND_PRIORITY_EDITOR
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -227,7 +225,7 @@ export default (
 		editor.registerCommand<KeyboardEvent>(
 			KEY_ARROW_LEFT_COMMAND,
 			event => $handleArrowKey(editor, event, 'backward', table_node, observer),
-			COMMAND_PRIORITY_EDITOR
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -235,7 +233,7 @@ export default (
 		editor.registerCommand<KeyboardEvent>(
 			KEY_ARROW_RIGHT_COMMAND,
 			event => $handleArrowKey(editor, event, 'forward', table_node, observer),
-			COMMAND_PRIORITY_EDITOR
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -259,16 +257,16 @@ export default (
 
 				return false
 			},
-			COMMAND_PRIORITY_EDITOR
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
 	observer.listeners.add(
-		editor.registerCommand<KeyboardEvent>(KEY_BACKSPACE_COMMAND, $delete_cell_handler, COMMAND_PRIORITY_EDITOR)
+		editor.registerCommand<KeyboardEvent>(KEY_BACKSPACE_COMMAND, $delete_cell_handler, COMMAND_PRIORITY_LOW)
 	)
 
 	observer.listeners.add(
-		editor.registerCommand<KeyboardEvent>(KEY_DELETE_COMMAND, $delete_cell_handler, COMMAND_PRIORITY_EDITOR)
+		editor.registerCommand<KeyboardEvent>(KEY_DELETE_COMMAND, $delete_cell_handler, COMMAND_PRIORITY_LOW)
 	)
 
 	observer.listeners.add(
@@ -297,7 +295,7 @@ export default (
 
 				return false
 			},
-			COMMAND_PRIORITY_EDITOR
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -348,7 +346,7 @@ export default (
 
 				return true
 			},
-			COMMAND_PRIORITY_EDITOR
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -388,7 +386,7 @@ export default (
 
 				return false
 			},
-			COMMAND_PRIORITY_EDITOR
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -425,13 +423,11 @@ export default (
 
 				return true
 			},
-			COMMAND_PRIORITY_EDITOR
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
-	observer.listeners.add(
-		editor.registerCommand(FOCUS_COMMAND, _ => table_node.isSelected(), COMMAND_PRIORITY_EDITOR)
-	)
+	observer.listeners.add(editor.registerCommand(FOCUS_COMMAND, _ => table_node.isSelected(), COMMAND_PRIORITY_LOW))
 
 	observer.listeners.add(
 		editor.registerCommand(
@@ -556,7 +552,7 @@ export default (
 
 				return true
 			},
-			COMMAND_PRIORITY_EDITOR
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -676,7 +672,7 @@ export default (
 
 				return false
 			},
-			COMMAND_PRIORITY_EDITOR
+			COMMAND_PRIORITY_LOW
 		)
 	)
 
@@ -746,7 +742,7 @@ export default (
 
 				return false
 			},
-			COMMAND_PRIORITY_EDITOR
+			COMMAND_PRIORITY_LOW
 		)
 	)
 

@@ -35,12 +35,6 @@
 					background-color: rgba(var(--color_bg_rgb), 0.1);
 				}
 
-				svg {
-					path:first-child {
-						fill: var(--color_main);
-					}
-				}
-
 				.app_name {
 					margin-top: 6px;
 					font-size: 12px;

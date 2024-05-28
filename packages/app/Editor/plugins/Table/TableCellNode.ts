@@ -24,7 +24,7 @@ export default class TableCellNode extends ElementNode {
 		return 'table_cell'
 	}
 
-	static clone(node: TableCellNode): TableCellNode {
+	static clone(node: TableCellNode) {
 		return new TableCellNode({
 			is_header: node.__is_header,
 			row_span: node.__row_span,
