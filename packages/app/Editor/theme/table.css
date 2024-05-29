@@ -57,6 +57,13 @@
 					min-width: 60px;
 				}
 
+				&[style] {
+					::selection {
+						color: var(--color_text);
+						background-color: unset;
+					}
+				}
+
 				&.__editor_table_th {
 					background-color: var(--color_bg_1);
 					text-align: unset;

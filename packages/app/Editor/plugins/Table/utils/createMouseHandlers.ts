@@ -1,35 +1,42 @@
-import { isMouseDownOnEvent } from '@/Editor/utils'
+import { throttle } from 'lodash-es'
+
+import { getDomSelection, isMouseDownOnEvent } from '@/Editor/utils'
 
 import TableObserver from '../TableObserver'
 import { getDOMCellFromTarget } from './index'
 
 export default (observer: TableObserver) => {
-	const on_mouse_move = (move_event: MouseEvent) => {
+	const onMouseMove = throttle((e: MouseEvent) => {
 		setTimeout(() => {
-			if (!isMouseDownOnEvent(move_event) && observer.selecting) {
+			if (!isMouseDownOnEvent(e) && observer.selecting) {
 				observer.selecting = false
 
-				window.removeEventListener('mouseup', on_mouse_up)
-				window.removeEventListener('mousemove', on_mouse_move)
+				window.removeEventListener('mouseup', onMouseUp)
+				window.removeEventListener('mousemove', onMouseMove)
 
 				return
 			}
 
-			const focus_cell = getDOMCellFromTarget(move_event.target as Node)
+			const focus_cell = getDOMCellFromTarget(e.target as HTMLElement)
 
-			if (focus_cell !== null && observer.anchor_x !== focus_cell.x && observer.anchor_y !== focus_cell.y) {
-				move_event.preventDefault()
+			if (focus_cell && (observer.anchor_x !== focus_cell.x || observer.anchor_y !== focus_cell.y)) {
+				e.preventDefault()
+
+				const dom_selection = getDomSelection(window)
+
+				if (dom_selection) dom_selection.removeAllRanges()
+
 				observer.setFocusCellForSelection(focus_cell)
 			}
 		}, 0)
-	}
+	}, 120)
 
-	const on_mouse_up = () => {
+	const onMouseUp = () => {
 		observer.selecting = false
 
-		window.removeEventListener('mouseup', on_mouse_up)
-		window.removeEventListener('mousemove', on_mouse_move)
+		window.removeEventListener('mouseup', onMouseUp)
+		window.removeEventListener('mousemove', onMouseMove)
 	}
 
-	return { onMouseMove: on_mouse_move, onMouseUp: on_mouse_up }
+	return { onMouseMove, onMouseUp }
 }

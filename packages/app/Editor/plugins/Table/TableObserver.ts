@@ -1,4 +1,5 @@
 import {
+	$createNodeSelection,
 	$createParagraphNode,
 	$createRangeSelection,
 	$createTextNode,
@@ -13,15 +14,13 @@ import {
 
 import { getDomSelection } from '@/Editor/utils'
 
+import TableCellNode from './TableCellNode'
 import TableSelection from './TableSelection'
 import { $createTableSelection, $findTableNode, $isTableCellNode, $updateTableCols, getTable } from './utils'
 
 import type { Cell, Table } from './types'
 import type { ElementNode, LexicalEditor, NodeKey, TextFormatType } from 'lexical'
 import type TableNode from './TableNode'
-import type TableRowNode from './TableRowNode'
-import type TableCellNode from './TableCellNode'
-
 export default class TableObserver {
 	editor: LexicalEditor
 	table: Table
@@ -35,6 +34,7 @@ export default class TableObserver {
 	anchor_cell: Cell
 	focus_cell: Cell
 	table_selection: TableSelection
+	selected_cells: Array<string>
 	selecting: boolean
 	listeners: Set<() => void>
 
@@ -51,6 +51,7 @@ export default class TableObserver {
 		this.anchor_cell = null
 		this.focus_cell = null
 		this.table_selection = null
+		this.selected_cells = []
 		this.selecting = false
 		this.listeners = new Set()
 
@@ -102,15 +103,59 @@ export default class TableObserver {
 		})
 	}
 
-	updateTableTableSelection(selection: TableSelection | null): void {
-		if (!selection) return
+	clearHighlight() {
+		this.anchor_x = -1
+		this.anchor_y = -1
+		this.focus_x = -1
+		this.focus_y = -1
+		this.anchor_cell_node_key = null
+		this.focus_cell_node_key = null
+		this.anchor_cell = null
+		this.focus_cell = null
+		this.table_selection = null
+		this.selected_cells = []
+		this.selecting = false
+
+		this.editor.update(() => {
+			$setSelection(null)
+
+			this.removeSelectedCellsBg()
+		})
+	}
+
+	addSelectedCellsBg(v: Array<string>) {
+		this.selected_cells = v
+
+		this.selected_cells.forEach(key => {
+			const cell_el = this.editor.getElementByKey(key)
+
+			cell_el.setAttribute('style', 'background-color:var(--color_bg_2); caret-color:transparent')
+		})
+	}
+
+	removeSelectedCellsBg() {
+		this.selected_cells = []
+
+		this.table.rows.forEach(cells => {
+			cells.forEach(cell => {
+				const cell_node = $getNearestNodeFromDOMNode(cell.el)
+
+				const cell_el = this.editor.getElementByKey(cell_node.getKey())
+
+				if (cell_el.hasAttribute('style')) cell_el.removeAttribute('style')
+			})
+		})
+	}
+
+	updateTableSelection(selection: TableSelection): void {
+		if (!selection) return this.removeSelectedCellsBg()
 
 		if (selection.table_key === this.table_node_key) {
 			this.table_selection = selection
 		} else {
 			this.table_node_key = selection.table_key
 
-			this.updateTableTableSelection(selection)
+			this.updateTableSelection(selection)
 		}
 	}
 
@@ -118,13 +163,12 @@ export default class TableObserver {
 		const editor = this.editor
 
 		editor.update(() => {
-			const table_node = $getNodeByKey(this.table_node_key)
 			const cell_x = cell.x
 			const cell_y = cell.y
 
 			this.focus_cell = cell
 
-			if (this.anchor_cell !== null) {
+			if (this.anchor_cell) {
 				const dom_selection = getDomSelection(editor._window)
 
 				if (dom_selection) {
@@ -137,29 +181,39 @@ export default class TableObserver {
 			this.focus_x = cell_x
 			this.focus_y = cell_y
 
+			const x = this.anchor_x > this.focus_x ? [this.focus_x, this.anchor_x] : [this.anchor_x, this.focus_x]
+			const y = this.anchor_y > this.focus_y ? [this.focus_y, this.anchor_y] : [this.anchor_y, this.focus_y]
+			const els = [] as Array<HTMLElement>
+
+			this.table.rows.forEach(row => {
+				row.forEach(cell => {
+					if (cell.x >= x[0] && cell.x <= x[1] && cell.y >= y[0] && cell.y <= y[1]) {
+						els.push(cell.el)
+					}
+				})
+			})
+
+			const cells = els.map(item => $getNearestNodeFromDOMNode(item)) as Array<TableCellNode>
+
+			this.removeSelectedCellsBg()
+			this.addSelectedCellsBg(cells.filter(node => $isTableCellNode(node)).map(node => node.getKey()))
+
 			const focus_table_cell_node = $getNearestNodeFromDOMNode(cell.el)
+			const focus_node_key = focus_table_cell_node.getKey()
 
-			if (
-				this.table_selection &&
-				this.anchor_cell_node_key &&
-				$isTableCellNode(focus_table_cell_node) &&
-				table_node.is($findTableNode(focus_table_cell_node))
-			) {
-				const focus_node_key = focus_table_cell_node.getKey()
+			this.table_selection = this.table_selection.clone() || $createTableSelection()
+			this.focus_cell_node_key = focus_node_key
 
-				this.table_selection = this.table_selection.clone() || $createTableSelection()
-				this.focus_cell_node_key = focus_node_key
+			this.table_selection.set(
+				this.table_node_key,
+				this.anchor_cell_node_key,
+				this.focus_cell_node_key,
+				cells
+			)
 
-				this.table_selection.set(
-					this.table_node_key,
-					this.anchor_cell_node_key,
-					this.focus_cell_node_key
-				)
+			$setSelection(this.table_selection)
 
-				$setSelection(this.table_selection)
-
-				editor.dispatchCommand(SELECTION_CHANGE_COMMAND, undefined)
-			}
+			editor.dispatchCommand(SELECTION_CHANGE_COMMAND, null)
 		})
 	}
 

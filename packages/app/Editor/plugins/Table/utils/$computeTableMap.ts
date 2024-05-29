@@ -14,7 +14,7 @@ export default (
 	let cell_b_value: TableMapValue = null
 
 	const write = (start_row: number, start_column: number, cell: TableCellNode) => {
-		const value = { cell, start_row, start_column } as TableMapValue
+		const value = { start_row, start_column, cell } as TableMapValue
 		const row_span = cell.__row_span
 		const col_span = cell.__col_span
 
@@ -26,32 +26,19 @@ export default (
 			}
 		}
 
-		if (cell_a !== null && cell_a.is(cell)) cell_a_value = value
-		if (cell_b !== null && cell_b.is(cell)) cell_b_value = value
+		if (cell_a && cell_a.is(cell)) cell_a_value = value
+		if (cell_b && cell_b.is(cell)) cell_b_value = value
 	}
 
-	const is_empty = (row: number, column: number) => {
-		return table_map[row] === undefined || table_map[row][column] === undefined
-	}
+	const rows = table.getChildren() as Array<TableRowNode>
 
-	const table_children = table.getChildren()
+	rows.forEach((row, row_index) => {
+		const cells = row.getChildren() as Array<TableCellNode>
 
-	for (let i = 0; i < table_children.length; i++) {
-		const row = table_children[i] as TableRowNode
-		const row_children = row.getChildren()
-
-		let j = 0
-
-		for (const cell of row_children) {
-			while (!is_empty(i, j)) {
-				j++
-			}
-
-			write(i, j, cell as TableCellNode)
-
-			j += (cell as TableCellNode).__col_span
-		}
-	}
+		cells.forEach((cell, col_index) => {
+			write(row_index, col_index, cell)
+		})
+	})
 
 	return [table_map, cell_a_value, cell_b_value]
 }

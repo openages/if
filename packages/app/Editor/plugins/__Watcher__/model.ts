@@ -42,6 +42,16 @@ export default class Index {
 			if (anchor.offset !== focus.offset) return
 
 			nodes = anchor.getNode().getParents()
+
+			if (anchor.key !== focus.key) {
+				const select_nodes = selection.getNodes().reverse()
+
+				select_nodes.forEach(item => {
+					if (nodes.findIndex(n => n.__key === item.__key) === -1) {
+						nodes.unshift(item)
+					}
+				})
+			}
 		}
 
 		const path = nodes.map(item => ({ type: item.getType(), key: item.getKey() }))

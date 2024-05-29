@@ -9,6 +9,7 @@ import {
 	$isRangeSelection,
 	$isTextNode,
 	$setSelection,
+	COMMAND_PRIORITY_CRITICAL,
 	COMMAND_PRIORITY_LOW,
 	CONTROLLED_TEXT_INSERTION_COMMAND,
 	DELETE_CHARACTER_COMMAND,
@@ -76,7 +77,7 @@ export default (
 		return table_node.getDOMCellFromCordsOrThrow(current_cords.x, current_cords.y, observer.table)
 	}
 
-	const delete_text_handler = (command: LexicalCommand<boolean>) => () => {
+	const onDeleteText = (command: LexicalCommand<boolean>) => () => {
 		const selection = $getSelection()
 
 		if (!$isSelectionInTable(selection, table_node)) return false
@@ -124,7 +125,7 @@ export default (
 		return false
 	}
 
-	const $delete_cell_handler = (event: KeyboardEvent): boolean => {
+	const onDeleteCell = (event: KeyboardEvent): boolean => {
 		const selection = $getSelection()
 
 		if (!$isSelectionInTable(selection, table_node) || !$isRangeSelection(selection)) {
@@ -181,6 +182,19 @@ export default (
 	}
 
 	table_element.addEventListener('mousedown', (event: MouseEvent) => {
+		editor.update(() => {
+			const selection = $getSelection() as TableSelection
+			const target = event.target as Node
+
+			if (
+				$isTableSelection(selection) &&
+				selection.table_key === observer.table_node_key &&
+				editor.getRootElement().contains(target)
+			) {
+				observer.clearHighlight()
+			}
+		})
+
 		setTimeout(() => {
 			if (event.button !== 0) return
 
@@ -202,7 +216,7 @@ export default (
 	})
 
 	commands.forEach(command => {
-		observer.listeners.add(editor.registerCommand(command, delete_text_handler(command), COMMAND_PRIORITY_LOW))
+		observer.listeners.add(editor.registerCommand(command, onDeleteText(command), COMMAND_PRIORITY_LOW))
 	})
 
 	observer.listeners.add(
@@ -262,11 +276,11 @@ export default (
 	)
 
 	observer.listeners.add(
-		editor.registerCommand<KeyboardEvent>(KEY_BACKSPACE_COMMAND, $delete_cell_handler, COMMAND_PRIORITY_LOW)
+		editor.registerCommand<KeyboardEvent>(KEY_BACKSPACE_COMMAND, onDeleteCell, COMMAND_PRIORITY_LOW)
 	)
 
 	observer.listeners.add(
-		editor.registerCommand<KeyboardEvent>(KEY_DELETE_COMMAND, $delete_cell_handler, COMMAND_PRIORITY_LOW)
+		editor.registerCommand<KeyboardEvent>(KEY_DELETE_COMMAND, onDeleteCell, COMMAND_PRIORITY_LOW)
 	)
 
 	observer.listeners.add(
@@ -581,6 +595,7 @@ export default (
 
 					if (is_partialy_within_table) {
 						const new_selection = selection.clone()
+
 						if (is_focus_inside) {
 							new_selection.focus.set(
 								table_node.getParentOrThrow().getKey(),
@@ -614,8 +629,8 @@ export default (
 
 									observer.selecting = true
 
-									window.addEventListener('mouseup', onMouseUp)
 									window.addEventListener('mousemove', onMouseMove)
+									window.addEventListener('mouseup', onMouseUp)
 								}, 0)
 							}
 						}
@@ -635,15 +650,18 @@ export default (
 						const anchor_node = $getNearestNodeFromDOMNode(dom_selection.anchorNode)
 						const is_anchor_inside = anchor_node && table_node.is($findTableNode(anchor_node))
 
+						dom_selection.removeAllRanges()
+
 						if (is_focus_outside && is_anchor_inside && dom_selection.rangeCount > 0) {
 							const new_selection = $createRangeSelectionFromDom(dom_selection, editor)
+
 							if (new_selection) {
 								new_selection.anchor.set(
 									table_node.getKey(),
 									selection.isBackward() ? table_node.getChildrenSize() : 0,
 									'element'
 								)
-								dom_selection.removeAllRanges()
+
 								$setSelection(new_selection)
 							}
 						}
@@ -658,13 +676,13 @@ export default (
 					!observer.table_selection.is(prev_selection)
 				) {
 					if ($isTableSelection(selection) && selection.table_key === observer.table_node_key) {
-						observer.updateTableTableSelection(selection)
+						observer.updateTableSelection(selection)
 					} else if (
 						!$isTableSelection(selection) &&
 						$isTableSelection(prev_selection) &&
 						prev_selection.table_key === observer.table_node_key
 					) {
-						observer.updateTableTableSelection(null)
+						observer.updateTableSelection(null)
 					}
 
 					return false
@@ -672,7 +690,7 @@ export default (
 
 				return false
 			},
-			COMMAND_PRIORITY_LOW
+			COMMAND_PRIORITY_CRITICAL
 		)
 	)
 

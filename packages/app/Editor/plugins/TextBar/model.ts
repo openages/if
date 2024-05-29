@@ -73,10 +73,16 @@ export default class Index {
 	}
 
 	updatePosition() {
-		const native_selection = window.getSelection()
-		const rect = native_selection.getRangeAt(0)?.getBoundingClientRect?.()
+		this.editor.update(() => {
+			const selection = $getSelection()
 
-		if (rect) this.position = { x: rect.left, y: rect.y - 42 }
+			if (!$isRangeSelection(selection)) return this.reset()
+
+			const native_selection = window.getSelection()
+			const rect = native_selection.getRangeAt(0)?.getBoundingClientRect?.()
+
+			if (rect) this.position = { x: rect.left, y: rect.y - 42 }
+		})
 	}
 
 	onMouseUp(e: MouseEvent) {

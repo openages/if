@@ -167,7 +167,7 @@ const Index = (
 			return false
 		}
 
-		table_observer.updateTableTableSelection(selection)
+		table_observer.updateTableSelection(selection)
 
 		const grid = getTable(table_element)
 		const cords_anchor = table_node.getCordsFromCellNode(anchor_cell_node, grid)

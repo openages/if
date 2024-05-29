@@ -1,7 +1,12 @@
-import { $getNodeByKey, $normalizeSelection__EXPERIMENTAL, isCurrentlyReadOnlyMode, BaseSelection } from 'lexical'
+import {
+	$getNodeByKey,
+	$getSelection,
+	$normalizeSelection__EXPERIMENTAL,
+	isCurrentlyReadOnlyMode,
+	BaseSelection
+} from 'lexical'
 
-import { $getChildrenRecursively } from '@/Editor/utils'
-import { $findMatchingParent } from '@lexical/utils'
+import { $getChildrenRecursively, $getMatchingParent } from '@/Editor/utils'
 
 import { $computeTableMap, $getTableCellNodeRect, $isTableCellNode, $isTableSelection } from './utils'
 
@@ -9,6 +14,7 @@ import type { TableMapValue } from './types'
 import type { ElementNode, LexicalNode, NodeKey, PointType } from 'lexical'
 import type TableNode from './TableNode'
 import type TableCellNode from './TableCellNode'
+import type TableObserver from './TableObserver'
 
 export default class TableSelection implements BaseSelection {
 	table_key: NodeKey
@@ -42,12 +48,22 @@ export default class TableSelection implements BaseSelection {
 		)
 	}
 
-	set(table_key: NodeKey, anchor_cell_key: NodeKey, focus_cell_key: NodeKey) {
+	set(
+		table_key: NodeKey,
+		anchor_cell_key: NodeKey,
+		focus_cell_key: NodeKey,
+		selected_cells?: Array<TableCellNode>
+	) {
 		this.table_key = table_key
 		this.anchor.key = anchor_cell_key
 		this.focus.key = focus_cell_key
 		this.dirty = true
-		this._cachedNodes = null
+
+		if (selected_cells) {
+			this._cachedNodes = selected_cells
+		} else {
+			this._cachedNodes = null
+		}
 	}
 
 	isBackward() {
@@ -105,15 +121,16 @@ export default class TableSelection implements BaseSelection {
 		}
 	}
 
-	getNodes() {
+	getNodes(): Array<LexicalNode> {
 		const cached_nodes = this._cachedNodes
 
 		if (cached_nodes) return cached_nodes
 
 		const anchor_node = this.anchor.getNode()
 		const focus_node = this.focus.getNode()
-		const anchor_cell = $findMatchingParent(anchor_node, $isTableCellNode) as TableCellNode
-		const focus_cell = $findMatchingParent(focus_node, $isTableCellNode) as TableCellNode
+		const anchor_cell = $getMatchingParent(anchor_node, $isTableCellNode) as TableCellNode
+		const focus_cell = $getMatchingParent(focus_node, $isTableCellNode) as TableCellNode
+
 		const anchor_row = anchor_cell.getParent()
 		const table_node = anchor_row.getParent() as TableNode
 
