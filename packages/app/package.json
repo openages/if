@@ -86,7 +86,7 @@
 		"rxdb": "15.6.1",
 		"rxjs": "^7.8.1",
 		"scheduler": "0.0.0-experimental-c3048aab4-20240326",
-		"shiki": "^1.6.0",
+		"shiki": "^1.6.1",
 		"smooth-scroll-into-view-if-needed": "^2.0.2",
 		"ts-pattern": "^5.1.2",
 		"tslib": "^2.6.2",
