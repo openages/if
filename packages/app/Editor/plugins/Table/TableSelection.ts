@@ -1,12 +1,7 @@
-import {
-	$getNodeByKey,
-	$getSelection,
-	$normalizeSelection__EXPERIMENTAL,
-	isCurrentlyReadOnlyMode,
-	BaseSelection
-} from 'lexical'
+import { $getNodeByKey, $normalizeSelection__EXPERIMENTAL, isCurrentlyReadOnlyMode, BaseSelection } from 'lexical'
+import { uniqWith } from 'lodash-es'
 
-import { $getChildrenRecursively, $getMatchingParent } from '@/Editor/utils'
+import { $getMatchingParent } from '@/Editor/utils'
 
 import { $computeTableMap, $getTableCellNodeRect, $isTableCellNode, $isTableSelection } from './utils'
 
@@ -14,7 +9,6 @@ import type { TableMapValue } from './types'
 import type { ElementNode, LexicalNode, NodeKey, PointType } from 'lexical'
 import type TableNode from './TableNode'
 import type TableCellNode from './TableCellNode'
-import type TableObserver from './TableObserver'
 
 export default class TableSelection implements BaseSelection {
 	table_key: NodeKey
@@ -48,17 +42,12 @@ export default class TableSelection implements BaseSelection {
 		)
 	}
 
-	set(
-		table_key: NodeKey,
-		anchor_cell_key: NodeKey,
-		focus_cell_key: NodeKey,
-		selected_cells?: Array<TableCellNode>
-	) {
+	set(table_key: NodeKey, anchor_cell_key: NodeKey, focus_cell_key: NodeKey) {
 		this.table_key = table_key
 		this.anchor.key = anchor_cell_key
 		this.focus.key = focus_cell_key
 		this.dirty = true
-		this._cachedNodes = selected_cells ?? null
+		this._cachedNodes = null
 	}
 
 	isBackward() {
@@ -104,16 +93,22 @@ export default class TableSelection implements BaseSelection {
 		const focus_cell_node = $getNodeByKey(this.focus.key) as TableCellNode
 		const focus_cell_node_rect = $getTableCellNodeRect(focus_cell_node)
 		const start_x = Math.min(anchor_cell_node_rect.column_index, focus_cell_node_rect.column_index)
-		const stop_x = Math.max(anchor_cell_node_rect.column_index, focus_cell_node_rect.column_index)
 		const start_y = Math.min(anchor_cell_node_rect.row_index, focus_cell_node_rect.row_index)
+		const stop_x = Math.max(anchor_cell_node_rect.column_index, focus_cell_node_rect.column_index)
 		const stop_y = Math.max(anchor_cell_node_rect.row_index, focus_cell_node_rect.row_index)
 
+		const merge_node_type =
+			anchor_cell_node_rect.row_index >= focus_cell_node_rect.row_index &&
+			anchor_cell_node_rect.column_index >= focus_cell_node_rect.column_index
+				? 'focus'
+				: 'anchor'
 		return {
+			merge_node_type,
 			from_x: Math.min(start_x, stop_x),
 			from_y: Math.min(start_y, stop_y),
 			to_x: Math.max(start_x, stop_x),
 			to_y: Math.max(start_y, stop_y)
-		}
+		} as const
 	}
 
 	getNodes(): Array<LexicalNode> {
@@ -224,29 +219,23 @@ export default class TableSelection implements BaseSelection {
 			}
 		}
 
-		const nodes: Array<LexicalNode> = [table_node]
-		let last_row = null
+		const nodes: Array<LexicalNode> = [table_node, ...table_node.getParents()]
 
-		for (let i = min_row; i <= max_row; i++) {
-			for (let j = min_column; j <= max_column; j++) {
+		for (let i = max_row; i >= min_row; i--) {
+			for (let j = max_column; j >= min_column; j--) {
 				const { cell } = map[i][j]
-				const current_row = cell.getParent()
 
-				if (current_row !== last_row) {
-					nodes.push(current_row)
-				}
-
-				nodes.push(cell, ...$getChildrenRecursively(cell))
-
-				last_row = current_row
+				nodes.unshift(cell)
 			}
 		}
 
+		const target_nodes = uniqWith(nodes, (a: TableCellNode, b: TableCellNode) => a.getKey() === b.getKey())
+
 		if (!isCurrentlyReadOnlyMode()) {
-			this._cachedNodes = nodes
+			this._cachedNodes = target_nodes
 		}
 
-		return nodes
+		return target_nodes
 	}
 
 	getTextContent() {

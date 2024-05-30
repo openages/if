@@ -1,0 +1,12 @@
+._local {
+	z-index: 4;
+	width: 21px;
+	height: 21px;
+	border: 1px solid transparent;
+	border-radius: 50%;
+	background-color: var(--color_bg);
+
+	&:hover {
+		border-color: rgba(var(--color_text_rgb), 0.24);
+	}
+}

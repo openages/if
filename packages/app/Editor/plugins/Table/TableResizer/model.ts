@@ -1,4 +1,10 @@
-import { $createNodeSelection, $getNearestNodeFromDOMNode, $setSelection, COMMAND_PRIORITY_HIGH } from 'lexical'
+import {
+	$createNodeSelection,
+	$getNearestNodeFromDOMNode,
+	$getSelection,
+	$setSelection,
+	COMMAND_PRIORITY_HIGH
+} from 'lexical'
 import { throttle } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
@@ -8,15 +14,17 @@ import { $getMatchingParent } from '@/Editor/utils'
 import Utils from '@/models/utils'
 import { deepEqual } from '@openages/stk/react'
 
-import { $getTableColumnIndexFromTableCellNode, $isTableNode, getDOMCellFromTarget } from '../utils'
+import { $getTableColumnIndexFromTableCellNode, $isTableNode, $isTableSelection, getDOMCellFromTarget } from '../utils'
 
 import type { LexicalEditor } from 'lexical'
 import type TableNode from '../TableNode'
 import type TableCellNode from '../TableCellNode'
+
 @injectable()
 export default class Index {
 	id = ''
 	editor = null as LexicalEditor
+	ref = null as HTMLDivElement
 	tables = [] as Array<{ type: string; key: string }>
 	info = {} as { table_node: TableNode; col_index: number; start: number }
 
@@ -32,6 +40,7 @@ export default class Index {
 				utils: false,
 				id: false,
 				editor: false,
+				ref: false,
 				tables: false,
 				info: false,
 				check: false,
@@ -65,6 +74,9 @@ export default class Index {
 	check(e: MouseEvent) {
 		const { target } = e
 
+		const is_table_selection = this.editor.getEditorState().read(() => $isTableSelection($getSelection()))
+
+		if (is_table_selection) return this.reset()
 		if (this.hoving || this.dragging) return
 
 		this.editor.update(() => {
@@ -143,6 +155,7 @@ export default class Index {
 				this.clearCellSelection()
 			})
 		})
+
 		el.addEventListener('mouseup', () => (this.dragging = false))
 		el.addEventListener('mouseout', () => (this.dragging = false))
 		el.addEventListener('mouseleave', () => (this.dragging = false))

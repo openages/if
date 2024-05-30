@@ -14,11 +14,12 @@ import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
 import { mergeRegister } from '@lexical/utils'
 import { deepEqual } from '@openages/stk/react'
 
-import type { LexicalEditor, LexicalNode } from 'lexical'
+import type { LexicalEditor, LexicalNode, BaseSelection } from 'lexical'
 
 export default class Index {
 	editor = null as LexicalEditor
 	path = []
+	selection = null as BaseSelection
 
 	init(editor: Index['editor']) {
 		this.editor = editor
@@ -27,13 +28,7 @@ export default class Index {
 	watcher() {
 		const selection = $getSelection()
 
-		if (!$isNodeSelection(selection) && !$isRangeSelection(selection)) return
-
-		let nodes: Array<LexicalNode>
-
-		if ($isNodeSelection(selection)) {
-			nodes = selection.getNodes()
-		}
+		let nodes: Array<LexicalNode> = selection.getNodes()
 
 		if ($isRangeSelection(selection)) {
 			const anchor = selection.anchor
@@ -56,11 +51,12 @@ export default class Index {
 
 		const path = nodes.map(item => ({ type: item.getType(), key: item.getKey() }))
 
-		if (deepEqual(path, this.path)) return
+		if (deepEqual(path, this.path) && selection.is(this.selection)) return
 
 		this.editor.dispatchCommand(SELECTION_ELEMENTS_CHANGE, path)
 
 		this.path = path
+		this.selection = selection
 
 		return false
 	}

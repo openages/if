@@ -181,20 +181,21 @@ export default (
 		return false
 	}
 
+	const onResetObserver = () => {
+		const selection = editor.getEditorState().read(() => $getSelection() as TableSelection)
+
+		if ($isTableSelection(selection) && selection.table_key === observer.table_node_key) {
+			observer.reset()
+		}
+	}
+
+	window.addEventListener('mousedown', onResetObserver)
+
+	observer.listeners.add(() => {
+		window.removeEventListener('mousedown', onResetObserver)
+	})
+
 	table_element.addEventListener('mousedown', (event: MouseEvent) => {
-		editor.update(() => {
-			const selection = $getSelection() as TableSelection
-			const target = event.target as Node
-
-			if (
-				$isTableSelection(selection) &&
-				selection.table_key === observer.table_node_key &&
-				editor.getRootElement().contains(target)
-			) {
-				observer.clearHighlight()
-			}
-		})
-
 		setTimeout(() => {
 			if (event.button !== 0) return
 

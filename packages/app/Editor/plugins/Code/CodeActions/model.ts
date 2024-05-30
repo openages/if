@@ -43,7 +43,7 @@ export default class Index {
 
 				this.resize_observer.observe(container)
 			} else {
-				document.getElementById(this.id).removeEventListener('scroll', this.onScroll)
+				container.removeEventListener('scroll', this.onScroll)
 
 				this.resize_observer.unobserve(container)
 				this.resize_observer.disconnect()

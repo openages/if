@@ -7,8 +7,8 @@ import type { IPropsTableCellNode, SerializedTableCellNode } from './types'
 
 export default class TableCellNode extends ElementNode {
 	__is_header: boolean
-	__row_span: number = 0
-	__col_span: number = 0
+	__row_span: number = 1
+	__col_span: number = 1
 
 	constructor(props: IPropsTableCellNode) {
 		const { is_header, row_span, col_span, node_key } = props
@@ -16,8 +16,8 @@ export default class TableCellNode extends ElementNode {
 		super(node_key)
 
 		this.__is_header = is_header
-		this.__row_span = row_span
-		this.__col_span = col_span
+		this.__row_span = row_span || 1
+		this.__col_span = col_span || 1
 	}
 
 	static getType() {
@@ -87,14 +87,18 @@ export default class TableCellNode extends ElementNode {
 		return this.__col_span
 	}
 
-	setRowSpan(rowSpan: number) {
-		this.getWritable().__row_span = rowSpan
+	setRowSpan(v: number) {
+		if (v === this.__row_span) return this
+
+		this.getWritable().__row_span = v
 
 		return this
 	}
 
-	setColSpan(colSpan: number) {
-		this.getWritable().__col_span = colSpan
+	setColSpan(v: number) {
+		if (v === this.__col_span) return this
+
+		this.getWritable().__col_span = v
 
 		return this
 	}

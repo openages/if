@@ -81,81 +81,36 @@ export default class Index {
 	}
 
 	onTransformTable(node: TableNode) {
-		const [grid_map] = $computeTableMap(node, null, null)
+		const [map] = $computeTableMap(node, null, null)
 
 		$updateTableCols(this.editor, node)
 
-		const max_row_length = grid_map.reduce((cur_length, row) => {
+		const max_row_length = map.reduce((cur_length, row) => {
 			return Math.max(cur_length, row.length)
 		}, 0)
 
-		for (let i = 0; i < grid_map.length; ++i) {
-			const row_length = grid_map[i].length
+		// for (let i = 0; i < map.length; ++i) {
+		// 	const row_length = map[i].length
 
-			if (row_length === max_row_length) {
-				continue
-			}
+		// 	if (row_length === max_row_length) {
+		// 		continue
+		// 	}
 
-			const last_cell_map = grid_map[i][row_length - 1]
-			const last_row_cell = last_cell_map.cell
+		// 	const last_cell_map = map[i][row_length - 1]
+		// 	const last_row_cell = last_cell_map.cell
 
-			for (let j = row_length; j < max_row_length; ++j) {
-				const new_cell = $createTableCellNode({})
+		// 	for (let j = row_length; j < max_row_length; ++j) {
+		// 		const new_cell = $createTableCellNode({})
 
-				new_cell.append($createParagraphNode())
+		// 		new_cell.append($createParagraphNode())
 
-				if (last_row_cell !== null) {
-					last_row_cell.insertAfter(new_cell)
-				} else {
-					$insertFirst(last_row_cell, new_cell)
-				}
-			}
-		}
-	}
-
-	onTransformCell(node: TableCellNode) {
-		if (!(node.getRowSpan() > 1 || node.getColSpan() > 1)) return
-
-		const [, , table_node] = $getNodeTriplet(node)
-		const [table_map] = $computeTableMap(table_node, node, node)
-		const unmerged = []
-
-		let row = table_node.getFirstChild() as TableRowNode
-
-		for (let i = 0; i < table_map.length; i++) {
-			if (i !== 0) {
-				row = row.getNextSibling()
-			}
-
-			let last_row_cell: TableCellNode = null
-
-			for (let j = 0; j < table_map[0].length; j++) {
-				const cell_map = table_map[i][j]
-				const cell = cell_map.cell
-
-				if (cell_map.start_row === i && cell_map.start_column === j) {
-					last_row_cell = cell
-
-					unmerged.push(cell)
-				} else if (cell.getRowSpan() > 1 || cell.getColSpan() > 1) {
-					const new_cell = $createTableCellNode({
-						row_span: cell.getRowSpan(),
-						col_span: cell.getColSpan()
-					})
-
-					if (last_row_cell) {
-						last_row_cell.insertAfter(new_cell)
-					} else {
-						$insertFirst(row, new_cell)
-					}
-				}
-			}
-		}
-
-		for (const cell of unmerged) {
-			cell.setColSpan(1)
-			cell.setRowSpan(1)
-		}
+		// 		if (last_row_cell !== null) {
+		// 			last_row_cell.insertAfter(new_cell)
+		// 		} else {
+		// 			$insertFirst(last_row_cell, new_cell)
+		// 		}
+		// 	}
+		// }
 	}
 
 	checkSelection(path: Array<{ type: string; key: string }>) {
@@ -199,8 +154,7 @@ export default class Index {
 		if (this.unregister) this.unregister()
 
 		this.unregister = mergeRegister(
-			this.editor.registerNodeTransform(TableNode, this.onTransformTable.bind(this)),
-			this.editor.registerNodeTransform(TableCellNode, this.onTransformCell.bind(this))
+			this.editor.registerNodeTransform(TableNode, this.onTransformTable.bind(this))
 		)
 	}
 
