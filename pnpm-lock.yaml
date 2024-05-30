@@ -265,8 +265,8 @@ importers:
         version: 3.23.8
     devDependencies:
       '@rsdoctor/rspack-plugin':
-        specifier: ^0.2.4
-        version: 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+        specifier: ^0.2.5
+        version: 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
       '@rspack/cli':
         specifier: 0.6.5
         version: 0.6.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))(@types/express@4.17.21)(webpack@5.91.0)
@@ -301,8 +301,8 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2
       '@types/node':
-        specifier: ^20.12.12
-        version: 20.12.12
+        specifier: ^20.12.13
+        version: 20.12.13
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
@@ -350,7 +350,7 @@ importers:
         version: 1.5.1
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@types/node@20.12.12)(typescript@5.4.5)
+        version: 10.9.2(@types/node@20.12.13)(typescript@5.4.5)
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -1745,8 +1745,8 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
 
-  '@rc-component/trigger@2.1.1':
-    resolution: {integrity: sha512-UjHkedkgtEcgQu87w1VuWug1idoDJV7VUt0swxHXRcmei2uu1AuUzGBPEUlmOmXGJ+YtTgZfVLi7kuAUKoZTMA==}
+  '@rc-component/trigger@2.2.0':
+    resolution: {integrity: sha512-QarBCji02YE9aRFhZgRZmOpXBj0IZutRippsVBv85sxvG4FGk/vRxwAlkn3MS9zK5mwbETd86mAVg2tKqTkdJA==}
     engines: {node: '>=8.x'}
     peerDependencies:
       react: '>=16.9.0'
@@ -1756,33 +1756,33 @@ packages:
     resolution: {integrity: sha512-es2g3dq6Nb07iFxGk5GuHN20RwBZOsuDQN7izWIisUcv9r+d2C5jQxqmgkdebXgReWfiyUabcki6Fg77mSNrig==}
     engines: {node: '>=14.0.0'}
 
-  '@rsdoctor/client@0.2.4':
-    resolution: {integrity: sha512-SeIpajDzyhyrepVg5BWbO1/6UGB+ROcoMw0S9jgSAI91LhoWMI6JsMBtpIuapg1EiakFuuzRjIrnQQrogCK7mg==}
+  '@rsdoctor/client@0.2.5':
+    resolution: {integrity: sha512-svpyJInCrQ7n8E9zRcCefOKOKJTnwBuG/9Vf1JXBDQQctzz92DIb4Nuk1vPsY315yhEFLnJ5n4RH6rSu1DilbA==}
 
-  '@rsdoctor/core@0.2.4':
-    resolution: {integrity: sha512-cp94z495H5UJAuLer4vIVNUGKbqXYuwRbaFThDnJlGFa48bc/vh0vBxuTQoFIek69QIMQdVKcs0lumuVxPPh8g==}
+  '@rsdoctor/core@0.2.5':
+    resolution: {integrity: sha512-f+EsbSG9rAMWkcWD3EZWIxFerb1GoUlUX+UxtMpQW0p7M/lvCkKhNA2KUGFPuN9FTarDYhBbBCvBgsPz3tCxdg==}
 
-  '@rsdoctor/graph@0.2.4':
-    resolution: {integrity: sha512-as5lsKEMolwoipmWYaC0SFfoASG7MzoAmvI6kjmDAXz+Su4nOIV1o4/oiaNrMXUVNXocd/ibYeBnZRdngL8GWA==}
+  '@rsdoctor/graph@0.2.5':
+    resolution: {integrity: sha512-cSHeuFio3vfoj8BFamvQc1m4yDXdKNbmTYA6DfuKgEYk7FKrhwtXetWRljUtwS6aKFWIndAwuGp5tv4sU2QaCQ==}
 
-  '@rsdoctor/rspack-plugin@0.2.4':
-    resolution: {integrity: sha512-NP6DVjYcFEVrDSyRyL+xwrjAxBnExsuwn4jECEYOfyjTp0RVkVzVtaEhxs4lVa2M3E0gB4bUqpsiKqa6beimew==}
+  '@rsdoctor/rspack-plugin@0.2.5':
+    resolution: {integrity: sha512-pf8idl6ckt5kox+9RFpaSqqh0LeEYpaYmiHhjZ13CnKDD8+hoSZLvG8g6W70fwpSlHWsyeagAxDhJHy8qReKug==}
     peerDependencies:
-      '@rspack/core': ^0.5.1
+      '@rspack/core': ^0.6.5
 
-  '@rsdoctor/sdk@0.2.4':
-    resolution: {integrity: sha512-hVoobVOif03rkavizjhYX8vmWnaQAkbvBgnlag4bTvuz51dA52ri9/oJFvsNgmLquJNF7XljBLyvAZeE8teckA==}
+  '@rsdoctor/sdk@0.2.5':
+    resolution: {integrity: sha512-8C8phAmMIBtkbhuZqazqLwVVYmMtAd3ME9g6lh8sQCyV6ngX7IZWMaYtxw4BWYpG6PO80hWnuq7ayVlriJHObg==}
 
-  '@rsdoctor/types@0.2.4':
-    resolution: {integrity: sha512-XvTwj6JFh0r+7iNqlv9vGeh7/y/Tu3/2+E4JmmPipmxsPI1cDJe65RTKj/eTgbpLH1W/TINDw2czAiol8m/ouA==}
+  '@rsdoctor/types@0.2.5':
+    resolution: {integrity: sha512-uIO3WPvpwN0+Hdayw22wpLiUQ+icIAa3lkDA5ImACI3MP5RrHe32mLCY3eDinEJJch3zC+FrWYUTWFmanT5nzQ==}
     peerDependencies:
-      '@rspack/core': ^0.5.1
+      '@rspack/core': ^0.6.5
     peerDependenciesMeta:
       '@rspack/core':
         optional: true
 
-  '@rsdoctor/utils@0.2.4':
-    resolution: {integrity: sha512-iztfgAyRMtqNW7juiY77gOdVuVDWi4Jc9tA3BqHPUg+31PIZmUB1dujvr6tfm4VnfGZy5gu4UMJn/8IG32d4/g==}
+  '@rsdoctor/utils@0.2.5':
+    resolution: {integrity: sha512-M3wPRezZ4BlO20UCb4hp/hkbdA5hVE+xoetlFvsT+frHY/TGl4W3L0HV8SL9yCXJ9eFPx+joND+kgJAuuHnBmw==}
 
   '@rspack/binding-darwin-arm64@0.6.5':
     resolution: {integrity: sha512-5Zbs3buzF80MZoWnnpm/ZqQ2ZLKWjmmy94gDMeJhG39lKcpK2J2NyDXVis2ZSg7uUvKyJ662BEgIE1AnTWjnYg==}
@@ -2118,6 +2118,9 @@ packages:
   '@types/express-serve-static-core@4.19.0':
     resolution: {integrity: sha512-bGyep3JqPCRry1wq+O5n7oiBgGWmeIJXPjXXCo8EK0u8duZGSYar7cGqd3ML2JUsLGeB7fmc06KYo9fLGWqPvQ==}
 
+  '@types/express-serve-static-core@4.19.2':
+    resolution: {integrity: sha512-dPSEQElyVJ97BuGduAqQjpBocZWAs0GR94z+ptL7JXQJeJdHw2WBG3EWdFrK36b8Q6j8P4cXOMhgUoi0IIfIsg==}
+
   '@types/express@4.17.21':
     resolution: {integrity: sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==}
 
@@ -2166,8 +2169,8 @@ packages:
   '@types/node@20.12.10':
     resolution: {integrity: sha512-Eem5pH9pmWBHoGAT8Dr5fdc5rYA+4NAovdM4EktRPVAAiJhmWWfQrA0cFhAbOsQdSfIHjAud6YdkbL69+zSKjw==}
 
-  '@types/node@20.12.12':
-    resolution: {integrity: sha512-eWLDGF/FOSPtAvEqeRAQ4C8LSA7M1I7i0ky1I8U7kD1J5ITyW3AsRhQrKVoWf5pFKZ2kILsEGJhsI9r93PYnOw==}
+  '@types/node@20.12.13':
+    resolution: {integrity: sha512-gBGeanV41c1L171rR7wjbMiEpEI/l5XFQdLLfhr/REwpgDy/4U8y89+i8kRiLzDyZdOkXh+cRaTetUnCYutoXA==}
 
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
@@ -2543,8 +2546,8 @@ packages:
     resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
     engines: {node: '>=10'}
 
-  caniuse-lite@1.0.30001624:
-    resolution: {integrity: sha512-0dWnQG87UevOCPYaOR49CBcLBwoZLpws+k6W37nLjWUhumP1Isusj0p2u+3KhjNloRWK9OKMgjBBzPujQHw4nA==}
+  caniuse-lite@1.0.30001625:
+    resolution: {integrity: sha512-4KE9N2gcRH+HQhpeiRZXd+1niLB/XNLAhSy4z7fI8EzcbcPoAqjNInxVHTiTwWfTIV4w096XG8OtCOCQQKPv3w==}
 
   chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
@@ -2565,8 +2568,8 @@ packages:
   chroma-js@2.4.2:
     resolution: {integrity: sha512-U9eDw6+wt7V8z5NncY2jJfZa+hUH8XEj8FQHgFJTrUFnJfXYf4Ml4adI2vXZOjqRDpFWtYVWypDfZwnJ+HIR4A==}
 
-  chrome-trace-event@1.0.3:
-    resolution: {integrity: sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==}
+  chrome-trace-event@1.0.4:
+    resolution: {integrity: sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ==}
     engines: {node: '>=6.0'}
 
   ci-info@1.6.0:
@@ -2939,8 +2942,8 @@ packages:
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
-  electron-to-chromium@1.4.783:
-    resolution: {integrity: sha512-bT0jEz/Xz1fahQpbZ1D7LgmPYZ3iHVY39NcWWro1+hA2IvjiPeaXtfSqrQ+nXjApMvQRE2ASt1itSLRrebHMRQ==}
+  electron-to-chromium@1.4.785:
+    resolution: {integrity: sha512-V94FSLwW6V1JYeYT/pl23zIdwiAbeod7gBjyud2uhuWTa2yV3gZ4IaWt6l0t808y4l6NwOspyR5hiENGrYQqvA==}
 
   emoji-mart@5.6.0:
     resolution: {integrity: sha512-eJp3QRe79pjwa+duv+n7+5YsNhRcMl812EcFVwrnRvYKoNPoQb5qxU8DG6Bgwji0akHdp6D4Ln6tYLG58MFSow==}
@@ -6604,7 +6607,7 @@ snapshots:
   '@grpc/grpc-js@1.9.14':
     dependencies:
       '@grpc/proto-loader': 0.7.13
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
 
   '@grpc/proto-loader@0.7.13':
     dependencies:
@@ -6954,13 +6957,13 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.6
       '@rc-component/portal': 1.1.2(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
-      '@rc-component/trigger': 2.1.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
+      '@rc-component/trigger': 2.2.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       classnames: 2.5.1
       rc-util: 5.41.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       react: 0.0.0-experimental-c3048aab4-20240326
       react-dom: 0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326)
 
-  '@rc-component/trigger@2.1.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)':
+  '@rc-component/trigger@2.2.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)':
     dependencies:
       '@babel/runtime': 7.24.6
       '@rc-component/portal': 1.1.2(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
@@ -6973,14 +6976,14 @@ snapshots:
 
   '@remix-run/router@1.16.1': {}
 
-  '@rsdoctor/client@0.2.4': {}
+  '@rsdoctor/client@0.2.5': {}
 
-  '@rsdoctor/core@0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
+  '@rsdoctor/core@0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
     dependencies:
-      '@rsdoctor/graph': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/sdk': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/types': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/utils': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/graph': 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/sdk': 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/types': 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
       axios: 1.7.2
       bytes: 3.1.2
       enhanced-resolve: 5.12.0
@@ -7002,10 +7005,10 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/graph@0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
+  '@rsdoctor/graph@0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
     dependencies:
-      '@rsdoctor/types': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/utils': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/types': 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
       lodash: 4.17.21
       socket.io: 4.7.2
       source-map: 0.7.4
@@ -7019,15 +7022,17 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/rspack-plugin@0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
+  '@rsdoctor/rspack-plugin@0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
     dependencies:
-      '@rsdoctor/core': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/graph': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/sdk': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/utils': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/core': 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/graph': 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/sdk': 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/types': 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
       '@rspack/core': 0.6.5(@swc/helpers@0.5.11)
       loader-utils: 2.0.4
       lodash: 4.17.21
+      webpack-sources: 3.2.3
     transitivePeerDependencies:
       - '@swc/core'
       - bufferutil
@@ -7038,12 +7043,12 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/sdk@0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
+  '@rsdoctor/sdk@0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
     dependencies:
-      '@rsdoctor/client': 0.2.4
-      '@rsdoctor/graph': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/types': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
-      '@rsdoctor/utils': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/client': 0.2.5
+      '@rsdoctor/graph': 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/types': 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
       body-parser: 1.20.1
       cors: 2.8.5
       dayjs: 1.11.6
@@ -7064,7 +7069,7 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/types@0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
+  '@rsdoctor/types@0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
     dependencies:
       '@types/connect': 3.4.35
       '@types/estree': 1.0.0
@@ -7079,10 +7084,10 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@rsdoctor/utils@0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
+  '@rsdoctor/utils@0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))':
     dependencies:
       '@babel/code-frame': 7.24.2
-      '@rsdoctor/types': 0.2.4(@rspack/core@0.6.5(@swc/helpers@0.5.11))
+      '@rsdoctor/types': 0.2.5(@rspack/core@0.6.5(@swc/helpers@0.5.11))
       '@types/estree': 1.0.0
       acorn: 8.11.3
       acorn-import-assertions: 1.9.0(acorn@8.11.3)
@@ -7171,7 +7176,7 @@ snapshots:
     dependencies:
       '@module-federation/runtime-tools': 0.1.6
       '@rspack/binding': 0.6.5
-      caniuse-lite: 1.0.30001624
+      caniuse-lite: 1.0.30001625
       enhanced-resolve: 5.12.0
       tapable: 2.2.1
       webpack-sources: 3.2.3
@@ -7322,7 +7327,7 @@ snapshots:
 
   '@types/bonjour@3.5.13':
     dependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
 
   '@types/clone@2.1.4': {}
 
@@ -7345,7 +7350,7 @@ snapshots:
 
   '@types/connect@3.4.35':
     dependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
 
   '@types/connect@3.4.38':
     dependencies:
@@ -7355,7 +7360,7 @@ snapshots:
 
   '@types/cors@2.8.17':
     dependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
 
   '@types/crypto-js@4.2.2': {}
 
@@ -7492,7 +7497,14 @@ snapshots:
 
   '@types/express-serve-static-core@4.19.0':
     dependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.12.10
+      '@types/qs': 6.9.15
+      '@types/range-parser': 1.2.7
+      '@types/send': 0.17.4
+
+  '@types/express-serve-static-core@4.19.2':
+    dependencies:
+      '@types/node': 20.12.13
       '@types/qs': 6.9.15
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
@@ -7500,14 +7512,14 @@ snapshots:
   '@types/express@4.17.21':
     dependencies:
       '@types/body-parser': 1.19.5
-      '@types/express-serve-static-core': 4.19.0
+      '@types/express-serve-static-core': 4.19.2
       '@types/qs': 6.9.15
       '@types/serve-static': 1.15.7
 
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 20.12.12
+      '@types/node': 20.12.10
 
   '@types/geojson@7946.0.14': {}
 
@@ -7515,7 +7527,7 @@ snapshots:
 
   '@types/http-proxy@1.17.14':
     dependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
 
   '@types/json-schema@7.0.11': {}
 
@@ -7541,13 +7553,13 @@ snapshots:
 
   '@types/node-forge@1.3.11':
     dependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
 
   '@types/node@20.12.10':
     dependencies:
       undici-types: 5.26.5
 
-  '@types/node@20.12.12':
+  '@types/node@20.12.13':
     dependencies:
       undici-types: 5.26.5
 
@@ -7583,7 +7595,7 @@ snapshots:
   '@types/send@0.17.4':
     dependencies:
       '@types/mime': 1.3.5
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
 
   '@types/serve-index@1.9.4':
     dependencies:
@@ -7597,11 +7609,11 @@ snapshots:
 
   '@types/simple-peer@9.11.8':
     dependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
 
   '@types/sockjs@0.3.36':
     dependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
 
   '@types/tapable@2.2.2':
     dependencies:
@@ -7611,7 +7623,7 @@ snapshots:
 
   '@types/webpack@5.28.0':
     dependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
       tapable: 2.2.1
       webpack: 5.91.0
     transitivePeerDependencies:
@@ -7824,7 +7836,7 @@ snapshots:
       '@rc-component/color-picker': 1.5.3(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       '@rc-component/mutate-observer': 1.1.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       '@rc-component/tour': 1.15.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
-      '@rc-component/trigger': 2.1.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
+      '@rc-component/trigger': 2.2.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       classnames: 2.5.1
       copy-to-clipboard: 3.3.3
       dayjs: 1.11.11
@@ -8019,8 +8031,8 @@ snapshots:
 
   browserslist@4.23.0:
     dependencies:
-      caniuse-lite: 1.0.30001624
-      electron-to-chromium: 1.4.783
+      caniuse-lite: 1.0.30001625
+      electron-to-chromium: 1.4.785
       node-releases: 2.0.14
       update-browserslist-db: 1.0.16(browserslist@4.23.0)
 
@@ -8035,7 +8047,7 @@ snapshots:
 
   bun-types@1.1.10:
     dependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
       '@types/ws': 8.5.10
 
   bun-types@1.1.7:
@@ -8081,7 +8093,7 @@ snapshots:
 
   camelcase@6.3.0: {}
 
-  caniuse-lite@1.0.30001624: {}
+  caniuse-lite@1.0.30001625: {}
 
   chalk@2.4.2:
     dependencies:
@@ -8110,7 +8122,7 @@ snapshots:
 
   chroma-js@2.4.2: {}
 
-  chrome-trace-event@1.0.3: {}
+  chrome-trace-event@1.0.4: {}
 
   ci-info@1.6.0: {}
 
@@ -8450,7 +8462,7 @@ snapshots:
 
   ee-first@1.1.1: {}
 
-  electron-to-chromium@1.4.783: {}
+  electron-to-chromium@1.4.785: {}
 
   emoji-mart@5.6.0: {}
 
@@ -8468,7 +8480,7 @@ snapshots:
     dependencies:
       '@types/cookie': 0.4.1
       '@types/cors': 2.8.17
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
       accepts: 1.3.8
       base64id: 2.0.0
       cookie: 0.4.2
@@ -9056,7 +9068,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -9562,7 +9574,7 @@ snapshots:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
       long: 5.2.3
 
   proxy-addr@2.0.7:
@@ -9659,7 +9671,7 @@ snapshots:
   rc-dropdown@4.2.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
       '@babel/runtime': 7.24.6
-      '@rc-component/trigger': 2.1.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
+      '@rc-component/trigger': 2.2.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       classnames: 2.5.1
       rc-util: 5.41.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       react: 0.0.0-experimental-c3048aab4-20240326
@@ -9705,7 +9717,7 @@ snapshots:
   rc-mentions@2.13.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
       '@babel/runtime': 7.24.6
-      '@rc-component/trigger': 2.1.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
+      '@rc-component/trigger': 2.2.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       classnames: 2.5.1
       rc-input: 1.5.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       rc-menu: 9.14.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
@@ -9717,7 +9729,7 @@ snapshots:
   rc-menu@9.14.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
       '@babel/runtime': 7.24.6
-      '@rc-component/trigger': 2.1.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
+      '@rc-component/trigger': 2.2.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       classnames: 2.5.1
       rc-motion: 2.9.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       rc-overflow: 1.3.2(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
@@ -9762,7 +9774,7 @@ snapshots:
   rc-picker@4.5.0(dayjs@1.11.11)(luxon@3.4.4)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
       '@babel/runtime': 7.24.6
-      '@rc-component/trigger': 2.1.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
+      '@rc-component/trigger': 2.2.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       classnames: 2.5.1
       rc-overflow: 1.3.2(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       rc-resize-observer: 1.4.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
@@ -9810,7 +9822,7 @@ snapshots:
   rc-select@14.14.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
       '@babel/runtime': 7.24.6
-      '@rc-component/trigger': 2.1.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
+      '@rc-component/trigger': 2.2.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       classnames: 2.5.1
       rc-motion: 2.9.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       rc-overflow: 1.3.2(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
@@ -9879,7 +9891,7 @@ snapshots:
   rc-tooltip@6.2.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
       '@babel/runtime': 7.24.6
-      '@rc-component/trigger': 2.1.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
+      '@rc-component/trigger': 2.2.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       classnames: 2.5.1
       react: 0.0.0-experimental-c3048aab4-20240326
       react-dom: 0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326)
@@ -10565,14 +10577,14 @@ snapshots:
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
 
-  ts-node@10.9.2(@types/node@20.12.12)(typescript@5.4.5):
+  ts-node@10.9.2(@types/node@20.12.13)(typescript@5.4.5):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.11
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.12.12
+      '@types/node': 20.12.13
       acorn: 8.11.3
       acorn-walk: 8.3.2
       arg: 4.1.3
@@ -10817,7 +10829,7 @@ snapshots:
       acorn: 8.11.3
       acorn-import-assertions: 1.9.0(acorn@8.11.3)
       browserslist: 4.23.0
-      chrome-trace-event: 1.0.3
+      chrome-trace-event: 1.0.4
       enhanced-resolve: 5.16.1
       es-module-lexer: 1.5.3
       eslint-scope: 5.1.1

@@ -58,12 +58,7 @@ export default class TableSelection implements BaseSelection {
 		this.anchor.key = anchor_cell_key
 		this.focus.key = focus_cell_key
 		this.dirty = true
-
-		if (selected_cells) {
-			this._cachedNodes = selected_cells
-		} else {
-			this._cachedNodes = null
-		}
+		this._cachedNodes = selected_cells ?? null
 	}
 
 	isBackward() {
