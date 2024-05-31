@@ -6,7 +6,7 @@ import { container } from 'tsyringe'
 
 import { useStackSelector } from '@/context/stack'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { ArrowsInLineHorizontal } from '@phosphor-icons/react'
+import { ArrowsInLineHorizontal, ArrowsOutLineHorizontal } from '@phosphor-icons/react'
 
 import styles from './index.css'
 import Model from './model'
@@ -20,19 +20,29 @@ const Index = () => {
 		x.init(id, editor)
 	}, [id, editor])
 
-	const mergeCells = useMemoizedFn(() => {
-		editor.update(() => x.mergeCells())
+	const onClick = useMemoizedFn(() => {
+		editor.update(() => {
+			if (x.type === 'merge') {
+				x.mergeCells()
+			} else {
+				x.unmergeCells()
+			}
+		})
 	})
 
-	if (!x.visible) return null
+	if (!x.type || !x.visible) return null
 
 	const Content = (
 		<div
-			className={$cx(styles._local, 'border_box flex justify_center align_center fixed clickable')}
+			className={$cx(
+				'border_box flex justify_center align_center fixed clickable',
+				styles._local,
+				x.type === 'unmerge' && styles.unmerge
+			)}
 			style={{ left: x.style.left, top: x.style.top }}
-			onClick={mergeCells}
+			onClick={onClick}
 		>
-			<ArrowsInLineHorizontal size={15} />
+			{x.type === 'merge' ? <ArrowsInLineHorizontal size={15} /> : <ArrowsOutLineHorizontal size={10} />}
 		</div>
 	)
 

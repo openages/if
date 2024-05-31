@@ -46,7 +46,7 @@ export default class TableRowNode extends ElementNode {
 	}
 
 	canBeEmpty() {
-		return false
+		return true
 	}
 
 	canIndent() {

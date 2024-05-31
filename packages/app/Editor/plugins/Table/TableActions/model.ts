@@ -19,6 +19,7 @@ import {
 	$createTableCellNode,
 	$createTableRowNode,
 	$getTableColumnIndexFromTableCellNode,
+	$getTableRowIndexFromTableCellNode,
 	$isTableCellNode,
 	$isTableNode,
 	$isTableRowNode
@@ -113,7 +114,18 @@ export default class Index {
 	onClick(args: { key: string; keyPath: Array<string> }) {
 		const { key, keyPath } = args
 		const [table_node, table_row_node, table_cell_node] = this.nodes
+		const row_index = $getTableRowIndexFromTableCellNode(table_cell_node)
 		const col_index = $getTableColumnIndexFromTableCellNode(table_cell_node)
+		const rows = table_node.getChildren() as Array<TableRowNode>
+		const cells = table_row_node.getChildren() as Array<TableCellNode>
+
+		const row_counts = Math.max(
+			...rows.map(item => {
+				const cells = item.getChildren() as Array<TableCellNode>
+
+				return cells.reduce((total, i) => total + i.getRowSpan(), 0)
+			})
+		)
 
 		if (keyPath.length === 2) {
 			if (key === 'left') {
@@ -134,7 +146,6 @@ export default class Index {
 			}
 
 			if (key === 'header_col') {
-				const rows = table_node.getChildren() as Array<TableRowNode>
 				const total_cells = rows.map(row => row.getChildren()[col_index]) as Array<TableCellNode>
 				const total_is_header = total_cells.some(item => item.__is_header)
 
@@ -154,41 +165,67 @@ export default class Index {
 			if (key === 'insert_above' || key === 'insert_below') {
 				const row = $createTableRowNode()
 
-				const cells = table_row_node
-					.getChildren()
-					.map((item: TableCellNode) => $createTableCellNode({ is_header: item.__is_header }))
+				const target = cells.map((item: TableCellNode) =>
+					$createTableCellNode({
+						is_header: item.__is_header,
+						col_span: item.getColSpan()
+					}).append($createParagraphNode())
+				)
 
 				if (key === 'insert_above') {
-					table_row_node.insertBefore(row.append(...cells))
+					table_node.splice(row_index, 0, [row.append(...target)])
 				} else {
-					table_row_node.insertAfter(row.append(...cells))
+					table_node.splice(row_index + table_cell_node.getRowSpan(), 0, [row.append(...target)])
 				}
 			}
 
 			if (key === 'insert_left' || key === 'insert_right') {
-				const rows = table_node.getChildren() as Array<TableRowNode>
+				Array.from({ length: row_counts }).forEach((_, _row_index) => {
+					const row = rows[_row_index]
 
-				rows.forEach((row, _row_index) => {
+					if (!row) return
+
 					const cells = row.getChildren() as Array<TableCellNode>
 
+					let target: TableCellNode
+
 					cells.forEach((item, _col_index) => {
-						if (col_index !== _col_index) return
+						if (col_index !== _col_index) {
+							if (!cells[col_index]) {
+								target = $createTableCellNode({}).append($createParagraphNode())
+							}
 
-						const cell = $createTableCellNode({ is_header: item.__is_header })
-
-						if (key === 'insert_left') {
-							item.insertBefore(cell)
-						} else {
-							item.insertAfter(cell)
+							return
 						}
+
+						target = $createTableCellNode({ is_header: item.__is_header }).append(
+							$createParagraphNode()
+						)
 					})
+
+					if (cells[col_index]) {
+						row.splice(col_index + (key === 'insert_right' ? 1 : 0), 0, [target])
+					} else {
+						row.append(...[target])
+					}
 				})
 			}
 
 			if (key === 'clone_row') {
-				const clone = $cloneNode(table_row_node)
+				const row = $createTableRowNode()
 
-				table_row_node.insertAfter(clone)
+				const target = cells.map((item: TableCellNode) => {
+					const cell = $createTableCellNode({
+						is_header: item.__is_header,
+						col_span: item.getColSpan()
+					})
+
+					cell.append(...item.getChildren().map(i => $cloneNode(i)))
+
+					return cell
+				})
+
+				table_node.splice(row_index + table_cell_node.getRowSpan(), 0, [row.append(...target)])
 			}
 
 			if (key === 'clear_row') {
@@ -211,10 +248,40 @@ export default class Index {
 			}
 
 			if (key === 'clone_col' || key === 'clear_col' || key === 'remove_col') {
-				const rows = table_node.getChildren() as Array<TableRowNode>
 				const cols = rows[0].getChildren()
 
-				if (key === 'clone_col') table_node.cloneCol(col_index)
+				if (key === 'clone_col') {
+					table_node.cloneCol(col_index)
+
+					rows.forEach((row, _row_index) => {
+						const cells = row.getChildren() as Array<TableCellNode>
+
+						let target: TableCellNode
+
+						cells.forEach((item, _col_index) => {
+							if (col_index !== _col_index) {
+								if (!cells[col_index]) {
+									target = $createTableCellNode({}).append($createParagraphNode())
+								}
+
+								return
+							}
+
+							const cell = $createTableCellNode({ is_header: item.__is_header })
+
+							target = cell.append(...item.getChildren().map(i => $cloneNode(i)))
+						})
+
+						if (cells[col_index]) {
+							row.splice(col_index + 1, 0, [target])
+						} else {
+							row.append(target)
+						}
+					})
+
+					return
+				}
+
 				if (key === 'remove_col' && col_index === cols.length - 1) return
 
 				rows.forEach((row, _row_index) => {
@@ -224,9 +291,6 @@ export default class Index {
 						if (col_index !== _col_index) return
 
 						switch (key) {
-							case 'clone_col':
-								item.insertAfter($cloneNode(item))
-								break
 							case 'clear_col':
 								item.clear()
 								item.append($createParagraphNode())

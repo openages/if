@@ -81,36 +81,7 @@ export default class Index {
 	}
 
 	onTransformTable(node: TableNode) {
-		const [map] = $computeTableMap(node, null, null)
-
 		$updateTableCols(this.editor, node)
-
-		const max_row_length = map.reduce((cur_length, row) => {
-			return Math.max(cur_length, row.length)
-		}, 0)
-
-		// for (let i = 0; i < map.length; ++i) {
-		// 	const row_length = map[i].length
-
-		// 	if (row_length === max_row_length) {
-		// 		continue
-		// 	}
-
-		// 	const last_cell_map = map[i][row_length - 1]
-		// 	const last_row_cell = last_cell_map.cell
-
-		// 	for (let j = row_length; j < max_row_length; ++j) {
-		// 		const new_cell = $createTableCellNode({})
-
-		// 		new_cell.append($createParagraphNode())
-
-		// 		if (last_row_cell !== null) {
-		// 			last_row_cell.insertAfter(new_cell)
-		// 		} else {
-		// 			$insertFirst(last_row_cell, new_cell)
-		// 		}
-		// 	}
-		// }
 	}
 
 	checkSelection(path: Array<{ type: string; key: string }>) {

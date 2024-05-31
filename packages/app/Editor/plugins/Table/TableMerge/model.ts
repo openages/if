@@ -1,40 +1,47 @@
-import { $getSelection, COMMAND_PRIORITY_HIGH } from 'lexical'
+import { $createParagraphNode, $getNodeByKey, $getSelection, $isRangeSelection, COMMAND_PRIORITY_HIGH } from 'lexical'
 import { groupBy } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
-import { $cloneNode } from '@/Editor/utils'
+import { $cloneNode, $getMatchingParent } from '@/Editor/utils'
 import Utils from '@/models/utils'
 import { useInstanceWatch, Watch } from '@openages/stk/mobx'
 
 import TableSelection from '../TableSelection'
 import {
 	$cellContainsEmptyParagraph,
+	$createTableCellNode,
+	$getTableCellNodeRect,
 	$getTableColumnIndexFromTableCellNode,
 	$isTableCellNode,
+	$isTableNode,
 	$isTableSelection
 } from '../utils'
 
-import type { LexicalEditor } from 'lexical'
+import type { LexicalEditor, RangeSelection } from 'lexical'
 import type TableCellNode from '../TableCellNode'
+import type TableNode from '../TableNode'
+import type TableRowNode from '../TableRowNode'
 
 @injectable()
 export default class Index {
 	id = ''
 	editor = null as LexicalEditor
 
+	type = '' as 'merge' | 'unmerge'
 	style = { left: 0, top: 0 }
 	visible = false
 
 	watch = {
 		visible: v => {
 			const container = document.getElementById(this.id)
+			const handler = this.type === 'merge' ? this.getMergePosition : this.getUnmergePosition
 
 			if (v) {
-				container.addEventListener('scroll', this.getPosition)
+				container.addEventListener('scroll', handler)
 			} else {
-				container.removeEventListener('scroll', this.getPosition)
+				container.removeEventListener('scroll', handler)
 			}
 		}
 	} as Watch<Index>
@@ -64,14 +71,24 @@ export default class Index {
 	reset() {
 		if (!this.visible) return
 
+		this.type = '' as Index['type']
 		this.style = { left: 0, top: 0 }
 		this.visible = false
+
+		return false
 	}
 
-	getPosition() {
+	getLargeCell(selection: RangeSelection) {
+		const focus_node = selection.focus.getNode()
+		const parents = focus_node.getParents()
+		const cell_node = parents.find(item => item.getType() === 'table_cell')
+
+		return cell_node as TableCellNode
+	}
+
+	getMergePosition() {
 		this.editor.update(() => {
 			const selection = $getSelection() as TableSelection
-
 			const anchor_node = selection.anchor.getNode() as TableCellNode
 			const focus_node = selection.focus.getNode() as TableCellNode
 			const anchor_el = this.editor.getElementByKey(anchor_node.getKey())
@@ -87,7 +104,27 @@ export default class Index {
 			const width = Math.max(...x_values) - x_min
 			const height = Math.max(...y_values) - y_min
 
+			this.type = 'merge'
 			this.style = { left: x_min + width / 2 - 10.5, top: y_min + height / 2 - 10.5 }
+			this.visible = true
+		})
+
+		return false
+	}
+
+	getUnmergePosition() {
+		this.editor.update(() => {
+			const selection = $getSelection() as RangeSelection
+
+			if (!selection) return this.reset()
+
+			const cell_node = this.getLargeCell(selection)
+
+			const cell_el = this.editor.getElementByKey(cell_node.getKey())
+			const { right, top } = cell_el.getBoundingClientRect()
+
+			this.type = 'unmerge'
+			this.style = { left: right - 18, top: top + 3 }
 			this.visible = true
 		})
 	}
@@ -103,13 +140,15 @@ export default class Index {
 		const cells = selection.getNodes().filter(item => $isTableCellNode(item)) as Array<TableCellNode>
 		const els = cells.map(item => this.editor.getElementByKey(item.getKey()))
 
-		if (!(els.every(item => item.tagName === 'TD') || els.every(item => item.tagName === 'TH'))) return
+		if (!(els.every(item => item.tagName === 'TD') || els.every(item => item.tagName === 'TH'))) {
+			return this.reset()
+		}
 
-		const group_cols = groupBy(cells, item => $getTableColumnIndexFromTableCellNode(item))
+		const group_cols = groupBy(cells, item => $getTableCellNodeRect(item).column_index)
 		const group_rows = groupBy(cells, item => item.getParent().getKey())
 
-		Object.keys(group_cols).forEach(row_key => {
-			const cells = group_cols[row_key]
+		Object.keys(group_cols).forEach(col_index => {
+			const cells = group_cols[col_index]
 
 			const rowspan = cells.reduce((total, item) => {
 				total += item.getRowSpan()
@@ -149,16 +188,59 @@ export default class Index {
 		target_node.getLastDescendant().selectEnd()
 	}
 
-	checkSelection() {
+	unmergeCells() {
+		const selection = $getSelection() as RangeSelection
+
+		if (!selection) return this.reset()
+
+		const cell_node = this.getLargeCell(selection)
+
+		const table_node = $getMatchingParent(cell_node, $isTableNode) as TableNode
+		const { row_index, column_index, row_span, col_span } = $getTableCellNodeRect(cell_node)
+		const rows_arr = Array.from({ length: row_span })
+		const cols_arr = Array.from({ length: col_span })
+		const rows = table_node.getChildren() as Array<TableRowNode>
+		const clone_cell_node = $cloneNode(cell_node) as TableCellNode
+
+		clone_cell_node.setRowSpan(1).setColSpan(1)
+
+		rows_arr.forEach((_, r_index) => {
+			const row_node = rows[row_index + r_index]
+
+			row_node.splice(
+				column_index,
+				0,
+				cols_arr.map(_ => $createTableCellNode({}).append($createParagraphNode()))
+			)
+		})
+
+		rows[row_index].getChildren()[column_index].selectEnd()
+
+		cell_node.remove()
+
+		this.reset()
+	}
+
+	checkSelection(path: Array<{ type: string; key: string }>) {
 		const selection = $getSelection()
 
 		if ($isTableSelection(selection)) {
-			this.getPosition()
-		} else {
-			this.reset()
+			return this.getMergePosition()
 		}
 
-		return false
+		if ($isRangeSelection(selection)) {
+			const cell = path.find(item => item.type === 'table_cell')
+
+			if (!cell) return this.reset()
+
+			const cell_node = $getNodeByKey(cell.key) as TableCellNode
+
+			if (cell_node.getRowSpan() === 1 && cell_node.getColSpan() === 1) return this.reset()
+
+			this.getUnmergePosition()
+		}
+
+		return this.reset()
 	}
 
 	on() {
