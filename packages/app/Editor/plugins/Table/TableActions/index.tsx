@@ -34,51 +34,25 @@ const Index = () => {
 
 	const Content = (
 		<Fragment>
-			<div
-				className={$cx(
-					'fixed z_index_100 border_box flex align_center',
-					styles.action,
-					styles.action_row
-				)}
-				style={{ left: x.position_row.left, top: x.position_row.top }}
-			>
-				<Dropdown
-					destroyPopupOnHide
-					trigger={['click']}
-					menu={{ items: menu_row, rootClassName: styles.dropdown_menu, onClick }}
-					onOpenChange={onRowOpenChange}
+			{x.position_row.left && x.position_row.top && (
+				<div
+					className={$cx(
+						'fixed z_index_100 border_box flex align_center',
+						styles.action,
+						styles.action_row
+					)}
+					style={{ left: x.position_row.left, top: x.position_row.top }}
 				>
-					<div
-						className={$cx(
-							'btn_action_row btn_action flex flex_column justify_center align_center absolute clickable cursor_point',
-							x.visible_menu_type === 'row' && 'active'
-						)}
-					>
-						<span className='dot'></span>
-						<span className='dot'></span>
-						<span className='dot'></span>
-					</div>
-				</Dropdown>
-			</div>
-			<div
-				className={$cx(
-					'fixed z_index_100 border_box flex align_center',
-					styles.action,
-					styles.action_col
-				)}
-				style={{ left: x.position_col.left, top: x.position_col.top }}
-			>
-				<ConfigProvider getPopupContainer={() => document.getElementById(id)}>
 					<Dropdown
 						destroyPopupOnHide
 						trigger={['click']}
-						menu={{ items: menu_col, rootClassName: styles.dropdown_menu, onClick }}
-						onOpenChange={onColOpenChange}
+						menu={{ items: menu_row, rootClassName: styles.dropdown_menu, onClick }}
+						onOpenChange={onRowOpenChange}
 					>
 						<div
 							className={$cx(
-								'btn_action_col btn_action flex justify_center align_center absolute clickable',
-								x.visible_menu_type === 'col' && 'active'
+								'btn_action_row btn_action flex flex_column justify_center align_center absolute clickable cursor_point',
+								x.visible_menu_type === 'row' && 'active'
 							)}
 						>
 							<span className='dot'></span>
@@ -86,8 +60,38 @@ const Index = () => {
 							<span className='dot'></span>
 						</div>
 					</Dropdown>
-				</ConfigProvider>
-			</div>
+				</div>
+			)}
+			{x.position_col.left && x.position_col.top && (
+				<div
+					className={$cx(
+						'fixed z_index_100 border_box flex align_center',
+						styles.action,
+						styles.action_col
+					)}
+					style={{ left: x.position_col.left, top: x.position_col.top }}
+				>
+					<ConfigProvider getPopupContainer={() => document.getElementById(id)}>
+						<Dropdown
+							destroyPopupOnHide
+							trigger={['click']}
+							menu={{ items: menu_col, rootClassName: styles.dropdown_menu, onClick }}
+							onOpenChange={onColOpenChange}
+						>
+							<div
+								className={$cx(
+									'btn_action_col btn_action flex justify_center align_center absolute clickable',
+									x.visible_menu_type === 'col' && 'active'
+								)}
+							>
+								<span className='dot'></span>
+								<span className='dot'></span>
+								<span className='dot'></span>
+							</div>
+						</Dropdown>
+					</ConfigProvider>
+				</div>
+			)}
 		</Fragment>
 	)
 

@@ -74,7 +74,7 @@ export default (
 	const getObserverCellFromCellNode = (table_cell_node: TableCellNode) => {
 		const current_cords = table_node.getCordsFromCellNode(table_cell_node, observer.table)
 
-		return table_node.getDOMCellFromCordsOrThrow(current_cords.x, current_cords.y, observer.table)
+		return table_node.getDOMCellFromCords(current_cords.x, current_cords.y, observer.table)
 	}
 
 	const onDeleteText = (command: LexicalCommand<boolean>) => () => {

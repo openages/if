@@ -1,8 +1,16 @@
-import { $getEditor, $getNearestNodeFromDOMNode, ElementNode } from 'lexical'
+import { $getEditor, $getNearestNodeFromDOMNode, $getSelection, $isRangeSelection, ElementNode } from 'lexical'
 
+import { $getMatchingParent } from '@/Editor/utils'
 import { isHTMLElement } from '@lexical/utils'
 
-import { $convertTableElement, $createTableNode, $isTableCellNode } from './utils'
+import {
+	$computeTableMap,
+	$convertTableElement,
+	$createTableNode,
+	$getTableCellNodeRect,
+	$isTableCellNode,
+	$isTableNode
+} from './utils'
 
 import type TableRowNode from './TableRowNode'
 import type TableCellNode from './TableCellNode'
@@ -160,6 +168,8 @@ export default class TableNode extends ElementNode {
 			cells.forEach(item => {
 				const el = editor.getElementByKey(item.getKey()) as HTMLTableCellElement
 
+				if (!el) return
+
 				if (el.hasAttribute('align')) el.removeAttribute('align')
 				if (el.hasAttribute('width')) el.removeAttribute('width')
 			})
@@ -176,6 +186,56 @@ export default class TableNode extends ElementNode {
 		const rows = this.getChildren() as Array<TableRowNode>
 
 		return rows.some(row => row.getChildren().some((cell: TableCellNode) => cell.getColSpan() > 1))
+	}
+
+	existLargeRowspan() {
+		const selection = $getSelection()
+
+		if (!$isRangeSelection(selection)) return
+
+		const anchor = selection.anchor.getNode()
+		const table_node = $getMatchingParent(anchor, $isTableNode) as TableNode
+		const table_cell_node = $getMatchingParent(anchor, $isTableCellNode) as TableCellNode
+
+		const [table_map, table_node_map] = $computeTableMap(table_node, table_cell_node, null)
+		const { start_row } = table_node_map
+
+		if (table_cell_node.getRowSpan() > 1) return true
+
+		const target_row = table_map[start_row]
+
+		return target_row.some(({ cell }) => cell.getRowSpan() > 1)
+	}
+
+	existLargeColspan() {
+		const selection = $getSelection()
+
+		if (!$isRangeSelection(selection)) return
+
+		const anchor = selection.anchor.getNode()
+		const table_node = $getMatchingParent(anchor, $isTableNode) as TableNode
+		const table_cell_node = $getMatchingParent(anchor, $isTableCellNode) as TableCellNode
+
+		const [table_map, table_node_map] = $computeTableMap(table_node, table_cell_node, null)
+		const { start_column } = table_node_map
+
+		if (table_cell_node.getColSpan() > 1) return true
+
+		let target = false
+
+		table_map.forEach(row_map => {
+			row_map.forEach((cell_map, col_index) => {
+				const { cell } = cell_map
+
+				if (start_column === col_index) {
+					if (cell.getColSpan() > 1) {
+						target = true
+					}
+				}
+			})
+		})
+
+		return target
 	}
 
 	getCordsFromCellNode(table_cell_node: TableCellNode, table: Table): { x: number; y: number } {
@@ -201,8 +261,6 @@ export default class TableNode extends ElementNode {
 				return { x, y }
 			}
 		}
-
-		throw new Error('Cell not found in table.')
 	}
 
 	getDOMCellFromCords(x: number, y: number, table: Table) {
@@ -219,16 +277,6 @@ export default class TableNode extends ElementNode {
 		return cell
 	}
 
-	getDOMCellFromCordsOrThrow(x: number, y: number, table: Table) {
-		const cell = this.getDOMCellFromCords(x, y, table)
-
-		if (!cell) {
-			throw new Error('Cell not found at cords.')
-		}
-
-		return cell
-	}
-
 	getCellNodeFromCords(x: number, y: number, table: Table) {
 		const cell = this.getDOMCellFromCords(x, y, table)
 
@@ -239,15 +287,5 @@ export default class TableNode extends ElementNode {
 		if ($isTableCellNode(node)) return node as TableCellNode
 
 		return null
-	}
-
-	getCellNodeFromCordsOrThrow(x: number, y: number, table: Table) {
-		const node = this.getCellNodeFromCords(x, y, table) as TableCellNode
-
-		if (!node) {
-			throw new Error('Node at cords not TableCellNode.')
-		}
-
-		return node
 	}
 }

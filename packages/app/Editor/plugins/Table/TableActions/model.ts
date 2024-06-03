@@ -16,10 +16,10 @@ import { mergeRegister } from '@lexical/utils'
 import { useInstanceWatch, Watch } from '@openages/stk/mobx'
 
 import {
+	$computeTableMap,
 	$createTableCellNode,
 	$createTableRowNode,
 	$getTableColumnIndexFromTableCellNode,
-	$getTableRowIndexFromTableCellNode,
 	$isTableCellNode,
 	$isTableNode,
 	$isTableRowNode
@@ -114,24 +114,14 @@ export default class Index {
 	onClick(args: { key: string; keyPath: Array<string> }) {
 		const { key, keyPath } = args
 		const [table_node, table_row_node, table_cell_node] = this.nodes
-		const row_index = $getTableRowIndexFromTableCellNode(table_cell_node)
-		const col_index = $getTableColumnIndexFromTableCellNode(table_cell_node)
-		const rows = table_node.getChildren() as Array<TableRowNode>
-		const cells = table_row_node.getChildren() as Array<TableCellNode>
-
-		const row_counts = Math.max(
-			...rows.map(item => {
-				const cells = item.getChildren() as Array<TableCellNode>
-
-				return cells.reduce((total, i) => total + i.getRowSpan(), 0)
-			})
-		)
+		const [table_map, cell_map] = $computeTableMap(table_node, table_cell_node, null)
+		const { start_row, start_column } = cell_map
 
 		if (keyPath.length === 2) {
 			if (key === 'left') {
-				table_node.resetColAttr(col_index, 'align')
+				table_node.resetColAttr(start_column, 'align')
 			} else {
-				table_node.updateCol(col_index, { align: key })
+				table_node.updateCol(start_column, { align: key })
 			}
 		} else {
 			if (key === 'header_row') {
@@ -145,87 +135,35 @@ export default class Index {
 				})
 			}
 
-			if (key === 'header_col') {
-				const total_cells = rows.map(row => row.getChildren()[col_index]) as Array<TableCellNode>
-				const total_is_header = total_cells.some(item => item.__is_header)
-
-				rows.forEach(row => {
-					const cells = row.getChildren() as Array<TableCellNode>
-
-					cells.forEach((item, index) => {
-						if (col_index !== index) return
-
-						const target = item.getWritable()
-
-						target.__is_header = !total_is_header
-					})
-				})
-			}
-
 			if (key === 'insert_above' || key === 'insert_below') {
 				const row = $createTableRowNode()
 
-				const target = cells.map((item: TableCellNode) =>
+				const target = table_map[start_row].map(({ cell }) =>
 					$createTableCellNode({
-						is_header: item.__is_header,
-						col_span: item.getColSpan()
+						is_header: cell.__is_header,
+						col_span: cell.getColSpan()
 					}).append($createParagraphNode())
 				)
 
 				if (key === 'insert_above') {
-					table_node.splice(row_index, 0, [row.append(...target)])
+					table_node.splice(start_row, 0, [row.append(...target)])
 				} else {
-					table_node.splice(row_index + table_cell_node.getRowSpan(), 0, [row.append(...target)])
+					table_node.splice(start_row + 1, 0, [row.append(...target)])
 				}
-			}
-
-			if (key === 'insert_left' || key === 'insert_right') {
-				Array.from({ length: row_counts }).forEach((_, _row_index) => {
-					const row = rows[_row_index]
-
-					if (!row) return
-
-					const cells = row.getChildren() as Array<TableCellNode>
-
-					let target: TableCellNode
-
-					cells.forEach((item, _col_index) => {
-						if (col_index !== _col_index) {
-							if (!cells[col_index]) {
-								target = $createTableCellNode({}).append($createParagraphNode())
-							}
-
-							return
-						}
-
-						target = $createTableCellNode({ is_header: item.__is_header }).append(
-							$createParagraphNode()
-						)
-					})
-
-					if (cells[col_index]) {
-						row.splice(col_index + (key === 'insert_right' ? 1 : 0), 0, [target])
-					} else {
-						row.append(...[target])
-					}
-				})
 			}
 
 			if (key === 'clone_row') {
 				const row = $createTableRowNode()
 
-				const target = cells.map((item: TableCellNode) => {
-					const cell = $createTableCellNode({
-						is_header: item.__is_header,
-						col_span: item.getColSpan()
-					})
+				const target = table_map[start_row].map(({ cell }) => {
+					const new_cell = $createTableCellNode({ is_header: cell.__is_header })
 
-					cell.append(...item.getChildren().map(i => $cloneNode(i)))
+					new_cell.append(...cell.getChildren().map(i => $cloneNode(i)))
 
 					return cell
 				})
 
-				table_node.splice(row_index + table_cell_node.getRowSpan(), 0, [row.append(...target)])
+				table_node.splice(start_row + 1, 0, [row.append(...target)])
 			}
 
 			if (key === 'clear_row') {
@@ -244,60 +182,66 @@ export default class Index {
 			}
 
 			if (key === 'reset_width') {
-				table_node.resetColAttr(col_index, 'width')
+				table_node.resetColAttr(start_column, 'width')
 			}
 
-			if (key === 'clone_col' || key === 'clear_col' || key === 'remove_col') {
-				const cols = rows[0].getChildren()
+			if (
+				key === 'header_col' ||
+				key === 'insert_left' ||
+				key === 'insert_right' ||
+				key === 'clone_col' ||
+				key === 'clear_col' ||
+				key === 'remove_col'
+			) {
+				const rows = table_node.getChildren() as Array<TableRowNode>
 
-				if (key === 'clone_col') {
-					table_node.cloneCol(col_index)
+				let total_is_header = false
 
-					rows.forEach((row, _row_index) => {
-						const cells = row.getChildren() as Array<TableCellNode>
-
-						let target: TableCellNode
-
-						cells.forEach((item, _col_index) => {
-							if (col_index !== _col_index) {
-								if (!cells[col_index]) {
-									target = $createTableCellNode({}).append($createParagraphNode())
-								}
-
-								return
-							}
-
-							const cell = $createTableCellNode({ is_header: item.__is_header })
-
-							target = cell.append(...item.getChildren().map(i => $cloneNode(i)))
-						})
-
-						if (cells[col_index]) {
-							row.splice(col_index + 1, 0, [target])
-						} else {
-							row.append(target)
-						}
-					})
-
-					return
+				if (key === 'header_col') {
+					total_is_header = rows.some(
+						row => (row.getChildren()[start_column] as TableCellNode).__is_header
+					)
 				}
 
-				if (key === 'remove_col' && col_index === cols.length - 1) return
-
-				rows.forEach((row, _row_index) => {
+				rows.forEach(row => {
 					const cells = row.getChildren() as Array<TableCellNode>
 
-					cells.forEach((item, _col_index) => {
-						if (col_index !== _col_index) return
+					cells.forEach((cell, index) => {
+						if (start_column !== index) return
 
-						switch (key) {
-							case 'clear_col':
-								item.clear()
-								item.append($createParagraphNode())
-								break
-							case 'remove_col':
-								item.remove()
-								break
+						if (key === 'header_col') {
+							const target = cell.getWritable()
+
+							target.__is_header = !total_is_header
+						}
+
+						if (key === 'insert_left' || key === 'insert_right') {
+							const target = $createTableCellNode({ is_header: cell.__is_header }).append(
+								$createParagraphNode()
+							)
+
+							if (key === 'insert_left') {
+								cell.insertBefore(target)
+							} else {
+								cell.insertAfter(target)
+							}
+						}
+
+						if (key == 'clone_col') {
+							const new_cell = $createTableCellNode({ is_header: cell.__is_header })
+
+							new_cell.append(...cell.getChildren().map(i => $cloneNode(i)))
+
+							cell.insertAfter(new_cell)
+						}
+
+						if (key == 'clear_col') {
+							cell.clear()
+							cell.append($createParagraphNode())
+						}
+
+						if (key === 'remove_col') {
+							cell.remove()
 						}
 					})
 				})
@@ -323,12 +267,23 @@ export default class Index {
 			const rect_cell = table_cell_node_el.getBoundingClientRect()
 			const rect_col = target_col_node_el.getBoundingClientRect()
 
-			this.position_row = {
-				left: rect_row.x - 0.5 + table_node_el.scrollLeft,
-				top: rect_row.y + rect_row.height / 2 - 5
+			const exsit_large_rowspan = table_node.existLargeRowspan()
+			const exsit_large_colspan = table_node.existLargeColspan()
+
+			if (exsit_large_rowspan && exsit_large_colspan) {
+				return this.reset()
 			}
 
-			this.position_col = { left: rect_cell.x + rect_cell.width / 2 - 5, top: rect_col.y - 0.5 }
+			this.position_row = !exsit_large_rowspan
+				? {
+						left: rect_row.x - 0.5 + table_node_el.scrollLeft,
+						top: rect_row.y + rect_row.height / 2 - 5
+					}
+				: { left: 0, top: 0 }
+
+			this.position_col = !exsit_large_colspan
+				? { left: rect_cell.x + rect_cell.width / 2 - 5, top: rect_col.y - 0.5 }
+				: { left: 0, top: 0 }
 		})
 	}
 
