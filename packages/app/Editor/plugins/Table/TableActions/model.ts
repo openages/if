@@ -6,12 +6,13 @@ import {
 	COMMAND_PRIORITY_LOW,
 	SELECTION_CHANGE_COMMAND
 } from 'lexical'
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
 import { $cloneNode, $getMatchingParent } from '@/Editor/utils'
 import Utils from '@/models/utils'
+import { draggable } from '@atlaskit/pragmatic-drag-and-drop/element/adapter'
 import { mergeRegister } from '@lexical/utils'
 import { useInstanceWatch, Watch } from '@openages/stk/mobx'
 
@@ -29,6 +30,7 @@ import type { LexicalEditor } from 'lexical'
 import type TableNode from '../TableNode'
 import type TableRowNode from '../TableRowNode'
 import type TableCellNode from '../TableCellNode'
+import type { CleanupFn } from '@atlaskit/pragmatic-drag-and-drop/dist/types/internal-types'
 
 @injectable()
 export default class Index {
@@ -36,6 +38,9 @@ export default class Index {
 	editor = null as LexicalEditor
 	nodes = [] as [TableNode, TableRowNode, TableCellNode] | []
 	resize_observer = null as ResizeObserver
+	ref_btn_row = null as HTMLDivElement
+	ref_btn_col = null as HTMLDivElement
+	drag_acts = [] as Array<CleanupFn>
 
 	position_row = { left: 0, top: 0 }
 	position_col = { left: 0, top: 0 }
@@ -88,6 +93,9 @@ export default class Index {
 				editor: false,
 				nodes: false,
 				resize_observer: false,
+				ref_btn_row: false,
+				ref_btn_col: false,
+				drag_acts: false,
 				unregister: false,
 				watch: false
 			},
@@ -105,10 +113,39 @@ export default class Index {
 	}
 
 	reset() {
+		runInAction(() => {
+			this.drag_acts.map(fn => fn())
+			this.drag_acts = []
+		})
+
 		this.nodes = []
 		this.position_row = { left: 0, top: 0 }
 		this.position_col = { left: 0, top: 0 }
 		this.visible = false
+	}
+
+	setRefBtnRow(el: HTMLDivElement) {
+		this.ref_btn_row = el
+
+		if (!el) return
+
+		this.drag_acts.push(
+			draggable({
+				element: el
+			})
+		)
+	}
+
+	setRefBtnCol(el: HTMLDivElement) {
+		this.ref_btn_col = el
+
+		if (!el) return
+
+		this.drag_acts.push(
+			draggable({
+				element: el
+			})
+		)
 	}
 
 	onClick(args: { key: string; keyPath: Array<string> }) {

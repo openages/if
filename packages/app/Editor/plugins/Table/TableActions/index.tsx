@@ -54,6 +54,7 @@ const Index = () => {
 								'btn_action_row btn_action flex flex_column justify_center align_center absolute clickable cursor_point',
 								x.visible_menu_type === 'row' && 'active'
 							)}
+							ref={x.setRefBtnRow}
 						>
 							<span className='dot'></span>
 							<span className='dot'></span>
@@ -83,6 +84,7 @@ const Index = () => {
 									'btn_action_col btn_action flex justify_center align_center absolute clickable',
 									x.visible_menu_type === 'col' && 'active'
 								)}
+								ref={x.setRefBtnCol}
 							>
 								<span className='dot'></span>
 								<span className='dot'></span>
