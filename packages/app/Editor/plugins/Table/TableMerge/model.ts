@@ -13,7 +13,6 @@ import {
 	$cellContainsEmptyParagraph,
 	$createTableCellNode,
 	$getTableCellNodeRect,
-	$getTableColumnIndexFromTableCellNode,
 	$isTableCellNode,
 	$isTableNode,
 	$isTableSelection
@@ -28,6 +27,7 @@ import type TableRowNode from '../TableRowNode'
 export default class Index {
 	id = ''
 	editor = null as LexicalEditor
+	selection = null as RangeSelection
 
 	type = '' as 'merge' | 'unmerge'
 	style = { left: 0, top: 0 }
@@ -53,6 +53,7 @@ export default class Index {
 				utils: false,
 				id: false,
 				editor: false,
+				selection: false,
 				watch: false
 			},
 			{ autoBind: true }
@@ -78,8 +79,8 @@ export default class Index {
 		return false
 	}
 
-	getLargeCell(selection: RangeSelection) {
-		const focus_node = selection.focus.getNode()
+	getLargeCell() {
+		const focus_node = this.selection.focus.getNode()
 		const parents = focus_node.getParents()
 		const cell_node = parents.find(item => item.getType() === 'table_cell')
 
@@ -114,12 +115,7 @@ export default class Index {
 
 	getUnmergePosition() {
 		this.editor.update(() => {
-			const selection = $getSelection() as RangeSelection
-
-			if (!selection) return this.reset()
-
-			const cell_node = this.getLargeCell(selection)
-
+			const cell_node = this.getLargeCell()
 			const cell_el = this.editor.getElementByKey(cell_node.getKey())
 			const { right, top } = cell_el.getBoundingClientRect()
 
@@ -189,12 +185,7 @@ export default class Index {
 	}
 
 	unmergeCells() {
-		const selection = $getSelection() as RangeSelection
-
-		if (!selection) return this.reset()
-
-		const cell_node = this.getLargeCell(selection)
-
+		const cell_node = this.getLargeCell()
 		const table_node = $getMatchingParent(cell_node, $isTableNode) as TableNode
 		const { row_index, column_index, row_span, col_span } = $getTableCellNodeRect(cell_node)
 		const rows_arr = Array.from({ length: row_span })
@@ -236,6 +227,8 @@ export default class Index {
 			const cell_node = $getNodeByKey(cell.key) as TableCellNode
 
 			if (cell_node.getRowSpan() === 1 && cell_node.getColSpan() === 1) return this.reset()
+
+			this.selection = selection
 
 			this.getUnmergePosition()
 		}

@@ -1,33 +1,16 @@
-import {
-	$createParagraphNode,
-	$getNodeByKey,
-	$insertNodes,
-	$isTextNode,
-	COMMAND_PRIORITY_EDITOR,
-	COMMAND_PRIORITY_HIGH
-} from 'lexical'
+import { $getNodeByKey, $insertNodes, $isTextNode, COMMAND_PRIORITY_EDITOR, COMMAND_PRIORITY_HIGH } from 'lexical'
 import { injectable } from 'tsyringe'
 
 import { INSERT_TABLE_COMMAND, SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
 import Utils from '@/models/utils'
-import { $insertFirst, mergeRegister } from '@lexical/utils'
+import { mergeRegister } from '@lexical/utils'
 
-import TableCellNode from './TableCellNode'
 import TableNode from './TableNode'
-import {
-	$computeTableMap,
-	$createTableCellNode,
-	$createTableNodeWithDimensions,
-	$getNodeTriplet,
-	$isTableNode,
-	$updateTableCols,
-	applyTableHandlers
-} from './utils'
+import { $createTableNodeWithDimensions, $isTableNode, $updateTableCols, applyTableHandlers } from './utils'
 
 import type { HTMLTableElementWithWithTableSelectionState } from './types'
 import type TableObserver from './TableObserver'
 import type { LexicalEditor, NodeMutation } from 'lexical'
-import type TableRowNode from './TableRowNode'
 
 @injectable()
 export default class Index {
@@ -81,7 +64,19 @@ export default class Index {
 	}
 
 	onTransformTable(node: TableNode) {
-		$updateTableCols(this.editor, node)
+		const has_colspan = node.existColspan()
+
+		if (has_colspan) {
+			this.editor.update(() => {
+				node.resetCols()
+
+				const target = node.getWritable()
+
+				target.__cols = []
+			})
+		} else {
+			$updateTableCols(this.editor, node)
+		}
 	}
 
 	checkSelection(path: Array<{ type: string; key: string }>) {

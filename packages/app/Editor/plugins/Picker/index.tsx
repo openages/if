@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import { $getSelection, $isRangeSelection } from 'lexical'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useMemo, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
@@ -19,6 +20,7 @@ import type Option from './option'
 import type { IPropsMenu } from './types'
 import type { IPropsModal } from '../../types'
 import type { TypeaheadMenuPluginProps } from '@lexical/react/LexicalTypeaheadMenuPlugin'
+import type { RangeSelection } from 'lexical'
 
 const Index = () => {
 	const [x] = useState(() => new Model())
@@ -44,8 +46,22 @@ const Index = () => {
 		(anchorElementRef, { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex }) => {
 			if (!anchorElementRef.current || !options.length) return null
 
+			const nodes = editor.getEditorState().read(() => {
+				const selection = $getSelection()
+
+				if (!$isRangeSelection(selection)) return
+
+				return selection.anchor.getNode().getParents()
+			})
+
+			let target: Array<Option> = options
+
+			if (nodes && nodes.some(item => item.__type === 'table')) {
+				target = options.filter(item => item.shortcut !== 'tb')
+			}
+
 			const props_menu: IPropsMenu = {
-				options,
+				options: target,
 				selected_index: selectedIndex,
 				selectOptionAndCleanUp,
 				setHighlightedIndex

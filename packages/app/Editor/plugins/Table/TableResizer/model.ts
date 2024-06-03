@@ -1,6 +1,7 @@
 import {
 	$createNodeSelection,
 	$getNearestNodeFromDOMNode,
+	$getNodeByKey,
 	$getSelection,
 	$setSelection,
 	COMMAND_PRIORITY_HIGH
@@ -182,9 +183,16 @@ export default class Index {
 	addListners() {
 		this.editor.update(() => {
 			this.tables.forEach(item => {
+				const node = $getNodeByKey(item.key) as TableNode
 				const el = this.editor.getElementByKey(item.key)
 
-				el.addEventListener('mousemove', this.check)
+				if (node.existColspan()) {
+					el.removeEventListener('mousemove', this.check)
+
+					this.reset()
+				} else {
+					el.addEventListener('mousemove', this.check)
+				}
 			})
 		})
 	}

@@ -150,6 +150,34 @@ export default class TableNode extends ElementNode {
 		}
 	}
 
+	resetCols() {
+		const editor = $getEditor()
+		const rows = this.getChildren() as Array<TableRowNode>
+
+		rows.forEach(row => {
+			const cells = row.getChildren() as Array<TableCellNode>
+
+			cells.forEach(item => {
+				const el = editor.getElementByKey(item.getKey()) as HTMLTableCellElement
+
+				if (el.hasAttribute('align')) el.removeAttribute('align')
+				if (el.hasAttribute('width')) el.removeAttribute('width')
+			})
+		})
+	}
+
+	existRowspan() {
+		const rows = this.getChildren() as Array<TableRowNode>
+
+		return rows.some(row => row.getChildren().some((cell: TableCellNode) => cell.getRowSpan() > 1))
+	}
+
+	existColspan() {
+		const rows = this.getChildren() as Array<TableRowNode>
+
+		return rows.some(row => row.getChildren().some((cell: TableCellNode) => cell.getColSpan() > 1))
+	}
+
 	getCordsFromCellNode(table_cell_node: TableCellNode, table: Table): { x: number; y: number } {
 		const { rows, row_counts } = table
 
