@@ -1,7 +1,6 @@
 import {
 	$createNodeSelection,
 	$getSelection,
-	$isNodeSelection,
 	$isRangeSelection,
 	$setSelection,
 	COMMAND_PRIORITY_CRITICAL,

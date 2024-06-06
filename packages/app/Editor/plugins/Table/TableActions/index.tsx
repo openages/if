@@ -25,6 +25,7 @@ const Index = () => {
 
 	const onRowOpenChange = useMemoizedFn(v => (x.visible_menu_type = (v ? 'row' : '') as Model['visible_menu_type']))
 	const onColOpenChange = useMemoizedFn(v => (x.visible_menu_type = (v ? 'col' : '') as Model['visible_menu_type']))
+	const setRefOverlay = useMemoizedFn(v => (x.ref_overlay = v))
 
 	const onClick: MenuProps['onClick'] = useMemoizedFn(e => {
 		editor.update(() => x.onClick(e))
@@ -46,13 +47,14 @@ const Index = () => {
 					<Dropdown
 						destroyPopupOnHide
 						trigger={['click']}
+						open={x.visible_menu_type === 'row'}
 						menu={{ items: menu_row, rootClassName: styles.dropdown_menu, onClick }}
 						onOpenChange={onRowOpenChange}
 					>
 						<div
 							className={$cx(
 								'btn_action_row btn_action flex flex_column justify_center align_center absolute clickable cursor_point',
-								x.visible_menu_type === 'row' && 'active'
+								(x.visible_menu_type === 'row' || x.dragging_type === 'row') && 'active'
 							)}
 							ref={x.setRefBtnRow}
 						>
@@ -76,13 +78,15 @@ const Index = () => {
 						<Dropdown
 							destroyPopupOnHide
 							trigger={['click']}
+							open={x.visible_menu_type === 'col'}
 							menu={{ items: menu_col, rootClassName: styles.dropdown_menu, onClick }}
 							onOpenChange={onColOpenChange}
 						>
 							<div
 								className={$cx(
 									'btn_action_col btn_action flex justify_center align_center absolute clickable',
-									x.visible_menu_type === 'col' && 'active'
+									(x.visible_menu_type === 'col' || x.dragging_type === 'col') &&
+										'active'
 								)}
 								ref={x.setRefBtnCol}
 							>
@@ -93,6 +97,17 @@ const Index = () => {
 						</Dropdown>
 					</ConfigProvider>
 				</div>
+			)}
+			{x.position_dragline.left && x.position_dragline.top && (
+				<div
+					className={$cx('fixed z_index_100', styles.dragline)}
+					style={{
+						left: x.position_dragline.left,
+						top: x.position_dragline.top,
+						width: x.dragging_type === 'row' ? x.position_dragline.width : 2,
+						height: x.dragging_type === 'col' ? x.position_dragline.height : 2
+					}}
+				></div>
 			)}
 		</Fragment>
 	)

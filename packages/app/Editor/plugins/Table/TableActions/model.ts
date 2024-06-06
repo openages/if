@@ -1,5 +1,6 @@
 import {
 	$createParagraphNode,
+	$getNearestNodeFromDOMNode,
 	$getSelection,
 	$isRangeSelection,
 	COMMAND_PRIORITY_HIGH,
@@ -10,6 +11,7 @@ import { makeAutoObservable, runInAction } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
+import { style } from '@/Editor/theme'
 import { $cloneNode, $getMatchingParent } from '@/Editor/utils'
 import Utils from '@/models/utils'
 import { draggable } from '@atlaskit/pragmatic-drag-and-drop/element/adapter'
@@ -30,7 +32,12 @@ import type { LexicalEditor } from 'lexical'
 import type TableNode from '../TableNode'
 import type TableRowNode from '../TableRowNode'
 import type TableCellNode from '../TableCellNode'
-import type { CleanupFn } from '@atlaskit/pragmatic-drag-and-drop/dist/types/internal-types'
+import type {
+	CleanupFn,
+	BaseEventPayload,
+	ElementDragType
+} from '@atlaskit/pragmatic-drag-and-drop/dist/types/internal-types'
+import type { TableMapValue } from '../types'
 
 @injectable()
 export default class Index {
@@ -40,12 +47,15 @@ export default class Index {
 	resize_observer = null as ResizeObserver
 	ref_btn_row = null as HTMLDivElement
 	ref_btn_col = null as HTMLDivElement
+	ref_overlay = null as HTMLDivElement
 	drag_acts = [] as Array<CleanupFn>
 
 	position_row = { left: 0, top: 0 }
 	position_col = { left: 0, top: 0 }
 	visible = false
 	visible_menu_type = '' as 'row' | 'col'
+	dragging_type = '' as 'row' | 'col'
+	position_dragline = { left: 0, top: 0, width: 0, height: 0 }
 
 	unregister = null as () => void
 
@@ -95,6 +105,7 @@ export default class Index {
 				resize_observer: false,
 				ref_btn_row: false,
 				ref_btn_col: false,
+				ref_overlay: false,
 				drag_acts: false,
 				unregister: false,
 				watch: false
@@ -124,14 +135,75 @@ export default class Index {
 		this.visible = false
 	}
 
+	resetDragline() {
+		this.dragging_type = '' as Index['dragging_type']
+		this.position_dragline = { left: 0, top: 0, width: 0, height: 0 }
+
+		if (this.ref_overlay) {
+			this.ref_overlay.remove()
+
+			this.ref_overlay = null
+		}
+	}
+
 	setRefBtnRow(el: HTMLDivElement) {
 		this.ref_btn_row = el
+
+		const [table_node] = this.nodes
+
+		if (!table_node) return
+
+		const exist_large_cell = this.editor.getEditorState().read(() => table_node.existRowspan())
+
+		if (exist_large_cell) return
 
 		if (!el) return
 
 		this.drag_acts.push(
 			draggable({
-				element: el
+				element: el,
+				onGenerateDragPreview: args => {
+					const { nativeSetDragImage } = args
+
+					nativeSetDragImage(this.ref_btn_row, 5, 5)
+				},
+				onDrag: args => {
+					this.editor.update(() => {
+						this.updateOverlay(args)
+
+						const over = this.getDragOver(args)
+
+						if (!over) return
+
+						this.updateDragline(over)
+					})
+				},
+				onDragStart: () => {
+					this.visible_menu_type = '' as Index['visible_menu_type']
+					this.dragging_type = 'row'
+				},
+				onDrop: args => {
+					this.editor.update(() => {
+						const active = this.getDragActive()
+						const over = this.getDragOver(args)
+
+						if (!over) return this.resetDragline()
+						if (active.start_row === over.start_row) return this.resetDragline()
+
+						const [table_node] = this.nodes
+						const rows = table_node.getChildren() as Array<TableRowNode>
+						const active_row = rows[active.start_row]
+						const over_row = rows[over.start_row]
+
+						if (active.start_row < over.start_row) {
+							over_row.insertAfter(active_row)
+						} else {
+							over_row.insertBefore(active_row)
+						}
+
+						this.resetDragline()
+					})
+				}
 			})
 		)
 	}
@@ -139,13 +211,199 @@ export default class Index {
 	setRefBtnCol(el: HTMLDivElement) {
 		this.ref_btn_col = el
 
+		const [table_node] = this.nodes
+
+		if (!table_node) return
+
+		const exist_large_cell = this.editor.getEditorState().read(() => table_node.existColspan())
+
+		if (exist_large_cell) return
+
 		if (!el) return
 
 		this.drag_acts.push(
 			draggable({
-				element: el
+				element: el,
+				onGenerateDragPreview: args => {
+					const { nativeSetDragImage } = args
+
+					nativeSetDragImage(this.ref_btn_col, 5, 3)
+				},
+				onDrag: args => {
+					this.editor.update(() => {
+						this.updateOverlay(args)
+
+						const over = this.getDragOver(args)
+
+						if (!over) return
+
+						this.updateDragline(over)
+					})
+				},
+				onDragStart: () => {
+					this.visible_menu_type = '' as Index['visible_menu_type']
+					this.dragging_type = 'col'
+				},
+				onDrop: args => {
+					this.editor.update(() => {
+						const active = this.getDragActive()
+						const over = this.getDragOver(args)
+
+						if (!over) return this.resetDragline()
+						if (active.start_column === over.start_column) return this.resetDragline()
+
+						const [table_node] = this.nodes
+						const rows = table_node.getChildren() as Array<TableRowNode>
+
+						rows.forEach(row => {
+							const cells = row.getChildren() as Array<TableCellNode>
+							const active_cell = cells[active.start_column]
+							const over_cell = cells[over.start_column]
+
+							if (active.start_column < over.start_column) {
+								over_cell.insertAfter(active_cell)
+							} else {
+								over_cell.insertBefore(active_cell)
+							}
+						})
+
+						this.resetDragline()
+					})
+				}
 			})
 		)
+	}
+
+	getDragActive() {
+		const [table_node, , table_cell_node] = this.nodes
+		const [_, table_cell_map] = $computeTableMap(table_node, table_cell_node, null)
+
+		return table_cell_map
+	}
+
+	getDragOver(args: BaseEventPayload<ElementDragType>) {
+		const { location } = args
+		const { current } = location
+		const { dropTargets } = current
+		const target = dropTargets.at(0)
+
+		if (!target) return
+
+		const cell_node = $getNearestNodeFromDOMNode(target.element) as TableCellNode
+		const table_node = $getMatchingParent(cell_node, $isTableNode) as TableNode
+		const [_, table_cell_map] = $computeTableMap(table_node, cell_node, null)
+
+		return table_cell_map
+	}
+
+	updateOverlay(args: BaseEventPayload<ElementDragType>) {
+		const { location } = args
+		const { current } = location
+		const { input } = current
+		const { clientX, clientY } = input
+		const [table_node, , table_cell_node] = this.nodes
+		const { start_row, start_column } = this.getDragActive()
+		const rows = table_node.getChildren() as Array<TableRowNode>
+		const cell_el = this.editor.getElementByKey(table_cell_node.getKey())
+		const rect_el = cell_el.getBoundingClientRect()
+
+		const getPosition = () => {
+			if (this.dragging_type === 'row') {
+				return {
+					left: clientX + 9 + 'px',
+					top: clientY - rect_el.height / 2 + 5 - 0.5 + 'px'
+				}
+			} else {
+				return {
+					left: clientX - rect_el.width / 2 + 5 - 0.5 + 'px',
+					top: clientY + 9 + 'px'
+				}
+			}
+		}
+
+		const position = getPosition()
+
+		const container = document.getElementById(this.id)
+		const overlay = document.createElement('div')
+		const table = document.createElement('table')
+
+		overlay.classList.value = `fixed`
+		overlay.style.zIndex = '101'
+
+		style.forEach(item => overlay.classList.add(item))
+
+		table.classList.value = '__editor_table'
+		table.style.left = position.left
+		table.style.top = position.top
+		table.style.backgroundColor = 'var(--color_bg)'
+		table.style.margin = 'unset'
+
+		if (this.ref_overlay) {
+			this.ref_overlay.style.left = position.left
+			this.ref_overlay.style.top = position.top
+
+			return
+		}
+
+		if (this.dragging_type === 'row') {
+			const row_node = rows[start_row]
+			const row_el = this.editor.getElementByKey(row_node.getKey())
+			const rect_row = row_el.getBoundingClientRect()
+
+			table.style.width = rect_row.width + 1 + 'px'
+			table.style.height = rect_el.height + 1 + 'px'
+
+			table.append(row_el.cloneNode(true))
+		} else {
+			table.style.width = rect_el.width + 1 + 'px'
+
+			rows.forEach(row => {
+				const cells = row.getChildren() as Array<TableCellNode>
+
+				cells.forEach((cell, index) => {
+					if (index !== start_column) return
+
+					const tr = document.createElement('tr')
+					const el = this.editor.getElementByKey(cell.getKey())
+
+					tr.append(el.cloneNode(true))
+					table.append(tr)
+				})
+			})
+		}
+
+		overlay.append(table)
+		container.append(overlay)
+
+		this.ref_overlay = overlay
+	}
+
+	updateDragline(table_cell_map: TableMapValue) {
+		const { cell } = table_cell_map
+		const [table_node, table_row_node] = this.nodes
+
+		const cell_el = this.editor.getElementByKey(cell.getKey())
+		const table_el = this.editor.getElementByKey(table_node.getKey())
+		const table_row_el = this.editor.getElementByKey(table_row_node.getKey())
+		const rect_cell = cell_el.getBoundingClientRect()
+		const rect_table = table_el.getBoundingClientRect()
+		const rect_table_row = table_row_el.getBoundingClientRect()
+
+		if (this.dragging_type === 'row') {
+			this.position_dragline = {
+				left: rect_table.x,
+				top: rect_cell.bottom - 0.5,
+				width: rect_table_row.width,
+				height: 0
+			}
+		} else {
+			this.position_dragline = {
+				left: rect_cell.right - 0.5,
+				top: rect_table.y,
+				width: 0,
+				height: rect_table.height
+			}
+		}
 	}
 
 	onClick(args: { key: string; keyPath: Array<string> }) {

@@ -140,7 +140,7 @@ const Index = (
 			const cords = table_node.getCordsFromCellNode(anchor_cell_node, table_observer.table)
 
 			if (event.shiftKey) {
-				const cell = table_node.getCellNodeFromCords(cords.x, cords.y, table_observer.table)
+				const cell = table_node.getDOMCellFromCords(cords.x, cords.y, table_observer.table)
 
 				table_observer.setAnchorCellForSelection(cell)
 				table_observer.setFocusCellForSelection(cell)
@@ -171,7 +171,8 @@ const Index = (
 
 		const grid = getTable(table_element)
 		const cords_anchor = table_node.getCordsFromCellNode(anchor_cell_node, grid)
-		const anchor_cell = table_node.getCellNodeFromCords(cords_anchor.x, cords_anchor.y, grid)
+		const anchor_cell = table_node.getDOMCellFromCords(cords_anchor.x, cords_anchor.y, grid)
+
 		table_observer.setAnchorCellForSelection(anchor_cell)
 
 		stopEvent(event)
@@ -181,7 +182,7 @@ const Index = (
 
 			return adjustFocusNodeInDirection(
 				table_observer,
-				table_node_from_selection,
+				table_node_from_selection as TableNode,
 				cords.x,
 				cords.y,
 				direction

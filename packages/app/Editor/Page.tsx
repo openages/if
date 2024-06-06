@@ -1,14 +1,14 @@
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
-import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
+import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary'
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 
 import { Placeholder } from './components'
 import styles from './index.css'
 import nodes from './nodes'
-import { AutoLink, Image, Katex, LinkEditor, MarkdownShortCut, Picker } from './plugins'
+import { AutoLink, Image, Katex, LinkEditor, Picker } from './plugins'
 import { onError } from './utils'
 
 const Index = () => {
@@ -23,7 +23,6 @@ const Index = () => {
 				<HistoryPlugin />
 				<AutoFocusPlugin />
 				<Picker />
-				<MarkdownShortCut />
 
 				<Image />
 				<AutoLink />

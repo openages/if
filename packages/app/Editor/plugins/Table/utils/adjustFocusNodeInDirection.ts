@@ -10,7 +10,7 @@ export default (table_observer: TableObserver, table_node: TableNode, x: number,
 		case 'forward':
 			if (x !== (is_forward ? table_observer.table.col_counts - 1 : 0)) {
 				table_observer.setFocusCellForSelection(
-					table_node.getCellNodeFromCords(x + (is_forward ? 1 : -1), y, table_observer.table)
+					table_node.getDOMCellFromCords(x + (is_forward ? 1 : -1), y, table_observer.table)
 				)
 			}
 
@@ -18,7 +18,7 @@ export default (table_observer: TableObserver, table_node: TableNode, x: number,
 		case 'up':
 			if (y !== 0) {
 				table_observer.setFocusCellForSelection(
-					table_node.getCellNodeFromCords(x, y - 1, table_observer.table)
+					table_node.getDOMCellFromCords(x, y - 1, table_observer.table)
 				)
 
 				return true
@@ -28,7 +28,7 @@ export default (table_observer: TableObserver, table_node: TableNode, x: number,
 		case 'down':
 			if (y !== table_observer.table.row_counts - 1) {
 				table_observer.setFocusCellForSelection(
-					table_node.getCellNodeFromCords(x, y + 1, table_observer.table)
+					table_node.getDOMCellFromCords(x, y + 1, table_observer.table)
 				)
 
 				return true

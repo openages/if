@@ -10,7 +10,6 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 
 import { INSERT_IMAGE_COMMAND } from '../../commands'
 import { getFileAlt } from '../../utils'
-import styles from './index.css'
 import Model from './model'
 import options from './options'
 

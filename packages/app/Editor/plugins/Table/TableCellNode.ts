@@ -1,5 +1,7 @@
 import { ElementNode } from 'lexical'
 
+import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter'
+
 import { $convertTableCellNodeElement, $createTableCellNode } from './utils'
 
 import type { DOMConversionMap, DOMExportOutput, LexicalEditor } from 'lexical'
@@ -55,6 +57,8 @@ export default class TableCellNode extends ElementNode {
 
 		if (this.__row_span > 1) el.rowSpan = this.__row_span
 		if (this.__col_span > 1) el.colSpan = this.__col_span
+
+		dropTargetForElements({ element: el })
 
 		return el
 	}

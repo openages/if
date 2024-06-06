@@ -1,7 +1,6 @@
 import { $getEditor, $getNearestNodeFromDOMNode, $getSelection, $isRangeSelection, ElementNode } from 'lexical'
 
 import { $getMatchingParent } from '@/Editor/utils'
-import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter'
 import { isHTMLElement } from '@lexical/utils'
 
 import { $computeTableMap, $convertTableElement, $createTableNode, $isTableCellNode, $isTableNode } from './utils'
@@ -65,10 +64,6 @@ export default class TableNode extends ElementNode {
 				})
 			})
 		}
-
-		dropTargetForElements({
-			element: el
-		})
 
 		return el
 	}

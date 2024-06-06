@@ -22,11 +22,8 @@
 				opacity: 1;
 			}
 
+			&.active,
 			&:active {
-				background-color: var(--color_bg_2);
-			}
-
-			&.active {
 				opacity: 1;
 				background-color: var(--color_text);
 
@@ -117,4 +114,8 @@
 			font-size: 15px !important;
 		}
 	}
+}
+
+.dragline {
+	background-color: var(--color_text);
 }

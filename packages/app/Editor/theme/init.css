@@ -1,0 +1,14 @@
+.init {
+	font-size: 15px;
+
+	:global {
+		div[contenteditable='true'] {
+			outline: none;
+		}
+
+		p {
+			margin-block-start: var(--editor_padding);
+			margin-block-end: var(--editor_padding);
+		}
+	}
+}
