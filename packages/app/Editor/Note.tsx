@@ -17,6 +17,7 @@ import {
 	Code,
 	CodeActions,
 	Divider,
+	Draggable,
 	Image,
 	Katex,
 	LinkEditor,
@@ -35,7 +36,7 @@ import { onError } from './utils'
 
 const Index = () => {
 	return (
-		<div className={$cx('w_100 relative', styles._local, ...style)}>
+		<div className={$cx('__editor_container w_100 relative', styles._local, ...style)}>
 			<LexicalComposer initialConfig={{ namespace: 'editor', nodes, theme: token, onError }}>
 				<RichTextPlugin
 					contentEditable={<ContentEditable />}
@@ -50,6 +51,7 @@ const Index = () => {
 				<TabIndentationPlugin />
 
 				<Watcher />
+				<Draggable />
 				<Picker />
 				<TextBar md />
 				<ListPlugin />

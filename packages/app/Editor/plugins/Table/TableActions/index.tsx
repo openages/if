@@ -25,7 +25,6 @@ const Index = () => {
 
 	const onRowOpenChange = useMemoizedFn(v => (x.visible_menu_type = (v ? 'row' : '') as Model['visible_menu_type']))
 	const onColOpenChange = useMemoizedFn(v => (x.visible_menu_type = (v ? 'col' : '') as Model['visible_menu_type']))
-	const setRefOverlay = useMemoizedFn(v => (x.ref_overlay = v))
 
 	const onClick: MenuProps['onClick'] = useMemoizedFn(e => {
 		editor.update(() => x.onClick(e))

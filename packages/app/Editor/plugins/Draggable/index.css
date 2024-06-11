@@ -1,0 +1,43 @@
+.handler {
+	width: 15px;
+	height: 15px;
+	border-radius: var(--radius_small_1);
+	background-color: var(--color_bg_1);
+	cursor: grab;
+	user-select: none;
+	transition: translate ease 0.18s;
+	will-change: translate;
+
+	&:hover {
+		background-color: var(--color_bg_2);
+	}
+
+	&:active {
+		background-color: var(--color_border);
+	}
+}
+
+.line {
+	height: 1px;
+	background-color: var(--color_text);
+
+	&::before,
+	&::after {
+		position: absolute;
+		z-index: 10;
+		width: 4px;
+		height: 4px;
+		box-sizing: border-box;
+		border: 1px solid var(--color_text);
+		border-radius: 50%;
+		content: '';
+	}
+
+	&::before {
+		left: -4px;
+	}
+
+	&::after {
+		right: -4px;
+	}
+}

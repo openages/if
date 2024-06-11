@@ -6,7 +6,7 @@
 			margin-bottom: 0;
 
 			.if-row {
-				flex-direction: row;
+				flex-direction: row !important;
 				flex-wrap: nowrap;
 
 				.if-form-item-label {

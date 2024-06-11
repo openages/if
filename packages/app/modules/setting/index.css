@@ -45,6 +45,10 @@
 					border-bottom-color: transparent !important;
 				}
 			}
+
+			.menu_name {
+				margin-left: -3px;
+			}
 		}
 	}
 }

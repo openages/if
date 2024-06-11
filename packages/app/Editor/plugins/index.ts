@@ -1,4 +1,5 @@
 export { default as Watcher } from './__Watcher__'
+export { default as Draggable } from './Draggable'
 
 export { default as Picker } from './Picker'
 export { default as Transform } from './Transform'

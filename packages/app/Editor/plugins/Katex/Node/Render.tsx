@@ -1,5 +1,8 @@
 import katex from 'katex'
-import { useEffect, useRef, Fragment } from 'react'
+import { useEffect, useRef } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
+
+import { Warning } from '@phosphor-icons/react'
 
 import type { IPropsRender } from '../types'
 
@@ -23,11 +26,17 @@ const Index = (props: IPropsRender) => {
 	}, [value, inline])
 
 	return (
-		<Fragment>
+		<ErrorBoundary
+			fallback={
+				<div>
+					<Warning size={18}></Warning>
+				</div>
+			}
+		>
 			<img src='#' alt='' />
 			<span ref={ref} role='button' tabIndex={-1} onClick={onClick} />
 			<img src='#' alt='' />
-		</Fragment>
+		</ErrorBoundary>
 	)
 }
 

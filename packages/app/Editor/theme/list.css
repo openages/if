@@ -54,7 +54,7 @@
 
 				&::before {
 					position: absolute;
-					top: 6px;
+					top: 7.2px;
 					left: 0;
 					display: block;
 					width: 10px;
@@ -71,7 +71,7 @@
 
 					&::after {
 						position: absolute;
-						top: 8.5px;
+						top: 9.6px;
 						left: 4.5px;
 						display: block;
 						width: 2px;

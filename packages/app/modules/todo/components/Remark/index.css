@@ -4,7 +4,7 @@
 	:global {
 		.textarea {
 			min-height: 150px;
-			line-height: 1.71;
+			line-height: var(--line_height);
 			padding: 0;
 			border-radius: 0;
 			outline: none;

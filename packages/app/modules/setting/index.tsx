@@ -1,6 +1,6 @@
 import { Button, Tabs } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useState, Fragment } from 'react'
+import { useMemo, useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
@@ -18,32 +18,35 @@ const Index = () => {
 	const [x] = useState(() => container.resolve(Model))
 	const { t } = useTranslation()
 
-	const nav_items = [
-		{
-			label: t('translation:setting.nav.titles.Global'),
-			icon: <Sliders size={16}></Sliders>,
-			key: '0',
-			children: <Global></Global>
-		},
-		{
-			label: t('translation:setting.nav.titles.Menu'),
-			icon: <Layout size={16}></Layout>,
-			key: '1',
-			children: <Menu></Menu>
-		},
-		{
-			label: t('translation:setting.nav.titles.Tasks'),
-			icon: <Activity size={16}></Activity>,
-			key: '2',
-			children: <Tasks></Tasks>
-		},
-		{
-			label: t('translation:setting.nav.titles.Shortcuts'),
-			icon: <Command size={16}></Command>,
-			key: '3',
-			children: <Shortcuts></Shortcuts>
-		}
-	]
+	const nav_items = useMemo(
+		() => [
+			{
+				label: t('translation:setting.nav.titles.Global'),
+				icon: <Sliders size={15}></Sliders>,
+				key: '0',
+				children: <Global></Global>
+			},
+			{
+				label: t('translation:setting.nav.titles.Menu'),
+				icon: <Layout size={15}></Layout>,
+				key: '1',
+				children: <Menu></Menu>
+			},
+			{
+				label: t('translation:setting.nav.titles.Tasks'),
+				icon: <Activity size={15}></Activity>,
+				key: '2',
+				children: <Tasks></Tasks>
+			},
+			{
+				label: t('translation:setting.nav.titles.Shortcuts'),
+				icon: <Command size={15}></Command>,
+				key: '3',
+				children: <Shortcuts></Shortcuts>
+			}
+		],
+		[]
+	)
 
 	return (
 		<Fragment>
@@ -60,7 +63,7 @@ const Index = () => {
 									onMouseDown={() => (x.active_index = index)}
 								>
 									{item.icon}
-									<span className='menu_name ml_4'>{item.label}</span>
+									<span className='menu_name'>{item.label}</span>
 								</Button>
 							</Wave>
 						))}

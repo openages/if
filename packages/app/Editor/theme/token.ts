@@ -1,6 +1,7 @@
 import type { EditorThemeClasses } from 'lexical'
 
 export default {
+	root: '__editor_root',
 	heading: {
 		h1: '__editor_heading __editor_heading_h1',
 		h2: '__editor_heading __editor_heading_h2',
