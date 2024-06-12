@@ -15,6 +15,12 @@
 	&:active {
 		background-color: var(--color_border);
 	}
+
+	&.dragging {
+		border-radius: 50%;
+		color: var(--color_bg);
+		background-color: var(--color_text);
+	}
 }
 
 .line {

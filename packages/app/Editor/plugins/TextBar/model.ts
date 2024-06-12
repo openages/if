@@ -20,10 +20,11 @@ import { $createHeadingNode, $isHeadingNode } from '@lexical/rich-text'
 import { $setBlocksType } from '@lexical/selection'
 import { $findMatchingParent, mergeRegister } from '@lexical/utils'
 
+import { $isCodeTextNode } from '../Code/utils'
+
 import type { LexicalEditor, LexicalNode, TextFormatType } from 'lexical'
 import type { HeadingTagType } from '@lexical/rich-text'
 import type { Formats, Format, ListType } from './types'
-
 const text_formats = ['bold', 'italic', 'strikethrough', 'underline', 'code']
 
 export default class Index {
@@ -151,6 +152,10 @@ export default class Index {
 		const selection = $getSelection()
 
 		if (!$isRangeSelection(selection)) return
+
+		const nodes = selection.getNodes()
+
+		if ($isCodeTextNode(nodes.at(-1))) return
 
 		const root = this.editor.getRootElement()
 		const native_selection = window.getSelection()

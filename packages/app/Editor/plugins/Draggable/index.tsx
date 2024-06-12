@@ -33,7 +33,8 @@ const Index = () => {
 				<div
 					className={$cx(
 						'__editor_draggable_handler absolute top_0 left_0 z_index_1000 flex justify_center align_center clickable',
-						styles.handler
+						styles.handler,
+						x.dragging && styles.dragging
 					)}
 					draggable
 					onDragStart={onDragStart}

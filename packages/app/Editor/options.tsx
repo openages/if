@@ -1,7 +1,6 @@
 import { $getSelection, $isRangeSelection } from 'lexical'
 
 import { INSERT_CHECK_LIST_COMMAND, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from '@lexical/list'
-import { $createQuoteNode } from '@lexical/rich-text'
 import { $setBlocksType } from '@lexical/selection'
 import {
 	CaretDown,
@@ -19,6 +18,7 @@ import {
 
 import { INSERT_CODE_COMMAND, INSERT_DIVIDER_COMMAND, INSERT_TABLE_COMMAND, INSERT_TOGGLE_COMMAND } from './commands'
 import Option from './plugins/Picker/option'
+import { $createQuoteNode } from './plugins/Quote/utils'
 
 import type Model from './plugins/Picker/model'
 import type { LexicalEditor } from 'lexical'

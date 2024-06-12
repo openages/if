@@ -18,10 +18,13 @@ import { $getMatchingParent } from '@/Editor/utils'
 import Utils from '@/models/utils'
 import { $isListItemNode, $isListNode } from '@lexical/list'
 import { eventFiles } from '@lexical/rich-text'
-import { $getNearestBlockElementAncestorOrThrow, calculateZoomLevel, isHTMLElement } from '@lexical/utils'
+import { $getNearestBlockElementAncestorOrThrow, isHTMLElement } from '@lexical/utils'
 
+import { $isCodeNode } from '../Code/utils'
 import { $isImageNode } from '../Image/utils'
+import { $isQuoteNode } from '../Quote/utils'
 import { $isTableCellNode, $isTableNode } from '../Table/utils'
+import { $isToggleBtnNode, $isToggleHeadNode, $isToggleNode } from '../Toggle/utils'
 
 import type { LexicalEditor, LexicalNode } from 'lexical'
 import type { DragEvent as ReactDragEvent } from 'react'
@@ -81,15 +84,6 @@ export default class Index {
 		return false
 	}
 
-	resetStyle() {
-		const key = this.active_node.getKey()
-		const el = this.editor.getElementByKey(key)
-
-		if (el.style.outline) el.style.removeProperty('outline')
-		if (el.style.outlineOffset) el.style.removeProperty('outline-offset')
-		if (el.style.borderRadius) el.style.removeProperty('border-radius')
-	}
-
 	onMouseMove(e: MouseEvent) {
 		const target = e.target
 
@@ -123,10 +117,6 @@ export default class Index {
 
 		if ($isTableNode(this.active_node)) el.style.transform = 'translateZ(0)'
 
-		el.style.outline = '1px dashed var(--color_text)'
-		el.style.outlineOffset = '1px'
-		el.style.borderRadius = 'var(--radius_small_1)'
-
 		e.dataTransfer.setDragImage(el, 0, 0)
 	}
 
@@ -135,7 +125,6 @@ export default class Index {
 
 		if (!this.active_node) return
 
-		this.resetStyle()
 		this.reset()
 	}
 
@@ -188,7 +177,6 @@ export default class Index {
 
 		this.over_node.insertAfter(this.active_node)
 
-		this.resetStyle()
 		this.reset()
 
 		return true
@@ -199,6 +187,7 @@ export default class Index {
 		const node = $getNearestNodeFromDOMNode(target)
 
 		if (!node) return
+		if ($isToggleBtnNode(node)) return
 		if (!node.getTextContent() && $isParagraphNode(node)) return
 		if ($isListNode(node)) return
 		if ($isDecoratorNode(node)) return node
@@ -206,6 +195,10 @@ export default class Index {
 		const target_node = ntry(() => $getNearestBlockElementAncestorOrThrow(node))
 
 		if (target_node) {
+			const head_node = $getMatchingParent(target_node, $isToggleHeadNode)
+
+			if (head_node) return $getMatchingParent(target_node, $isToggleNode)
+
 			const table_node = $getMatchingParent(target_node, $isTableNode)
 			const table_cell_node = $getMatchingParent(target_node, $isTableCellNode)
 
@@ -241,7 +234,15 @@ export default class Index {
 				margin_left = 18
 			}
 
-			if ($isTableNode(node) || $isImageNode(node)) margin_top = 0
+			if (
+				$isTableNode(node) ||
+				$isImageNode(node) ||
+				$isQuoteNode(node) ||
+				$isCodeNode(node) ||
+				$isToggleNode(node)
+			) {
+				margin_top = 1
+			}
 
 			return {
 				left: rect_node.left - rect_container.left - 19.2 - margin_left,

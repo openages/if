@@ -16,7 +16,7 @@ export default {
 	color_bg_2: '#f0f0f0',
 	color_border: '#e6e6e6',
 	color_border_light: 'rgba(0, 0, 0, 0.06)',
-	color_border_soft: 'rgba(0, 0, 0, 0.03)',
+	color_border_soft: 'rgba(0, 0, 0, 0.042)',
 	shadow: '0 0 30px rgba(var(--color_text_rgb), 0.072)',
 	shadow_left: '-6px 6px 30px rgba(var(--color_text_rgb), 0.072)',
 	shadow_right: '15px 0 30px rgba(var(--color_text_rgb), 0.072)',

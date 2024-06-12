@@ -1,4 +1,11 @@
-import { $createParagraphNode, $getNodeByKey, $getSelection, $isRangeSelection, COMMAND_PRIORITY_HIGH } from 'lexical'
+import {
+	$copyNode,
+	$createParagraphNode,
+	$getNodeByKey,
+	$getSelection,
+	$isRangeSelection,
+	COMMAND_PRIORITY_HIGH
+} from 'lexical'
 import { groupBy } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
@@ -201,7 +208,17 @@ export default class Index {
 			row_node.splice(
 				column_index,
 				0,
-				cols_arr.map(_ => $createTableCellNode({}).append($createParagraphNode()))
+				cols_arr.map((_, c_index) => {
+					if (r_index === 0 && c_index === 0) {
+						return clone_cell_node
+					} else {
+						const raw_node = $copyNode(cell_node)
+
+						raw_node.setRowSpan(1).setColSpan(1)
+
+						return raw_node.append($createParagraphNode())
+					}
+				})
 			)
 		})
 

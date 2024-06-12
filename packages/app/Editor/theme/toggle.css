@@ -5,7 +5,7 @@
 			padding: 0 18px;
 			margin-block-start: var(--editor_padding);
 			margin-block-end: var(--editor_padding);
-			border: var(--border);
+			border: var(--border_light);
 			border-radius: var(--radius);
 
 			&.__editor_toggle_open {

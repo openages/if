@@ -9,10 +9,11 @@
 			border: none;
 
 			.if-select-selector {
+				box-sizing: border-box;
 				padding: 0 !important;
-				border: none;
+				border: var(--border_light) !important;
 				color: var(--color_text_grey);
-				background-color: var(--color_bg_1);
+				background-color: var(--color_bg);
 				font-family: 'CascadiaCode';
 				font-size: 10px;
 
@@ -43,8 +44,9 @@
 			width: 52px;
 			height: 28px;
 			padding: 2px;
+			border: var(--border_light);
 			border-radius: var(--radius);
-			background-color: var(--color_bg_1);
+			background-color: var(--color_bg);
 
 			.btn_action {
 				width: 24px;
@@ -65,6 +67,6 @@
 }
 
 .lang_dropdown {
-	width: 156px;
+	width: 132px;
 	font-family: 'CascadiaCode';
 }

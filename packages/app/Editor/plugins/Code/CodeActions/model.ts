@@ -45,9 +45,9 @@ export default class Index {
 			} else {
 				container.removeEventListener('scroll', this.onScroll)
 
-				this.resize_observer.unobserve(container)
-				this.resize_observer.disconnect()
+				if (container) this.resize_observer.unobserve(container)
 
+				this.resize_observer.disconnect()
 				this.resize_observer = null
 			}
 		}
@@ -82,7 +82,7 @@ export default class Index {
 		const el = this.editor.getElementByKey(key)
 		const { right, top } = el.getBoundingClientRect()
 
-		this.position = { left: right - (78 + 52), top: top - 32 }
+		this.position = { left: right - (78 + 52 + 2), top: top - 32 }
 	}
 
 	onSelection() {

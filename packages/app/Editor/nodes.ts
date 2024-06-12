@@ -1,12 +1,13 @@
 import { AutoLinkNode, LinkNode } from '@lexical/link'
 import { ListItemNode, ListNode } from '@lexical/list'
-import { HeadingNode, QuoteNode } from '@lexical/rich-text'
+import { HeadingNode } from '@lexical/rich-text'
 
 import CodeNode from './plugins/Code/CodeNode'
 import CodeTextNode from './plugins/Code/CodeTextNode'
 import DividerNode from './plugins/Divider/Node'
 import ImageNode from './plugins/Image/Node'
 import KatexNode from './plugins/Katex/Node'
+import QuoteNode from './plugins/Quote/QuoteNode'
 import TableCellNode from './plugins/Table/TableCellNode'
 import TableNode from './plugins/Table/TableNode'
 import TableRowNode from './plugins/Table/TableRowNode'
@@ -30,11 +31,11 @@ export default [
 	TableNode,
 	TableRowNode,
 	TableCellNode,
+	QuoteNode,
 
 	AutoLinkNode,
 	LinkNode,
 	HeadingNode,
-	QuoteNode,
 	ListNode,
 	ListItemNode
 ] as Array<Klass<LexicalNode>>

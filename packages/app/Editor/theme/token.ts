@@ -27,6 +27,5 @@ export default {
 		nested: { listitem: '__editor_list_item_nested' }
 	},
 	link: '__editor_link',
-	code: '__editor_code',
-	quote: '__editor_quote'
+	code: '__editor_code'
 } as EditorThemeClasses

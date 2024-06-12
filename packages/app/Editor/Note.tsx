@@ -22,6 +22,7 @@ import {
 	Katex,
 	LinkEditor,
 	Picker,
+	Quote,
 	Table,
 	TableActions,
 	TableMerge,
@@ -68,6 +69,7 @@ const Index = () => {
 				<TableActions />
 				<TableResizer />
 				<TableMerge />
+				<Quote />
 			</LexicalComposer>
 		</div>
 	)

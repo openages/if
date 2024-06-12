@@ -11,10 +11,11 @@
 			padding: 15px 18px;
 			margin-block-start: var(--editor_padding);
 			margin-block-end: var(--editor_padding);
+			border: var(--border_light);
 			border-radius: var(--radius);
-			background-color: var(--color_bg_1);
+			background-color: var(--color_bg);
 			font-family: 'CascadiaCode';
-			font-size: 14px;
+			font-size: 13px;
 			tab-size: 4;
 			caret-color: var(--color_text);
 
@@ -23,6 +24,7 @@
 				top: 18px;
 				right: 18px;
 				color: var(--color_text_light);
+				background-color: var(--color_bg);
 				content: attr(data-lang);
 				font-size: 10px;
 			}

@@ -1,27 +1,39 @@
 import {
 	$createNodeSelection,
+	$createParagraphNode,
+	$getRoot,
 	$getSelection,
 	$isRangeSelection,
 	$setSelection,
 	COMMAND_PRIORITY_CRITICAL,
 	DELETE_CHARACTER_COMMAND,
+	RootNode,
 	SELECTION_CHANGE_COMMAND
 } from 'lexical'
+import { injectable } from 'tsyringe'
 
 import blocks from '@/Editor/blocks'
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
+import Utils from '@/models/utils'
 import { mergeRegister } from '@lexical/utils'
 import { deepEqual } from '@openages/stk/react'
 
 import type { LexicalEditor, LexicalNode, BaseSelection } from 'lexical'
 
+@injectable()
 export default class Index {
 	editor = null as LexicalEditor
 	path = []
 	selection = null as BaseSelection
 
+	unregister = null as () => void
+
+	constructor(public utils: Utils) {}
+
 	init(editor: Index['editor']) {
 		this.editor = editor
+
+		this.on()
 	}
 
 	watcher() {
@@ -57,6 +69,14 @@ export default class Index {
 		this.path = path
 		this.selection = selection
 
+		const root = $getRoot()
+
+		if (root.getChildren().length > 1) {
+			this.removeEventListners()
+		} else {
+			this.addEventListners()
+		}
+
 		return false
 	}
 
@@ -87,8 +107,26 @@ export default class Index {
 		return false
 	}
 
-	register() {
-		return mergeRegister(
+	onRootTranform(node: RootNode) {
+		if (!node.getChildren().length) {
+			node.append($createParagraphNode())
+		}
+	}
+
+	addEventListners() {
+		this.removeEventListners()
+
+		this.utils.acts = [this.editor.registerNodeTransform(RootNode, this.onRootTranform.bind(this))]
+	}
+
+	removeEventListners() {
+		this.utils.acts.forEach(item => item())
+
+		this.utils.acts = []
+	}
+
+	on() {
+		this.unregister = mergeRegister(
 			this.editor.registerCommand(
 				SELECTION_CHANGE_COMMAND,
 				this.watcher.bind(this),
@@ -100,5 +138,11 @@ export default class Index {
 				COMMAND_PRIORITY_CRITICAL
 			)
 		)
+	}
+
+	off() {
+		this.removeEventListners()
+
+		this.unregister()
 	}
 }
