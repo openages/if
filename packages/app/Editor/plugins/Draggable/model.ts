@@ -3,6 +3,7 @@ import {
 	$getNearestNodeFromDOMNode,
 	$isDecoratorNode,
 	$isParagraphNode,
+	$isTextNode,
 	COMMAND_PRIORITY_HIGH,
 	COMMAND_PRIORITY_LOW,
 	DRAGOVER_COMMAND,
@@ -16,15 +17,17 @@ import { injectable } from 'tsyringe'
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
 import { $getMatchingParent } from '@/Editor/utils'
 import Utils from '@/models/utils'
+import { getComputedStyleValue } from '@/utils'
 import { $isListItemNode, $isListNode } from '@lexical/list'
-import { eventFiles } from '@lexical/rich-text'
+import { $isHeadingNode, eventFiles } from '@lexical/rich-text'
 import { $getNearestBlockElementAncestorOrThrow, isHTMLElement } from '@lexical/utils'
 
 import { $isCodeNode } from '../Code/utils'
-import { $isImageNode } from '../Image/utils'
+import KatexNode from '../Katex/Node'
+import { $isKatexNode } from '../Katex/utils'
 import { $isQuoteNode } from '../Quote/utils'
 import { $isTableCellNode, $isTableNode } from '../Table/utils'
-import { $isToggleBtnNode, $isToggleHeadNode, $isToggleNode } from '../Toggle/utils'
+import { $isToggleBodyNode, $isToggleBtnNode, $isToggleHeadNode, $isToggleNode } from '../Toggle/utils'
 
 import type { LexicalEditor, LexicalNode } from 'lexical'
 import type { DragEvent as ReactDragEvent } from 'react'
@@ -187,17 +190,26 @@ export default class Index {
 		const node = $getNearestNodeFromDOMNode(target)
 
 		if (!node) return
-		if ($isToggleBtnNode(node)) return
 		if (!node.getTextContent() && $isParagraphNode(node)) return
+
+		if ($isToggleBtnNode(node)) {
+			this.reset()
+
+			return
+		}
+
 		if ($isListNode(node)) return
+		if ($isKatexNode(node) && (node as KatexNode).__inline) return
+
 		if ($isDecoratorNode(node)) return node
 
 		const target_node = ntry(() => $getNearestBlockElementAncestorOrThrow(node))
 
 		if (target_node) {
 			const head_node = $getMatchingParent(target_node, $isToggleHeadNode)
+			const toggle_node = $getMatchingParent(target_node, $isToggleNode)
 
-			if (head_node) return $getMatchingParent(target_node, $isToggleNode)
+			if (head_node || $isToggleBodyNode(target_node)) return toggle_node
 
 			const table_node = $getMatchingParent(target_node, $isTableNode)
 			const table_cell_node = $getMatchingParent(target_node, $isTableCellNode)
@@ -206,7 +218,7 @@ export default class Index {
 				return table_node
 			}
 
-			if ($isTableCellNode(target_node)) return null
+			if ($isTableCellNode(target_node)) return
 		}
 
 		return target_node
@@ -224,6 +236,9 @@ export default class Index {
 				top: rect_node.top - rect_container.top + rect_node.height - 2
 			}
 		} else {
+			const block_padding = getComputedStyleValue(el_node, 'padding-block-start')
+			const inline_padding = getComputedStyleValue(el_node, 'padding-inline-start')
+
 			let margin_left = 0
 			let margin_top = 6
 
@@ -234,9 +249,17 @@ export default class Index {
 				margin_left = 18
 			}
 
+			if ($isParagraphNode(node) || $isHeadingNode(node)) {
+				const line_height = getComputedStyleValue(el_node, 'line-height')
+
+				if (line_height !== 27) {
+					margin_top = (line_height - 15) / 2
+				}
+			}
+
 			if (
+				$isDecoratorNode(node) ||
 				$isTableNode(node) ||
-				$isImageNode(node) ||
 				$isQuoteNode(node) ||
 				$isCodeNode(node) ||
 				$isToggleNode(node)
@@ -245,8 +268,8 @@ export default class Index {
 			}
 
 			return {
-				left: rect_node.left - rect_container.left - 19.2 - margin_left,
-				top: rect_node.top - rect_container.top + margin_top
+				left: rect_node.left - rect_container.left - 19.2 - margin_left + inline_padding,
+				top: rect_node.top - rect_container.top + margin_top + block_padding
 			}
 		}
 	}

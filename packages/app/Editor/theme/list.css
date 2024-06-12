@@ -3,8 +3,6 @@
 		.__editor_list_ul,
 		.__editor_list_ol {
 			padding-inline-start: 15px;
-			margin-block-start: var(--editor_padding);
-			margin-block-end: var(--editor_padding);
 
 			::marker {
 				color: rgba(var(--color_text_rgb), 0.72);

@@ -2,9 +2,6 @@
 	:global {
 		.__editor_toggle {
 			position: relative;
-			padding: 0 18px;
-			margin-block-start: var(--editor_padding);
-			margin-block-end: var(--editor_padding);
 			border: var(--border_light);
 			border-radius: var(--radius);
 
@@ -15,7 +12,16 @@
 				}
 
 				.__editor_toggle_head {
-					border-bottom: var(--border_dashed);
+					position: relative;
+
+					&::before {
+						position: absolute;
+						bottom: 0;
+						left: var(--editor_padding_x);
+						width: calc(100% - (var(--editor_padding_x) * 2));
+						border-bottom: var(--border_dashed);
+						content: '';
+					}
 				}
 
 				.__editor_toggle_body {
@@ -64,9 +70,18 @@
 
 			.__editor_toggle_head {
 				p {
-					margin-block-start: 0.6em;
-					margin-block-end: 0.6em;
+					margin-block-start: 0;
+					margin-block-end: 0;
 				}
+			}
+
+			.__editor_toggle_body {
+				padding: 0.45em 0;
+			}
+
+			* {
+				--editor_padding_y: 0.45em;
+				--editor_padding_x: 1.2em;
 			}
 		}
 	}

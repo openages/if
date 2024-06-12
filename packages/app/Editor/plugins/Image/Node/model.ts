@@ -1,5 +1,5 @@
 import { $getNodeByKey } from 'lexical'
-import { makeObservable } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { Block } from '@/Editor/models'
@@ -10,7 +10,7 @@ import type { FocusEvent, CSSProperties } from 'react'
 @injectable()
 export default class Index {
 	constructor(public block: Block) {
-		makeObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, { block: false }, { autoBind: true })
 	}
 
 	onChangeSrc(e: FocusEvent<HTMLInputElement>) {

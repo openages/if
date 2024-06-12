@@ -39,6 +39,8 @@ export default class Index {
 	watcher() {
 		const selection = $getSelection()
 
+		if (!selection) return
+
 		let nodes: Array<LexicalNode> = selection.getNodes()
 
 		if ($isRangeSelection(selection)) {

@@ -40,7 +40,7 @@ export default class TableNode extends ElementNode {
 	createDOM() {
 		const el = document.createElement('table')
 
-		el.className = '__editor_table'
+		el.className = '__editor_table __editor_block'
 
 		const col_keys = Object.keys(this.__cols)
 

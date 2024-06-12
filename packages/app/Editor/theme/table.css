@@ -5,16 +5,12 @@
 			overflow: hidden;
 			overflow-x: auto;
 			max-width: 100%;
-			margin-block-start: var(--editor_padding);
-			margin-block-end: var(--editor_padding);
 			border-collapse: collapse;
 
 			.__editor_table_td {
-				--editor_padding: 0;
-
 				min-width: 120px;
 				box-sizing: border-box;
-				padding: 3px 12px;
+				padding: 0.3em 0;
 				border: 1px solid var(--color_bg_2);
 				vertical-align: unset;
 
@@ -45,6 +41,11 @@
 					&[align='right'] {
 						text-align: right;
 					}
+				}
+
+				* {
+					--editor_padding_y: 0.3em;
+					--editor_padding_x: 0.9em;
 				}
 			}
 		}

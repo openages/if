@@ -63,12 +63,11 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 		el.classList.add('__editor_katex', styles._local)
 
 		if (!this.__inline) {
+			el.classList.add('__editor_block')
 			el.classList.remove(styles.inline)
 
 			el.style.display = 'flex'
 			el.style.justifyContent = 'center'
-			el.style.paddingTop = 'var(--editor_padding)'
-			el.style.paddingBottom = 'var(--editor_padding)'
 		} else {
 			el.classList.add(styles.inline)
 

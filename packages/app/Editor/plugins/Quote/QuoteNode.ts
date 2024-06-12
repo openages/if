@@ -44,7 +44,7 @@ export default class QuoteNode extends ElementNode {
 	createDOM(): HTMLElement {
 		const el = document.createElement('blockquote')
 
-		el.classList.value = '__editor_quote'
+		el.classList.value = '__editor_quote __editor_block'
 
 		return el
 	}

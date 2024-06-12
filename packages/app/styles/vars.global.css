@@ -23,5 +23,6 @@
 	--border_deep: 1px solid var(--color_border);
 	--border_deep_dashed: 1px dashed var(--color_border);
 
-	--editor_padding: 1.2em;
+	--editor_padding_y: 0.6em;
+	--editor_padding_x: 0;
 }

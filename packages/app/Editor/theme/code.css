@@ -9,8 +9,6 @@
 			display: block;
 			box-sizing: border-box;
 			padding: 15px 18px;
-			margin-block-start: var(--editor_padding);
-			margin-block-end: var(--editor_padding);
 			border: var(--border_light);
 			border-radius: var(--radius);
 			background-color: var(--color_bg);

@@ -1,4 +1,4 @@
-import { makeObservable } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { SHOW_MODAL_COMMAND } from '@/Editor/commands'
@@ -9,7 +9,7 @@ import type { MouseEvent } from 'react'
 @injectable()
 export default class Index {
 	constructor(public block: Block) {
-		makeObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, { block: false }, { autoBind: true })
 	}
 
 	onEdit(e: MouseEvent<HTMLSpanElement>) {

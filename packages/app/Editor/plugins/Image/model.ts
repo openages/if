@@ -1,4 +1,4 @@
-import { $getSelection, COMMAND_PRIORITY_LOW } from 'lexical'
+import { COMMAND_PRIORITY_LOW } from 'lexical'
 import { makeObservable } from 'mobx'
 
 import { INSERT_IMAGE_COMMAND } from '@/Editor/commands'
