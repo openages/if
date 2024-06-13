@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import { ConfigProvider, Dropdown } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
@@ -10,6 +11,9 @@ import { DotsSixVertical } from '@phosphor-icons/react'
 
 import styles from './index.css'
 import Model from './model'
+import options from './options'
+
+import type { MenuProps } from 'antd'
 
 const Index = () => {
 	const [x] = useState(() => container.resolve(Model))
@@ -22,6 +26,11 @@ const Index = () => {
 		return () => x.off()
 	}, [id, editor])
 
+	const onClick: MenuProps['onClick'] = useMemoizedFn(e => {
+		editor.update(() => x.onClick(e))
+	})
+
+	const onOpenChange = useMemoizedFn(v => (x.visible_menu = v))
 	const onDragStart = useMemoizedFn(e => editor.update(() => x.onDragStart(e)))
 	const onDragEnd = useMemoizedFn(e => editor.update(() => x.onDragEnd(e)))
 
@@ -30,19 +39,31 @@ const Index = () => {
 	const Content = (
 		<Fragment>
 			{x.visible_handler && (
-				<div
-					className={$cx(
-						'__editor_draggable_handler absolute top_0 left_0 z_index_1000 flex justify_center align_center clickable',
-						styles.handler,
-						x.dragging && styles.dragging
-					)}
-					draggable
-					onDragStart={onDragStart}
-					onDragEnd={onDragEnd}
-					style={{ translate: `${x.position_handler.left}px ${x.position_handler.top}px` }}
-				>
-					<DotsSixVertical size={14} weight='bold' />
-				</div>
+				<ConfigProvider getPopupContainer={() => document.getElementById(id)}>
+					<Dropdown
+						destroyPopupOnHide
+						trigger={['click']}
+						open={x.visible_menu}
+						menu={{ items: options, rootClassName: styles.dropdown_menu, onClick }}
+						onOpenChange={onOpenChange}
+					>
+						<div
+							className={$cx(
+								'__editor_draggable_handler absolute top_0 left_0 z_index_1000 flex justify_center align_center clickable',
+								styles.handler,
+								x.dragging && styles.dragging
+							)}
+							draggable
+							onDragStart={onDragStart}
+							onDragEnd={onDragEnd}
+							style={{
+								translate: `${x.position_handler.left}px ${x.position_handler.top}px`
+							}}
+						>
+							<DotsSixVertical size={14} weight='bold' />
+						</div>
+					</Dropdown>
+				</ConfigProvider>
 			)}
 			{x.visible_line && (
 				<div

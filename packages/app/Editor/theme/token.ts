@@ -18,10 +18,10 @@ export default {
 		underline: '__editor_text_underline'
 	},
 	list: {
-		ul: '__editor_list_ul __editor_block',
-		ol: '__editor_list_ol __editor_block',
+		ul: '__editor_list_ul __editor_block_special',
+		ol: '__editor_list_ol __editor_block_special',
 		listitem: '__editor_list_item',
-		checklist: '__editor_list_checklist __editor_block',
+		checklist: '__editor_list_checklist __editor_block_special',
 		listitemChecked: '__editor_list_item_checked',
 		listitemUnchecked: '__editor_list_item_unchecked',
 		nested: { listitem: '__editor_list_item_nested' }

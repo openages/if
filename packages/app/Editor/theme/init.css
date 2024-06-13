@@ -17,6 +17,10 @@
 			margin-inline-end: 0;
 		}
 
+		.__editor_root {
+			padding: var(--editor_padding_y) 0;
+		}
+
 		.__editor_block {
 			padding-inline-start: var(--editor_padding_x);
 			padding-inline-end: var(--editor_padding_x);
@@ -24,6 +28,13 @@
 			margin-block-end: calc(var(--editor_padding_y) * 2);
 			margin-inline-start: 0;
 			margin-inline-end: 0;
+		}
+
+		.__editor_block_special {
+			margin-block-start: calc(var(--editor_padding_y) * 2);
+			margin-block-end: calc(var(--editor_padding_y) * 2);
+			margin-inline-start: var(--editor_padding_x);
+			margin-inline-end: var(--editor_padding_x);
 		}
 	}
 }

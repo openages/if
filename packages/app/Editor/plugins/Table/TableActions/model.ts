@@ -428,6 +428,8 @@ export default class Index {
 
 					target.__is_header = !total_is_header
 				})
+
+				return
 			}
 
 			if (key === 'insert_above' || key === 'insert_below') {
@@ -445,6 +447,8 @@ export default class Index {
 				} else {
 					table_node.splice(start_row + 1, 0, [row.append(...target)])
 				}
+
+				return
 			}
 
 			if (key === 'clone_row') {
@@ -459,6 +463,8 @@ export default class Index {
 				})
 
 				table_node.splice(start_row + 1, 0, [row.append(...target)])
+
+				return
 			}
 
 			if (key === 'clear_row') {
@@ -468,16 +474,22 @@ export default class Index {
 					item.clear()
 					item.append($createParagraphNode())
 				})
+
+				return
 			}
 
 			if (key === 'remove_row') {
 				if (table_row_node.isLastChild()) return
 
 				table_row_node.remove()
+
+				return
 			}
 
 			if (key === 'reset_width') {
 				table_node.resetColAttr(start_column, 'width')
+
+				return
 			}
 
 			if (

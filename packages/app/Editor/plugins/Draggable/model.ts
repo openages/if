@@ -1,6 +1,8 @@
 import {
 	$copyNode,
+	$createParagraphNode,
 	$getNearestNodeFromDOMNode,
+	$getNodeByKey,
 	$isDecoratorNode,
 	$isParagraphNode,
 	$isTextNode,
@@ -15,7 +17,7 @@ import ntry from 'nice-try'
 import { injectable } from 'tsyringe'
 
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
-import { $getMatchingParent } from '@/Editor/utils'
+import { $cloneNode, $getMatchingParent } from '@/Editor/utils'
 import Utils from '@/models/utils'
 import { getComputedStyleValue } from '@/utils'
 import { $isListItemNode, $isListNode } from '@lexical/list'
@@ -45,6 +47,7 @@ export default class Index {
 	style_line = { width: 0, left: 0, top: 0 }
 	visible_handler = false
 	visible_line = false
+	visible_menu = false
 	dragging = false
 
 	constructor(public utils: Utils) {
@@ -87,6 +90,35 @@ export default class Index {
 		return false
 	}
 
+	onClick(args: { key: string; keyPath: Array<string> }) {
+		if (!this.active_node) return
+
+		const { key } = args
+
+		if (key === 'clone') {
+			const clone_node = $cloneNode(this.active_node)
+
+			this.active_node.insertAfter(clone_node)
+
+			clone_node.selectEnd()
+
+			return
+		}
+
+		if (key === 'remove') {
+			const prev_node = this.active_node.getPreviousSibling()
+			const next_node = this.active_node.getNextSibling()
+
+			this.active_node.remove()
+
+			if (prev_node) {
+				prev_node.selectEnd()
+			} else {
+				if (next_node) next_node.selectEnd()
+			}
+		}
+	}
+
 	onMouseMove(e: MouseEvent) {
 		const target = e.target
 
@@ -114,6 +146,7 @@ export default class Index {
 		if (!e.dataTransfer || !this.active_node) return
 
 		this.dragging = true
+		this.visible_menu = false
 
 		const key = this.active_node.getKey()
 		const el = this.editor.getElementByKey(key)
@@ -252,9 +285,7 @@ export default class Index {
 			if ($isParagraphNode(node) || $isHeadingNode(node)) {
 				const line_height = getComputedStyleValue(el_node, 'line-height')
 
-				if (line_height !== 27) {
-					margin_top = (line_height - 15) / 2
-				}
+				margin_top = (line_height - 15) / 2
 			}
 
 			if (

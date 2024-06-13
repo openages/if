@@ -10,7 +10,7 @@
 			.__editor_table_td {
 				min-width: 120px;
 				box-sizing: border-box;
-				padding: 0.3em 0;
+				padding: 0.12em 0;
 				border: 1px solid var(--color_bg_2);
 				vertical-align: unset;
 
@@ -44,7 +44,7 @@
 				}
 
 				* {
-					--editor_padding_y: 0.3em;
+					--editor_padding_y: 0.12em;
 					--editor_padding_x: 0.9em;
 				}
 			}
