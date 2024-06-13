@@ -1,6 +1,11 @@
 .heading {
 	:global {
 		.__editor_heading {
+			&.__editor_fold {
+				&::before {
+					left: -1em;
+				}
+			}
 			a {
 				text-decoration: unset;
 
@@ -25,9 +30,13 @@
 		.__editor_heading_h4,
 		.__editor_heading_h5,
 		.__editor_heading_h6 {
-			margin-block-start: 1em;
-			margin-block-end: 0.72em;
+			margin-block-start: 0.6em;
+			margin-block-end: 0.36em;
 			font-weight: 500;
+		}
+
+		.__editor_heading_h1 {
+			margin-block-start: 0.48em;
 		}
 
 		.__editor_heading_h1,
@@ -37,14 +46,14 @@
 
 		.__editor_heading_h3 {
 			line-height: 1;
-			margin-block-start: 1.8em;
+			margin-block-start: 0.9em;
 		}
 
 		.__editor_heading_h4,
 		.__editor_heading_h5,
 		.__editor_heading_h6 {
 			line-height: 1;
-			margin-block-start: 1.5em;
+			margin-block-start: 0.6em;
 		}
 	}
 }

@@ -3,6 +3,7 @@ import {
 	$createParagraphNode,
 	$getNearestNodeFromDOMNode,
 	$getNodeByKey,
+	$getRoot,
 	$isDecoratorNode,
 	$isParagraphNode,
 	$isTextNode,
@@ -17,11 +18,11 @@ import ntry from 'nice-try'
 import { injectable } from 'tsyringe'
 
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
-import { $cloneNode, $getMatchingParent } from '@/Editor/utils'
+import { $cloneNode, $getHeadingLevel, $getMatchingParent } from '@/Editor/utils'
 import Utils from '@/models/utils'
 import { getComputedStyleValue } from '@/utils'
 import { $isListItemNode, $isListNode } from '@lexical/list'
-import { $isHeadingNode, eventFiles } from '@lexical/rich-text'
+import { $isHeadingNode, eventFiles, HeadingNode } from '@lexical/rich-text'
 import { $getNearestBlockElementAncestorOrThrow, isHTMLElement } from '@lexical/utils'
 
 import { $isCodeNode } from '../Code/utils'
@@ -48,7 +49,9 @@ export default class Index {
 	visible_handler = false
 	visible_line = false
 	visible_menu = false
+	visible_toggle = false
 	dragging = false
+	fold = false
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(
@@ -85,9 +88,40 @@ export default class Index {
 		this.style_line = { width: 0, left: 0, top: 0 }
 		this.visible_handler = false
 		this.visible_line = false
+		this.visible_toggle = false
 		this.dragging = false
+		this.fold = false
 
 		return false
+	}
+
+	resetHiddenNodes() {
+		const root = $getRoot()
+		const children = root.getChildren()
+
+		children.forEach(item => {
+			const el = this.editor.getElementByKey(item.getKey())
+
+			if (el.classList.contains('__editor_fold')) el.classList.remove('__editor_fold')
+			if (el.classList.contains('__editor_hidden')) el.classList.remove('__editor_hidden')
+		})
+	}
+
+	resetHiddenList() {
+		const next_node = this.over_node.getNextSibling()
+
+		if (!next_node) return
+
+		const next_el = this.editor.getElementByKey(next_node.getKey())
+
+		if (!next_el) return
+
+		if (!next_el.classList.contains('__editor_list_item_nested')) return
+
+		const over_el = this.editor.getElementByKey(this.over_node.getKey())
+
+		over_el.classList.remove('__editor_fold')
+		next_el.classList.remove('__editor_hidden')
 	}
 
 	onClick(args: { key: string; keyPath: Array<string> }) {
@@ -119,6 +153,72 @@ export default class Index {
 		}
 	}
 
+	onToggle() {
+		if (!this.active_node) return
+
+		if ($isListItemNode(this.active_node)) {
+			const next_node = this.active_node.getNextSibling()
+
+			if (!next_node) return
+
+			const next_el = this.editor.getElementByKey(next_node.getKey())
+
+			if (!next_el) return
+
+			if (!next_el.classList.contains('__editor_list_item_nested')) return
+
+			const active_el = this.editor.getElementByKey(this.active_node.getKey())
+			const fold = next_el.classList.contains('__editor_hidden')
+
+			if (fold) {
+				active_el.classList.remove('__editor_fold')
+				next_el.classList.remove('__editor_hidden')
+			} else {
+				active_el.classList.add('__editor_fold')
+				next_el.classList.add('__editor_hidden')
+			}
+
+			this.fold = !fold
+		}
+
+		if ($isHeadingNode(this.active_node) && $getHeadingLevel(this.active_node) <= 4) {
+			const active_level = $getHeadingLevel(this.active_node)
+			const active_el = this.editor.getElementByKey(this.active_node.getKey())
+			const fold = active_el.classList.contains('__editor_fold')
+
+			let child_node = this.active_node.getNextSibling()
+
+			while (child_node) {
+				if (
+					!child_node ||
+					($isHeadingNode(child_node) && $getHeadingLevel(child_node) <= active_level)
+				) {
+					break
+				}
+
+				const child_el = this.editor.getElementByKey(child_node.getKey())
+
+				if (fold) {
+					child_el.classList.remove('__editor_hidden')
+				} else {
+					child_el.classList.add('__editor_hidden')
+				}
+
+				child_node = child_node.getNextSibling()
+			}
+
+			if (fold) {
+				active_el.classList.remove('__editor_fold')
+			} else {
+				active_el.classList.add('__editor_fold')
+			}
+
+			this.fold = !fold
+		}
+
+		this.active_node.selectEnd()
+	}
+
 	onMouseMove(e: MouseEvent) {
 		const target = e.target
 
@@ -128,16 +228,21 @@ export default class Index {
 		if (target.closest('.__editor_draggable_handler')) return
 
 		this.editor.update(() => {
-			const active_node = this.getNode(e)
+			const active_node = this.getDragNode(e)
 
 			if (!active_node) return
 			if (this.active_node && this.active_node.is(active_node)) return
 
 			this.active_node = active_node
 
+			const fold = this.getToggleNode(active_node)
+
 			runInAction(() => {
 				this.position_handler = this.getNodePosition(this.active_node)
 				this.visible_handler = true
+				this.visible_menu = false
+				this.visible_toggle = fold !== undefined ? true : false
+				this.fold = fold
 			})
 		})
 	}
@@ -147,6 +252,10 @@ export default class Index {
 
 		this.dragging = true
 		this.visible_menu = false
+
+		if ($isHeadingNode(this.active_node) && $getHeadingLevel(this.active_node) <= 4) {
+			this.resetHiddenNodes()
+		}
 
 		const key = this.active_node.getKey()
 		const el = this.editor.getElementByKey(key)
@@ -177,12 +286,19 @@ export default class Index {
 		if (!target.closest('.__editor_root')) return
 
 		this.editor.update(() => {
-			const over_node = this.getNode(e)
+			const over_node = this.getDragNode(e)
 
 			if (!over_node) return
 			if (this.active_node && this.active_node.is(over_node)) return
+			if (this.over_node && this.over_node.is(over_node)) return
 
 			this.over_node = over_node
+
+			const over_el = this.editor.getElementByKey(over_node.getKey())
+
+			if ($isListItemNode(over_node) && over_el.classList.contains('__editor_fold')) {
+				this.resetHiddenList()
+			}
 
 			runInAction(() => {
 				this.style_line = this.getNodePosition(this.over_node, true) as Index['style_line']
@@ -211,6 +327,12 @@ export default class Index {
 			}
 		}
 
+		const active_parent_node = this.active_node.getParent()
+
+		if ($isTableCellNode(active_parent_node) && active_parent_node.getChildren().length === 1) {
+			active_parent_node.append($createParagraphNode())
+		}
+
 		this.over_node.insertAfter(this.active_node)
 
 		this.reset()
@@ -218,7 +340,7 @@ export default class Index {
 		return true
 	}
 
-	getNode(e: MouseEvent | DragEvent) {
+	getDragNode(e: MouseEvent | DragEvent) {
 		const target = e.target as HTMLElement
 		const node = $getNearestNodeFromDOMNode(target)
 
@@ -257,6 +379,24 @@ export default class Index {
 		}
 
 		return target_node
+	}
+
+	getToggleNode(node: LexicalNode) {
+		if ($isHeadingNode(node) && parseInt((node as HeadingNode).getTag().replace('h', '')) <= 4) {
+			const active_el = this.editor.getElementByKey(node.getKey())
+
+			return active_el.classList.contains('__editor_fold')
+		}
+
+		const next_node = node.getNextSibling()
+
+		if (!next_node) return
+
+		const next_el = this.editor.getElementByKey(next_node.getKey())
+
+		if ($isListItemNode(next_node) && next_el.classList.contains('__editor_list_item_nested')) {
+			return next_el.classList.contains('__editor_hidden')
+		}
 	}
 
 	getNodePosition(node: LexicalNode, line?: boolean) {

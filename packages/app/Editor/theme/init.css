@@ -30,11 +30,20 @@
 			margin-inline-end: 0;
 		}
 
-		.__editor_block_special {
-			margin-block-start: calc(var(--editor_padding_y) * 2);
-			margin-block-end: calc(var(--editor_padding_y) * 2);
-			margin-inline-start: var(--editor_padding_x);
-			margin-inline-end: var(--editor_padding_x);
+		.__editor_hidden {
+			display: none;
+		}
+
+		.__editor_fold {
+			position: relative;
+			list-style-type: none;
+
+			&::before {
+				position: absolute;
+				left: -18px;
+				content: '▶  ';
+				scale: 72% 100%;
+			}
 		}
 	}
 }

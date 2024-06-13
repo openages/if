@@ -7,7 +7,7 @@ import { container } from 'tsyringe'
 
 import { useStackSelector } from '@/context/stack'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { DotsSixVertical } from '@phosphor-icons/react'
+import { CaretDown, DotsSixVertical } from '@phosphor-icons/react'
 
 import styles from './index.css'
 import Model from './model'
@@ -26,15 +26,13 @@ const Index = () => {
 		return () => x.off()
 	}, [id, editor])
 
-	const onClick: MenuProps['onClick'] = useMemoizedFn(e => {
-		editor.update(() => x.onClick(e))
-	})
-
+	const onClick: MenuProps['onClick'] = useMemoizedFn(e => editor.update(() => x.onClick(e)))
+	const onToggle = useMemoizedFn(() => editor.update(() => x.onToggle()))
 	const onOpenChange = useMemoizedFn(v => (x.visible_menu = v))
 	const onDragStart = useMemoizedFn(e => editor.update(() => x.onDragStart(e)))
 	const onDragEnd = useMemoizedFn(e => editor.update(() => x.onDragEnd(e)))
 
-	if (!x.visible_handler && !x.visible_line) return null
+	if (!x.visible_handler && !x.visible_line && !x.visible_toggle) return null
 
 	const Content = (
 		<Fragment>
@@ -49,9 +47,10 @@ const Index = () => {
 					>
 						<div
 							className={$cx(
-								'__editor_draggable_handler absolute top_0 left_0 z_index_1000 flex justify_center align_center clickable',
-								styles.handler,
-								x.dragging && styles.dragging
+								'__editor_btn_drag absolute top_0 left_0 z_index_1000 flex justify_center align_center clickable',
+								styles.btn,
+								styles.btn_drag,
+								(x.dragging || x.visible_menu) && styles.active
 							)}
 							draggable
 							onDragStart={onDragStart}
@@ -68,14 +67,28 @@ const Index = () => {
 			{x.visible_line && (
 				<div
 					className={$cx(
-						'__editor_draggable_line absolute top_0 left_0 z_index_1000 flex align_center',
-						styles.line
+						'__editor_dragline absolute top_0 left_0 z_index_1000 flex align_center',
+						styles.dragline
 					)}
 					style={{
 						width: x.style_line.width,
 						translate: `${x.style_line.left}px ${x.style_line.top}px`
 					}}
 				></div>
+			)}
+			{x.visible_toggle && (
+				<div
+					className={$cx(
+						'__editor_btn_toggle absolute top_0 left_0 z_index_1000 flex justify_center align_center clickable',
+						styles.btn,
+						styles.btn_toggle,
+						x.fold && styles.fold
+					)}
+					style={{ translate: `${x.position_handler.left - 18}px ${x.position_handler.top}px` }}
+					onClick={onToggle}
+				>
+					<CaretDown className='icon' size={12} weight='fill' />
+				</div>
 			)}
 		</Fragment>
 	)

@@ -3,6 +3,8 @@
 		.__editor_list_ul,
 		.__editor_list_ol {
 			padding-inline-start: 15px;
+			margin-block-start: 0.3em;
+			margin-block-end: 0.3em;
 
 			::marker {
 				color: rgba(var(--color_text_rgb), 0.72);
@@ -15,6 +17,12 @@
 
 		.__editor_list_ol {
 			padding-inline-start: 18px;
+		}
+
+		.__editor_list_item {
+			&.__editor_fold {
+				list-style-type: none;
+			}
 		}
 
 		.__editor_list_item_nested {
@@ -43,6 +51,8 @@
 
 		.__editor_list_checklist {
 			padding-inline-start: 0;
+			margin-block-start: 0.3em;
+			margin-block-end: 0.3em;
 
 			.__editor_list_item {
 				position: relative;

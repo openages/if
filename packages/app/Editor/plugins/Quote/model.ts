@@ -32,10 +32,16 @@ export default class Index {
 		this.on()
 	}
 
-	toggleNodeTranform(node: QuoteNode) {
+	quoteNodeTranform(node: QuoteNode) {
 		const children = node.getChildren()
 		const children_length = children.length
 		const p = $createParagraphNode()
+
+		if (!children_length) {
+			node.append(p)
+
+			return true
+		}
 
 		if (
 			children_length >= 3 &&
@@ -97,7 +103,7 @@ export default class Index {
 		if (this.unregister) this.unregister()
 
 		this.unregister = mergeRegister(
-			this.editor.registerNodeTransform(QuoteNode, this.toggleNodeTranform),
+			this.editor.registerNodeTransform(QuoteNode, this.quoteNodeTranform),
 			this.editor.registerCommand(DELETE_CHARACTER_COMMAND, this.onDelete.bind(this), COMMAND_PRIORITY_LOW)
 		)
 	}

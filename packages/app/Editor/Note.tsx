@@ -17,7 +17,7 @@ import {
 	Code,
 	CodeActions,
 	Divider,
-	Draggable,
+	Hover,
 	Image,
 	Katex,
 	LinkEditor,
@@ -52,7 +52,7 @@ const Index = () => {
 				<TabIndentationPlugin />
 
 				<Watcher />
-				<Draggable />
+				<Hover />
 				<Picker />
 				<TextBar md />
 				<ListPlugin />

@@ -1,9 +1,8 @@
-.handler {
+.btn {
 	width: 15px;
 	height: 15px;
 	border-radius: var(--radius_small_1);
 	background-color: var(--color_bg_1);
-	cursor: grab;
 	user-select: none;
 	transition: translate ease 0.18s;
 	will-change: translate;
@@ -15,14 +14,16 @@
 	&:active {
 		background-color: var(--color_border);
 	}
+}
 
-	&.dragging {
+.btn_drag {
+	&.active {
 		color: var(--color_bg);
 		background-color: var(--color_text);
 	}
 }
 
-.line {
+.dragline {
 	height: 1px;
 	background-color: var(--color_text);
 
@@ -44,6 +45,21 @@
 
 	&::after {
 		right: -4px;
+	}
+}
+
+.btn_toggle {
+	&.fold {
+		:global {
+			.icon {
+				rotate: -90deg;
+			}
+		}
+	}
+	:global {
+		.icon {
+			transition: rotate ease 0.18s;
+		}
 	}
 }
 

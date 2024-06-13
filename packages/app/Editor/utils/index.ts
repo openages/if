@@ -17,5 +17,6 @@ export { default as $getMatchingParent } from './$getMatchingParent'
 export { default as $getSelectionType } from './$getSelectionType'
 export { default as $updateTextNodeProperties } from './$updateTextNodeProperties'
 export { default as $updateParagraphNodeProperties } from './$updateParagraphNodeProperties'
+export { default as $getHeadingLevel } from './$getHeadingLevel'
 
 export * from './handlers'
