@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { Button, Form, Input, Segmented } from 'antd'
+import { Button, Form, Input, Segmented, Switch } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,6 +10,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 
 import { INSERT_IMAGE_COMMAND } from '../../commands'
 import { getFileAlt } from '../../utils'
+import styles from './index.css'
 import Model from './model'
 import options from './options'
 
@@ -40,7 +41,7 @@ const Index = (props: IPropsModal) => {
 		if (x.type === 'URL' && !v.src) return
 		if (x.type === 'File' && v.file?.length !== 1) return
 
-		const target = { alt: v.alt, src: v.src }
+		const target = { alt: v.alt, src: v.src, inline: v.inline }
 
 		if (x.type === 'File') {
 			const file = (v.file as UploadProps['fileList'])[0]
@@ -59,12 +60,20 @@ const Index = (props: IPropsModal) => {
 		<div className='w_100 flex flex_column'>
 			<Segmented className='w_100' block options={options} onChange={x.onChangeType}></Segmented>
 			<Form
+				className='relative'
 				form={form}
 				preserve={false}
 				layout='vertical'
 				onValuesChange={onValuesChange}
 				onFinish={onFinish}
 			>
+				<Item
+					className={$cx('absolute', styles.inline_wrap)}
+					label={t('translation:editor.Image.modal.label.inline')}
+					name='inline'
+				>
+					<Switch size='small'></Switch>
+				</Item>
 				<Choose>
 					<When condition={x.type === 'URL'}>
 						<Item label={t('translation:editor.Image.modal.label.url')} name='src'>
@@ -82,6 +91,7 @@ const Index = (props: IPropsModal) => {
 				<Item label={t('translation:editor.Image.modal.label.alt')} name='alt'>
 					<Input placeholder={t('translation:editor.Image.modal.placeholder.alt')}></Input>
 				</Item>
+
 				<Button className='w_100 mt_4' htmlType='submit' type='primary'>
 					{t('translation:common.confirm')}
 				</Button>

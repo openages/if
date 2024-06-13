@@ -31,7 +31,7 @@ import { $isQuoteNode } from '../Quote/utils'
 import { $isTableCellNode, $isTableNode } from '../Table/utils'
 import { $isToggleBodyNode, $isToggleBtnNode, $isToggleHeadNode, $isToggleNode } from '../Toggle/utils'
 
-import type { LexicalEditor, LexicalNode } from 'lexical'
+import type { DecoratorNode, LexicalEditor, LexicalNode } from 'lexical'
 import type { DragEvent as ReactDragEvent } from 'react'
 import type { ListNode } from '@lexical/list'
 
@@ -234,7 +234,9 @@ export default class Index {
 		if ($isListNode(node)) return
 		if ($isKatexNode(node) && (node as KatexNode).__inline) return
 
-		if ($isDecoratorNode(node)) return node
+		if ($isDecoratorNode(node) && !(node as DecoratorNode<unknown> & { __inline: boolean }).__inline) {
+			return node
+		}
 
 		const target_node = ntry(() => $getNearestBlockElementAncestorOrThrow(node))
 

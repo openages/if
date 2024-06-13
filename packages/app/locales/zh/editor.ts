@@ -19,7 +19,8 @@ export default {
 			label: {
 				url: '链接',
 				file: '文件',
-				alt: '说明'
+				alt: '说明',
+				inline: '行内'
 			},
 			placeholder: {
 				url: '图片链接',

@@ -1,4 +1,4 @@
-import { COMMAND_PRIORITY_LOW } from 'lexical'
+import { $insertNodes, COMMAND_PRIORITY_LOW } from 'lexical'
 import { makeObservable } from 'mobx'
 
 import { INSERT_IMAGE_COMMAND } from '@/Editor/commands'
@@ -10,6 +10,7 @@ import { $createImageNode, dragInsert } from './utils'
 
 import type { LexicalEditor } from 'lexical'
 import type { IPropsImage } from './types'
+import type ImageNode from './Node'
 
 export default class Index {
 	editor = null as LexicalEditor
@@ -31,9 +32,13 @@ export default class Index {
 			this.editor.registerCommand<IPropsImage>(
 				INSERT_IMAGE_COMMAND,
 				payload => {
-					const node = $createImageNode(payload)
+					const node = $createImageNode(payload) as ImageNode
 
-					insertBlock(node)
+					if (node.__inline) {
+						$insertNodes([node])
+					} else {
+						insertBlock(node)
+					}
 
 					return true
 				},

@@ -3,6 +3,7 @@ import {
 	$createParagraphNode,
 	$getRoot,
 	$getSelection,
+	$isNodeSelection,
 	$isRangeSelection,
 	$setSelection,
 	COMMAND_PRIORITY_CRITICAL,
@@ -14,6 +15,7 @@ import { injectable } from 'tsyringe'
 
 import blocks from '@/Editor/blocks'
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
+import { $getSelectionType } from '@/Editor/utils'
 import Utils from '@/models/utils'
 import { mergeRegister } from '@lexical/utils'
 import { deepEqual } from '@openages/stk/react'
@@ -62,9 +64,20 @@ export default class Index {
 			}
 		}
 
+		if ($isNodeSelection(selection)) {
+			const node = selection.getNodes()[0]
+
+			if (!node) return
+
+			nodes = node.getParents()
+		}
+
 		const path = nodes.map(item => ({ type: item.getType(), key: item.getKey() }))
 
-		if (deepEqual(path, this.path) && selection.is(this.selection)) return
+		const prev_selection_type = $getSelectionType(this.selection)
+		const current_selection_type = $getSelectionType(selection)
+
+		if (deepEqual(path, this.path) && prev_selection_type === current_selection_type) return
 
 		this.editor.dispatchCommand(SELECTION_ELEMENTS_CHANGE, path)
 

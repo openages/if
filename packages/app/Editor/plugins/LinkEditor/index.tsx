@@ -1,6 +1,7 @@
 import { useClickAway, useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useRef, useState } from 'react'
+import { container } from 'tsyringe'
 
 import { Popover } from '@/components'
 import { stopPropagation } from '@/Editor/utils'
@@ -11,7 +12,7 @@ import styles from './index.css'
 import Model from './model'
 
 const Index = () => {
-	const [x] = useState(() => new Model())
+	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const ref = useRef()
 	const position = $copy(x.position)

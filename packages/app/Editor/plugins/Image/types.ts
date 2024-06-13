@@ -9,6 +9,7 @@ export interface IPropsImage {
 	alt?: string
 	align?: CSSProperties['justifyContent']
 	object_fit?: CSSProperties['objectFit']
+	inline?: boolean
 	node_key?: string
 }
 

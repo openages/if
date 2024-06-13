@@ -88,8 +88,6 @@ export default class QuoteNode extends ElementNode {
 		const p = $createParagraphNode()
 		const children = this.getChildren()
 
-		console.log(123)
-
 		children.forEach(child => p.append(child))
 
 		this.replace(p)

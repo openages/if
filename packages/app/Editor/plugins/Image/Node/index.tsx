@@ -18,11 +18,12 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 	__alt: string
 	__align: CSSProperties['justifyContent']
 	__object_fit: CSSProperties['objectFit']
+	__inline: boolean
 
 	constructor(props: IPropsImage) {
 		super(props.node_key)
 
-		const { src, width, height, alt, align, object_fit } = props
+		const { src, width, height, alt, align, object_fit, inline } = props
 
 		this.__src = src
 		this.__width = width
@@ -30,6 +31,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 		this.__alt = alt
 		this.__align = align || 'center'
 		this.__object_fit = object_fit
+		this.__inline = inline
 	}
 
 	static getType() {
@@ -44,6 +46,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 			alt: node.__alt,
 			align: node.__align,
 			object_fit: node.__object_fit,
+			inline: node.__inline,
 			node_key: node.__key
 		})
 	}
@@ -57,21 +60,30 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 	}
 
 	createDOM() {
-		return document.createElement('p')
+		const el = document.createElement(this.__inline ? 'span' : 'p')
+
+		if (this.__inline) {
+			el.style.display = 'inline-block'
+			el.style.lineHeight = '1'
+			el.style.paddingInlineStart = '2px'
+			el.style.paddingInlineEnd = '2px'
+		}
+
+		return el
 	}
 
 	exportDOM(): DOMExportOutput {
-		const element = document.createElement('img')
+		const el = document.createElement('img')
 
 		const width = typeof this.__width === 'number' ? this.__width.toString() + 'px' : this.__width
 		const height = typeof this.__height === 'number' ? this.__height.toString() + 'px' : this.__height
 
-		element.setAttribute('src', this.__src)
-		element.setAttribute('width', width)
-		element.setAttribute('height', height)
-		element.setAttribute('alt', this.__alt)
+		el.setAttribute('src', this.__src)
+		el.setAttribute('width', width)
+		el.setAttribute('height', height)
+		el.setAttribute('alt', this.__alt)
 
-		return { element }
+		return { element: el }
 	}
 
 	updateDOM() {
@@ -84,7 +96,8 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 			src: this.__src,
 			width: this.__width,
 			height: this.__height,
-			alt: this.__alt
+			alt: this.__alt,
+			inline: this.__inline
 		} as SerializedImageNode
 	}
 
@@ -98,6 +111,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 					alt={this.__alt}
 					align={this.__align}
 					object_fit={this.__object_fit}
+					inline={this.__inline}
 					node_key={this.__key}
 				/>
 			</Suspense>

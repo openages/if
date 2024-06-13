@@ -1,0 +1,32 @@
+.inline_wrap {
+	z-index: 10;
+	right: 0;
+	margin-bottom: 0;
+
+	:global {
+		.if-row {
+			flex-direction: row !important;
+			flex-wrap: nowrap;
+
+			.if-form-item-label {
+				padding: 0 !important;
+				margin-right: 4px !important;
+
+				label {
+					&::after {
+						display: none;
+					}
+				}
+			}
+
+			.if-form-item-control {
+				display: flex;
+				width: unset !important;
+
+				.if-form-item-control-input {
+					min-height: unset;
+				}
+			}
+		}
+	}
+}

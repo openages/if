@@ -17,9 +17,10 @@ export default {
 	Image: {
 		modal: {
 			label: {
-				url: '链接',
-				file: '文件',
-				alt: '说明'
+				url: 'URL',
+				file: 'File',
+				alt: 'Alt',
+				inline: 'Inline'
 			},
 			placeholder: {
 				url: 'Image URL',
