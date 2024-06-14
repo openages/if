@@ -44,16 +44,12 @@
 			border-bottom: var(--border);
 		}
 
-		.__editor_heading_h3 {
-			line-height: 1;
-			margin-block-start: 0.9em;
-		}
-
+		.__editor_heading_h3,
 		.__editor_heading_h4,
 		.__editor_heading_h5,
 		.__editor_heading_h6 {
 			line-height: 1;
-			margin-block-start: 0.6em;
+			margin-block-start: 1.2em;
 		}
 	}
 }

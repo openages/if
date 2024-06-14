@@ -21,6 +21,7 @@ import {
 	Image,
 	Katex,
 	LinkEditor,
+	Navigation,
 	Picker,
 	Quote,
 	Table,
@@ -53,6 +54,7 @@ const Index = () => {
 
 				<Watcher />
 				<Hover />
+				<Navigation />
 				<Picker />
 				<TextBar md />
 				<ListPlugin />

@@ -1,0 +1,14 @@
+.navigation {
+	:global {
+		.__editor_navigation {
+			padding-block-start: var(--editor_padding_y);
+			padding-block-end: var(--editor_padding_y);
+			padding-inline-start: var(--editor_padding_x);
+			padding-inline-end: var(--editor_padding_x);
+			margin-block-start: 0;
+			margin-block-end: 0;
+			margin-inline-start: 0;
+			margin-inline-end: 0;
+		}
+	}
+}

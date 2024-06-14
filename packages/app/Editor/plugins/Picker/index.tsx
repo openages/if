@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { $getSelection, $isRangeSelection } from 'lexical'
+import { $getRoot, $getSelection, $isRangeSelection } from 'lexical'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useMemo, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
@@ -7,10 +7,12 @@ import { useTranslation } from 'react-i18next'
 
 import { LazyElement, LoadingCircle, Modal } from '@/components'
 import { useStackSelector } from '@/context/stack'
+import { $getMatchingParent } from '@/Editor/utils'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useBasicTypeaheadTriggerMatch, LexicalTypeaheadMenuPlugin } from '@lexical/react/LexicalTypeaheadMenuPlugin'
 
 import getOptions from '../../options'
+import { $isTableNode } from '../Table/utils'
 import { Menu } from './components'
 import config from './config'
 import styles from './index.css'
@@ -46,19 +48,23 @@ const Index = () => {
 		(anchorElementRef, { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex }) => {
 			if (!anchorElementRef.current || !options.length) return null
 
-			const nodes = editor.getEditorState().read(() => {
+			const excludes = editor.getEditorState().read(() => {
 				const selection = $getSelection()
 
 				if (!$isRangeSelection(selection)) return
 
-				return selection.anchor.getNode().getParents()
+				const excludes = []
+				const anchor = selection.anchor.getNode()
+
+				if ($getMatchingParent(anchor, $isTableNode)) excludes.push('tb')
+				// if (!$getRoot().is(anchor?.getParent?.()?.getParent?.())) excludes.push('nav')
+
+				return excludes
 			})
 
 			let target: Array<Option> = options
 
-			if (nodes && nodes.some(item => item.__type === 'table')) {
-				target = options.filter(item => item.shortcut !== 'tb')
-			}
+			if (excludes) target = options.filter(item => !excludes.includes(item.shortcut))
 
 			const props_menu: IPropsMenu = {
 				options: target,

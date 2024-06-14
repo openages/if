@@ -7,6 +7,7 @@ import CodeTextNode from './plugins/Code/CodeTextNode'
 import DividerNode from './plugins/Divider/Node'
 import ImageNode from './plugins/Image/Node'
 import KatexNode from './plugins/Katex/Node'
+import NavigationNode from './plugins/Navigation/Node'
 import QuoteNode from './plugins/Quote/QuoteNode'
 import TableCellNode from './plugins/Table/TableCellNode'
 import TableNode from './plugins/Table/TableNode'
@@ -32,6 +33,7 @@ export default [
 	TableRowNode,
 	TableCellNode,
 	QuoteNode,
+	NavigationNode,
 
 	AutoLinkNode,
 	LinkNode,

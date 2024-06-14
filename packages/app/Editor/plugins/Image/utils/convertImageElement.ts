@@ -1,7 +1,7 @@
 import { $createImageNode } from './index'
 
-export default (domNode: Node) => {
-	const img = domNode as HTMLImageElement
+export default (dom: Node) => {
+	const img = dom as HTMLImageElement
 
 	if (img.src.startsWith('file:///')) return null
 

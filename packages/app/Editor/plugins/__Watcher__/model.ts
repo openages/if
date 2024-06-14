@@ -69,7 +69,7 @@ export default class Index {
 
 			if (!node) return
 
-			nodes = node.getParents()
+			nodes = [node, ...node.getParents()]
 		}
 
 		const path = nodes.map(item => ({ type: item.getType(), key: item.getKey() }))

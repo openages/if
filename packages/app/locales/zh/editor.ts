@@ -12,7 +12,8 @@ export default {
 		Katex: '公式',
 		Divider: '分割线',
 		Quote: '引言',
-		Toggle: '折叠'
+		Toggle: '折叠',
+		Navigation: '标题导航'
 	},
 	Image: {
 		modal: {

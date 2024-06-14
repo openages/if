@@ -5,6 +5,7 @@ import { $setBlocksType } from '@lexical/selection'
 import {
 	CaretDown,
 	CodeSimple,
+	Compass,
 	Divide,
 	Function,
 	Image,
@@ -16,7 +17,13 @@ import {
 	Table
 } from '@phosphor-icons/react'
 
-import { INSERT_CODE_COMMAND, INSERT_DIVIDER_COMMAND, INSERT_TABLE_COMMAND, INSERT_TOGGLE_COMMAND } from './commands'
+import {
+	INSERT_CODE_COMMAND,
+	INSERT_DIVIDER_COMMAND,
+	INSERT_NAVIGATION_COMMAND,
+	INSERT_TABLE_COMMAND,
+	INSERT_TOGGLE_COMMAND
+} from './commands'
 import Option from './plugins/Picker/option'
 import { $createQuoteNode } from './plugins/Quote/utils'
 
@@ -96,6 +103,11 @@ export default (args: Args) => {
 			icon: <CaretDown />,
 			shortcut: 'tg',
 			onSelect: () => editor.dispatchCommand(INSERT_TOGGLE_COMMAND, null)
+		}),
+		new Option($t('translation:editor.name.Navigation'), {
+			icon: <Compass />,
+			shortcut: 'nav',
+			onSelect: () => editor.dispatchCommand(INSERT_NAVIGATION_COMMAND, null)
 		})
 	].filter(option => regex.test(option.title.toLowerCase()) || regex.test(option.shortcut))
 }

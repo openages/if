@@ -1,0 +1,56 @@
+._local {
+	display: block;
+	max-width: 100%;
+	margin: 0 auto;
+	border-radius: var(--radius);
+
+	&.empty {
+		display: flex;
+		padding: 18px 0;
+		color: var(--color_text_light);
+	}
+
+	&.selected {
+		outline: 1px dashed var(--color_text);
+	}
+
+	ul {
+		list-style-type: none;
+		margin-block: 0;
+		padding-inline: 0;
+
+		li {
+			position: relative;
+
+			&::before {
+				position: absolute;
+				top: 12px;
+				left: var(--padding_left);
+				display: inline-block;
+				width: 4px;
+				height: 4px;
+				border-radius: 50%;
+				background-color: var(--color_text);
+				content: '';
+			}
+
+			a {
+				cursor: pointer;
+				user-select: none;
+				text-decoration-color: var(--color_text_light);
+				text-decoration-line: underline;
+				text-decoration-thickness: 1px;
+				text-underline-offset: 2px;
+
+				&:hover {
+					color: var(--color_blue);
+					text-decoration-color: transparent;
+				}
+
+				&:active {
+					color: var(--color_text_light);
+				}
+			}
+		}
+	}
+}

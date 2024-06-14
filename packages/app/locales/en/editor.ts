@@ -12,7 +12,8 @@ export default {
 		Katex: 'Katex',
 		Divider: 'Divider',
 		Quote: 'Quote',
-		Toggle: 'Toggle'
+		Toggle: 'Toggle',
+		Navigation: 'Nav'
 	},
 	Image: {
 		modal: {
