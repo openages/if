@@ -723,7 +723,11 @@ export default class Index {
 
 				scrollIntoView(target_dom, { block: 'center', behavior: 'smooth' })
 
-				target_todo.style.color = 'var(--color_danger)'
+				target_todo.classList.add('notice_text')
+
+				setTimeout(() => {
+					target_todo.classList.remove('notice_text')
+				}, 1200)
 			}, 300)
 		}
 	}

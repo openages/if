@@ -30,6 +30,13 @@
 			margin-inline-end: 0;
 		}
 
+		.__editor_block_special {
+			padding-inline-start: 0;
+			padding-inline-end: 0;
+			margin-inline-start: var(--editor_padding_x);
+			margin-inline-end: var(--editor_padding_x);
+		}
+
 		.__editor_hidden {
 			display: none;
 		}

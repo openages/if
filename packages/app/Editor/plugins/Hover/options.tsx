@@ -1,8 +1,13 @@
-import { Copy, Trash } from '@phosphor-icons/react'
+import { Copy, Link, Trash } from '@phosphor-icons/react'
 
 import type { MenuProps } from 'antd'
 
 export default [
+	{
+		label: 'Copy Link',
+		icon: <Link />,
+		key: 'copy_link'
+	},
 	{
 		label: 'Clone',
 		icon: <Copy />,

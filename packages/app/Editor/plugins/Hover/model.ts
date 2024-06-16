@@ -129,6 +129,18 @@ export default class Index {
 
 		const { key } = args
 
+		if (key === 'copy_link') {
+			navigator.clipboard
+				.writeText(`block://${this.active_node.getKey()}`)
+				.then(() =>
+					$message.success(
+						`${$t('translation:common.link')}${$t('translation:common.letter_space')}${$t('translation:common.copied')}`
+					)
+				)
+
+			return
+		}
+
 		if (key === 'clone') {
 			const clone_node = $cloneNode(this.active_node)
 

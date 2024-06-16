@@ -104,8 +104,16 @@ export default class Index {
 				} else {
 					this.formats['link'] = true
 
-					this.editor.dispatchCommand(TOGGLE_LINK_COMMAND, 'https://')
+					navigator.clipboard.readText().then(res => {
+						if (res && (res.indexOf('block://') !== -1 || res.indexOf('https://') !== -1)) {
+							this.editor.dispatchCommand(TOGGLE_LINK_COMMAND, res)
+						} else {
+							this.editor.dispatchCommand(TOGGLE_LINK_COMMAND, 'https://')
+						}
+					})
 				}
+
+				return
 			}
 
 			if (type === 'heading') {
@@ -120,6 +128,8 @@ export default class Index {
 						$setBlocksType(selection, () => $createHeadingNode(v as HeadingTagType))
 					})
 				}
+
+				return
 			}
 
 			if (type === 'list') {

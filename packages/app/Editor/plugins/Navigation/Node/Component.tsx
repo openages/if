@@ -1,6 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useLayoutEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import smoothScrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { container } from 'tsyringe'
 
@@ -18,6 +19,7 @@ const Index = (props: { items: Array<TableOfContentsEntry>; node_key: string }) 
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(node_key)
+	const { t } = useTranslation()
 
 	useLayoutEffect(() => {
 		x.block.init(editor, node_key, setSelected, clearSelection)
@@ -50,14 +52,15 @@ const Index = (props: { items: Array<TableOfContentsEntry>; node_key: string }) 
 		return (
 			<div
 				className={$cx(
-					'w_100 border_box justify_center align_center',
+					'w_100 border_box flex_column justify_center align_center',
 					styles._local,
 					styles.empty,
 					x.block.selected && styles.selected
 				)}
 				onClick={x.block.onClick}
 			>
-				<Empty size={18}></Empty>
+				<Empty className='mb_4' size={21}></Empty>
+				<span>{t('translation:editor.Navigation.empty')}</span>
 			</div>
 		)
 	}

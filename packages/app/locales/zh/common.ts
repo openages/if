@@ -32,6 +32,7 @@ export default {
 		感恩节: '感恩节',
 		圣诞节: '圣诞节'
 	},
+	link: '链接',
 	folded: '已折叠',
 	error: '错误',
 	update: '更新',

@@ -7,6 +7,7 @@ import {
 	COMMAND_PRIORITY_LOW
 } from 'lexical'
 import { makeAutoObservable } from 'mobx'
+import smoothScrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { injectable } from 'tsyringe'
 
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
@@ -108,7 +109,22 @@ export default class Index {
 		if (!node) return false
 
 		if (e && (!this.editor.isEditable() || e.metaKey || e.ctrlKey)) {
-			window.open(this.node.getURL(), '_blank')
+			const url = this.node.getURL()
+
+			if (url.indexOf('block://') !== -1) {
+				const key = url.replace('block://', '')
+				const el = this.editor.getElementByKey(key)
+
+				smoothScrollIntoView(el)
+
+				el.classList.add('notice_text')
+
+				setTimeout(() => {
+					el.classList.remove('notice_text')
+				}, 1200)
+			} else {
+				window.open(url, '_blank')
+			}
 		} else {
 			this.visible = true
 

@@ -13,7 +13,7 @@ export default {
 		Divider: '分割线',
 		Quote: '引言',
 		Toggle: '折叠',
-		Navigation: '标题导航'
+		Navigation: '目录'
 	},
 	Image: {
 		modal: {
@@ -40,5 +40,8 @@ export default {
 			},
 			preview: '预览'
 		}
+	},
+	Navigation: {
+		empty: '未检测到标题'
 	}
 }

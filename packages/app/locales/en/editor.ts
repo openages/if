@@ -13,7 +13,7 @@ export default {
 		Divider: 'Divider',
 		Quote: 'Quote',
 		Toggle: 'Toggle',
-		Navigation: 'Nav'
+		Navigation: 'Catalog'
 	},
 	Image: {
 		modal: {
@@ -40,5 +40,8 @@ export default {
 			},
 			preview: 'Preview'
 		}
+	},
+	Navigation: {
+		empty: 'No Headings detected'
 	}
 }

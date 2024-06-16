@@ -4,6 +4,7 @@ export default {
 	color_warning: '#FF8F00',
 	color_success: '#00C853',
 	color_danger: '#FF1744',
-	color_blue: '#3d87f5',
+	color_blue: '#075cdd',
+	color_blue_active: '#3d87f5',
 	color_bg_blur: 'rgba(var(--color_bg_rgb), 0.48)'
 }

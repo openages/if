@@ -7,7 +7,9 @@
 	&.empty {
 		display: flex;
 		padding: 18px 0;
+		border: var(--border);
 		color: var(--color_text_light);
+		font-size: 13px;
 	}
 
 	&.selected {
@@ -37,6 +39,7 @@
 			a {
 				cursor: pointer;
 				user-select: none;
+				transition: all ease 0.18s;
 				text-decoration-color: var(--color_text_light);
 				text-decoration-line: underline;
 				text-decoration-thickness: 1px;
@@ -44,11 +47,12 @@
 
 				&:hover {
 					color: var(--color_blue);
-					text-decoration-color: transparent;
+					text-decoration-color: var(--color_blue);
 				}
 
 				&:active {
-					color: var(--color_text_light);
+					color: var(--color_blue_active);
+					text-decoration-color: var(--color_blue_active);
 				}
 			}
 		}
