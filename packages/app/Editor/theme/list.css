@@ -11,10 +11,6 @@
 			}
 		}
 
-		.__editor_list_ul {
-			list-style-type: none;
-		}
-
 		.__editor_list_item {
 			&.__editor_fold {
 				list-style-type: none;
