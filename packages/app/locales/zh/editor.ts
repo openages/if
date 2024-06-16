@@ -43,5 +43,22 @@ export default {
 	},
 	Navigation: {
 		empty: '未检测到标题'
+	},
+	Table: {
+		actions: {
+			header_row: '标题行',
+			insert_above: '上方插入',
+			insert_below: '下方插入',
+			align: {
+				title: '对齐',
+				left: '靠左',
+				center: '居中',
+				right: '靠右'
+			},
+			header_col: '标题列',
+			insert_left: '左侧插入',
+			insert_right: '右侧插入',
+			reset_width: '重置宽度'
+		}
 	}
 }

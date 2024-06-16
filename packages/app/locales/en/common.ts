@@ -44,6 +44,8 @@ export default {
 	today: 'Today',
 	setting: 'Setting',
 	copy: 'Copy',
+	clone: 'Clone',
+	clear: 'Clear',
 	check: 'Check',
 	remove: 'Remove',
 	reload: 'Reload',

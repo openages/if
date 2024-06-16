@@ -4,17 +4,18 @@ import type { MenuProps } from 'antd'
 
 export default [
 	{
-		label: 'Copy Link',
+		label:
+			$t('translation:common.copy') + $t('translation:common.letter_space') + $t('translation:common.link'),
 		icon: <Link />,
 		key: 'copy_link'
 	},
 	{
-		label: 'Clone',
+		label: $t('translation:common.clone'),
 		icon: <Copy />,
 		key: 'clone'
 	},
 	{
-		label: 'Remove',
+		label: $t('translation:common.remove'),
 		icon: <Trash />,
 		key: 'remove'
 	}

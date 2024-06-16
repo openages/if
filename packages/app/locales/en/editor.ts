@@ -43,5 +43,22 @@ export default {
 	},
 	Navigation: {
 		empty: 'No Headings detected'
+	},
+	Table: {
+		actions: {
+			header_row: 'Header Row',
+			insert_above: 'Insert Above',
+			insert_below: 'Insert Below',
+			align: {
+				title: 'Align',
+				left: 'Left',
+				center: 'Center',
+				right: 'Right'
+			},
+			header_col: 'Header Col',
+			insert_left: 'Insert Left',
+			insert_right: 'Insert Right',
+			reset_width: 'Reset Width'
+		}
 	}
 }

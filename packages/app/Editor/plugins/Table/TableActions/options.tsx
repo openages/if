@@ -18,32 +18,32 @@ import type { MenuProps } from 'antd'
 
 export const menu_row = [
 	{
-		label: 'Header Row',
+		label: $t('translation:editor.Table.actions.header_col'),
 		icon: <SquareHalf />,
 		key: 'header_row'
 	},
 	{
-		label: 'Insert Above',
+		label: $t('translation:editor.Table.actions.insert_above'),
 		icon: <ArrowFatUp />,
 		key: 'insert_above'
 	},
 	{
-		label: 'Insert Below',
+		label: $t('translation:editor.Table.actions.insert_below'),
 		icon: <ArrowFatDown />,
 		key: 'insert_below'
 	},
 	{
-		label: 'Clone',
+		label: $t('translation:common.clone'),
 		icon: <Copy />,
 		key: 'clone_row'
 	},
 	{
-		label: 'Clear',
+		label: $t('translation:common.clear'),
 		icon: <Broom />,
 		key: 'clear_row'
 	},
 	{
-		label: 'Remove',
+		label: $t('translation:common.remove'),
 		icon: <Trash />,
 		key: 'remove_row'
 	}
@@ -51,59 +51,59 @@ export const menu_row = [
 
 export const menu_col = [
 	{
-		label: 'Align',
+		label: $t('translation:editor.Table.actions.align.title'),
 		icon: <TextAlignCenter />,
 		key: 'align',
 		children: [
 			{
-				label: 'Left',
+				label: $t('translation:editor.Table.actions.align.left'),
 				icon: <TextAlignLeft />,
 				key: 'left'
 			},
 			{
-				label: 'Center',
+				label: $t('translation:editor.Table.actions.align.center'),
 				icon: <TextAlignCenter />,
 				key: 'center'
 			},
 			{
-				label: 'Right',
+				label: $t('translation:editor.Table.actions.align.right'),
 				icon: <TextAlignRight />,
 				key: 'right'
 			}
 		]
 	},
 	{
-		label: 'Header Col',
+		label: $t('translation:editor.Table.actions.header_col'),
 		icon: <SquareHalfBottom />,
 		key: 'header_col'
 	},
 	{
-		label: 'Insert Left',
+		label: $t('translation:editor.Table.actions.insert_left'),
 		icon: <ArrowFatLeft />,
 		key: 'insert_left'
 	},
 	{
-		label: 'Insert Right',
+		label: $t('translation:editor.Table.actions.insert_right'),
 		icon: <ArrowFatRight />,
 		key: 'insert_right'
 	},
 	{
-		label: 'Reset Width',
+		label: $t('translation:editor.Table.actions.reset_width'),
 		icon: <ArrowsCounterClockwise />,
 		key: 'reset_width'
 	},
 	{
-		label: 'Clone',
+		label: $t('translation:common.clone'),
 		icon: <Copy />,
 		key: 'clone_col'
 	},
 	{
-		label: 'Clear',
+		label: $t('translation:common.clear'),
 		icon: <Broom />,
 		key: 'clear_col'
 	},
 	{
-		label: 'Remove',
+		label: $t('translation:common.remove'),
 		icon: <Trash />,
 		key: 'remove_col'
 	}

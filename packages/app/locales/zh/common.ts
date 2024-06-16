@@ -44,6 +44,8 @@ export default {
 	today: '今天',
 	setting: '设置',
 	copy: '复制',
+	clone: '克隆',
+	clear: '清空',
 	check: '查看',
 	remove: '移除',
 	reload: '重新加载',
