@@ -108,9 +108,19 @@
 				border: none;
 				border-radius: var(--radius_small);
 				background-color: transparent;
+				cursor: pointer;
+				transition: scale ease 0.12s;
 
 				&:hover {
 					background-color: rgba(var(--color_std_rgb), 0.15);
+				}
+
+				&:active {
+					scale: 0.9;
+
+					& + .if-select-arrow {
+						scale: 0.9;
+					}
 				}
 
 				input {
@@ -141,6 +151,7 @@
 				margin-top: unset;
 				opacity: 1 !important;
 				color: var(--color_bg) !important;
+				transition: scale ease 0.12s;
 				font-size: 15px;
 			}
 		}

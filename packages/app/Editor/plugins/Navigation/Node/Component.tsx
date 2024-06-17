@@ -7,13 +7,14 @@ import { container } from 'tsyringe'
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection'
-import { Empty } from '@phosphor-icons/react'
+import { GpsSlash } from '@phosphor-icons/react'
 
 import styles from './index.css'
 import Item from './Item'
 import Model from './model'
 
 import type { TableOfContentsEntry } from '@lexical/react/LexicalTableOfContentsPlugin'
+
 const Index = (props: { items: Array<TableOfContentsEntry>; node_key: string }) => {
 	const { items, node_key } = props
 	const [x] = useState(() => container.resolve(Model))
@@ -59,7 +60,7 @@ const Index = (props: { items: Array<TableOfContentsEntry>; node_key: string }) 
 				)}
 				onClick={x.block.onClick}
 			>
-				<Empty className='mb_4' size={21}></Empty>
+				<GpsSlash className='mb_4' size={21}></GpsSlash>
 				<span>{t('translation:editor.Navigation.empty')}</span>
 			</div>
 		)

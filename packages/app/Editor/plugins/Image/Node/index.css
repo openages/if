@@ -11,6 +11,7 @@
 		.options_wrap {
 			overflow: hidden;
 			height: 24px;
+			border: 1px solid rgba(var(--color_bg_rgb), 0.12);
 			border-radius: 12px;
 			color: var(--color_bg);
 			background-color: rgba(var(--color_text_rgb), 0.48);

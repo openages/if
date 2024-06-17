@@ -8,17 +8,20 @@ import { useStackSelector } from '@/context/stack'
 
 import styles from './index.css'
 
-import type { ReactNode } from 'react'
+import type { ReactNode, CSSProperties } from 'react'
+
 interface IProps {
 	open: boolean
-	position: { x: number; y: number }
 	children: ReactNode
+	position?: { x: number; y: number }
 	top?: boolean
+	className?: HTMLElement['className']
+	style?: CSSProperties
 	updatePosition: () => void
 }
 
 const Index = (props: IProps) => {
-	const { open, position, children, top, updatePosition } = props
+	const { open, position, children, top, className, style, updatePosition } = props
 	const [exist, setExsit] = useState(false)
 	const [oveflow, setOverflow] = useState(0)
 	const id = useStackSelector(v => v.id)
@@ -52,7 +55,7 @@ const Index = (props: IProps) => {
 	)
 
 	useEffect(() => {
-		if (!exist) return setOverflow(0)
+		if (!exist || style) return setOverflow(0)
 
 		checkOverflow()
 
@@ -72,7 +75,7 @@ const Index = (props: IProps) => {
 			resize_observer.unobserve(container)
 			resize_observer.disconnect()
 		}
-	}, [exist])
+	}, [exist, style])
 
 	if (!exist) return null
 
@@ -84,9 +87,10 @@ const Index = (props: IProps) => {
 						'fixed z_index_100',
 						styles._local,
 						top && styles.top,
-						oveflow && styles.oveflow
+						oveflow && styles.oveflow,
+						className
 					)}
-					style={{ top: position.y, left: position.x - oveflow }}
+					style={style ?? { top: position.y, left: position.x - oveflow }}
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}

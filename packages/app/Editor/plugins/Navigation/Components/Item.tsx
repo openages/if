@@ -8,14 +8,14 @@ interface IProps {
 	type: HeadingTagType
 	text: string
 	node_key: string
-	max_type_value: number
+	visible: boolean
+	active: boolean
 	scrollIntoEl: (node_key: string) => void
 }
 
 const Index = (props: IProps) => {
-	const { type, text, node_key, max_type_value, scrollIntoEl } = props
-	const type_value = useMemo(() => parseInt(type.replace('h', '')), [type])
-	const padding_left = (type_value - max_type_value) * 18 + 15
+	const { type, text, node_key, visible, active, scrollIntoEl } = props
+	const type_value = useMemo(() => 6 - parseInt(type.replace('h', '')), [type])
 
 	const onClick = useMemoizedFn((e: MouseEvent) => {
 		e.preventDefault()
@@ -25,12 +25,10 @@ const Index = (props: IProps) => {
 	})
 
 	return (
-		<li
-			style={{
-				'--padding_left': padding_left - 12 + 'px',
-				paddingLeft: padding_left
-			}}
-		>
+		<li className={$cx('w_100 border_box', visible && 'visible', active && 'active')}>
+			<span className='signal_wrap align_center'>
+				<span className='signal inline_block' style={{ width: type_value * 3 }}></span>
+			</span>
 			<a onClick={onClick}>{text}</a>
 		</li>
 	)

@@ -29,6 +29,12 @@
 						}
 					}
 
+					&:active {
+						.tab_name {
+							translate: 0 1.5px;
+						}
+					}
+
 					&.active {
 						&::after {
 							position: absolute;
@@ -47,9 +53,11 @@
 					}
 
 					.tab_name {
+						display: inline-block;
 						line-height: 1;
 						opacity: 0.6;
 						user-select: none;
+						transition: translate ease 0.18s;
 						white-space: nowrap;
 					}
 				}

@@ -95,7 +95,7 @@ const Index = (props: IPropsFormats) => {
 			<span className='d_line'></span>
 			<div className='format_items_wrap flex'>
 				<Select
-					className={$cx('select_heading select clickable', formats['heading'] && 'active')}
+					className={$cx('select_heading select', formats['heading'] && 'active')}
 					popupClassName={styles.dropdown}
 					size='small'
 					virtual={false}
@@ -117,7 +117,7 @@ const Index = (props: IPropsFormats) => {
 			<span className='d_line'></span>
 			<div className='format_items_wrap flex'>
 				<Select
-					className={$cx('select_list select clickable', formats['list'] && 'active')}
+					className={$cx('select_list select', formats['list'] && 'active')}
 					popupClassName={styles.dropdown}
 					size='small'
 					virtual={false}

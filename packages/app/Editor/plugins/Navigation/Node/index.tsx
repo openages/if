@@ -56,11 +56,13 @@ export default class NavigationNode extends DecoratorNode<JSX.Element> {
 
 	decorate() {
 		return (
-			<Suspense fallback={null}>
-				<TableOfContentsPlugin>
-					{items => <Component items={items} node_key={this.__key} />}
-				</TableOfContentsPlugin>
-			</Suspense>
+			<TableOfContentsPlugin>
+				{items => (
+					<Suspense fallback={null}>
+						<Component items={items} node_key={this.__key} />
+					</Suspense>
+				)}
+			</TableOfContentsPlugin>
 		)
 	}
 }

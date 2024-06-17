@@ -1,47 +1,236 @@
-import { COMMAND_PRIORITY_LOW } from 'lexical'
-import { makeObservable } from 'mobx'
+import { $getNodeByKey, COMMAND_PRIORITY_LOW } from 'lexical'
+import { debounce, throttle } from 'lodash-es'
+import { makeAutoObservable, runInAction } from 'mobx'
 
 import { INSERT_NAVIGATION_COMMAND } from '@/Editor/commands'
-import { insertBlock } from '@/Editor/utils'
+import { $getHeadingLevel, insertBlock } from '@/Editor/utils'
+import { getComputedStyleValue } from '@/utils'
 import { mergeRegister } from '@lexical/utils'
 
 import { $createNavigationNode } from './utils'
 
-import type { LexicalEditor } from 'lexical'
+import type { LexicalEditor, LexicalNode } from 'lexical'
 import type NavigationNode from './Node'
+import type { CSSProperties } from 'react'
+
+import type { TableOfContentsEntry } from '@lexical/react/LexicalTableOfContentsPlugin'
+import type { HeadingNode } from '@lexical/rich-text'
 
 export default class Index {
+	id = ''
 	editor = null as LexicalEditor
+	container = null as HTMLElement
+	observer = null as ResizeObserver
+	items = [] as Array<TableOfContentsEntry>
+
+	visible_mini_nav = false
+	minimize = false
+	style = null as CSSProperties
+	visible_items = [] as Array<string>
+	active_items = [] as Array<string>
 
 	unregister = null as () => void
 
 	constructor() {
-		makeObservable(this, {}, { autoBind: true })
-	}
-
-	init(editor: Index['editor']) {
-		this.editor = editor
-
-		this.register()
-	}
-
-	register() {
-		this.unregister = mergeRegister(
-			this.editor.registerCommand(
-				INSERT_NAVIGATION_COMMAND,
-				() => {
-					const node = $createNavigationNode() as NavigationNode
-
-					insertBlock(node)
-
-					return true
-				},
-				COMMAND_PRIORITY_LOW
-			)
+		makeAutoObservable(
+			this,
+			{
+				id: false,
+				editor: false,
+				container: false,
+				observer: false,
+				items: false,
+				onScroll: false,
+				unregister: false
+			},
+			{ autoBind: true }
 		)
+
+		this.onScroll = debounce(this.onScroll.bind(this), 120)
+	}
+
+	init(id: Index['id'], editor: Index['editor']) {
+		this.id = id
+		this.editor = editor
+		this.container = document.getElementById(this.id)
+
+		this.on()
+		this.getPosition()
+	}
+
+	getPosition() {
+		const editor_container = document.querySelector(`#${this.id} .__editor_container`)
+
+		const { top, right: right_container, width, height } = this.container.getBoundingClientRect()
+		const { right: right_editor_container } = editor_container.getBoundingClientRect()
+
+		if (width < 1110) {
+			this.minimize = true
+
+			this.style = { left: right_container - 21 - 18 }
+
+			return
+		}
+
+		if (width >= 1420) {
+			this.style = { left: right_editor_container + 150, top, width: 180, height }
+		} else {
+			this.style = { left: right_container - 150 - 48, top, height }
+		}
+
+		this.minimize = false
+		this.visible_mini_nav = false
+	}
+
+	onScroll() {
+		if (!this.items.length) return
+
+		this.editor.update(() => {
+			let target_top = null as number
+			let target_index: number
+			let list_max_level = 6
+
+			const visible_items = []
+			const active_items = []
+
+			const { height } = this.container.getBoundingClientRect()
+
+			this.items.forEach(([node_key], index) => {
+				const el = this.editor.getElementByKey(node_key)
+				const { top } = el.getBoundingClientRect()
+				const level = $getHeadingLevel($getNodeByKey(node_key))
+
+				if (level < list_max_level) {
+					list_max_level = level
+				}
+
+				if (target_top === null) {
+					target_top = top
+					target_index = index
+				}
+
+				if (top - (getComputedStyleValue(el, 'line-height') + height / 2) <= 0) {
+					if (top > target_top) {
+						target_top = top
+						target_index = index
+					}
+				} else {
+					if (top < target_top) {
+						target_top = top
+						target_index = index
+					}
+				}
+			})
+
+			const prev_items = this.items.slice(0, target_index)
+			const next_items = this.items.slice(target_index)
+
+			// console.log(target_index, prev_items, next_items)
+
+			const target_key = this.items[target_index][0]
+			const target_node = $getNodeByKey(target_key) as HeadingNode
+			const target_level = $getHeadingLevel(target_node)
+
+			visible_items.push(target_node.getKey())
+			active_items.push(target_node.getKey())
+
+			let current_max_level = target_level
+			let current_prev_index = prev_items.length - 1
+			let has_prev_max_level = false
+
+			while (current_prev_index >= 0 && prev_items[current_prev_index]) {
+				const current_node: HeadingNode = $getNodeByKey(prev_items[current_prev_index][0])
+				const current_key = current_node.getKey()
+				const current_level = $getHeadingLevel(current_node)
+
+				if (
+					current_level > current_max_level ||
+					(current_level === list_max_level && has_prev_max_level)
+				) {
+					break
+				}
+
+				if (current_level <= current_max_level) {
+					visible_items.push(current_key)
+
+					if (current_level < current_max_level) {
+						active_items.push(current_key)
+
+						current_max_level = current_level
+					}
+				}
+
+				if (current_level === list_max_level) {
+					has_prev_max_level = true
+				}
+
+				current_prev_index--
+			}
+
+			let current_min_level = target_level
+			let current_next_index = 0
+			let has_next_max_level = false
+
+			while (current_next_index < next_items.length && next_items[current_next_index]) {
+				const current_node: HeadingNode = $getNodeByKey(next_items[current_next_index][0])
+				const current_key = current_node.getKey()
+				const current_level = $getHeadingLevel(current_node)
+
+				if (
+					current_level < current_min_level ||
+					(current_level === list_max_level && has_next_max_level)
+				) {
+					break
+				}
+
+				if (current_level >= current_min_level) {
+					visible_items.push(current_key)
+
+					if (current_level > current_max_level) {
+						current_min_level = current_level
+					}
+				}
+
+				if (current_level === list_max_level) {
+					has_next_max_level = true
+				}
+
+				current_next_index++
+			}
+
+			runInAction(() => {
+				this.visible_items = visible_items
+				this.active_items = active_items
+			})
+		})
+	}
+
+	insert() {
+		const node = $createNavigationNode() as NavigationNode
+
+		insertBlock(node)
+
+		return true
+	}
+
+	on() {
+		this.unregister = mergeRegister(
+			this.editor.registerCommand(INSERT_NAVIGATION_COMMAND, this.insert, COMMAND_PRIORITY_LOW)
+		)
+
+		this.container.addEventListener('scroll', this.onScroll)
+
+		this.observer = new ResizeObserver(throttle(this.getPosition.bind(this), 30))
+
+		this.observer.observe(this.container)
 	}
 
 	off() {
 		this.unregister()
+
+		this.container.removeEventListener('scroll', this.onScroll)
+
+		this.observer.unobserve(this.container)
+		this.observer.disconnect()
 	}
 }

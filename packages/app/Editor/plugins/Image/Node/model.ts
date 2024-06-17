@@ -64,8 +64,8 @@ export default class Index {
 			const node = $getNodeByKey(this.block.key)
 			const target = node.getWritable() as ImageNode
 
-			if (type === 'width') target.__width = typeof Number(v) === 'number' ? Number(v) : v
-			if (type === 'height') target.__height = typeof Number(v) === 'number' ? Number(v) : v
+			if (type === 'width') target.__width = Number.isNaN(Number(v)) ? v : Number(v)
+			if (type === 'height') target.__height = Number.isNaN(Number(v)) ? v : Number(v)
 		})
 	}
 

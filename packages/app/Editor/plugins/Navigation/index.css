@@ -1,0 +1,158 @@
+._local {
+	width: 150px;
+	padding: 48px 0;
+
+	&.minimize {
+		overflow-y: scroll;
+		max-height: calc(100vh - 36px - 60px);
+		padding: 0;
+
+		:global {
+			.nav_list {
+				li {
+					.signal_wrap {
+						.signal {
+							background-color: var(--color_bg_2);
+						}
+					}
+
+					a {
+						opacity: 0.6;
+					}
+				}
+			}
+		}
+	}
+
+	:global {
+		.nav_list_wrap {
+			overflow-y: scroll;
+		}
+
+		.nav_list {
+			list-style-type: none;
+			padding-inline: unset;
+			margin-block: unset;
+
+			&:hover {
+				li {
+					.signal_wrap {
+						.signal {
+							background-color: var(--color_bg_2);
+						}
+					}
+
+					a {
+						opacity: 0.6;
+					}
+				}
+			}
+
+			.right_mask {
+				z-index: 1;
+				width: 18px;
+				background: linear-gradient(to right, transparent, rgba(var(--color_bg_rgb), 1));
+			}
+
+			li {
+				position: relative;
+				overflow: hidden;
+				text-overflow: clip;
+				white-space: nowrap;
+				font-size: 12px;
+
+				&:hover {
+					.signal_wrap {
+						.signal {
+							background-color: var(--color_text_light);
+						}
+					}
+
+					a {
+						opacity: 1;
+						color: var(--color_text);
+					}
+				}
+
+				&.visible {
+					&.active {
+						.signal_wrap {
+							.signal {
+								background-color: var(--color_text_light);
+							}
+						}
+
+						a {
+							opacity: 1;
+							color: var(--color_text);
+						}
+					}
+
+					.signal_wrap {
+						.signal {
+							background-color: var(--color_bg_2);
+						}
+					}
+
+					a {
+						opacity: 0.6;
+					}
+				}
+
+				.signal_wrap {
+					display: inline-flex;
+					width: 15px;
+					margin-right: 3px;
+					vertical-align: 3px;
+
+					.signal {
+						height: 3px;
+						border-radius: 3px;
+						background-color: var(--color_bg_1);
+						transition: background-color ease 0.3s;
+					}
+				}
+
+				a {
+					display: inline-block;
+					padding: 1.5px 0;
+					opacity: 0;
+					cursor: pointer;
+					user-select: none;
+					transition:
+						color,
+						opacity ease 0.3s;
+
+					&:active {
+						font-weight: bold;
+					}
+				}
+			}
+		}
+	}
+}
+
+.btn_nav {
+	bottom: 12px;
+	width: 21px;
+	height: 21px;
+	border: var(--border);
+	border-radius: var(--radius_small);
+	color: var(--color_text_light);
+	background-color: var(--color_bg);
+
+	&:hover,
+	&.active {
+		border-color: var(--color_text);
+		color: var(--color_text);
+	}
+}
+
+.mini_nav {
+	width: 150px;
+	background-color: var(--color_bg);
+
+	&::before {
+		display: none;
+	}
+}

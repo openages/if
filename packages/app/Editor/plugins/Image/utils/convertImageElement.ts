@@ -7,5 +7,5 @@ export default (dom: Node) => {
 
 	const { src, alt } = img
 
-	return { node: $createImageNode({ src, width: '100%', height: '100%', alt }) }
+	return { node: $createImageNode({ src, width: 'auto', height: 'auto', alt }) }
 }

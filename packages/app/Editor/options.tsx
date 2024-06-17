@@ -5,9 +5,9 @@ import { $setBlocksType } from '@lexical/selection'
 import {
 	CaretDown,
 	CodeSimple,
-	Compass,
 	Divide,
 	Function,
+	GpsFix,
 	Image,
 	ListBullets,
 	ListChecks,
@@ -105,7 +105,7 @@ export default (args: Args) => {
 			onSelect: () => editor.dispatchCommand(INSERT_TOGGLE_COMMAND, null)
 		}),
 		new Option($t('translation:editor.name.Navigation'), {
-			icon: <Compass />,
+			icon: <GpsFix />,
 			shortcut: 'nav',
 			onSelect: () => editor.dispatchCommand(INSERT_NAVIGATION_COMMAND, null)
 		})

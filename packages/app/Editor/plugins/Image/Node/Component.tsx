@@ -64,7 +64,7 @@ const Index = (props: IPropsImage) => {
 					className={$cx('__editor_image', styles._local, x.block.selected && styles.selected)}
 					src={src}
 					width={width}
-					height={height}
+					height={height === '100%' ? 'auto' : height}
 					alt={alt}
 					style={style_img}
 					draggable={false}

@@ -1,4 +1,5 @@
 import { useScrollToItem } from '@/hooks'
+
 import type { IPropsTabsItem } from '../../types'
 
 const Index = (props: IPropsTabsItem) => {
@@ -8,13 +9,10 @@ const Index = (props: IPropsTabsItem) => {
 
 	return (
 		<div
-			className={$cx(
-				'tab_item_wrap border_box inline_block cursor_point clickable relative',
-				active && 'active'
-			)}
+			className={$cx('tab_item_wrap border_box inline_block cursor_point relative', active && 'active')}
 			onMouseDown={() => setCurrentAngleId(item.id)}
 		>
-			<span className='tab_name transition_normal'>{item.text}</span>
+			<span className='tab_name'>{item.text}</span>
 		</div>
 	)
 }
