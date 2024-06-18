@@ -3,9 +3,13 @@ import { injectable } from 'tsyringe'
 
 @injectable()
 export default class Index {
-	active_index = 0
+	ref = null as HTMLElement
+
+	active = 'global'
+	mini = false
+	visible_menu = false
 
 	constructor() {
-		makeAutoObservable(this, {}, { autoBind: true })
+		makeAutoObservable(this, { ref: false }, { autoBind: true })
 	}
 }

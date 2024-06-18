@@ -31,6 +31,10 @@
 	&.disableOverflow {
 		padding: 0 60px;
 	}
+
+	&.disablePadding {
+		padding: 0;
+	}
 }
 
 .content {

@@ -256,6 +256,7 @@ const Index = () => {
 				open={global.screenlock.modal_open}
 				title={title}
 				width={300}
+				zIndex={3000}
 				confirmLoading={global.screenlock.loading}
 				centered
 				destroyOnClose

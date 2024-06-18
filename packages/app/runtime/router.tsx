@@ -25,10 +25,6 @@ const routes: Array<RouteObject> = [
 	{
 		path: '/schedule',
 		element: <LazyElement type='modules' path='schedule/page' />
-	},
-	{
-		path: '/setting',
-		element: <LazyElement type='modules' path='setting' />
 	}
 ]
 

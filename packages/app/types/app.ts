@@ -9,6 +9,7 @@ export namespace App {
 		path: string
 		short?: number
 		fixed?: boolean
+		event?: string
 	}
 
 	export type Modules = Array<Module>

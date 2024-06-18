@@ -51,7 +51,7 @@ export default {
 	reload: '重新加载',
 	storage: '应用缓存',
 	clear_storage: '清除缓存',
-	clear_storage_desc: '清除应用临时缓存',
+	clear_storage_desc: '清除应用缓存',
 	default: '默认',
 	start: '开始',
 	stop: '停止',

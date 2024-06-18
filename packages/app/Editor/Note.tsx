@@ -24,6 +24,7 @@ import {
 	Navigation,
 	Picker,
 	Quote,
+	Settings,
 	Table,
 	TableActions,
 	TableMerge,
@@ -53,6 +54,7 @@ const Index = () => {
 				<TabIndentationPlugin />
 
 				<Watcher />
+				<Settings />
 				<Hover />
 				<Navigation />
 				<Picker />

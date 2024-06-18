@@ -26,6 +26,24 @@
 		}
 	}
 
+	&.visible {
+		:global {
+			.nav_list {
+				li {
+					.signal_wrap {
+						.signal {
+							background-color: var(--color_bg_2);
+						}
+					}
+
+					a {
+						opacity: 0.6;
+					}
+				}
+			}
+		}
+	}
+
 	:global {
 		.nav_list_wrap {
 			overflow-y: scroll;

@@ -3,7 +3,7 @@ import { debounce, throttle } from 'lodash-es'
 import { makeAutoObservable, runInAction } from 'mobx'
 import smoothScrollIntoView from 'smooth-scroll-into-view-if-needed'
 
-import { INSERT_NAVIGATION_COMMAND } from '@/Editor/commands'
+import { INSERT_NAVIGATION_COMMAND, UPDATE_NAVIGATION_TOC } from '@/Editor/commands'
 import { $getHeadingLevel, insertBlock } from '@/Editor/utils'
 import { getComputedStyleValue } from '@/utils'
 import { mergeRegister } from '@lexical/utils'
@@ -16,6 +16,7 @@ import type { CSSProperties } from 'react'
 
 import type { TableOfContentsEntry } from '@lexical/react/LexicalTableOfContentsPlugin'
 import type { HeadingNode } from '@lexical/rich-text'
+import type { Note } from '@/types'
 
 export default class Index {
 	id = ''
@@ -24,6 +25,7 @@ export default class Index {
 	ref = null as HTMLElement
 	observer = null as ResizeObserver
 	items = [] as Array<TableOfContentsEntry>
+	toc = 'default' as Note.Setting['toc']
 
 	visible_mini_nav = false
 	minimize = false
@@ -68,7 +70,7 @@ export default class Index {
 		const { top, right: right_container, width, height } = this.container.getBoundingClientRect()
 		const { right: right_editor_container } = editor_container.getBoundingClientRect()
 
-		if (width < 1110) {
+		if (width < 1110 || this.toc === 'hidden') {
 			this.minimize = true
 
 			this.style = { left: right_container - 21 - 18 }
@@ -232,15 +234,18 @@ export default class Index {
 		return true
 	}
 
-	toggleList(v?: boolean) {
-		if (v) this.visible_items
+	updateToc(v: Index['toc']) {
+		this.toc = v
+
+		this.getPosition()
 
 		return false
 	}
 
 	on() {
 		this.unregister = mergeRegister(
-			this.editor.registerCommand(INSERT_NAVIGATION_COMMAND, this.insert, COMMAND_PRIORITY_LOW)
+			this.editor.registerCommand(INSERT_NAVIGATION_COMMAND, this.insert, COMMAND_PRIORITY_LOW),
+			this.editor.registerCommand(UPDATE_NAVIGATION_TOC, this.updateToc, COMMAND_PRIORITY_LOW)
 		)
 
 		this.container.addEventListener('scroll', this.onScroll)

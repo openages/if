@@ -31,7 +31,7 @@ export default {
             "properties": {
                   "file_id": {
                         "type": "string",
-                        "maxLength": 120
+                        "maxLength": 30
                   },
                   "sessions": {
                         "type": "array",

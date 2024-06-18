@@ -1,0 +1,105 @@
+@keyframes shake {
+	0%,
+	100% {
+		transform: translateX(0);
+	}
+	25%,
+	75% {
+		transform: translateX(-10px);
+	}
+	50% {
+		transform: translateX(10px);
+	}
+}
+
+.password_modal {
+	&.ungenerated {
+		:global {
+			.if-modal-footer {
+				.if-btn-primary {
+					border: 1px dashed var(--color_border_light);
+					color: var(--color_text_light);
+					background: var(--color_bg_1);
+					box-shadow: none;
+					cursor: not-allowed;
+					pointer-events: none;
+				}
+			}
+		}
+	}
+
+	:global {
+		.password_input {
+			&.unverified {
+				:global {
+					animation: shake 0.3s ease-in-out;
+				}
+			}
+		}
+
+		.key_wrap {
+			&.reset_mode {
+				.padding_wrap {
+					padding-top: 0;
+
+					.password_key {
+						overflow: scroll;
+						height: 150px;
+						cursor: initial;
+					}
+
+					.btn_copy {
+						display: none;
+					}
+				}
+			}
+
+			.padding_wrap {
+				padding-top: 12px;
+
+				.password_key {
+					overflow: hidden;
+					height: 72px;
+					resize: none;
+					cursor: pointer;
+					font-size: 12px;
+
+					&.unverified {
+						:local {
+							animation: shake 0.3s ease-in-out;
+						}
+					}
+				}
+
+				.btn_copy {
+					z-index: 10000;
+					right: 0;
+					overflow: hidden;
+					width: 21px;
+					height: 21px;
+					border: 1px dashed var(--color_border_light);
+					border-top: none;
+					border-right: none;
+					border-top-right-radius: var(--radius);
+					border-bottom-left-radius: var(--radius);
+					background-color: var(--color_bg);
+
+					&:hover {
+						background-color: var(--color_bg_2);
+					}
+				}
+
+				.desc {
+					width: 93%;
+					margin-top: 12px;
+					color: var(--color_text_light);
+					font-size: 12px;
+				}
+			}
+		}
+
+		.btn_toggle_use {
+			background-color: var(--color_bg_1);
+		}
+	}
+}

@@ -18,9 +18,12 @@ interface IProps {
 	minHeight?: string | number
 	maskClosable?: boolean
 	disableOverflow?: boolean
+	disablePadding?: boolean
 	hideClose?: boolean
+	zIndex?: number
 	onCancel?: (e: MouseEvent<HTMLDivElement>) => void
 	getContainer?: () => Element
+	getRef?: (v: HTMLElement) => void
 }
 
 const Index = (props: IProps) => {
@@ -33,15 +36,18 @@ const Index = (props: IProps) => {
 		minHeight,
 		maskClosable,
 		disableOverflow,
+		disablePadding,
 		hideClose,
+		zIndex,
 		onCancel,
-		getContainer
+		getContainer,
+		getRef
 	} = props
 	const ref_content_wrap = useRef<HTMLDivElement>(null)
 	const ref_content = useRef<HTMLDivElement>(null)
 	const [on_body, setOnbody] = useState(false)
 	const [exsit, setExsit] = useState(false)
-	const container = getContainer?.()
+	const container = getContainer?.() || document.body
 
 	useEffect(() => {
 		if (open) {
@@ -73,28 +79,31 @@ const Index = (props: IProps) => {
 			<AnimatePresence>
 				{open && (
 					<motion.div
+						className={$cx(styles.mask, on_body && styles.on_body, 'w_100 h_100')}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
 						transition={{ duration: 0.18, ease: 'easeInOut' }}
-						className={$cx(styles.mask, on_body && styles.on_body, 'w_100 h_100')}
+						style={{ zIndex: zIndex ?? 1001 }}
 					></motion.div>
 				)}
 			</AnimatePresence>
 			<AnimatePresence>
 				{open && (
 					<motion.div
-						initial={{ transform: 'translate3d(0px, -30px, 0px)', opacity: 0 }}
-						animate={{ transform: 'translate3d(0px, 0px, 0px)', opacity: 1 }}
-						exit={{ transform: 'translate3d(0px, 30px, 0px)', opacity: 0 }}
-						transition={{ duration: 0.18, ease: 'easeInOut' }}
 						className={$cx(
 							styles.content_wrap,
 							on_body && styles.on_body,
 							disableOverflow && styles.disableOverflow,
+							disablePadding && styles.disablePadding,
 							'if_modal_wrap w_100 h_100 border_box flex align_center'
 						)}
 						ref={ref_content_wrap}
+						initial={{ transform: 'translate3d(0px, -30px, 0px)', opacity: 0 }}
+						animate={{ transform: 'translate3d(0px, 0px, 0px)', opacity: 1 }}
+						exit={{ transform: 'translate3d(0px, 30px, 0px)', opacity: 0 }}
+						transition={{ duration: 0.18, ease: 'easeInOut' }}
+						style={{ zIndex: zIndex ? zIndex + 1 : 1002 }}
 					>
 						<div
 							className={$cx(
@@ -130,6 +139,7 @@ const Index = (props: IProps) => {
 									disableOverflow && styles.disableOverflow,
 									'if_modal_body border_box flex flex_column'
 								)}
+								ref={getRef}
 							>
 								{children}
 							</div>

@@ -87,6 +87,7 @@ const typed_nav_items = [
 		id: 'setting',
 		title: 'setting',
 		path: '/setting',
+		event: 'global.setting.toggleVisible',
 		fixed: true
 	}
 ] as const

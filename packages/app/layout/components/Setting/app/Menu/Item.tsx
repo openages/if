@@ -30,9 +30,9 @@ const Index = (props: IProps) => {
 			ref={setNodeRef}
 			style={{ transform: CSS.Transform.toString(transform), transition }}
 		>
-			<div className='app_module_item w_100 border_box flex align_center justify_between relative'>
+			<div className='app_module_item setting_item w_100 border_box flex align_center justify_between relative'>
 				<div
-					className='btn_drag flex justify_end align_center absolute'
+					className='btn_drag btn_action flex justify_end align_center absolute'
 					ref={setActivatorNodeRef}
 					{...attributes}
 					{...listeners}

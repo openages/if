@@ -10,4 +10,13 @@
 		font-size: 21px;
 		font-weight: 500;
 	}
+
+	:global {
+		.article_title {
+			&.serif {
+				font-family: serif;
+				font-weight: bold;
+			}
+		}
+	}
 }

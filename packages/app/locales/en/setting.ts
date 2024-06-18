@@ -11,7 +11,7 @@ export default {
 		title: 'Setting',
 		language: {
 			title: 'Language',
-			desc: 'Languages used by applications and modules'
+			desc: 'Languages used by application'
 		},
 		theme: {
 			title: 'Theme',
@@ -57,6 +57,21 @@ export default {
 		},
 		getFingerprint: {
 			error: 'Fingerprint generation failed, please contact the developer.'
+		}
+	},
+	Note: {
+		serif: {
+			title: 'Serif',
+			desc: 'Readability, professionalism, and recognizability'
+		},
+		small_text: {
+			title: 'Small Text',
+			desc: 'Optimal size for more content'
+		},
+		toc: {
+			title: 'Table of Contents',
+			desc: 'Overview of article structure',
+			options: ['default', 'visible', 'hidden']
 		}
 	}
 }

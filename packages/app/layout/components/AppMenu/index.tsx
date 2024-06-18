@@ -52,7 +52,15 @@ const Index = (props: IPropsAppMenu) => {
 									)}
 									key={item.title}
 									to={item.path}
-									onClick={onClose}
+									onClick={e => {
+										if (item.event) {
+											e.preventDefault()
+
+											$app.Event.emit(item.event)
+										}
+
+										onClose()
+									}}
 								>
 									<div className='icon_wrap flex justify_center align_center'>
 										<ModuleIcon

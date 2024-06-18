@@ -15,14 +15,22 @@ import { GlobalContext, GlobalModel } from '@/context/app'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
 import { useDeepMemo } from '@openages/stk/react'
 
-import { AppMenu, AppSwitch, PayModal, Screenlock, Search, Sidebar, Stacks } from './components'
+import { AppMenu, AppSwitch, PayModal, Screenlock, Search, Setting, Sidebar, Stacks } from './components'
 import { useGlobalNavigate, useGlobalTranslate, useLayout } from './hooks'
 import styles from './index.css'
 
 import type { IPropsOffscreenOutlet } from '@/components/OffscreenOutlet'
 import type { AppProps } from 'antd'
 import type { ConfigProviderProps } from 'antd/es/config-provider'
-import type { IPropsAppMenu, IPropsAppSwitch, IPropsSidebar, IPropsStacks, IPropsPayModal, IPropsSearch } from './types'
+import type {
+	IPropsAppMenu,
+	IPropsAppSwitch,
+	IPropsSidebar,
+	IPropsStacks,
+	IPropsPayModal,
+	IPropsSearch,
+	IPropsSetting
+} from './types'
 
 const Index = () => {
 	const { pathname } = useLocation()
@@ -146,6 +154,11 @@ const Index = () => {
 		clearSearchHistory: useMemoizedFn(global.search.clearSearchHistory)
 	}
 
+	const props_setting: IPropsSetting = {
+		visible: global.setting.visible,
+		onClose: useMemoizedFn(() => (global.setting.visible = false))
+	}
+
 	if (global.screenlock.screenlock_open) {
 		return (
 			<GlobalContext.Provider value={global}>
@@ -181,6 +194,7 @@ const Index = () => {
 						<AppSwitch {...props_app_switch}></AppSwitch>
 						<PayModal {...props_pay_modal}></PayModal>
 						<Search {...props_search}></Search>
+						<Setting {...props_setting}></Setting>
 						{process.env.NODE_ENV === 'development' && (
 							<LazyElement type='dev' path=''></LazyElement>
 						)}

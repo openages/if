@@ -4,6 +4,24 @@
 	background-color: transparent;
 	box-shadow: none;
 
+	&:not(.if-switch-small) {
+		width: 30px;
+		min-width: 30px;
+		height: 16px;
+		line-height: 16px;
+
+		&.if-switch-checked {
+			.if-switch-handle {
+				inset-inline-start: calc(100% - 15px);
+			}
+		}
+
+		.if-switch-handle {
+			width: 12px;
+			height: 12px;
+		}
+	}
+
 	&:hover {
 		outline-color: var(--color_text_sub);
 

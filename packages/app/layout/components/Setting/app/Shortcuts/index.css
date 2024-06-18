@@ -1,27 +1,19 @@
 ._local {
-	max-width: 360px;
-	margin: 0 auto;
-
 	:global {
 		.row_item_wrap {
-			margin-bottom: 6px;
-
 			.row_item {
-				line-height: 1;
-				padding: 12px;
-				border-radius: var(--radius_large);
-				background-color: var(--color_bg_1);
-
 				.key_action {
-					padding: 2px 4px;
+					padding: 0 4px;
 					border: 1px dashed var(--color_border);
 					border-radius: var(--radius_small);
 					font-size: 10px;
 				}
 
 				.key_bindings {
+					width: 120px;
+
 					.key {
-						padding: 2px 4px;
+						padding: 0px 4px;
 						border: 1px solid var(--color_border);
 						border-bottom-width: 2px;
 						border-radius: var(--radius_small);

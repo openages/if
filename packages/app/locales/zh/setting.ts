@@ -11,7 +11,7 @@ export default {
 		title: '设置',
 		language: {
 			title: '语言',
-			desc: '应用和模块所使用的语言'
+			desc: '应用所使用的语言'
 		},
 		theme: {
 			title: '主题',
@@ -57,6 +57,21 @@ export default {
 		},
 		getFingerprint: {
 			error: '指纹生成失败，请联系开发商'
+		}
+	},
+	Note: {
+		serif: {
+			title: '衬线字体',
+			desc: '衬线字体有易读、专业、可识别等优点'
+		},
+		small_text: {
+			title: '小字号',
+			desc: '更好的字号以展示更多内容'
+		},
+		toc: {
+			title: '大纲模式',
+			desc: '大纲用于总览文章结构',
+			options: ['默认', '常亮', '隐藏']
 		}
 	}
 }

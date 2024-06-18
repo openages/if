@@ -1,6 +1,14 @@
 .init {
 	font-size: 15px;
 
+	&.serif {
+		font-family: serif;
+	}
+
+	&.small_text {
+		font-size: 13px;
+	}
+
 	:global {
 		div[contenteditable='true'] {
 			outline: none;

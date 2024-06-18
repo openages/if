@@ -136,3 +136,8 @@ export interface IPropsSearch {
 	changeSearchIndex: (index: number) => void
 	clearSearchHistory: () => void
 }
+
+export interface IPropsSetting {
+	visible: GlobalModel['setting']['visible']
+	onClose: () => void
+}

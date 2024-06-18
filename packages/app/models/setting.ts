@@ -10,6 +10,7 @@ import type { Theme } from '@/appdata'
 
 @injectable()
 export default class Index {
+	visible = false
 	theme: Theme = 'light'
 	auto_theme = false
 	color_main_rgb = '255,0,0'
@@ -33,6 +34,7 @@ export default class Index {
 		this.setColorMain(this.color_main_rgb || '255,0,0')
 		this.setPageWidth(this.page_width || '780px')
 		this.checkTheme()
+		this.on()
 	}
 
 	setTheme(v: Theme, initial?: boolean) {
@@ -81,7 +83,21 @@ export default class Index {
 		document.documentElement.style.setProperty('--limited_width', v)
 	}
 
+	toggleVisible(v?: boolean) {
+		if (v) {
+			this.visible = v
+		} else {
+			this.visible = !this.visible
+		}
+	}
+
+	on() {
+		$app.Event.on('global.setting.toggleVisible', this.toggleVisible)
+	}
+
 	off() {
+		$app.Event.off('global.setting.toggleVisible', this.toggleVisible)
+
 		this.utils.off()
 	}
 }

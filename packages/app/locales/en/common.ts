@@ -51,7 +51,7 @@ export default {
 	reload: 'Reload',
 	storage: 'Cache',
 	clear_storage: 'Clear Cache',
-	clear_storage_desc: `Clearing the application's temporary cache storage`,
+	clear_storage_desc: `Clearing the application's cache storage`,
 	default: 'Default',
 	start: 'Start',
 	stop: 'Stop',

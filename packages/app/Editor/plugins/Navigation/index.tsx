@@ -18,6 +18,7 @@ interface IPropsContent {
 	minimize: Model['minimize']
 	scroll: Model['scroll']
 	style: Model['style']
+	toc: Model['toc']
 	visible_items: Array<string>
 	active_items: Array<string>
 	setRef: (v: HTMLElement) => void
@@ -26,7 +27,7 @@ interface IPropsContent {
 }
 
 const Content = $app.memo((props: IPropsContent) => {
-	const { minimize, scroll, style, visible_items, active_items, setRef, setItems, scrollIntoEl } = props
+	const { minimize, scroll, style, toc, visible_items, active_items, setRef, setItems, scrollIntoEl } = props
 
 	return (
 		<TableOfContentsPlugin>
@@ -40,7 +41,8 @@ const Content = $app.memo((props: IPropsContent) => {
 						className={$cx(
 							'border_box',
 							styles._local,
-							!minimize ? 'fixed z_index_10' : styles.minimize
+							!minimize ? 'fixed z_index_10' : styles.minimize,
+							!minimize && toc !== 'default' && styles.visible
 						)}
 						style={!minimize ? style : {}}
 					>
@@ -92,6 +94,7 @@ const Index = () => {
 		minimize: x.minimize,
 		scroll: x.scroll,
 		style: $copy(x.style),
+		toc: $copy(x.toc),
 		visible_items: $copy(x.visible_items),
 		active_items: $copy(x.active_items),
 		setRef,

@@ -12,6 +12,7 @@ const Index = (props: IPropsSidebarItem) => {
 	const { current_module, show_bar_title, item, active } = props
 	const { t } = useTranslation()
 	const current = current_module === item.title
+	const title = t(`translation:modules.${item.title}`) as string
 
 	const exitApp = useMemoizedFn((e: MouseEvent<HTMLAnchorElement>) => {
 		e.preventDefault()
@@ -22,7 +23,13 @@ const Index = (props: IPropsSidebarItem) => {
 		$app.Event.emit('global.app.exitApp', item.title)
 	})
 
-	const title = t(`translation:modules.${item.title}`) as string
+	const onClick = useMemoizedFn((e: MouseEvent) => {
+		if (item.event) {
+			e.preventDefault()
+
+			$app.Event.emit(item.event)
+		}
+	})
 
 	const LinkItem = (
 		<NavLink
@@ -34,6 +41,7 @@ const Index = (props: IPropsSidebarItem) => {
 			)}
 			to={item.path}
 			onContextMenu={exitApp}
+			onClick={onClick}
 		>
 			<ModuleIcon
 				className='icon_bar'

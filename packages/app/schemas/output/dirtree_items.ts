@@ -43,6 +43,12 @@ export default {
                   },
                   "backup_at": {
                         "type": "number"
+                  },
+                  "projects": {
+                        "type": "array",
+                        "items": {
+                              "type": "string"
+                        }
                   }
             },
             "required": [
@@ -99,6 +105,12 @@ export default {
                         },
                         "backup_at": {
                               "type": "number"
+                        },
+                        "projects": {
+                              "type": "array",
+                              "items": {
+                                    "type": "string"
+                              }
                         }
                   },
                   "required": [

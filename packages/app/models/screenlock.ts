@@ -68,7 +68,7 @@ export default class Index {
 	async genKeyPair(password: string, by_unlocking?: boolean) {
 		const { privateKey, publicKey: public_key } = await generateKey({
 			type: 'ecc',
-			curve: 'ed25519',
+			curve: 'ed25519Legacy',
 			format: 'armored',
 			passphrase,
 			userIDs: { name: '1yasa', email: 'openages@gmail.com', comment: password }
