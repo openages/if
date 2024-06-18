@@ -11,6 +11,10 @@
 			}
 		}
 
+		.__editor_list_ul {
+			list-style-type: disc;
+		}
+
 		.__editor_list_item {
 			&.__editor_fold {
 				list-style-type: none;

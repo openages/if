@@ -3,11 +3,13 @@
 	padding: 48px 0;
 
 	&.minimize {
-		overflow-y: scroll;
-		max-height: calc(100vh - 36px - 60px);
 		padding: 0;
 
 		:global {
+			.nav_list_wrap {
+				max-height: calc(100vh - 36px - 60px);
+			}
+
 			.nav_list {
 				li {
 					.signal_wrap {

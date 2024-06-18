@@ -1,6 +1,7 @@
 import { $getNodeByKey, COMMAND_PRIORITY_LOW } from 'lexical'
 import { debounce, throttle } from 'lodash-es'
 import { makeAutoObservable, runInAction } from 'mobx'
+import smoothScrollIntoView from 'smooth-scroll-into-view-if-needed'
 
 import { INSERT_NAVIGATION_COMMAND } from '@/Editor/commands'
 import { $getHeadingLevel, insertBlock } from '@/Editor/utils'
@@ -9,7 +10,7 @@ import { mergeRegister } from '@lexical/utils'
 
 import { $createNavigationNode } from './utils'
 
-import type { LexicalEditor, LexicalNode } from 'lexical'
+import type { LexicalEditor } from 'lexical'
 import type NavigationNode from './Node'
 import type { CSSProperties } from 'react'
 
@@ -20,11 +21,13 @@ export default class Index {
 	id = ''
 	editor = null as LexicalEditor
 	container = null as HTMLElement
+	ref = null as HTMLElement
 	observer = null as ResizeObserver
 	items = [] as Array<TableOfContentsEntry>
 
 	visible_mini_nav = false
 	minimize = false
+	scroll = false
 	style = null as CSSProperties
 	visible_items = [] as Array<string>
 	active_items = [] as Array<string>
@@ -38,6 +41,7 @@ export default class Index {
 				id: false,
 				editor: false,
 				container: false,
+				ref: false,
 				observer: false,
 				items: false,
 				onScroll: false,
@@ -124,9 +128,6 @@ export default class Index {
 
 			const prev_items = this.items.slice(0, target_index)
 			const next_items = this.items.slice(target_index)
-
-			// console.log(target_index, prev_items, next_items)
-
 			const target_key = this.items[target_index][0]
 			const target_node = $getNodeByKey(target_key) as HeadingNode
 			const target_level = $getHeadingLevel(target_node)
@@ -198,7 +199,25 @@ export default class Index {
 				current_next_index++
 			}
 
+			let scroll = false
+
+			if (this.ref) {
+				const nav_is_scroll = this.ref.scrollHeight > this.ref.clientHeight
+
+				if (nav_is_scroll) {
+					smoothScrollIntoView(this.ref.querySelector(`.nav_item_${target_key}`), {
+						scrollMode: 'if-needed',
+						boundary: this.ref
+					})
+
+					scroll = true
+				} else {
+					scroll = false
+				}
+			}
+
 			runInAction(() => {
+				this.scroll = scroll
 				this.visible_items = visible_items
 				this.active_items = active_items
 			})
@@ -211,6 +230,12 @@ export default class Index {
 		insertBlock(node)
 
 		return true
+	}
+
+	toggleList(v?: boolean) {
+		if (v) this.visible_items
+
+		return false
 	}
 
 	on() {

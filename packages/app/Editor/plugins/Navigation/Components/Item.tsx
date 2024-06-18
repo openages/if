@@ -25,7 +25,7 @@ const Index = (props: IProps) => {
 	})
 
 	return (
-		<li className={$cx('w_100 border_box', visible && 'visible', active && 'active')}>
+		<li className={$cx('w_100 border_box', `nav_item_${node_key}`, visible && 'visible', active && 'active')}>
 			<span className='signal_wrap align_center'>
 				<span className='signal inline_block' style={{ width: type_value * 3 }}></span>
 			</span>

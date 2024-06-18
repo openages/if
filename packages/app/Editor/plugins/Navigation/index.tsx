@@ -16,20 +16,24 @@ import Model from './model'
 
 interface IPropsContent {
 	minimize: Model['minimize']
+	scroll: Model['scroll']
 	style: Model['style']
 	visible_items: Array<string>
 	active_items: Array<string>
+	setRef: (v: HTMLElement) => void
 	setItems: (v: Model['items']) => void
 	scrollIntoEl: (node_key: string) => void
 }
 
 const Content = $app.memo((props: IPropsContent) => {
-	const { minimize, style, visible_items, active_items, setItems, scrollIntoEl } = props
+	const { minimize, scroll, style, visible_items, active_items, setRef, setItems, scrollIntoEl } = props
 
 	return (
 		<TableOfContentsPlugin>
 			{items => {
 				setItems(items)
+
+				if (!items.length) return null
 
 				return (
 					<div
@@ -40,7 +44,13 @@ const Content = $app.memo((props: IPropsContent) => {
 						)}
 						style={!minimize ? style : {}}
 					>
-						<div className='nav_list_wrap h_100 border_box flex align_center'>
+						<div
+							className={$cx(
+								'nav_list_wrap h_100 border_box flex relative',
+								!scroll && 'align_center'
+							)}
+							ref={setRef}
+						>
 							<ul className='nav_list w_100 relative'>
 								<div className='right_mask absolute right_0 h_100'></div>
 								{items.map(([node_key, text, type]) => (
@@ -72,6 +82,7 @@ const Index = () => {
 	}, [id, editor])
 
 	const setItems = useMemoizedFn(v => (x.items = v))
+	const setRef = useMemoizedFn(v => (x.ref = v))
 
 	const scrollIntoEl = useMemoizedFn((node_key: string) => {
 		smoothScrollIntoView(editor.getElementByKey(node_key))
@@ -79,9 +90,11 @@ const Index = () => {
 
 	const props_content: IPropsContent = {
 		minimize: x.minimize,
+		scroll: x.scroll,
 		style: $copy(x.style),
 		visible_items: $copy(x.visible_items),
 		active_items: $copy(x.active_items),
+		setRef,
 		setItems,
 		scrollIntoEl
 	}
