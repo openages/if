@@ -1,13 +1,11 @@
 ._local {
 	:global {
 		.app_module_item_wrap {
-			margin-bottom: 6px;
-
 			&.isDragging {
 				z-index: 100;
 
 				.app_module_item {
-					padding: 9px;
+					padding: 12px;
 					border-radius: var(--radius);
 					outline: 1px dashed var(--color_text);
 					background-color: transparent;
@@ -23,7 +21,7 @@
 				}
 
 				.btn_drag {
-					right: 30px;
+					right: 39px;
 					opacity: 0;
 					cursor: grab;
 				}

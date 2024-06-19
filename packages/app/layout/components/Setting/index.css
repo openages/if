@@ -4,7 +4,7 @@
 	max-width: 840px;
 	height: 81vh;
 	min-height: unset;
-	max-height: 720px !important;
+	max-height: 600px !important;
 	padding: 0 !important;
 
 	:global {
@@ -64,6 +64,7 @@
 				padding: 0 9px;
 				border: none;
 				border-radius: var(--radius);
+				outline: none;
 				opacity: 0.6;
 				background-color: transparent;
 				box-shadow: none;
@@ -147,7 +148,7 @@
 		}
 
 		.setting_item {
-			padding: 9px 0px;
+			padding: 12px 0px;
 			border-bottom: var(--border_light_dashed);
 		}
 

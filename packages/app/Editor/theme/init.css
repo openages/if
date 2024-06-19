@@ -2,7 +2,13 @@
 	font-size: 15px;
 
 	&.serif {
-		font-family: serif;
+		font-family: Georgia, ui-serif, serif;
+
+		:global {
+			.__editor_heading {
+				font-weight: bold;
+			}
+		}
 	}
 
 	&.small_text {

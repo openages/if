@@ -43,7 +43,7 @@ const Index = (props: IProps) => {
 					<ModuleIcon type={item.title} size={24} weight='duotone'></ModuleIcon>
 					<span className='name ml_12'>{t(`translation:modules.${item.title}`)}</span>
 				</div>
-				<Switch size='small' checked={item.fixed} onChange={v => changeIsFixed(index, v)}></Switch>
+				<Switch checked={item.fixed} onChange={v => changeIsFixed(index, v)}></Switch>
 			</div>
 		</div>
 	)

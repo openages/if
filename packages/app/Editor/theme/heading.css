@@ -1,6 +1,8 @@
 .heading {
 	:global {
 		.__editor_heading {
+			font-weight: 500;
+
 			&.__editor_fold {
 				&::before {
 					left: -1em;
@@ -32,7 +34,6 @@
 		.__editor_heading_h6 {
 			margin-block-start: 0.6em;
 			margin-block-end: 0.36em;
-			font-weight: 500;
 		}
 
 		.__editor_heading_h1 {
