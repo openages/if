@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import { container } from 'tsyringe'
 
 import { Popover } from '@/components'
+import { useStackSelector } from '@/context/stack'
 import { stopPropagation } from '@/Editor/utils'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { ShareFat } from '@phosphor-icons/react'
@@ -14,14 +15,15 @@ import Model from './model'
 const Index = () => {
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
+	const id = useStackSelector(v => v.id)
 	const ref = useRef()
 	const position = $copy(x.position)
 
 	useLayoutEffect(() => {
-		x.init(editor)
+		x.init(id, editor)
 
 		return () => x.off()
-	}, [editor])
+	}, [id, editor])
 
 	useClickAway(() => x.reset(), [x.dom, ref])
 

@@ -1,16 +1,18 @@
 import {
 	$copyNode,
 	$createParagraphNode,
+	$createPoint,
+	$createRangeSelection,
 	$getNearestNodeFromDOMNode,
-	$getNodeByKey,
 	$getRoot,
 	$isDecoratorNode,
 	$isParagraphNode,
-	$isTextNode,
+	$setSelection,
 	COMMAND_PRIORITY_HIGH,
 	COMMAND_PRIORITY_LOW,
 	DRAGOVER_COMMAND,
-	DROP_COMMAND
+	DROP_COMMAND,
+	RangeSelection
 } from 'lexical'
 import { throttle } from 'lodash-es'
 import { makeAutoObservable, runInAction } from 'mobx'
@@ -21,6 +23,7 @@ import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
 import { $cloneNode, $getHeadingLevel, $getMatchingParent } from '@/Editor/utils'
 import Utils from '@/models/utils'
 import { getComputedStyleValue } from '@/utils'
+import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link'
 import { $isListItemNode, $isListNode } from '@lexical/list'
 import { $isHeadingNode, eventFiles, HeadingNode } from '@lexical/rich-text'
 import { $getNearestBlockElementAncestorOrThrow, isHTMLElement } from '@lexical/utils'
@@ -35,12 +38,12 @@ import { $isToggleBodyNode, $isToggleBtnNode, $isToggleHeadNode, $isToggleNode }
 import type { DecoratorNode, LexicalEditor, LexicalNode } from 'lexical'
 import type { DragEvent as ReactDragEvent } from 'react'
 import type { ListNode } from '@lexical/list'
-
 @injectable()
 export default class Index {
 	id = ''
-	container = null as HTMLDivElement
 	editor = null as LexicalEditor
+	md = false
+	container = null as HTMLDivElement
 	active_node = null as LexicalNode
 	over_node = null as LexicalNode
 
@@ -52,6 +55,7 @@ export default class Index {
 	visible_toggle = false
 	dragging = false
 	fold = false
+	is_heading = false
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(
@@ -59,8 +63,9 @@ export default class Index {
 			{
 				utils: false,
 				id: false,
-				container: false,
 				editor: false,
+				md: false,
+				container: false,
 				active_node: false,
 				over_node: false,
 				onMouseMove: false,
@@ -73,10 +78,11 @@ export default class Index {
 		this.onMouseMove = throttle(this.onMouseMove.bind(this), 180)
 	}
 
-	init(id: Index['id'], editor: Index['editor']) {
+	init(id: Index['id'], editor: Index['editor'], md: Index['md']) {
 		this.id = id
-		this.container = document.querySelector(`#${id} .__editor_container`)
 		this.editor = editor
+		this.md = md
+		this.container = document.querySelector(`#${id} .__editor_container`)
 
 		this.on()
 	}
@@ -91,6 +97,7 @@ export default class Index {
 		this.visible_toggle = false
 		this.dragging = false
 		this.fold = false
+		this.is_heading = false
 
 		return false
 	}
@@ -130,8 +137,26 @@ export default class Index {
 		const { key } = args
 
 		if (key === 'copy_link') {
+			const link = this.md
+				? `#${this.active_node.getTextContent()}`
+				: `block://${this.active_node.getKey()}`
+
+			const link_node = $getMatchingParent((this.active_node as HeadingNode).getFirstChild(), $isLinkNode)
+
+			if (this.md && !link_node) {
+				const active_key = this.active_node.getKey()
+				const selection = $createRangeSelection()
+
+				selection.anchor.set(active_key, 0, 'element')
+				selection.focus.set(active_key, 0, 'element')
+
+				$setSelection(selection)
+
+				this.editor.dispatchCommand(TOGGLE_LINK_COMMAND, link_node ? null : link)
+			}
+
 			navigator.clipboard
-				.writeText(`block://${this.active_node.getKey()}`)
+				.writeText(link)
 				.then(() =>
 					$message.success(
 						`${$t('translation:common.link')}${$t('translation:common.letter_space')}${$t('translation:common.copied')}`
@@ -255,6 +280,7 @@ export default class Index {
 				this.visible_menu = false
 				this.visible_toggle = fold !== undefined ? true : false
 				this.fold = fold
+				this.is_heading = $isHeadingNode(active_node)
 			})
 		})
 	}

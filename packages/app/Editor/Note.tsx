@@ -55,7 +55,7 @@ const Index = () => {
 
 				<Watcher />
 				<Settings />
-				<Hover />
+				<Hover md />
 				<Navigation />
 				<Picker />
 				<TextBar md />

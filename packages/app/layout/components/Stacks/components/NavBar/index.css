@@ -96,6 +96,7 @@
 			.name_wrap {
 				overflow: scroll;
 				max-width: 90px;
+				line-height: 16px;
 				outline: none;
 				font-size: 12px;
 			}

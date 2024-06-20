@@ -105,7 +105,12 @@ export default class Index {
 					this.formats['link'] = true
 
 					navigator.clipboard.readText().then(res => {
-						if (res && (res.indexOf('block://') !== -1 || res.indexOf('https://') !== -1)) {
+						if (
+							res &&
+							(res.startsWith('#') ||
+								res.startsWith('block://') ||
+								res.startsWith('https://'))
+						) {
 							this.editor.dispatchCommand(TOGGLE_LINK_COMMAND, res)
 						} else {
 							this.editor.dispatchCommand(TOGGLE_LINK_COMMAND, 'https://')

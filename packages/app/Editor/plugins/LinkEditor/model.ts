@@ -22,6 +22,7 @@ import type { FocusEvent } from 'react'
 
 @injectable()
 export default class Index {
+	id = ''
 	editor = null as LexicalEditor
 	node = null as LinkNode
 	dom = null as HTMLAnchorElement
@@ -35,12 +36,13 @@ export default class Index {
 	constructor(public utils: Utils) {
 		makeAutoObservable(
 			this,
-			{ utils: false, editor: false, node: false, dom: false, unregister: false },
+			{ utils: false, id: false, editor: false, node: false, dom: false, unregister: false },
 			{ autoBind: true }
 		)
 	}
 
-	init(editor: Index['editor']) {
+	init(id: Index['id'], editor: Index['editor']) {
+		this.id = id
 		this.editor = editor
 
 		this.on()
@@ -111,20 +113,33 @@ export default class Index {
 		if (e && (!this.editor.isEditable() || e.metaKey || e.ctrlKey)) {
 			const url = this.node.getURL()
 
-			if (url.indexOf('block://') !== -1) {
-				const key = url.replace('block://', '')
-				const el = this.editor.getElementByKey(key)
+			let el = null as HTMLElement
 
+			if (url.startsWith('#')) {
+				const container = document.getElementById(this.id)
+
+				el = container.querySelector(`a[href="${url}"]`)
+			}
+
+			if (url.startsWith('block://')) {
+				const key = url.replace('block://', '')
+
+				el = this.editor.getElementByKey(key)
+			}
+
+			if (el) {
 				smoothScrollIntoView(el)
 
 				el.classList.add('notice_text')
 
 				setTimeout(() => {
 					el.classList.remove('notice_text')
-				}, 1200)
-			} else {
-				window.open(url, '_blank')
+				}, 1500)
+
+				return true
 			}
+
+			window.open(url, '_blank')
 		} else {
 			this.visible = true
 

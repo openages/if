@@ -1,7 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { ConfigProvider, Dropdown } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState, Fragment } from 'react'
+import { useLayoutEffect, useMemo, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
 import { container } from 'tsyringe'
 
@@ -11,20 +11,28 @@ import { CaretDown, DotsSixVertical } from '@phosphor-icons/react'
 
 import styles from './index.css'
 import Model from './model'
-import options from './options'
+import { options_common, options_heading } from './options'
 
 import type { MenuProps } from 'antd'
+import type { IPropsCommon } from '@/Editor/types'
 
-const Index = () => {
+const Index = (props: IPropsCommon) => {
+	const { md } = props
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
 
 	useLayoutEffect(() => {
-		x.init(id, editor)
+		x.init(id, editor, md)
 
 		return () => x.off()
-	}, [id, editor])
+	}, [id, editor, md])
+
+	const options = useMemo(() => {
+		if (!md || (md && x.is_heading)) return options_heading.concat(options_common)
+
+		return options_common
+	}, [md, x.is_heading])
 
 	const onClick: MenuProps['onClick'] = useMemoizedFn(e => editor.update(() => x.onClick(e)))
 	const onToggle = useMemoizedFn(() => editor.update(() => x.onToggle()))
