@@ -1,0 +1,12 @@
+._local {
+	border-radius: var(--radius);
+}
+
+.selected {
+	outline: 1px dashed var(--color_text);
+}
+
+.pre {
+	display: inline-flex;
+	margin: 0;
+}

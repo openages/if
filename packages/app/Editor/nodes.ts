@@ -7,6 +7,7 @@ import CodeTextNode from './plugins/Code/CodeTextNode'
 import DividerNode from './plugins/Divider/Node'
 import ImageNode from './plugins/Image/Node'
 import KatexNode from './plugins/Katex/Node'
+import MermaidNode from './plugins/Mermaid/Node'
 import NavigationNode from './plugins/Navigation/Node'
 import QuoteNode from './plugins/Quote/QuoteNode'
 import TableCellNode from './plugins/Table/TableCellNode'
@@ -22,6 +23,7 @@ import type { Klass, LexicalNode } from 'lexical'
 export default [
 	ImageNode,
 	KatexNode,
+	MermaidNode,
 	DividerNode,
 	CodeNode,
 	CodeTextNode,

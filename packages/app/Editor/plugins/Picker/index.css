@@ -1,8 +1,13 @@
 .modal {
 	min-width: 300px;
+	max-width: 100%;
 
 	.Emoji {
 		padding: 0 !important;
+	}
+
+	.Mermaid {
+		min-width: 450px;
 	}
 
 	:global {

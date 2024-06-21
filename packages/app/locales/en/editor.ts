@@ -10,6 +10,7 @@ export default {
 		TodoList: 'Todo List',
 		Table: 'Table',
 		Katex: 'Katex',
+		Mermaid: 'Mermaid',
 		Divider: 'Divider',
 		Quote: 'Quote',
 		Toggle: 'Toggle',
@@ -37,8 +38,15 @@ export default {
 			},
 			placeholder: {
 				equation: 'Equation expression'
+			}
+		}
+	},
+	Mermaid: {
+		modal: {
+			label: {
+				definition: 'Definition'
 			},
-			preview: 'Preview'
+			placeholder: 'Graph definition'
 		}
 	},
 	Navigation: {

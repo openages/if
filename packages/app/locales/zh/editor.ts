@@ -10,6 +10,7 @@ export default {
 		TodoList: '任务列表',
 		Table: '表格',
 		Katex: '公式',
+		Mermaid: '绘图',
 		Divider: '分割线',
 		Quote: '引言',
 		Toggle: '折叠',
@@ -37,8 +38,15 @@ export default {
 			},
 			placeholder: {
 				equation: '公式表达式'
+			}
+		}
+	},
+	Mermaid: {
+		modal: {
+			label: {
+				definition: '定义'
 			},
-			preview: '预览'
+			placeholder: '图定义'
 		}
 	},
 	Navigation: {

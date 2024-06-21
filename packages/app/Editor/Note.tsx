@@ -21,6 +21,7 @@ import {
 	Image,
 	Katex,
 	LinkEditor,
+	Mermaid,
 	Navigation,
 	Picker,
 	Quote,
@@ -65,6 +66,7 @@ const Index = () => {
 				<Image />
 				<LinkEditor />
 				<Katex />
+				<Mermaid />
 				<Divider />
 				<Code />
 				<CodeActions />

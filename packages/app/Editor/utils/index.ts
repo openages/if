@@ -18,5 +18,6 @@ export { default as $getSelectionType } from './$getSelectionType'
 export { default as $updateTextNodeProperties } from './$updateTextNodeProperties'
 export { default as $updateParagraphNodeProperties } from './$updateParagraphNodeProperties'
 export { default as $getHeadingLevel } from './$getHeadingLevel'
+export { default as mermaidRender } from './mermaidRender'
 
 export * from './handlers'

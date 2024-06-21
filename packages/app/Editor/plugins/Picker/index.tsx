@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { $getRoot, $getSelection, $isRangeSelection } from 'lexical'
+import { $getSelection, $isRangeSelection } from 'lexical'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useMemo, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
@@ -22,7 +22,6 @@ import type Option from './option'
 import type { IPropsMenu } from './types'
 import type { IPropsModal } from '../../types'
 import type { TypeaheadMenuPluginProps } from '@lexical/react/LexicalTypeaheadMenuPlugin'
-import type { RangeSelection } from 'lexical'
 
 const Index = () => {
 	const [x] = useState(() => new Model())
@@ -57,7 +56,6 @@ const Index = () => {
 				const anchor = selection.anchor.getNode()
 
 				if ($getMatchingParent(anchor, $isTableNode)) excludes.push('tb')
-				// if (!$getRoot().is(anchor?.getParent?.()?.getParent?.())) excludes.push('nav')
 
 				return excludes
 			})

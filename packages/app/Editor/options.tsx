@@ -14,7 +14,8 @@ import {
 	ListNumbers,
 	Quotes,
 	Smiley,
-	Table
+	Table,
+	TreeStructure
 } from '@phosphor-icons/react'
 
 import {
@@ -76,11 +77,6 @@ export default (args: Args) => {
 			shortcut: 'tb',
 			onSelect: () => editor.dispatchCommand(INSERT_TABLE_COMMAND, null)
 		}),
-		new Option($t('translation:editor.name.Katex'), {
-			icon: <Function />,
-			shortcut: 'kat',
-			onSelect: () => showModal('Katex')
-		}),
 		new Option($t('translation:editor.name.Divider'), {
 			icon: <Divide />,
 			shortcut: 'dv',
@@ -103,6 +99,16 @@ export default (args: Args) => {
 			icon: <CaretDown />,
 			shortcut: 'tg',
 			onSelect: () => editor.dispatchCommand(INSERT_TOGGLE_COMMAND, null)
+		}),
+		new Option($t('translation:editor.name.Katex'), {
+			icon: <Function />,
+			shortcut: 'kat',
+			onSelect: () => showModal('Katex')
+		}),
+		new Option($t('translation:editor.name.Mermaid'), {
+			icon: <TreeStructure />,
+			shortcut: 'mm',
+			onSelect: () => showModal('Mermaid')
 		}),
 		new Option($t('translation:editor.name.Navigation'), {
 			icon: <GpsFix />,

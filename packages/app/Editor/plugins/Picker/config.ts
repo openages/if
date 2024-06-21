@@ -4,5 +4,8 @@ export default {
 	},
 	Katex: {
 		width: 'auto'
+	},
+	Mermaid: {
+		width: 'auto'
 	}
 } as const

@@ -76,7 +76,7 @@ export default class Index {
 				this.setSelected(true)
 			}
 
-			return true
+			return false
 		}
 
 		return false

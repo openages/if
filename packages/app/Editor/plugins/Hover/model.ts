@@ -29,6 +29,7 @@ import { $isHeadingNode, eventFiles, HeadingNode } from '@lexical/rich-text'
 import { $getNearestBlockElementAncestorOrThrow, isHTMLElement } from '@lexical/utils'
 
 import { $isCodeNode } from '../Code/utils'
+import { $isImageNode } from '../Image/utils'
 import KatexNode from '../Katex/Node'
 import { $isKatexNode } from '../Katex/utils'
 import { $isQuoteNode } from '../Quote/utils'
@@ -449,9 +450,9 @@ export default class Index {
 				top: rect_node.top - rect_container.top + rect_node.height - 2
 			}
 		} else {
-			const block_padding = getComputedStyleValue(el_node, 'padding-block-start')
 			const inline_padding = getComputedStyleValue(el_node, 'padding-inline-start')
 
+			let block_padding = getComputedStyleValue(el_node, 'padding-block-start')
 			let margin_left = 0
 			let margin_top = 6
 
@@ -476,6 +477,10 @@ export default class Index {
 				$isToggleNode(node)
 			) {
 				margin_top = 1
+			}
+
+			if ($isDecoratorNode(node) && !$isImageNode(node)) {
+				block_padding = 0
 			}
 
 			return {
