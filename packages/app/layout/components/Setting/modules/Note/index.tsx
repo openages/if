@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { Radio, Switch } from 'antd'
+import { Select, Switch } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,10 +9,6 @@ import { NoteSettings } from '@/models'
 import { ArticleNyTimes, ListDashes, TextT } from '@phosphor-icons/react'
 
 import styles from './index.css'
-
-import type { RadioChangeEvent } from 'antd'
-
-const { Group: RadioGroup } = Radio
 
 const Index = () => {
 	const [x] = useState(() => new NoteSettings())
@@ -42,9 +38,7 @@ const Index = () => {
 		updateSetting({ small_text: v })
 	})
 
-	const onChangeToc = useMemoizedFn((e: RadioChangeEvent) => {
-		const v = e.target.value
-
+	const onChangeToc = useMemoizedFn(v => {
 		x.settings.toc = v
 
 		updateSetting({ toc: v })
@@ -54,6 +48,23 @@ const Index = () => {
 		<div className={$cx('flex flex_column', styles._local)}>
 			<span className='setting_title'>{t('translation:modules.note')}</span>
 			<div className='setting_items w_100 border_box flex flex_column'>
+				<div className='setting_item w_100 border_box flex justify_between align_center'>
+					<div className='title_wrap flex align_center'>
+						<ListDashes size={24}></ListDashes>
+						<div className='text_wrap flex flex_column'>
+							<span className='title'>{t('translation:setting.Note.toc.title')}</span>
+							<span className='desc'>{t('translation:setting.Note.toc.desc')}</span>
+						</div>
+					</div>
+					<div className='value_wrap flex align_center'>
+						<Select
+							className='select'
+							value={x.settings.toc}
+							options={toc_options}
+							onSelect={onChangeToc}
+						></Select>
+					</div>
+				</div>
 				<div className='setting_item w_100 border_box flex justify_between align_center'>
 					<div className='title_wrap flex align_center'>
 						<TextT size={24}></TextT>
@@ -78,23 +89,6 @@ const Index = () => {
 					</div>
 					<div className='value_wrap flex align_center'>
 						<Switch value={x.settings.small_text} onChange={onChangeSmallText}></Switch>
-					</div>
-				</div>
-				<div className='setting_item w_100 border_box flex justify_between align_center'>
-					<div className='title_wrap flex align_center'>
-						<ListDashes size={24}></ListDashes>
-						<div className='text_wrap flex flex_column'>
-							<span className='title'>{t('translation:setting.Note.toc.title')}</span>
-							<span className='desc'>{t('translation:setting.Note.toc.desc')}</span>
-						</div>
-					</div>
-					<div className='value_wrap flex align_center'>
-						<RadioGroup
-							className='radio_wrap flex align_center justify_end'
-							value={x.settings.toc}
-							options={toc_options}
-							onChange={onChangeToc}
-						></RadioGroup>
 					</div>
 				</div>
 			</div>

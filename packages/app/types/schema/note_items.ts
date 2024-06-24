@@ -2,7 +2,7 @@ export namespace Note {
 	export interface Setting {
 		serif: boolean
 		small_text: boolean
-		toc: 'default' | 'visible' | 'hidden'
+		toc: 'default' | 'visible' | 'minimize' | 'hidden'
 	}
 
 	export type Item = {

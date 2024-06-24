@@ -1,9 +1,9 @@
-import { useDeepCompareEffect, useMemoizedFn, useSize } from 'ahooks'
+import { useDeepCompareEffect, useMemoizedFn } from 'ahooks'
 import { useMemo, useRef, useState } from 'react'
 import { Layer, Line, Stage } from 'react-konva'
 
 import { SortableWrap } from '@/components'
-import { useCssVariable } from '@/hooks'
+import { useCssVariable, useSize } from '@/hooks'
 import { points } from '@/utils'
 import { useDndMonitor, useDroppable } from '@dnd-kit/core'
 import { verticalListSortingStrategy, SortableContext } from '@dnd-kit/sortable'
@@ -42,8 +42,8 @@ const Index = (props: IPropsTodos) => {
 	const stoper = useRef<number>()
 	const [lines, setLines] = useState<Array<JSX.Element>>([])
 	const [link_points, setLinkPoints] = useState<Array<number>>(null)
-	const size = useSize(container)
-	const height = useMemo(() => (size ? size.height : 0), [size])
+	const size = useSize(() => container.current) as number
+	const height = useMemo(() => (size ? size : 0), [size])
 	const color_text_line = useCssVariable('--color_text_line')
 	const color_text_softlight = useCssVariable('--color_text_softlight')
 

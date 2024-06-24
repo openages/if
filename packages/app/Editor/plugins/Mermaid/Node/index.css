@@ -1,4 +1,5 @@
 ._local {
+	border: var(--border);
 	border-radius: var(--radius);
 }
 
@@ -8,5 +9,10 @@
 
 .pre {
 	display: inline-flex;
+	padding: 18px;
 	margin: 0;
+
+	svg {
+		font-size: 13px !important;
+	}
 }

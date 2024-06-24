@@ -2,6 +2,7 @@ import { COMMAND_PRIORITY_EDITOR } from 'lexical'
 import { makeAutoObservable } from 'mobx'
 
 import { SHOW_MODAL_COMMAND } from '@/Editor/commands'
+import { $focus } from '@/Editor/utils'
 import { mergeRegister } from '@lexical/utils'
 
 import type { LexicalEditor } from 'lexical'
@@ -33,8 +34,14 @@ export default class Index {
 	}
 
 	close() {
+		const node_key = this.node_key
+
 		this.modal = '' as Index['modal']
 		this.node_key = ''
+
+		if (!node_key) return
+
+		$focus(this.editor)
 	}
 
 	onSelectOption(...args: Parameters<TypeaheadMenuPluginProps<Option>['onSelectOption']>) {

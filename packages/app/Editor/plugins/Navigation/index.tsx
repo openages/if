@@ -104,6 +104,8 @@ const Index = () => {
 
 	const onToggleMiniNav = useMemoizedFn(() => (x.visible_mini_nav = !x.visible_mini_nav))
 
+	if (x.toc === 'hidden') return null
+
 	if (x.minimize) {
 		const Button = (
 			<Fragment>

@@ -1,5 +1,6 @@
-import { useSize } from 'ahooks'
 import { useMemo } from 'react'
+
+import { useSize } from '@/hooks'
 
 import Scanline from '../Scanline'
 import styles from './index.css'
@@ -21,15 +22,14 @@ const Index = (props: IPropsTimelineView) => {
 		copyTimeBlock,
 		changeTimeBlockLength
 	} = props
-	const size = useSize(container)
-
+	const width = useSize(() => container.current, 'width') as number
 	const limit = useMemo(() => (scale === 'year' ? 1 : 2), [scale])
 
 	const step = useMemo(() => {
-		if (!size?.width || !days.length) return 0
+		if (!width || !days.length) return 0
 
-		return parseFloat(((size.width - 90) / days.length / limit).toFixed(3))
-	}, [days, size, limit])
+		return parseFloat(((width - 90) / days.length / limit).toFixed(3))
+	}, [days, width, limit])
 
 	return (
 		<div className='h_100 relative'>

@@ -1,10 +1,10 @@
-import { useAsyncEffect } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { useGlobal } from '@/context/app'
 import { mermaidRender } from '@/Editor/utils'
+import { useSize } from '@/hooks'
 import { Warning } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -16,30 +16,31 @@ const Index = (props: IPropsRender) => {
 	const ref = useRef(null)
 	const global = useGlobal()
 	const theme = global.setting.theme
+	const width = useSize(() => ref.current, 'width') as number
 
 	useEffect(() => {
 		const el = ref.current
 
-		if (!el || !value) return
+		if (!el || !value || !width) return
 
-		mermaidRender(value, el)
-	}, [value])
+		mermaidRender(value, el, width)
+	}, [value, width])
 
 	useEffect(() => {
 		const el = ref.current
 
-		if (!el || !value) return
+		if (!el || !value || !width) return
 
 		let timer: NodeJS.Timeout = null
 
-		mermaidRender(value, el).then(() => {
+		mermaidRender(value, el, width).then(() => {
 			timer = setTimeout(() => {
-				mermaidRender(value, el)
+				mermaidRender(value, el, width)
 			}, 300)
 		})
 
 		return () => clearTimeout(timer)
-	}, [theme])
+	}, [theme, width])
 
 	return (
 		<ErrorBoundary

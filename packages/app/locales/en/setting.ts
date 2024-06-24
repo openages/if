@@ -71,7 +71,7 @@ export default {
 		toc: {
 			title: 'Table of Contents',
 			desc: 'Overview of article structure',
-			options: ['default', 'visible', 'hidden']
+			options: ['default', 'visible', 'minimize', 'hidden']
 		}
 	}
 }

@@ -2593,7 +2593,6 @@ packages:
 
   bun@1.1.16:
     resolution: {integrity: sha512-t2AwDuJsLA3cBAxNQv/hJ66SLGtVkKFjrxdpcztkUwjVst6G9ynWiVwQOlg6VSN7niF2EZptTvDg6Jb+MKEGMQ==}
-    cpu: [arm64, x64]
     os: [darwin, linux, win32]
     hasBin: true
 

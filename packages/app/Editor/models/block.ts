@@ -69,12 +69,8 @@ export default class Index {
 		if (this.selected) return true
 
 		if (e.target === this.ref || this.ref.contains(e.target as HTMLElement)) {
-			if (e.shiftKey) {
-				this.setSelected(!this.selected)
-			} else {
-				this.clearSelection()
-				this.setSelected(true)
-			}
+			this.clearSelection()
+			this.setSelected(true)
 
 			return false
 		}

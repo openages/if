@@ -35,20 +35,7 @@ body {
 	margin: 0;
 	color: var(--color_text);
 	background-color: var(--color_bg);
-	font-family:
-		'Rubik',
-		-apple-system,
-		BlinkMacSystemFont,
-		'Segoe UI',
-		Roboto,
-		'Helvetica Neue',
-		Arial,
-		'Noto Sans',
-		sans-serif,
-		'Apple Color Emoji',
-		'Segoe UI Emoji',
-		'Segoe UI Symbol',
-		'Noto Color Emoji';
+	font-family: var(----font_family);
 	font-size: 14px;
 	text-rendering: optimizeLegibility;
 	text-size-adjust: 100%;

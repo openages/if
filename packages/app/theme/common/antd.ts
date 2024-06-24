@@ -13,9 +13,7 @@ export default {
 		controlHeightXS: 26,
 		lineType: 'dashed',
 		lineHeight: common.line_height,
-		fontFamily: `'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
-		Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-		'Noto Color Emoji'`,
+		fontFamily: 'var(--font_family)',
 		controlOutline: 'none'
 	}
 } as ThemeConfig

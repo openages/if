@@ -63,6 +63,10 @@ export default class MermaidNode extends DecoratorNode<JSX.Element> {
 		el.classList.add('__editor_katex', styles._local)
 
 		el.style.display = 'flex'
+		el.style.paddingBlockStart = '0'
+		el.style.paddingBlockEnd = '0'
+		el.style.marginBlockStart = 'var(--editor_padding_y)'
+		el.style.marginBlockEnd = 'var(--editor_padding_y)'
 
 		return el
 	}

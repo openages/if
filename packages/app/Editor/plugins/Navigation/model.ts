@@ -70,7 +70,7 @@ export default class Index {
 		const { top, right: right_container, width, height } = this.container.getBoundingClientRect()
 		const { right: right_editor_container } = editor_container.getBoundingClientRect()
 
-		if (width < 1110 || this.toc === 'hidden') {
+		if (width < 1110 || this.toc === 'minimize') {
 			this.minimize = true
 
 			this.style = { left: right_container - 21 - 18 }
@@ -237,9 +237,25 @@ export default class Index {
 	updateToc(v: Index['toc']) {
 		this.toc = v
 
+		if (v === 'hidden') {
+			this.removeEventListener()
+		} else {
+			this.addEventListener()
+		}
+
 		this.getPosition()
 
 		return false
+	}
+
+	addEventListener() {
+		this.removeEventListener()
+
+		this.container.addEventListener('scroll', this.onScroll)
+	}
+
+	removeEventListener() {
+		this.container.removeEventListener('scroll', this.onScroll)
 	}
 
 	on() {
@@ -248,7 +264,7 @@ export default class Index {
 			this.editor.registerCommand(UPDATE_NAVIGATION_TOC, this.updateToc, COMMAND_PRIORITY_LOW)
 		)
 
-		this.container.addEventListener('scroll', this.onScroll)
+		this.addEventListener()
 
 		this.observer = new ResizeObserver(throttle(this.getPosition.bind(this), 30))
 
@@ -257,8 +273,7 @@ export default class Index {
 
 	off() {
 		this.unregister()
-
-		this.container.removeEventListener('scroll', this.onScroll)
+		this.removeEventListener()
 
 		this.observer.unobserve(this.container)
 		this.observer.disconnect()

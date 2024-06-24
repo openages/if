@@ -1,4 +1,4 @@
-import { useMemoizedFn, useSize } from 'ahooks'
+import { useMemoizedFn } from 'ahooks'
 import { Button, Drawer, Tabs } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useMemo, useState, Fragment } from 'react'
@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { Modal, ModuleIcon, Wave } from '@/components'
+import { useSize } from '@/hooks'
 import { List } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -19,13 +20,13 @@ const Index = (props: IPropsSetting) => {
 	const { visible, onClose } = props
 	const [x] = useState(() => container.resolve(Model))
 	const { t } = useTranslation()
-	const body_size = useSize(() => document.body)
+	const body_width = useSize(() => document.body, 'width') as number
 
 	useEffect(() => {
-		if (!body_size) return
+		if (!body_width) return
 
-		x.mini = body_size.width <= 840
-	}, [body_size])
+		x.mini = body_width <= 840
+	}, [body_width])
 
 	const setting_items = useMemo(() => getSettingItems(t), [t])
 	const module_items = useMemo(() => getModuleItems(t), [t])

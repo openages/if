@@ -71,7 +71,7 @@ export default {
 		toc: {
 			title: '大纲模式',
 			desc: '大纲用于总览文章结构',
-			options: ['默认', '常亮', '隐藏']
+			options: ['默认', '常亮', '最小化', '隐藏']
 		}
 	}
 }
