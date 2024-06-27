@@ -7,5 +7,8 @@ export default {
 	},
 	Mermaid: {
 		width: 'auto'
+	},
+	Ref: {
+		width: 450
 	}
 } as const

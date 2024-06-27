@@ -5,6 +5,7 @@ import { $setBlocksType } from '@lexical/selection'
 import {
 	CaretDown,
 	CodeSimple,
+	CubeFocus,
 	Divide,
 	Function,
 	GpsFix,
@@ -114,6 +115,11 @@ export default (args: Args) => {
 			icon: <GpsFix />,
 			shortcut: 'nav',
 			onSelect: () => editor.dispatchCommand(INSERT_NAVIGATION_COMMAND, null)
+		}),
+		new Option($t('translation:editor.name.Ref'), {
+			icon: <CubeFocus />,
+			shortcut: 'ref',
+			onSelect: () => showModal('Ref')
 		})
 	].filter(option => regex.test(option.title.toLowerCase()) || regex.test(option.shortcut))
 }

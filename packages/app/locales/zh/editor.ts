@@ -14,7 +14,8 @@ export default {
 		Divider: '分割线',
 		Quote: '引言',
 		Toggle: '折叠',
-		Navigation: '目录'
+		Navigation: '目录',
+		Ref: '引用'
 	},
 	Image: {
 		modal: {

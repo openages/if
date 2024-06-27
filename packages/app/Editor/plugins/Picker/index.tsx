@@ -77,14 +77,20 @@ const Index = () => {
 
 	const getModalContainer = useMemoizedFn(() => document.getElementById(id))
 
+	const modal_title = useMemo(() => {
+		if (x.modal === 'Ref') return
+
+		return `${t(x.node_key ? 'translation:common.update' : 'translation:editor.insert')}${t(
+			'translation:common.letter_space'
+		)}${t(`translation:editor.name.${x.modal}`)}`
+	}, [x.modal, x.node_key])
+
 	return (
 		<Fragment>
 			<Modal
 				className={$cx(styles.modal, x.modal && styles[x.modal])}
 				open={x.modal !== ('' as Model['modal'])}
-				title={`${t(x.node_key ? 'translation:common.update' : 'translation:editor.insert')}${t(
-					'translation:common.letter_space'
-				)}${t(`translation:editor.name.${x.modal}`)}`}
+				title={modal_title}
 				width={config[x.modal]?.width || 300}
 				maskClosable
 				onCancel={closeModal}

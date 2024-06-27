@@ -224,7 +224,8 @@ export default {
             "properties": {
                   "type": {
                         "type": "string",
-                        "const": "todo"
+                        "const": "todo",
+                        "maxLength": 12
                   },
                   "status": {
                         "type": "string",
@@ -443,6 +444,7 @@ export default {
             "properties": {
                   "type": {
                         "type": "string",
+                        "maxLength": 12,
                         "enum": [
                               "todo",
                               "group"

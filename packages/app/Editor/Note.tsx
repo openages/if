@@ -25,6 +25,7 @@ import {
 	Navigation,
 	Picker,
 	Quote,
+	Ref,
 	Settings,
 	Table,
 	TableActions,
@@ -76,6 +77,7 @@ const Index = () => {
 				<TableResizer />
 				<TableMerge />
 				<Quote />
+				<Ref />
 			</LexicalComposer>
 		</div>
 	)

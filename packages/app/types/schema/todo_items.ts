@@ -51,6 +51,7 @@ export namespace Todo {
 		  }
 
 	export type Todo = Common & {
+		/** @maxLength 12 */
 		type: 'todo'
 		/** @maxLength 12 */
 		status: 'checked' | 'unchecked' | 'closed'

@@ -1,0 +1,21 @@
+._local {
+	:global {
+		.module_items {
+			line-height: 1;
+
+			.module_item {
+				padding: 6px 8px;
+				margin-right: 3px;
+				border-radius: var(--radius);
+				color: var(--color_text_grey);
+				font-size: 12px;
+
+				&:hover,
+				&.active {
+					color: var(--color_text);
+					background-color: var(--color_bg_1);
+				}
+			}
+		}
+	}
+}

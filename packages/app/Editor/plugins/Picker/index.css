@@ -10,6 +10,10 @@
 		min-width: 450px;
 	}
 
+	.Ref {
+		padding-bottom: 0;
+	}
+
 	:global {
 		.if-segmented {
 			margin-bottom: 9px;

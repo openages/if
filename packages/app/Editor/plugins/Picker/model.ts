@@ -11,7 +11,7 @@ import type Option from './option'
 
 export default class Index {
 	editor = null as LexicalEditor
-	modal = '' as 'Image' | 'Emoji' | 'Katex' | 'Mermaid'
+	modal = '' as 'Image' | 'Emoji' | 'Katex' | 'Mermaid' | 'Ref'
 	node_key = ''
 	query = ''
 	index = null as number

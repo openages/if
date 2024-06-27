@@ -14,7 +14,8 @@ export default {
 		Divider: 'Divider',
 		Quote: 'Quote',
 		Toggle: 'Toggle',
-		Navigation: 'Catalog'
+		Navigation: 'Catalog',
+		Ref: 'Ref'
 	},
 	Image: {
 		modal: {

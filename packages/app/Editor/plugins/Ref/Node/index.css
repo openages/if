@@ -1,0 +1,8 @@
+._local {
+	border: var(--border);
+	border-radius: var(--radius);
+}
+
+.selected {
+	outline: 1px dashed var(--color_text);
+}

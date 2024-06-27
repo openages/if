@@ -53,6 +53,7 @@
 
 	:global {
 		.item_wrap {
+			justify-content: flex-start;
 			height: 36px;
 			line-height: 1;
 			padding: 0;
@@ -84,7 +85,6 @@
 
 			.left_icon_wrap {
 				width: 18px;
-				margin-right: 6px;
 				user-select: none;
 			}
 

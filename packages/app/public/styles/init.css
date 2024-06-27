@@ -35,7 +35,7 @@ body {
 	margin: 0;
 	color: var(--color_text);
 	background-color: var(--color_bg);
-	font-family: var(----font_family);
+	font-family: var(--font_family);
 	font-size: 14px;
 	text-rendering: optimizeLegibility;
 	text-size-adjust: 100%;

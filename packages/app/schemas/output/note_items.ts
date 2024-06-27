@@ -13,6 +13,7 @@ export default {
                         "enum": [
                               "default",
                               "visible",
+                              "minimize",
                               "hidden"
                         ]
                   }
