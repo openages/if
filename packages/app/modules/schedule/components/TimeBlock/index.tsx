@@ -104,6 +104,7 @@ const Index = (props: IPropsTimeBlock) => {
 				}}
 			>
 				<div
+					id={item.id}
 					className={$cx(
 						'timeblock_item_wrap w_100 border_box flex flex_column',
 						styles._local,

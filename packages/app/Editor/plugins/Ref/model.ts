@@ -1,8 +1,7 @@
-import { COMMAND_PRIORITY_EDITOR } from 'lexical'
+import { $insertNodes, COMMAND_PRIORITY_EDITOR } from 'lexical'
 import { makeObservable } from 'mobx'
 
 import { INSERT_REF_COMMAND } from '@/Editor/commands'
-import { insertBlock } from '@/Editor/utils'
 import { mergeRegister } from '@lexical/utils'
 
 import { $createRefNode } from './utils'
@@ -32,7 +31,7 @@ export default class Index {
 				payload => {
 					const node = $createRefNode(payload)
 
-					insertBlock(node)
+					$insertNodes([node])
 
 					return true
 				},

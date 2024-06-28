@@ -1,7 +1,7 @@
 .if-select {
 	&.borderless {
-
 		--height: 22px;
+
 		border: none !important;
 
 		.if-select-selector {

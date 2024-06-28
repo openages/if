@@ -10,6 +10,7 @@ import KatexNode from './plugins/Katex/Node'
 import MermaidNode from './plugins/Mermaid/Node'
 import NavigationNode from './plugins/Navigation/Node'
 import QuoteNode from './plugins/Quote/QuoteNode'
+import RefNode from './plugins/Ref/Node'
 import TableCellNode from './plugins/Table/TableCellNode'
 import TableNode from './plugins/Table/TableNode'
 import TableRowNode from './plugins/Table/TableRowNode'
@@ -36,6 +37,7 @@ export default [
 	TableCellNode,
 	QuoteNode,
 	NavigationNode,
+	RefNode,
 
 	AutoLinkNode,
 	LinkNode,

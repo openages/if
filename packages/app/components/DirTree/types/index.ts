@@ -93,4 +93,5 @@ export interface IPropsLeftIcon {
 	module: Model['module']
 	item: DirTree.Item
 	size?: number
+	className?: string
 }

@@ -6,11 +6,11 @@ import type { Todo } from '@/types'
 import type { IPropsItem } from '../../types'
 
 const Index = (props: IPropsItem) => {
-	const { item, index, onItem } = props
+	const { module, item, index, onItem } = props
 	const target = item.item as Todo.Todo
 	const file = item.file
 
-	const onClick = useMemoizedFn(() => onItem('todo', index))
+	const onClick = useMemoizedFn(() => onItem(module, index))
 
 	return (
 		<div
@@ -25,7 +25,7 @@ const Index = (props: IPropsItem) => {
 							<Emoji shortcodes={file.icon} size={10} hue={file.icon_hue}></Emoji>
 						</When>
 						<Otherwise>
-							<LeftIcon module='todo' item={file} size={10}></LeftIcon>
+							<LeftIcon module={module} item={file} size={10}></LeftIcon>
 						</Otherwise>
 					</Choose>
 				</div>

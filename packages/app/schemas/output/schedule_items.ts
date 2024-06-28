@@ -232,6 +232,12 @@ export default {
                   },
                   "timeline_year": {
                         "type": "boolean"
+                  },
+                  "create_at": {
+                        "type": "number"
+                  },
+                  "update_at": {
+                        "type": "number"
                   }
             },
             "required": [
@@ -324,6 +330,12 @@ export default {
                   },
                   "timeline_year": {
                         "type": "boolean"
+                  },
+                  "create_at": {
+                        "type": "number"
+                  },
+                  "update_at": {
+                        "type": "number"
                   }
             },
             "required": [
@@ -421,6 +433,12 @@ export default {
                         },
                         "timeline_year": {
                               "type": "boolean"
+                        },
+                        "create_at": {
+                              "type": "number"
+                        },
+                        "update_at": {
+                              "type": "number"
                         }
                   },
                   "required": [
@@ -521,6 +539,12 @@ export default {
                               },
                               "timeline_year": {
                                     "type": "boolean"
+                              },
+                              "create_at": {
+                                    "type": "number"
+                              },
+                              "update_at": {
+                                    "type": "number"
                               }
                         },
                         "required": [

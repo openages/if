@@ -3,15 +3,16 @@ import styles from './index.css'
 import type { CSSProperties } from 'react'
 
 interface IProps {
+	className?: HTMLDivElement['className']
 	style?: CSSProperties
 }
 
 const Index = (props: IProps) => {
-	const { style = {} } = props
+	const { className, style = {} } = props
 
 	return (
 		<div
-			className={$cx('w_100 h_100 flex flex_column align_center justify_center', styles._local)}
+			className={$cx('w_100 h_100 flex flex_column align_center justify_center', styles._local, className)}
 			style={style}
 		>
 			<div className='empty_icon_wrap flex'>

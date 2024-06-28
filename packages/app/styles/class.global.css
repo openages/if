@@ -7,6 +7,10 @@
 	}
 }
 
+.inline_flex {
+	display: inline-flex;
+}
+
 .limited_content_wrap {
 	width: 100%;
 	max-width: var(--limited_width);

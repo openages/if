@@ -1,6 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs'
 import { omit } from 'lodash-es'
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
+import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
@@ -518,6 +519,26 @@ export default class Index {
 		await cleanByTime(this.id, v)
 	}
 
+	async redirect(id: string) {
+		const doc = await $db.schedule_items.findOne(id).exec()
+		const target = getDocItem(doc)
+		const container = document.getElementById(this.id)
+
+		this.changeCurrent(dayjs(target.start_time))
+
+		setTimeout(() => {
+			const target_dom = container.querySelector(`#${id}`)
+
+			scrollIntoView(target_dom, { block: 'center', behavior: 'smooth', boundary: container })
+
+			target_dom.classList.add('notice_text')
+
+			setTimeout(() => {
+				target_dom.classList.remove('notice_text')
+			}, 1200)
+		}, 300)
+	}
+
 	watchSetting() {
 		this.setting_watcher = getQuerySetting(this.id).$.subscribe(setting => {
 			const doc_setting = getDocItem(setting)
@@ -682,6 +703,8 @@ export default class Index {
 	on() {
 		this.watchSetting()
 		this.watchScheduleItems()
+
+		window.$app.Event.on(`schedule/${this.id}/redirect`, this.redirect)
 	}
 
 	off() {
@@ -692,5 +715,7 @@ export default class Index {
 		this.schedule_ids_watcher?.unsubscribe?.()
 		this.calendar_days_watcher?.unsubscribe?.()
 		this.timeline_rows_watcher?.unsubscribe?.()
+
+		window.$app.Event.off(`schedule/${this.id}/redirect`, this.redirect)
 	}
 }

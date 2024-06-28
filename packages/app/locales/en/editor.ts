@@ -69,5 +69,9 @@ export default {
 			insert_right: 'Insert Right',
 			reset_width: 'Reset Width'
 		}
+	},
+	Ref: {
+		latest_items: 'Latest items',
+		latest_files: 'Latest files'
 	}
 }

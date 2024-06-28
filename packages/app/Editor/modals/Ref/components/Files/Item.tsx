@@ -6,7 +6,7 @@ import { Emoji, LeftIcon } from '@/components'
 import type { IPropsFileItem } from '../../types'
 
 const Index = (props: IPropsFileItem) => {
-	const { item, index, onItem } = props
+	const { module, item, index, onItem } = props
 
 	const onClick = useMemoizedFn(() => onItem('file', index))
 
@@ -22,7 +22,7 @@ const Index = (props: IPropsFileItem) => {
 							<Emoji shortcodes={item.icon} size={12} hue={item.icon_hue}></Emoji>
 						</When>
 						<Otherwise>
-							<LeftIcon module='todo' item={item} size={12}></LeftIcon>
+							<LeftIcon module={module} item={item} size={12}></LeftIcon>
 						</Otherwise>
 					</Choose>
 				</div>

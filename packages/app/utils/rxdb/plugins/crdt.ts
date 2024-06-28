@@ -43,11 +43,11 @@ const config = {
 
 const cleanOperations = async <RxDocType>(args: {
 	crdtDocField: CRDTDocumentField<RxDocType>
-	docData: WithDeleted<RxDocType>
+	doc: WithDeleted<RxDocType>
 	storageToken: string
 	hashFunction: HashFunction
 }) => {
-	const { crdtDocField, docData, storageToken, hashFunction } = args
+	const { crdtDocField, doc, storageToken, hashFunction } = args
 
 	if (!config.auto_clean) return
 	if (crdtDocField.operations.length < config.trigger_counts) return
@@ -59,7 +59,7 @@ const cleanOperations = async <RxDocType>(args: {
 			body: [
 				{
 					ifMatch: {
-						$set: omit(docData, 'crdts', '_meta', '_rev', '_attachments', '_deleted')
+						$set: omit(doc, 'crdts', '_meta', '_rev', '_attachments', '_deleted')
 					}
 				}
 			],
@@ -78,21 +78,26 @@ export async function updateCRDT<RxDocType>(
 ) {
 	entry = overwritable.deepFreezeWhenDevMode(entry) as any
 
-	const jsonSchema = this.collection.schema.jsonSchema
-	if (!jsonSchema.crdt) {
+	const schema = this.collection.schema.jsonSchema
+
+	if (!schema.crdt) {
 		throw newRxError('CRDT1', {
-			schema: jsonSchema,
+			schema: schema,
 			queryObj: entry
 		})
 	}
-	const crdtOptions = ensureNotFalsy(jsonSchema.crdt)
+
+	const crdtOptions = ensureNotFalsy(schema.crdt)
 	const storageToken = await this.collection.database.storageToken
 
-	return this.incrementalModify(async docData => {
+	return this.incrementalModify(async doc => {
 		// @ts-ignore
-		docData.update_at = new Date().valueOf()
+		if (!doc.create_at) doc.create_at = new Date().valueOf()
 
-		const crdtDocField: CRDTDocumentField<RxDocType> = clone(getProperty(docData as any, crdtOptions.field))
+		// @ts-ignore
+		doc.update_at = new Date().valueOf()
+
+		const crdtDocField: CRDTDocumentField<RxDocType> = clone(getProperty(doc as any, crdtOptions.field))
 
 		const operation: CRDTOperation<RxDocType> = {
 			body: toArray(entry),
@@ -106,18 +111,18 @@ export async function updateCRDT<RxDocType>(
 
 		crdtDocField.hash = await hashCRDTOperations(this.collection.database.hashFunction, crdtDocField)
 
-		docData = runOperationOnDocument(this.collection.schema.jsonSchema, docData, operation)
+		doc = runOperationOnDocument(this.collection.schema.jsonSchema, doc, operation)
 
 		await cleanOperations({
 			crdtDocField,
-			docData,
+			doc,
 			storageToken,
 			hashFunction: this.collection.database.hashFunction
 		})
 
-		setProperty(docData, crdtOptions.field, crdtDocField)
+		setProperty(doc, crdtOptions.field, crdtDocField)
 
-		return docData
+		return doc
 	}, RX_CRDT_CONTEXT)
 }
 
@@ -127,14 +132,14 @@ export async function insertCRDT<RxDocType>(
 ) {
 	entry = overwritable.deepFreezeWhenDevMode(entry) as any
 
-	const jsonSchema = this.schema.jsonSchema
-	if (!jsonSchema.crdt) {
+	const schema = this.schema.jsonSchema
+	if (!schema.crdt) {
 		throw newRxError('CRDT1', {
-			schema: jsonSchema,
+			schema: schema,
 			queryObj: entry
 		})
 	}
-	const crdtOptions = ensureNotFalsy(jsonSchema.crdt)
+	const crdtOptions = ensureNotFalsy(schema.crdt)
 	const storageToken = await this.database.storageToken
 	const operation: CRDTOperation<RxDocType> = {
 		body: Array.isArray(entry) ? entry : [entry],
@@ -173,7 +178,7 @@ export function sortOperationComparator<RxDocType>(a: CRDTOperation<RxDocType>, 
 
 function runOperationOnDocument<RxDocType>(
 	schema: RxJsonSchema<RxDocumentData<RxDocType>>,
-	docData: WithDeleted<RxDocType>,
+	doc: WithDeleted<RxDocType>,
 	operation: CRDTOperation<RxDocType>
 ): WithDeleted<RxDocType> {
 	const entryParts = operation.body
@@ -190,23 +195,23 @@ function runOperationOnDocument<RxDocType>(
 
 			const matcher = getQueryMatcher(schema, query)
 
-			isMatching = matcher(docData as any)
+			isMatching = matcher(doc as any)
 		} else {
 			isMatching = true
 		}
 
 		if (isMatching) {
 			if (entryPart.ifMatch) {
-				docData = mingoUpdater<WithDeleted<RxDocType>>(docData, entryPart.ifMatch)
+				doc = mingoUpdater<WithDeleted<RxDocType>>(doc, entryPart.ifMatch)
 			}
 		} else {
 			if (entryPart.ifNotMatch) {
-				docData = mingoUpdater<WithDeleted<RxDocType>>(docData, entryPart.ifNotMatch)
+				doc = mingoUpdater<WithDeleted<RxDocType>>(doc, entryPart.ifNotMatch)
 			}
 		}
 	})
 
-	return docData
+	return doc
 }
 
 export async function hashCRDTOperations(hashFunction: HashFunction, crdts: CRDTDocumentField<any>): Promise<string> {
@@ -314,7 +319,7 @@ export async function mergeCRDTFields<RxDocType>(
 
 export function rebuildFromCRDT<RxDocType>(
 	schema: RxJsonSchema<RxDocumentData<RxDocType>>,
-	docData: WithDeleted<RxDocType>,
+	doc: WithDeleted<RxDocType>,
 	crdts: CRDTDocumentField<RxDocType>
 ): WithDeleted<RxDocType> {
 	let base: WithDeleted<RxDocType> = {
@@ -503,9 +508,9 @@ export const RxDBcrdtPlugin: RxPlugin = {
 				collection.bulkInsert = async function (docsData: any[]) {
 					const storageToken = await collection.database.storageToken
 					const useDocsData = await Promise.all(
-						docsData.map(async docData => {
+						docsData.map(async doc => {
 							const setMe: Partial<RxDocumentData<any>> = {}
-							Object.entries(docData).forEach(([key, value]) => {
+							Object.entries(doc).forEach(([key, value]) => {
 								if (!key.startsWith('_') && key !== crdtField) {
 									setMe[key] = value
 								}
@@ -533,8 +538,8 @@ export const RxDBcrdtPlugin: RxPlugin = {
 								collection.database.hashFunction,
 								crdtOperations
 							)
-							setProperty(docData, crdtOptions.field, crdtOperations)
-							return docData
+							setProperty(doc, crdtOptions.field, crdtOperations)
+							return doc
 						})
 					)
 					return bulkInsertBefore(useDocsData)

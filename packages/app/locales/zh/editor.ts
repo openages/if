@@ -69,5 +69,9 @@ export default {
 			insert_right: '右侧插入',
 			reset_width: '重置宽度'
 		}
+	},
+	Ref: {
+		latest_items: '最近的项',
+		latest_files: '最近的文件'
 	}
 }

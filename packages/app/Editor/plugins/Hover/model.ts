@@ -33,6 +33,7 @@ import { $isImageNode } from '../Image/utils'
 import KatexNode from '../Katex/Node'
 import { $isKatexNode } from '../Katex/utils'
 import { $isQuoteNode } from '../Quote/utils'
+import { $isRefNode } from '../Ref/utils'
 import { $isTableCellNode, $isTableNode } from '../Table/utils'
 import { $isToggleBodyNode, $isToggleBtnNode, $isToggleHeadNode, $isToggleNode } from '../Toggle/utils'
 
@@ -393,6 +394,7 @@ export default class Index {
 		}
 
 		if ($isListNode(node)) return
+		if ($isRefNode(node)) return
 		if ($isKatexNode(node) && (node as KatexNode).__inline) return
 
 		if ($isDecoratorNode(node) && !(node as DecoratorNode<unknown> & { __inline: boolean }).__inline) {

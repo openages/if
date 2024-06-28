@@ -1,8 +1,26 @@
 ._local {
-	border: var(--border);
-	border-radius: var(--radius);
+	display: inline-flex;
 }
 
-.selected {
-	outline: 1px dashed var(--color_text);
+.component {
+	overflow: hidden;
+	height: 1.2em;
+	margin-right: 4px;
+	border-bottom: 1px solid var(--color_text);
+	color: var(--color_text_sub);
+
+	&:hover,
+	&.selected {
+		background-color: var(--color_bg_2);
+	}
+
+	.status {
+		font-size: 0.72em;
+		translate: 1px -0.3px;
+		scale: 1.42;
+	}
+
+	.module_icon {
+		padding: 0;
+	}
 }

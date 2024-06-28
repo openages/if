@@ -47,6 +47,8 @@ export namespace Schedule {
 		/** @maxLength 30 */
 		timeline_angle_row_id?: string
 		timeline_year?: boolean
+		create_at?: number
+		update_at?: number
 	}
 
 	export type CalendarItem = Item & {

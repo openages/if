@@ -80,16 +80,12 @@ const Index = (props: IPropsSearch) => {
 	}, [open])
 
 	const onInput = useMemoizedFn(
-		debounce(
-			({ target: { value } }) => {
-				if (compositing) return
+		debounce(({ target: { value } }) => {
+			if (compositing) return
 
-				searchByInput(value)
-				setText(value)
-			},
-			600,
-			{ leading: false }
-		)
+			searchByInput(value)
+			setText(value)
+		}, 600)
 	)
 
 	const clear = useMemoizedFn(() => {
