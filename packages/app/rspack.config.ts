@@ -2,7 +2,7 @@ import { resolve } from 'path'
 
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
 import { defineConfig } from '@rspack/cli'
-import { CopyRspackPlugin, HtmlRspackPlugin } from '@rspack/core'
+import { CopyRspackPlugin, HtmlRspackPlugin, SwcCssMinimizerRspackPlugin } from '@rspack/core'
 import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
 
 const is_dev = process.env.NODE_ENV === 'development'
@@ -35,7 +35,7 @@ module.exports = defineConfig({
 	},
 	resolve: {
 		extensions: ['.tsx', '.ts', '.js'],
-		tsConfigPath: resolve(__dirname, 'tsconfig.json'),
+		tsConfig: resolve(__dirname, 'tsconfig.json'),
 		alias: process.env.DOCTOR && {
 			tslib: resolve(__dirname, 'node_modules/tslib')
 		}
@@ -44,8 +44,12 @@ module.exports = defineConfig({
 		compress: false
 	},
 	experiments: {
+		css: true,
 		outputModule: is_module,
 		lazyCompilation: false
+	},
+	optimization: {
+		minimizer: [new SwcCssMinimizerRspackPlugin()]
 	},
 	plugins: [
 		new HtmlRspackPlugin({
