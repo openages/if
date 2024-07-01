@@ -8,6 +8,28 @@
 	font-size: 12px;
 
 	:global {
+		.latest_blocks {
+			padding-bottom: 3px;
+			margin-bottom: 3px;
+			border-bottom: var(--border_light_dashed);
+
+			.latest_block {
+				width: calc((100% - 12px) / 5);
+				margin-right: 3px;
+				border-radius: var(--radius);
+				font-size: 14px;
+				aspect-ratio: 1;
+
+				&:hover {
+					background-color: var(--color_bg_1);
+				}
+
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
+
 		.picker_menu_item {
 			padding: 6px 9px;
 			border-radius: var(--radius_small);

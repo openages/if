@@ -40,6 +40,7 @@ import { $isToggleBodyNode, $isToggleBtnNode, $isToggleHeadNode, $isToggleNode }
 import type { DecoratorNode, LexicalEditor, LexicalNode } from 'lexical'
 import type { DragEvent as ReactDragEvent } from 'react'
 import type { ListNode } from '@lexical/list'
+
 @injectable()
 export default class Index {
 	id = ''
@@ -452,8 +453,7 @@ export default class Index {
 				top: rect_node.top - rect_container.top + rect_node.height - 2
 			}
 		} else {
-			const inline_padding = getComputedStyleValue(el_node, 'padding-inline-start')
-
+			let inline_padding = getComputedStyleValue(el_node, 'padding-inline-start')
 			let block_padding = getComputedStyleValue(el_node, 'padding-block-start')
 			let margin_left = 0
 			let margin_top = 6
@@ -483,6 +483,11 @@ export default class Index {
 
 			if ($isDecoratorNode(node) && !$isImageNode(node)) {
 				block_padding = 0
+			}
+
+			if ($isCodeNode(node)) {
+				block_padding = 0
+				inline_padding = 0
 			}
 
 			return {

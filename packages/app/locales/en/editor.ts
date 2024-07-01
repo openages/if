@@ -73,5 +73,9 @@ export default {
 	Ref: {
 		latest_items: 'Latest items',
 		latest_files: 'Latest files'
+	},
+	Count: {
+		total: 'Words (no spaces)',
+		filted: 'Words (no punctuations)'
 	}
 }

@@ -111,7 +111,7 @@ const Index = () => {
 			<Fragment>
 				<div
 					className={$cx(
-						'fixed z_index_10 flex justify_center align_center clickable',
+						'fixed z_index_100 flex justify_center align_center clickable',
 						styles.btn_nav,
 						x.visible_mini_nav && styles.active
 					)}

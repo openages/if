@@ -32,6 +32,7 @@ export default {
 		感恩节: '感恩节',
 		圣诞节: '圣诞节'
 	},
+	words: '个字',
 	item: '项',
 	file: '文件',
 	preview: '预览',

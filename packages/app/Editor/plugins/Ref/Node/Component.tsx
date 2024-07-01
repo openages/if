@@ -31,7 +31,7 @@ const Index = (props: IPropsRef) => {
 	return (
 		<span
 			className={$cx(
-				'border_box inline_flex align_center cursor_point clickable',
+				'border_box inline_flex align_center relative cursor_point clickable',
 				styles.component,
 				module !== 'file' && styles.is_module,
 				selected && styles.selected
@@ -40,23 +40,22 @@ const Index = (props: IPropsRef) => {
 		>
 			<Choose>
 				<When condition={module === 'file' && item?.module}>
-					<span className='inline_flex justify_center align_center mr_2'>
-						<Choose>
-							<When condition={!!item.icon}>
-								<Emoji shortcodes={item.icon} size={13} hue={item.icon_hue}></Emoji>
-							</When>
-							<Otherwise>
-								<LeftIcon module={item.module} item={item} size={13}></LeftIcon>
-							</Otherwise>
-						</Choose>
-					</span>
+					<ModuleIcon
+						className={$cx('h_100 absolute left_0', styles.file_icon)}
+						type={item.module}
+						weight='fill'
+					></ModuleIcon>
 					<span className={styles.name}>{item.name}</span>
-					<ModuleIcon className={$cx('h_100', styles.module_icon)} type={item.module}></ModuleIcon>
 				</When>
 				<When condition={module !== 'file'}>
 					<Choose>
 						<When condition={module === 'todo'}>
-							<span className={$cx('inline_flex align_center mr_4', styles.status)}>
+							<span
+								className={$cx(
+									'inline_flex align_center absolute left_0',
+									styles.status
+								)}
+							>
 								<Choose>
 									<When
 										condition={
@@ -73,14 +72,13 @@ const Index = (props: IPropsRef) => {
 							</span>
 						</When>
 					</Choose>
-
-					<span className={$cx(styles.name)}>{item.text}</span>
 					<If condition={module !== 'todo'}>
 						<ModuleIcon
-							className={$cx('h_100 ml_2', styles.module_icon)}
+							className='h_100 absolute left_0'
 							type={module as App.ModuleType}
 						></ModuleIcon>
 					</If>
+					<span className={$cx(styles.name)}>{item.text}</span>
 				</When>
 			</Choose>
 		</span>

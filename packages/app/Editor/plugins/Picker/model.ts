@@ -1,28 +1,41 @@
 import { COMMAND_PRIORITY_EDITOR } from 'lexical'
 import { makeAutoObservable } from 'mobx'
+import { injectable } from 'tsyringe'
 
 import { SHOW_MODAL_COMMAND } from '@/Editor/commands'
 import { $focus } from '@/Editor/utils'
+import Utils from '@/models/utils'
 import { mergeRegister } from '@lexical/utils'
+import { setStorageWhenChange } from '@openages/stk/mobx'
 
 import type { LexicalEditor } from 'lexical'
 import type { TypeaheadMenuPluginProps } from '@lexical/react/LexicalTypeaheadMenuPlugin'
 import type Option from './option'
 
+@injectable()
 export default class Index {
 	editor = null as LexicalEditor
+	options = [] as Array<Option>
+
 	modal = '' as 'Image' | 'Emoji' | 'Katex' | 'Mermaid' | 'Ref'
 	node_key = ''
 	query = ''
 	index = null as number
+	latest_blocks = [] as Array<number>
 
 	unregister = null as () => void
 
-	constructor() {
-		makeAutoObservable(this, { editor: false, unregister: false }, { autoBind: true })
+	constructor(public utils: Utils) {
+		makeAutoObservable(
+			this,
+			{ utils: false, editor: false, options: false, unregister: false },
+			{ autoBind: true }
+		)
 	}
 
 	init(editor: Index['editor']) {
+		this.utils.acts = [setStorageWhenChange([{ note_latest_blocks: 'latest_blocks' }], this)]
+
 		this.editor = editor
 
 		this.register()
@@ -45,14 +58,34 @@ export default class Index {
 	}
 
 	onSelectOption(...args: Parameters<TypeaheadMenuPluginProps<Option>['onSelectOption']>) {
-		const [selectedOption, node, close, query_string] = args
+		const [option, node, close, query_string] = args
+
+		const index = this.options.findIndex(item => item.shortcut === option.shortcut)
 
 		this.editor.update(() => {
 			node?.remove()
-			selectedOption.onSelect(query_string)
+			option.onSelect(query_string)
 
 			close()
+
+			this.setLatestBlocks(index)
 		})
+	}
+
+	setLatestBlocks(v: number) {
+		const exsit_index = this.latest_blocks.findIndex(item => item === v)
+
+		if (exsit_index !== -1) {
+			this.latest_blocks.splice(exsit_index, 1)
+		} else {
+			if (this.latest_blocks.length === 5) {
+				this.latest_blocks.pop()
+			}
+		}
+
+		this.latest_blocks.unshift(v)
+
+		this.latest_blocks = $copy(this.latest_blocks)
 	}
 
 	register() {
@@ -75,5 +108,7 @@ export default class Index {
 
 	off() {
 		this.unregister()
+
+		this.utils.off()
 	}
 }

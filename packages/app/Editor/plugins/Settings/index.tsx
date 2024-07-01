@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useState } from 'react'
 import { container } from 'tsyringe'
 
 import { useStackSelector } from '@/context/stack'
-import { UPDATE_NAVIGATION_TOC } from '@/Editor/commands'
+import { TOGGLE_COUNT, UPDATE_NAVIGATION_TOC } from '@/Editor/commands'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 
 import Model from './model'
@@ -32,6 +32,10 @@ const Index = () => {
 	useEffect(() => {
 		editor.dispatchCommand(UPDATE_NAVIGATION_TOC, settings.toc)
 	}, [settings.toc])
+
+	useEffect(() => {
+		editor.dispatchCommand(TOGGLE_COUNT, settings.count)
+	}, [settings.count])
 
 	return null
 }

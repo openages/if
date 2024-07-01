@@ -28,6 +28,10 @@ em-emoji {
 		span {
 			margin-bottom: -3px;
 		}
+
+		img {
+			min-width: 18px;
+		}
 	}
 }
 

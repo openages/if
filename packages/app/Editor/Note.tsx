@@ -16,6 +16,7 @@ import {
 	AutoLink,
 	Code,
 	CodeActions,
+	Count,
 	Divider,
 	Hover,
 	Image,
@@ -59,6 +60,7 @@ const Index = () => {
 				<Settings />
 				<Hover md />
 				<Navigation />
+				<Count />
 				<Picker />
 				<TextBar md />
 				<ListPlugin />

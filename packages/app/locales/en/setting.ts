@@ -72,6 +72,10 @@ export default {
 			title: 'Table of Contents',
 			desc: 'Overview of article structure',
 			options: ['default', 'visible', 'minimize', 'hidden']
+		},
+		count: {
+			title: 'Word Count',
+			desc: 'Count the total number of words, excluding spaces'
 		}
 	}
 }

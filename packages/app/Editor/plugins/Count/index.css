@@ -1,0 +1,51 @@
+._local {
+	z-index: 99;
+	height: 21px;
+	padding: 0 6px;
+	margin-top: 0;
+	border-radius: unset;
+	border-top-right-radius: var(--radius);
+	color: var(--color_text_light);
+	background-color: var(--color_bg) !important;
+	box-shadow: unset;
+	font-size: 10px;
+
+	&:hover {
+		color: var(--color_text);
+	}
+
+	&::before {
+		display: none;
+	}
+}
+
+.count_options {
+	padding: 6px;
+	font-size: 10px;
+
+	:global {
+		.option_item {
+			padding: 3px 6px;
+			border-radius: var(--radius);
+			color: var(--color_text_light);
+
+			&:hover {
+				background-color: var(--color_bg_1);
+			}
+
+			&:active {
+				background-color: var(--color_bg_2);
+			}
+
+			&.active {
+				color: var(--color_text);
+				font-weight: 500;
+			}
+
+			.option_value {
+				min-width: 30px;
+				margin-left: 6px;
+			}
+		}
+	}
+}

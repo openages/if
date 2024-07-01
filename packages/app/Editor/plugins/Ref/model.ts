@@ -1,4 +1,4 @@
-import { $insertNodes, COMMAND_PRIORITY_EDITOR } from 'lexical'
+import { $getSelection, $insertNodes, $isRangeSelection, $isTextNode, COMMAND_PRIORITY_EDITOR } from 'lexical'
 import { makeObservable } from 'mobx'
 
 import { INSERT_REF_COMMAND } from '@/Editor/commands'
@@ -29,9 +29,19 @@ export default class Index {
 			this.editor.registerCommand<IPropsRef>(
 				INSERT_REF_COMMAND,
 				payload => {
+					const selection = $getSelection()
+
+					if (!$isRangeSelection(selection)) return false
+
 					const node = $createRefNode(payload)
 
 					$insertNodes([node])
+
+					const prev_node = node.getPreviousSibling()
+
+					if ($isTextNode(prev_node) && prev_node.getTextContent().at(-1) === ' ') {
+						prev_node.spliceText(prev_node.getTextContentSize() - 1, 1, '', false)
+					}
 
 					return true
 				},

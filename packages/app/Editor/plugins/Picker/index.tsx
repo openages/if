@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useMemo, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
+import { container } from 'tsyringe'
 
 import { LazyElement, LoadingCircle, Modal } from '@/components'
 import { useStackSelector } from '@/context/stack'
@@ -24,7 +25,7 @@ import type { IPropsModal } from '../../types'
 import type { TypeaheadMenuPluginProps } from '@lexical/react/LexicalTypeaheadMenuPlugin'
 
 const Index = () => {
-	const [x] = useState(() => new Model())
+	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
 	const { t } = useTranslation()
@@ -41,11 +42,17 @@ const Index = () => {
 	const onSelectOption = useMemoizedFn(x.onSelectOption)
 	const checkForTriggerMatch = useBasicTypeaheadTriggerMatch('/', { minLength: 0 })
 
-	const options = useMemo(() => getOptions({ query_string: x.query, editor, showModal }), [editor, x.query])
+	const options = useMemo(() => {
+		const target = getOptions({ query_string: x.query, editor, showModal })
+
+		if (!x.query) x.options = target
+
+		return target
+	}, [editor, x.query])
 
 	const render: TypeaheadMenuPluginProps<Option>['menuRenderFn'] = useMemoizedFn(
-		(anchorElementRef, { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex }) => {
-			if (!anchorElementRef.current || !options.length) return null
+		(ref, { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex }) => {
+			if (!ref.current || !options.length) return null
 
 			const excludes = editor.getEditorState().read(() => {
 				const selection = $getSelection()
@@ -65,13 +72,15 @@ const Index = () => {
 			if (excludes) target = options.filter(item => !excludes.includes(item.shortcut))
 
 			const props_menu: IPropsMenu = {
+				all_options: x.options,
+				latest_blocks: $copy(x.latest_blocks),
 				options: target,
 				selected_index: selectedIndex,
 				selectOptionAndCleanUp,
 				setHighlightedIndex
 			}
 
-			return createPortal(<Menu {...props_menu}></Menu>, anchorElementRef.current)
+			return createPortal(<Menu {...props_menu}></Menu>, ref.current)
 		}
 	)
 

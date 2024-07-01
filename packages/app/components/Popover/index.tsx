@@ -17,7 +17,7 @@ interface IProps {
 	top?: boolean
 	className?: HTMLElement['className']
 	style?: CSSProperties
-	updatePosition: () => void
+	updatePosition?: () => void
 }
 
 const Index = (props: IProps) => {
@@ -49,13 +49,13 @@ const Index = (props: IProps) => {
 
 	const onResize = useMemoizedFn(
 		debounce(() => {
-			updatePosition()
+			updatePosition?.()
 			checkOverflow()
 		}, 450)
 	)
 
 	useEffect(() => {
-		if (!exist || style) return setOverflow(0)
+		if (!exist || style || !updatePosition) return setOverflow(0)
 
 		checkOverflow()
 
@@ -75,7 +75,7 @@ const Index = (props: IProps) => {
 			resize_observer.unobserve(container)
 			resize_observer.disconnect()
 		}
-	}, [exist, style])
+	}, [exist, style, updatePosition])
 
 	if (!exist) return null
 

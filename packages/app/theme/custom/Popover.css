@@ -1,5 +1,20 @@
+[data-theme='dark'] {
+	.if-popover {
+		.if-popover-inner {
+			box-shadow: var(--shadow);
+		}
+	}
+}
+
 .if-popover {
 	&.border_popover {
+		&.if-popover-placement-topLeft {
+			.if-popover-arrow {
+				bottom: -7px !important;
+				left: 17px !important;
+			}
+		}
+
 		&.if-popover-placement-top {
 			.if-popover-arrow {
 				bottom: -7px !important;
@@ -31,9 +46,11 @@
 				bottom: 18px !important;
 			}
 		}
+
 		.if-popover-content {
 			.if-popover-inner {
 				border: var(--border);
+				box-shadow: var(--shadow);
 			}
 		}
 
@@ -78,6 +95,7 @@
 			}
 		}
 	}
+
 	.if-popover-arrow::after {
 		box-shadow: var(--shadow);
 	}
@@ -85,6 +103,5 @@
 	.if-popover-inner {
 		padding: 0;
 		border-radius: var(--radius);
-		box-shadow: var(--shadow);
 	}
 }

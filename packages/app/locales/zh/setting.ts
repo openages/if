@@ -72,6 +72,10 @@ export default {
 			title: '大纲模式',
 			desc: '大纲用于总览文章结构',
 			options: ['默认', '常亮', '最小化', '隐藏']
+		},
+		count: {
+			title: '字数统计',
+			desc: '统计全文字数，不包含空格'
 		}
 	}
 }

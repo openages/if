@@ -73,5 +73,9 @@ export default {
 	Ref: {
 		latest_items: '最近的项',
 		latest_files: '最近的文件'
+	},
+	Count: {
+		total: '字数（不计空格）',
+		filted: '字数（不计标点）'
 	}
 }

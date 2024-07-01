@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 
 import { updateSetting } from '@/actions/note'
 import { NoteSettings } from '@/models'
-import { ArticleNyTimes, ListDashes, TextT } from '@phosphor-icons/react'
+import { ArticleNyTimes, ListDashes, TextT, Toolbox } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -42,6 +42,12 @@ const Index = () => {
 		x.settings.toc = v
 
 		updateSetting({ toc: v })
+	})
+
+	const onChangeCount = useMemoizedFn((v: boolean) => {
+		x.settings.count = v
+
+		updateSetting({ count: v })
 	})
 
 	return (
@@ -89,6 +95,18 @@ const Index = () => {
 					</div>
 					<div className='value_wrap flex align_center'>
 						<Switch value={x.settings.small_text} onChange={onChangeSmallText}></Switch>
+					</div>
+				</div>
+				<div className='setting_item w_100 border_box flex justify_between align_center'>
+					<div className='title_wrap flex align_center'>
+						<Toolbox size={24}></Toolbox>
+						<div className='text_wrap flex flex_column'>
+							<span className='title'>{t('translation:setting.Note.count.title')}</span>
+							<span className='desc'>{t('translation:setting.Note.count.desc')}</span>
+						</div>
+					</div>
+					<div className='value_wrap flex align_center'>
+						<Switch value={x.settings.count} onChange={onChangeCount}></Switch>
 					</div>
 				</div>
 			</div>
