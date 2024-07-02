@@ -32,7 +32,7 @@ export default class ToggleNode extends ElementNode {
 	createDOM(): HTMLElement {
 		const el = document.createElement('div')
 
-		el.classList.value = '__editor_toggle __editor_block'
+		el.classList.value = '__editor_toggle __editor_block __editor_block_special'
 
 		this.updateClass(el)
 

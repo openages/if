@@ -1,10 +1,12 @@
 import { useMemoizedFn } from 'ahooks'
+import { $getNodeByKey } from 'lexical'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import smoothScrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { container } from 'tsyringe'
 
+import { useDeepEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection'
 import { GpsSlash } from '@phosphor-icons/react'
@@ -14,6 +16,7 @@ import Item from './Item'
 import Model from './model'
 
 import type { TableOfContentsEntry } from '@lexical/react/LexicalTableOfContentsPlugin'
+import type NavigationNode from '.'
 
 const Index = (props: { items: Array<TableOfContentsEntry>; node_key: string }) => {
 	const { items, node_key } = props
@@ -31,6 +34,15 @@ const Index = (props: { items: Array<TableOfContentsEntry>; node_key: string }) 
 	useEffect(() => {
 		x.block.selected = selected
 	}, [selected])
+
+	useDeepEffect(() => {
+		editor.update(() => {
+			const node = $getNodeByKey(node_key) as NavigationNode
+			const target = node.getWritable()
+
+			target.__items = items
+		})
+	}, [node_key, items])
 
 	const max_type_value = useMemo(() => {
 		let max = 7

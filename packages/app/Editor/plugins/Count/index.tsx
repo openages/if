@@ -8,7 +8,7 @@ import { container } from 'tsyringe'
 import { Popover } from '@/components'
 import { useStackSelector } from '@/context/stack'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { TextAlignCenter } from '@phosphor-icons/react'
+import { Calculator } from '@phosphor-icons/react'
 
 import styles from './index.css'
 import Model from './model'
@@ -80,7 +80,7 @@ const Index = () => {
 			>
 				<div>
 					<div className='cursor_point flex align_center clickable'>
-						<TextAlignCenter className='mr_2' size={12}></TextAlignCenter>
+						<Calculator className='mr_2' size={10}></Calculator>
 						{x.count_mode === 'total' ? x.counts_total : x.counts_filted}
 					</div>
 				</div>

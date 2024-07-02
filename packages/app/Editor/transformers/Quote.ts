@@ -1,7 +1,10 @@
 import { $createLineBreakNode } from 'lexical'
 
+import { $convertToMarkdownString } from '@lexical/markdown'
+
 import QuoteNode from '../plugins/Quote/QuoteNode'
 import { $createQuoteNode, $isQuoteNode } from '../plugins/Quote/utils'
+import transformers from './'
 
 import type { ElementTransformer } from '@lexical/markdown'
 
@@ -12,7 +15,9 @@ export default {
 	export(node: QuoteNode, exportChildren) {
 		if (!$isQuoteNode(node)) return null
 
-		const lines = exportChildren(node).split('\n')
+		const res = $convertToMarkdownString(transformers, node, true)
+
+		const lines = res.split('\n')
 		const output = []
 
 		for (const line of lines) {

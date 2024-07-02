@@ -1,0 +1,38 @@
+import { ArrowLineDown, Export, FileMd } from '@phosphor-icons/react'
+
+import styles from './index.css'
+
+import type { IPropsOptions } from './types'
+
+const Index = (props: IPropsOptions) => {
+	const { exportMd, importMd } = props
+
+	return (
+		<div className={$cx('border_box', styles.options)}>
+			<div className='option_items w_100 border_box flex flex_column'>
+				<div
+					className='option_item w_100 border_box flex justify_between align_center clickable'
+					onClick={exportMd}
+				>
+					<div className='flex align_center'>
+						<Export size={15}></Export>
+						<span className='title ml_8'>Export</span>
+					</div>
+					<FileMd className='symbol' size={12}></FileMd>
+				</div>
+				<div
+					className='option_item w_100 border_box flex justify_between align_center clickable'
+					onClick={importMd}
+				>
+					<div className='flex align_center'>
+						<ArrowLineDown size={15}></ArrowLineDown>
+						<span className='title ml_8'>Import</span>
+					</div>
+					<FileMd className='symbol' size={12}></FileMd>
+				</div>
+			</div>
+		</div>
+	)
+}
+
+export default $app.memo(Index)

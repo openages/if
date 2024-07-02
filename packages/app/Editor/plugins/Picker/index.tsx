@@ -13,7 +13,9 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { useBasicTypeaheadTriggerMatch, LexicalTypeaheadMenuPlugin } from '@lexical/react/LexicalTypeaheadMenuPlugin'
 
 import getOptions from '../../options'
+import { $isQuoteNode } from '../Quote/utils'
 import { $isTableNode } from '../Table/utils'
+import { $isToggleBodyNode, $isToggleHeadNode } from '../Toggle/utils'
 import { Menu } from './components'
 import config from './config'
 import styles from './index.css'
@@ -62,18 +64,38 @@ const Index = () => {
 				const excludes = []
 				const anchor = selection.anchor.getNode()
 
-				if ($getMatchingParent(anchor, $isTableNode)) excludes.push('tb')
+				if ($getMatchingParent(anchor, $isTableNode)) {
+					excludes.push(...['tb', 'qt', 'nav'])
+				}
+
+				if ($getMatchingParent(anchor, $isQuoteNode)) {
+					excludes.push(...['qt', 'tb', 'dv', 'cat'])
+				}
+
+				if ($getMatchingParent(anchor, $isToggleHeadNode)) {
+					excludes.push(
+						...['img', 'cd', 'ul', 'ol', 'tl', 'dv', 'tg', 'tb', 'qt', 'nav', 'ktx', 'mmd']
+					)
+				}
+
+				if ($getMatchingParent(anchor, $isToggleBodyNode)) {
+					excludes.push(...['qt', 'cat', 'tg'])
+				}
 
 				return excludes
 			})
 
 			let target: Array<Option> = options
+			let target_latest: Array<number> = $copy(x.latest_blocks)
 
-			if (excludes) target = options.filter(item => !excludes.includes(item.shortcut))
+			if (excludes) {
+				target = options.filter(item => !excludes.includes(item.shortcut))
+				target_latest = target_latest.filter(item => !excludes.includes(x.options[item].shortcut))
+			}
 
 			const props_menu: IPropsMenu = {
 				all_options: x.options,
-				latest_blocks: $copy(x.latest_blocks),
+				latest_blocks: target_latest,
 				options: target,
 				selected_index: selectedIndex,
 				selectOptionAndCleanUp,

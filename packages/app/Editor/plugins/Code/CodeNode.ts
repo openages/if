@@ -52,7 +52,7 @@ export default class CodeNode extends ElementNode {
 	createDOM() {
 		const el = document.createElement('code')
 
-		el.className = '__editor_code __editor_block'
+		el.className = '__editor_code __editor_block __editor_block_special'
 
 		el.setAttribute('spellcheck', 'false')
 		el.setAttribute('data-lang', shiki_langs[this.__lang].name)

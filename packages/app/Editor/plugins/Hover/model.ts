@@ -32,6 +32,7 @@ import { $isCodeNode } from '../Code/utils'
 import { $isImageNode } from '../Image/utils'
 import KatexNode from '../Katex/Node'
 import { $isKatexNode } from '../Katex/utils'
+import { $isNavigationNode } from '../Navigation/utils'
 import { $isQuoteNode } from '../Quote/utils'
 import { $isRefNode } from '../Ref/utils'
 import { $isTableCellNode, $isTableNode } from '../Table/utils'
@@ -40,7 +41,6 @@ import { $isToggleBodyNode, $isToggleBtnNode, $isToggleHeadNode, $isToggleNode }
 import type { DecoratorNode, LexicalEditor, LexicalNode } from 'lexical'
 import type { DragEvent as ReactDragEvent } from 'react'
 import type { ListNode } from '@lexical/list'
-
 @injectable()
 export default class Index {
 	id = ''
@@ -190,6 +190,8 @@ export default class Index {
 			} else {
 				if (next_node) next_node.selectEnd()
 			}
+
+			this.reset()
 		}
 	}
 
@@ -481,7 +483,7 @@ export default class Index {
 				margin_top = 1
 			}
 
-			if ($isDecoratorNode(node) && !$isImageNode(node)) {
+			if ($isDecoratorNode(node) && !$isImageNode(node) && !$isNavigationNode(node)) {
 				block_padding = 0
 			}
 

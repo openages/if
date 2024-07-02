@@ -34,51 +34,57 @@ const Index = (props: IPropsRef) => {
 				'border_box inline_flex align_center relative cursor_point clickable',
 				styles.component,
 				module !== 'file' && styles.is_module,
-				selected && styles.selected
+				selected && styles.selected,
+				!x.item && styles.removed
 			)}
-			onClick={onClick}
+			onClick={x.item ? onClick : null}
 		>
 			<Choose>
-				<When condition={module === 'file' && item?.module}>
+				<When condition={item?.module && module === 'file'}>
 					<ModuleIcon
 						className={$cx('h_100 absolute left_0', styles.file_icon)}
 						type={item.module}
 						weight='fill'
 					></ModuleIcon>
-					<span className={styles.name}>{item.name}</span>
+					<span className={styles.name}>{item?.name || id}</span>
 				</When>
 				<When condition={module !== 'file'}>
-					<Choose>
-						<When condition={module === 'todo'}>
-							<span
-								className={$cx(
-									'inline_flex align_center absolute left_0',
-									styles.status
-								)}
-							>
-								<Choose>
-									<When
-										condition={
-											item.status === 'unchecked' ||
-											item.status === 'closed'
-										}
-									>
-										<Square />
-									</When>
-									<When condition={item.status === 'checked'}>
-										<CheckSquare />
-									</When>
-								</Choose>
-							</span>
-						</When>
-					</Choose>
+					<If condition={module === 'todo'}>
+						<Choose>
+							<When condition={item.status}>
+								<span
+									className={$cx(
+										'inline_flex align_center absolute left_0',
+										styles.status
+									)}
+								>
+									<Choose>
+										<When
+											condition={
+												item.status === 'unchecked' ||
+												item.status === 'closed'
+											}
+										>
+											<Square />
+										</When>
+										<When condition={item.status === 'checked'}>
+											<CheckSquare />
+										</When>
+									</Choose>
+								</span>
+							</When>
+							<Otherwise>
+								<ModuleIcon className='h_100 absolute left_0' type='todo'></ModuleIcon>
+							</Otherwise>
+						</Choose>
+					</If>
 					<If condition={module !== 'todo'}>
 						<ModuleIcon
 							className='h_100 absolute left_0'
 							type={module as App.ModuleType}
 						></ModuleIcon>
 					</If>
-					<span className={$cx(styles.name)}>{item.text}</span>
+					<span className={$cx(styles.name)}>{item?.text || id}</span>
 				</When>
 			</Choose>
 		</span>

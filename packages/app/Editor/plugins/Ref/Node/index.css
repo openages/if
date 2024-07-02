@@ -12,7 +12,18 @@
 
 	&:hover,
 	&.selected {
+		border-radius: var(--radius_small_1);
 		background-color: var(--color_bg_2);
+	}
+
+	&.removed {
+		border-bottom: none;
+		color: var(--color_text_light);
+		user-select: none;
+
+		&:active {
+			scale: unset;
+		}
 	}
 
 	.file_icon {

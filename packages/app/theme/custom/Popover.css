@@ -1,11 +1,3 @@
-[data-theme='dark'] {
-	.if-popover {
-		.if-popover-inner {
-			box-shadow: var(--shadow);
-		}
-	}
-}
-
 .if-popover {
 	&.border_popover {
 		&.if-popover-placement-topLeft {
@@ -103,5 +95,6 @@
 	.if-popover-inner {
 		padding: 0;
 		border-radius: var(--radius);
+		box-shadow: var(--shadow);
 	}
 }

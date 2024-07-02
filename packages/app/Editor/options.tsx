@@ -103,17 +103,17 @@ export default (args: Args) => {
 		}),
 		new Option($t('translation:editor.name.Katex'), {
 			icon: <Function />,
-			shortcut: 'kat',
+			shortcut: 'ktx',
 			onSelect: () => showModal('Katex')
 		}),
 		new Option($t('translation:editor.name.Mermaid'), {
 			icon: <TreeStructure />,
-			shortcut: 'mm',
+			shortcut: 'mmd',
 			onSelect: () => showModal('Mermaid')
 		}),
 		new Option($t('translation:editor.name.Navigation'), {
 			icon: <GpsFix />,
-			shortcut: 'nav',
+			shortcut: 'cat',
 			onSelect: () => editor.dispatchCommand(INSERT_NAVIGATION_COMMAND, null)
 		}),
 		new Option($t('translation:editor.name.Ref'), {

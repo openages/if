@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 
 import { updateSetting } from '@/actions/note'
 import { NoteSettings } from '@/models'
-import { ArticleNyTimes, ListDashes, TextT, Toolbox } from '@phosphor-icons/react'
+import { ArticleNyTimes, Calculator, ListDashes, TextT } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -99,7 +99,7 @@ const Index = () => {
 				</div>
 				<div className='setting_item w_100 border_box flex justify_between align_center'>
 					<div className='title_wrap flex align_center'>
-						<Toolbox size={24}></Toolbox>
+						<Calculator size={24}></Calculator>
 						<div className='text_wrap flex flex_column'>
 							<span className='title'>{t('translation:setting.Note.count.title')}</span>
 							<span className='desc'>{t('translation:setting.Note.count.desc')}</span>

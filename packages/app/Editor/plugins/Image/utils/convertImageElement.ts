@@ -1,4 +1,8 @@
+import { $getEditor, $isParagraphNode } from 'lexical'
+
 import { $createImageNode } from './index'
+
+import type { DOMConversionOutput } from 'lexical'
 
 export default (dom: Node) => {
 	const img = dom as HTMLImageElement
@@ -7,5 +11,20 @@ export default (dom: Node) => {
 
 	const { src, alt } = img
 
-	return { node: $createImageNode({ src, width: 'auto', height: 'auto', alt }) }
+	const node = $createImageNode({ src, width: 'auto', height: 'auto', alt })
+
+	return {
+		node,
+		after: nodes => {
+			$getEditor().update(() => {
+				const parent = node.getTopLevelElement()
+
+				if ($isParagraphNode(parent) && parent.getChildren().length === 1) {
+					parent.replace(node)
+				}
+			})
+
+			return nodes
+		}
+	} as DOMConversionOutput
 }

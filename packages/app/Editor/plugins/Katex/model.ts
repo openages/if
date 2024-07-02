@@ -1,4 +1,4 @@
-import { COMMAND_PRIORITY_EDITOR } from 'lexical'
+import { $insertNodes, COMMAND_PRIORITY_EDITOR } from 'lexical'
 import { makeObservable } from 'mobx'
 
 import { INSERT_KATEX_COMMAND } from '@/Editor/commands'
@@ -32,7 +32,11 @@ export default class Index {
 				payload => {
 					const node = $createKatexNode(payload)
 
-					insertBlock(node)
+					if (payload.inline) {
+						$insertNodes([node])
+					} else {
+						insertBlock(node)
+					}
 
 					return true
 				},

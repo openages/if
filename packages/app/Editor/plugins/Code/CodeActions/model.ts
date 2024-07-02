@@ -9,7 +9,7 @@ import {
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
-import { prettier_langs } from '@/Editor/utils'
+import { $getMatchingParent, prettier_langs } from '@/Editor/utils'
 import Utils from '@/models/utils'
 import { mergeRegister } from '@lexical/utils'
 import { useInstanceWatch, Watch } from '@openages/stk/mobx'
@@ -100,7 +100,7 @@ export default class Index {
 			return false
 		}
 
-		const node = ($isCodeNode(anchor) ? anchor : anchor.getTopLevelElement()) as CodeNode
+		const node = $getMatchingParent(anchor, $isCodeNode) as CodeNode
 
 		if (this.key === node.__key) return false
 

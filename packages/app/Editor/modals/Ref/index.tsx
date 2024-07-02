@@ -50,9 +50,9 @@ const Index = (props: IPropsModal) => {
 	const props_module_tab: IPropsModuleTab = {
 		module: x.module,
 		onChangeModule: useMemoizedFn(v => {
-			if (ref.current?.value) ref.current.value = ''
-
 			x.onChangeModule(v)
+
+			if (ref.current?.value) ref.current.value = ''
 		})
 	}
 
@@ -78,7 +78,11 @@ const Index = (props: IPropsModal) => {
 		}, 600)
 	)
 
-	const onChangeSearchType = useMemoizedFn(v => (x.search_type = v))
+	const onChangeSearchType = useMemoizedFn(v => {
+		x.search_type = v
+
+		if (ref.current?.value) ref.current.value = ''
+	})
 
 	return (
 		<div className={$cx('w_100 flex flex_column', styles._local)}>

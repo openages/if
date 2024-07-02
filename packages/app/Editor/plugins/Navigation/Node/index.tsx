@@ -6,10 +6,13 @@ import { TableOfContentsPlugin } from '@lexical/react/LexicalTableOfContentsPlug
 import { $createNavigationNode, convertNavigationElement } from '../utils'
 
 import type { DOMConversionMap, DOMExportOutput, SerializedLexicalNode } from 'lexical'
+import type { TableOfContentsEntry } from '@lexical/react/LexicalTableOfContentsPlugin'
 
 const Component = lazy(() => import('./Component'))
 
 export default class NavigationNode extends DecoratorNode<JSX.Element> {
+	__items: Array<TableOfContentsEntry>
+
 	constructor(key?: string) {
 		super(key)
 	}

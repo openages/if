@@ -92,7 +92,9 @@ export default class Index {
 			query = $db.collections[module_map[this.module]].findOne(this.id)
 		}
 
-		this.watcher = query.$.subscribe(res => (this.item = getDocItem(res)))
+		this.watcher = query.$.subscribe(res => {
+			this.item = res ? getDocItem(res) : null
+		})
 	}
 
 	off() {

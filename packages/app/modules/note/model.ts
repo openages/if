@@ -22,8 +22,6 @@ export default class Index {
 		this.id = id
 
 		this.file.init(id)
-
-		this.on()
 	}
 
 	onChangeFileName(e: ChangeEvent<HTMLInputElement>) {
@@ -47,8 +45,6 @@ export default class Index {
 			update({ item })
 		}
 	}
-
-	on() {}
 
 	off() {
 		this.file.off()

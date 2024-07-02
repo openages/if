@@ -24,6 +24,7 @@ import {
 	LinkEditor,
 	Mermaid,
 	Navigation,
+	Options,
 	Picker,
 	Quote,
 	Ref,
@@ -60,6 +61,7 @@ const Index = () => {
 				<Settings />
 				<Hover md />
 				<Navigation />
+				<Options />
 				<Count />
 				<Picker />
 				<TextBar md />
