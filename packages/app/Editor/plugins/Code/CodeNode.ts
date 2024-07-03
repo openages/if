@@ -7,7 +7,7 @@ import {
 	ElementNode
 } from 'lexical'
 
-import { shiki_langs } from '@/Editor/utils'
+import { getLangName, shiki_langs } from '@/Editor/utils'
 
 import {
 	$createCodeNode,
@@ -30,7 +30,11 @@ export default class CodeNode extends ElementNode {
 
 		super(node_key)
 
-		this.__lang = lang as BundledLanguage
+		let target = getLangName(lang)
+
+		if (!shiki_langs[target]) target = 'javascript'
+
+		this.__lang = target as BundledLanguage
 	}
 
 	static getType() {
@@ -55,7 +59,7 @@ export default class CodeNode extends ElementNode {
 		el.className = '__editor_code __editor_block __editor_block_special'
 
 		el.setAttribute('spellcheck', 'false')
-		el.setAttribute('data-lang', shiki_langs[this.__lang].name)
+		el.setAttribute('data-lang', shiki_langs[this.__lang]?.name || 'javascript')
 
 		return el
 	}

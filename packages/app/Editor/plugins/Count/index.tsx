@@ -8,7 +8,7 @@ import { container } from 'tsyringe'
 import { Popover } from '@/components'
 import { useStackSelector } from '@/context/stack'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { Calculator } from '@phosphor-icons/react'
+import { Pulse } from '@phosphor-icons/react'
 
 import styles from './index.css'
 import Model from './model'
@@ -71,16 +71,16 @@ const Index = () => {
 			style={style}
 		>
 			<AntdPopover
-				rootClassName='border_popover'
 				trigger='click'
 				placement='topLeft'
+				destroyTooltipOnHide
 				content={CountOptions}
 				open={x.visible_count_popover}
 				onOpenChange={onChangeCountVisible}
 			>
 				<div>
 					<div className='cursor_point flex align_center clickable'>
-						<Calculator className='mr_2' size={10}></Calculator>
+						<Pulse className='mr_2' size={10}></Pulse>
 						{x.count_mode === 'total' ? x.counts_total : x.counts_filted}
 					</div>
 				</div>

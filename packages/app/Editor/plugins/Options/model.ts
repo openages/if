@@ -1,14 +1,16 @@
+import { $getRoot } from 'lexical'
 import { throttle } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import transformers from '@/Editor/transformers'
+import { $convertFromMarkdownString } from '@/Editor/utils'
 import { File } from '@/models'
-import { downloadFile } from '@/utils'
+import { convertFile, downloadFile, uploadFile } from '@/utils'
 import { $convertToMarkdownString } from '@lexical/markdown'
 
-import type { LexicalEditor } from 'lexical'
 import type { CSSProperties } from 'react'
+import type { LexicalEditor } from 'lexical'
 
 @injectable()
 export default class Index {
@@ -51,7 +53,7 @@ export default class Index {
 	getPosition() {
 		const { right, top } = this.container.getBoundingClientRect()
 
-		this.style = { left: right - 30, top: top + 6 }
+		this.style = { left: right - 33, top: top + 12 }
 	}
 
 	exportMd() {
@@ -60,7 +62,17 @@ export default class Index {
 		downloadFile(this.file.data.name, res, 'md')
 	}
 
-	importMd() {}
+	async importMd() {
+		const files = await uploadFile({ accept: '.md' })
+
+		if (!files) return
+
+		const text = await convertFile(files[0])
+
+		this.editor.update(() => {
+			$convertFromMarkdownString(text, transformers, $getRoot(), false)
+		})
+	}
 
 	on() {
 		this.observer = new ResizeObserver(throttle(this.getPosition, 60))

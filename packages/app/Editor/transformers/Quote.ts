@@ -1,9 +1,10 @@
-import { $createLineBreakNode } from 'lexical'
+import { $createLineBreakNode, $getEditor, $getRoot } from 'lexical'
 
 import { $convertToMarkdownString } from '@lexical/markdown'
 
 import QuoteNode from '../plugins/Quote/QuoteNode'
 import { $createQuoteNode, $isQuoteNode } from '../plugins/Quote/utils'
+import { $convertFromMarkdownString, $getMatchingParent } from '../utils'
 import transformers from './'
 
 import type { ElementTransformer } from '@lexical/markdown'
@@ -27,24 +28,17 @@ export default {
 		return output.join('\n')
 	},
 	replace(parent, children, _match, is_import) {
-		if (is_import) {
-			const prev_node = parent.getPreviousSibling() as QuoteNode
-
-			if ($isQuoteNode(prev_node)) {
-				prev_node.splice(prev_node.getChildrenSize(), 0, [$createLineBreakNode(), ...children])
-				prev_node.select(0, 0)
-
-				parent.remove()
-
-				return
-			}
-		}
-
 		const node = $createQuoteNode()
 
-		node.append(...children)
-		parent.replace(node)
+		if (is_import) {
+			$convertFromMarkdownString(parent.getTextContent(), transformers, node, false)
 
-		node.select(0, 0)
+			parent.replace(node)
+		} else {
+			node.append(...children)
+			parent.replace(node)
+
+			node.select(0, 0)
+		}
 	}
 } as ElementTransformer

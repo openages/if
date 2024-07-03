@@ -2,7 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import { Upload } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-import { fileToBase64 } from '@/utils'
+import { convertFile } from '@/utils'
 import { UploadSimple } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -39,7 +39,7 @@ const Index = (props: IProps) => {
 		customRequest: useMemoizedFn(async res => {
 			const { file, onSuccess } = res
 
-			const base64 = await fileToBase64(file as Blob)
+			const base64 = await convertFile(file as Blob, 'base64')
 
 			onSuccess(base64)
 		})

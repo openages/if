@@ -4,15 +4,7 @@ import { isHTMLElement } from '@dnd-kit/utilities'
 
 import { $convertBlockquoteElement, $createQuoteNode } from './utils'
 
-import type {
-	NodeKey,
-	DOMConversionMap,
-	SerializedElementNode,
-	DOMExportOutput,
-	LexicalEditor,
-	RangeSelection,
-	LexicalNode
-} from 'lexical'
+import type { NodeKey, DOMConversionMap, SerializedElementNode, DOMExportOutput, LexicalEditor } from 'lexical'
 
 export default class QuoteNode extends ElementNode {
 	constructor(key?: NodeKey) {

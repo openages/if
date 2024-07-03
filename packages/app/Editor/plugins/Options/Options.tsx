@@ -15,8 +15,8 @@ const Index = (props: IPropsOptions) => {
 					onClick={exportMd}
 				>
 					<div className='flex align_center'>
-						<Export size={15}></Export>
-						<span className='title ml_8'>Export</span>
+						<Export size={16}></Export>
+						<span className='title ml_6'>Export</span>
 					</div>
 					<FileMd className='symbol' size={12}></FileMd>
 				</div>
@@ -25,8 +25,8 @@ const Index = (props: IPropsOptions) => {
 					onClick={importMd}
 				>
 					<div className='flex align_center'>
-						<ArrowLineDown size={15}></ArrowLineDown>
-						<span className='title ml_8'>Import</span>
+						<ArrowLineDown size={16}></ArrowLineDown>
+						<span className='title ml_6'>Import</span>
 					</div>
 					<FileMd className='symbol' size={12}></FileMd>
 				</div>

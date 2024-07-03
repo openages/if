@@ -73,7 +73,7 @@ export default class Index {
 		if (width < 1110 || this.toc === 'minimize') {
 			this.minimize = true
 
-			this.style = { left: right_container - 21 - 18 }
+			this.style = { left: right_container - 21 - 12, bottom: 12 }
 
 			return
 		}
@@ -103,6 +103,9 @@ export default class Index {
 
 			this.items.forEach(([node_key], index) => {
 				const el = this.editor.getElementByKey(node_key)
+
+				if (!el) return
+
 				const { top } = el.getBoundingClientRect()
 				const level = $getHeadingLevel($getNodeByKey(node_key))
 

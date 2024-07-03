@@ -33,7 +33,7 @@ const Index = () => {
 
 	const props_options: IPropsOptions = {
 		exportMd: useMemoizedFn(() => editor.update(() => x.exportMd())),
-		importMd: useMemoizedFn(() => editor.update(() => x.importMd()))
+		importMd: useMemoizedFn(x.importMd)
 	}
 
 	return (
@@ -47,10 +47,10 @@ const Index = () => {
 			style={style}
 		>
 			<AntdPopover
-				rootClassName='border_popover'
 				trigger='click'
 				placement='bottomLeft'
 				arrow={false}
+				destroyTooltipOnHide
 				content={<Options {...props_options} />}
 				open={x.visible_options}
 				onOpenChange={onChangeCountVisible}

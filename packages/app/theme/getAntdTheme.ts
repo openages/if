@@ -28,9 +28,9 @@ export default (theme: Theme, color_main: string) => {
 			controlItemBgActive: vars.color_bg_2,
 			switchHeight: 34,
 			boxShadow: vars.shadow,
-			borderRadius: 6,
+			borderRadiusXS: 3,
 			borderRadiusSM: 6,
-			borderRadiusXS: 6
+			borderRadius: 6
 		},
 		components: {
 			Switch: {

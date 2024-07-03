@@ -1,4 +1,4 @@
-import { useMemoizedFn } from 'ahooks'
+import { useMemoizedFn, useUpdate } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
@@ -14,7 +14,12 @@ import { Item } from './Components'
 import styles from './index.css'
 import Model from './model'
 
+interface IPropsToc {
+	setItems: (v: Model['items']) => void
+}
+
 interface IPropsContent {
+	items: Model['items']
 	minimize: Model['minimize']
 	scroll: Model['scroll']
 	style: Model['style']
@@ -22,53 +27,51 @@ interface IPropsContent {
 	visible_items: Array<string>
 	active_items: Array<string>
 	setRef: (v: HTMLElement) => void
-	setItems: (v: Model['items']) => void
 	scrollIntoEl: (node_key: string) => void
 }
 
-const Content = $app.memo((props: IPropsContent) => {
-	const { minimize, scroll, style, toc, visible_items, active_items, setRef, setItems, scrollIntoEl } = props
-
+const Toc = $app.memo(({ setItems }: IPropsToc) => {
 	return (
 		<TableOfContentsPlugin>
 			{items => {
 				setItems(items)
 
-				if (!items.length) return null
-
-				return (
-					<div
-						className={$cx(
-							'border_box',
-							styles._local,
-							!minimize ? 'fixed z_index_10' : styles.minimize,
-							!minimize && toc !== 'default' && styles.visible
-						)}
-						style={!minimize ? style : {}}
-					>
-						<div
-							className={$cx(
-								'nav_list_wrap h_100 border_box flex relative',
-								!scroll && 'align_center'
-							)}
-							ref={setRef}
-						>
-							<ul className='nav_list w_100 relative'>
-								<div className='right_mask absolute right_0 h_100'></div>
-								{items.map(([node_key, text, type]) => (
-									<Item
-										{...{ type, text, node_key, scrollIntoEl }}
-										visible={visible_items.includes(node_key)}
-										active={active_items.includes(node_key)}
-										key={node_key}
-									></Item>
-								))}
-							</ul>
-						</div>
-					</div>
-				)
+				return null
 			}}
 		</TableOfContentsPlugin>
+	)
+})
+
+const Content = $app.memo((props: IPropsContent) => {
+	const { items, minimize, scroll, style, toc, visible_items, active_items, setRef, scrollIntoEl } = props
+
+	return (
+		<div
+			className={$cx(
+				'border_box',
+				styles._local,
+				!minimize ? 'fixed z_index_10' : styles.minimize,
+				!minimize && toc !== 'default' && styles.visible
+			)}
+			style={!minimize ? style : {}}
+		>
+			<div
+				className={$cx('nav_list_wrap h_100 border_box flex relative', !scroll && 'align_center')}
+				ref={setRef}
+			>
+				<ul className='nav_list w_100 relative'>
+					<div className='right_mask absolute right_0 h_100'></div>
+					{items.map(([node_key, text, type]) => (
+						<Item
+							{...{ type, text, node_key, scrollIntoEl }}
+							visible={visible_items.includes(node_key)}
+							active={active_items.includes(node_key)}
+							key={node_key}
+						></Item>
+					))}
+				</ul>
+			</div>
+		</div>
 	)
 })
 
@@ -76,6 +79,8 @@ const Index = () => {
 	const [x] = useState(() => new Model())
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
+	const update = useUpdate()
+	const items = $copy(x.items)
 
 	useLayoutEffect(() => {
 		x.init(id, editor)
@@ -83,7 +88,11 @@ const Index = () => {
 		return () => x.off()
 	}, [id, editor])
 
-	const setItems = useMemoizedFn(v => (x.items = v))
+	const setItems = useMemoizedFn(v => {
+		x.items = v
+
+		setTimeout(() => update(), 0)
+	})
 	const setRef = useMemoizedFn(v => (x.ref = v))
 
 	const scrollIntoEl = useMemoizedFn((node_key: string) => {
@@ -93,12 +102,12 @@ const Index = () => {
 	const props_content: IPropsContent = {
 		minimize: x.minimize,
 		scroll: x.scroll,
+		items,
 		style: $copy(x.style),
 		toc: $copy(x.toc),
 		visible_items: $copy(x.visible_items),
 		active_items: $copy(x.active_items),
 		setRef,
-		setItems,
 		scrollIntoEl
 	}
 
@@ -111,19 +120,21 @@ const Index = () => {
 			<Fragment>
 				<div
 					className={$cx(
-						'fixed z_index_100 flex justify_center align_center clickable',
+						'border_box fixed z_index_100 flex justify_center align_center clickable',
 						styles.btn_nav,
-						x.visible_mini_nav && styles.active
+						x.visible_mini_nav && styles.active,
+						!items.length && 'none'
 					)}
 					style={props_content.style}
 					onClick={onToggleMiniNav}
 				>
 					<GpsFix></GpsFix>
 				</div>
+				<Toc setItems={setItems}></Toc>
 				<Popover
 					className={styles.mini_nav}
 					open={x.visible_mini_nav}
-					style={{ left: (props_content.style.left as number) - 150, bottom: 21 + 18 + 3 }}
+					style={{ left: (props_content.style.left as number) - 152, bottom: 21 + 18 + 3 }}
 					updatePosition={x.getPosition}
 				>
 					<Content {...props_content} />
@@ -134,7 +145,13 @@ const Index = () => {
 		return createPortal(Button, document.getElementById(id))
 	}
 
-	return createPortal(<Content {...props_content} />, document.getElementById(id))
+	return createPortal(
+		<Fragment>
+			<Toc setItems={setItems}></Toc>
+			<Content {...props_content} />
+		</Fragment>,
+		document.getElementById(id)
+	)
 }
 
 export default new $app.handle(Index).by(observer).by($app.memo).get()

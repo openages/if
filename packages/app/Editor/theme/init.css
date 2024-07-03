@@ -39,8 +39,8 @@
 		.__editor_block {
 			padding-inline-start: var(--editor_padding_x);
 			padding-inline-end: var(--editor_padding_x);
-			margin-block-start: calc(var(--editor_padding_y) * 2);
-			margin-block-end: calc(var(--editor_padding_y) * 2);
+			margin-block-start: calc(var(--editor_padding_y) * 1.5);
+			margin-block-end: calc(var(--editor_padding_y) * 1.5);
 			margin-inline-start: 0;
 			margin-inline-end: 0;
 		}

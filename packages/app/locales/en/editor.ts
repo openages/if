@@ -75,7 +75,7 @@ export default {
 		latest_files: 'Latest files'
 	},
 	Count: {
-		total: 'Words (no spaces)',
-		filted: 'Words (no punctuations)'
+		total: '- Spaces',
+		filted: '- Punctuations'
 	}
 }

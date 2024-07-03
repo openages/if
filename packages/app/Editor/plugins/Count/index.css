@@ -20,12 +20,13 @@
 }
 
 .count_options {
-	padding: 6px;
-	font-size: 10px;
+	line-height: 1;
+	padding: 3px;
+	font-size: 12px;
 
 	:global {
 		.option_item {
-			padding: 3px 6px;
+			padding: 6px 9px;
 			border-radius: var(--radius);
 			color: var(--color_text_light);
 
