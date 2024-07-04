@@ -77,5 +77,10 @@ export default {
 	Count: {
 		total: '- Spaces',
 		filted: '- Punctuations'
+	},
+	Options: {
+		import: {
+			warning: 'The imported content will overwrite the current content. Confirm import?'
+		}
 	}
 }

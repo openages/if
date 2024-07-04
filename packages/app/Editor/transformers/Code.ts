@@ -1,4 +1,4 @@
-import { getLangName, shiki_langs } from '@/Editor/utils'
+import { getLangName, shiki_langs, CODE_BLOCK_REG_EXP } from '@/Editor/utils'
 
 import CodeNode from '../plugins/Code/CodeNode'
 import { $createCodeNode, $isCodeNode } from '../plugins/Code/utils'
@@ -8,7 +8,7 @@ import type { BundledLanguage } from 'shiki'
 
 export default {
 	type: 'element',
-	regExp: /^[ \t]*```(\w{1,10})?\s$/,
+	regExp: CODE_BLOCK_REG_EXP,
 	dependencies: [CodeNode],
 	export(node: CodeNode) {
 		if (!$isCodeNode(node)) return null

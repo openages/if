@@ -1,6 +1,4 @@
-import { $createParagraphNode, $createTextNode, $isParagraphNode, $isTextNode } from 'lexical'
-
-import { $convertToMarkdownString } from '@lexical/markdown'
+import { $createParagraphNode, $isParagraphNode, $isTextNode } from 'lexical'
 
 import TableCellNode from '../plugins/Table/TableCellNode'
 import TableNode from '../plugins/Table/TableNode'
@@ -12,6 +10,7 @@ import {
 	$isTableNode,
 	$isTableRowNode
 } from '../plugins/Table/utils'
+import { $convertFromMarkdownString, $convertToMarkdownString } from '../utils'
 import transformers from './'
 
 import type { ElementTransformer } from '@lexical/markdown'
@@ -26,13 +25,12 @@ const getCells = (v: string) => {
 
 	return match[1].split('|').map(text => {
 		const cell = $createTableCellNode({})
-		const p = $createParagraphNode()
-		const t = $createTextNode()
 
-		t.setTextContent(text)
-
-		p.append(t)
-		cell.append(p)
+		if (text.length) {
+			$convertFromMarkdownString(text.replace(/\\n/g, '\n'), transformers, cell, false)
+		} else {
+			cell.append($createParagraphNode())
+		}
 
 		return cell
 	})
@@ -53,19 +51,44 @@ export default {
 
 		const output = [] as Array<string>
 		const rows = node.getChildren() as Array<TableRowNode>
+		const cols = node.__cols
 
 		rows.forEach((row, row_index) => {
 			const row_output = []
 			const cells = row.getChildren() as Array<TableCellNode>
 
 			cells.forEach(cell => {
-				row_output.push($convertToMarkdownString(transformers, cell, true).replace(/\n/g, '\\n'))
+				const text_length = cell.getTextContentSize()
+
+				if (text_length) {
+					row_output.push($convertToMarkdownString(transformers, cell, false).replace(/\n/g, '\\n'))
+				} else {
+					row_output.push(' ')
+				}
 			})
 
 			output.push(`| ${row_output.join(' | ')} |`)
 
 			if (row_index === 0) {
-				output.push(`| ${row_output.map(_ => '---').join(' | ')} |`)
+				const table_line = row_output
+					.map((_, col_index) => {
+						const col_style = cols[col_index]
+
+						if (col_style) {
+							if (col_style.align === 'center') {
+								return ':---:'
+							}
+
+							if (col_style.align === 'right') {
+								return '---:'
+							}
+						}
+
+						return '---'
+					})
+					.join(' | ')
+
+				output.push(`| ${table_line} |`)
 			}
 		})
 
@@ -77,11 +100,26 @@ export default {
 
 			if (!table || !$isTableNode(table)) return
 
+			const col_align = match[1].replace(/\s/g, '').split('|')
+
+			col_align.forEach((item, index) => {
+				if (item) {
+					const arr = Array.from(item)
+					const target = table.getWritable()
+
+					if (arr.at(0) === ':' && arr.at(-1) === ':') {
+						target.__cols[index] = { align: 'center' }
+					} else if (arr.at(-1) === ':') {
+						target.__cols[index] = { align: 'right' }
+					}
+				}
+			})
+
 			const rows = table.getChildren()
 
-			const lastRow = rows[rows.length - 1] as TableRowNode
+			const last_row = rows[rows.length - 1] as TableRowNode
 
-			if (!lastRow || !$isTableRowNode(lastRow)) return
+			if (!last_row || !$isTableRowNode(last_row)) return
 
 			parent.remove()
 
@@ -146,11 +184,16 @@ export default {
 		if ($isTableNode(prev_sibling) && getTableColumnsSize(prev_sibling) === max_cells) {
 			prev_sibling.append(...table.getChildren())
 
+			const first_row = prev_sibling.getFirstChild() as TableRowNode
+			const first_row_cells = first_row.getChildren() as Array<TableCellNode>
+
+			first_row_cells.forEach(cell => {
+				cell.__is_header = true
+			})
+
 			parent.remove()
 		} else {
 			parent.replace(table)
 		}
-
-		table.selectNext()
 	}
 } as ElementTransformer

@@ -1,18 +1,17 @@
-import { ELEMENT_TRANSFORMERS, TEXT_FORMAT_TRANSFORMERS, TEXT_MATCH_TRANSFORMERS } from '@lexical/markdown'
+import { CHECK_LIST, ELEMENT_TRANSFORMERS, TEXT_FORMAT_TRANSFORMERS, TEXT_MATCH_TRANSFORMERS } from '@lexical/markdown'
 
 import Code from './Code'
 import Divider from './Divider'
 import { Image_element, Image_text } from './Image'
 import { Katex_block, Katex_inline } from './Katex'
-import Mermaid from './Mermaid'
-import Navigation from './Navigation'
 import Quote from './Quote'
 import Table from './Table'
-import Toggle from './Toggle'
+import { Toggle_export, Toggle_import } from './Toggle'
 
 const exludes = ['^[ \\t]*```(\\w{1,10})?\\s', '^>\\s']
 
 export default [
+	CHECK_LIST,
 	...ELEMENT_TRANSFORMERS.filter(item => !exludes.includes(item.regExp.source)),
 	...TEXT_FORMAT_TRANSFORMERS,
 	...TEXT_MATCH_TRANSFORMERS,
@@ -24,7 +23,6 @@ export default [
 	Katex_block,
 	Quote,
 	Table,
-	Toggle,
-	Mermaid,
-	Navigation
+	Toggle_import,
+	Toggle_export
 ]

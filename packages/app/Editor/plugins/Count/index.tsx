@@ -66,7 +66,11 @@ const Index = () => {
 
 	return (
 		<Popover
-			className={$cx('border_box flex align_center', styles._local)}
+			className={$cx(
+				'border_box flex align_center',
+				styles._local,
+				x.visible_count_popover && styles.active
+			)}
 			open={x.count && x.visible}
 			style={style}
 		>

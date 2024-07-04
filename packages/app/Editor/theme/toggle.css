@@ -69,6 +69,8 @@
 			}
 
 			.__editor_toggle_head {
+				padding: 0.45em 0;
+
 				p {
 					margin-block-start: 0;
 					margin-block-end: 0;
@@ -80,7 +82,7 @@
 			}
 
 			* {
-				--editor_padding_y: 0.45em;
+				--editor_padding_y: 0.6em;
 				--editor_padding_x: 1.2em;
 			}
 		}

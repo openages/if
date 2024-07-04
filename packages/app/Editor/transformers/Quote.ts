@@ -1,10 +1,6 @@
-import { $createLineBreakNode, $getEditor, $getRoot } from 'lexical'
-
-import { $convertToMarkdownString } from '@lexical/markdown'
-
 import QuoteNode from '../plugins/Quote/QuoteNode'
 import { $createQuoteNode, $isQuoteNode } from '../plugins/Quote/utils'
-import { $convertFromMarkdownString, $getMatchingParent } from '../utils'
+import { $convertFromMarkdownString, $convertToMarkdownString } from '../utils'
 import transformers from './'
 
 import type { ElementTransformer } from '@lexical/markdown'
@@ -13,7 +9,7 @@ export default {
 	type: 'element',
 	regExp: /^>\s/,
 	dependencies: [QuoteNode],
-	export(node: QuoteNode, exportChildren) {
+	export(node: QuoteNode) {
 		if (!$isQuoteNode(node)) return null
 
 		const res = $convertToMarkdownString(transformers, node, true)

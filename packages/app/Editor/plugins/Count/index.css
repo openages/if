@@ -10,7 +10,8 @@
 	box-shadow: unset;
 	font-size: 10px;
 
-	&:hover {
+	&:hover,
+	&.active {
 		color: var(--color_text);
 	}
 

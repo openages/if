@@ -24,10 +24,6 @@
 			}
 		}
 
-		.if-modal-body {
-			padding: 6px 0;
-		}
-
 		.if-modal-close {
 			top: 14.5px;
 			right: 15px;
@@ -61,6 +57,7 @@
 				display: flex;
 				align-items: center;
 				flex-direction: column;
+				padding: 6px 0;
 				text-align: center;
 
 				.if-icon {

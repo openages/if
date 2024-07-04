@@ -1,5 +1,4 @@
 import { DecoratorNode } from 'lexical'
-import mermaid from 'mermaid'
 import { lazy, Suspense } from 'react'
 
 import { mermaidRender } from '@/Editor/utils'
@@ -60,7 +59,7 @@ export default class MermaidNode extends DecoratorNode<JSX.Element> {
 	createDOM() {
 		const el = document.createElement('p')
 
-		el.classList.add('__editor_katex', styles._local)
+		el.classList.value = `__editor_mermaid  __editor_block __editor_block_special ${styles._local}`
 
 		el.style.display = 'flex'
 		el.style.paddingBlockStart = '0'

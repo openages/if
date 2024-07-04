@@ -24,16 +24,20 @@ export const Katex_inline = {
 
 export const Katex_block = {
 	type: 'element',
-	regExp: /^\$\$\s*([^$]+?)\s*\$\$?\s$/,
+	regExp: /\$\$\s*([^$]+?)\s*\$\$\s{0,1}$/,
 	dependencies: [KatexNode],
 	export(node: KatexNode) {
 		if (!$isKatexNode(node)) return null
 
 		return `$$ ${node.__value} $$`
 	},
-	replace(_parent, _children, match, _is_import) {
+	replace(parent, _children, match, is_import) {
 		const node = $createKatexNode({ value: match[1], inline: false })
 
-		insertBlock(node)
+		if (is_import) {
+			parent.replace(node)
+		} else {
+			insertBlock(node)
+		}
 	}
 } as ElementTransformer

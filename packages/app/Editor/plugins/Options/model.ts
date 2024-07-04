@@ -4,10 +4,10 @@ import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import transformers from '@/Editor/transformers'
-import { $convertFromMarkdownString } from '@/Editor/utils'
+import { $convertFromMarkdownString, $convertToMarkdownString } from '@/Editor/utils'
 import { File } from '@/models'
 import { convertFile, downloadFile, uploadFile } from '@/utils'
-import { $convertToMarkdownString } from '@lexical/markdown'
+import { confirm } from '@/utils/antd'
 
 import type { CSSProperties } from 'react'
 import type { LexicalEditor } from 'lexical'
@@ -63,6 +63,18 @@ export default class Index {
 	}
 
 	async importMd() {
+		const content_size = this.editor.getEditorState().read(() => $getRoot().getTextContentSize())
+
+		if (content_size) {
+			const res = await confirm({
+				id: this.id,
+				title: $t('translation:common.notice'),
+				content: $t('translation:editor.Options.import.warning')
+			})
+
+			if (!res) return
+		}
+
 		const files = await uploadFile({ accept: '.md' })
 
 		if (!files) return

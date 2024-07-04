@@ -177,14 +177,14 @@
 	bottom: 18px;
 	width: 24px;
 	height: 24px;
-	border: var(--border_dashed);
 	border-radius: var(--radius_small);
+	outline: var(--border_light_dashed);
 	color: var(--color_text_light);
 	background-color: var(--color_bg);
 
 	&:hover,
 	&.active {
-		border-color: transparent;
+		outline-color: transparent;
 		color: var(--color_text);
 		box-shadow: var(--shadow_btn);
 	}

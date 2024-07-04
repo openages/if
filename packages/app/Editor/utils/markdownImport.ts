@@ -2,7 +2,6 @@ import {
 	$createLineBreakNode,
 	$createParagraphNode,
 	$createTextNode,
-	$getEditor,
 	$getRoot,
 	$getSelection,
 	$isParagraphNode,
@@ -14,21 +13,21 @@ import { $isListItemNode, $isListNode, ListItemNode } from '@lexical/list'
 import { $findMatchingParent } from '@lexical/utils'
 
 import { $createCodeNode, $createCodeTextNode } from '../plugins/Code/utils'
-import { $createQuoteNode, $isQuoteNode } from '../plugins/Quote/utils'
-import transformers from '../transformers'
+import { $createMermaidNode } from '../plugins/Mermaid/utils'
 import {
 	$isEmptyParagraph,
 	transformersByType,
 	CODE_BLOCK_REG_EXP,
+	MERMAID_BLOCK_REG_EXP,
 	PUNCTUATION_OR_SPACE,
-	QUOTE_BLOCK_REG_EXP
+	QUOTE_BLOCK_REG_EXP,
+	TOGGLE_END_BLOCK_REG_EXP,
+	TOGGLE_START_BLOCK_REG_EXP
 } from './'
 
-import type CodeNode from '../plugins/Code/CodeNode'
 import type { ElementTransformer, TextFormatTransformer, TextMatchTransformer, Transformer } from '@lexical/markdown'
-import type { TextNode } from 'lexical'
+import type { LexicalNode, TextNode } from 'lexical'
 import type { BundledLanguage } from 'shiki'
-import type QuoteNode from '../plugins/Quote/QuoteNode'
 
 type TextFormatTransformersIndex = Readonly<{
 	fullMatchRegExpByTag: Readonly<Record<string, RegExp>>
@@ -53,20 +52,38 @@ export function createMarkdownImport(
 		for (let i = 0; i < linesLength; i++) {
 			const lineText = lines[i]
 
-			const [codeblockNode, code_index] = $importCodeBlock(lines, i, root)
+			const [code_node, code_index] = $importCodeBlock(lines, i, root)
 
-			if (codeblockNode) {
+			if (code_node) {
 				i = code_index
 
 				continue
 			}
 
-			const [quote_text, quote_index] = $importQuoteBlock(lines, i, root)
+			const [mermaid_node, mermaid_index] = $importMermaidBlock(lines, i, root)
+
+			if (mermaid_node) {
+				i = mermaid_index
+
+				continue
+			}
+
+			const [quote_text, quote_index] = $importQuoteBlock(lines, i)
 
 			if (quote_text) {
 				i = quote_index
 
 				$importBlocks(quote_text, root, byType.element, textFormatTransformersIndex, byType.textMatch)
+
+				continue
+			}
+
+			const [toggle_text, toggle_index] = $importToggleBlock(lines, i)
+
+			if (toggle_text) {
+				i = toggle_index
+
+				$importBlocks(toggle_text, root, byType.element, textFormatTransformersIndex, byType.textMatch)
 
 				continue
 			}
@@ -155,7 +172,7 @@ function $importCodeBlock(
 	lines: Array<string>,
 	startLineIndex: number,
 	rootNode: ElementNode
-): [CodeNode | null, number] {
+): [LexicalNode | null, number] {
 	const openMatch = lines[startLineIndex].match(CODE_BLOCK_REG_EXP)
 
 	if (openMatch) {
@@ -183,11 +200,36 @@ function $importCodeBlock(
 	return [null, startLineIndex]
 }
 
-function $importQuoteBlock(
+function $importMermaidBlock(
 	lines: Array<string>,
 	startLineIndex: number,
 	rootNode: ElementNode
-): [string | null, number] {
+): [LexicalNode | null, number] {
+	const openMatch = lines[startLineIndex].match(MERMAID_BLOCK_REG_EXP)
+
+	if (openMatch) {
+		let endLineIndex = startLineIndex
+		const linesLength = lines.length
+
+		while (++endLineIndex < linesLength) {
+			const closeMatch = lines[endLineIndex].match(CODE_BLOCK_REG_EXP)
+
+			if (closeMatch) {
+				const mermaid_node = $createMermaidNode({
+					value: lines.slice(startLineIndex + 1, endLineIndex).join('\n')
+				})
+
+				rootNode.append(mermaid_node)
+
+				return [mermaid_node, endLineIndex]
+			}
+		}
+	}
+
+	return [null, startLineIndex]
+}
+
+function $importQuoteBlock(lines: Array<string>, startLineIndex: number): [string | null, number] {
 	const openMatch = lines[startLineIndex].match(QUOTE_BLOCK_REG_EXP)
 
 	if (openMatch) {
@@ -207,6 +249,28 @@ function $importQuoteBlock(
 						.map(item => item.replace('> ', ''))
 						.join('\n') +
 					'\n'
+
+				return [text, endLineIndex]
+			}
+		}
+	}
+
+	return [null, startLineIndex]
+}
+
+function $importToggleBlock(lines: Array<string>, startLineIndex: number): [string | null, number] {
+	const openMatch = lines[startLineIndex].match(TOGGLE_START_BLOCK_REG_EXP)
+
+	if (openMatch) {
+		let endLineIndex = startLineIndex
+
+		const linesLength = lines.length
+
+		while (++endLineIndex < linesLength) {
+			const closeMatch = lines[endLineIndex].match(TOGGLE_END_BLOCK_REG_EXP)
+
+			if (closeMatch) {
+				const text = lines[startLineIndex] + lines.slice(startLineIndex + 1, endLineIndex).join('\n')
 
 				return [text, endLineIndex]
 			}
@@ -321,12 +385,14 @@ function findOutermostMatch(
 		// before using match to find transformer
 		const tag = match.replace(/^\s/, '')
 		const fullMatchRegExp = textTransformersIndex.fullMatchRegExpByTag[tag]
+
 		if (fullMatchRegExp == null) {
 			continue
 		}
 
 		const fullMatch = textContent.match(fullMatchRegExp)
 		const transformer = textTransformersIndex.transformersByTag[tag]
+
 		if (fullMatch != null && transformer != null) {
 			if (transformer.intraword !== false) {
 				return fullMatch

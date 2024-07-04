@@ -1,19 +1,53 @@
-import { $convertToMarkdownString } from '@lexical/markdown'
-
 import ToggleNode from '../plugins/Toggle/ToggleNode'
-import { $isToggleNode } from '../plugins/Toggle/utils'
+import {
+	$createToggleBodyNode,
+	$createToggleBtnNode,
+	$createToggleHeadNode,
+	$createToggleNode,
+	$isToggleNode
+} from '../plugins/Toggle/utils'
+import { $convertFromMarkdownString, $convertToMarkdownString } from '../utils'
 import transformers from './'
 
 import type { ElementTransformer } from '@lexical/markdown'
 import type ToggleHeadNode from '../plugins/Toggle/ToggleHeadNode'
 import type ToggleBodyNode from '../plugins/Toggle/ToggleBodyNode'
 
-export default {
+export const Toggle_import = {
+	type: 'element',
+	regExp: /<details[^>]*>/,
+	dependencies: [ToggleNode],
+	export() {
+		return null
+	},
+	replace(parent, _children, _match, is_import) {
+		if (!is_import) return
+
+		let text = parent.getTextContent()
+
+		const [_, summary] = text.match(/<summary>(.*?)<\/summary>/)
+
+		text = text.replace(/<summary>(.*?)<\/summary>/, '')
+
+		const btn = $createToggleBtnNode()
+		const head = $createToggleHeadNode()
+		const body = $createToggleBodyNode()
+
+		$convertFromMarkdownString(summary, transformers, head, false)
+		$convertFromMarkdownString(text, transformers, body, false)
+
+		const node = $createToggleNode({ open: true }).append(btn, head, body)
+
+		parent.replace(node)
+	}
+} as ElementTransformer
+
+export const Toggle_export = {
 	type: 'element',
 	regExp: new RegExp(''),
 	dependencies: [ToggleNode],
 	export(node: ToggleNode) {
-		if (!$isToggleNode(node)) return
+		if (!$isToggleNode(node)) return null
 
 		const [_, head_node, body_node] = node.getChildren()
 

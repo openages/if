@@ -51,6 +51,7 @@ const Index = () => {
 				placement='bottomLeft'
 				arrow={false}
 				destroyTooltipOnHide
+				align={{ offset: [0, 9] }}
 				content={<Options {...props_options} />}
 				open={x.visible_options}
 				onOpenChange={onChangeCountVisible}

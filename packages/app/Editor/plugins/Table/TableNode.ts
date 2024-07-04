@@ -51,17 +51,21 @@ export default class TableNode extends ElementNode {
 			col_keys.forEach(key => {
 				const target_key = Number(key)
 				const target_value = this.__cols[target_key]
+
 				const row = rows[target_key]
-				const cells = row.getChildren() as Array<TableCellNode>
 
-				cells.forEach((item, index) => {
-					if (target_key !== index) return
+				if (row) {
+					const cells = row.getChildren() as Array<TableCellNode>
 
-					const el = editor.getElementByKey(item.getKey()) as HTMLTableCellElement
+					cells.forEach((item, index) => {
+						if (target_key !== index) return
 
-					if (target_value.align) el.setAttribute('align', target_value.align)
-					if (target_value.width) el.setAttribute('width', String(target_value.width))
-				})
+						const el = editor.getElementByKey(item.getKey()) as HTMLTableCellElement
+
+						if (el && target_value.align) el.setAttribute('align', target_value.align)
+						if (el && target_value.width) el.setAttribute('width', String(target_value.width))
+					})
+				}
 			})
 		}
 

@@ -77,5 +77,10 @@ export default {
 	Count: {
 		total: '字数（不计空格）',
 		filted: '字数（不计标点）'
+	},
+	Options: {
+		import: {
+			warning: '导入的内容将覆盖当前内容，确认导入'
+		}
 	}
 }
