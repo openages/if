@@ -30,8 +30,8 @@ importers:
         specifier: ^0.12.0
         version: 0.12.0
       '@atlaskit/pragmatic-drag-and-drop':
-        specifier: ^1.2.0
-        version: 1.2.0
+        specifier: ^1.2.1
+        version: 1.2.1
       '@dnd-kit/core':
         specifier: ^6.1.0
         version: 6.1.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
@@ -225,17 +225,17 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0(react@0.0.0-experimental-c3048aab4-20240326)
       react-router:
-        specifier: ^6.24.0
-        version: 6.24.0(react@0.0.0-experimental-c3048aab4-20240326)
+        specifier: ^6.24.1
+        version: 6.24.1(react@0.0.0-experimental-c3048aab4-20240326)
       react-router-dom:
-        specifier: ^6.24.0
-        version: 6.24.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
+        specifier: ^6.24.1
+        version: 6.24.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       rfdc:
         specifier: ^1.4.1
         version: 1.4.1
       rxdb:
-        specifier: 15.25.0
-        version: 15.25.0(rxjs@7.8.1)
+        specifier: 15.26.0
+        version: 15.26.0(rxjs@7.8.1)
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
@@ -268,8 +268,8 @@ importers:
         version: 3.23.8
     devDependencies:
       '@rsdoctor/rspack-plugin':
-        specifier: ^0.3.5
-        version: 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+        specifier: ^0.3.7
+        version: 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
       '@rspack/cli':
         specifier: 1.0.0-alpha.0
         version: 1.0.0-alpha.0(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))(@types/express@4.17.21)(webpack@5.92.1)
@@ -316,11 +316,11 @@ importers:
         specifier: ^0.23.0
         version: 0.23.0
       bun:
-        specifier: ^1.1.17
-        version: 1.1.17
+        specifier: ^1.1.18
+        version: 1.1.18
       bun-types:
-        specifier: ^1.1.17
-        version: 1.1.17
+        specifier: ^1.1.18
+        version: 1.1.18
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -461,8 +461,8 @@ packages:
     peerDependencies:
       react: '>=16.9.0'
 
-  '@atlaskit/pragmatic-drag-and-drop@1.2.0':
-    resolution: {integrity: sha512-JLhHv4dHJRlz5S2AyVPOCvYkAB8LyomqwJNWcYVw8QZ6Ugoo3J8ctR7JKqCRrOWCkuCVNx5ArzgCYUSFg0Enhg==}
+  '@atlaskit/pragmatic-drag-and-drop@1.2.1':
+    resolution: {integrity: sha512-gW2wJblFAeg94YXITHg0YdhFM2nmFAdDmX0LKYBIm79yEbIrOiuHHukgSjII07M4U5JpJ0Ff/4BaADjN23ix+A==}
 
   '@babel/code-frame@7.24.2':
     resolution: {integrity: sha512-y5+tLQyV8pg3fsiln67BVLD1P13Eg4lh5RW9mF0zUuvLrv9uIQ4MCL+CRT+FTsBlBjcIan6PGsLcBN0m3ClUyQ==}
@@ -1567,8 +1567,18 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
+  '@oven/bun-darwin-aarch64@1.1.18':
+    resolution: {integrity: sha512-2YMh1G+S5AxDqOEDh9i+9kc17887mkP/yzK/d5DQ0NyPt5uR2w5FKGaalPLDiu5w139y3LKBi+1eGba1oEJnyw==}
+    cpu: [arm64]
+    os: [darwin]
+
   '@oven/bun-darwin-x64-baseline@1.1.17':
     resolution: {integrity: sha512-2y0VY4TjX1YAM0Lo0iMKylF6Z9lU9RItYoHRHWGRRAgdJbxD4sMk4RMP4Q7vcj9kiCmzfxH9vRap5OPpP6CWaw==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@oven/bun-darwin-x64-baseline@1.1.18':
+    resolution: {integrity: sha512-shwwfe9Yugpyr490FdjQ90O3JtETbszyUk4PBXQrbz3babPfhXGuVGewis8ORNYeb8zoWGo/adk4biby6kKwHA==}
     cpu: [x64]
     os: [darwin]
 
@@ -1577,8 +1587,18 @@ packages:
     cpu: [x64]
     os: [darwin]
 
+  '@oven/bun-darwin-x64@1.1.18':
+    resolution: {integrity: sha512-ppeJpQqEXO6nfCneq2TXYFO/l1S/KYKTt3cintTiQxW0ISvj36vQcP/l0ln8BxEu46EnqulVKDrkTBAttv9sww==}
+    cpu: [x64]
+    os: [darwin]
+
   '@oven/bun-linux-aarch64@1.1.17':
     resolution: {integrity: sha512-uzP+V2uuVtDiDBWExbUwop9JgSWCgICSPiAuHYODk6zqJMsMnXocVlREVy9g7wS3mxOApn0IE9ak4SyHjsTodw==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@oven/bun-linux-aarch64@1.1.18':
+    resolution: {integrity: sha512-cDwqcGA/PiiqM8pQkZSRW0HbSh3r1hMsS2ew61d6FjjEI7HP+bwTuu0n0rGdzQKWTtb3PzzXvOkiFZywKS5Gzg==}
     cpu: [arm64]
     os: [linux]
 
@@ -1587,8 +1607,18 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@oven/bun-linux-x64-baseline@1.1.18':
+    resolution: {integrity: sha512-hxnFwssve6M9i4phusIn9swFvQKwLI+9i2taWSotshp1axLXQ5ruIIE9WPKJGR0i+yuw5Q8HBCnUDDh5ZMp9rA==}
+    cpu: [x64]
+    os: [linux]
+
   '@oven/bun-linux-x64@1.1.17':
     resolution: {integrity: sha512-aP+0FclnRNrz0s5DTaRbccqW0ZsGWNImHeVw2xUazTNfLiK35YcyIakgzSSE5D+Q/c2wh23Yk6TR6f4Nhmcqtg==}
+    cpu: [x64]
+    os: [linux]
+
+  '@oven/bun-linux-x64@1.1.18':
+    resolution: {integrity: sha512-oce0pELxlVhRO7clQGAkbo8vfxaCmRpf7Tu/Swn+T/wqeA5tew02HmsZAnDQqgYx8Z2/QpCOfF1SvLsdg7hR+A==}
     cpu: [x64]
     os: [linux]
 
@@ -1597,8 +1627,18 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@oven/bun-windows-x64-baseline@1.1.18':
+    resolution: {integrity: sha512-Wlb55q9QbayO+7NvfYMnU8oaTPz1k2xMr7mm9+JOnG/I6q82HMvIQEG181bAhU1kcm5YcZZ5E0WMp2gX3NFsEw==}
+    cpu: [x64]
+    os: [win32]
+
   '@oven/bun-windows-x64@1.1.17':
     resolution: {integrity: sha512-ap9ZVcC2hsoNRyf77C4aZ6hWupXXOQG4WmL/K3i07p9toTPAhJUmcsr5jGQ9wH98lm6vRsGd49jjOp0tIDUUhA==}
+    cpu: [x64]
+    os: [win32]
+
+  '@oven/bun-windows-x64@1.1.18':
+    resolution: {integrity: sha512-d639p5g8hrXyvFX3FK9EpsaoVEhMRThftmkueljjpYnYjMvIiMQ2crHtI2zwZ6yLEHvecaFXVXlocu2+jxia7g==}
     cpu: [x64]
     os: [win32]
 
@@ -1644,7 +1684,7 @@ packages:
     resolution: {integrity: sha512-kdSefcPdruJiFMVSbn801t4vFK7KB/5gd2fYvrxhuJYg8ILrmn9SKSX2tZdV6V+ksulWqS7aXjBcRXl3wHoD9Q==}
 
   '@protobufjs/path@1.1.2':
-    resolution: {integrity: sha1-bMKyDFya1q0NzP0hynZz2Nf79o0=}
+    resolution: {integrity: sha512-6JOcJ5Tm08dOHAbdR3GrvP+yUUfkjG5ePsHYczMFLq3ZmMkAD98cDgcT2iA1lJ9NVwFd4tH/iSSoe44YWkltEA==}
 
   '@protobufjs/pool@1.1.0':
     resolution: {integrity: sha512-0kELaGSIDBKvcgS4zkjz1PeddatrjYcmMWOlAuAPwAeccUrPHdUqo/J6LiymHHEiJT5NrF1UVwxY14f+fy4WQw==}
@@ -1707,37 +1747,37 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
 
-  '@remix-run/router@1.17.0':
-    resolution: {integrity: sha512-2D6XaHEVvkCn682XBnipbJjgZUU7xjLtA4dGJRBVUKpEaDYOZMENZoZjAOSb7qirxt5RupjzZxz4fK2FO+EFPw==}
+  '@remix-run/router@1.17.1':
+    resolution: {integrity: sha512-mCOMec4BKd6BRGBZeSnGiIgwsbLGp3yhVqAD8H+PxiRNEHgDpZb8J1TnrSDlg97t0ySKMQJTHCWBCmBpSmkF6Q==}
     engines: {node: '>=14.0.0'}
 
-  '@rsdoctor/client@0.3.5':
-    resolution: {integrity: sha512-ilRx3SqeHcX6VY7skvAouClDRmde4ElZMfTOZvncvAw640l7U7gm7Lu/W69GFe4Z6wMNMi1vou1lZ/O415Zv/A==}
+  '@rsdoctor/client@0.3.7':
+    resolution: {integrity: sha512-ZBMy65BO0jUEc6YvfEO7aqnsl0fcEzzIztVORAV//oZftUMkJLCUUwDAfAAVYpZT7c94CX32IQNbEBz2dp5VRA==}
 
-  '@rsdoctor/core@0.3.5':
-    resolution: {integrity: sha512-yB+vcmJ+Kf/y/4+IPQFu3Ytyz+MkuRUl9EZErHdF64OJAEJ87I/Jt28xKWwnsJaXf6U7J3CVhzp0imiMD56XBQ==}
+  '@rsdoctor/core@0.3.7':
+    resolution: {integrity: sha512-UBz4BKEoygryUR7TC2uW5uhZIb7//zI+JjajrSWEoa8O41a5uXj2KSga88c5ZeiWwg5jaIrk5L6dryHSlwWy2A==}
 
-  '@rsdoctor/graph@0.3.5':
-    resolution: {integrity: sha512-T2tI0j+GMv/oUwymEgwLcL/PPzbuSnRorviHilPbH5LBQUfDiFQdXruawp9Bu54+t3b1JsQtXHoYFsv5wreRbQ==}
+  '@rsdoctor/graph@0.3.7':
+    resolution: {integrity: sha512-VZU1E2AoDMSpp4xA5cRWe2xFt+RGUZhnxYpBmJvuKtZCo+KY056BmWY2MBV9abV1J6jYdUs9S0XGNK8437h/mw==}
 
-  '@rsdoctor/rspack-plugin@0.3.5':
-    resolution: {integrity: sha512-MaTzRhX4aHwX6hr45XrlcdsDB8f1R3FCl0quewm3D3fkD/Mj5fsTHoccTNS9+HRc0FeASVp2oyLJPmdGF9O5IA==}
+  '@rsdoctor/rspack-plugin@0.3.7':
+    resolution: {integrity: sha512-ThB0e3vVEmQ2MHhrQZc4YHOsdk0ltHwKOzN+j3Vk7YWsZwbZTw6ZT7G0CMEqFtx0VHzOR/Ef6OU3MZXtM1L2JA==}
     peerDependencies:
       '@rspack/core': 0.x
 
-  '@rsdoctor/sdk@0.3.5':
-    resolution: {integrity: sha512-hINLRHYSlkXoQDODKYaoOlrA7bQucdwt76NSbl47HvsCPe656tk7tULTBMA/SHs1h+eB9DeLwjuerAnIzAc44w==}
+  '@rsdoctor/sdk@0.3.7':
+    resolution: {integrity: sha512-n35v64Z75ledyDPF5zJLPGT/MJpEpM7MMwjBuBAoGnE32p9Sb19jPjbERPobRvX1ik4fSyOJUJA6IgipaX20CQ==}
 
-  '@rsdoctor/types@0.3.5':
-    resolution: {integrity: sha512-tCKn1FtvjfIDXt2HP4n5MnsxRvAtljxnZKXdm0aDEMfRCHeUilomUDV7bzYTAE99gz21+BbgcA+mFz0nVa+e2A==}
+  '@rsdoctor/types@0.3.7':
+    resolution: {integrity: sha512-nXV9IfeSOgInmPkq4awRG2drROfOSzsowzGvSo48lj0+jLk/qDFiy6Bg+e4dzD2jUCrF7WuRohzMVw74rv2O1A==}
     peerDependencies:
       '@rspack/core': 0.x
     peerDependenciesMeta:
       '@rspack/core':
         optional: true
 
-  '@rsdoctor/utils@0.3.5':
-    resolution: {integrity: sha512-Gsn1+nRMV8DGAD3zO3t3y8ZuXtSH1sqOkJAZ5dmaX4o/f0+5m1ppZWh5QVseIZvvT8dDg9MirzRVeNC81zGIPw==}
+  '@rsdoctor/utils@0.3.7':
+    resolution: {integrity: sha512-rWebg/FSkEBUXEBrgQYYwNgceOneabcmZKu7OR6V7qXDNLm0dydSovoA32MCgVphDcjycys98cSY36CcQ37yVQ==}
 
   '@rspack/binding-darwin-arm64@0.6.5':
     resolution: {integrity: sha512-5Zbs3buzF80MZoWnnpm/ZqQ2ZLKWjmmy94gDMeJhG39lKcpK2J2NyDXVis2ZSg7uUvKyJ662BEgIE1AnTWjnYg==}
@@ -2353,6 +2393,11 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
+  acorn@8.12.1:
+    resolution: {integrity: sha512-tcpGyI9zbizT9JbV6oYE477V6mTlXvvi0T0G3SNIYE2apm/G5huBa1+K89VGeovbg+jycCrfhl3ADxErOuO6Jg==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+
   ahooks@3.8.0:
     resolution: {integrity: sha512-M01m+mxLRNNeJ/PCT3Fom26UyreTj6oMqJBetUrJnK4VNI5j6eMA543Xxo53OBXn6XibA2FXKcCCgrT6YCTtKQ==}
     engines: {node: '>=8.0.0'}
@@ -2553,8 +2598,16 @@ packages:
   bun-types@1.1.17:
     resolution: {integrity: sha512-Z4+OplcSd/YZq7ZsrfD00DKJeCwuNY96a1IDJyR73+cTBaFIS7SC6LhpY/W3AMEXO9iYq5NJ58WAwnwL1p5vKg==}
 
+  bun-types@1.1.18:
+    resolution: {integrity: sha512-m5GnQrIpQdRyfWRoa5pvwpVAMDiQR1GTgMMZNvBWzJ+k2/fC55NRFZCEsXFE38HLFpM57o/diAjP3rgacdA4Eg==}
+
   bun@1.1.17:
     resolution: {integrity: sha512-x2vUqI75XQ11Qxb3FzQCd/AkbA8A3AiJ35xfw49JeNgu0MTi0RCuW+1zOyFf5iJM0xU07LKf2H69n4ASuEqhtQ==}
+    os: [darwin, linux, win32]
+    hasBin: true
+
+  bun@1.1.18:
+    resolution: {integrity: sha512-bv1wLYtmkn6GCqYFsVO9xZzPvNaDlA3xHbtePGHMtXMqq8N/vo+L6b19LB4+I5RKXFAsSmgzonyh2oMExaaWcQ==}
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -3868,7 +3921,7 @@ packages:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
 
   lodash.camelcase@4.3.0:
-    resolution: {integrity: sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA==}
+    resolution: {integrity: sha1-soqmKIorn8ZRA1x3EfZathkDMaY=}
 
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
@@ -4154,8 +4207,8 @@ packages:
     engines: {node: ^18 || >=20}
     hasBin: true
 
-  nats@2.27.0:
-    resolution: {integrity: sha512-ebbcZE89YVHri2SHubJKAjNIgACGxMwAfdknFGQsOyLoLHXb8b35Tq9frl9p815Xskm1tjhjZ9hm6pNwL9pA7A==}
+  nats@2.28.0:
+    resolution: {integrity: sha512-zXWOTOZEizUQy8UO2lMYFAee0htGrZLmJ2sddfmsDI00nc+dsK5+gS7p7bt26O1omfdCLVU5xymlnAjaqYnOmw==}
     engines: {node: '>= 14.0.0'}
 
   negotiator@0.6.3:
@@ -4562,8 +4615,8 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
 
-  rc-picker@4.6.6:
-    resolution: {integrity: sha512-sEWARCNlodubP7/IM6nXHDDIuKZ3gYd5CpS2cYcNORa2telX3nAfllqnGSGjGEFvdtyW+IqGAVatLOmFT0lKYg==}
+  rc-picker@4.6.7:
+    resolution: {integrity: sha512-ZntxLH863jdNPZq2i6e2+1iXpRfYKHjNfUGgoObA1YExuWAnTCHpZzOkBuS43GnVcnp2MPDp78pH9OZJFd2hLw==}
     engines: {node: '>=8.x'}
     peerDependencies:
       date-fns: '>= 2.x'
@@ -4776,15 +4829,15 @@ packages:
     resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
     engines: {node: '>=0.10.0'}
 
-  react-router-dom@6.24.0:
-    resolution: {integrity: sha512-960sKuau6/yEwS8e+NVEidYQb1hNjAYM327gjEyXlc6r3Skf2vtwuJ2l7lssdegD2YjoKG5l8MsVyeTDlVeY8g==}
+  react-router-dom@6.24.1:
+    resolution: {integrity: sha512-U19KtXqooqw967Vw0Qcn5cOvrX5Ejo9ORmOtJMzYWtCT4/WOfFLIZGGsVLxcd9UkBO0mSTZtXqhZBsWlHr7+Sg==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
       react-dom: '>=16.8'
 
-  react-router@6.24.0:
-    resolution: {integrity: sha512-sQrgJ5bXk7vbcC4BxQxeNa5UmboFm35we1AFK0VvQaz9g0LzxEIuLOhHIoZ8rnu9BO21ishGeL9no1WB76W/eg==}
+  react-router@6.24.1:
+    resolution: {integrity: sha512-PTXFXGK2pyXpHzVo3rR9H7ip4lSPZZc0bHG5CARmj65fTT6qG7sTngmb6lcYu1gf3y/8KxORoy9yn59pGpCnpg==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
@@ -4892,8 +4945,8 @@ packages:
   rw@1.3.3:
     resolution: {integrity: sha512-PdhdWy89SiZogBLaw42zdeqtRJ//zFd2PgQavcICDUgJT5oW10QCRKbJ6bg4r0/UY2M6BWd5tkxuGFRvCkgfHQ==}
 
-  rxdb@15.25.0:
-    resolution: {integrity: sha512-NyEf2G2kv7znVNnJ0ydeCeNgAs/ekR5AazDOowj/jZ5SZtVG2jXnCYNZN3KkvbIOIBw43YKA1NbjFZMZEas5aQ==}
+  rxdb@15.26.0:
+    resolution: {integrity: sha512-AxQMYbtJ1wpFO4RZIcSse3yGucFhL7njjp0/85DtCgTJfrHUcPCw0FaA/kJG27byD4BvKF2Rs5q0l1+Sq3N1kg==}
     engines: {node: '>=18'}
     peerDependencies:
       rxjs: ^7.8.0
@@ -5762,7 +5815,7 @@ snapshots:
       resize-observer-polyfill: 1.5.1
       throttle-debounce: 5.0.2
 
-  '@atlaskit/pragmatic-drag-and-drop@1.2.0':
+  '@atlaskit/pragmatic-drag-and-drop@1.2.1':
     dependencies:
       '@babel/runtime': 7.24.7
       bind-event-listener: 3.0.0
@@ -7269,25 +7322,49 @@ snapshots:
   '@oven/bun-darwin-aarch64@1.1.17':
     optional: true
 
+  '@oven/bun-darwin-aarch64@1.1.18':
+    optional: true
+
   '@oven/bun-darwin-x64-baseline@1.1.17':
+    optional: true
+
+  '@oven/bun-darwin-x64-baseline@1.1.18':
     optional: true
 
   '@oven/bun-darwin-x64@1.1.17':
     optional: true
 
+  '@oven/bun-darwin-x64@1.1.18':
+    optional: true
+
   '@oven/bun-linux-aarch64@1.1.17':
+    optional: true
+
+  '@oven/bun-linux-aarch64@1.1.18':
     optional: true
 
   '@oven/bun-linux-x64-baseline@1.1.17':
     optional: true
 
+  '@oven/bun-linux-x64-baseline@1.1.18':
+    optional: true
+
   '@oven/bun-linux-x64@1.1.17':
+    optional: true
+
+  '@oven/bun-linux-x64@1.1.18':
     optional: true
 
   '@oven/bun-windows-x64-baseline@1.1.17':
     optional: true
 
+  '@oven/bun-windows-x64-baseline@1.1.18':
+    optional: true
+
   '@oven/bun-windows-x64@1.1.17':
+    optional: true
+
+  '@oven/bun-windows-x64@1.1.18':
     optional: true
 
   '@phosphor-icons/react@2.1.7(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)':
@@ -7414,16 +7491,16 @@ snapshots:
       react: 0.0.0-experimental-c3048aab4-20240326
       react-dom: 0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326)
 
-  '@remix-run/router@1.17.0': {}
+  '@remix-run/router@1.17.1': {}
 
-  '@rsdoctor/client@0.3.5': {}
+  '@rsdoctor/client@0.3.7': {}
 
-  '@rsdoctor/core@0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))':
+  '@rsdoctor/core@0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))':
     dependencies:
-      '@rsdoctor/graph': 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
-      '@rsdoctor/sdk': 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
-      '@rsdoctor/types': 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
-      '@rsdoctor/utils': 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+      '@rsdoctor/graph': 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+      '@rsdoctor/sdk': 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+      '@rsdoctor/types': 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
       axios: 1.7.2
       enhanced-resolve: 5.12.0
       filesize: 10.1.2
@@ -7446,10 +7523,10 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/graph@0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))':
+  '@rsdoctor/graph@0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))':
     dependencies:
-      '@rsdoctor/types': 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
-      '@rsdoctor/utils': 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+      '@rsdoctor/types': 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
       lodash: 4.17.21
       socket.io: 4.7.2
       source-map: 0.7.4
@@ -7463,13 +7540,13 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/rspack-plugin@0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))':
+  '@rsdoctor/rspack-plugin@0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))':
     dependencies:
-      '@rsdoctor/core': 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
-      '@rsdoctor/graph': 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
-      '@rsdoctor/sdk': 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
-      '@rsdoctor/types': 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
-      '@rsdoctor/utils': 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+      '@rsdoctor/core': 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+      '@rsdoctor/graph': 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+      '@rsdoctor/sdk': 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+      '@rsdoctor/types': 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
       '@rspack/core': 1.0.0-alpha.0(@swc/helpers@0.5.11)
       loader-utils: 2.0.4
       lodash: 4.17.21
@@ -7483,12 +7560,12 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/sdk@0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))':
+  '@rsdoctor/sdk@0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))':
     dependencies:
-      '@rsdoctor/client': 0.3.5
-      '@rsdoctor/graph': 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
-      '@rsdoctor/types': 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
-      '@rsdoctor/utils': 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+      '@rsdoctor/client': 0.3.7
+      '@rsdoctor/graph': 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+      '@rsdoctor/types': 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+      '@rsdoctor/utils': 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
       body-parser: 1.20.1
       cors: 2.8.5
       dayjs: 1.11.6
@@ -7509,7 +7586,7 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@rsdoctor/types@0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))':
+  '@rsdoctor/types@0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))':
     dependencies:
       '@types/connect': 3.4.35
       '@types/estree': 1.0.0
@@ -7524,13 +7601,13 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@rsdoctor/utils@0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))':
+  '@rsdoctor/utils@0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))':
     dependencies:
       '@babel/code-frame': 7.24.2
-      '@rsdoctor/types': 0.3.5(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
+      '@rsdoctor/types': 0.3.7(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
       '@types/estree': 1.0.0
-      acorn: 8.12.0
-      acorn-import-assertions: 1.9.0(acorn@8.12.0)
+      acorn: 8.12.1
+      acorn-import-assertions: 1.9.0(acorn@8.12.1)
       acorn-walk: 8.3.2
       chalk: 4.1.2
       connect: 3.7.0
@@ -8299,13 +8376,13 @@ snapshots:
       mime-types: 2.1.35
       negotiator: 0.6.3
 
-  acorn-import-assertions@1.9.0(acorn@8.12.0):
+  acorn-import-assertions@1.9.0(acorn@8.12.1):
     dependencies:
-      acorn: 8.12.0
+      acorn: 8.12.1
 
-  acorn-import-attributes@1.9.5(acorn@8.12.0):
+  acorn-import-attributes@1.9.5(acorn@8.12.1):
     dependencies:
-      acorn: 8.12.0
+      acorn: 8.12.1
 
   acorn-walk@8.3.2: {}
 
@@ -8314,6 +8391,8 @@ snapshots:
       acorn: 8.12.0
 
   acorn@8.12.0: {}
+
+  acorn@8.12.1: {}
 
   ahooks@3.8.0(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
@@ -8417,7 +8496,7 @@ snapshots:
       rc-motion: 2.9.2(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       rc-notification: 5.6.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       rc-pagination: 4.2.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
-      rc-picker: 4.6.6(dayjs@1.11.11)(luxon@3.4.4)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
+      rc-picker: 4.6.7(dayjs@1.11.11)(luxon@3.4.4)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       rc-progress: 4.0.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       rc-rate: 2.13.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       rc-resize-observer: 1.4.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
@@ -8603,6 +8682,11 @@ snapshots:
       '@types/node': 20.12.14
       '@types/ws': 8.5.10
 
+  bun-types@1.1.18:
+    dependencies:
+      '@types/node': 20.12.14
+      '@types/ws': 8.5.10
+
   bun@1.1.17:
     optionalDependencies:
       '@oven/bun-darwin-aarch64': 1.1.17
@@ -8613,6 +8697,17 @@ snapshots:
       '@oven/bun-linux-x64-baseline': 1.1.17
       '@oven/bun-windows-x64': 1.1.17
       '@oven/bun-windows-x64-baseline': 1.1.17
+
+  bun@1.1.18:
+    optionalDependencies:
+      '@oven/bun-darwin-aarch64': 1.1.18
+      '@oven/bun-darwin-x64': 1.1.18
+      '@oven/bun-darwin-x64-baseline': 1.1.18
+      '@oven/bun-linux-aarch64': 1.1.18
+      '@oven/bun-linux-x64': 1.1.18
+      '@oven/bun-linux-x64-baseline': 1.1.18
+      '@oven/bun-windows-x64': 1.1.18
+      '@oven/bun-windows-x64-baseline': 1.1.18
 
   bytes@3.0.0: {}
 
@@ -10252,7 +10347,7 @@ snapshots:
 
   nanoid@5.0.7: {}
 
-  nats@2.27.0:
+  nats@2.28.0:
     dependencies:
       nkeys.js: 1.1.0
 
@@ -10682,7 +10777,7 @@ snapshots:
       react: 0.0.0-experimental-c3048aab4-20240326
       react-dom: 0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326)
 
-  rc-picker@4.6.6(dayjs@1.11.11)(luxon@3.4.4)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
+  rc-picker@4.6.7(dayjs@1.11.11)(luxon@3.4.4)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
       '@babel/runtime': 7.24.7
       '@rc-component/trigger': 2.2.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
@@ -10926,16 +11021,16 @@ snapshots:
 
   react-refresh@0.14.2: {}
 
-  react-router-dom@6.24.0(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
+  react-router-dom@6.24.1(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
-      '@remix-run/router': 1.17.0
+      '@remix-run/router': 1.17.1
       react: 0.0.0-experimental-c3048aab4-20240326
       react-dom: 0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326)
-      react-router: 6.24.0(react@0.0.0-experimental-c3048aab4-20240326)
+      react-router: 6.24.1(react@0.0.0-experimental-c3048aab4-20240326)
 
-  react-router@6.24.0(react@0.0.0-experimental-c3048aab4-20240326):
+  react-router@6.24.1(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
-      '@remix-run/router': 1.17.0
+      '@remix-run/router': 1.17.1
       react: 0.0.0-experimental-c3048aab4-20240326
 
   react@0.0.0-experimental-c3048aab4-20240326: {}
@@ -11038,7 +11133,7 @@ snapshots:
 
   rw@1.3.3: {}
 
-  rxdb@15.25.0(rxjs@7.8.1):
+  rxdb@15.26.0(rxjs@7.8.1):
     dependencies:
       '@babel/runtime': 7.24.7
       '@types/clone': 2.1.4
@@ -11065,7 +11160,7 @@ snapshots:
       lokijs: 1.5.12
       mingo: 6.4.13
       mongodb: 6.8.0
-      nats: 2.27.0
+      nats: 2.28.0
       oblivious-set: 1.4.0
       ohash: 1.1.3
       reconnecting-websocket: 4.4.0
@@ -11455,7 +11550,7 @@ snapshots:
   terser@5.31.1:
     dependencies:
       '@jridgewell/source-map': 0.3.6
-      acorn: 8.12.0
+      acorn: 8.12.1
       commander: 2.20.3
       source-map-support: 0.5.21
 
@@ -11716,7 +11811,7 @@ snapshots:
   webpack-bundle-analyzer@4.10.2:
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
-      acorn: 8.12.0
+      acorn: 8.12.1
       acorn-walk: 8.3.3
       commander: 7.2.0
       debounce: 1.2.1
@@ -11814,8 +11909,8 @@ snapshots:
       '@webassemblyjs/ast': 1.12.1
       '@webassemblyjs/wasm-edit': 1.12.1
       '@webassemblyjs/wasm-parser': 1.12.1
-      acorn: 8.12.0
-      acorn-import-attributes: 1.9.5(acorn@8.12.0)
+      acorn: 8.12.1
+      acorn-import-attributes: 1.9.5(acorn@8.12.1)
       browserslist: 4.23.1
       chrome-trace-event: 1.0.4
       enhanced-resolve: 5.17.0
