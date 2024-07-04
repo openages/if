@@ -1,3 +1,31 @@
+[data-theme='dark'] {
+	.wrap {
+		:global {
+			.options_wrap {
+				border-color: rgba(var(--color_contrast_rgb), 0.12);
+				color: var(--color_contrast);
+				background-color: rgba(var(--color_std_rgb), 0.48);
+
+				input {
+					color: var(--color_contrast);
+				}
+			}
+		}
+	}
+
+	.size_wrap {
+		:global {
+			.size_input_wrap {
+				.input_item {
+					input {
+						color: var(--color_contrast);
+					}
+				}
+			}
+		}
+	}
+}
+
 .wrap {
 	&:hover {
 		:global {

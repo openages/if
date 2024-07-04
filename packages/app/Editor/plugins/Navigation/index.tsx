@@ -134,7 +134,7 @@ const Index = () => {
 				<Popover
 					className={styles.mini_nav}
 					open={x.visible_mini_nav}
-					style={{ left: (props_content.style.left as number) - 152, bottom: 21 + 18 + 3 }}
+					style={{ left: (props_content.style.left as number) - 162, bottom: 24 + 18 + 9 }}
 					updatePosition={x.getPosition}
 				>
 					<Content {...props_content} />

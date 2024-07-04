@@ -1,3 +1,24 @@
+[data-theme='dark'] {
+	._local {
+		&.minimize {
+			:global {
+				.nav_list {
+					.right_mask {
+						background: linear-gradient(to right, transparent, rgba(var(--color_bg_1_rgb), 1));
+					}
+				}
+			}
+		}
+	}
+
+	.btn_nav {
+		&:hover,
+		&.active {
+			background-color: var(--color_bg_1);
+		}
+	}
+}
+
 ._local {
 	width: 150px;
 	padding: 48px 0;
@@ -153,23 +174,26 @@
 }
 
 .btn_nav {
-	bottom: 12px;
-	width: 21px;
-	height: 21px;
-	border: var(--border);
+	bottom: 18px;
+	width: 24px;
+	height: 24px;
+	border: var(--border_dashed);
 	border-radius: var(--radius_small);
 	color: var(--color_text_light);
 	background-color: var(--color_bg);
 
 	&:hover,
 	&.active {
-		border-color: var(--color_text);
+		border-color: transparent;
 		color: var(--color_text);
+		box-shadow: var(--shadow_btn);
 	}
 }
 
 .mini_nav {
 	width: 150px;
+	padding: 12px 18px;
+	margin-top: 0;
 	background-color: var(--color_bg);
 
 	&::before {

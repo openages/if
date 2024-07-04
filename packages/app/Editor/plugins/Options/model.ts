@@ -53,7 +53,7 @@ export default class Index {
 	getPosition() {
 		const { right, top } = this.container.getBoundingClientRect()
 
-		this.style = { left: right - 33, top: top + 12 }
+		this.style = { left: right - 42, top: top + 18 }
 	}
 
 	exportMd() {

@@ -73,7 +73,7 @@ export default class Index {
 		if (width < 1110 || this.toc === 'minimize') {
 			this.minimize = true
 
-			this.style = { left: right_container - 21 - 12, bottom: 12 }
+			this.style = { left: right_container - 24 - 18 }
 
 			return
 		}

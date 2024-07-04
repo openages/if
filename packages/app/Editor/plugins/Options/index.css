@@ -1,10 +1,9 @@
 ._local {
 	z-index: 99;
-	width: 21px;
-	height: 21px;
+	width: 24px;
+	height: 24px;
 	padding: 0;
 	margin: 0;
-	border: 1px solid transparent;
 	border-radius: var(--radius_small);
 	color: var(--color_text);
 	background-color: transparent !important;
@@ -12,7 +11,8 @@
 
 	&:hover,
 	&.visible_options {
-		border: 1px solid var(--color_text);
+		color: var(--color_text);
+		box-shadow: var(--shadow_btn);
 
 		:global {
 			.btn_options {

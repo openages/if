@@ -32,17 +32,22 @@
 		.__editor_heading_h1,
 		.__editor_heading_h2 {
 			margin-block-start: 0.9em;
-			margin-block-end: 0.48em;
+			margin-block-end: 0.15em;
 			border-bottom: var(--border);
 		}
 
 		.__editor_heading_h3,
-		.__editor_heading_h4,
+		.__editor_heading_h4 {
+			line-height: 1;
+			margin-block-start: 1.2em;
+			margin-block-end: 0.45em;
+		}
+
 		.__editor_heading_h5,
 		.__editor_heading_h6 {
 			line-height: 1;
-			margin-block-start: 1.2em;
-			margin-block-end: 0.6em;
+			margin-block-start: 0.9em;
+			margin-block-end: 0.15em;
 		}
 	}
 }

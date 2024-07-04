@@ -11,7 +11,7 @@ const Index = (props: IPropsOptions) => {
 		<div className={$cx('border_box', styles.options)}>
 			<div className='option_items w_100 border_box flex flex_column'>
 				<div
-					className='option_item w_100 border_box flex justify_between align_center clickable'
+					className='option_item w_100 border_box flex justify_between align_center cursor_point'
 					onClick={exportMd}
 				>
 					<div className='flex align_center'>
@@ -21,7 +21,7 @@ const Index = (props: IPropsOptions) => {
 					<FileMd className='symbol' size={12}></FileMd>
 				</div>
 				<div
-					className='option_item w_100 border_box flex justify_between align_center clickable'
+					className='option_item w_100 border_box flex justify_between align_center cursor_point'
 					onClick={importMd}
 				>
 					<div className='flex align_center'>

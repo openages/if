@@ -1,6 +1,8 @@
 export default {
 	color_std: 'black',
 	color_std_rgb: '0,0,0',
+	color_contrast: 'white',
+	color_contrast_rgb: '255,255,255',
 
 	color_text: '#a2a5b9',
 	color_text_rgb: '162,165,185',
@@ -9,11 +11,12 @@ export default {
 	color_text_light: 'rgba(162,165,185,0.3)',
 	color_text_softlight: 'rgba(162,165,185,0.24)',
 	color_text_line: '#888',
-	color_text_contrast: 'white',
 	color_bg: '#232326',
 	color_bg_rgb: '35,35,38',
 	color_bg_1: '#2f2f34',
+	color_bg_1_rgb: '47,47,52',
 	color_bg_2: '#3b3b41',
+	color_bg_2_rgb: '59,59,65',
 	color_border: '#404046',
 	color_border_light: 'rgba(255, 255, 255, 0.036)',
 	color_border_soft: 'rgba(255, 255, 255, 0.024)',
@@ -22,5 +25,6 @@ export default {
 	shadow_right: '6px 0 30px rgba(var(--color_std_rgb), 0.36)',
 	shadow_top: '0 6px 30px rgba(var(--color_std_rgb), 0.36)',
 	shadow_card: '0 1.5px 3px rgba(var(--color_std_rgb), 0.24)',
+	shadow_btn: '0 0 24px rgba(var(--color_std_rgb), 0.9)',
 	wave: 'rgba(var(--color_text_rgb), 0.3)'
 }
