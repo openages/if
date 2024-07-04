@@ -33,7 +33,8 @@ const Index = () => {
 
 	const props_options: IPropsOptions = {
 		exportMd: useMemoizedFn(() => editor.update(() => x.exportMd())),
-		importMd: useMemoizedFn(x.importMd)
+		importMd: useMemoizedFn(x.importMd),
+		batchImportMd: useMemoizedFn(x.batchImportMd)
 	}
 
 	return (

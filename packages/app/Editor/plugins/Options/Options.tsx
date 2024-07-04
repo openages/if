@@ -1,11 +1,14 @@
-import { ArrowLineDown, Export, FileMd } from '@phosphor-icons/react'
+import { useTranslation } from 'react-i18next'
+
+import { ArrowLineDown, ArrowSquareDown, Export, FileMd } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
 import type { IPropsOptions } from './types'
 
 const Index = (props: IPropsOptions) => {
-	const { exportMd, importMd } = props
+	const { exportMd, importMd, batchImportMd } = props
+	const { t } = useTranslation()
 
 	return (
 		<div className={$cx('border_box', styles.options)}>
@@ -16,7 +19,7 @@ const Index = (props: IPropsOptions) => {
 				>
 					<div className='flex align_center'>
 						<Export size={16}></Export>
-						<span className='title ml_6'>Export</span>
+						<span className='title ml_6'>{t('translation:common.export')}</span>
 					</div>
 					<FileMd className='symbol' size={12}></FileMd>
 				</div>
@@ -26,7 +29,17 @@ const Index = (props: IPropsOptions) => {
 				>
 					<div className='flex align_center'>
 						<ArrowLineDown size={16}></ArrowLineDown>
-						<span className='title ml_6'>Import</span>
+						<span className='title ml_6'>{t('translation:common.import')}</span>
+					</div>
+					<FileMd className='symbol' size={12}></FileMd>
+				</div>
+				<div
+					className='option_item w_100 border_box flex justify_between align_center cursor_point'
+					onClick={batchImportMd}
+				>
+					<div className='flex align_center'>
+						<ArrowSquareDown size={16}></ArrowSquareDown>
+						<span className='title ml_6'>{`${t('translation:common.import')}${t('translation:common.letter_space')}${t('translation:common.multiple')}`}</span>
 					</div>
 					<FileMd className='symbol' size={12}></FileMd>
 				</div>
