@@ -34,7 +34,7 @@ export default {
 	},
 	import: '导入',
 	export: '导出',
-	multiple: '多个',
+	batch: '批量',
 	words: '个字',
 	item: '项',
 	file: '文件',

@@ -132,8 +132,8 @@ importers:
         specifier: ^0.8.2
         version: 0.8.2
       framer-motion:
-        specifier: ^11.2.12
-        version: 11.2.12(@emotion/is-prop-valid@0.8.8)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
+        specifier: ^11.2.13
+        version: 11.2.13(@emotion/is-prop-valid@0.8.8)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326)
       hotkeys-js:
         specifier: ^3.13.7
         version: 3.13.7
@@ -2608,6 +2608,7 @@ packages:
 
   bun@1.1.18:
     resolution: {integrity: sha512-bv1wLYtmkn6GCqYFsVO9xZzPvNaDlA3xHbtePGHMtXMqq8N/vo+L6b19LB4+I5RKXFAsSmgzonyh2oMExaaWcQ==}
+    cpu: [arm64, x64]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -3390,8 +3391,8 @@ packages:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
     engines: {node: '>= 0.6'}
 
-  framer-motion@11.2.12:
-    resolution: {integrity: sha512-lCjkV4nA9rWOy2bhR4RZzkp2xpB++kFmUZ6D44V9VQaxk+JDmbDd5lq+u58DjJIIllE8AZEXp9OG/TyDN4FB/w==}
+  framer-motion@11.2.13:
+    resolution: {integrity: sha512-AyIeegfkXlkX1lWEudRYsJlC+0A59cE8oFK9IsN9bUQzxLwcvN3AEaYaznkELiWlHC7a0eD7pxsYQo7BC05S5A==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^18.0.0
@@ -3921,7 +3922,7 @@ packages:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
 
   lodash.camelcase@4.3.0:
-    resolution: {integrity: sha1-soqmKIorn8ZRA1x3EfZathkDMaY=}
+    resolution: {integrity: sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA==}
 
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
@@ -9546,7 +9547,7 @@ snapshots:
 
   forwarded@0.2.0: {}
 
-  framer-motion@11.2.12(@emotion/is-prop-valid@0.8.8)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
+  framer-motion@11.2.13(@emotion/is-prop-valid@0.8.8)(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
       tslib: 2.6.3
     optionalDependencies:

@@ -39,7 +39,7 @@ const Index = (props: IPropsOptions) => {
 				>
 					<div className='flex align_center'>
 						<ArrowSquareDown size={16}></ArrowSquareDown>
-						<span className='title ml_6'>{`${t('translation:common.import')}${t('translation:common.letter_space')}${t('translation:common.multiple')}`}</span>
+						<span className='title ml_6'>{`${t('translation:common.batch')}${t('translation:common.letter_space')}${t('translation:common.import')}`}</span>
 					</div>
 					<FileMd className='symbol' size={12}></FileMd>
 				</div>

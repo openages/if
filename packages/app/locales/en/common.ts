@@ -34,7 +34,7 @@ export default {
 	},
 	import: 'Import',
 	export: 'Export',
-	multiple: 'Multiple',
+	batch: 'Batch',
 	words: 'Words',
 	item: 'Item',
 	file: 'File',
