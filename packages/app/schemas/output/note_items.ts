@@ -16,12 +16,16 @@ export default {
                               "minimize",
                               "hidden"
                         ]
+                  },
+                  "count": {
+                        "type": "boolean"
                   }
             },
             "required": [
                   "serif",
                   "small_text",
-                  "toc"
+                  "toc",
+                  "count"
             ]
       },
       "Note.Item": {
@@ -29,11 +33,15 @@ export default {
             "properties": {
                   "id": {
                         "type": "string",
-                        "maxLength": 30
+                        "maxLength": 42
                   },
                   "file_id": {
                         "type": "string",
                         "maxLength": 30
+                  },
+                  "key": {
+                        "type": "string",
+                        "maxLength": 9
                   },
                   "content": {
                         "type": "string"
@@ -42,6 +50,7 @@ export default {
             "required": [
                   "id",
                   "file_id",
+                  "key",
                   "content"
             ]
       }

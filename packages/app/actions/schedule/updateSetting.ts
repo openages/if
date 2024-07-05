@@ -1,5 +1,3 @@
-import stringify from 'json-stable-stringify'
-
 import type { Schedule } from '@/types'
 
 export default async (file_id: string, data: Partial<Schedule.Setting>) => {
@@ -8,6 +6,6 @@ export default async (file_id: string, data: Partial<Schedule.Setting>) => {
 	const setting = JSON.parse(module_setting.setting) as Schedule.Setting
 
 	await module_setting.incrementalPatch({
-		setting: stringify({ ...setting, ...data })
+		setting: JSON.stringify({ ...setting, ...data })
 	})
 }

@@ -8,7 +8,7 @@ import type Model from '../model'
 export interface IProps {
 	module: Model['module']
 	actions: {
-		insert: (file_id: string) => Promise<any>
+		insert?: (file_id: string) => Promise<any>
 		remove: (focusing_item: DirTree.Item) => Promise<any>
 	}
 	height?: CSSProperties['height']

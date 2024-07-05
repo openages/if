@@ -82,10 +82,16 @@ function exportTopLevelElements(
 		}
 	}
 
-	if ($isElementNode(node)) {
+	if ($isMermaidNode(node)) {
+		return outputMermaid(node as MermaidNode)
+	} else if ($isNavigationNode(node)) {
+		return outputNavigation(node as NavigationNode)
+	} else if ($isElementNode(node)) {
 		return exportChildren(node, textTransformersIndex, textMatchTransformers)
 	} else if ($isDecoratorNode(node)) {
 		return node.getTextContent()
+	} else if ($isTextNode(node)) {
+		return exportTextFormat(node, node.getTextContent(), textTransformersIndex)
 	} else {
 		return null
 	}

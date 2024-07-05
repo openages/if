@@ -1,4 +1,3 @@
-import stringify from 'json-stable-stringify'
 import { omit } from 'lodash-es'
 import {
 	clone,
@@ -218,7 +217,7 @@ export async function hashCRDTOperations(hashFunction: HashFunction, crdts: CRDT
 	const hashObj = crdts.operations.map(operations => {
 		return operations.map(op => op.creator)
 	})
-	const hash = await hashFunction(stringify(hashObj))
+	const hash = await hashFunction(JSON.stringify(hashObj))
 	return hash
 }
 

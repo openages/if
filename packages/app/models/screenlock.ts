@@ -1,6 +1,5 @@
 import to from 'await-to-js'
 import { enc, AES } from 'crypto-js'
-import stringify from 'json-stable-stringify'
 import { makeAutoObservable } from 'mobx'
 import ntry from 'nice-try'
 import {
@@ -138,7 +137,7 @@ export default class Index {
 	async saveKeyPair(keypair?: Omit<App.Screenlock, 'autolock'>) {
 		if (keypair) this.data = { ...keypair, autolock: this.data.autolock }
 
-		const data = { key: 'screenlock', value: stringify($copy(this.data)) }
+		const data = { key: 'screenlock', value: JSON.stringify($copy(this.data)) }
 		const screenlock = (await $db.kv.findOne('screenlock').exec()) ?? (await $db.kv.insert(data))
 
 		await screenlock.incrementalPatch({ value: data.value })

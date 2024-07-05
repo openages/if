@@ -9,8 +9,9 @@ import type { RxDB } from '@/types'
 
 const schema = toTypedRxJsonSchema({
 	version: 0,
-	primaryKey: 'file_id',
+	primaryKey: 'id',
 	keyCompression,
+	indexes: ['file_id', 'key'],
 	...schema_raw['Note.Item']
 } as const)
 

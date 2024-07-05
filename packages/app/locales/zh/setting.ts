@@ -76,6 +76,9 @@ export default {
 		count: {
 			title: '字数统计',
 			desc: '统计全文字数，不包含空格'
+		},
+		batch_import: {
+			desc: '批量导入Markdown文件'
 		}
 	}
 }

@@ -86,16 +86,6 @@ export default class Index {
 		})
 	}
 
-	async batchImportMd() {
-		const files = await uploadFile({ accept: '.md', max_count: 99 })
-
-		if (!files) return
-
-		files.forEach(async item => {
-			const text = await convertFile(item)
-		})
-	}
-
 	on() {
 		this.observer = new ResizeObserver(throttle(this.getPosition, 60))
 

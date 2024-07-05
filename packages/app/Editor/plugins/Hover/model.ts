@@ -1,7 +1,6 @@
 import {
 	$copyNode,
 	$createParagraphNode,
-	$createPoint,
 	$createRangeSelection,
 	$getNearestNodeFromDOMNode,
 	$getRoot,
@@ -11,8 +10,7 @@ import {
 	COMMAND_PRIORITY_HIGH,
 	COMMAND_PRIORITY_LOW,
 	DRAGOVER_COMMAND,
-	DROP_COMMAND,
-	RangeSelection
+	DROP_COMMAND
 } from 'lexical'
 import { throttle } from 'lodash-es'
 import { makeAutoObservable, runInAction } from 'mobx'
@@ -30,7 +28,6 @@ import { $getNearestBlockElementAncestorOrThrow, isHTMLElement } from '@lexical/
 
 import { $isCodeNode } from '../Code/utils'
 import { $isImageNode } from '../Image/utils'
-import KatexNode from '../Katex/Node'
 import { $isKatexNode } from '../Katex/utils'
 import { $isNavigationNode } from '../Navigation/utils'
 import { $isQuoteNode } from '../Quote/utils'
@@ -38,9 +35,11 @@ import { $isRefNode } from '../Ref/utils'
 import { $isTableCellNode, $isTableNode } from '../Table/utils'
 import { $isToggleBodyNode, $isToggleBtnNode, $isToggleHeadNode, $isToggleNode } from '../Toggle/utils'
 
+import type KatexNode from '../Katex/Node'
 import type { DecoratorNode, LexicalEditor, LexicalNode } from 'lexical'
 import type { DragEvent as ReactDragEvent } from 'react'
 import type { ListNode } from '@lexical/list'
+
 @injectable()
 export default class Index {
 	id = ''
@@ -245,6 +244,8 @@ export default class Index {
 				} else {
 					child_el.classList.add('__editor_hidden')
 				}
+
+				if (child_el.classList.contains('__editor_fold')) child_el.classList.remove('__editor_fold')
 
 				child_node = child_node.getNextSibling()
 			}

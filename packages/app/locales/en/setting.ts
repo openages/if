@@ -76,6 +76,9 @@ export default {
 		count: {
 			title: 'Word Count',
 			desc: 'Count the total number of words, excluding spaces'
+		},
+		batch_import: {
+			desc: 'Batch import markdown files'
 		}
 	}
 }

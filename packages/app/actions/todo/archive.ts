@@ -1,4 +1,3 @@
-import stringify from 'json-stable-stringify'
 import { difference } from 'lodash-es'
 
 import { getDocItemsData } from '@/utils'
@@ -49,6 +48,6 @@ export default async (file_id: string, todo_id?: string) => {
 			}
 		})
 
-		await module_setting.incrementalPatch({ setting: stringify({ ...info, relations }) })
+		await module_setting.incrementalPatch({ setting: JSON.stringify({ ...info, relations }) })
 	}
 }

@@ -1,5 +1,3 @@
-import stringify from 'json-stable-stringify'
-
 import type { Note } from '@/types'
 
 export default async (data: Partial<Note.Setting>) => {
@@ -8,6 +6,6 @@ export default async (data: Partial<Note.Setting>) => {
 	const setting = JSON.parse(doc.value) as Note.Setting
 
 	await doc.incrementalPatch({
-		value: stringify({ ...setting, ...data })
+		value: JSON.stringify({ ...setting, ...data })
 	})
 }

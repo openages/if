@@ -143,9 +143,6 @@ importers:
       js-xxhash:
         specifier: ^4.0.0
         version: 4.0.0
-      json-stable-stringify:
-        specifier: ^1.1.1
-        version: 1.1.1
       katex:
         specifier: ^0.16.11
         version: 0.16.11
@@ -291,9 +288,6 @@ importers:
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
-      '@types/json-stable-stringify':
-        specifier: ^1.0.36
-        version: 1.0.36
       '@types/katex':
         specifier: ^0.16.7
         version: 0.16.7
@@ -2204,9 +2198,6 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
-  '@types/json-stable-stringify@1.0.36':
-    resolution: {integrity: sha512-b7bq23s4fgBB76n34m2b3RBf6M369B0Z9uRR8aHTMd8kZISRkmDEpPD8hhpYvDFzr3bJCPES96cm3Q6qRNDbQw==}
-
   '@types/jsonfile@6.1.4':
     resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
 
@@ -2608,7 +2599,6 @@ packages:
 
   bun@1.1.18:
     resolution: {integrity: sha512-bv1wLYtmkn6GCqYFsVO9xZzPvNaDlA3xHbtePGHMtXMqq8N/vo+L6b19LB4+I5RKXFAsSmgzonyh2oMExaaWcQ==}
-    cpu: [arm64, x64]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -3762,9 +3752,6 @@ packages:
   isarray@1.0.0:
     resolution: {integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==}
 
-  isarray@2.0.5:
-    resolution: {integrity: sha512-xHjhDr3cNBK0BzdUJSPXZntQUx/mwMS5Rw4A7lPJ90XGAO6ISP/ePDNuo0vhqOZU+UD5JoodwCAAoZQd3FeAKw==}
-
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
@@ -3831,10 +3818,6 @@ packages:
   json-sorted-stringify@1.0.0:
     resolution: {integrity: sha512-r27DgPdI80AXd6Hm0zJ7nPCYTBFUersR7sn7xcYyafvcgYOvwmCXB+DKWazAe0YaCNHbxH5Qzt7AIhUzPD1ETg==}
 
-  json-stable-stringify@1.1.1:
-    resolution: {integrity: sha512-SU/971Kt5qVQfJpyDveVhQ/vya+5hvrjClFOcr8c0Fq5aODJjMwutrOfCU+eCnVD5gpx1Q3fEqkyom77zH1iIg==}
-    engines: {node: '>= 0.4'}
-
   json-stream-stringify@3.0.1:
     resolution: {integrity: sha512-vuxs3G1ocFDiAQ/SX0okcZbtqXwgj1g71qE9+vrjJ2EkjKQlEFDAcUNRxRU8O+GekV4v5cM2qXP0Wyt/EMDBiQ==}
 
@@ -3848,9 +3831,6 @@ packages:
 
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
-
-  jsonify@0.0.1:
-    resolution: {integrity: sha512-2/Ki0GcmuqSrgFyelQq9M05y7PS0mEwuIzrf3f1fPqkVDVRvZrPZtVSMHxdgo8Aq0sxAOb/cr2aqqA3LeWHVPg==}
 
   jsonpointer@5.0.1:
     resolution: {integrity: sha512-p/nXbhSEcu3pZRdkW1OfJhpsVtW1gd4Wa1fnQc9YLiTfAjn0312eMKimbdIQzuZl9aa9xUGaRlP9T/CJE/ditQ==}
@@ -4271,10 +4251,6 @@ packages:
 
   object-inspect@1.13.1:
     resolution: {integrity: sha512-5qoj1RUiKOMsCCNLV1CBiPYE10sziTsnmNxkAI/rZhiD63CF7IqdFGC/XzjWjpSgLf0LxXX3bDFIh0E18f6UhQ==}
-
-  object-keys@1.1.1:
-    resolution: {integrity: sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==}
-    engines: {node: '>= 0.4'}
 
   oblivious-set@1.4.0:
     resolution: {integrity: sha512-szyd0ou0T8nsAqHtprRcP3WidfsN1TnAR5yWXf2mFCEr5ek3LEOkT6EZ/92Xfs74HIdyhG5WkGxIssMU0jBaeg==}
@@ -8144,8 +8120,6 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
-  '@types/json-stable-stringify@1.0.36': {}
-
   '@types/jsonfile@6.1.4':
     dependencies:
       '@types/node': 20.14.9
@@ -9877,8 +9851,6 @@ snapshots:
 
   isarray@1.0.0: {}
 
-  isarray@2.0.5: {}
-
   isexe@2.0.0: {}
 
   isomorphic-ws@5.0.0(ws@8.16.0):
@@ -9930,13 +9902,6 @@ snapshots:
 
   json-sorted-stringify@1.0.0: {}
 
-  json-stable-stringify@1.1.1:
-    dependencies:
-      call-bind: 1.0.7
-      isarray: 2.0.5
-      jsonify: 0.0.1
-      object-keys: 1.1.1
-
   json-stream-stringify@3.0.1: {}
 
   json2mq@0.2.0:
@@ -9950,8 +9915,6 @@ snapshots:
       universalify: 2.0.1
     optionalDependencies:
       graceful-fs: 4.2.11
-
-  jsonify@0.0.1: {}
 
   jsonpointer@5.0.1: {}
 
@@ -10398,8 +10361,6 @@ snapshots:
   object-assign@4.1.1: {}
 
   object-inspect@1.13.1: {}
-
-  object-keys@1.1.1: {}
 
   oblivious-set@1.4.0: {}
 

@@ -12,7 +12,7 @@ export const query = async (module: App.ModuleType) => {
 export const insert = async (args: ArgsInsert) => {
 	const { actions, item, effect_items } = args
 
-	if (item.type === 'file') {
+	if (item.type === 'file' && actions.insert) {
 		await actions.insert(item.id)
 	}
 

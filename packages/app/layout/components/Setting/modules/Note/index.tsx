@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 
 import { updateSetting } from '@/actions/note'
 import { NoteSettings } from '@/models'
-import { ArticleNyTimes, ListDashes, Pulse, TextT } from '@phosphor-icons/react'
+import { ArrowSquareDown, ArticleNyTimes, ListDashes, Pulse, TextT } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -107,6 +107,22 @@ const Index = () => {
 					</div>
 					<div className='value_wrap flex align_center'>
 						<Switch value={x.settings.count} onChange={onChangeCount}></Switch>
+					</div>
+				</div>
+				<div className='setting_item w_100 border_box flex justify_between align_center'>
+					<div className='title_wrap flex align_center'>
+						<ArrowSquareDown size={24}></ArrowSquareDown>
+						<div className='text_wrap flex flex_column'>
+							<span className='title'>{`${t('translation:common.batch')}${t('translation:common.letter_space')}${t('translation:common.import')}`}</span>
+							<span className='desc'>
+								{t('translation:setting.Note.batch_import.desc')}
+							</span>
+						</div>
+					</div>
+					<div className='value_wrap flex align_center'>
+						<button className='btn flex justify_center align_center clickable'>
+							{t('translation:common.import')}
+						</button>
 					</div>
 				</div>
 			</div>

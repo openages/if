@@ -1,5 +1,3 @@
-import stringify from 'json-stable-stringify'
-
 import type { Note } from '@/types'
 
 export default async () => {
@@ -9,6 +7,6 @@ export default async () => {
 
 	await $db.kv.insert({
 		key: 'note_settings',
-		value: stringify({ serif: false, small_text: false, toc: 'default' } as Note.Setting)
+		value: JSON.stringify({ serif: false, small_text: false, toc: 'default' } as Note.Setting)
 	})
 }

@@ -11,34 +11,42 @@ import {
 	RootNode,
 	SELECTION_CHANGE_COMMAND
 } from 'lexical'
+import { debounce } from 'lodash-es'
 import { injectable } from 'tsyringe'
 
 import blocks from '@/Editor/blocks'
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
-import { $getSelectionType } from '@/Editor/utils'
+import transformers from '@/Editor/transformers'
+import { $convertFromMarkdownString, $convertToMarkdownString, $getSelectionType } from '@/Editor/utils'
 import Utils from '@/models/utils'
+import { getDocItemsData } from '@/utils'
 import { mergeRegister } from '@lexical/utils'
 import { deepEqual } from '@openages/stk/react'
 
-import type { LexicalEditor, LexicalNode, BaseSelection } from 'lexical'
+import type { LexicalEditor, LexicalNode, BaseSelection, ElementNode } from 'lexical'
+import type { UpdateListenerArgs } from './types'
+import type { Subscription } from 'rxjs'
 
 @injectable()
 export default class Index {
+	id = ''
 	editor = null as LexicalEditor
 	path = []
 	selection = null as BaseSelection
+	watcher = null as Subscription
 
 	unregister = null as () => void
 
 	constructor(public utils: Utils) {}
 
-	init(editor: Index['editor']) {
+	init(id: Index['id'], editor: Index['editor']) {
+		this.id = id
 		this.editor = editor
 
 		this.on()
 	}
 
-	watcher() {
+	watch() {
 		const selection = $getSelection()
 
 		if (!selection) return
@@ -122,6 +130,57 @@ export default class Index {
 		return false
 	}
 
+	onUpdate(args: UpdateListenerArgs) {
+		const { dirtyElements, editorState, prevEditorState, dirtyLeaves } = args
+		// const root = $getRoot()
+
+		const change_nodes = Array.from(dirtyElements)
+			.filter(item => item[0] !== 'root')
+			.map(item => item[0])
+
+		const curr_map = editorState._nodeMap
+		const prev_map = prevEditorState._nodeMap
+
+		console.log('------------')
+		// console.dir(root.getChildren().map(item => [item.__key, item.getTextContent()]))
+		console.log(dirtyElements, change_nodes, dirtyLeaves)
+		console.log('current_map: ', curr_map)
+		console.log('prev_map: ', prev_map)
+		console.log('------------')
+
+		console.log(editorState.toJSON())
+
+		// change_nodes.forEach(async key => {
+		// 	const id = `${this.id}|${key}`
+		// 	const curr_node = curr_map.get(key)
+		// 	const prev_node = prev_map.get(key)
+
+		// 	const item = await $db.note_items.findOne(id).exec()
+
+		// 	editorState.read(() => {
+		// 		console.log($getRoot().getChildren())
+		// 	})
+
+		// 	// 新增
+		// 	if (!item && curr_node && prev_node) {
+		// 		const text = editorState.read(() =>
+		// 			$convertToMarkdownString(transformers, curr_node as ElementNode, false)
+		// 		)
+		// 		console.log(curr_node, text)
+
+		// 		// $db.note_items.insert({
+		// 		//       id,
+		// 		//       file_id:this.id,
+		// 		//       key,
+		// 		//       content:curr_node
+		// 		// })
+		// 	}
+		// 	// 移除
+		// 	// 更新
+		// 	// 移动
+		// })
+	}
+
 	onRootTranform(node: RootNode) {
 		if (!node.getChildren().length) {
 			node.append($createParagraphNode())
@@ -141,23 +200,37 @@ export default class Index {
 	}
 
 	on() {
+		const onUpdate = debounce(this.onUpdate.bind(this), 1200)
+
 		this.unregister = mergeRegister(
 			this.editor.registerCommand(
 				SELECTION_CHANGE_COMMAND,
-				this.watcher.bind(this),
+				this.watch.bind(this),
 				COMMAND_PRIORITY_CRITICAL
 			),
 			this.editor.registerCommand(
 				DELETE_CHARACTER_COMMAND,
 				this.onDelete.bind(this),
 				COMMAND_PRIORITY_CRITICAL
-			)
+			),
+			this.editor.registerUpdateListener(onUpdate)
 		)
+
+		this.watcher = $db.note_items.find({ selector: { file_id: this.id } }).$.subscribe(docs => {
+			const items = getDocItemsData(docs)
+
+			this.editor.update(() => {
+				const root = $getRoot()
+			})
+			// console.log(items)
+		})
 	}
 
 	off() {
 		this.removeEventListners()
 
 		this.unregister()
+
+		if (this.watcher) this.watcher.unsubscribe()
 	}
 }

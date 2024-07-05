@@ -1,4 +1,4 @@
-import { insert, remove } from '@/actions/note'
+import { remove } from '@/actions/note'
 import { DirTree } from '@/components'
 
 import type { IPropsDirTree } from '@/components'
@@ -6,10 +6,7 @@ import type { IPropsDirTree } from '@/components'
 const Index = () => {
 	const props_dir_tree: IPropsDirTree = {
 		module: 'note',
-		actions: {
-			insert,
-			remove
-		}
+		actions: { remove }
 	}
 
 	return <DirTree {...props_dir_tree}></DirTree>
