@@ -52,7 +52,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 	}
 
 	static importDOM(): DOMConversionMap {
-		return { img: node => ({ conversion: convertImageElement, priority: 0 }) }
+		return { img: () => ({ conversion: convertImageElement, priority: 0 }) }
 	}
 
 	static importJSON(serializedNode: SerializedImageNode) {
@@ -93,6 +93,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 	exportJSON() {
 		return {
 			type: 'image',
+			node_key: this.__key,
 			src: this.__src,
 			width: this.__width,
 			height: this.__height,

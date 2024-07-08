@@ -13,6 +13,8 @@ export namespace Note {
 		file_id: string
 		/** @maxLength 9 */
 		key: string
+		prev?: string
+		next?: string
 		content: string
 	}
 }

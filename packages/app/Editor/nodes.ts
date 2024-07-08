@@ -1,3 +1,5 @@
+import { ParagraphNode } from 'lexical'
+
 import { AutoLinkNode, LinkNode } from '@lexical/link'
 import { ListItemNode, ListNode } from '@lexical/list'
 import { HeadingNode } from '@lexical/rich-text'
@@ -18,8 +20,9 @@ import ToggleBodyNode from './plugins/Toggle/ToggleBodyNode'
 import ToggleBtnNode from './plugins/Toggle/ToggleBtnNode'
 import ToggleHeadNode from './plugins/Toggle/ToggleHeadNode'
 import ToggleNode from './plugins/Toggle/ToggleNode'
+import { ReplaceParagraphNode } from './replace_nodes'
 
-import type { Klass, LexicalNode } from 'lexical'
+import type { Klass, LexicalNode, LexicalNodeReplacement } from 'lexical'
 
 export default [
 	ImageNode,
@@ -43,5 +46,11 @@ export default [
 	LinkNode,
 	HeadingNode,
 	ListNode,
-	ListItemNode
-] as Array<Klass<LexicalNode>>
+	ListItemNode,
+
+	ReplaceParagraphNode,
+	{
+		replace: ParagraphNode,
+		with: (node: ParagraphNode) => new ReplaceParagraphNode()
+	}
+] as ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>

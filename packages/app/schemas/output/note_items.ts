@@ -43,6 +43,12 @@ export default {
                         "type": "string",
                         "maxLength": 9
                   },
+                  "prev": {
+                        "type": "string"
+                  },
+                  "next": {
+                        "type": "string"
+                  },
                   "content": {
                         "type": "string"
                   }

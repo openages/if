@@ -1,4 +1,5 @@
 export { default as Watcher } from './__Watcher__'
+export { default as DataLoader } from './_DataLoader_'
 export { default as Settings } from './Settings'
 export { default as Hover } from './Hover'
 

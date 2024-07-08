@@ -1,5 +1,9 @@
 ._local {
 	:global {
+		.if-modal-header {
+			margin-bottom: 12px;
+		}
+
 		.if-modal-close {
 			right: 15px;
 			width: 21px;
