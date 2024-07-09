@@ -85,7 +85,7 @@ export default class MermaidNode extends DecoratorNode<JSX.Element> {
 	}
 
 	exportJSON() {
-		return { type: 'mermaid', value: this.__value } as SerializedMermaidNode
+		return { type: 'mermaid',node_key:this.__key, value: this.__value } as SerializedMermaidNode
 	}
 
 	decorate() {

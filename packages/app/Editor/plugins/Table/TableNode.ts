@@ -34,7 +34,7 @@ export default class TableNode extends ElementNode {
 	}
 
 	static importJSON(serializedNode: SerializedTableNode) {
-		return $createTableNode({ cols: serializedNode.cols })
+		return $createTableNode({ cols: serializedNode.cols,node_key:serializedNode.key })
 	}
 
 	createDOM() {

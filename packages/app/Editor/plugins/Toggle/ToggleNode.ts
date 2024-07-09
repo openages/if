@@ -26,7 +26,7 @@ export default class ToggleNode extends ElementNode {
 	}
 
 	static importJSON(serializedNode: SerializedToggleNode) {
-		return $createToggleNode({ open: serializedNode.open })
+		return $createToggleNode({ open: serializedNode.open,node_key:serializedNode.key })
 	}
 
 	createDOM(): HTMLElement {

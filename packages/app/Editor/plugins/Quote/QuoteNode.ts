@@ -24,7 +24,7 @@ export default class QuoteNode extends ElementNode {
 	}
 
 	static importJSON(serializedNode: SerializedElementNode) {
-		const node = $createQuoteNode()
+		const node = $createQuoteNode(serializedNode.key)
 
 		node.setFormat(serializedNode.format)
 		node.setIndent(serializedNode.indent)

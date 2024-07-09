@@ -60,7 +60,7 @@ export default class RefNode extends DecoratorNode<JSX.Element> {
 	}
 
 	exportJSON() {
-		return { type: 'ref', module: this.__module, id: this.__id } as SerializedRefNode
+		return { type: 'ref', module: this.__module, id: this.__id,node_key:this.__key } as SerializedRefNode
 	}
 
 	decorate() {

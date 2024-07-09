@@ -25,8 +25,8 @@ export default class DividerNode extends DecoratorNode<JSX.Element> {
 		return { hr: () => ({ conversion: convertDividerElement, priority: 0 }) }
 	}
 
-	static importJSON() {
-		return $createDividerNode()
+	static importJSON(serializedNode: SerializedDividerNode) {
+		return $createDividerNode(serializedNode.node_key)
 	}
 
 	createDOM() {
@@ -48,7 +48,7 @@ export default class DividerNode extends DecoratorNode<JSX.Element> {
 	}
 
 	exportJSON() {
-		return { type: 'divider' } as SerializedDividerNode
+		return { type: 'divider',node_key:this.__key } as SerializedDividerNode
 	}
 
 	decorate() {

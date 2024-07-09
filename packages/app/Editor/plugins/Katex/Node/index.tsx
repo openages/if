@@ -109,6 +109,7 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 	exportJSON() {
 		return {
 			type: 'katex',
+                  node_key:this.__key,
 			value: this.__value,
 			inline: this.__inline
 		} as SerializedKatexNode

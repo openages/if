@@ -1,7 +1,7 @@
 import type { SerializedLexicalNode, Spread } from 'lexical'
 
 export interface IPropsComponent {
-	node_key: string
+	node_key?: string
 }
 
-export type SerializedDividerNode = Spread<{}, SerializedLexicalNode>
+export type SerializedDividerNode = Spread<IPropsComponent, SerializedLexicalNode>

@@ -7,6 +7,7 @@ import { $createNavigationNode, convertNavigationElement } from '../utils'
 
 import type { DOMConversionMap, DOMExportOutput, SerializedLexicalNode } from 'lexical'
 import type { TableOfContentsEntry } from '@lexical/react/LexicalTableOfContentsPlugin'
+import type {SerializedNavigationNode} from './types'
 
 const Component = lazy(() => import('./Component'))
 
@@ -29,8 +30,8 @@ export default class NavigationNode extends DecoratorNode<JSX.Element> {
 		return { div: () => ({ conversion: convertNavigationElement, priority: 0 }) }
 	}
 
-	static importJSON() {
-		return $createNavigationNode()
+	static importJSON(serializedNode: SerializedNavigationNode) {
+		return $createNavigationNode(serializedNode.node_key)
 	}
 
 	createDOM() {
@@ -54,7 +55,7 @@ export default class NavigationNode extends DecoratorNode<JSX.Element> {
 	}
 
 	exportJSON() {
-		return { type: 'navigation' } as SerializedLexicalNode
+		return { type: 'navigation' ,node_key:this.__key} as SerializedNavigationNode
 	}
 
 	decorate() {
