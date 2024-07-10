@@ -22,6 +22,7 @@ export default class Index {
 	ids_array = null as Array<string>
 	ids_map = null as Map<string, undefined>
 	disable_watcher = false
+      change_nodes=[] as Array<string>
 
 	unregister = null as () => void
 
@@ -67,7 +68,7 @@ export default class Index {
 
             return
 
-		if (!change_nodes.length) return
+		if (!change_nodes.length||deepEqual(this.change_nodes,change_nodes)) return
 
 		change_nodes.forEach(async key => {
 			const id = `${this.id}|${key}`

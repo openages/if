@@ -13,6 +13,3 @@
 [submodule "packages/if_website"]
 	path = packages/if_website
 	url = git@1yasa:openages/if_website.git
-[submodule "packages/lexical"]
-	path = packages/lexical
-	url = git@1yasa:openages/lexical.git
