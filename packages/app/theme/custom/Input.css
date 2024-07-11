@@ -1,3 +1,3 @@
 .if-input {
-	font-family: 'Rubik';
+	font-family: var(--font_family);
 }

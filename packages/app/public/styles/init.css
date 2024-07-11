@@ -38,6 +38,7 @@ body {
 	font-family: var(--font_family);
 	font-size: 14px;
 	text-rendering: optimizeLegibility;
+	-webkit-text-size-adjust: 100%;
 	text-size-adjust: 100%;
 
 	-webkit-font-smoothing: antialiased;
@@ -77,7 +78,7 @@ a:hover {
 }
 
 input {
-	font-family: 'Rubik';
+	font-family: var(--font_family);
 }
 
 button {

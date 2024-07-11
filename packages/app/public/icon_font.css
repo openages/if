@@ -1,59 +1,141 @@
-/** Rubik */
+/** SourceSans3 */
 @font-face {
-	font-family: 'Rubik';
+	font-family: 'SourceSans3';
+	font-style: normal;
+	font-weight: 200;
+	src:
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-ExtraLight.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'SourceSans3';
+	font-style: italic;
+	font-weight: 200;
+	src:
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-ExtraLightItalic.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'SourceSans3';
+	font-style: normal;
+	font-weight: 300;
+	src:
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-Light.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'SourceSans3';
+	font-style: italic;
+	font-weight: 300;
+	src:
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-LightItalic.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'SourceSans3';
 	font-style: normal;
 	font-weight: 400;
 	src:
-		local('Rubik'),
-		url('./font/Rubik/Rubik-Regular.ttf') format('truetype');
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-Regular.ttf') format('truetype');
 }
-
 @font-face {
-	font-family: 'Rubik';
+	font-family: 'SourceSans3';
 	font-style: italic;
 	font-weight: 400;
 	src:
-		local('Rubik'),
-		url('./font/Rubik/Rubik-Italic.ttf') format('truetype');
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-Italic.ttf') format('truetype');
 }
 
 @font-face {
-	font-family: 'Rubik';
+	font-family: 'SourceSans3';
 	font-style: normal;
 	font-weight: 500;
 	src:
-		local('Rubik'),
-		url('./font/Rubik/Rubik-Medium.ttf') format('truetype');
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-Medium.ttf') format('truetype');
 }
-
 @font-face {
-	font-family: 'Rubik';
+	font-family: 'SourceSans3';
 	font-style: italic;
 	font-weight: 500;
 	src:
-		local('Rubik'),
-		url('./font/Rubik/Rubik-MediumItalic.ttf') format('truetype');
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-MediumItalic.ttf') format('truetype');
 }
 
 @font-face {
-	font-family: 'Rubik';
+	font-family: 'SourceSans3';
 	font-style: normal;
 	font-weight: 600;
 	src:
-		local('Rubik'),
-		url('./font/Rubik/Rubik-SemiBold.ttf') format('truetype');
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-SemiBold.ttf') format('truetype');
 }
-
 @font-face {
-	font-family: 'Rubik';
+	font-family: 'SourceSans3';
 	font-style: italic;
 	font-weight: 600;
 	src:
-		local('Rubik'),
-		url('./font/Rubik/Rubik-SemiBoldItalic.ttf') format('truetype');
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-SemiBoldItalic.ttf') format('truetype');
 }
 
-/** Rubik */
+@font-face {
+	font-family: 'SourceSans3';
+	font-style: normal;
+	font-weight: 700;
+	src:
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-Bold.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'SourceSans3';
+	font-style: italic;
+	font-weight: 700;
+	src:
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-BoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'SourceSans3';
+	font-style: normal;
+	font-weight: 800;
+	src:
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-ExtraBold.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'SourceSans3';
+	font-style: italic;
+	font-weight: 800;
+	src:
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-ExtraBoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'SourceSans3';
+	font-style: normal;
+	font-weight: 900;
+	src:
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-Black.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'SourceSans3';
+	font-style: italic;
+	font-weight: 900;
+	src:
+		local('SourceSans3'),
+		url('./font/SourceSans3/SourceSans3-BlackItalic.ttf') format('truetype');
+}
+
+/** Code */
 @font-face {
 	font-family: 'CascadiaCode';
 	font-style: normal;
