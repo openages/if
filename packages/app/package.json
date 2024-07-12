@@ -94,9 +94,9 @@
 	},
 	"devDependencies": {
 		"@rsdoctor/rspack-plugin": "^0.3.7",
-		"@rspack/cli": "1.0.0-alpha.2",
-		"@rspack/core": "1.0.0-alpha.2",
-		"@rspack/plugin-react-refresh": "1.0.0-alpha.2",
+		"@rspack/cli": "1.0.0-alpha.3",
+		"@rspack/core": "1.0.0-alpha.3",
+		"@rspack/plugin-react-refresh": "1.0.0-alpha.3",
 		"@svgr/webpack": "^8.1.0",
 		"@types/color": "^3.0.6",
 		"@types/crypto-js": "^4.2.2",

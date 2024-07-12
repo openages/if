@@ -7,14 +7,14 @@ export namespace Note {
 	}
 
 	export type Item = {
-		/** @maxLength 42 */
-		id: string
 		/** @maxLength 30 */
 		file_id: string
-		/** @maxLength 9 */
-		key: string
+		/** @maxLength 30 */
+		id: string
 		prev?: string
 		next?: string
 		content: string
+		create_at: number
+		update_at?: number
 	}
 }

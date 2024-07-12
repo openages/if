@@ -31,17 +31,13 @@ export default {
       "Note.Item": {
             "type": "object",
             "properties": {
-                  "id": {
-                        "type": "string",
-                        "maxLength": 42
-                  },
                   "file_id": {
                         "type": "string",
                         "maxLength": 30
                   },
-                  "key": {
+                  "id": {
                         "type": "string",
-                        "maxLength": 9
+                        "maxLength": 30
                   },
                   "prev": {
                         "type": "string"
@@ -51,13 +47,19 @@ export default {
                   },
                   "content": {
                         "type": "string"
+                  },
+                  "create_at": {
+                        "type": "number"
+                  },
+                  "update_at": {
+                        "type": "number"
                   }
             },
             "required": [
-                  "id",
                   "file_id",
-                  "key",
-                  "content"
+                  "id",
+                  "content",
+                  "create_at"
             ]
       }
 } as const
