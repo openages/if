@@ -40,9 +40,9 @@ body {
 	text-rendering: optimizeLegibility;
 	-webkit-text-size-adjust: 100%;
 	text-size-adjust: 100%;
+	unicode-bidi: isolate;
 
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+	-webkit-tap-highlight-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {

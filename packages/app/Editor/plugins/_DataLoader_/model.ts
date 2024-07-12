@@ -22,7 +22,7 @@ export default class Index {
 	ids_array = null as Array<string>
 	ids_map = null as Map<string, undefined>
 	disable_watcher = false
-      change_nodes=[] as Array<string>
+	change_nodes = [] as Array<string>
 
 	unregister = null as () => void
 
@@ -42,6 +42,8 @@ export default class Index {
 		const curr_map = editorState._nodeMap
 		const prev_map = prevEditorState._nodeMap
 
+		return
+
 		dirty_els.delete('root')
 
 		const change_nodes = uniq(
@@ -59,16 +61,14 @@ export default class Index {
 		)
 
 		console.log('------------')
-		console.log(this.editor._nodes)
-		// console.dir(root.getChildren().map(item => [item.__key, item.getTextContent()]))
-		// console.log(change_nodes)
-		// console.log('current_map: ', curr_map)
-		// console.log('prev_map: ', prev_map)
+		console.log(change_nodes)
+		console.log('current_map: ', curr_map)
+		console.log('prev_map: ', prev_map)
 		console.log('------------')
 
-            return
+		return
 
-		if (!change_nodes.length||deepEqual(this.change_nodes,change_nodes)) return
+		if (!change_nodes.length || deepEqual(this.change_nodes, change_nodes)) return
 
 		change_nodes.forEach(async key => {
 			const id = `${this.id}|${key}`

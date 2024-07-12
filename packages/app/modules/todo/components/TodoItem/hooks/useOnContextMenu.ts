@@ -70,7 +70,7 @@ export default (args: HookArgs) => {
 					showDetailModal({ id, index, ...(kanban_mode ? { dimension_id } : {}) })
 					break
 				case 'insert':
-					insert({ index })
+					insert({ index, dimension_id })
 					break
 				case 'insert_children':
 					insertChildren()
