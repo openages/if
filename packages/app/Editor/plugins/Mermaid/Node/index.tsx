@@ -1,4 +1,4 @@
-import { DecoratorNode } from 'lexical'
+import { $setImportNode, DecoratorNode } from 'lexical'
 import { lazy, Suspense } from 'react'
 
 import { mermaidRender } from '@/Editor/utils'
@@ -53,7 +53,11 @@ export default class MermaidNode extends DecoratorNode<JSX.Element> {
 	}
 
 	static importJSON(serializedNode: SerializedMermaidNode) {
-		return $createMermaidNode(serializedNode)
+		const node = $createMermaidNode(serializedNode)
+
+		$setImportNode(serializedNode.node_key, node)
+
+		return node
 	}
 
 	createDOM() {
@@ -85,7 +89,7 @@ export default class MermaidNode extends DecoratorNode<JSX.Element> {
 	}
 
 	exportJSON() {
-		return { type: 'mermaid',node_key:this.__key, value: this.__value } as SerializedMermaidNode
+		return { type: 'mermaid', node_key: this.__key, value: this.__value } as SerializedMermaidNode
 	}
 
 	decorate() {

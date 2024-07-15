@@ -1,16 +1,16 @@
-import { $getNodeByKey, $getRoot } from 'lexical'
+import { $getNodeByKey, $getRoot, parseEditorState } from 'lexical'
 import { debounce, uniq } from 'lodash-es'
 import { injectable } from 'tsyringe'
 
-import { $exportNodeToJson, $restoreNodeFromJson } from '@/Editor/utils'
-import { getDocItem, getDocItemsData, sortLinkNodes } from '@/utils'
+import { $exportNodeToJson, $getRemovedParent, $restoreNodeFromJson, getStateJson } from '@/Editor/utils'
+import { getDocItem, getDocItemsData } from '@/utils'
 import { disableWatcher } from '@/utils/decorators'
 import { deepEqual } from '@openages/stk/react'
 
 import type { LexicalEditor } from 'lexical'
 import type { UpdateListenerArgs } from './types'
 import type { Subscription } from 'rxjs'
-import type { IPropsDataLoader } from './types'
+import type { IPropsDataLoader, Change } from './types'
 import type { Note } from '@/types'
 
 @injectable()
@@ -19,30 +19,75 @@ export default class Index {
 	id = ''
 	editor = null as LexicalEditor
 	total_watcher = null as Subscription
-	update_watcher = null as Subscription
+	update_watchers = [] as Array<Subscription>
 	ids_array = [] as Array<string>
 	ids_map = new Map<string, undefined>()
 	disable_watcher = false
-	change_nodes = [] as Array<string>
-	intial = true
+	mutation_load_status = false
+	update_load_status = 0
+	timer_change = null as NodeJS.Timeout
+	changes = new Map<string, Change>()
 
 	unregister = null as () => void
 
-	constructor() {}
-
-	init(collection: Index['collection'], id: Index['id'], editor: Index['editor']) {
+	async init(collection: Index['collection'], id: Index['id'], editor: Index['editor']) {
 		this.collection = collection
 		this.id = id
 		this.editor = editor
 
+		await this.getData()
+
 		this.on()
 	}
 
-	@disableWatcher
+	async getData() {
+		const parent = this.editor.getRootElement().parentElement
+		const placeholer = parent.querySelector('.__editor_placeholder') as HTMLDivElement
+
+		placeholer.classList.add('__editor_hidden')
+
+		const docs = await $db.collections[this.collection].find({ selector: { file_id: this.id } }).exec()
+		const items = getDocItemsData(docs)
+
+		if (!items.length) {
+			const { key, content } = this.editor.getEditorState().read(() => {
+				const root = $getRoot()
+				const node = root.getFirstChild()
+
+				return { key: node.getKey(), content: JSON.stringify($exportNodeToJson(node)) }
+			})
+
+			this.ids_array.push(key)
+			this.ids_map.set(key, undefined)
+
+			await $db.note_items.insert({
+				file_id: this.id,
+				id: key,
+				prev: undefined,
+				next: undefined,
+				content,
+				create_at: new Date().valueOf()
+			})
+
+			return placeholer.classList.remove('__editor_hidden')
+		} else {
+			const state = getStateJson(items, key => {
+				this.ids_array.push(key)
+				this.ids_map.set(key, undefined)
+			})
+
+			// console.log(state)
+
+			this.editor.setEditorState(parseEditorState(state, this.editor))
+			this.editor.focus(null, { defaultSelection: 'rootStart' })
+		}
+	}
+
 	async onUpdate(args: UpdateListenerArgs) {
-		const { dirtyElements, editorState, prevEditorState, dirtyLeaves } = args
+		const { dirtyElements, editorState, dirtyLeaves, prevEditorState } = args
 		const dirty_els = $copy(dirtyElements)
 		const curr_map = editorState._nodeMap
+		const prev_map = prevEditorState._nodeMap
 
 		dirty_els.delete('root')
 
@@ -53,7 +98,13 @@ export default class Index {
 					editorState.read(() => {
 						const node = $getNodeByKey(item)
 
-						if (node && node.__parent !== 'root') return node.getTopLevelElement().getKey()
+						if (node?.__parent !== 'root') {
+							if (node) {
+								return node.getTopLevelElement().getKey()
+							} else {
+								return $getRemovedParent(item, prev_map)
+							}
+						}
 
 						return item
 					})
@@ -62,86 +113,135 @@ export default class Index {
 
 		// console.log('------------')
 		// console.log(change_nodes)
-		// console.log('current_map: ', curr_map)
-		// console.log('prev_map: ', prev_map)
+		// // console.log('curr_map: ', curr_map)
+		// console.log('prev_map: ', prevEditorState._nodeMap)
 		// console.log('------------')
 
-		if (!change_nodes.length || deepEqual(this.change_nodes, change_nodes)) return
+		if (change_nodes.length) clearTimeout(this.timer_change)
 
-		const syncs = change_nodes.map(async key => {
-			const curr_node = curr_map.get(key)
-			const prev = curr_node.__prev
-			const next = curr_node.__next
-			const content = JSON.stringify(editorState.read(() => $exportNodeToJson(curr_node)))
-
-			const item = await $db.note_items.findOne(key).exec()
+		change_nodes.forEach(id => {
+			const curr_node = curr_map.get(id)
+			const prev_node = prev_map.get(id)
 
 			// 新增
-			if (!item && curr_node) {
-				if (!this.ids_array.includes(key)) {
-					this.ids_array.push(key)
-					this.ids_map.set(key, undefined)
+			if (curr_node && !prev_node) {
+				console.log('add')
 
-					this.addUpdateListner()
-				}
-
-				return $db.note_items.insert({
-					file_id: this.id,
-					id: key,
-					prev,
-					next,
-					content,
-					create_at: new Date().valueOf()
-				})
+				this.dispatch([{ type: 'add', id }])
 			}
 
 			// 移除
-			if (item && !curr_node) {
-				console.log(2)
-				return item.remove()
+			if (!curr_node && prev_node) {
+				console.log('remove')
+
+				this.dispatch([{ type: 'remove', id }])
 			}
 
 			// 更新
-			if (item && curr_node) {
-				console.log(3)
-				const euqal_prev = item.prev === prev
-				const euqal_next = item.next === next
-				const euqal_content = deepEqual(item.content, content)
+			if (curr_node && prev_node) {
+				console.log('update')
 
-				const target = {} as Partial<Note.Item>
-
-				if (!euqal_prev) target['prev'] = prev
-				if (!euqal_next) target['next'] = next
-				if (!euqal_content) target['content'] = content
-
-				return item.updateCRDT({ ifMatch: { $set: target } })
+				this.changes.set(id, { type: 'update', id })
 			}
 		})
 
-		await Promise.all(syncs)
+		this.timer_change = setTimeout(() => {
+			this.dispatch()
+		}, 1500)
+	}
+
+	@disableWatcher
+	async dispatch(changes?: Array<Change>) {
+		const target = changes || Array.from(this.changes.values())
+
+		const events = target.map(async ({ type, id }) => {
+			let prev: string
+			let next: string
+			let content: string
+
+			if (type === 'add' || type === 'update') {
+				const res = this.getNodeData(id)
+
+				prev = res.prev
+				next = res.next
+				content = res.content
+			}
+
+			switch (type) {
+				case 'add':
+					console.log('dispatch add')
+
+					this.ids_array.push(id)
+					this.ids_map.set(id, undefined)
+
+					await $db.note_items.insert({
+						file_id: this.id,
+						id,
+						prev,
+						next,
+						content,
+						create_at: new Date().valueOf()
+					})
+
+					this.addUpdateListner()
+
+					break
+				case 'remove':
+					console.log('dispatch remove')
+
+					this.ids_array = this.ids_array.filter(v => v !== id)
+					this.ids_map.delete(id)
+
+					await $db.note_items.findOne(id).remove()
+
+					this.addUpdateListner()
+
+					break
+				case 'update':
+					console.log('dispatch update')
+
+					const item = await $db.note_items.findOne(id).exec()
+					const euqal_prev = item.prev === prev
+					const euqal_next = item.next === next
+					const euqal_content = deepEqual(item.content, content)
+
+					const target = {} as Partial<Note.Item>
+
+					if (!euqal_prev) target['prev'] = prev
+					if (!euqal_next) target['next'] = next
+					if (!euqal_content) target['content'] = content
+
+					if (Object.keys(target).length) {
+						await item.updateCRDT({ ifMatch: { $set: target } })
+					}
+
+					break
+			}
+		})
+
+		await Promise.all(events)
+
+		if (!changes) this.changes.clear()
+	}
+
+	getNodeData(id: string) {
+		return this.editor.getEditorState().read(() => {
+			const node = $getNodeByKey(id)
+			const content = JSON.stringify($exportNodeToJson(node))
+
+			return { prev: node.__prev, next: node.__next, content }
+		})
 	}
 
 	addEditorListner() {
-		const onUpdate = debounce(this.onUpdate.bind(this), 1200, { leading: true })
-
-		this.unregister = this.editor.registerUpdateListener(onUpdate)
+		this.unregister = this.editor.registerUpdateListener(this.onUpdate.bind(this))
 	}
 
 	addMutationListner() {
 		this.total_watcher = $db.collections[this.collection]
 			.find({ selector: { file_id: this.id } })
 			.$.subscribe(docs => {
-				if (!this.ids_array.length || this.ids_array.length === 1) {
-					docs.forEach(({ id }) => {
-						this.ids_array.push(id)
-						this.ids_map.set(id, undefined)
-					})
-
-					this.addUpdateListner()
-
-					return
-				}
-
+				if (!this.mutation_load_status) return (this.mutation_load_status = true)
 				if (this.disable_watcher) return
 
 				const add_doc = [] as Array<Note.Item>
@@ -152,7 +252,7 @@ export default class Index {
 				docs.forEach(doc => {
 					const { id } = doc
 
-					if (this.ids_map.get(id)) {
+					if (this.ids_map.has(id)) {
 						remove_ids_map.delete(id)
 					} else {
 						add_doc.push(getDocItem(doc))
@@ -207,22 +307,27 @@ export default class Index {
 	addUpdateListner() {
 		this.removeUpdateListner()
 
-		this.update_watcher = $db.collections[this.collection].findByIds(this.ids_array).$.subscribe(doc_map => {
-			// if (this.disable_watcher) return
+		this.update_load_status = this.ids_array.length
 
-			console.log('doc_map:', doc_map)
-		})
+		this.update_watchers = this.ids_array.map(key =>
+			$db.collections[this.collection].findOne(key).$.subscribe(doc_map => {
+				if (this.update_load_status !== 0) return this.update_load_status--
+				if (this.disable_watcher) return
+
+				console.log('doc_map:', doc_map)
+			})
+		)
 	}
 
 	removeUpdateListner() {
-		this.update_watcher?.unsubscribe?.()
-		this.update_watcher = null
+		this.update_watchers.forEach(item => item.unsubscribe())
+		this.update_watchers = []
 	}
 
 	on() {
-		this.addMutationListner()
 		this.addEditorListner()
-		this.addUpdateListner()
+		// this.addMutationListner()
+		// this.addUpdateListner()
 	}
 
 	off() {
@@ -231,5 +336,11 @@ export default class Index {
 
 		this.total_watcher?.unsubscribe?.()
 		this.total_watcher = null
+
+		if (this.timer_change) {
+			clearTimeout(this.timer_change)
+
+			this.dispatch()
+		}
 	}
 }

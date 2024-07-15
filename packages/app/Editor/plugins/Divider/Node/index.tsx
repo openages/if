@@ -1,4 +1,4 @@
-import { DecoratorNode } from 'lexical'
+import { $setImportNode, DecoratorNode } from 'lexical'
 import { lazy, Suspense } from 'react'
 
 import { $createDividerNode, convertDividerElement } from '../utils'
@@ -26,7 +26,11 @@ export default class DividerNode extends DecoratorNode<JSX.Element> {
 	}
 
 	static importJSON(serializedNode: SerializedDividerNode) {
-		return $createDividerNode(serializedNode.node_key)
+		const node = $createDividerNode(serializedNode.node_key)
+
+		$setImportNode(serializedNode.node_key, node)
+
+		return node
 	}
 
 	createDOM() {
@@ -48,7 +52,7 @@ export default class DividerNode extends DecoratorNode<JSX.Element> {
 	}
 
 	exportJSON() {
-		return { type: 'divider',node_key:this.__key } as SerializedDividerNode
+		return { type: 'divider', node_key: this.__key } as SerializedDividerNode
 	}
 
 	decorate() {

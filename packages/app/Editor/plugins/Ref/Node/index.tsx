@@ -1,4 +1,4 @@
-import { DecoratorNode } from 'lexical'
+import { $setImportNode, DecoratorNode } from 'lexical'
 import { lazy, Suspense } from 'react'
 
 import { $createRefNode, convertRefElement } from '../utils'
@@ -35,7 +35,11 @@ export default class RefNode extends DecoratorNode<JSX.Element> {
 	}
 
 	static importJSON(serializedNode: SerializedRefNode) {
-		return $createRefNode(serializedNode)
+		const node = $createRefNode(serializedNode)
+
+		$setImportNode(serializedNode.node_key, node)
+
+		return node
 	}
 
 	createDOM() {
@@ -60,7 +64,7 @@ export default class RefNode extends DecoratorNode<JSX.Element> {
 	}
 
 	exportJSON() {
-		return { type: 'ref', module: this.__module, id: this.__id,node_key:this.__key } as SerializedRefNode
+		return { type: 'ref', module: this.__module, id: this.__id, node_key: this.__key } as SerializedRefNode
 	}
 
 	decorate() {

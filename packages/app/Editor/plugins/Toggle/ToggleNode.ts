@@ -1,4 +1,4 @@
-import { DOMConversionMap, DOMExportOutput, ElementNode } from 'lexical'
+import { $setImportNode, DOMConversionMap, DOMExportOutput, ElementNode } from 'lexical'
 
 import { $createToggleNode, convertToggleElement } from './utils'
 
@@ -26,7 +26,11 @@ export default class ToggleNode extends ElementNode {
 	}
 
 	static importJSON(serializedNode: SerializedToggleNode) {
-		return $createToggleNode({ open: serializedNode.open,node_key:serializedNode.key })
+		const node = $createToggleNode({ open: serializedNode.open, node_key: serializedNode.key })
+
+		$setImportNode(serializedNode.key, node)
+
+		return node
 	}
 
 	createDOM(): HTMLElement {

@@ -72,3 +72,7 @@
 .notice_text {
 	color: var(--color_danger);
 }
+
+.transparent {
+	opacity: 0;
+}

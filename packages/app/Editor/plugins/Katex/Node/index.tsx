@@ -1,5 +1,5 @@
 import katex from 'katex'
-import { DecoratorNode } from 'lexical'
+import { $setImportNode, DecoratorNode } from 'lexical'
 import { lazy, Suspense } from 'react'
 
 import { $createKatexNode, convertKatexElement } from '../utils'
@@ -54,7 +54,11 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 	}
 
 	static importJSON(serializedNode: SerializedKatexNode) {
-		return $createKatexNode(serializedNode)
+		const node = $createKatexNode(serializedNode)
+
+		$setImportNode(serializedNode.node_key, node)
+
+		return node
 	}
 
 	createDOM() {
@@ -109,7 +113,7 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 	exportJSON() {
 		return {
 			type: 'katex',
-                  node_key:this.__key,
+			node_key: this.__key,
 			value: this.__value,
 			inline: this.__inline
 		} as SerializedKatexNode

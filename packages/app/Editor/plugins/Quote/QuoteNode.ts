@@ -1,4 +1,4 @@
-import { $createParagraphNode, ElementNode } from 'lexical'
+import { $createParagraphNode, $setImportNode, ElementNode } from 'lexical'
 
 import { isHTMLElement } from '@dnd-kit/utilities'
 
@@ -25,6 +25,8 @@ export default class QuoteNode extends ElementNode {
 
 	static importJSON(serializedNode: SerializedElementNode) {
 		const node = $createQuoteNode(serializedNode.key)
+
+		$setImportNode(serializedNode.key, node)
 
 		node.setFormat(serializedNode.format)
 		node.setIndent(serializedNode.indent)

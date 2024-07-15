@@ -4,6 +4,7 @@ import {
 	$createTabNode,
 	$isTabNode,
 	$isTextNode,
+	$setImportNode,
 	ElementNode
 } from 'lexical'
 
@@ -50,7 +51,11 @@ export default class CodeNode extends ElementNode {
 	}
 
 	static importJSON(serializedNode: SerializedCodeNode) {
-		return $createCodeNode({ lang: serializedNode.lang,node_key:serializedNode.key })
+		const node = $createCodeNode({ lang: serializedNode.lang, node_key: serializedNode.key })
+
+		$setImportNode(serializedNode.key, node)
+
+		return node
 	}
 
 	createDOM() {

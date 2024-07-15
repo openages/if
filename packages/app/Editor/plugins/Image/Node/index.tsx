@@ -1,6 +1,6 @@
 import type { SerializedImageNode } from '../types'
 
-import { DecoratorNode } from 'lexical'
+import { $setImportNode, DecoratorNode } from 'lexical'
 import { lazy, Suspense } from 'react'
 
 import { $createImageNode, convertImageElement } from '../utils'
@@ -56,7 +56,11 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 	}
 
 	static importJSON(serializedNode: SerializedImageNode) {
-		return $createImageNode(serializedNode)
+		const node = $createImageNode(serializedNode)
+
+		$setImportNode(serializedNode.node_key, node)
+
+		return node
 	}
 
 	createDOM() {

@@ -1,4 +1,4 @@
-import { DecoratorNode } from 'lexical'
+import { $setImportNode, DecoratorNode } from 'lexical'
 import { lazy, Suspense } from 'react'
 
 import { TableOfContentsPlugin } from '@lexical/react/LexicalTableOfContentsPlugin'
@@ -7,7 +7,7 @@ import { $createNavigationNode, convertNavigationElement } from '../utils'
 
 import type { DOMConversionMap, DOMExportOutput, SerializedLexicalNode } from 'lexical'
 import type { TableOfContentsEntry } from '@lexical/react/LexicalTableOfContentsPlugin'
-import type {SerializedNavigationNode} from './types'
+import type { SerializedNavigationNode } from './types'
 
 const Component = lazy(() => import('./Component'))
 
@@ -31,7 +31,11 @@ export default class NavigationNode extends DecoratorNode<JSX.Element> {
 	}
 
 	static importJSON(serializedNode: SerializedNavigationNode) {
-		return $createNavigationNode(serializedNode.node_key)
+		const node = $createNavigationNode(serializedNode.node_key)
+
+		$setImportNode(serializedNode.node_key, node)
+
+		return node
 	}
 
 	createDOM() {
@@ -55,7 +59,7 @@ export default class NavigationNode extends DecoratorNode<JSX.Element> {
 	}
 
 	exportJSON() {
-		return { type: 'navigation' ,node_key:this.__key} as SerializedNavigationNode
+		return { type: 'navigation', node_key: this.__key } as SerializedNavigationNode
 	}
 
 	decorate() {

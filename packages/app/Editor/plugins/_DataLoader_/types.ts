@@ -12,3 +12,8 @@ export interface UpdateListenerArgs {
 	prevEditorState: EditorState
 	tags: Set<string>
 }
+
+export interface Change {
+	type: 'add' | 'remove' | 'update'
+	id: string
+}

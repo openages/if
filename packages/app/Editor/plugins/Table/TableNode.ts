@@ -1,4 +1,11 @@
-import { $getEditor, $getNearestNodeFromDOMNode, $getSelection, $isRangeSelection, ElementNode } from 'lexical'
+import {
+	$getEditor,
+	$getNearestNodeFromDOMNode,
+	$getSelection,
+	$isRangeSelection,
+	$setImportNode,
+	ElementNode
+} from 'lexical'
 
 import { $getMatchingParent } from '@/Editor/utils'
 import { isHTMLElement } from '@lexical/utils'
@@ -34,7 +41,11 @@ export default class TableNode extends ElementNode {
 	}
 
 	static importJSON(serializedNode: SerializedTableNode) {
-		return $createTableNode({ cols: serializedNode.cols,node_key:serializedNode.key })
+		const node = $createTableNode({ cols: serializedNode.cols, node_key: serializedNode.key })
+
+		$setImportNode(serializedNode.key, node)
+
+		return node
 	}
 
 	createDOM() {
