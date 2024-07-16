@@ -1,13 +1,19 @@
-import { $getNodeByKey, $getRoot, parseEditorState } from 'lexical'
+import { $getNodeByKey, $getRoot, $getSelection, $isRangeSelection, $setSelection, parseEditorState } from 'lexical'
 import { uniq } from 'lodash-es'
 import { injectable } from 'tsyringe'
 
-import { $exportNodeToJson, $getRemovedParent, $restoreNodeFromJson, getStateJson } from '@/Editor/utils'
+import {
+	$exportNodeToJson,
+	$getMatchingParent,
+	$getRemovedParent,
+	$restoreNodeFromJson,
+	getStateJson
+} from '@/Editor/utils'
 import { getDocItem, getDocItemsData } from '@/utils'
 import { disableWatcher } from '@/utils/decorators'
 import { deepEqual } from '@openages/stk/react'
 
-import type { LexicalEditor } from 'lexical'
+import type { LexicalEditor, RangeSelection } from 'lexical'
 import type { UpdateListenerArgs } from './types'
 import type { Subscription } from 'rxjs'
 import type { IPropsDataLoader, Change } from './types'
@@ -76,8 +82,6 @@ export default class Index {
 				this.ids_map.set(key, undefined)
 			})
 
-			// console.log(state)
-
 			this.editor.setEditorState(parseEditorState(state, this.editor))
 			this.editor.focus(null, { defaultSelection: 'rootStart' })
 		}
@@ -90,6 +94,13 @@ export default class Index {
 		const prev_map = prevEditorState._nodeMap
 
 		dirty_els.delete('root')
+
+		// console.log('------------')
+		// console.log('prev_map: ', prev_map)
+		// console.log('curr_map: ', curr_map)
+		// console.log('dirty_els: ', dirty_els)
+		// console.log('dirtyLeaves: ', dirtyLeaves)
+		// console.log('------------')
 
 		const change_nodes = uniq(
 			Array.from(dirty_els.keys())
@@ -289,11 +300,39 @@ export default class Index {
 		this.update_load_status = this.ids_array.length
 
 		this.update_watchers = this.ids_array.map(key =>
-			$db.collections[this.collection].findOne(key).$.subscribe(doc_map => {
+			$db.collections[this.collection].findOne(key).$.subscribe(doc => {
 				if (this.update_load_status !== 0) return this.update_load_status--
 				if (this.disable_watcher) return
 
-				console.log('doc_map:', doc_map)
+				const item = getDocItem(doc)
+				const json = JSON.parse(item.content)
+				const node_map = this.editor.getEditorState()._nodeMap
+				const el = this.editor.getElementByKey(item.id)
+
+				this.editor.update(() => {
+					const node = $getNodeByKey(item.id)
+					const selection = $getSelection()
+
+					let selection_cloned = null as RangeSelection
+
+					if ($isRangeSelection(selection)) {
+						const match = $getMatchingParent(selection.focus.getNode(), n => node.is(n))
+
+						if (match) {
+							selection_cloned = selection.clone()
+
+							$setSelection(null)
+						}
+					}
+
+					$restoreNodeFromJson(json, this.editor._nodes, node_map)
+
+					el.classList.add('notice_text')
+
+					setTimeout(() => {
+						el.classList.remove('notice_text')
+					}, 1500)
+				})
 			})
 		)
 	}
@@ -305,6 +344,8 @@ export default class Index {
 
 	on() {
 		this.addEditorListner()
+
+		// 对接云端同步之后开放
 		// this.addMutationListner()
 		// this.addUpdateListner()
 	}

@@ -30,10 +30,10 @@ export default class NavigationNode extends DecoratorNode<JSX.Element> {
 		return { div: () => ({ conversion: convertNavigationElement, priority: 0 }) }
 	}
 
-	static importJSON(serializedNode: SerializedNavigationNode) {
+	static importJSON(serializedNode: SerializedNavigationNode, update?: boolean) {
 		const node = $createNavigationNode(serializedNode.node_key)
 
-		$setImportNode(serializedNode.node_key, node)
+		if (!update) $setImportNode(serializedNode.node_key, node)
 
 		return node
 	}

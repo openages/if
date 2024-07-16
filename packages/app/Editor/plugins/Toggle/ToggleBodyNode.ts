@@ -1,10 +1,14 @@
-import { ElementNode } from 'lexical'
+import { $setImportNode, ElementNode } from 'lexical'
 
 import { $createToggleBodyNode, convertToggleBodyElement } from './utils'
 
 import type { DOMConversionMap, DOMExportOutput, SerializedElementNode } from 'lexical'
 
 export default class ToggleBodyNode extends ElementNode {
+	constructor(key?: string) {
+		super(key)
+	}
+
 	static getType() {
 		return 'toggle_body'
 	}
@@ -26,8 +30,12 @@ export default class ToggleBodyNode extends ElementNode {
 		}
 	}
 
-	static importJSON() {
-		return $createToggleBodyNode()
+	static importJSON(serializedNode: SerializedElementNode, update?: boolean) {
+		const node = $createToggleBodyNode(serializedNode.key)
+
+		if (!update) $setImportNode(serializedNode.key, node)
+
+		return node
 	}
 
 	createDOM() {

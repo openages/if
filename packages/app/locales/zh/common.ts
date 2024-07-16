@@ -32,6 +32,8 @@ export default {
 		感恩节: '感恩节',
 		圣诞节: '圣诞节'
 	},
+	success: '成功',
+	failed: '失败',
 	import: '导入',
 	export: '导出',
 	batch: '批量',

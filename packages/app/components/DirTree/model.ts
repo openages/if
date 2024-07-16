@@ -90,12 +90,14 @@ export default class Index {
 	async insert(item: Partial<DirTree.Item>) {
 		if (!item.icon && item.type === 'file') item.icon = module_default_icon[this.module] || ''
 
+		const target_id = item.id || id()
+
 		const authed = await auth(this.module)
 
 		if (!authed) return
 
 		const { item: target, effect_items } = this.node_tree.insert(
-			{ ...item, id: id(), module: this.module } as DirTree.Item,
+			{ ...item, id: target_id, module: this.module } as DirTree.Item,
 			this.focusing_index
 		)
 

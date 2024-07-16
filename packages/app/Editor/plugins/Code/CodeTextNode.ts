@@ -1,4 +1,4 @@
-import { TextNode } from 'lexical'
+import { $setImportNode, TextNode } from 'lexical'
 
 import { $createCodeNode, $createCodeTextNode } from './utils'
 
@@ -24,8 +24,16 @@ export default class CodeTextNode extends TextNode {
 		return new CodeTextNode({ text: node.__text, color: node.__color, node_key: node.__key })
 	}
 
-	static importJSON(serializedNode: SerializedCodeTextNode) {
-		return $createCodeTextNode({ text: serializedNode.text, color: serializedNode.color })
+	static importJSON(serializedNode: SerializedCodeTextNode, update?: boolean) {
+		const node = $createCodeTextNode({
+			text: serializedNode.text,
+			color: serializedNode.color,
+			node_key: serializedNode.key
+		})
+
+		if (!update) $setImportNode(serializedNode.key, node)
+
+		return node
 	}
 
 	createDOM(config: EditorConfig) {

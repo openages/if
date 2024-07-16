@@ -25,10 +25,10 @@ export default class ToggleNode extends ElementNode {
 		return { details: () => ({ conversion: convertToggleElement, priority: 0 }) }
 	}
 
-	static importJSON(serializedNode: SerializedToggleNode) {
+	static importJSON(serializedNode: SerializedToggleNode, update?: boolean) {
 		const node = $createToggleNode({ open: serializedNode.open, node_key: serializedNode.key })
 
-		$setImportNode(serializedNode.key, node)
+		if (!update) $setImportNode(serializedNode.key, node)
 
 		return node
 	}

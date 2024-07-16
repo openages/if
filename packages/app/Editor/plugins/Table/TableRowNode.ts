@@ -1,8 +1,8 @@
-import { ElementNode } from 'lexical'
+import { $setImportNode, ElementNode } from 'lexical'
 
 import { $convertTableRowElement, $createTableRowNode } from './utils'
 
-import type { DOMConversionMap, NodeKey } from 'lexical'
+import type { DOMConversionMap, NodeKey, SerializedElementNode } from 'lexical'
 
 export default class TableRowNode extends ElementNode {
 	constructor(key?: NodeKey) {
@@ -21,8 +21,12 @@ export default class TableRowNode extends ElementNode {
 		return { tr: () => ({ conversion: $convertTableRowElement, priority: 0 }) }
 	}
 
-	static importJSON() {
-		return $createTableRowNode()
+	static importJSON(serializedNode: SerializedElementNode, update?: boolean) {
+		const node = $createTableRowNode(serializedNode.key)
+
+		if (!update) $setImportNode(serializedNode.key, node)
+
+		return node
 	}
 
 	createDOM() {

@@ -23,10 +23,10 @@ export default class QuoteNode extends ElementNode {
 		return { blockquote: () => ({ conversion: $convertBlockquoteElement, priority: 0 }) }
 	}
 
-	static importJSON(serializedNode: SerializedElementNode) {
+	static importJSON(serializedNode: SerializedElementNode, update?: boolean) {
 		const node = $createQuoteNode(serializedNode.key)
 
-		$setImportNode(serializedNode.key, node)
+		if (!update) $setImportNode(serializedNode.key, node)
 
 		node.setFormat(serializedNode.format)
 		node.setIndent(serializedNode.indent)

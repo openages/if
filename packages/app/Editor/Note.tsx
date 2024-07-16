@@ -11,7 +11,7 @@ import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin
 
 import { Placeholder } from './components'
 import styles from './index.css'
-import nodes from './nodes'
+import { note_nodes } from './nodes'
 import {
 	AutoLink,
 	Code,
@@ -45,7 +45,7 @@ import { onError } from './utils'
 const Index = () => {
 	return (
 		<div className={$cx('__editor_container w_100 relative', styles._local, ...style)}>
-			<LexicalComposer initialConfig={{ namespace: 'editor', nodes, theme: token, onError }}>
+			<LexicalComposer initialConfig={{ namespace: 'editor', nodes: note_nodes, theme: token, onError }}>
 				<RichTextPlugin
 					contentEditable={<ContentEditable />}
 					placeholder={<Placeholder />}

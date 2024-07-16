@@ -50,10 +50,10 @@ export default class CodeNode extends ElementNode {
 		return { code: () => ({ conversion: convertCodeElement, priority: 0 }) }
 	}
 
-	static importJSON(serializedNode: SerializedCodeNode) {
+	static importJSON(serializedNode: SerializedCodeNode, update?: boolean) {
 		const node = $createCodeNode({ lang: serializedNode.lang, node_key: serializedNode.key })
 
-		$setImportNode(serializedNode.key, node)
+		if (!update) $setImportNode(serializedNode.key, node)
 
 		return node
 	}

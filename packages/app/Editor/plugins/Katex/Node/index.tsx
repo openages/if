@@ -53,10 +53,10 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 		}
 	}
 
-	static importJSON(serializedNode: SerializedKatexNode) {
+	static importJSON(serializedNode: SerializedKatexNode, update?: boolean) {
 		const node = $createKatexNode(serializedNode)
 
-		$setImportNode(serializedNode.node_key, node)
+		if (!update) $setImportNode(serializedNode.node_key, node)
 
 		return node
 	}

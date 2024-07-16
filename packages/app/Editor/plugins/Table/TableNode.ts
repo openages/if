@@ -40,10 +40,10 @@ export default class TableNode extends ElementNode {
 		return { table: () => ({ conversion: $convertTableElement, priority: 0 }) }
 	}
 
-	static importJSON(serializedNode: SerializedTableNode) {
+	static importJSON(serializedNode: SerializedTableNode, update?: boolean) {
 		const node = $createTableNode({ cols: serializedNode.cols, node_key: serializedNode.key })
 
-		$setImportNode(serializedNode.key, node)
+		if (!update) $setImportNode(serializedNode.key, node)
 
 		return node
 	}

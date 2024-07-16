@@ -55,10 +55,10 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 		return { img: () => ({ conversion: convertImageElement, priority: 0 }) }
 	}
 
-	static importJSON(serializedNode: SerializedImageNode) {
+	static importJSON(serializedNode: SerializedImageNode, update?: boolean) {
 		const node = $createImageNode(serializedNode)
 
-		$setImportNode(serializedNode.node_key, node)
+		if (!update) $setImportNode(serializedNode.node_key, node)
 
 		return node
 	}

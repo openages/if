@@ -2,8 +2,8 @@ import { $getNodeByKey, $isRootNode } from 'lexical'
 
 import type { NodeMap } from 'lexical'
 
-const Index = (key: string, node_map: NodeMap) => {
-	const node = node_map.get(key)
+const Index = (key: string, prev_map: NodeMap) => {
+	const node = prev_map.get(key)
 	const parent = $getNodeByKey(node.__parent)
 
 	if (parent) {
@@ -11,7 +11,7 @@ const Index = (key: string, node_map: NodeMap) => {
 
 		return parent.getTopLevelElement().getKey()
 	} else {
-		return Index(node.__parent, node_map)
+		return Index(node.__parent, prev_map)
 	}
 }
 

@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { $getNodeByKey, DecoratorNode } from 'lexical'
+import { $getNodeByKey, $setImportNode, DecoratorNode } from 'lexical'
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { $findMatchingParent } from '@lexical/utils'
@@ -28,8 +28,12 @@ export default class ToggleBtnNode extends DecoratorNode<JSX.Element> {
 		return { button: () => ({ conversion: convertToggleBtnElement, priority: 0 }) }
 	}
 
-	static importJSON() {
-		return $createToggleBtnNode()
+	static importJSON(serializedNode: SerializedLexicalNode, update?: boolean) {
+		const node = $createToggleBtnNode(serializedNode.key)
+
+		if (!update) $setImportNode(serializedNode.key, node)
+
+		return node
 	}
 
 	createDOM() {

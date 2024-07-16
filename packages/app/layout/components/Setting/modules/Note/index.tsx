@@ -120,7 +120,10 @@ const Index = () => {
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
-						<button className='btn flex justify_center align_center clickable'>
+						<button
+							className='btn flex justify_center align_center clickable'
+							onClick={x.importMds}
+						>
 							{t('translation:common.import')}
 						</button>
 					</div>

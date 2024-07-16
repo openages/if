@@ -2,6 +2,6 @@ import { $applyNodeReplacement } from 'lexical'
 
 import ToggleBodyNode from '../ToggleBodyNode'
 
-export default () => {
-	return $applyNodeReplacement(new ToggleBodyNode()) as ToggleBodyNode
+export default (key?: string) => {
+	return $applyNodeReplacement(new ToggleBodyNode(key)) as ToggleBodyNode
 }

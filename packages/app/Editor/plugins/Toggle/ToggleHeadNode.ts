@@ -1,4 +1,4 @@
-import { $createParagraphNode, $isElementNode, ElementNode } from 'lexical'
+import { $createParagraphNode, $isElementNode, $setImportNode, ElementNode } from 'lexical'
 
 import { $createToggleHeadNode, convertToggleHeadElement } from './utils'
 
@@ -19,8 +19,12 @@ export default class ToggleHeadNode extends ElementNode {
 		return { div: () => ({ conversion: convertToggleHeadElement, priority: 0 }) }
 	}
 
-	static importJSON() {
-		return $createToggleHeadNode()
+	static importJSON(serializedNode: SerializedElementNode, update?: boolean) {
+		const node = $createToggleHeadNode(serializedNode.key)
+
+		if (!update) $setImportNode(serializedNode.key, node)
+
+		return node
 	}
 
 	createDOM(): HTMLElement {

@@ -1,4 +1,4 @@
-import { ElementNode } from 'lexical'
+import { $setImportNode, ElementNode } from 'lexical'
 
 import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter'
 
@@ -42,12 +42,17 @@ export default class TableCellNode extends ElementNode {
 		}
 	}
 
-	static importJSON(serializedNode: SerializedTableCellNode) {
-		return $createTableCellNode({
+	static importJSON(serializedNode: SerializedTableCellNode, update?: boolean) {
+		const node = $createTableCellNode({
 			is_header: serializedNode.is_header,
 			row_span: serializedNode.row_span,
-			col_span: serializedNode.col_span
+			col_span: serializedNode.col_span,
+			node_key: serializedNode.key
 		})
+
+		if (!update) $setImportNode(serializedNode.key, node)
+
+		return node
 	}
 
 	createDOM() {

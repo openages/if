@@ -21,7 +21,7 @@ import ToggleNode from './plugins/Toggle/ToggleNode'
 
 import type { Klass, LexicalNode, LexicalNodeReplacement } from 'lexical'
 
-export default [
+export const note_nodes = [
 	ImageNode,
 	KatexNode,
 	MermaidNode,
@@ -43,5 +43,5 @@ export default [
 	LinkNode,
 	HeadingNode,
 	ListNode,
-	ListItemNode,
+	ListItemNode
 ] as ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>
