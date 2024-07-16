@@ -1,5 +1,5 @@
 import { $getNodeByKey, $getRoot, parseEditorState } from 'lexical'
-import { debounce, uniq } from 'lodash-es'
+import { uniq } from 'lodash-es'
 import { injectable } from 'tsyringe'
 
 import { $exportNodeToJson, $getRemovedParent, $restoreNodeFromJson, getStateJson } from '@/Editor/utils'
@@ -111,36 +111,21 @@ export default class Index {
 				)
 		)
 
-		// console.log('------------')
-		// console.log(change_nodes)
-		// // console.log('curr_map: ', curr_map)
-		// console.log('prev_map: ', prevEditorState._nodeMap)
-		// console.log('------------')
-
 		if (change_nodes.length) clearTimeout(this.timer_change)
 
 		change_nodes.forEach(id => {
 			const curr_node = curr_map.get(id)
 			const prev_node = prev_map.get(id)
 
-			// 新增
 			if (curr_node && !prev_node) {
-				console.log('add')
-
 				this.dispatch([{ type: 'add', id }])
 			}
 
-			// 移除
 			if (!curr_node && prev_node) {
-				console.log('remove')
-
 				this.dispatch([{ type: 'remove', id }])
 			}
 
-			// 更新
 			if (curr_node && prev_node) {
-				console.log('update')
-
 				this.changes.set(id, { type: 'update', id })
 			}
 		})
@@ -169,8 +154,6 @@ export default class Index {
 
 			switch (type) {
 				case 'add':
-					console.log('dispatch add')
-
 					this.ids_array.push(id)
 					this.ids_map.set(id, undefined)
 
@@ -187,8 +170,6 @@ export default class Index {
 
 					break
 				case 'remove':
-					console.log('dispatch remove')
-
 					this.ids_array = this.ids_array.filter(v => v !== id)
 					this.ids_map.delete(id)
 
@@ -198,8 +179,6 @@ export default class Index {
 
 					break
 				case 'update':
-					console.log('dispatch update')
-
 					const item = await $db.note_items.findOne(id).exec()
 					const euqal_prev = item.prev === prev
 					const euqal_next = item.next === next
