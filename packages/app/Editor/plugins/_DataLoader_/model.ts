@@ -97,13 +97,6 @@ export default class Index {
 
 		dirty_els.delete('root')
 
-		// console.log('------------')
-		// console.log('prev_map: ', prev_map)
-		// console.log('curr_map: ', curr_map)
-		// console.log('dirty_els: ', dirty_els)
-		// console.log('dirtyLeaves: ', dirtyLeaves)
-		// console.log('------------')
-
 		const change_nodes = uniq(
 			Array.from(dirty_els.keys())
 				.concat(Array.from(dirtyLeaves))
