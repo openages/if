@@ -118,6 +118,22 @@
 		url('./font/IBMPlexSans/IBMPlexSans-BoldItalic.ttf') format('truetype');
 }
 
+/** SourceSerif4 */
+@font-face {
+	font-family: 'SourceSerif4';
+	font-style: normal;
+	src:
+		local('SourceSerif4'),
+		url('./font/SourceSerif4/SourceSerif4.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'SourceSerif4';
+	font-style: italic;
+	src:
+		local('SourceSerif4'),
+		url('./font/SourceSerif4/SourceSerif4-Italic.ttf') format('truetype');
+}
+
 /** Code */
 @font-face {
 	font-family: 'CascadiaCode';

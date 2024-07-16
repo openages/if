@@ -3,7 +3,7 @@
 	font-size: 15px;
 
 	&.serif {
-		font-family: Georgia, ui-serif, serif;
+		font-family: 'SourceSerif4', Georgia, ui-serif, serif;
 
 		:global {
 			.__editor_heading {

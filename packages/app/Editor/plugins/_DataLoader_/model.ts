@@ -88,6 +88,8 @@ export default class Index {
 	}
 
 	async onUpdate(args: UpdateListenerArgs) {
+		if (this.editor.isComposing()) return
+
 		const { dirtyElements, editorState, dirtyLeaves, prevEditorState } = args
 		const dirty_els = $copy(dirtyElements)
 		const curr_map = editorState._nodeMap
@@ -122,7 +124,9 @@ export default class Index {
 				)
 		)
 
-		if (change_nodes.length) clearTimeout(this.timer_change)
+		if (!change_nodes.length) return
+
+		clearTimeout(this.timer_change)
 
 		change_nodes.forEach(id => {
 			const curr_node = curr_map.get(id)
