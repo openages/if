@@ -43,6 +43,8 @@
 			user-select: none;
 			transition: none;
 			font-style: italic;
+			row-gap: unset;
+			column-gap: unset;
 
 			&:hover {
 				border-right-color: var(--color_border_light) !important;

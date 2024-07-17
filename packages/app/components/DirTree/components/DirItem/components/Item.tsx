@@ -32,6 +32,7 @@ const Index = (props: IPropsDirItem_Item) => {
 					focusing_item.id === id && 'focusing',
 					dragging && 'dragging'
 				)}
+				autoInsertSpace={false}
 				style={{ paddingLeft: 18 * parent_index.length }}
 				onClick={onItem}
 				onContextMenu={e => showDirTreeOptions(e, parent_index)}
