@@ -42,7 +42,7 @@ const Index = (props: IPropsTodos) => {
 	const stoper = useRef<number>()
 	const [lines, setLines] = useState<Array<JSX.Element>>([])
 	const [link_points, setLinkPoints] = useState<Array<number>>(null)
-	const size = useSize(() => container.current) as number
+	const size = useSize(() => container.current, 'height') as number
 	const height = useMemo(() => (size ? size : 0), [size])
 	const color_text_line = useCssVariable('--color_text_line')
 	const color_text_softlight = useCssVariable('--color_text_softlight')

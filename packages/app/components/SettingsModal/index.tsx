@@ -15,12 +15,14 @@ export interface IPropsSettingsModal {
 	info: any
 	className?: HTMLAttributes<any>['className']
 	IconEditCenter?: boolean
+	getContainer?: () => Element
 	onClose: () => void
 	onValuesChange: (changedValues: any, values: any) => void
 }
 
 const Index = (props: IPropsSettingsModal) => {
-	const { module, children, visible, info, className, IconEditCenter, onClose, onValuesChange } = props
+	const { module, children, visible, info, className, IconEditCenter, getContainer, onClose, onValuesChange } =
+		props
 	const { t } = useTranslation()
 
 	return (
@@ -30,6 +32,7 @@ const Index = (props: IPropsSettingsModal) => {
 			open={visible}
 			width={420}
 			maskClosable
+			getContainer={getContainer}
 			onCancel={onClose}
 		>
 			<Form module={module} info={info} IconEditCenter={IconEditCenter} onValuesChange={onValuesChange}>
