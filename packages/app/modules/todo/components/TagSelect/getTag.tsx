@@ -16,8 +16,8 @@ type CustomTagProps = {
 
 const Index = (tags: Required<IPropsInput['tags']>, options: { useByTodo?: boolean }) => (props: CustomTagProps) => {
 	const { value, onClose } = props
-	const { text, color: bg_color } = tags.find(item => item.id === value) || {}
-	const color = useTagColor(bg_color)
+	const { text, color } = tags.find(item => item.id === value) || {}
+	const { bg_color, text_color } = useTagColor(color)
 
 	const onPreventMouseDown = useMemoizedFn((e: React.MouseEvent<HTMLSpanElement>) => {
 		e.preventDefault()
@@ -28,7 +28,7 @@ const Index = (tags: Required<IPropsInput['tags']>, options: { useByTodo?: boole
 			className='tag border_box flex justify_center align_center'
 			style={{
 				backgroundColor: bg_color,
-				color
+				color: text_color
 			}}
 			onMouseDown={onPreventMouseDown}
 		>

@@ -1,7 +1,7 @@
 ._local {
 	:global {
 		.if-form-item {
-			margin-bottom: 12px;
+			margin-bottom: 18px;
 
 			&:last-child {
 				margin-bottom: 0px;
@@ -9,6 +9,7 @@
 
 			&-label {
 				padding-bottom: 6px;
+				font-weight: 500;
 			}
 		}
 

@@ -180,6 +180,7 @@ export interface IPropsTimeBlockDetail {
 }
 
 export interface IPropsSettingsModal {
+	id: Model['id']
 	visible_settings_modal: Model['visible_settings_modal']
 	setting: Model['setting']['setting'] & Model['file']['data']
 	closeSettingsModal: () => void

@@ -1,3 +1,4 @@
+import { useMemoizedFn } from 'ahooks'
 import { Form, Select } from 'antd'
 import { useTranslation } from 'react-i18next'
 
@@ -14,6 +15,7 @@ const { Item } = Form
 
 const Index = (props: IPropsSettingsModal) => {
 	const {
+		id,
 		visible_settings_modal,
 		setting,
 		closeSettingsModal,
@@ -32,6 +34,7 @@ const Index = (props: IPropsSettingsModal) => {
 		visible: visible_settings_modal,
 		info: setting,
 		IconEditCenter: true,
+		getContainer: useMemoizedFn(() => document.getElementById(id)),
 		onClose: closeSettingsModal,
 		onValuesChange: updateSetting
 	}

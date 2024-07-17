@@ -5,15 +5,15 @@
 
 			:global {
 				.timeblock_content_wrap {
-					background-color: rgba(var(--tag_color), 0.3) !important;
-
 					.text_wrap {
 						&:empty::after {
+							opacity: 1;
 							color: var(--color_text_light);
 						}
 					}
 
 					.time {
+						opacity: 1;
 						color: var(--color_text_light);
 					}
 				}
@@ -131,21 +131,23 @@
 	}
 
 	&.has_tag {
-		color: rgba(var(--tag_color), 0.9);
+		color: var(--tag_text_color);
 
 		:global {
 			.timeblock_content_wrap {
-				border-color: rgba(var(--tag_color), 0.18);
-				background-color: rgba(var(--tag_color), 0.12);
+				border-color: rgba(var(--tag_color), 0.12);
+				background-color: var(--tag_bg_color);
 
 				.text_wrap {
 					&:empty::after {
-						color: rgba(var(--tag_color), 0.6);
+						opacity: 0.6;
+						color: var(--tag_text_color);
 					}
 				}
 
 				.time {
-					color: rgba(var(--tag_color), 0.6);
+					opacity: 0.6;
+					color: var(--tag_text_color);
 				}
 			}
 		}
@@ -223,14 +225,6 @@
 		z-index: 2;
 		height: 36px;
 		border-radius: var(--radius_small);
-
-		&.has_tag {
-			:global {
-				.timeblock_content_wrap {
-					border-color: rgba(var(--tag_color), 0.09);
-				}
-			}
-		}
 
 		:global {
 			.drag_line {

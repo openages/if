@@ -43,7 +43,7 @@
 					overflow: hidden;
 					border-radius: var(--radius_small);
 					font-size: 12px;
-					font-weight: bold;
+					font-weight: 500;
 				}
 			}
 

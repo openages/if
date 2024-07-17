@@ -11,7 +11,14 @@ export default (tags: Schedule.Setting['tags'], tag: Schedule.Item['tag']) => {
 		const target = tags.find(it => it.id === tag)
 
 		return {
-			'--tag_color': Color(target.color).rgb().array().join(',')
+			'--tag_color': Color(target.color).rgb().array().join(','),
+			'--tag_bg_color': Color(target.color)
+				.alpha(0.12)
+				.lighten(0.6)
+				.saturationl(90)
+				.saturationv(30)
+				.toString(),
+			'--tag_text_color': Color(target.color).saturationl(0).saturationv(100).chroma(36).toString()
 		}
 	}, [tag, tags])
 }

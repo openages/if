@@ -24,7 +24,7 @@ const Index = (props: IProps) => {
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = sortable_props
 
 	const { t } = useTranslation()
-	const color = useTagColor(item.color)
+	const { bg_color, text_color } = useTagColor(item.color)
 
 	const getPopupContainer = useMemoizedFn(() => document.body)
 	const onDebounceChange = useMemoizedFn(debounce((_, v) => onUpdate('color', index, v), 300))
@@ -54,8 +54,8 @@ const Index = (props: IProps) => {
 				<span
 					className='tag w_100 h_100 flex justify_center align_center transition_normal'
 					style={{
-						backgroundColor: item.color,
-						color
+						backgroundColor: bg_color,
+						color: text_color
 					}}
 				>
 					{item.text || t('translation:common.tags.placeholder')}
