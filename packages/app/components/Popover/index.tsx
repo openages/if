@@ -15,13 +15,14 @@ interface IProps {
 	children: ReactNode
 	position?: { x: number; y: number }
 	top?: boolean
+	show_on_top?: boolean
 	className?: HTMLElement['className']
 	style?: CSSProperties
 	updatePosition?: () => void
 }
 
 const Index = (props: IProps) => {
-	const { open, position, children, top, className, style, updatePosition } = props
+	const { open, position, children, top, show_on_top, className, style, updatePosition } = props
 	const [exist, setExsit] = useState(false)
 	const [oveflow, setOverflow] = useState(0)
 	const id = useStackSelector(v => v.id)
@@ -87,6 +88,7 @@ const Index = (props: IProps) => {
 						'fixed z_index_100',
 						styles._local,
 						top && styles.top,
+						show_on_top && styles.show_on_top,
 						oveflow && styles.oveflow,
 						className
 					)}

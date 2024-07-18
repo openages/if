@@ -432,10 +432,15 @@ export default class Index {
 			await update(data)
 
 			setTimeout(
-				() =>
-					document
-						.getElementById(`${this.visible_detail_modal ? 'detail_' : ''}todo_${target.id}`)
-						?.focus(),
+				() => {
+					const el = document.getElementById(
+						`${this.visible_detail_modal ? 'detail_' : ''}todo_${target.id}`
+					)
+
+					if (el) {
+						;(el.querySelector('.__editor_root') as HTMLDivElement)?.focus()
+					}
+				},
 				this.mode === 'mindmap' ? 60 : 0
 			)
 
@@ -565,7 +570,13 @@ export default class Index {
 			if (document.activeElement) (document.activeElement as HTMLDivElement).blur()
 
 			setTimeout(
-				() => document.getElementById(`todo_${item.id}`)?.focus(),
+				() => {
+					const el = document.getElementById(`todo_${item.id}`)
+
+					if (el) {
+						;(el.querySelector('.__editor_root') as HTMLDivElement)?.focus()
+					}
+				},
 				this.mode === 'mindmap' ? 60 : 0
 			)
 		}

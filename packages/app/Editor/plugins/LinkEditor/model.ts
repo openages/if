@@ -26,6 +26,7 @@ export default class Index {
 	editor = null as LexicalEditor
 	node = null as LinkNode
 	dom = null as HTMLAnchorElement
+	show_on_top = false
 
 	visible = false
 	position = null as { x: number; y: number }
@@ -41,9 +42,10 @@ export default class Index {
 		)
 	}
 
-	init(id: Index['id'], editor: Index['editor']) {
+	init(id: Index['id'], editor: Index['editor'], show_on_top: Index['show_on_top']) {
 		this.id = id
 		this.editor = editor
+		this.show_on_top = show_on_top
 
 		this.on()
 	}
@@ -102,7 +104,7 @@ export default class Index {
 
 		const rect = this.editor.getElementByKey(this.node.getKey()).getBoundingClientRect()
 
-		this.position = { x: rect.x, y: rect.y + rect.height }
+		this.position = { x: rect.x, y: rect.y + (this.show_on_top ? -42 : rect.height) }
 	}
 
 	check(e?: MouseEvent) {

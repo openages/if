@@ -12,7 +12,10 @@ import { ShareFat } from '@phosphor-icons/react'
 import styles from './index.css'
 import Model from './model'
 
-const Index = () => {
+import type { IPropsLinkEditor } from './types'
+
+const Index = (props: IPropsLinkEditor) => {
+	const { show_on_top } = props
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
@@ -20,17 +23,17 @@ const Index = () => {
 	const position = $copy(x.position)
 
 	useLayoutEffect(() => {
-		x.init(id, editor)
+		x.init(id, editor, show_on_top)
 
 		return () => x.off()
-	}, [id, editor])
+	}, [id, editor, show_on_top])
 
 	useClickAway(() => x.reset(), [x.dom, ref])
 
 	const updatePosition = useMemoizedFn(x.updatePosition)
 
 	return (
-		<Popover open={x.visible} position={position} updatePosition={updatePosition}>
+		<Popover open={x.visible} position={position} show_on_top={show_on_top} updatePosition={updatePosition}>
 			<div className={$cx('flex align_center', styles._local)} ref={ref}>
 				<input
 					className='input_link'

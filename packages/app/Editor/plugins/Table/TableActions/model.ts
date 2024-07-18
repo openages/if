@@ -11,7 +11,7 @@ import { makeAutoObservable, runInAction } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
-import { style } from '@/Editor/theme'
+import { note_style } from '@/Editor/theme'
 import { $cloneNode, $getMatchingParent } from '@/Editor/utils'
 import Utils from '@/models/utils'
 import { draggable } from '@atlaskit/pragmatic-drag-and-drop/element/adapter'
@@ -332,7 +332,7 @@ export default class Index {
 		overlay.classList.value = `fixed`
 		overlay.style.zIndex = '101'
 
-		style.forEach(item => overlay.classList.add(item))
+		note_style.forEach(item => overlay.classList.add(item))
 
 		table.classList.value = '__editor_table'
 		table.style.left = position.left

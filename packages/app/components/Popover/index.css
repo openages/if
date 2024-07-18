@@ -35,7 +35,8 @@
 		content: '';
 	}
 
-	&.top {
+	&.top,
+	&.show_on_top {
 		padding: 0;
 		margin-top: 0;
 
@@ -48,6 +49,10 @@
 			border-right: 6px solid transparent;
 			border-left: 6px solid transparent;
 		}
+	}
+
+	&.show_on_top {
+		padding: 4px 12px;
 	}
 
 	&.oveflow {

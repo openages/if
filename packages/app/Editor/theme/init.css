@@ -1,4 +1,4 @@
-.init {
+.init_note {
 	line-height: 1.8;
 	font-size: 15px;
 
@@ -14,6 +14,11 @@
 
 	&.small_text {
 		font-size: 13px;
+	}
+
+	&.text_mode {
+		line-height: inherit;
+		font-size: inherit;
 	}
 
 	:global {
@@ -60,6 +65,23 @@
 				content: '▶  ';
 				scale: 72% 100%;
 			}
+		}
+	}
+}
+
+.init_text {
+	:global {
+		div[contenteditable='true'] {
+			outline: none;
+		}
+
+		p {
+			padding-inline-start: 0;
+			padding-inline-end: 0;
+			margin-block-start: 0;
+			margin-block-end: 0;
+			margin-inline-start: 0;
+			margin-inline-end: 0;
 		}
 	}
 }

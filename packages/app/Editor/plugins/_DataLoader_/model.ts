@@ -14,10 +14,10 @@ import { disableWatcher } from '@/utils/decorators'
 import { deepEqual } from '@openages/stk/react'
 
 import type { LexicalEditor, RangeSelection } from 'lexical'
-import type { UpdateListenerArgs } from './types'
 import type { Subscription } from 'rxjs'
 import type { IPropsDataLoader, Change } from './types'
 import type { Note } from '@/types'
+import type { Lexical } from '@/types'
 
 @injectable()
 export default class Index {
@@ -87,7 +87,7 @@ export default class Index {
 		}
 	}
 
-	async onUpdate(args: UpdateListenerArgs) {
+	async onUpdate(args: Lexical.ArgsUpdateListener) {
 		if (this.editor.isComposing()) return
 
 		const { dirtyElements, editorState, dirtyLeaves, prevEditorState } = args

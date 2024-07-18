@@ -4,11 +4,11 @@ import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
 import { todo } from '@/appdata'
+import { useText, useTextChange, Text } from '@/Editor'
 import { useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { CheckSquare, DotsSixVertical, Square } from '@phosphor-icons/react'
 
-import { useInput } from '../../hooks'
 import Children from '../Children'
 import CycleStatus from '../CycleStatus'
 import DeadlineStatus from '../DeadlineStatus'
@@ -99,13 +99,11 @@ const Index = (props: IPropsTodoItem) => {
 
 	const { linker, dragging, hovering } = useLink({ item, dimension_id, makeLinkLine, updateRelations })
 
-	const { input, onInput } = useInput({
-		value: text,
-		max_length: todo.text_max_length,
-		update: useMemoizedFn(textContent =>
-			update({ type: 'parent', index, dimension_id, value: { text: textContent } })
-		)
+	const { ref_editor, ref_input, onChange, setEditor, setRef } = useText({
+		update: v => update({ type: 'parent', index, dimension_id, value: { text: v } })
 	})
+
+	useTextChange({ ref_editor, text })
 
 	const context_menu = useContextMenu({ kanban_mode, angles, tags, tag_ids })
 
@@ -125,7 +123,7 @@ const Index = (props: IPropsTodoItem) => {
 
 	useOpen({ item, zen_mode, open, open_items, renderLines, setOpen })
 
-	const { remind } = useOptions({ item, input, zen_mode })
+	const { remind } = useOptions({ item, input: ref_input, zen_mode })
 
 	const props_children: IPropsChildren = {
 		mode,
@@ -285,7 +283,7 @@ const Index = (props: IPropsTodoItem) => {
 								onClick: onContextMenu
 							}}
 						>
-							<div
+							<Text
 								id={`todo_${id}`}
 								className={$cx(
 									'text_wrap',
@@ -293,11 +291,12 @@ const Index = (props: IPropsTodoItem) => {
 									outdate && 'outdate',
 									remind && 'remind'
 								)}
-								contentEditable='plaintext-only'
-								ref={input}
-								onInput={onInput}
+								max_length={todo.text_max_length}
+								onChange={onChange}
+								setEditor={setEditor}
 								onKeyDown={onKeyDown}
-							></div>
+								setRef={setRef}
+							></Text>
 						</Dropdown>
 					</ConfigProvider>
 				</div>

@@ -7,13 +7,21 @@ import Latest from './Latest'
 import type { IPropsMenu } from '../../types'
 
 const Index = (props: IPropsMenu) => {
-	const { all_options, latest_blocks, options, selected_index, selectOptionAndCleanUp, setHighlightedIndex } = props
+	const {
+		all_options,
+		latest_blocks,
+		options,
+		selected_index,
+		text_mode,
+		selectOptionAndCleanUp,
+		setHighlightedIndex
+	} = props
 
 	const blocks = useMemo(() => latest_blocks.map(item => all_options[item]), [all_options, latest_blocks])
 
 	return (
 		<div className={$cx('flex flex_column border_box', styles._local)}>
-			<If condition={blocks.length > 0}>
+			<If condition={!text_mode && blocks.length > 0}>
 				<Latest blocks={blocks} selectOptionAndCleanUp={selectOptionAndCleanUp}></Latest>
 			</If>
 			{options.map((option, index) => (

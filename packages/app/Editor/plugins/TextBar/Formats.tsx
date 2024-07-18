@@ -20,7 +20,7 @@ import styles from './index.css'
 import type { IPropsFormats } from './types'
 
 const Index = (props: IPropsFormats) => {
-	const { md, formats, heading_type, list_type, setRef, onFormat } = props
+	const { md, only_text, formats, heading_type, list_type, setRef, onFormat } = props
 
 	const getRef = useMemoizedFn(v => setRef(v))
 	const onBold = useMemoizedFn(() => onFormat('bold'))
@@ -92,47 +92,49 @@ const Index = (props: IPropsFormats) => {
 					<Link weight='bold' />
 				</div>
 			</div>
-			<span className='d_line'></span>
-			<div className='format_items_wrap flex'>
-				<Select
-					className={$cx('select_heading select', formats['heading'] && 'active')}
-					popupClassName={styles.dropdown}
-					size='small'
-					virtual={false}
-					popupMatchSelectWidth={false}
-					dropdownAlign={{ offset: [-4, 6] }}
-					suffixIcon={<TextH weight='bold' />}
-					options={[
-						{ label: 'H1', value: 'h1' },
-						{ label: 'H2', value: 'h2' },
-						{ label: 'H3', value: 'h3' },
-						{ label: 'H4', value: 'h4' },
-						{ label: 'H5', value: 'h5' },
-						{ label: 'H6', value: 'h6' }
-					]}
-					value={heading_type}
-					onSelect={onHeading}
-				></Select>
-			</div>
-			<span className='d_line'></span>
-			<div className='format_items_wrap flex'>
-				<Select
-					className={$cx('select_list select', formats['list'] && 'active')}
-					popupClassName={styles.dropdown}
-					size='small'
-					virtual={false}
-					popupMatchSelectWidth={false}
-					dropdownAlign={{ offset: [-4, 6] }}
-					suffixIcon={<List weight='bold' />}
-					options={[
-						{ label: <ListBullets weight='bold' />, value: 'bullet' },
-						{ label: <ListNumbers weight='bold' />, value: 'number' },
-						{ label: <ListChecks weight='bold' />, value: 'check' }
-					]}
-					value={list_type}
-					onSelect={onList}
-				></Select>
-			</div>
+			<If condition={!only_text}>
+				<span className='d_line'></span>
+				<div className='format_items_wrap flex'>
+					<Select
+						className={$cx('select_heading select', formats['heading'] && 'active')}
+						popupClassName={styles.dropdown}
+						size='small'
+						virtual={false}
+						popupMatchSelectWidth={false}
+						dropdownAlign={{ offset: [-4, 6] }}
+						suffixIcon={<TextH weight='bold' />}
+						options={[
+							{ label: 'H1', value: 'h1' },
+							{ label: 'H2', value: 'h2' },
+							{ label: 'H3', value: 'h3' },
+							{ label: 'H4', value: 'h4' },
+							{ label: 'H5', value: 'h5' },
+							{ label: 'H6', value: 'h6' }
+						]}
+						value={heading_type}
+						onSelect={onHeading}
+					></Select>
+				</div>
+				<span className='d_line'></span>
+				<div className='format_items_wrap flex'>
+					<Select
+						className={$cx('select_list select', formats['list'] && 'active')}
+						popupClassName={styles.dropdown}
+						size='small'
+						virtual={false}
+						popupMatchSelectWidth={false}
+						dropdownAlign={{ offset: [-4, 6] }}
+						suffixIcon={<List weight='bold' />}
+						options={[
+							{ label: <ListBullets weight='bold' />, value: 'bullet' },
+							{ label: <ListNumbers weight='bold' />, value: 'number' },
+							{ label: <ListChecks weight='bold' />, value: 'check' }
+						]}
+						value={list_type}
+						onSelect={onList}
+					></Select>
+				</div>
+			</If>
 		</div>
 	)
 }

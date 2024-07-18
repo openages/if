@@ -11,11 +11,13 @@ import { setStorageWhenChange } from '@openages/stk/mobx'
 import type { LexicalEditor } from 'lexical'
 import type { TypeaheadMenuPluginProps } from '@lexical/react/LexicalTypeaheadMenuPlugin'
 import type Option from './option'
+import type { IProps } from './types'
 
 @injectable()
 export default class Index {
 	editor = null as LexicalEditor
 	options = [] as Array<Option>
+	text_mode = false as IProps['text_mode']
 
 	modal = '' as 'Image' | 'Emoji' | 'Katex' | 'Mermaid' | 'Ref'
 	node_key = ''
@@ -33,10 +35,13 @@ export default class Index {
 		)
 	}
 
-	init(editor: Index['editor']) {
-		this.utils.acts = [setStorageWhenChange([{ note_latest_blocks: 'latest_blocks' }], this)]
+	init(editor: Index['editor'], text_mode: boolean) {
+		if (!text_mode) {
+			this.utils.acts = [setStorageWhenChange([{ note_latest_blocks: 'latest_blocks' }], this)]
+		}
 
 		this.editor = editor
+		this.text_mode = text_mode
 
 		this.register()
 	}
@@ -68,7 +73,7 @@ export default class Index {
 
 			close()
 
-			this.setLatestBlocks(index)
+			if (!this.text_mode) this.setLatestBlocks(index)
 		})
 	}
 

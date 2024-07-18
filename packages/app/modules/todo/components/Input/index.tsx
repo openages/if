@@ -3,7 +3,8 @@ import { Select, Tooltip } from 'antd'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useInput } from '@/modules/todo/hooks'
+import { todo } from '@/appdata'
+import { useText, Text } from '@/Editor'
 import { id } from '@/utils'
 import { Calendar, Sun } from '@phosphor-icons/react'
 
@@ -15,20 +16,15 @@ import TagSelect from '../TagSelect'
 import styles from './index.css'
 
 import type { Todo } from '@/types'
-import type { KeyboardEvent } from 'react'
 import type { IPropsCircle, IPropsInput, IPropsDateTime } from '../../types'
 
 const Index = (props: IPropsInput) => {
 	const { loading, tags, create } = props
 	const { t } = useTranslation()
 	const [input, setInput] = useState<Omit<Todo.TodoItem, 'file_id' | 'angle_id' | 'sort'>>(getTodo())
-	const {
-		input: input_ref,
-		onInput,
-		updateValue
-	} = useInput({
-		value: input.text,
-		update: useMemoizedFn(v => setInput(input => ({ ...input, text: v })))
+
+	const { ref_editor, onChange, setEditor, setRef } = useText({
+		update: v => setInput(input => ({ ...input, text: v }))
 	})
 
 	useEffect(() => {
@@ -63,15 +59,16 @@ const Index = (props: IPropsInput) => {
 		onChangeItem: useMemoizedFn(v => setInput(input => ({ ...input, ...v })))
 	}
 
-	const onKeyDown = useMemoizedFn(async (e: KeyboardEvent<HTMLDivElement>) => {
+	const onKeyDown = useMemoizedFn(async (e: KeyboardEvent) => {
 		if (e.key !== 'Enter') return
 		if (loading) return
+		if (!ref_editor.current) return
 
 		e.preventDefault()
 
-		const textContent = await updateValue(input_ref.current.textContent)
+		const text = JSON.stringify(ref_editor.current.getEditorState().toJSON())
 
-		create({ ...input, text: textContent, create_at: new Date().valueOf() } as Todo.TodoItem, { top: true })
+		create({ ...input, text, create_at: new Date().valueOf() } as Todo.TodoItem, { top: true })
 	})
 
 	return (
@@ -167,14 +164,17 @@ const Index = (props: IPropsInput) => {
 						</div>
 					</If>
 				</div>
-				<div
+				<Text
 					className='input_add_todo w_100 border_box transition_normal'
-					contentEditable='plaintext-only'
-					data-placeholder={t('translation:todo.Input.placeholder')}
-					ref={input_ref}
-					onInput={onInput}
+					placeholder_classname='input_add_todo_placeholder'
+					placeholder={t('translation:todo.Input.placeholder')}
+					max_length={todo.text_max_length}
+					show_on_top
+					onChange={onChange}
+					setEditor={setEditor}
 					onKeyDown={onKeyDown}
-				></div>
+					setRef={setRef}
+				></Text>
 			</div>
 		</div>
 	)

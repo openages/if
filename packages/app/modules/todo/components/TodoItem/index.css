@@ -218,7 +218,7 @@
 			.action_wrap {
 				width: 21px;
 				height: 21px;
-				margin-top: 0.5px;
+				margin-top: 1px;
 				margin-right: 3px;
 				border-radius: 3px;
 				color: var(--color_text_sub);

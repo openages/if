@@ -9,11 +9,10 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import Formats from './Formats'
 import Model from './model'
 
-import type { IPropsCommon } from '@/Editor/types'
-import type { IPropsFormats } from './types'
+import type { IPropsFormats, IPropsTextBar } from './types'
 
-const Index = (props: IPropsCommon) => {
-	const { md } = props
+const Index = (props: IPropsTextBar) => {
+	const { md, only_text } = props
 	const [x] = useState(() => new Model())
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
@@ -27,6 +26,7 @@ const Index = (props: IPropsCommon) => {
 
 	const props_formats: IPropsFormats = {
 		md,
+		only_text,
 		heading_type: x.heading_type,
 		list_type: x.list_type,
 		formats: $copy(x.formats),

@@ -45,3 +45,10 @@ export const note_nodes = [
 	ListNode,
 	ListItemNode
 ] as ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>
+
+export const text_nodes = [
+	RefNode,
+
+	AutoLinkNode,
+	LinkNode
+] as ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>

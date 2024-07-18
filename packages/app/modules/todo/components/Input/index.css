@@ -24,6 +24,10 @@
 			}
 		}
 
+		.input_add_todo_placeholder {
+			top: 7px;
+		}
+
 		.options_wrap {
 			padding-bottom: 6px;
 

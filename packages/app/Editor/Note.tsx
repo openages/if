@@ -39,12 +39,12 @@ import {
 	Transform,
 	Watcher
 } from './plugins'
-import { style, token } from './theme'
+import { note_style, token } from './theme'
 import { onError } from './utils'
 
 const Index = () => {
 	return (
-		<div className={$cx('__editor_container w_100 relative', styles._local, ...style)}>
+		<div className={$cx('__editor_container w_100 relative', styles._local, ...note_style)}>
 			<LexicalComposer initialConfig={{ namespace: 'editor', nodes: note_nodes, theme: token, onError }}>
 				<RichTextPlugin
 					contentEditable={<ContentEditable />}

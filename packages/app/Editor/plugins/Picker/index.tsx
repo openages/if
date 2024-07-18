@@ -22,21 +22,22 @@ import styles from './index.css'
 import Model from './model'
 
 import type Option from './option'
-import type { IPropsMenu } from './types'
+import type { IPropsMenu, IProps } from './types'
 import type { IPropsModal } from '../../types'
 import type { TypeaheadMenuPluginProps } from '@lexical/react/LexicalTypeaheadMenuPlugin'
 
-const Index = () => {
+const Index = (props: IProps) => {
+	const { text_mode } = props
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
 	const { t } = useTranslation()
 
 	useLayoutEffect(() => {
-		x.init(editor)
+		x.init(editor, text_mode)
 
 		return () => x.off()
-	}, [editor])
+	}, [editor, text_mode])
 
 	const showModal = useMemoizedFn(x.show)
 	const closeModal = useMemoizedFn(x.close)
@@ -45,12 +46,12 @@ const Index = () => {
 	const checkForTriggerMatch = useBasicTypeaheadTriggerMatch('/', { minLength: 0 })
 
 	const options = useMemo(() => {
-		const target = getOptions({ query_string: x.query, editor, showModal })
+		const target = getOptions({ query_string: x.query, editor, text_mode, showModal })
 
 		if (!x.query) x.options = target
 
 		return target
-	}, [editor, x.query])
+	}, [editor, x.query, text_mode])
 
 	const render: TypeaheadMenuPluginProps<Option>['menuRenderFn'] = useMemoizedFn(
 		(ref, { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex }) => {
@@ -88,7 +89,7 @@ const Index = () => {
 			let target: Array<Option> = options
 			let target_latest: Array<number> = $copy(x.latest_blocks)
 
-			if (excludes) {
+			if (!text_mode && excludes) {
 				target = options.filter(item => !excludes.includes(item.shortcut))
 				target_latest = target_latest.filter(item => !excludes.includes(x.options[item].shortcut))
 			}
@@ -98,6 +99,7 @@ const Index = () => {
 				latest_blocks: target_latest,
 				options: target,
 				selected_index: selectedIndex,
+				text_mode,
 				selectOptionAndCleanUp,
 				setHighlightedIndex
 			}
@@ -140,6 +142,7 @@ const Index = () => {
 			</Modal>
 			<LexicalTypeaheadMenuPlugin
 				options={options}
+				showOnTop={text_mode}
 				menuRenderFn={render}
 				onQueryChange={setQuery}
 				onSelectOption={onSelectOption}

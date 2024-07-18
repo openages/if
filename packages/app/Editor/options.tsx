@@ -35,12 +35,28 @@ import type { LexicalEditor } from 'lexical'
 interface Args {
 	query_string: string
 	editor: LexicalEditor
+	text_mode?: boolean
 	showModal: (v: Model['modal']) => void
 }
 
 export default (args: Args) => {
-	const { query_string, editor, showModal } = args
+	const { query_string, editor, text_mode, showModal } = args
 	const regex = new RegExp(query_string, 'i')
+
+	if (text_mode) {
+		return [
+			new Option($t('translation:editor.name.Emoji'), {
+				icon: <Smiley />,
+				shortcut: 'emo',
+				onSelect: () => showModal('Emoji')
+			}),
+			new Option($t('translation:editor.name.Ref'), {
+				icon: <CubeFocus />,
+				shortcut: 'ref',
+				onSelect: () => showModal('Ref')
+			})
+		]
+	}
 
 	return [
 		new Option($t('translation:editor.name.Image'), {
