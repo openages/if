@@ -11,8 +11,8 @@ export default class ToggleHeadNode extends ElementNode {
 		return 'toggle_head'
 	}
 
-	static clone(node: ToggleHeadNode) {
-		return new ToggleHeadNode(node.__key)
+	static clone(node: ToggleHeadNode, new_key?: boolean) {
+		return new ToggleHeadNode(new_key ? undefined : node.__key)
 	}
 
 	static importDOM(): DOMConversionMap | null {

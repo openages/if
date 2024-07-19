@@ -26,12 +26,12 @@ export default class TableCellNode extends ElementNode {
 		return 'table_cell'
 	}
 
-	static clone(node: TableCellNode) {
+	static clone(node: TableCellNode, new_key?: boolean) {
 		return new TableCellNode({
 			is_header: node.__is_header,
 			row_span: node.__row_span,
 			col_span: node.__col_span,
-			node_key: node.__key
+			node_key: new_key ? undefined : node.__key
 		})
 	}
 

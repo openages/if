@@ -13,8 +13,8 @@ export default class ToggleBodyNode extends ElementNode {
 		return 'toggle_body'
 	}
 
-	static clone(node: ToggleBodyNode) {
-		return new ToggleBodyNode(node.__key)
+	static clone(node: ToggleBodyNode, new_key?: boolean) {
+		return new ToggleBodyNode(new_key ? undefined : node.__key)
 	}
 
 	static importDOM(): DOMConversionMap {

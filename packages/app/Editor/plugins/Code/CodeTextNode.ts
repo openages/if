@@ -20,8 +20,12 @@ export default class CodeTextNode extends TextNode {
 		return 'code_text'
 	}
 
-	static clone(node: CodeTextNode) {
-		return new CodeTextNode({ text: node.__text, color: node.__color, node_key: node.__key })
+	static clone(node: CodeTextNode, new_key?: boolean) {
+		return new CodeTextNode({
+			text: node.__text,
+			color: node.__color,
+			node_key: new_key ? undefined : node.__key
+		})
 	}
 
 	static importJSON(serializedNode: SerializedCodeTextNode, update?: boolean) {

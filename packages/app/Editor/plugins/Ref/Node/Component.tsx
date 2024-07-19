@@ -1,8 +1,9 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useMemo, useState } from 'react'
 
-import { Emoji, LeftIcon, ModuleIcon } from '@/components'
+import { ModuleIcon } from '@/components'
+import { getTodoText } from '@/utils/editor'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection'
 import { CheckSquare, Square } from '@phosphor-icons/react'
@@ -25,6 +26,16 @@ const Index = (props: IPropsRef) => {
 
 		return () => x.off()
 	}, [editor, node_key, module, id])
+
+	const text = useMemo(() => {
+		if (!item.text) return ''
+
+		if (module === 'todo') {
+			return getTodoText(item.text)
+		}
+
+		return item.text
+	}, [module, item.text])
 
 	const onClick = useMemoizedFn(x.onEdit)
 
@@ -84,7 +95,7 @@ const Index = (props: IPropsRef) => {
 							type={module as App.ModuleType}
 						></ModuleIcon>
 					</If>
-					<span className={$cx(styles.name)}>{item?.text || id}</span>
+					<span className={$cx(styles.name)}>{text || id}</span>
 				</When>
 			</Choose>
 		</span>

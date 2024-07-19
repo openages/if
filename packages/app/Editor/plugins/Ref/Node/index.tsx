@@ -26,8 +26,12 @@ export default class RefNode extends DecoratorNode<JSX.Element> {
 		return 'ref'
 	}
 
-	static clone(node: RefNode) {
-		return new RefNode({ module: node.__module as IPropsRef['module'], id: node.__id, node_key: node.__key })
+	static clone(node: RefNode, new_key?: boolean) {
+		return new RefNode({
+			module: node.__module as IPropsRef['module'],
+			id: node.__id,
+			node_key: new_key ? undefined : node.__key
+		})
 	}
 
 	static importDOM(): DOMConversionMap | null {

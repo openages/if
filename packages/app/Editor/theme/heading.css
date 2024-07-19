@@ -31,6 +31,7 @@
 
 		.__editor_heading_h1,
 		.__editor_heading_h2 {
+			padding-bottom: 0.18em;
 			margin-block-start: 1.2em;
 			margin-block-end: 0.6em;
 			border-bottom: var(--border);
@@ -39,7 +40,7 @@
 		.__editor_heading_h3,
 		.__editor_heading_h4 {
 			line-height: 1;
-			margin-block-start: 1.62em;
+			margin-block-start: 1.8em;
 		}
 
 		.__editor_heading_h5,

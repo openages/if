@@ -13,8 +13,8 @@ export default class TableRowNode extends ElementNode {
 		return 'table_row'
 	}
 
-	static clone(node: TableRowNode) {
-		return new TableRowNode(node.__key)
+	static clone(node: TableRowNode, new_key?: boolean) {
+		return new TableRowNode(new_key ? undefined : node.__key)
 	}
 
 	static importDOM(): DOMConversionMap {

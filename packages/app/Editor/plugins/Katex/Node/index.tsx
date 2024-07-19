@@ -28,8 +28,12 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 		return 'katex'
 	}
 
-	static clone(node: KatexNode) {
-		return new KatexNode({ value: node.__value, inline: node.__inline, node_key: node.__key })
+	static clone(node: KatexNode, new_key?: boolean) {
+		return new KatexNode({
+			value: node.__value,
+			inline: node.__inline,
+			node_key: new_key ? undefined : node.__key
+		})
 	}
 
 	static importDOM(): DOMConversionMap | null {

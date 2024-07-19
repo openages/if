@@ -27,8 +27,8 @@ export default class MermaidNode extends DecoratorNode<JSX.Element> {
 		return 'mermaid'
 	}
 
-	static clone(node: MermaidNode) {
-		return new MermaidNode({ value: node.__value, node_key: node.__key })
+	static clone(node: MermaidNode, new_key?: boolean) {
+		return new MermaidNode({ value: node.__value, node_key: new_key ? undefined : node.__key })
 	}
 
 	static importDOM(): DOMConversionMap | null {

@@ -50,7 +50,9 @@ export default class Index {
 		const parent = this.editor.getRootElement().parentElement
 		const placeholer = parent.querySelector('.__editor_placeholder') as HTMLDivElement
 
-		placeholer.classList.add('__editor_hidden')
+		if (placeholer && this.editor.getEditorState().read(() => $getRoot().getTextContentSize())) {
+			placeholer.classList.add('__editor_hidden')
+		}
 
 		const docs = await $db.collections[this.collection].find({ selector: { file_id: this.id } }).exec()
 		const items = getDocItemsData(docs)

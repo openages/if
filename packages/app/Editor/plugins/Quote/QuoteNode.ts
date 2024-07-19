@@ -15,8 +15,8 @@ export default class QuoteNode extends ElementNode {
 		return 'quote'
 	}
 
-	static clone(node: QuoteNode) {
-		return new QuoteNode(node.__key)
+	static clone(node: QuoteNode, new_key?: boolean) {
+		return new QuoteNode(new_key ? undefined : node.__key)
 	}
 
 	static importDOM(): DOMConversionMap {

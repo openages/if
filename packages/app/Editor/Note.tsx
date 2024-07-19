@@ -17,7 +17,6 @@ import {
 	Code,
 	CodeActions,
 	Count,
-	DataLoader,
 	Divider,
 	Hover,
 	Image,
@@ -25,6 +24,7 @@ import {
 	LinkEditor,
 	Mermaid,
 	Navigation,
+	NoteLoader,
 	Options,
 	Picker,
 	Quote,
@@ -59,7 +59,7 @@ const Index = () => {
 				<TabIndentationPlugin />
 
 				<Watcher />
-				<DataLoader collection='note_items' />
+				<NoteLoader collection='note_items' />
 				<Settings />
 				<Hover md />
 				<Navigation />

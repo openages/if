@@ -1,6 +1,7 @@
 import type { Klass, LexicalNode, Transform, LexicalEditor, DOMExportOutput } from 'lexical'
-import type { IPropsUpdater } from './plugins/_Updater_/types'
+import type { IPropsUpdater } from './plugins/_TextLoader_/types'
 import type { IPropsLinkEditor } from './plugins/LinkEditor/types'
+import type { DOMAttributes } from 'react'
 
 export interface IPropsModal {
 	node_key?: string
@@ -33,4 +34,5 @@ export interface IPropsText extends IPropsUpdater, IPropsLinkEditor {
 	placeholder?: string
 	placeholder_classname?: HTMLDivElement['className']
 	setRef?: (v: HTMLDivElement) => void
+	onContextMenu?: DOMAttributes<HTMLDivElement>['onContextMenu']
 }

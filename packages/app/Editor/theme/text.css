@@ -16,11 +16,17 @@
 			text-decoration: underline;
 		}
 
-		.__editor_text_code {
-			padding: 2px 4px;
+		code[data-lexical-text] {
+			display: inline-block;
+			padding: 0 0.3em;
 			border-radius: var(--radius_small);
 			background-color: var(--color_bg_2);
-			font-size: 0.81em;
+			vertical-align: 0.12em;
+			font-size: 0.72em;
+
+			span {
+				font-family: 'CascadiaCode';
+			}
 		}
 	}
 }

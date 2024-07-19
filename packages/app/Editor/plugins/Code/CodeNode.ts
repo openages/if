@@ -42,8 +42,8 @@ export default class CodeNode extends ElementNode {
 		return 'code'
 	}
 
-	static clone(node: CodeNode) {
-		return new CodeNode({ lang: node.__lang, node_key: node.__key })
+	static clone(node: CodeNode, new_key?: boolean) {
+		return new CodeNode({ lang: node.__lang, node_key: new_key ? undefined : node.__key })
 	}
 
 	static importDOM(): DOMConversionMap {

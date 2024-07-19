@@ -20,8 +20,8 @@ export default class ToggleBtnNode extends DecoratorNode<JSX.Element> {
 		return 'toggle_btn'
 	}
 
-	static clone(node: ToggleBtnNode) {
-		return new ToggleBtnNode(node.__key)
+	static clone(node: ToggleBtnNode, new_key?: boolean) {
+		return new ToggleBtnNode(new_key ? undefined : node.__key)
 	}
 
 	static importDOM(): DOMConversionMap | null {

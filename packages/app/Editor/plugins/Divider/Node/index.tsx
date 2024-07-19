@@ -17,8 +17,8 @@ export default class DividerNode extends DecoratorNode<JSX.Element> {
 		return 'divider'
 	}
 
-	static clone(node: DividerNode) {
-		return new DividerNode(node.__key)
+	static clone(node: DividerNode, new_key?: boolean) {
+		return new DividerNode(new_key ? undefined : node.__key)
 	}
 
 	static importDOM(): DOMConversionMap | null {

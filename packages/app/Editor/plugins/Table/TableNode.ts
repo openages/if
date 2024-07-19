@@ -32,8 +32,8 @@ export default class TableNode extends ElementNode {
 		return 'table'
 	}
 
-	static clone(node: TableNode) {
-		return new TableNode({ cols: node.__cols, node_key: node.__key })
+	static clone(node: TableNode, new_key?: boolean) {
+		return new TableNode({ cols: node.__cols, node_key: new_key ? undefined : node.__key })
 	}
 
 	static importDOM(): DOMConversionMap {

@@ -1,6 +1,8 @@
 import { useMemoizedFn } from 'ahooks'
+import { useMemo } from 'react'
 
 import { Emoji, LeftIcon } from '@/components'
+import { getTodoText } from '@/utils/editor'
 
 import type { Todo } from '@/types'
 import type { IPropsItem } from '../../types'
@@ -10,6 +12,14 @@ const Index = (props: IPropsItem) => {
 	const target = item.item as Todo.Todo
 	const file = item.file
 
+	const text = useMemo(() => {
+		if (module === 'todo') {
+			return getTodoText(target.text)
+		}
+
+		return target.text
+	}, [module, target])
+
 	const onClick = useMemoizedFn(() => onItem(module, index))
 
 	return (
@@ -17,7 +27,7 @@ const Index = (props: IPropsItem) => {
 			className='target_item w_100 border_box cursor_point transition_normal flex flex_column justify_center'
 			onClick={onClick}
 		>
-			<div className='text_wrap'>{target.text}</div>
+			<div className='text_wrap'>{text}</div>
 			<div className='file_wrap flex align_center mr_8'>
 				<div className='icon_wrap flex justify_center align_center'>
 					<Choose>

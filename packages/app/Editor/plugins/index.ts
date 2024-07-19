@@ -1,6 +1,6 @@
 export { default as Watcher } from './__Watcher__'
-export { default as DataLoader } from './_DataLoader_'
-export { default as Updater } from './_Updater_'
+export { default as NoteLoader } from './_NoteLoader_'
+export { default as TextLoader } from './_TextLoader_'
 export { default as Settings } from './Settings'
 export { default as Hover } from './Hover'
 

@@ -17,8 +17,8 @@ export default class ToggleNode extends ElementNode {
 		return 'toggle'
 	}
 
-	static clone(node: ToggleNode) {
-		return new ToggleNode({ open: node.__open, node_key: node.__key })
+	static clone(node: ToggleNode, new_key?: boolean) {
+		return new ToggleNode({ open: node.__open, node_key: new_key ? undefined : node.__key })
 	}
 
 	static importDOM(): DOMConversionMap<HTMLDetailsElement> {

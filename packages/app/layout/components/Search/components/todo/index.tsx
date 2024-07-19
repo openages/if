@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Emoji, LeftIcon } from '@/components'
+import { getTodoText } from '@/utils/editor'
 import { ArrowBendDownLeft } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -30,7 +31,7 @@ const Index = (props: IProps) => {
 		hover && changeSearchIndex(index)
 	}, [hover])
 
-	const array_text = item.text.split(text)
+	const array_text = useMemo(() => getTodoText(item.text).split(text), [item.text, text])
 
 	const angle = useMemo(() => setting.angles.find(i => i.id === item.angle_id), [item.angle_id, setting.angles])
 

@@ -22,8 +22,8 @@ export default class NavigationNode extends DecoratorNode<JSX.Element> {
 		return 'navigation'
 	}
 
-	static clone(node: NavigationNode) {
-		return new NavigationNode(node.__key)
+	static clone(node: NavigationNode, new_key?: boolean) {
+		return new NavigationNode(new_key ? undefined : node.__key)
 	}
 
 	static importDOM(): DOMConversionMap {

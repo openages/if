@@ -38,7 +38,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 		return 'image'
 	}
 
-	static clone(node: ImageNode) {
+	static clone(node: ImageNode, new_key?: boolean) {
 		return new ImageNode({
 			src: node.__src,
 			width: node.__width,
@@ -47,7 +47,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 			align: node.__align,
 			object_fit: node.__object_fit,
 			inline: node.__inline,
-			node_key: node.__key
+			node_key: new_key ? undefined : node.__key
 		})
 	}
 

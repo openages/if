@@ -122,9 +122,9 @@ export default class Index {
 		return false
 	}
 
-	onRootTranform(node: RootNode) {
-		if (!node.getChildren().length) {
-			node.append($createParagraphNode())
+	onRootTranform(root: RootNode) {
+		if (!root.getChildren().length) {
+			root.append($createParagraphNode())
 		}
 	}
 
