@@ -1,10 +1,12 @@
 import { useMemoizedFn } from 'ahooks'
 import { ConfigProvider, Dropdown } from 'antd'
 
+import { todo } from '@/appdata'
+import { useText, useTextChange, Text } from '@/Editor'
 import { CSS } from '@dnd-kit/utilities'
 import { CheckSquare, DotsSixVertical, Square } from '@phosphor-icons/react'
 
-import { useChildrenContextMenu, useInput } from '../../hooks'
+import { useChildrenContextMenu } from '../../hooks'
 import styles from './index.css'
 
 import type { IPropsChildrenItem } from '../../types'
@@ -35,10 +37,11 @@ const Index = (props: IPropsChildrenItem) => {
 		}
 	)
 
-	const { input, onInput } = useInput({
-		value: text,
-		update: useMemoizedFn(textContent => updateChildren(children_index, { text: textContent }))
+	const { ref_editor, onChange, setEditor, setRef } = useText({
+		update: v => updateChildren(children_index, { text: v })
 	})
+
+	useTextChange({ ref_editor, text })
 
 	const onCheck = useMemoizedFn(() => {
 		updateChildren(children_index, { status: status === 'unchecked' ? 'checked' : 'unchecked' })
@@ -127,14 +130,15 @@ const Index = (props: IPropsChildrenItem) => {
 					overlayStyle={{ width: 102 }}
 					menu={{ items: context_menu, onClick: onContextMenu }}
 				>
-					<div
+					<Text
 						id={`${useByDetail ? 'detail_' : ''}todo_${id}`}
 						className='text_wrap'
-						ref={input}
-						contentEditable='plaintext-only'
-						onInput={onInput}
+						max_length={todo.text_max_length}
+						onChange={onChange}
+						setEditor={setEditor}
 						onKeyDown={onKeyDown}
-					></div>
+						setRef={setRef}
+					></Text>
 				</Dropdown>
 			</ConfigProvider>
 		</div>

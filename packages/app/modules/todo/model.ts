@@ -437,6 +437,8 @@ export default class Index {
 						`${this.visible_detail_modal ? 'detail_' : ''}todo_${target.id}`
 					)
 
+					console.log(`${this.visible_detail_modal ? 'detail_' : ''}todo_${target.id}`, el)
+
 					if (el) {
 						;(el.querySelector('.__editor_root') as HTMLDivElement)?.focus()
 					}

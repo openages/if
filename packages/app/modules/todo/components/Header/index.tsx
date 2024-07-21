@@ -90,7 +90,7 @@ const Index = (props: IPropsHeader) => {
 				'limited_content_wrap border_box flex justify_between align_center relative',
 				styles._local,
 				mode !== 'list' && styles.other_mode,
-				desc && styles.desc
+				editor_size && styles.desc
 			)}
 		>
 			{(items_filter_tags.length > 0 || items_sort_param) && (

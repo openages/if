@@ -55,8 +55,8 @@
 			}
 
 			.drag_wrap {
-				top: 7px;
-				left: -14px;
+				top: 7.8px;
+				left: -12px;
 				width: 12px;
 				height: 12px;
 				border-radius: var(--radius_small_1);
