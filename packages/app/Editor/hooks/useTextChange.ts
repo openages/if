@@ -23,14 +23,15 @@ export default (args: Args) => {
 
 		if (!editor || !text) return
 
-		const new_state = JSON.parse(text)
-		const editor_state = editor.getEditorState().toJSON()
+		const editor_state = JSON.stringify(editor.getEditorState().toJSON())
 
-		if (deepEqual(new_state, editor_state)) return
+		if (deepEqual(text, editor_state)) return
 
-		editor.setEditorState(parseEditorState(new_state, editor))
+		editor.setEditorState(parseEditorState(JSON.parse(text), editor))
 
 		setEditorSize($getEditorSize(editor))
+
+		editor.focus()
 	}, [text])
 
 	return { editor_size }

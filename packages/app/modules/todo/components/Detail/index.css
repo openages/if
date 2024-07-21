@@ -141,7 +141,6 @@
 					padding: 0 calc(var(--padding) - 2px);
 					padding-top: 8px;
 					padding-bottom: 8px;
-					margin-bottom: 12px;
 
 					&::before,
 					&::after {
@@ -170,7 +169,6 @@
 
 			.btn_insert {
 				height: 36px;
-				margin-bottom: 12px;
 				border-radius: var(--radius_large);
 				background-color: var(--color_bg_1);
 
@@ -198,7 +196,7 @@
 			}
 
 			.btn_remark_modal {
-				top: 0;
+				top: 0.9em;
 				right: 18px;
 				width: 21px;
 				height: 21px;
@@ -215,4 +213,9 @@
 			}
 		}
 	}
+}
+
+.modal {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
 }

@@ -1,5 +1,10 @@
 ._local {
 	padding: 0 var(--padding);
+	color: rgba(var(--color_text_rgb), 0.6);
+
+	&.in_modal {
+		color: var(--color_text);
+	}
 
 	:global {
 		.textarea {
@@ -8,16 +13,12 @@
 			padding: 0;
 			border-radius: 0;
 			outline: none;
-			color: rgba(var(--color_text_rgb), 0.6) !important;
 			white-space: pre-wrap;
 			font-size: 12px;
+		}
 
-			&:empty {
-				&::after {
-					color: var(--color_text_light);
-					content: attr(data-placeholder);
-				}
-			}
+		.textarea_placeholder {
+			top: 0;
 		}
 	}
 }

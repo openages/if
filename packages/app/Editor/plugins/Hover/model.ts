@@ -38,7 +38,7 @@ import { $isToggleBodyNode, $isToggleBtnNode, $isToggleHeadNode, $isToggleNode }
 import type KatexNode from '../Katex/Node'
 import type { DecoratorNode, LexicalEditor, LexicalNode } from 'lexical'
 import type { DragEvent as ReactDragEvent } from 'react'
-import type { ListNode } from '@lexical/list'
+import type { ListItemNode, ListNode } from '@lexical/list'
 
 @injectable()
 export default class Index {
@@ -461,10 +461,7 @@ export default class Index {
 			let margin_left = 0
 			let margin_top = 6
 
-			if (
-				$isListItemNode(node) &&
-				($getMatchingParent(node, $isListNode) as ListNode).getListType() !== 'check'
-			) {
+			if ($isListItemNode(node)) {
 				margin_left = 18
 			}
 

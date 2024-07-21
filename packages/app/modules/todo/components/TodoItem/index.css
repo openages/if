@@ -165,7 +165,7 @@
 
 		:global {
 			.dot_wrap {
-				top: 6px;
+				top: 7px;
 				left: -9px;
 				width: 14px;
 				height: 14px;
@@ -233,18 +233,24 @@
 				outline: none;
 
 				&.has_children {
-					&::after {
+					&::before {
+						position: absolute;
+						top: 4px;
+						left: 0;
 						height: 14px;
 						line-height: 12px;
 						box-sizing: border-box;
 						padding: 0 3px;
-						margin-left: 3px;
 						border: var(--border);
 						border-radius: 8px;
 						background-color: var(--color_bg_1);
 						content: attr(data-children);
-						vertical-align: 1.6px;
+						text-indent: unset;
 						font-size: 10px;
+					}
+
+					.__editor_root {
+						text-indent: 30px;
 					}
 				}
 
@@ -267,6 +273,10 @@
 						vertical-align: 1.6px;
 						font-size: 10px;
 					}
+				}
+
+				.__editor_root {
+					transition: text-indent ease 0.18s;
 				}
 			}
 		}

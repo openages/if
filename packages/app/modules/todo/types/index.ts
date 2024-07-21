@@ -282,5 +282,6 @@ export interface IPropsDetail {
 
 export interface IPropsDetailRemark {
 	remark: Todo.Todo['remark']
+	in_modal?: boolean
 	updateRemark: (v: Todo.Todo['remark']) => void
 }

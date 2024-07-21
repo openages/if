@@ -50,5 +50,8 @@ export const text_nodes = [
 	RefNode,
 
 	AutoLinkNode,
-	LinkNode
+	LinkNode,
+	HeadingNode,
+	ListNode,
+	ListItemNode
 ] as ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>

@@ -1,14 +1,17 @@
+import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary'
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
+import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
+import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin'
 
 import { Placeholder } from './components'
 import { text_nodes } from './nodes'
 import { AutoLink, LinkEditor, Picker, Ref, TextBar, TextLoader, Watcher } from './plugins'
-import { text_style, token } from './theme'
+import { linebreak_style, text_style, token } from './theme'
 import { onError } from './utils'
 
 import type { IPropsText } from './types'
@@ -20,6 +23,7 @@ const Index = (props: IPropsText) => {
 		placeholder,
 		placeholder_classname,
 		max_length,
+		linebreak,
 		show_on_top,
 		onChange,
 		setEditor,
@@ -40,7 +44,7 @@ const Index = (props: IPropsText) => {
 	return (
 		<div
 			id={id}
-			className={$cx('w_100 relative', ...text_style, className)}
+			className={$cx('w_100 relative', ...text_style, linebreak && linebreak_style, className)}
 			ref={setRef}
 			onContextMenu={onContextMenu}
 		>
@@ -48,11 +52,14 @@ const Index = (props: IPropsText) => {
 				<RichTextPlugin {...props_rich_text} />
 				<HistoryPlugin />
 				<LinkPlugin />
+				<ListPlugin />
+				<CheckListPlugin />
+				<TabIndentationPlugin />
 
 				<Watcher />
-				<TextLoader {...{ max_length, onChange, setEditor, onKeyDown }} />
+				<TextLoader {...{ max_length, linebreak, onChange, setEditor, onKeyDown }} />
 				<Picker text_mode />
-				<TextBar only_text />
+				<TextBar only_text={!linebreak} />
 
 				<AutoLink />
 				<LinkEditor show_on_top={show_on_top} />

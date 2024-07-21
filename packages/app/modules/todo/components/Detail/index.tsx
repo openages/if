@@ -143,6 +143,7 @@ const Index = (props: IPropsDetail) => {
 	}
 
 	const props_remark_modal = {
+		bodyClassName: styles.modal,
 		open: visible_remark_modal,
 		title: t('translation:todo.Detail.remark.title'),
 		width: 540,
@@ -367,7 +368,7 @@ const Index = (props: IPropsDetail) => {
 						)}
 					</div>
 					<Modal {...props_remark_modal}>
-						<Remark remark={remark} updateRemark={updateRemark}></Remark>
+						<Remark remark={remark} in_modal updateRemark={updateRemark}></Remark>
 					</Modal>
 					<div className='remark_wrap w_100 relative'>
 						<div

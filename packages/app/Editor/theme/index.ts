@@ -1,2 +1,2 @@
 export { default as token } from './token'
-export { note_style, text_style } from './style'
+export { note_style, text_style, linebreak_style } from './style'

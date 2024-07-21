@@ -55,6 +55,8 @@ const Index = () => {
 				<Transform />
 				<AutoLink />
 				<LinkPlugin />
+				<ListPlugin />
+				<CheckListPlugin />
 				<TabIndentationPlugin />
 
 				<Watcher />
@@ -66,8 +68,6 @@ const Index = () => {
 				<Count />
 				<Picker />
 				<TextBar md />
-				<ListPlugin />
-				<CheckListPlugin />
 
 				<Image />
 				<LinkEditor />

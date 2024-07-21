@@ -13,6 +13,7 @@ interface IProps {
 	children: ReactNode
 	open: boolean
 	className?: HTMLDivElement['className']
+	bodyClassName?: HTMLDivElement['className']
 	title?: string | number
 	width?: string | number
 	minHeight?: string | number
@@ -31,6 +32,7 @@ const Index = (props: IProps) => {
 		children,
 		open,
 		className,
+		bodyClassName,
 		title,
 		width,
 		minHeight,
@@ -135,8 +137,8 @@ const Index = (props: IProps) => {
 							<div
 								className={$cx(
 									styles.body,
-									className,
 									disableOverflow && styles.disableOverflow,
+									bodyClassName,
 									'if_modal_body border_box flex flex_column'
 								)}
 								ref={getRef}

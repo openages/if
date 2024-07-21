@@ -11,6 +11,7 @@ import type { LexicalEditor } from 'lexical'
 export default class Index {
 	editor = null as LexicalEditor
 	max_length = 0
+	linebreak = false
 
 	onChange: IPropsUpdater['onChange']
 	onKeyDown: IPropsUpdater['onKeyDown']
@@ -21,11 +22,13 @@ export default class Index {
 	init(
 		editor: Index['editor'],
 		max_length: Index['max_length'],
+		linebreak: Index['linebreak'],
 		onChange: Index['onChange'],
 		onKeyDown: Index['onKeyDown']
 	) {
 		this.editor = editor
 		this.max_length = max_length
+		this.linebreak = linebreak
 
 		this.onChange = onChange
 
@@ -34,7 +37,10 @@ export default class Index {
 		}
 
 		this.on()
-		this.addKeyDownLisnter()
+
+		if (!this.linebreak) {
+			this.addKeyDownLisnter()
+		}
 	}
 
 	onUpdate(args: Lexical.ArgsUpdateListener) {

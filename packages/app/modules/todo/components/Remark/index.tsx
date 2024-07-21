@@ -1,29 +1,30 @@
 import { useTranslation } from 'react-i18next'
 
-import { useInput } from '@/modules/todo/hooks'
+import { useText, useTextChange, Text } from '@/Editor'
 
 import styles from './index.css'
 
 import type { IPropsDetailRemark } from '@/modules/todo/types'
 
 const Index = (props: IPropsDetailRemark) => {
-	const { remark, updateRemark } = props
+	const { remark, in_modal, updateRemark } = props
 	const { t } = useTranslation()
-	const { input, onInput } = useInput({
-		value: remark,
-		max_length: 3000,
-		update: updateRemark
-	})
+	const { ref_editor, onChange, setEditor, setRef } = useText({ update: updateRemark })
+
+	useTextChange({ ref_editor, text: remark })
 
 	return (
-		<div className={$cx('w_100 border_box relative', styles._local)}>
-			<div
+		<div className={$cx('w_100 border_box relative', styles._local, in_modal && styles.in_modal)}>
+			<Text
 				className='textarea w_100 border_box'
-				contentEditable='plaintext-only'
-				data-placeholder={t('translation:todo.Detail.remark.placeholder')}
-				ref={input}
-				onInput={onInput}
-			></div>
+				placeholder_classname='textarea_placeholder'
+				max_length={1500}
+				linebreak
+				placeholder={t('translation:todo.Detail.remark.placeholder')}
+				onChange={onChange}
+				setEditor={setEditor}
+				setRef={setRef}
+			></Text>
 		</div>
 	)
 }

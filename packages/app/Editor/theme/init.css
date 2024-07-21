@@ -71,6 +71,15 @@
 }
 
 .init_text {
+	&.linebreak {
+		:global {
+			p {
+				margin-block-start: var(--editor_padding_y);
+				margin-block-end: var(--editor_padding_y);
+			}
+		}
+	}
+
 	:global {
 		div[contenteditable='true'] {
 			outline: none;

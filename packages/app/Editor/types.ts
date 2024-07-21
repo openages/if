@@ -33,6 +33,7 @@ export interface IPropsText extends IPropsUpdater, IPropsLinkEditor {
 	className?: HTMLDivElement['className']
 	placeholder?: string
 	placeholder_classname?: HTMLDivElement['className']
+	linebreak?: boolean
 	setRef?: (v: HTMLDivElement) => void
 	onContextMenu?: DOMAttributes<HTMLDivElement>['onContextMenu']
 }
