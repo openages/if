@@ -1,4 +1,4 @@
-import { $getRoot, COMMAND_PRIORITY_LOW, KEY_DOWN_COMMAND, RootNode, UNDO_COMMAND } from 'lexical'
+import { $getRoot, COMMAND_PRIORITY_LOW, KEY_DOWN_COMMAND, UNDO_COMMAND } from 'lexical'
 import { debounce } from 'lodash-es'
 
 import { mergeRegister } from '@lexical/utils'
@@ -6,7 +6,7 @@ import { mergeRegister } from '@lexical/utils'
 import type { IPropsUpdater } from './types'
 
 import type { Lexical } from '@/types'
-import type { LexicalEditor, ParagraphNode } from 'lexical'
+import type { LexicalEditor } from 'lexical'
 
 export default class Index {
 	editor = null as LexicalEditor
@@ -31,11 +31,10 @@ export default class Index {
 
 		if (onKeyDown) {
 			this.onKeyDown = onKeyDown
-
-			this.addKeyDownLisnter()
 		}
 
 		this.on()
+		this.addKeyDownLisnter()
 	}
 
 	onUpdate(args: Lexical.ArgsUpdateListener) {
@@ -58,9 +57,15 @@ export default class Index {
 		this.lisnter = this.editor.registerCommand(
 			KEY_DOWN_COMMAND,
 			e => {
-				this.onKeyDown(e)
+				this.onKeyDown?.(e)
 
-				return true
+				if (e.key === 'Enter') {
+					e.preventDefault()
+
+					return true
+				}
+
+				return false
 			},
 			COMMAND_PRIORITY_LOW
 		)

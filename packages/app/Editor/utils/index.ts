@@ -23,6 +23,7 @@ export { default as $updateParagraphNodeProperties } from './$updateParagraphNod
 export { default as $getHeadingLevel } from './$getHeadingLevel'
 export { default as $isEmptyParagraph } from './$isEmptyParagraph'
 export { default as $focus } from './$focus'
+export { default as $getEditorSize } from './$getEditorSize'
 export { default as mermaidRender } from './mermaidRender'
 export { default as indexBy } from './indexBy'
 export { default as transformersByType } from './transformersByType'

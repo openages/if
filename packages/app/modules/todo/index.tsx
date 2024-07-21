@@ -43,6 +43,7 @@ const Index = ({ id }: IProps) => {
 	const relations = $copy(x.setting?.setting?.relations || [])
 	const current_detail_item = $copy(x.current_detail_item)
 	const search_mode = Boolean(x.table_selector.id)
+	const updateSetting = useMemoizedFn(x.updateSetting)
 
 	useLayoutEffect(() => {
 		x.init({ id })
@@ -77,7 +78,8 @@ const Index = ({ id }: IProps) => {
 		setItemsSortParam: useMemoizedFn(v => (x.items_sort_param = v)),
 		setItemsFilterTags: useMemoizedFn(v => (x.items_filter_tags = v)),
 		toggleTableFilter: useMemoizedFn(() => (x.visible_table_filter = !x.visible_table_filter)),
-		resetSearchMode: useMemoizedFn(x.resetSearchMode)
+		resetSearchMode: useMemoizedFn(x.resetSearchMode),
+		updateSetting
 	}
 
 	const props_tabs: IPropsTabs = {
@@ -151,7 +153,7 @@ const Index = ({ id }: IProps) => {
 		visible_settings_modal: x.visible_settings_modal,
 		setting: { ...$copy(x.setting?.setting), ...$copy(x.file.data) },
 		closeSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = false)),
-		updateSetting: useMemoizedFn(x.updateSetting),
+		updateSetting,
 		removeAngle: useMemoizedFn(x.removeAngle),
 		removeTag: useMemoizedFn(x.removeTag)
 	}

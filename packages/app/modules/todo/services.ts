@@ -200,7 +200,7 @@ export const updateTodoSetting = async (args: ArgsUpdateTodoData) => {
 	} else {
 		const todo_setting = $copy(setting)
 
-		todo_setting.setting = { ...todo_setting.setting, ...omit(values, 'icon_info') }
+		todo_setting.setting = { ...todo_setting.setting, ...omit(values, 'icon_info'), ...changed_values }
 
 		setTodo(todo_setting)
 

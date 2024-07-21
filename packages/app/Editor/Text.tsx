@@ -6,7 +6,6 @@ import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 
 import { Placeholder } from './components'
-import styles from './index.css'
 import { text_nodes } from './nodes'
 import { AutoLink, LinkEditor, Picker, Ref, TextBar, TextLoader, Watcher } from './plugins'
 import { text_style, token } from './theme'
@@ -41,7 +40,7 @@ const Index = (props: IPropsText) => {
 	return (
 		<div
 			id={id}
-			className={$cx('w_100 relative', styles._local, ...text_style, className)}
+			className={$cx('w_100 relative', ...text_style, className)}
 			ref={setRef}
 			onContextMenu={onContextMenu}
 		>

@@ -3,8 +3,10 @@ import { Drawer, Tooltip } from 'antd'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { todo } from '@/appdata'
 import { Modal } from '@/components'
 import { useStackSelector } from '@/context/stack'
+import { useText, useTextChange, Text } from '@/Editor'
 import { getItemStatus } from '@/utils/modules/todo'
 import {
 	ArrowsOutSimple,
@@ -23,7 +25,6 @@ import {
 	X
 } from '@phosphor-icons/react'
 
-import { useInput } from '../../hooks'
 import Children from '../Children'
 import Cycle from '../Cycle'
 import DateTime from '../DateTime'
@@ -73,17 +74,11 @@ const Index = (props: IPropsDetail) => {
 		remark
 	} = item
 
-	const { input, onInput } = useInput({
-		value: text,
-		update: useMemoizedFn(textContent =>
-			update({
-				type: 'parent',
-				index: index,
-				dimension_id: dimension_id,
-				value: { text: textContent }
-			})
-		)
+	const { ref_editor, onChange, setEditor, setRef } = useText({
+		update: v => update({ type: 'parent', index, dimension_id, value: { text: v } })
 	})
+
+	useTextChange({ ref_editor, text })
 
 	const {
 		updateValues,
@@ -227,12 +222,13 @@ const Index = (props: IPropsDetail) => {
 			</div>
 			{item.id && (
 				<div className='detail_item_wrap w_100 border_box flex flex_column'>
-					<div
+					<Text
 						className='todo_text_wrap w_100 border_box'
-						contentEditable='plaintext-only'
-						ref={input}
-						onInput={onInput}
-					></div>
+						max_length={todo.text_max_length}
+						onChange={onChange}
+						setEditor={setEditor}
+						setRef={setRef}
+					></Text>
 					<div className='option_items w_100 border_box flex flex_column'>
 						<div className='option_item w_100 border_box flex align_center'>
 							<div className='name_wrap flex align_center'>

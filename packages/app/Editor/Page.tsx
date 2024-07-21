@@ -6,14 +6,13 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 
 import { Placeholder } from './components'
-import styles from './index.css'
 import { note_nodes } from './nodes'
 import { AutoLink, Image, Katex, LinkEditor, Picker } from './plugins'
 import { onError } from './utils'
 
 const Index = () => {
 	return (
-		<div className={$cx('w_100 relative', styles._local)}>
+		<div className={$cx('w_100 relative')}>
 			<LexicalComposer initialConfig={{ namespace: 'editor', nodes: note_nodes, onError }}>
 				<RichTextPlugin
 					contentEditable={<ContentEditable />}

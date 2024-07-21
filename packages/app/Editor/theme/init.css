@@ -1,5 +1,6 @@
 .init_note {
 	line-height: 1.8;
+	padding-bottom: 60vh;
 	font-size: 15px;
 
 	&.serif {

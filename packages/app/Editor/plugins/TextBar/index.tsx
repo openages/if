@@ -37,7 +37,7 @@ const Index = (props: IPropsTextBar) => {
 	const updatePosition = useMemoizedFn(x.updatePosition)
 
 	return (
-		<Popover open={x.visible} position={position} top updatePosition={updatePosition}>
+		<Popover open={x.visible} position={position} top z_index={3000} updatePosition={updatePosition}>
 			<Formats {...props_formats}></Formats>
 		</Popover>
 	)

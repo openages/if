@@ -42,6 +42,7 @@ export interface IPropsHeader
 	setItemsFilterTags: (v: Model['items_filter_tags']) => void
 	toggleTableFilter: () => void
 	resetSearchMode: Model['resetSearchMode']
+	updateSetting: Model['updateSetting']
 }
 
 export interface IPropsTabs {

@@ -18,11 +18,12 @@ interface IProps {
 	show_on_top?: boolean
 	className?: HTMLElement['className']
 	style?: CSSProperties
+	z_index?: number
 	updatePosition?: () => void
 }
 
 const Index = (props: IProps) => {
-	const { open, position, children, top, show_on_top, className, style, updatePosition } = props
+	const { open, position, children, top, show_on_top, className, style, z_index, updatePosition } = props
 	const [exist, setExsit] = useState(false)
 	const [oveflow, setOverflow] = useState(0)
 	const id = useStackSelector(v => v.id)
@@ -85,14 +86,17 @@ const Index = (props: IProps) => {
 			{open && (
 				<motion.div
 					className={$cx(
-						'fixed z_index_100',
+						'fixed',
 						styles._local,
 						top && styles.top,
 						show_on_top && styles.show_on_top,
 						oveflow && styles.oveflow,
 						className
 					)}
-					style={style ?? { top: position.y, left: position.x - oveflow }}
+					style={{
+						zIndex: z_index ?? 100,
+						...(style ?? { top: position.y, left: position.x - oveflow })
+					}}
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}

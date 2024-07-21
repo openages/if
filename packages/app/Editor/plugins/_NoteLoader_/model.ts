@@ -4,6 +4,7 @@ import { injectable } from 'tsyringe'
 
 import {
 	$exportNodeToJson,
+	$getEditorSize,
 	$getMatchingParent,
 	$getRemovedParent,
 	$restoreNodeFromJson,
@@ -50,7 +51,7 @@ export default class Index {
 		const parent = this.editor.getRootElement().parentElement
 		const placeholer = parent.querySelector('.__editor_placeholder') as HTMLDivElement
 
-		if (placeholer && this.editor.getEditorState().read(() => $getRoot().getTextContentSize())) {
+		if (placeholer && $getEditorSize(this.editor)) {
 			placeholer.classList.add('__editor_hidden')
 		}
 

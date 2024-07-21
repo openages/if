@@ -310,12 +310,12 @@ export default class Index {
 		this.archive_counts = await queryArchivesCounts(this.id)
 	}
 
-	async updateSetting(changed_values: ArgsUpdateTodoData['changed_values'], values: ArgsUpdateTodoData['values']) {
+	async updateSetting(changed_values: ArgsUpdateTodoData['changed_values'], values?: ArgsUpdateTodoData['values']) {
 		await updateTodoSetting({
 			file_id: this.id,
 			setting: this.setting,
 			changed_values,
-			values,
+			values: values ?? { ...$copy(this.setting?.setting), ...$copy(this.file.data) },
 			setTodo: setting => {
 				this.setting = setting
 			}

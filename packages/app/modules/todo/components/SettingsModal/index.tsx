@@ -1,9 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
-import { Button, Form, Input, Select } from 'antd'
+import { Button, Form, Select } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { AnglesEditor, SettingsModal, TagsEditor } from '@/components'
+import { TextEditor } from '@/Editor/components'
 import { useLimits } from '@/hooks'
 import { cleanTodoItems } from '@/modules/todo/services'
 
@@ -13,7 +14,6 @@ import type { IPropsSettingsModal } from '../../types'
 import type { App } from '@/types'
 
 const { Item } = Form
-const { TextArea } = Input
 
 const Index = (props: IPropsSettingsModal) => {
 	const { id, visible_settings_modal, setting, closeSettingsModal, updateSetting, removeAngle, removeTag } = props
@@ -45,13 +45,12 @@ const Index = (props: IPropsSettingsModal) => {
 		<SettingsModal {...props_settings_modal}>
 			<div className='w_100 flex flex_column'>
 				<Item name='desc' label={t('translation:todo.SettingsModal.desc.label')}>
-					<TextArea
+					<TextEditor
 						className='desc_textarea'
+						placeholder_classname='desc_textarea_placeholder'
 						placeholder={t('translation:todo.SettingsModal.desc.placeholder')}
-						rows={3}
-						showCount
-						maxLength={limits.todo_list_desc_max_length}
-					></TextArea>
+						max_length={limits.todo_list_desc_max_length}
+					></TextEditor>
 				</Item>
 				<Item name='angles' label={t('translation:common.angles.label')}>
 					<AnglesEditor remove={removeAngle}></AnglesEditor>

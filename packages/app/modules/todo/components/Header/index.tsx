@@ -4,6 +4,8 @@ import { Shapes } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { Emoji } from '@/components'
+import { useText, useTextChange, Text } from '@/Editor'
+import { useLimits } from '@/hooks'
 import {
 	CaretDown,
 	CaretUp,
@@ -45,10 +47,18 @@ const Index = (props: IPropsHeader) => {
 		setItemsSortParam,
 		setItemsFilterTags,
 		toggleTableFilter,
-		resetSearchMode
+		resetSearchMode,
+		updateSetting
 	} = props
 
+	const limits = useLimits()
 	const { t } = useTranslation()
+
+	const { ref_editor, onChange, setEditor, setRef } = useText({
+		update: v => updateSetting({ desc: v })
+	})
+
+	const { editor_size } = useTextChange({ ref_editor, text: desc })
 
 	const { options_mode, options_menu, onModeContextMenu, onOptionsContextMenu } = useContextMenu({
 		tags,
@@ -142,9 +152,13 @@ const Index = (props: IPropsHeader) => {
 					</If>
 					<div className='name flex justify_between align_center'>{name}</div>
 				</div>
-				<If condition={mode === 'list' && !!desc}>
-					<span className='desc'>{desc}</span>
-				</If>
+				<Text
+					className={$cx('desc', (mode !== 'list' || !editor_size) && 'none')}
+					max_length={limits.todo_list_desc_max_length}
+					onChange={onChange}
+					setEditor={setEditor}
+					setRef={setRef}
+				></Text>
 			</div>
 			<div className='actions_wrap flex justify_end align_center'>
 				{search_mode && (

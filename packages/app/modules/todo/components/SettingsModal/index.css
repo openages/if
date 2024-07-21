@@ -1,15 +1,21 @@
 ._local {
 	:global {
 		.desc_textarea {
-			textarea {
-				resize: none;
-			}
+			overflow-y: scroll;
+			max-height: 150px;
+			line-height: var(--line_height);
+			padding: 9px 12px;
+			border: var(--border_dashed);
+			border-radius: var(--radius);
+			transition: border ease 0.18s;
 
-			.if-input-data-count {
-				top: -24px;
-				bottom: unset;
-				font-size: 12px;
+			&:focus-within {
+				border-color: var(--color_text);
 			}
+		}
+
+		.desc_textarea_placeholder {
+			top: 9px;
 		}
 
 		.angles_select {
