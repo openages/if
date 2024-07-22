@@ -42,6 +42,8 @@ export default class Index {
 		e.stopPropagation()
 
 		if (e.metaKey || e.ctrlKey) {
+			this.editor.dispatchCommand(SHOW_MODAL_COMMAND, { type: 'Ref', node_key: this.key })
+		} else {
 			let module: App.ModuleType
 			let file_id: string
 			let file: DirTree.Item
@@ -78,8 +80,6 @@ export default class Index {
 				await sleep(360)
 				await $app.Event.emit(`${module}/${file_id}/redirect`, this.id)
 			}
-		} else {
-			this.editor.dispatchCommand(SHOW_MODAL_COMMAND, { type: 'Ref', node_key: this.key })
 		}
 	}
 

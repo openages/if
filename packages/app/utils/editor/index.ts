@@ -1,1 +1,1 @@
-export { default as getTodoText } from './getTodoText'
+export { default as getEditorText } from './getEditorText'

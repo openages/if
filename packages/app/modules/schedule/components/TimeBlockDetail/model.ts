@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { getDocItemsData } from '@/utils'
+import { getEditorText } from '@/utils/editor'
 
 import type { Todo } from '@/types'
 
@@ -29,6 +30,10 @@ export default class Index {
 			})
 			.exec()
 
-		this.search_todos = getDocItemsData(docs) as Array<Todo.Todo>
+		this.search_todos = getDocItemsData(docs).map(item => {
+			item.text = getEditorText(item.text)
+
+			return item
+		}) as Array<Todo.Todo>
 	}
 }

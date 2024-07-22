@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useMemo, useState } from 'react'
 
 import { ModuleIcon } from '@/components'
-import { getTodoText } from '@/utils/editor'
+import { getEditorText } from '@/utils/editor'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection'
 import { CheckSquare, Square } from '@phosphor-icons/react'
@@ -31,7 +31,7 @@ const Index = (props: IPropsRef) => {
 		if (!item.text) return ''
 
 		if (module === 'todo') {
-			return getTodoText(item.text)
+			return getEditorText(item.text)
 		}
 
 		return item.text

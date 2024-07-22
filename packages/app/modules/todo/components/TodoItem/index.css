@@ -250,7 +250,13 @@
 					}
 
 					.__editor_root {
-						text-indent: 30px;
+						p {
+							text-indent: 30px;
+
+							> * {
+								text-indent: 0;
+							}
+						}
 					}
 				}
 

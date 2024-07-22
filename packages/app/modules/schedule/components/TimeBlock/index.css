@@ -299,6 +299,11 @@
 				}
 			}
 
+			.timeblock_placeholder {
+				top: 0;
+				font-weight: normal;
+			}
+
 			.time {
 				line-height: 1;
 				margin-top: 6px;

@@ -30,8 +30,6 @@ export default (args: Args) => {
 		editor.setEditorState(parseEditorState(JSON.parse(text), editor))
 
 		setEditorSize($getEditorSize(editor))
-
-		editor.focus()
 	}, [text])
 
 	return { editor_size }

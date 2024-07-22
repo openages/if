@@ -108,7 +108,14 @@ const Index = (props: IPropsSearch) => {
 	})
 
 	return (
-		<Modal className={styles._local} maskClosable disableOverflow width={420} open={open} onCancel={onClose}>
+		<Modal
+			bodyClassName={styles._local}
+			maskClosable
+			disableOverflow
+			width={420}
+			open={open}
+			onCancel={onClose}
+		>
 			<div className='flex flex_column'>
 				<div className='input_wrap w_100 relative flex align_center'>
 					<MagnifyingGlass

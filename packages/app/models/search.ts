@@ -60,6 +60,26 @@ export default class Index {
 			}))
 		}
 
+		if (this.module === 'note') {
+			const docs = await $db.note_items
+				.find({
+					selector: {
+						content: { $regex: `.*${text}.*`, $options: 'i' }
+					},
+					index: 'file_id'
+				})
+				.exec()
+
+			const file_ids = docs.map(item => item.file_id)
+
+			const files = await $db.dirtree_items.findByIds(file_ids).exec()
+
+			this.items = file_ids.map((_, index) => ({
+				item: getDocItem(docs[index]),
+				file: getDocItem(files.get(docs[index].file_id))
+			}))
+		}
+
 		if (this.module === 'pomo') {
 			const docs = await $db.pomo_items
 				.find({

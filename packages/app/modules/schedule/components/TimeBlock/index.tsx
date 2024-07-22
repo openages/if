@@ -1,9 +1,9 @@
-import { useMemoizedFn } from 'ahooks'
 import { Dropdown, Popover } from 'antd'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useInput } from '@/modules/todo/hooks'
+import { schedule } from '@/appdata'
+import { useText, useTextChange, Text } from '@/Editor'
 import { useDraggable, useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { Check, Info, X } from '@phosphor-icons/react'
@@ -41,6 +41,8 @@ const Index = (props: IPropsTimeBlock) => {
 	const look = useLook({ item, month_mode, step, timeline })
 	const time = useTime({ year_scale, item, timeline })
 
+	const [focus, setFocus] = useState(false)
+
 	const { stopPropagationContextMenu, onKeyDown, onAction } = useHandlers({
 		item,
 		copyTimeBlock,
@@ -57,7 +59,7 @@ const Index = (props: IPropsTimeBlock) => {
 		setActivatorNodeRef
 	} = useDraggable({
 		id: item.id,
-		disabled: month_mode,
+		disabled: month_mode || focus,
 		data: { day_index, angle_row_id, timeblock_index }
 	})
 
@@ -77,12 +79,11 @@ const Index = (props: IPropsTimeBlock) => {
 		timeblock_index,
 		changeTimeBlockLength
 	})
-
-	const { input, onInput } = useInput({
-		value: item.text,
-		max_length: 60,
-		update: useMemoizedFn(textContent => updateTimeBlock(item.id, { text: textContent }))
+	const { ref_editor, onChange, setEditor, setRef } = useText({
+		update: v => updateTimeBlock(item.id, { text: v })
 	})
+
+	useTextChange({ ref_editor, text: item.text })
 
 	return (
 		<Popover
@@ -149,14 +150,17 @@ const Index = (props: IPropsTimeBlock) => {
 								month_mode && status && 'has_status'
 							)}
 						>
-							<div
+							<Text
 								className='text_wrap w_100 border_box'
-								ref={input}
-								contentEditable='plaintext-only'
-								data-placeholder={t('translation:schedule.timeblock_placeholder')}
-								onInput={onInput}
+								placeholder_classname='timeblock_placeholder'
+								max_length={schedule.text_max_length}
+								placeholder={t('translation:schedule.timeblock_placeholder')}
+								onChange={onChange}
+								setEditor={setEditor}
 								onKeyDown={onKeyDown}
-							></div>
+								onFocus={setFocus}
+								setRef={setRef}
+							></Text>
 						</div>
 						{((!month_mode && item.length > 1) || timeline) && (
 							<div className='time flex justify_between align_center relative'>

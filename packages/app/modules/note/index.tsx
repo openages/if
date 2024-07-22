@@ -1,3 +1,4 @@
+import { useMemoizedFn } from 'ahooks'
 import { Input } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useLayoutEffect, useState } from 'react'
@@ -10,7 +11,6 @@ import styles from './index.css'
 import Model from './model'
 
 import type { IProps } from './types'
-
 const { TextArea } = Input
 
 const Index = ({ id }: IProps) => {
@@ -27,6 +27,8 @@ const Index = ({ id }: IProps) => {
 		x.module = module
 	}, [module])
 
+	const setEditor = useMemoizedFn(editor => (x.editor = editor))
+
 	if (!x?.file?.id) return
 
 	return (
@@ -38,7 +40,7 @@ const Index = ({ id }: IProps) => {
 				onChange={x.onChangeFileName}
 				onBlur={x.onBlurFileName}
 			></TextArea>
-			<Note></Note>
+			<Note collection='note_items' setEditor={setEditor}></Note>
 		</div>
 	)
 }

@@ -28,6 +28,7 @@ const Index = (props: IPropsText) => {
 		onChange,
 		setEditor,
 		onKeyDown,
+		onFocus,
 		setRef,
 		onContextMenu
 	} = props
@@ -57,7 +58,7 @@ const Index = (props: IPropsText) => {
 				<TabIndentationPlugin />
 
 				<Watcher />
-				<TextLoader {...{ max_length, linebreak, onChange, setEditor, onKeyDown }} />
+				<TextLoader {...{ max_length, linebreak, onChange, setEditor, onKeyDown, onFocus }} />
 				<Picker text_mode />
 				<TextBar only_text={!linebreak} />
 

@@ -10,12 +10,14 @@ import Model from './model'
 import type { IPropsDataLoader } from './types'
 
 const Index = (props: IPropsDataLoader) => {
-	const { collection } = props
+	const { collection, setEditor } = props
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
 
 	useLayoutEffect(() => {
+		setEditor(editor)
+
 		x.init(collection, id, editor)
 
 		return () => x.off()

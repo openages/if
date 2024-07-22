@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx'
+import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { injectable } from 'tsyringe'
 
 import { update } from '@/components/DirTree/services'
@@ -6,14 +7,16 @@ import { File } from '@/models'
 
 import type { FocusEvent, ChangeEvent } from 'react'
 import type { App } from '@/types'
+import type { LexicalEditor } from 'lexical'
 
 @injectable()
 export default class Index {
 	id = ''
 	module = '' as App.ModuleType
+	editor = null as LexicalEditor
 
 	constructor(public file: File) {
-		makeAutoObservable(this, { file: false, id: false, module: false }, { autoBind: true })
+		makeAutoObservable(this, { file: false, id: false, module: false, editor: false }, { autoBind: true })
 	}
 
 	init(args: { id: string }) {
@@ -22,6 +25,8 @@ export default class Index {
 		this.id = id
 
 		this.file.init(id)
+
+		this.on()
 	}
 
 	onChangeFileName(e: ChangeEvent<HTMLTextAreaElement>) {
@@ -46,7 +51,29 @@ export default class Index {
 		}
 	}
 
+	async redirect(id: string) {
+		setTimeout(() => {
+			const el = this.editor.getElementByKey(id)
+
+			if (el) {
+				scrollIntoView(el, { block: 'start' })
+
+				el.classList.add('notice_text')
+
+				setTimeout(() => {
+					el.classList.remove('notice_text')
+				}, 1500)
+			}
+		}, 300)
+	}
+
+	on() {
+		window.$app.Event.on(`note/${this.id}/redirect`, this.redirect)
+	}
+
 	off() {
 		this.file.off()
+
+		window.$app.Event.off(`note/${this.id}/redirect`, this.redirect)
 	}
 }

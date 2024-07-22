@@ -1,9 +1,9 @@
-import { $getRoot, COMMAND_PRIORITY_LOW, KEY_DOWN_COMMAND, UNDO_COMMAND } from 'lexical'
+import { $getRoot, BLUR_COMMAND, COMMAND_PRIORITY_LOW, FOCUS_COMMAND, KEY_DOWN_COMMAND, UNDO_COMMAND } from 'lexical'
 import { debounce } from 'lodash-es'
 
 import { mergeRegister } from '@lexical/utils'
 
-import type { IPropsUpdater } from './types'
+import type { IPropsTextLoader } from './types'
 
 import type { Lexical } from '@/types'
 import type { LexicalEditor } from 'lexical'
@@ -13,18 +13,21 @@ export default class Index {
 	max_length = 0
 	linebreak = false
 
-	onChange: IPropsUpdater['onChange']
-	onKeyDown: IPropsUpdater['onKeyDown']
+	onChange: IPropsTextLoader['onChange']
+	onKeyDown: IPropsTextLoader['onKeyDown']
+	onFocus: IPropsTextLoader['onFocus']
 	unregister = null as () => void
 
-	lisnter = null as () => void
+	lisnter_keydown = null as () => void
+	lisnter_focus = null as () => void
 
 	init(
 		editor: Index['editor'],
 		max_length: Index['max_length'],
 		linebreak: Index['linebreak'],
 		onChange: Index['onChange'],
-		onKeyDown: Index['onKeyDown']
+		onKeyDown: Index['onKeyDown'],
+		onFocus: Index['onFocus']
 	) {
 		this.editor = editor
 		this.max_length = max_length
@@ -32,8 +35,12 @@ export default class Index {
 
 		this.onChange = onChange
 
-		if (onKeyDown) {
-			this.onKeyDown = onKeyDown
+		if (onKeyDown) this.onKeyDown = onKeyDown
+
+		if (onFocus) {
+			this.onFocus = onFocus
+
+			this.addFocusLisnter()
 		}
 
 		this.on()
@@ -60,7 +67,7 @@ export default class Index {
 	}
 
 	addKeyDownLisnter() {
-		this.lisnter = this.editor.registerCommand(
+		this.lisnter_keydown = this.editor.registerCommand(
 			KEY_DOWN_COMMAND,
 			e => {
 				this.onKeyDown?.(e)
@@ -78,7 +85,34 @@ export default class Index {
 	}
 
 	removeKeyDownLisnter() {
-		this.lisnter?.()
+		this.lisnter_keydown?.()
+	}
+
+	addFocusLisnter() {
+		this.lisnter_focus = mergeRegister(
+			this.editor.registerCommand(
+				FOCUS_COMMAND,
+				() => {
+					this.onFocus(true)
+
+					return false
+				},
+				COMMAND_PRIORITY_LOW
+			),
+			this.editor.registerCommand(
+				BLUR_COMMAND,
+				() => {
+					this.onFocus(false)
+
+					return false
+				},
+				COMMAND_PRIORITY_LOW
+			)
+		)
+	}
+
+	removeFocusLisnter() {
+		this.lisnter_focus?.()
 	}
 
 	on() {
@@ -91,5 +125,6 @@ export default class Index {
 		this.unregister?.()
 
 		this.removeKeyDownLisnter()
+		this.removeFocusLisnter()
 	}
 }

@@ -41,7 +41,11 @@ import {
 import { note_style, token } from './theme'
 import { onError } from './utils'
 
-const Index = () => {
+import type { IPropsNote } from './types'
+
+const Index = (props: IPropsNote) => {
+	const { collection, setEditor } = props
+
 	return (
 		<div className={$cx('__editor_container w_100 relative', ...note_style)}>
 			<LexicalComposer initialConfig={{ namespace: 'editor', nodes: note_nodes, theme: token, onError }}>
@@ -60,7 +64,7 @@ const Index = () => {
 				<TabIndentationPlugin />
 
 				<Watcher />
-				<NoteLoader collection='note_items' />
+				<NoteLoader {...{ collection, setEditor }} />
 				<Settings />
 				<Hover md />
 				<Navigation />

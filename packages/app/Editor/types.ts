@@ -1,5 +1,6 @@
 import type { Klass, LexicalNode, Transform, LexicalEditor, DOMExportOutput } from 'lexical'
-import type { IPropsUpdater } from './plugins/_TextLoader_/types'
+import type { IPropsTextLoader } from './plugins/_TextLoader_/types'
+import type { IPropsDataLoader } from './plugins/_NoteLoader_/types'
 import type { IPropsLinkEditor } from './plugins/LinkEditor/types'
 import type { DOMAttributes } from 'react'
 
@@ -28,7 +29,9 @@ export interface InternalSerializedNode {
 	children?: Array<InternalSerializedNode>
 }
 
-export interface IPropsText extends IPropsUpdater, IPropsLinkEditor {
+export interface IPropsNote extends IPropsDataLoader {}
+
+export interface IPropsText extends IPropsTextLoader, IPropsLinkEditor {
 	id?: HTMLDivElement['id']
 	className?: HTMLDivElement['className']
 	placeholder?: string

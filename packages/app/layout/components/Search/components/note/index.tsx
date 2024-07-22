@@ -1,6 +1,5 @@
 import { useHover, useMemoizedFn } from 'ahooks'
 import { useEffect, useMemo, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { Emoji, LeftIcon } from '@/components'
 import { getEditorText } from '@/utils/editor'
@@ -8,13 +7,12 @@ import { ArrowBendDownLeft } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
-import type { Todo, DirTree } from '@/types'
+import type { Note, DirTree } from '@/types'
 import type { IPropsSearch } from '@/layout/types'
 
 interface IProps extends Pick<IPropsSearch, 'changeSearchIndex'> {
-	item: Todo.Todo
+	item: Note.Item
 	file: DirTree.Item
-	setting: Todo.Setting
 	text: string
 	active: boolean
 	index: number
@@ -22,8 +20,7 @@ interface IProps extends Pick<IPropsSearch, 'changeSearchIndex'> {
 }
 
 const Index = (props: IProps) => {
-	const { item, file, setting, text, active, index, changeSearchIndex, onCheck } = props
-	const { t } = useTranslation()
+	const { item, file, text, active, index, changeSearchIndex, onCheck } = props
 	const ref = useRef(null)
 	const hover = useHover(ref)
 
@@ -31,18 +28,7 @@ const Index = (props: IProps) => {
 		hover && changeSearchIndex(index)
 	}, [hover])
 
-	const array_text = useMemo(() => getEditorText(item.text).split(text), [item.text, text])
-
-	const angle = useMemo(() => setting.angles.find(i => i.id === item.angle_id), [item.angle_id, setting.angles])
-
-	const tags = useMemo(() => {
-		if (!item?.tag_ids?.length || !setting.tags?.length) return []
-
-		return item.tag_ids
-			.map(tag_id => setting.tags.find(i => i.id === tag_id))
-			.filter(it => it)
-			.map(it => it.text)
-	}, [item.tag_ids, setting.tags])
+	const array_text = useMemo(() => getEditorText(item.content, true).split(text), [item.content, text])
 
 	const onItem = useMemoizedFn(() => onCheck({ id: item.id, file }))
 
@@ -80,17 +66,6 @@ const Index = (props: IProps) => {
 					</div>
 					<span className='file_name ml_2'>{file.name}</span>
 				</div>
-				<span className='angle mr_8'>{angle.text}</span>
-				{tags.length > 0 && (
-					<span className='tags flex align_center mr_8'>
-						{tags.map((i, idx) => (
-							<div className='tag flex align_center' key={i}>
-								{i} {idx !== tags.length - 1 && <span className='dot ml_4 mr_4'></span>}
-							</div>
-						))}
-					</span>
-				)}
-				{item.archive && <span className='archived'>{t('translation:todo.common.archived')}</span>}
 			</div>
 		</div>
 	)

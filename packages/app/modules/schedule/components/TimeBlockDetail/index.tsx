@@ -6,8 +6,9 @@ import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
+import { schedule } from '@/appdata'
 import { Todos } from '@/atoms'
-import { FormEditable } from '@/components'
+import { TextEditor } from '@/Editor/components'
 import { useDeepEffect } from '@/hooks'
 import { deepEqual, useDeepMemo } from '@openages/stk/react'
 import { ListChecks, MagnifyingGlass } from '@phosphor-icons/react'
@@ -105,10 +106,11 @@ const Index = (props: IPropsTimeBlockDetail) => {
 			onValuesChange={onValuesChange}
 		>
 			<Item label={t('translation:schedule.TimeBlockDetail.desc')} name='text'>
-				<FormEditable
+				<TextEditor
 					className='text_wrap border_box'
 					placeholder={t('translation:schedule.timeblock_placeholder')}
-				></FormEditable>
+					max_length={schedule.text_max_length}
+				></TextEditor>
 			</Item>
 			<Item label={t('translation:common.tags.single_label')} name='tag'>
 				<Select
