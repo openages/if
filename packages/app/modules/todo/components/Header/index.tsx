@@ -55,6 +55,7 @@ const Index = (props: IPropsHeader) => {
 	const { t } = useTranslation()
 
 	const { ref_editor, onChange, setEditor, setRef } = useText({
+		text: desc,
 		update: v => updateSetting({ desc: v })
 	})
 

@@ -2,7 +2,9 @@ import {
 	$createParagraphNode,
 	$getSelection,
 	$isRangeSelection,
+	BLUR_COMMAND,
 	COMMAND_PRIORITY_CRITICAL,
+	COMMAND_PRIORITY_EDITOR,
 	FORMAT_TEXT_COMMAND,
 	SELECTION_CHANGE_COMMAND
 } from 'lexical'
@@ -41,12 +43,23 @@ export default class Index {
 	heading_type = '' as HeadingTagType
 	list_type = '' as ListType
 
+	timer_click = null as NodeJS.Timeout
+	listener_blur = null as () => void
 	unregister = null as () => void
 
 	constructor() {
 		makeAutoObservable(
 			this,
-			{ editor: false, md: false, ref: false, node: false, oveflow_x: false, unregister: false },
+			{
+				editor: false,
+				md: false,
+				ref: false,
+				node: false,
+				oveflow_x: false,
+				timer_click: false,
+				listener_blur: false,
+				unregister: false
+			},
 			{ autoBind: true }
 		)
 	}
@@ -117,11 +130,7 @@ export default class Index {
 						}
 					})
 				}
-
-				return
-			}
-
-			if (type === 'heading') {
+			} else if (type === 'heading') {
 				if (v === this.heading_type) {
 					this.unFormat()
 
@@ -133,11 +142,7 @@ export default class Index {
 						$setBlocksType(selection, () => $createHeadingNode(v as HeadingTagType))
 					})
 				}
-
-				return
-			}
-
-			if (type === 'list') {
+			} else if (type === 'list') {
 				if (v === this.list_type) {
 					this.unFormat()
 
@@ -229,6 +234,51 @@ export default class Index {
 		}
 	}
 
+	addBlurListener() {
+		this.removeBlurListener()
+
+		this.listener_blur = this.editor.registerCommand(
+			BLUR_COMMAND,
+			() => {
+				if (this.visible) {
+					this.reset()
+					this.removeBlurListener()
+				}
+
+				return false
+			},
+			COMMAND_PRIORITY_EDITOR
+		)
+	}
+
+	removeBlurListener() {
+		this.listener_blur?.()
+
+		this.listener_blur = null
+	}
+
+	onClick(e: MouseEvent) {
+		if (e.target && (e.target as HTMLElement).closest('.__editor_text_bar')) {
+			this.removeBlurListener()
+		} else {
+			this.addBlurListener()
+		}
+	}
+
+	addClickListener() {
+		this.removeClickListener()
+
+		const el = document.getElementById(this.id)
+
+		el.addEventListener('mousedown', this.onClick)
+	}
+
+	removeClickListener() {
+		const el = document.getElementById(this.id)
+
+		el.removeEventListener('mousedown', this.onClick)
+	}
+
 	register() {
 		this.unregister = mergeRegister(
 			this.editor.registerCommand(
@@ -250,5 +300,6 @@ export default class Index {
 
 	off() {
 		this.unregister()
+		this.removeBlurListener()
 	}
 }

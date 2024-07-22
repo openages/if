@@ -75,6 +75,7 @@ const Index = (props: IPropsDetail) => {
 	} = item
 
 	const { ref_editor, onChange, setEditor, setRef } = useText({
+		text,
 		update: v => update({ type: 'parent', index, dimension_id, value: { text: v } })
 	})
 

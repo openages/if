@@ -38,6 +38,7 @@ const Index = (props: IPropsChildrenItem) => {
 	)
 
 	const { ref_editor, onChange, setEditor, setRef } = useText({
+		text,
 		update: v => updateChildren(children_index, { text: v })
 	})
 

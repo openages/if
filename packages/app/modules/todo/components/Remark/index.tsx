@@ -9,7 +9,7 @@ import type { IPropsDetailRemark } from '@/modules/todo/types'
 const Index = (props: IPropsDetailRemark) => {
 	const { remark, in_modal, updateRemark } = props
 	const { t } = useTranslation()
-	const { ref_editor, onChange, setEditor, setRef } = useText({ update: updateRemark })
+	const { ref_editor, onChange, setEditor, setRef } = useText({ text: remark, update: updateRemark })
 
 	useTextChange({ ref_editor, text: remark })
 

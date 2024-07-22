@@ -100,6 +100,7 @@ const Index = (props: IPropsTodoItem) => {
 	const { linker, dragging, hovering } = useLink({ item, dimension_id, makeLinkLine, updateRelations })
 
 	const { ref_editor, ref_input, onChange, setEditor, setRef } = useText({
+		text,
 		update: v => update({ type: 'parent', index, dimension_id, value: { text: v } })
 	})
 

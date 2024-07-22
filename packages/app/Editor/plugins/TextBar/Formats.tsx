@@ -33,7 +33,7 @@ const Index = (props: IPropsFormats) => {
 	const onList = useMemoizedFn(v => onFormat('list', v))
 
 	return (
-		<div className={$cx('flex align_center', styles._local)} ref={getRef}>
+		<div className={$cx('__editor_text_bar flex align_center', styles._local)} ref={getRef}>
 			<div className='format_items_wrap flex'>
 				<div
 					className={$cx(

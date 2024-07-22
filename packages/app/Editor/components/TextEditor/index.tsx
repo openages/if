@@ -12,7 +12,7 @@ interface IProps extends IPropsCustomFormItem<string> {
 const Index = (props: IProps) => {
 	const { value, className, placeholder, placeholder_classname, max_length, onChange: onChangeValue } = props
 
-	const { ref_editor, onChange, setEditor, setRef } = useText({ update: v => onChangeValue(v) })
+	const { ref_editor, onChange, setEditor, setRef } = useText({ text: value, update: v => onChangeValue(v) })
 
 	useTextChange({ ref_editor, text: value })
 

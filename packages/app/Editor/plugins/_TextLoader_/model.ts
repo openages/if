@@ -18,8 +18,8 @@ export default class Index {
 	onFocus: IPropsTextLoader['onFocus']
 	unregister = null as () => void
 
-	lisnter_keydown = null as () => void
-	lisnter_focus = null as () => void
+	listener_keydown = null as () => void
+	listener_focus = null as () => void
 
 	init(
 		editor: Index['editor'],
@@ -40,13 +40,13 @@ export default class Index {
 		if (onFocus) {
 			this.onFocus = onFocus
 
-			this.addFocusLisnter()
+			this.addFocusListener()
 		}
 
 		this.on()
 
 		if (!this.linebreak) {
-			this.addKeyDownLisnter()
+			this.addKeyDownListener()
 		}
 	}
 
@@ -66,8 +66,8 @@ export default class Index {
 		this.onChange(JSON.stringify(editorState.toJSON()))
 	}
 
-	addKeyDownLisnter() {
-		this.lisnter_keydown = this.editor.registerCommand(
+	addKeyDownListener() {
+		this.listener_keydown = this.editor.registerCommand(
 			KEY_DOWN_COMMAND,
 			e => {
 				this.onKeyDown?.(e)
@@ -84,12 +84,12 @@ export default class Index {
 		)
 	}
 
-	removeKeyDownLisnter() {
-		this.lisnter_keydown?.()
+	removeKeyDownListener() {
+		this.listener_keydown?.()
 	}
 
-	addFocusLisnter() {
-		this.lisnter_focus = mergeRegister(
+	addFocusListener() {
+		this.listener_focus = mergeRegister(
 			this.editor.registerCommand(
 				FOCUS_COMMAND,
 				() => {
@@ -111,8 +111,8 @@ export default class Index {
 		)
 	}
 
-	removeFocusLisnter() {
-		this.lisnter_focus?.()
+	removeFocusListener() {
+		this.listener_focus?.()
 	}
 
 	on() {
@@ -124,7 +124,7 @@ export default class Index {
 	off() {
 		this.unregister?.()
 
-		this.removeKeyDownLisnter()
-		this.removeFocusLisnter()
+		this.removeKeyDownListener()
+		this.removeFocusListener()
 	}
 }

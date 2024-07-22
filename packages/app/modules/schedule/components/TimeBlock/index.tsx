@@ -80,6 +80,7 @@ const Index = (props: IPropsTimeBlock) => {
 		changeTimeBlockLength
 	})
 	const { ref_editor, onChange, setEditor, setRef } = useText({
+		text: item.text,
 		update: v => updateTimeBlock(item.id, { text: v })
 	})
 

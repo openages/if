@@ -1,6 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
 import { Popover } from '@/components'
 import { useStackSelector } from '@/context/stack'
@@ -23,6 +23,16 @@ const Index = (props: IPropsTextBar) => {
 
 		return () => x.off()
 	}, [id, editor, md])
+
+	useEffect(() => {
+		if (x.visible) {
+			x.addClickListener()
+			x.addBlurListener()
+		} else {
+			x.removeClickListener()
+			x.removeBlurListener()
+		}
+	}, [x.visible])
 
 	const props_formats: IPropsFormats = {
 		md,

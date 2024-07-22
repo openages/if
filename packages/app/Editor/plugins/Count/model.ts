@@ -58,7 +58,7 @@ export default class Index {
 		this.on()
 
 		if (this.count) {
-			this.addEventLisnter()
+			this.addEventListener()
 			this.getPosition()
 		}
 	}
@@ -74,10 +74,10 @@ export default class Index {
 		this.count = v
 
 		if (v) {
-			this.addEventLisnter()
+			this.addEventListener()
 			this.getPosition()
 		} else {
-			this.removeEventLisnter()
+			this.removeEventListener()
 
 			this.visible = false
 			this.style = {}
@@ -94,8 +94,8 @@ export default class Index {
 		this.counts_filted = getLength(string_filted)
 	}
 
-	addEventLisnter() {
-		this.removeEventLisnter()
+	addEventListener() {
+		this.removeEventListener()
 
 		this.unregister = mergeRegister(this.editor.registerTextContentListener(this.onChangeText))
 
@@ -104,7 +104,7 @@ export default class Index {
 		this.observer.observe(this.container)
 	}
 
-	removeEventLisnter() {
+	removeEventListener() {
 		if (this.unregister) {
 			this.unregister()
 
@@ -122,7 +122,7 @@ export default class Index {
 	}
 
 	off() {
-		this.removeEventLisnter()
+		this.removeEventListener()
 
 		this.utils.off()
 	}

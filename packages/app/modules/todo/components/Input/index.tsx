@@ -24,6 +24,7 @@ const Index = (props: IPropsInput) => {
 	const [input, setInput] = useState<Omit<Todo.TodoItem, 'file_id' | 'angle_id' | 'sort'>>(getTodo())
 
 	const { ref_editor, onChange, setEditor, setRef } = useText({
+		text: input.text,
 		update: v => setInput(input => ({ ...input, text: v }))
 	})
 

@@ -1,5 +1,7 @@
 import { flatten } from 'lodash-es'
 
+import { getEditorJSON } from '@/utils/editor'
+
 import { todos_cn } from './data'
 
 import type { Todo } from '@/types'
@@ -40,5 +42,13 @@ export default async () => {
 		})
 	})
 
-	$db.todo_items.bulkInsert(flatten(todos))
+	const items = flatten(todos).map(item => {
+		if (item.type === 'todo') {
+			item.text = JSON.stringify(getEditorJSON(item.text))
+		}
+
+		return item
+	})
+
+	$db.todo_items.bulkInsert(items)
 }
