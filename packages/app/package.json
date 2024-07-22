@@ -83,7 +83,7 @@
 		"rxdb": "15.26.0",
 		"rxjs": "^7.8.1",
 		"scheduler": "^0.23.2",
-		"shiki": "^1.10.3",
+		"shiki": "^1.11.0",
 		"smooth-scroll-into-view-if-needed": "^2.0.2",
 		"string-length": "^6.0.0",
 		"ts-pattern": "^5.2.0",
