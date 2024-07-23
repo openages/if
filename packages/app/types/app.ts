@@ -9,6 +9,8 @@ export namespace App {
 		path: string
 		short?: number
 		fixed?: boolean
+		plan?: boolean
+		deving?: boolean
 		event?: string
 	}
 

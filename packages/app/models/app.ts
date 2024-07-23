@@ -33,6 +33,7 @@ export default class Index {
 
 	get apps() {
 		return $copy(this.app_modules).filter(item => {
+			if (item.plan) return false
 			if (item.fixed) return true
 			if (this.actives.find(i => i.app === item.title)) return true
 
@@ -41,7 +42,10 @@ export default class Index {
 	}
 
 	init() {
-		this.utils.acts = [setStorageWhenChange(['app_modules'], this), ...useInstanceWatch(this)]
+		this.utils.acts = [
+			// setStorageWhenChange(['app_modules'], this),
+			...useInstanceWatch(this)
+		]
 
 		this.on()
 	}

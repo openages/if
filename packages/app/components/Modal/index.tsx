@@ -137,9 +137,9 @@ const Index = (props: IProps) => {
 							<div
 								className={$cx(
 									styles.body,
-									disableOverflow && styles.disableOverflow,
 									bodyClassName,
-									'if_modal_body border_box flex flex_column'
+									disableOverflow && styles.disableOverflow,
+									'if_modal_body w_100 border_box flex flex_column'
 								)}
 								ref={getRef}
 							>

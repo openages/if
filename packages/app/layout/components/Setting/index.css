@@ -24,6 +24,12 @@
 	}
 }
 
+.modal_body {
+	flex-direction: row;
+	max-height: unset !important;
+	padding: 0 !important;
+}
+
 @media (max-width: 930px) {
 	.modal {
 		width: calc(100vw - 96px) !important;
@@ -132,7 +138,7 @@
 						overflow-y: scroll;
 						height: 100%;
 						padding: 48px;
-						padding-top: 36px;
+						padding-top: 24px;
 						padding-bottom: 60px;
 					}
 				}

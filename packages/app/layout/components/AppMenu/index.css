@@ -103,6 +103,21 @@
 							}
 						}
 
+						&.plan:not(.deving) {
+							opacity: 0.6;
+							filter: blur(3px);
+						}
+
+						.deving_badge {
+							top: 3px;
+							left: -1px;
+							padding: 2px 2px;
+							border-radius: 50%;
+							color: white;
+							background-color: var(--color_main);
+							font-size: 9px;
+						}
+
 						.icon_wrap {
 							width: 36px;
 							height: 36px;

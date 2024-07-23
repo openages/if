@@ -83,6 +83,7 @@ const Index = (props: IPropsSetting) => {
 	return (
 		<Modal
 			className={$cx('relative', styles.modal)}
+			bodyClassName={styles.modal_body}
 			open={visible}
 			zIndex={2000}
 			maskClosable

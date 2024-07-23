@@ -11,7 +11,8 @@ const typed_nav_items = [
 		id: 'memo',
 		title: 'memo',
 		path: '/memo',
-		fixed: true
+		fixed: true,
+		plan: true
 	},
 	{
 		id: 'note',
@@ -23,17 +24,20 @@ const typed_nav_items = [
 		id: 'page',
 		title: 'page',
 		path: '/page',
-		fixed: true
+		fixed: true,
+		plan: true
 	},
 	{
 		id: 'whiteboard',
 		title: 'whiteboard',
-		path: '/whiteboard'
+		path: '/whiteboard',
+		plan: true
 	},
 	{
 		id: 'ppt',
 		title: 'ppt',
-		path: '/ppt'
+		path: '/ppt',
+		plan: true
 	},
 	{
 		id: 'pomo',
@@ -51,37 +55,45 @@ const typed_nav_items = [
 	{
 		id: 'flag',
 		title: 'flag',
-		path: '/flag'
+		path: '/flag',
+		plan: true
 	},
 	{
 		id: 'table',
 		title: 'table',
-		path: '/table'
+		path: '/table',
+		plan: true
 	},
 	{
 		id: 'form',
 		title: 'form',
-		path: '/form'
+		path: '/form',
+		plan: true
 	},
 	{
 		id: 'chart',
 		title: 'chart',
-		path: '/chart'
+		path: '/chart',
+		plan: true,
+		deving: true
 	},
 	{
 		id: 'api',
 		title: 'api',
-		path: '/api'
+		path: '/api',
+		plan: true
 	},
 	{
 		id: 'dataflow',
 		title: 'dataflow',
-		path: '/dataflow'
+		path: '/dataflow',
+		plan: true
 	},
 	{
 		id: 'database',
 		title: 'database',
-		path: '/database'
+		path: '/database',
+		plan: true
 	},
 	{
 		id: 'setting',

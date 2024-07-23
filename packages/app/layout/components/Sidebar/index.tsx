@@ -1,5 +1,3 @@
-import { useMemo } from 'react'
-
 import { LogoWithBg } from '@/components'
 import { useAntdApp } from '@/hooks'
 import { is_mac_electron } from '@/utils'

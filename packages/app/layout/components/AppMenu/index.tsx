@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 
 import { getGroupModules } from '@/appdata'
 import { ModuleIcon } from '@/components'
+import { Barricade } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -48,10 +49,12 @@ const Index = (props: IPropsAppMenu) => {
 								<Link
 									className={$cx(
 										'menu_item border_box flex align_center clickable relative',
-										getStatus(item)
+										getStatus(item),
+										item.plan && 'plan disabled',
+										item.deving && 'deving'
 									)}
 									key={item.title}
-									to={item.path}
+									to={!item.plan && item.path}
 									onClick={e => {
 										if (item.event) {
 											e.preventDefault()
@@ -62,6 +65,11 @@ const Index = (props: IPropsAppMenu) => {
 										onClose()
 									}}
 								>
+									<If condition={item.deving}>
+										<span className='deving_badge flex justify_center align_center absolute'>
+											<Barricade weight='bold'></Barricade>
+										</span>
+									</If>
 									<div className='icon_wrap flex justify_center align_center'>
 										<ModuleIcon
 											type={item.title}

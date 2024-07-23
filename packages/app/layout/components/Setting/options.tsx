@@ -12,12 +12,12 @@ export const getSettingItems = (t: TFunction<'translation', undefined>) => [
 		key: 'global',
 		children: <Global></Global>
 	},
-	{
-		label: t('translation:setting.nav.titles.Menu'),
-		Icon: Layout,
-		key: 'menu',
-		children: <Menu></Menu>
-	},
+	// {
+	// 	label: t('translation:setting.nav.titles.Menu'),
+	// 	Icon: Layout,
+	// 	key: 'menu',
+	// 	children: <Menu></Menu>
+	// },
 	{
 		label: t('translation:setting.nav.titles.Tasks'),
 		Icon: Activity,
