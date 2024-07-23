@@ -4,7 +4,8 @@ export default {
 			Global: 'Global',
 			Menu: 'Menu',
 			Tasks: 'Tasks',
-			Shortcuts: 'Shortcuts'
+			Shortcuts: 'Shortcuts',
+			About: 'About'
 		}
 	},
 	Normal: {

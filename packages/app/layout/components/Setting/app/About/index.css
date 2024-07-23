@@ -1,0 +1,22 @@
+._local {
+	:global {
+		.statement {
+			color: var(--color_text_light);
+		}
+
+		.media_wrap {
+			margin-top: 9px;
+			font-size: 12px;
+
+			.media_item {
+				margin: 0 6px;
+				opacity: 0.6;
+				color: var(--color_blue);
+
+				&:hover {
+					opacity: 1;
+				}
+			}
+		}
+	}
+}

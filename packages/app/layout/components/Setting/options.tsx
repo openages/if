@@ -1,6 +1,6 @@
-import { Activity, Command, Layout, Sliders } from '@phosphor-icons/react'
+import { Activity, Command, Info, Layout, Sliders } from '@phosphor-icons/react'
 
-import { Global, Menu, Shortcuts, Tasks } from './app'
+import { About, Global, Menu, Shortcuts, Tasks } from './app'
 import { Note } from './modules'
 
 import type { TFunction } from 'i18next'
@@ -29,6 +29,12 @@ export const getSettingItems = (t: TFunction<'translation', undefined>) => [
 		Icon: Command,
 		key: 'shortcuts',
 		children: <Shortcuts></Shortcuts>
+	},
+	{
+		label: t('translation:setting.nav.titles.About'),
+		Icon: Info,
+		key: 'about',
+		children: <About></About>
 	}
 ]
 

@@ -4,7 +4,8 @@ export default {
 			Global: '全局设置',
 			Menu: '菜单设置',
 			Tasks: '任务管理器',
-			Shortcuts: '快捷键'
+			Shortcuts: '快捷键',
+			About: '关于'
 		}
 	},
 	Normal: {
