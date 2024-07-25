@@ -382,8 +382,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1
       framer-motion:
-        specifier: ^11.3.8
-        version: 11.3.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^11.3.17
+        version: 11.3.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       i18next:
         specifier: ^23.12.2
         version: 23.12.2
@@ -433,8 +433,8 @@ importers:
         specifier: ^1.4.1
         version: 1.4.1
       shiki:
-        specifier: ^1.11.0
-        version: 1.11.0
+        specifier: ^1.11.1
+        version: 1.11.1
       smooth-scroll-into-view-if-needed:
         specifier: ^2.0.2
         version: 2.0.2
@@ -461,8 +461,8 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2
       '@types/node':
-        specifier: ^20.14.11
-        version: 20.14.11
+        specifier: ^20.14.12
+        version: 20.14.12
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
@@ -486,7 +486,7 @@ importers:
         version: 16.1.0(postcss@8.4.39)
       postcss-loader:
         specifier: ^8.1.1
-        version: 8.1.1(@rspack/core@0.6.5(@swc/helpers@0.5.12))(postcss@8.4.39)(typescript@5.5.3)(webpack@5.93.0)
+        version: 8.1.1(@rspack/core@0.6.5(@swc/helpers@0.5.12))(postcss@8.4.39)(typescript@5.5.4)(webpack@5.93.0)
       postcss-nested:
         specifier: ^6.2.0
         version: 6.2.0(postcss@8.4.39)
@@ -497,8 +497,8 @@ importers:
         specifier: link:../stk/crates/swc-plugin-jsx-control-statements
         version: link:../stk/crates/swc-plugin-jsx-control-statements
       typescript:
-        specifier: ^5.5.3
-        version: 5.5.3
+        specifier: ^5.5.4
+        version: 5.5.4
 
   packages/lexical:
     devDependencies:
@@ -2718,6 +2718,9 @@ packages:
   '@shikijs/core@1.11.0':
     resolution: {integrity: sha512-VbEhDAhT/2ozO0TPr5/ZQBO/NWLqtk4ZiBf6NplYpF38mKjNfMMied5fNEfIfYfN+cdKvhDB4VMcKvG/g9c3zg==}
 
+  '@shikijs/core@1.11.1':
+    resolution: {integrity: sha512-Qsn8h15SWgv5TDRoDmiHNzdQO2BxDe86Yq6vIHf5T0cCvmfmccJKIzHtep8bQO9HMBZYCtCBzaXdd1MnxZBPSg==}
+
   '@sindresorhus/merge-streams@2.3.0':
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
     engines: {node: '>=18'}
@@ -3144,6 +3147,9 @@ packages:
 
   '@types/node@20.14.11':
     resolution: {integrity: sha512-kprQpL8MMeszbz6ojB5/tU8PLN4kesnN8Gjzw349rDlNgsSzg90lAVj3llK99Dh7JON+t9AuscPPFW6mPbTnSA==}
+
+  '@types/node@20.14.12':
+    resolution: {integrity: sha512-r7wNXakLeSsGT0H1AU863vS2wa5wBOK4bWMjZz2wj+8nBx+m5PeIn0k8AloSLpRuiwdRQZwarZqHE4FNArPuJQ==}
 
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
@@ -4322,6 +4328,20 @@ packages:
   forwarded@0.2.0:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
     engines: {node: '>= 0.6'}
+
+  framer-motion@11.3.17:
+    resolution: {integrity: sha512-LZcckvZL8Rjod03bud8LQcp+R0PLmWIlOSu+NVc+v6Uh43fQr4IBsEAX7sSn7CdBQ1L0fZ/IqSXZVPnGFSMxHw==}
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
 
   framer-motion@11.3.8:
     resolution: {integrity: sha512-1D+RDTsIp4Rz2dq/oToqSEc9idEQwgBRQyBq4rGpFba+0Z+GCbj9z1s0+ikFbanWe3YJ0SqkNlDe08GcpFGj5A==}
@@ -6057,6 +6077,9 @@ packages:
   shiki@1.11.0:
     resolution: {integrity: sha512-NqH/O1zRHvnuk/WfSL6b7+DtI7/kkMMSQGlZhm9DyzSU+SoIHhaw/fBZMr+zp9R8KjdIzkk3JKSC6hORuGDyng==}
 
+  shiki@1.11.1:
+    resolution: {integrity: sha512-VHD3Q0EBXaaa245jqayBe5zQyMQUdXBFjmGr9MpDaDpAKRMYn7Ff00DM5MLk26UyKjnml3yQ0O2HNX7PtYVNFQ==}
+
   side-channel@1.0.6:
     resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
     engines: {node: '>= 0.4'}
@@ -6448,6 +6471,11 @@ packages:
 
   typescript@5.5.3:
     resolution: {integrity: sha512-/hreyEujaB0w76zKo6717l3L0o/qEUtRgdvUBvlkhoWeOVMjMuHNHk0BRBzikzuGDqNmPQbg5ifMEqsHLiIUcQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.5.4:
+    resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -9353,6 +9381,10 @@ snapshots:
     dependencies:
       '@types/hast': 3.0.4
 
+  '@shikijs/core@1.11.1':
+    dependencies:
+      '@types/hast': 3.0.4
+
   '@sindresorhus/merge-streams@2.3.0': {}
 
   '@socket.io/component-emitter@3.1.2': {}
@@ -9585,7 +9617,7 @@ snapshots:
 
   '@types/child-process-promise@2.2.6':
     dependencies:
-      '@types/node': 20.14.11
+      '@types/node': 17.0.45
 
   '@types/clone@2.1.4': {}
 
@@ -9829,6 +9861,10 @@ snapshots:
       undici-types: 5.26.5
 
   '@types/node@20.14.11':
+    dependencies:
+      undici-types: 5.26.5
+
+  '@types/node@20.14.12':
     dependencies:
       undici-types: 5.26.5
 
@@ -10667,6 +10703,15 @@ snapshots:
     optionalDependencies:
       typescript: 5.5.3
 
+  cosmiconfig@9.0.0(typescript@5.5.4):
+    dependencies:
+      env-paths: 2.2.1
+      import-fresh: 3.3.0
+      js-yaml: 4.1.0
+      parse-json: 5.2.0
+    optionalDependencies:
+      typescript: 5.5.4
+
   create-require@1.1.1: {}
 
   cross-env@7.0.3:
@@ -11312,19 +11357,19 @@ snapshots:
 
   forwarded@0.2.0: {}
 
+  framer-motion@11.3.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      tslib: 2.6.3
+    optionalDependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
   framer-motion@11.3.8(react-dom@0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326))(react@0.0.0-experimental-c3048aab4-20240326):
     dependencies:
       tslib: 2.6.3
     optionalDependencies:
       react: 0.0.0-experimental-c3048aab4-20240326
       react-dom: 0.0.0-experimental-c3048aab4-20240326(react@0.0.0-experimental-c3048aab4-20240326)
-
-  framer-motion@11.3.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      tslib: 2.6.3
-    optionalDependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   fresh@0.5.2: {}
 
@@ -12381,9 +12426,9 @@ snapshots:
       read-cache: 1.0.0
       resolve: 1.22.8
 
-  postcss-loader@8.1.1(@rspack/core@0.6.5(@swc/helpers@0.5.12))(postcss@8.4.39)(typescript@5.5.3)(webpack@5.93.0):
+  postcss-loader@8.1.1(@rspack/core@0.6.5(@swc/helpers@0.5.12))(postcss@8.4.39)(typescript@5.5.4)(webpack@5.93.0):
     dependencies:
-      cosmiconfig: 9.0.0(typescript@5.5.3)
+      cosmiconfig: 9.0.0(typescript@5.5.4)
       jiti: 1.21.6
       postcss: 8.4.39
       semver: 7.6.3
@@ -13550,6 +13595,11 @@ snapshots:
       '@shikijs/core': 1.11.0
       '@types/hast': 3.0.4
 
+  shiki@1.11.1:
+    dependencies:
+      '@shikijs/core': 1.11.1
+      '@types/hast': 3.0.4
+
   side-channel@1.0.6:
     dependencies:
       call-bind: 1.0.7
@@ -13996,6 +14046,8 @@ snapshots:
       mime-types: 2.1.35
 
   typescript@5.5.3: {}
+
+  typescript@5.5.4: {}
 
   ufo@1.5.4: {}
 
