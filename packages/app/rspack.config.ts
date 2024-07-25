@@ -53,7 +53,7 @@ module.exports = defineConfig({
 	},
 	plugins: [
 		new HtmlRspackPlugin({
-			title: 'IF - GTD for prefessionals.',
+			title: 'IF - GTD for professionals.',
 			template: './public/index.html',
 			scriptLoading: is_module ? 'module' : 'defer'
 		}),
