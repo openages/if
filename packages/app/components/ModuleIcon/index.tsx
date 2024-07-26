@@ -1,3 +1,4 @@
+import { omit } from 'lodash-es'
 import { match } from 'ts-pattern'
 
 import { Memo } from '@/icons'
@@ -32,7 +33,7 @@ const Index = (props: IProps) => {
 	const { type, className, ...icon_props } = props
 
 	const target_class = $cx(icon_props?.weight === 'duotone' && styles._local, className)
-	const target_props = { ...icon_props, className: target_class }
+	const target_props = { ...omit(icon_props, 'ref'), className: target_class }
 
 	return match(type)
 		.with('todo', () => <CheckCircle {...target_props} />)
