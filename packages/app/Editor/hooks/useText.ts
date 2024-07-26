@@ -7,7 +7,7 @@ import type { LexicalEditor } from 'lexical'
 
 interface Args {
 	text: string
-	update: (v: string) => void
+	update?: (v: string) => void
 }
 
 export default (args: Args) => {
@@ -18,7 +18,7 @@ export default (args: Args) => {
 	const onChange = useMemoizedFn(v => {
 		if (deepEqual(text, v)) return
 
-		update(v)
+		update?.(v)
 	})
 
 	const setEditor = useMemoizedFn((v: LexicalEditor) => (ref_editor.current = v))

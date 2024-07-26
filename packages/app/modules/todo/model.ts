@@ -437,8 +437,6 @@ export default class Index {
 						`${this.visible_detail_modal ? 'detail_' : ''}todo_${target.id}`
 					)
 
-					console.log(`${this.visible_detail_modal ? 'detail_' : ''}todo_${target.id}`, el)
-
 					if (el) {
 						;(el.querySelector('.__editor_root') as HTMLDivElement)?.focus()
 					}
@@ -563,7 +561,13 @@ export default class Index {
 		const { items } = this.getItem({ index, dimension_id })
 
 		runInAction(() => {
-			items.splice(index + 1, 0, item as Todo.TodoItem)
+			if (index === -1) {
+				items.push(item as Todo.TodoItem)
+
+				this.kanban_items = $copy(this.kanban_items)
+			} else {
+				items.splice(index + 1, 0, item as Todo.TodoItem)
+			}
 
 			if (callback) callback()
 		})

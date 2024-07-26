@@ -1,5 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { Select, Tooltip } from 'antd'
+import { $getRoot } from 'lexical'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -17,7 +18,6 @@ import styles from './index.css'
 
 import type { Todo } from '@/types'
 import type { IPropsCircle, IPropsInput, IPropsDateTime } from '../../types'
-
 const Index = (props: IPropsInput) => {
 	const { loading, tags, create } = props
 	const { t } = useTranslation()
@@ -67,9 +67,17 @@ const Index = (props: IPropsInput) => {
 
 		e.preventDefault()
 
-		const text = JSON.stringify(ref_editor.current.getEditorState().toJSON())
+		let text: string
+
+		if (input.type === 'todo') {
+			text = JSON.stringify(ref_editor.current.getEditorState().toJSON())
+		} else {
+			text = ref_editor.current.getEditorState().read(() => $getRoot().getTextContent())
+		}
 
 		create({ ...input, text, create_at: new Date().valueOf() } as Todo.TodoItem, { top: true })
+
+		ref_editor.current.update(() => $getRoot().clear())
 	})
 
 	return (

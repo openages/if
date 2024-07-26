@@ -87,13 +87,13 @@
 
 			.left_icon_wrap {
 				width: 18px;
-				margin-right: 4px;
+				margin-right: 6px;
 				user-select: none;
 			}
 
 			.title_wrap {
 				overflow: hidden;
-				width: calc(100% - 22px - 48px);
+				width: calc(100% - 24px - 48px);
 				user-select: none;
 				text-align: left;
 				text-overflow: ellipsis;
@@ -101,7 +101,7 @@
 				white-space: nowrap;
 
 				&.is_file {
-					width: calc(100% - 22px);
+					width: calc(100% - 24px);
 				}
 			}
 

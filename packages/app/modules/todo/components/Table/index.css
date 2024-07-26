@@ -175,12 +175,21 @@
 }
 
 .RenderText {
+	overflow: scroll;
 	padding: 0;
 	border: none;
 	outline: none;
 	background-color: transparent;
 	text-overflow: ellipsis;
+	white-space: nowrap;
 	font-size: 12px;
+
+	:global {
+		p {
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
 }
 
 .RenderAngle {

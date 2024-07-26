@@ -37,6 +37,9 @@ export interface IPropsText extends IPropsTextLoader, IPropsLinkEditor {
 	placeholder?: string
 	placeholder_classname?: HTMLDivElement['className']
 	linebreak?: boolean
+	readonly?: boolean
+	disable_textbar?: boolean
 	setRef?: (v: HTMLDivElement) => void
 	onContextMenu?: DOMAttributes<HTMLDivElement>['onContextMenu']
+	onClick?: DOMAttributes<HTMLDivElement>['onClick']
 }

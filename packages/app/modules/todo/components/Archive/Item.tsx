@@ -1,15 +1,67 @@
 import { useMemoizedFn } from 'ahooks'
 import dayjs from 'dayjs'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useMemo, useState } from 'react'
+import { useLayoutEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useText, useTextChange, Text } from '@/Editor'
 import { ArrowCounterClockwise, CheckSquare, Square, Trash } from '@phosphor-icons/react'
 
 import CycleStatus from '../CycleStatus'
 
 import type { Todo } from '@/types'
 import type { IPropsArchiveItem } from '../../types'
+
+interface IPropsTextItem {
+	id: string
+	status: Todo.Todo['status']
+	text: string
+	is_parent?: boolean
+	open?: boolean
+	data_children?: string
+	setOpen?: (v: boolean) => void
+}
+
+const TextItem = $app.memo((props: IPropsTextItem) => {
+	const { id, status, text, is_parent, open, data_children, setOpen } = props
+	const icon_size = is_parent ? 16 : 14
+
+	const { ref_editor, ref_input, onChange, setEditor, setRef } = useText({ text })
+
+	useLayoutEffect(() => {
+		const el = ref_input.current
+
+		if (!el) return
+		if (!data_children) return el.removeAttribute('data-children')
+
+		el.setAttribute('data-children', data_children)
+	}, [data_children])
+
+	useTextChange({ ref_editor, text })
+
+	return (
+		<div className={$cx('text_wrap w_100 relative', is_parent ? 'parent' : 'child')} key={id}>
+			<div className='status_wrap flex justify_center align_center absolute'>
+				<Choose>
+					<When condition={status === 'unchecked' || status === 'closed'}>
+						<Square size={icon_size} />
+					</When>
+					<Otherwise>
+						<CheckSquare size={icon_size} />
+					</Otherwise>
+				</Choose>
+			</div>
+			<Text
+				className={$cx('text block', is_parent && data_children && 'has_children')}
+				readonly
+				onChange={onChange}
+				setEditor={setEditor}
+				setRef={setRef}
+				onClick={is_parent && setOpen ? () => setOpen(!open) : undefined}
+			></Text>
+		</div>
+	)
+})
 
 const Index = (props: IPropsArchiveItem) => {
 	const { item, restoreArchiveItem, removeArchiveItem } = props
@@ -31,35 +83,9 @@ const Index = (props: IPropsArchiveItem) => {
 		return `${checked_children.length}/${item.children.length}`
 	}, [item.children])
 
-	const getTextItem = useMemoizedFn((id: string, status: Todo.Todo['status'], text, is_parent: boolean) => {
-		const icon_size = is_parent ? 16 : 14
-
-		return (
-			<div className={$cx('text_wrap w_100 relative', is_parent ? 'parent' : 'child')} key={id}>
-				<div className='status_wrap flex justify_center align_center absolute'>
-					<Choose>
-						<When condition={status === 'unchecked' || status === 'closed'}>
-							<Square size={icon_size} />
-						</When>
-						<Otherwise>
-							<CheckSquare size={icon_size} />
-						</Otherwise>
-					</Choose>
-				</div>
-				<span
-					className={$cx('text block', is_parent && data_children && 'has_children')}
-					data-children={is_parent ? data_children : ''}
-					onClick={is_parent ? () => setOpen(!open) : undefined}
-				>
-					{text}
-				</span>
-			</div>
-		)
-	})
-
 	return (
 		<div className='archive_item w_100 border_box flex flex_column'>
-			{getTextItem(id, status, text, true)}
+			<TextItem {...{ id, status, text, open, data_children, setOpen }} is_parent></TextItem>
 			<AnimatePresence>
 				{item.children?.length > 0 && open && (
 					<motion.div
@@ -70,7 +96,9 @@ const Index = (props: IPropsArchiveItem) => {
 						transition={{ duration: 0.18 }}
 						layout
 					>
-						{item.children.map(it => getTextItem(it.id, it.status, it.text, false))}
+						{item.children.map(it => (
+							<TextItem id={it.id} status={it.status} text={it.text} key={it.id}></TextItem>
+						))}
 					</motion.div>
 				)}
 			</AnimatePresence>

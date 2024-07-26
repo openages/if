@@ -62,7 +62,8 @@ const typed_nav_items = [
 		id: 'table',
 		title: 'table',
 		path: '/table',
-		plan: true
+		plan: true,
+		deving: true
 	},
 	{
 		id: 'form',
@@ -74,8 +75,7 @@ const typed_nav_items = [
 		id: 'chart',
 		title: 'chart',
 		path: '/chart',
-		plan: true,
-		deving: true
+		plan: true
 	},
 	{
 		id: 'api',

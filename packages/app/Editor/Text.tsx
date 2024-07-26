@@ -25,12 +25,15 @@ const Index = (props: IPropsText) => {
 		max_length,
 		linebreak,
 		show_on_top,
+		readonly,
+		disable_textbar,
 		onChange,
 		setEditor,
 		onKeyDown,
 		onFocus,
 		setRef,
-		onContextMenu
+		onContextMenu,
+		onClick
 	} = props
 
 	const props_rich_text = {
@@ -48,8 +51,17 @@ const Index = (props: IPropsText) => {
 			className={$cx('w_100 relative', ...text_style, linebreak && linebreak_style, className)}
 			ref={setRef}
 			onContextMenu={onContextMenu}
+			onClick={onClick}
 		>
-			<LexicalComposer initialConfig={{ namespace: 'editor', nodes: text_nodes, theme: token, onError }}>
+			<LexicalComposer
+				initialConfig={{
+					namespace: 'editor',
+					nodes: text_nodes,
+					theme: token,
+					editable: !readonly,
+					onError
+				}}
+			>
 				<RichTextPlugin {...props_rich_text} />
 				<HistoryPlugin />
 				<LinkPlugin />
@@ -60,7 +72,10 @@ const Index = (props: IPropsText) => {
 				<Watcher />
 				<TextLoader {...{ max_length, linebreak, onChange, setEditor, onKeyDown, onFocus }} />
 				<Picker text_mode />
-				<TextBar only_text={!linebreak} />
+
+				<If condition={!disable_textbar}>
+					<TextBar only_text={!linebreak} />
+				</If>
 
 				<AutoLink />
 				<LinkEditor show_on_top={show_on_top} />

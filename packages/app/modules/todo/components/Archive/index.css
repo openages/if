@@ -42,7 +42,7 @@
 
 					&.parent {
 						.status_wrap {
-							top: 5.5px;
+							top: 6.6px;
 						}
 					}
 
@@ -50,7 +50,7 @@
 						font-size: 12px;
 
 						.status_wrap {
-							top: 5px;
+							top: 6px;
 						}
 					}
 
@@ -69,21 +69,38 @@
 					}
 
 					.text {
-						text-indent: 21px;
-
 						&.has_children {
-							&::after {
+							&::before {
+								position: absolute;
+								top: 4px;
+								left: 21px;
 								height: 14px;
 								line-height: 12px;
 								box-sizing: border-box;
 								padding: 0 3px;
-								margin-left: 6px;
 								border: var(--border);
 								border-radius: 8px;
 								background-color: var(--color_bg_1);
 								content: attr(data-children);
+								text-indent: unset;
 								vertical-align: 1px;
 								font-size: 10px;
+							}
+
+							.__editor_root {
+								p {
+									text-indent: 51px;
+								}
+							}
+						}
+
+						.__editor_root {
+							p {
+								text-indent: 21px;
+
+								> * {
+									text-indent: 0;
+								}
 							}
 						}
 					}
@@ -232,6 +249,10 @@
 						border: 1px dashed var(--color_border);
 						border-radius: var(--radius);
 					}
+				}
+
+				.if-select-selection-placeholder {
+					font-size: 14px;
 				}
 			}
 		}
