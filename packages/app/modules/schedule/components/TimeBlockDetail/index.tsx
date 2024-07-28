@@ -108,6 +108,7 @@ const Index = (props: IPropsTimeBlockDetail) => {
 			<Item label={t('translation:schedule.TimeBlockDetail.desc')} name='text'>
 				<TextEditor
 					className='text_wrap border_box'
+					placeholder_classname='timeblock_placeholder'
 					placeholder={t('translation:schedule.timeblock_placeholder')}
 					max_length={schedule.text_max_length}
 				></TextEditor>

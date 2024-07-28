@@ -1,5 +1,4 @@
-import dayjs from 'dayjs'
-import { useLayoutEffect, useMemo } from 'react'
+import { useLayoutEffect } from 'react'
 
 import type { MutableRefObject } from 'react'
 import type { IPropsTodoItem } from '../../../types'
@@ -11,13 +10,8 @@ interface HookArgs {
 }
 
 export default (args: HookArgs) => {
-	const { item, input, zen_mode } = args
-	const { remind_time, children } = item
-
-	const remind = useMemo(
-		() => zen_mode && remind_time && dayjs(remind_time).diff(dayjs(), 'hour') <= 12,
-		[zen_mode, remind_time]
-	)
+	const { item, input } = args
+	const { children } = item
 
 	useLayoutEffect(() => {
 		const el = input.current
@@ -28,14 +22,4 @@ export default (args: HookArgs) => {
 
 		el.setAttribute('data-children', `${checked_children.length}/${children.length}`)
 	}, [children])
-
-	useLayoutEffect(() => {
-		const el = input.current
-
-		if (!el || !remind) return el.removeAttribute('data-remind')
-
-		el.setAttribute('data-remind', dayjs().to(dayjs(remind_time)))
-	}, [remind])
-
-	return { remind }
 }

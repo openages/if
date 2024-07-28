@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 
 import { AnglesEditor, SettingsModal, TagsEditor } from '@/components'
 import { TextEditor } from '@/Editor/components'
-import { useLimits } from '@/hooks'
 import { cleanTodoItems } from '@/modules/todo/services'
 
 import styles from './index.css'
@@ -17,7 +16,6 @@ const { Item } = Form
 
 const Index = (props: IPropsSettingsModal) => {
 	const { id, visible_settings_modal, setting, closeSettingsModal, updateSetting, removeAngle, removeTag } = props
-	const limits = useLimits()
 	const { t, i18n } = useTranslation()
 
 	const archive_options = useMemo(() => {
@@ -49,7 +47,7 @@ const Index = (props: IPropsSettingsModal) => {
 						className='desc_textarea'
 						placeholder_classname='desc_textarea_placeholder'
 						placeholder={t('translation:todo.SettingsModal.desc.placeholder')}
-						max_length={limits.todo_list_desc_max_length}
+						max_length={150}
 					></TextEditor>
 				</Item>
 				<Item name='angles' label={t('translation:common.angles.label')}>

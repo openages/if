@@ -63,8 +63,7 @@
 	.RenderTags,
 	.RenderLevel,
 	.RenderSchedule,
-	.RenderChildren,
-	.RenderRemark {
+	.RenderChildren {
 		opacity: var(--disable_opacity);
 	}
 
@@ -104,7 +103,6 @@
 	.RenderCycle,
 	.RenderSchedule,
 	.RenderChildren,
-	.RenderRemark,
 	.RenderCreateAt {
 		opacity: var(--disable_opacity);
 		color: var(--color_text_light);
@@ -293,40 +291,6 @@
 					}
 				}
 			}
-		}
-	}
-}
-
-.RenderRemark {
-	&.has_value {
-		:global {
-			.btn_remark {
-				color: var(--color_text);
-			}
-		}
-	}
-
-	:global {
-		.btn_remark {
-			width: 21px;
-			height: 21px;
-			border-radius: var(--radius_small);
-			color: var(--color_text_light);
-
-			&:hover {
-				background-color: var(--color_bg_2);
-			}
-		}
-	}
-}
-
-.RenderRemarkPopover {
-	:global {
-		.if-popover-inner {
-			overflow-y: scroll;
-			width: 300px;
-			height: 150px;
-			padding: 18px;
 		}
 	}
 }

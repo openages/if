@@ -42,7 +42,7 @@
 			margin-right: 2px;
 			border-radius: 3px;
 			color: var(--color_text_sub);
-			transform: translateY(1.5px);
+			transform: translateY(1.8px);
 
 			&:hover {
 				background-color: var(--color_bg_2);
@@ -56,18 +56,33 @@
 			user-select: none;
 
 			&.has_children {
+				position: relative;
+
 				&::after {
+					position: absolute;
+					top: 4px;
+					left: 0;
 					height: 14px;
 					line-height: 12px;
 					box-sizing: border-box;
 					padding: 0 3px;
-					margin-left: 6px;
 					border: var(--border);
 					border-radius: 8px;
 					background-color: var(--color_bg_1);
 					content: attr(data-children);
 					vertical-align: 1px;
 					font-size: 10px;
+				}
+
+				.__editor_root {
+					p {
+						transition: text-indent ease 0.18s;
+						text-indent: 30px;
+
+						> * {
+							text-indent: 0;
+						}
+					}
 				}
 			}
 		}

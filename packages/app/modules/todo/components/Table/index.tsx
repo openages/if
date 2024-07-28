@@ -17,7 +17,6 @@ import {
 	RenderDeadline,
 	RenderLevel,
 	RenderOptions,
-	RenderRemark,
 	RenderRemind,
 	RenderSchedule,
 	RenderStatus,
@@ -157,7 +156,7 @@ const Index = (props: IPropsTable) => {
 					dataIndex: 'schedule',
 					width: 60,
 					align: 'center',
-					disableEditing: true,
+					alwaysEditing: true,
 					component: RenderSchedule
 				},
 				{
@@ -167,13 +166,6 @@ const Index = (props: IPropsTable) => {
 					align: 'center',
 					disableEditing: true,
 					component: RenderChildren
-				},
-				{
-					title: t('translation:todo.Detail.remark.title'),
-					dataIndex: 'remark',
-					width: 60,
-					align: 'center',
-					component: RenderRemark
 				},
 				{
 					title: t('translation:todo.Archive.title'),

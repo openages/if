@@ -1,6 +1,5 @@
 export { default as modules } from './modules'
 export { default as shortcuts } from './shortcuts'
-export { default as limits } from './limits'
 export { default as exclude_paths } from './exclude_paths'
 export { default as full_paths } from './full_paths'
 

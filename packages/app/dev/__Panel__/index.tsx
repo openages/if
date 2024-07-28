@@ -30,8 +30,13 @@ const Index = () => {
 				</Button>
 			</div>
 			<div className='btn_wrap w_100 border_box'>
-				<Button className='btn clickable' size='small' onClick={Todo_insertItems}>
-					插入任务
+				<Button className='btn clickable' size='small' onClick={() => Todo_insertItems('cn')}>
+					插入任务[cn]
+				</Button>
+			</div>
+			<div className='btn_wrap w_100 border_box'>
+				<Button className='btn clickable' size='small' onClick={() => Todo_insertItems('en')}>
+					插入任务[en]
 				</Button>
 			</div>
 		</div>

@@ -1,14 +1,14 @@
 import { flatten } from 'lodash-es'
+import { match } from 'ts-pattern'
 
 import { getEditorJSON } from '@/utils/editor'
 
-import { todos_cn } from './data'
+import { todos_cn, todos_en } from './data'
 
 import type { Todo } from '@/types'
+type Args = { file_id: string; angles: Todo.Setting['angles'] }
 
-type Args = { file_id: string; angles: Todo.Setting['angles']; type: 'cn' | 'en' }
-
-export default async () => {
+export default async (lang: 'cn' | 'en') => {
 	const args = {} as Args
 
 	const one_dirtree = await $db.dirtree_items
@@ -31,9 +31,10 @@ export default async () => {
 
 	args.angles = (JSON.parse(one_module_setting[0].setting) as Todo.Setting).angles
 
-	args.type = 'cn'
-
-	const todos = todos_cn()
+	const todos = match(lang)
+		.with('cn', () => todos_cn())
+		.with('en', () => todos_en())
+		.exhaustive()
 
 	args.angles.map((item, index) => {
 		todos[index].map(todo => {

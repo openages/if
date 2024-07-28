@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { getTextColor } from '@/utils'
+import { getTagColor } from '@/utils'
 
 import TagSelect from '../../TagSelect'
 import styles from '../index.css'
@@ -34,18 +34,22 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 				<div className={$cx(styles.RenderTagsViewer, 'w_100 flex justify_center')}>
 					<Choose>
 						<When condition={items !== undefined && items?.length > 0}>
-							{items?.map(item => (
-								<span
-									className='tag_item'
-									style={{
-										backgroundColor: item.color,
-										color: getTextColor(item.color)
-									}}
-									key={item.id}
-								>
-									{item.text}
-								</span>
-							))}
+							{items?.map(item => {
+								const tag_color = getTagColor(item.color)
+
+								return (
+									<span
+										className='tag_item'
+										style={{
+											backgroundColor: tag_color.bg_color,
+											color: tag_color.text_color
+										}}
+										key={item.id}
+									>
+										{item.text}
+									</span>
+								)
+							})}
 						</When>
 						<Otherwise>
 							<span className='color_text_light'>

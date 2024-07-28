@@ -123,8 +123,7 @@ const Index = (props: IPropsTodoItem) => {
 	})
 
 	useOpen({ item, zen_mode, open, open_items, renderLines, setOpen })
-
-	const { remind } = useOptions({ item, input: ref_input, zen_mode })
+	useOptions({ item, input: ref_input, zen_mode })
 
 	const props_children: IPropsChildren = {
 		mode,
@@ -289,8 +288,7 @@ const Index = (props: IPropsTodoItem) => {
 								className={$cx(
 									'text_wrap',
 									children && children?.length && !open && 'has_children',
-									outdate && 'outdate',
-									remind && 'remind'
+									outdate && 'outdate'
 								)}
 								max_length={todo.text_max_length}
 								onChange={onChange}

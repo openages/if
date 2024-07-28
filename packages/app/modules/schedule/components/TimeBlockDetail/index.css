@@ -5,6 +5,10 @@
 	font-size: 12px;
 
 	:global {
+		.timeblock_placeholder {
+			top: 6px;
+		}
+
 		.if-form-item {
 			margin-bottom: 0px;
 			border-bottom: 1px dashed var(--color_border_light);

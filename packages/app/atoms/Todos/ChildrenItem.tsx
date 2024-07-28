@@ -1,5 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 
+import { useText, useTextChange, Text } from '@/Editor'
 import { CheckSquare, Square } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -15,6 +16,10 @@ interface IProps {
 const Index = (props: IProps) => {
 	const { item, index, updateChildStatus } = props
 	const { text, status } = item
+
+	const { ref_editor, onChange, setEditor, setRef } = useText({ text })
+
+	useTextChange({ ref_editor, text })
 
 	const onCheck = useMemoizedFn(() => {
 		updateChildStatus(index, status === 'unchecked' ? 'checked' : 'unchecked')
@@ -35,7 +40,7 @@ const Index = (props: IProps) => {
 					</When>
 				</Choose>
 			</div>
-			<span className='todo_text'>{text}</span>
+			<Text className='todo_text' readonly onChange={onChange} setEditor={setEditor} setRef={setRef}></Text>
 		</div>
 	)
 }

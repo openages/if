@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useText, useTextChange, Text } from '@/Editor'
 import { CSS } from '@dnd-kit/utilities'
 import { CheckSquare, ListMagnifyingGlass, Square, Trash } from '@phosphor-icons/react'
 
@@ -50,6 +51,10 @@ const Index = (props: IProps) => {
 	useEffect(() => {
 		if (isDragging) setOpen(false)
 	}, [isDragging])
+
+	const { ref_editor, onChange, setEditor, setRef } = useText({ text })
+
+	useTextChange({ ref_editor, text })
 
 	const toggleChildren = useMemoizedFn(() => setOpen(!open))
 
@@ -162,7 +167,7 @@ const Index = (props: IProps) => {
 						{...attributes}
 						{...listeners}
 					>
-						{text}
+						<Text readonly onChange={onChange} setEditor={setEditor} setRef={setRef}></Text>
 					</span>
 				</Dropdown>
 			</div>

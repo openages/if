@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import { match } from 'ts-pattern'
 
 import { IconEditor } from '@/components'
-import { useLimits } from '@/hooks'
 
 import styles from './index.css'
 
@@ -30,7 +29,6 @@ const Index = (props: IPropsModal) => {
 	const [icon, setIcon] = useState({ icon: '', icon_hue: undefined })
 	const input = useRef<InputRef>(null)
 	const [value, { onChange }] = useEventTarget<string>()
-	const limits = useLimits()
 	const { t } = useTranslation()
 
 	useEffect(() => {
@@ -81,7 +79,7 @@ const Index = (props: IPropsModal) => {
 	}, [modal_type, current_option, focusing_item])
 
 	const onOk = useMemoizedFn(() => {
-		if (!value || value.length > limits.todo_list_title_max_length) return
+		if (!value || value.length > 72) return
 		if (current_option === 'rename') return update({ name: value, ...icon })
 		if (current_option === 'add_dir') return insert({ type: 'dir', name: value, ...icon })
 		if (current_option === 'add_file') return insert({ type: 'file', name: value, ...icon })
@@ -122,7 +120,7 @@ const Index = (props: IPropsModal) => {
 					autoFocus
 					ref={input}
 					value={value}
-					maxLength={limits.todo_list_title_max_length}
+					maxLength={72}
 					onChange={onChange}
 				></Input>
 			</div>

@@ -10,7 +10,7 @@ import { getTodoItems, updateTodoItem } from './services'
 import type { Todo } from '@/types'
 import type { Subscription } from 'rxjs'
 import type { RxDocument } from 'rxdb'
-import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core'
+import type { DragEndEvent } from '@dnd-kit/core'
 import type { IProps } from './index'
 
 @injectable()
@@ -133,7 +133,7 @@ export default class Index {
 		this.watcher = getTodoItems(this.ids).$.subscribe(doc => {
 			if (!this.mode) this.checkExsit(Array.from(doc.keys()))
 
-			this.items = getDocItemsData(Array.from(doc.values())) as Array<Todo.Todo>
+			this.items = this.ids.map(id => getDocItem(doc.get(id))) as Array<Todo.Todo>
 		})
 	}
 

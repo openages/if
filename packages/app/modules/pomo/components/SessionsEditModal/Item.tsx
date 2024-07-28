@@ -98,7 +98,7 @@ const Index = (props: IPropsSessionsEditModalItem) => {
 				</div>
 				<span className='work_time_value flex flex_column'>
 					{title && <span className='title w_100 text_center mb_6'>{title}</span>}
-					<span>
+					<span className='text_center'>
 						{target_work_time.hours}:{target_work_time.minutes}
 					</span>
 				</span>

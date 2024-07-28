@@ -96,6 +96,7 @@
 
 						.__editor_root {
 							p {
+								transition: text-indent ease 0.18s;
 								text-indent: 21px;
 
 								> * {

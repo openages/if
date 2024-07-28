@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { IconEditor } from '@/components'
-import { useLimits } from '@/hooks'
 import { isFormValuesEqual } from '@/utils'
 
 const { Item, useForm } = Form
@@ -16,7 +15,6 @@ const Index = (
 ) => {
 	const { module, children, info, IconEditCenter, onValuesChange } = props
 	const [form] = useForm()
-	const limits = useLimits()
 	const { t } = useTranslation()
 	const { getFieldsValue, setFieldsValue } = form
 
@@ -45,7 +43,7 @@ const Index = (
 						className='name_input'
 						placeholder={t('translation:components.SettingsModal.name_placeholder')}
 						showCount
-						maxLength={limits.todo_list_title_max_length}
+						maxLength={72}
 					></Input>
 				</Item>
 			</div>

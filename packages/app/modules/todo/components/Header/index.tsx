@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 
 import { Emoji } from '@/components'
 import { useText, useTextChange, Text } from '@/Editor'
-import { useLimits } from '@/hooks'
 import {
 	CaretDown,
 	CaretUp,
@@ -51,7 +50,6 @@ const Index = (props: IPropsHeader) => {
 		updateSetting
 	} = props
 
-	const limits = useLimits()
 	const { t } = useTranslation()
 
 	const { ref_editor, onChange, setEditor, setRef } = useText({
@@ -156,7 +154,7 @@ const Index = (props: IPropsHeader) => {
 				</div>
 				<Text
 					className={$cx('desc', (mode !== 'list' || !editor_size) && 'none')}
-					max_length={limits.todo_list_desc_max_length}
+					max_length={150}
 					onChange={onChange}
 					setEditor={setEditor}
 					setRef={setRef}
