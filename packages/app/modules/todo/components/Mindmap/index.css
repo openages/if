@@ -66,17 +66,13 @@
 }
 
 .shadow {
+	z-index: -1;
+	top: -100vh;
+	left: -100vw;
 	visibility: hidden;
 	overflow: hidden;
-	width: 0;
-	height: 0;
 
 	:global {
-		.shadow_graph {
-			width: 1px !important;
-			height: 1px !important;
-		}
-
 		.react-flow__node {
 			box-sizing: border-box;
 			padding: 0;

@@ -14,14 +14,15 @@ const Index = (props: IPropsShadow) => {
 
 	useEffect(() => {
 		if (!nodes.length) return
-		if (nodes.some(item => !item?.computed?.width || !item?.computed?.height)) return
+		// @ts-ignore
+		if (nodes.some(item => !item?.measured?.width || !item?.measured?.height)) return
 
 		layout(nodes)
 		setHandlers({ setNodes })
 	}, [nodes])
 
 	return (
-		<div className={$cx('absolute top_0 left_0', styles.shadow)}>
+		<div className={$cx('absolute top_0 left_0 h_100vh w_100vw', styles.shadow)}>
 			<ReactFlow className='shadow_graph' nodeTypes={node_types} defaultNodes={pure_nodes}></ReactFlow>
 		</div>
 	)

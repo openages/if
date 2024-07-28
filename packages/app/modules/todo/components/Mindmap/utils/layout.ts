@@ -14,8 +14,10 @@ export default (args: Pick<IPropsMindmap, 'file_id' | 'kanban_items'>, nodes: Ar
 	const nodes_map = nodes.reduce(
 		(total, item) => {
 			total[item.id] = {
-				width: item.computed.width,
-				height: item.computed.height,
+				// @ts-ignore
+				width: item.measured.width,
+				// @ts-ignore
+				height: item.measured.height,
 				position: { x: 0, y: 0 }
 			}
 
@@ -81,7 +83,8 @@ export default (args: Pick<IPropsMindmap, 'file_id' | 'kanban_items'>, nodes: Ar
 
 	return nodes.map(item => {
 		item.position = nodes_map[item.id].position
-		item.computed.positionAbsolute = item.position
+		//@ts-ignore
+		item.measured.positionAbsolute = item.position
 		item.targetPosition = Position.Left
 		item.sourcePosition = Position.Right
 
