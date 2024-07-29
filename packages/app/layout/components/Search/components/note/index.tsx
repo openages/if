@@ -47,7 +47,7 @@ const Index = (props: IProps) => {
 			<div className='text_wrap'>
 				{array_text.map((it, idx) => (
 					<span className='text_item' key={idx}>
-						<span>{it}</span>
+						<span>{it.slice(0, 30)}</span>
 						{idx !== array_text.length - 1 && <span className='color_main'>{text}</span>}
 					</span>
 				))}
