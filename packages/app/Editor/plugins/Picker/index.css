@@ -2,15 +2,15 @@
 	min-width: 300px;
 	max-width: 100%;
 
-	.Emoji {
+	&.Emoji {
 		padding: 0 !important;
 	}
 
-	.Mermaid {
+	&.Mermaid {
 		min-width: 450px;
 	}
 
-	.Ref {
+	&.Ref {
 		padding-bottom: 0;
 	}
 

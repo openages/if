@@ -3,6 +3,7 @@ import type Model from './model'
 
 export interface IProps {
 	text_mode?: boolean
+	linebreak?: boolean
 }
 
 export interface IPropsMenu {

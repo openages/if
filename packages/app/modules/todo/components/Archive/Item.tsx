@@ -102,17 +102,13 @@ const Index = (props: IPropsArchiveItem) => {
 					</motion.div>
 				)}
 			</AnimatePresence>
-
 			<div className='bottom_wrap flex justify_between align_center'>
 				<div className='create_at flex align_center'>
 					{relative_time}
 					{recycle && <CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>}
 				</div>
 				<div className='actions_wrap flex align_center'>
-					<div
-						className='btn_action flex align_center cursor_point clickable mr_4'
-						onClick={restore}
-					>
+					<div className='btn_action flex align_center cursor_point clickable' onClick={restore}>
 						<ArrowCounterClockwise size={12}></ArrowCounterClockwise>
 						<span className='btn_text ml_2'>{t('translation:todo.Archive.restore')}</span>
 					</div>

@@ -27,7 +27,7 @@ import type { IPropsModal } from '../../types'
 import type { TypeaheadMenuPluginProps } from '@lexical/react/LexicalTypeaheadMenuPlugin'
 
 const Index = (props: IProps) => {
-	const { text_mode } = props
+	const { text_mode, linebreak } = props
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
@@ -46,7 +46,7 @@ const Index = (props: IProps) => {
 	const checkForTriggerMatch = useBasicTypeaheadTriggerMatch('/', { minLength: 0 })
 
 	const options = useMemo(() => {
-		const target = getOptions({ query_string: x.query, editor, text_mode, showModal })
+		const target = getOptions({ query_string: x.query, editor, text_mode, linebreak, showModal })
 
 		if (!x.query) x.options = target
 
@@ -121,7 +121,7 @@ const Index = (props: IProps) => {
 	return (
 		<Fragment>
 			<Modal
-				className={$cx(styles.modal, x.modal && styles[x.modal])}
+				bodyClassName={$cx(styles.modal, x.modal && styles[x.modal])}
 				open={x.modal !== ('' as Model['modal'])}
 				title={modal_title}
 				width={config[x.modal]?.width || 300}

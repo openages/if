@@ -7,6 +7,7 @@ import {
 	$getEditorSize,
 	$getMatchingParent,
 	$getRemovedParent,
+	$getTopLevelNode,
 	$restoreNodeFromJson,
 	getStateJson
 } from '@/Editor/utils'
@@ -93,7 +94,7 @@ export default class Index {
 	async onUpdate(args: Lexical.ArgsUpdateListener) {
 		if (this.editor.isComposing()) return
 
-		const { dirtyElements, editorState, dirtyLeaves, prevEditorState } = args
+		const { dirtyElements, dirtyLeaves, editorState, prevEditorState } = args
 		const dirty_els = $copy(dirtyElements)
 		const curr_map = editorState._nodeMap
 		const prev_map = prevEditorState._nodeMap
@@ -109,7 +110,7 @@ export default class Index {
 
 						if (node?.__parent !== 'root') {
 							if (node) {
-								return node.getTopLevelElement().getKey()
+								return $getTopLevelNode(node).getKey()
 							} else {
 								return $getRemovedParent(item, prev_map)
 							}
@@ -157,6 +158,8 @@ export default class Index {
 
 			if (type === 'add' || type === 'update') {
 				const res = this.getNodeData(id)
+
+				if (!res) return
 
 				prev = res.prev
 				next = res.next
@@ -217,6 +220,9 @@ export default class Index {
 	getNodeData(id: string) {
 		return this.editor.getEditorState().read(() => {
 			const node = $getNodeByKey(id)
+
+			if (!node) return null
+
 			const content = JSON.stringify($exportNodeToJson(node))
 
 			return { prev: node.__prev, next: node.__next, content }

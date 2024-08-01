@@ -524,10 +524,13 @@ export default class Index {
 		const target = getDocItem(doc)
 		const container = document.getElementById(this.id)
 
+		this.changeView(target.type)
 		this.changeCurrent(dayjs(target.start_time))
 
 		setTimeout(() => {
 			const target_dom = container.querySelector(`#${id}`)
+
+			if (!target_dom) return
 
 			scrollIntoView(target_dom, { block: 'center', behavior: 'smooth', boundary: container })
 

@@ -14,6 +14,8 @@ import Model from './model'
 import type { IPropsRef } from '../types'
 import type { App } from '@/types'
 
+const text_modules = ['todo', 'schedule']
+
 const Index = (props: IPropsRef) => {
 	const { module, id, node_key } = props
 	const [x] = useState(() => new Model())
@@ -30,7 +32,7 @@ const Index = (props: IPropsRef) => {
 	const text = useMemo(() => {
 		if (!item.text) return ''
 
-		if (module === 'todo') {
+		if (text_modules.includes(module)) {
 			return getEditorText(item.text)
 		}
 

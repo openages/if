@@ -5,8 +5,8 @@ export namespace Lexical {
 		dirtyElements: Map<NodeKey, boolean>
 		dirtyLeaves: Set<NodeKey>
 		editorState: EditorState
-		normalizedNodes: Set<NodeKey>
 		prevEditorState: EditorState
+		normalizedNodes: Set<NodeKey>
 		tags: Set<string>
 	}
 }

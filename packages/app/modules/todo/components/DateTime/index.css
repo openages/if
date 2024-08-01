@@ -68,8 +68,8 @@
 			}
 		}
 
-		.if-picker-suffix {
-			margin: 0;
+		.if-picker-clear {
+			right: 8px;
 		}
 
 		.btn_clock {

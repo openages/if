@@ -70,7 +70,7 @@
 }
 
 .notice_text {
-	color: var(--color_danger);
+	color: var(--color_danger) !important;
 }
 
 .transparent {

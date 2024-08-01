@@ -72,7 +72,7 @@ const Index = (props: IPropsText) => {
 
 				<Watcher />
 				<TextLoader {...{ max_length, linebreak, onChange, setEditor, onKeyDown, onFocus }} />
-				<Picker text_mode />
+				<Picker text_mode linebreak={linebreak} />
 
 				<If condition={!disable_textbar}>
 					<TextBar only_text={!linebreak} />

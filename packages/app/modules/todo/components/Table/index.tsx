@@ -146,7 +146,7 @@ const Index = (props: IPropsTable) => {
 					title: t('translation:todo.Input.Cycle.title'),
 					dataIndex: 'cycle',
 					deps: ['cycle_enabled'],
-					width: 96,
+					width: 132,
 					align: 'center',
 					useRowChange: true,
 					component: RenderCycle

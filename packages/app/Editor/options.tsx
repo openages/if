@@ -36,15 +36,16 @@ interface Args {
 	query_string: string
 	editor: LexicalEditor
 	text_mode?: boolean
+	linebreak?: boolean
 	showModal: (v: Model['modal']) => void
 }
 
 export default (args: Args) => {
-	const { query_string, editor, text_mode, showModal } = args
+	const { query_string, editor, text_mode, linebreak, showModal } = args
 	const regex = new RegExp(query_string, 'i')
 
 	if (text_mode) {
-		return [
+		const options = [
 			new Option($t('translation:editor.name.Emoji'), {
 				icon: <Smiley />,
 				shortcut: 'emo',
@@ -56,6 +57,28 @@ export default (args: Args) => {
 				onSelect: () => showModal('Ref')
 			})
 		]
+
+		if (linebreak) {
+			options.push(
+				new Option($t('translation:editor.name.UnorderedList'), {
+					icon: <ListBullets />,
+					shortcut: 'ul',
+					onSelect: () => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, null)
+				}),
+				new Option($t('translation:editor.name.OrderedList'), {
+					icon: <ListNumbers />,
+					shortcut: 'ol',
+					onSelect: () => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, null)
+				}),
+				new Option($t('translation:editor.name.TodoList'), {
+					icon: <ListChecks />,
+					shortcut: 'tl',
+					onSelect: () => editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, null)
+				})
+			)
+		}
+
+		return options
 	}
 
 	return [

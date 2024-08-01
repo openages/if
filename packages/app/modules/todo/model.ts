@@ -518,7 +518,7 @@ export default class Index {
 				id: this.id,
 				title: $t('translation:common.notice'),
 				// @ts-ignore
-				content: $t('translation:todo.SettingsModal.angles.remove_confirm', { counts })
+				content: $t('translation:common.angles.remove_confirm', { counts })
 			})
 
 			if (!res) return false
@@ -537,7 +537,7 @@ export default class Index {
 				id: this.id,
 				title: $t('translation:common.notice'),
 				// @ts-ignore
-				content: $t('translation:todo.SettingsModal.tags.remove_confirm', { counts })
+				content: $t('translation:common.tags.remove_confirm', { counts })
 			})
 
 			if (!res) return false
