@@ -300,9 +300,6 @@ export default class Index {
 		if (this.unregister) this.unregister()
 
 		this.unregister = mergeRegister(
-			this.editor.registerNodeTransform(ToggleNode, this.toggleNodeTranform),
-			this.editor.registerNodeTransform(ToggleHeadNode, this.toggleHeadNodeTransform),
-			this.editor.registerNodeTransform(ToggleBodyNode, this.toggleBodyNodeTransform),
 			this.editor.registerCommand(
 				INSERT_PARAGRAPH_COMMAND,
 				this.insertParagraph.bind(this),
@@ -335,6 +332,9 @@ export default class Index {
 
 	on() {
 		this.utils.acts.push(
+			this.editor.registerNodeTransform(ToggleNode, this.toggleNodeTranform),
+			this.editor.registerNodeTransform(ToggleHeadNode, this.toggleHeadNodeTransform),
+			this.editor.registerNodeTransform(ToggleBodyNode, this.toggleBodyNodeTransform),
 			this.editor.registerCommand(INSERT_TOGGLE_COMMAND, this.insert.bind(this), COMMAND_PRIORITY_EDITOR),
 			this.editor.registerCommand(
 				SELECTION_ELEMENTS_CHANGE,

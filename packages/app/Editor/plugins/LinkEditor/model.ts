@@ -1,4 +1,5 @@
 import {
+	$getNearestNodeFromDOMNode,
 	$getSelection,
 	$isNodeSelection,
 	$isRangeSelection,
@@ -120,7 +121,15 @@ export default class Index {
 			if (url.startsWith('#')) {
 				const container = document.getElementById(this.id)
 
-				el = container.querySelector(`a[href="${url}"]`)
+				const els = container.querySelectorAll(`a[href="${url}"]`)
+
+				els.forEach((element: HTMLElement) => {
+					const node = $getNearestNodeFromDOMNode(element)
+
+					if (`#${node.getTextContent()}` === url) {
+						el = element
+					}
+				})
 			}
 
 			if (url.startsWith('block://')) {

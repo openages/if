@@ -205,6 +205,8 @@ export default class TableNode extends ElementNode {
 		const table_node = $getMatchingParent(anchor, $isTableNode) as TableNode
 		const table_cell_node = $getMatchingParent(anchor, $isTableCellNode) as TableCellNode
 
+		if (!table_node) return
+
 		const [table_map, table_node_map] = $computeTableMap(table_node, table_cell_node, null)
 		const { start_row } = table_node_map
 
@@ -223,6 +225,8 @@ export default class TableNode extends ElementNode {
 		const anchor = selection.anchor.getNode()
 		const table_node = $getMatchingParent(anchor, $isTableNode) as TableNode
 		const table_cell_node = $getMatchingParent(anchor, $isTableCellNode) as TableCellNode
+
+		if (!table_node) return
 
 		const [table_map, table_node_map] = $computeTableMap(table_node, table_cell_node, null)
 		const { start_column } = table_node_map

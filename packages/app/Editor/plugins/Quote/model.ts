@@ -103,7 +103,6 @@ export default class Index {
 		if (this.unregister) this.unregister()
 
 		this.unregister = mergeRegister(
-			this.editor.registerNodeTransform(QuoteNode, this.quoteNodeTranform),
 			this.editor.registerCommand(DELETE_CHARACTER_COMMAND, this.onDelete.bind(this), COMMAND_PRIORITY_LOW)
 		)
 	}
@@ -118,6 +117,7 @@ export default class Index {
 
 	on() {
 		this.utils.acts.push(
+			this.editor.registerNodeTransform(QuoteNode, this.quoteNodeTranform),
 			this.editor.registerCommand(
 				SELECTION_ELEMENTS_CHANGE,
 				this.checkSelection.bind(this),

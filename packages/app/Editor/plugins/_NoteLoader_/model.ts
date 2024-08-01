@@ -31,8 +31,9 @@ export default class Index {
 	ids_array = [] as Array<string>
 	ids_map = new Map<string, undefined>()
 	disable_watcher = false
+	loaded = false
 	mutation_load_status = false
-	update_load_status = 0
+	update_load_status = 1
 	timer_change = null as NodeJS.Timeout
 	changes = new Map<string, Change>()
 
@@ -46,6 +47,10 @@ export default class Index {
 		await this.getData()
 
 		this.on()
+
+		// setInterval(() => {
+		// 	console.log(Array.from(this.changes.values()))
+		// }, 1000)
 	}
 
 	async getData() {
@@ -92,6 +97,7 @@ export default class Index {
 	}
 
 	async onUpdate(args: Lexical.ArgsUpdateListener) {
+		if (!this.loaded) return (this.loaded = true)
 		if (this.editor.isComposing()) return
 
 		const { dirtyElements, dirtyLeaves, editorState, prevEditorState } = args
@@ -319,14 +325,10 @@ export default class Index {
 					const node = $getNodeByKey(item.id)
 					const selection = $getSelection()
 
-					let selection_cloned = null as RangeSelection
-
 					if ($isRangeSelection(selection)) {
 						const match = $getMatchingParent(selection.focus.getNode(), n => node.is(n))
 
 						if (match) {
-							selection_cloned = selection.clone()
-
 							$setSelection(null)
 						}
 					}

@@ -3,7 +3,6 @@ import { injectable } from 'tsyringe'
 
 import { INSERT_TABLE_COMMAND, SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
 import Utils from '@/models/utils'
-import { mergeRegister } from '@lexical/utils'
 
 import TableNode from './TableNode'
 import { $createTableNodeWithDimensions, $isTableNode, $updateTableCols, applyTableHandlers } from './utils'
@@ -16,8 +15,6 @@ import type { LexicalEditor, NodeMutation } from 'lexical'
 export default class Index {
 	editor = null as LexicalEditor
 	table_selections = {} as Record<string, TableObserver>
-
-	unregister = null as () => void
 
 	constructor(public utils: Utils) {}
 
@@ -80,12 +77,6 @@ export default class Index {
 	}
 
 	checkSelection(path: Array<{ type: string; key: string }>) {
-		if (path.find(item => item.type === 'table') !== undefined) {
-			this.addListeners()
-		} else {
-			this.removeListeners()
-		}
-
 		const selection_keys = Object.keys(this.table_selections)
 
 		selection_keys.forEach(key => {
@@ -116,21 +107,7 @@ export default class Index {
 		}
 	}
 
-	addListeners() {
-		if (this.unregister) this.unregister()
-
-		this.unregister = mergeRegister(
-			this.editor.registerNodeTransform(TableNode, this.onTransformTable.bind(this))
-		)
-	}
-
 	removeListeners() {
-		if (!this.unregister) return
-
-		this.unregister()
-
-		this.unregister = null
-
 		for (const key in this.table_selections) {
 			this.table_selections[key].removeListeners()
 		}
@@ -141,6 +118,7 @@ export default class Index {
 	on() {
 		this.utils.acts.push(
 			this.editor.registerCommand(INSERT_TABLE_COMMAND, this.onInsert.bind(this), COMMAND_PRIORITY_EDITOR),
+			this.editor.registerNodeTransform(TableNode, this.onTransformTable.bind(this)),
 			this.editor.registerMutationListener(TableNode, this.onMutation.bind(this)),
 			this.editor.registerCommand(
 				SELECTION_ELEMENTS_CHANGE,
@@ -152,9 +130,5 @@ export default class Index {
 
 	off() {
 		this.utils.off()
-
-		this.unregister?.()
-
-		this.unregister = null
 	}
 }

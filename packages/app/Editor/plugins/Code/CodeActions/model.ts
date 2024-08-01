@@ -45,6 +45,7 @@ export default class Index {
 			} else {
 				container.removeEventListener('scroll', this.onScroll)
 
+				if (!this.resize_observer) return
 				if (container) this.resize_observer.unobserve(container)
 
 				this.resize_observer.disconnect()
