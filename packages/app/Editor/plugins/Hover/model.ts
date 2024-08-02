@@ -38,7 +38,7 @@ import { $isToggleBodyNode, $isToggleBtnNode, $isToggleHeadNode, $isToggleNode }
 import type KatexNode from '../Katex/Node'
 import type { DecoratorNode, LexicalEditor, LexicalNode } from 'lexical'
 import type { DragEvent as ReactDragEvent } from 'react'
-import type { ListItemNode, ListNode } from '@lexical/list'
+import type { ListNode } from '@lexical/list'
 
 @injectable()
 export default class Index {
@@ -485,7 +485,7 @@ export default class Index {
 				block_padding = 0
 			}
 
-			if ($isCodeNode(node)) {
+			if ($isCodeNode(node) || $isQuoteNode(node)) {
 				block_padding = 0
 				inline_padding = 0
 			}

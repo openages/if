@@ -231,6 +231,14 @@
 		height: 36px;
 		border-radius: var(--radius_small);
 
+		&.has_tag {
+			:global {
+				.timeblock_content_wrap {
+					border-color: transparent;
+				}
+			}
+		}
+
 		:global {
 			p {
 				text-overflow: ellipsis;

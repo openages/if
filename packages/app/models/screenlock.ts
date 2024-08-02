@@ -193,6 +193,8 @@ export default class Index {
 	}
 
 	async lock() {
+		if (!this.data.password) return
+
 		const has_timer = await $app.Event.emit('global.app.hasTimer')
 
 		if (has_timer) return

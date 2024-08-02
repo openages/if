@@ -1,10 +1,6 @@
 ._local {
 	:global {
-		.statement {
-			margin-top: 12px;
-		}
 		.media_wrap {
-			margin-top: 12px;
 			font-size: 12px;
 
 			.media_item {
@@ -14,6 +10,32 @@
 				&:hover {
 					opacity: 1;
 				}
+			}
+		}
+
+		.statement {
+			width: 81%;
+			padding: 12px;
+			margin-top: 18px;
+			font-family: 'SourceSerif4', Georgia, ui-serif, serif;
+
+			.words {
+				line-height: 1.32;
+				margin-bottom: 15px;
+				font-size: 30px;
+				font-weight: 500;
+
+				&::before {
+					content: '“';
+				}
+
+				&::after {
+					content: '”';
+				}
+			}
+
+			.person {
+				color: var(--color_text_light);
 			}
 		}
 	}

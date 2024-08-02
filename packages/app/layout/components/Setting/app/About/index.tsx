@@ -6,7 +6,6 @@ const Index = () => {
 	return (
 		<div className={$cx('w_100 h_100 flex flex_column align_center justify_center', styles._local)}>
 			<Logo size={150}></Logo>
-			<span className='statement'>Create and design by iyasa</span>
 			<div className='media_wrap flex'>
 				<a className='media_item' href='https://if.openages.com' target='_blank'>
 					Website
@@ -20,6 +19,10 @@ const Index = () => {
 				<a className='media_item' href='https://if.openages.com/privacy' target='_blank'>
 					Privacy Policy
 				</a>
+			</div>
+			<div className='statement flex flex_column align_center'>
+				<span className='words text_center'>Time is the most valuable thing a man can spend.</span>
+				<span className='person'>Theophrastus</span>
 			</div>
 		</div>
 	)
