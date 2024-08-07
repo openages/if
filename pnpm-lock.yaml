@@ -518,8 +518,8 @@ importers:
         specifier: ^0.14.2
         version: 0.14.2
       swc-plugin-jsx-control-statements:
-        specifier: link:../stk/crates/swc-plugin-jsx-control-statements
-        version: link:../stk/crates/swc-plugin-jsx-control-statements
+        specifier: link:../stk/crates/swc-plugin-jsx-control-statements-for-next
+        version: link:../stk/crates/swc-plugin-jsx-control-statements-for-next
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
