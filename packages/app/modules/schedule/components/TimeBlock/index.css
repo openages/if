@@ -125,7 +125,7 @@
 	&.past {
 		:global {
 			.timeblock_content_wrap {
-				opacity: 0.48;
+				opacity: 1;
 			}
 		}
 	}
@@ -135,7 +135,6 @@
 
 		:global {
 			.timeblock_content_wrap {
-				border-color: rgba(var(--tag_color), 0.12);
 				background-color: var(--tag_bg_color);
 
 				.text_wrap {
@@ -157,6 +156,14 @@
 		z-index: 998;
 	}
 
+	&.no_tag {
+		:global {
+			.timeblock_content_wrap {
+				background-color: var(--color_bg_1);
+			}
+		}
+	}
+
 	&.month_mode {
 		align-items: center;
 		flex-direction: row;
@@ -169,14 +176,6 @@
 			:global {
 				.status {
 					opacity: 0;
-				}
-			}
-		}
-
-		&.no_tag {
-			:global {
-				.timeblock_content_wrap {
-					background-color: var(--color_bg_1);
 				}
 			}
 		}
@@ -231,14 +230,6 @@
 		height: 36px;
 		border-radius: var(--radius_small);
 
-		&.has_tag {
-			:global {
-				.timeblock_content_wrap {
-					border-color: transparent;
-				}
-			}
-		}
-
 		:global {
 			p {
 				text-overflow: ellipsis;
@@ -291,7 +282,6 @@
 		}
 
 		.timeblock_content_wrap {
-			border: 1px solid var(--color_border);
 			border-radius: var(--radius);
 			cursor: grab;
 
