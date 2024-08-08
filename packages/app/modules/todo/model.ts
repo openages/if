@@ -408,6 +408,8 @@ export default class Index {
 		if (type === 'children_item') {
 			const children = $copy(item.children)
 
+			if (!children?.[children_index]) return
+
 			children[children_index] = { ...children[children_index], ...value }
 
 			data['children'] = children
@@ -604,11 +606,16 @@ export default class Index {
 
 		if (type === 'in') {
 			const prev_item = items[index - 1]
-			const exsit_index = this.setting.setting.relations
-				? this.setting.setting.relations.findIndex(relation => relation.items.includes(item.id))
-				: -1
 
 			if (!prev_item || prev_item.type === 'group') return
+
+			const exsit_index = this.setting.setting.relations
+				? this.setting.setting.relations.findIndex(
+						relation =>
+							relation.items.includes(item.id) || relation.items.includes(prev_item.id)
+					)
+				: -1
+
 			if (exsit_index !== -1) return
 			if (item.children?.length) return
 
