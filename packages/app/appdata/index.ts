@@ -11,5 +11,6 @@ export * from './values'
 export * from './colors'
 export * from './options'
 export * from './const'
+export * from './version'
 
 export type { ShortcutEventPaths } from './shortcuts'

@@ -1,8 +1,10 @@
 ._local {
 	:global {
-		.media_wrap {
+		.version {
 			font-size: 12px;
+		}
 
+		.media_wrap {
 			.media_item {
 				margin: 0 6px;
 				text-decoration: underline;

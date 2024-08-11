@@ -1,3 +1,4 @@
+import { getVersion } from '@/appdata/version'
 import { Logo } from '@/components'
 
 import styles from './index.css'
@@ -6,6 +7,7 @@ const Index = () => {
 	return (
 		<div className={$cx('w_100 h_100 flex flex_column align_center justify_center', styles._local)}>
 			<Logo size={150}></Logo>
+			<span className='version mb_6'>{getVersion()}</span>
 			<div className='media_wrap flex'>
 				<a className='media_item' href='https://if.openages.com' target='_blank'>
 					Website

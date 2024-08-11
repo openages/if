@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import smoothScrollIntoView from 'smooth-scroll-into-view-if-needed'
 
 import { Popover } from '@/components'
+import { useGlobal } from '@/context/app'
 import { useStackSelector } from '@/context/stack'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { TableOfContentsPlugin } from '@lexical/react/LexicalTableOfContentsPlugin'
@@ -79,14 +80,16 @@ const Index = () => {
 	const [x] = useState(() => new Model())
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
+	const global = useGlobal()
 	const update = useUpdate()
 	const items = $copy(x.items)
+	const page_width = global.setting.page_width
 
 	useLayoutEffect(() => {
-		x.init(id, editor)
+		x.init(id, editor, page_width)
 
 		return () => x.off()
-	}, [id, editor])
+	}, [id, editor, page_width])
 
 	const setItems = useMemoizedFn(v => {
 		x.items = v
@@ -115,7 +118,7 @@ const Index = () => {
 
 	if (x.toc === 'hidden') return null
 
-	if (x.minimize) {
+	if ((page_width === '100%' || x.minimize) && props_content.style) {
 		const Button = (
 			<Fragment>
 				<div

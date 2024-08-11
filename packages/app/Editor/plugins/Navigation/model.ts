@@ -21,6 +21,7 @@ import type { Note } from '@/types'
 export default class Index {
 	id = ''
 	editor = null as LexicalEditor
+	page_width = ''
 	container = null as HTMLElement
 	ref = null as HTMLElement
 	observer = null as ResizeObserver
@@ -42,6 +43,7 @@ export default class Index {
 			{
 				id: false,
 				editor: false,
+				page_width: false,
 				container: false,
 				ref: false,
 				observer: false,
@@ -55,9 +57,10 @@ export default class Index {
 		this.onScroll = debounce(this.onScroll.bind(this), 120)
 	}
 
-	init(id: Index['id'], editor: Index['editor']) {
+	init(id: Index['id'], editor: Index['editor'], page_width: Index['page_width']) {
 		this.id = id
 		this.editor = editor
+		this.page_width = page_width
 		this.container = document.getElementById(this.id)
 
 		this.on()
@@ -70,7 +73,7 @@ export default class Index {
 		const { top, right: right_container, width, height } = this.container.getBoundingClientRect()
 		const { right: right_editor_container } = editor_container.getBoundingClientRect()
 
-		if (width < 1110 || this.toc === 'minimize') {
+		if (this.page_width === '100%' || width < 1110 || this.toc === 'minimize') {
 			this.minimize = true
 
 			this.style = { left: right_container - 24 - 18 }
