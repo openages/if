@@ -5,5 +5,5 @@ export const main_version = Number(version.split('.')[0])
 export const version_map = new Map([[1, 'Davinci']])
 
 export const getVersion = () => {
-	return `${version_map.get(main_version)} (${version})`
+	return `${version_map.get(main_version)} (${version}) Beta`
 }

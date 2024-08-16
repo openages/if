@@ -15,22 +15,14 @@ import { GlobalContext, GlobalModel } from '@/context/app'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
 import { useDeepMemo } from '@openages/stk/react'
 
-import { AppMenu, AppSwitch, PayModal, Screenlock, Search, Setting, Sidebar, Stacks } from './components'
+import { AppMenu, AppSwitch, Screenlock, Search, Setting, Sidebar, Stacks } from './components'
 import { useGlobalNavigate, useGlobalTranslate, useLayout } from './hooks'
 import styles from './index.css'
 
 import type { IPropsOffscreenOutlet } from '@/components/OffscreenOutlet'
 import type { AppProps } from 'antd'
 import type { ConfigProviderProps } from 'antd/es/config-provider'
-import type {
-	IPropsAppMenu,
-	IPropsAppSwitch,
-	IPropsSidebar,
-	IPropsStacks,
-	IPropsPayModal,
-	IPropsSearch,
-	IPropsSetting
-} from './types'
+import type { IPropsAppMenu, IPropsAppSwitch, IPropsSidebar, IPropsStacks, IPropsSearch, IPropsSetting } from './types'
 
 const Index = () => {
 	const { pathname } = useLocation()
@@ -134,12 +126,6 @@ const Index = () => {
 		handleAppSwitch: useMemoizedFn(global.app.handleAppSwitch)
 	}
 
-	const props_pay_modal: IPropsPayModal = {
-		user_type: global.auth.user_type,
-		visible_pay_modal: global.auth.visible_pay_modal,
-		closeModal: useMemoizedFn(() => (global.auth.visible_pay_modal = false))
-	}
-
 	const props_search: IPropsSearch = {
 		current_module,
 		open: $copy(global.search.open),
@@ -192,7 +178,6 @@ const Index = () => {
 						</div>
 						<AppMenu {...props_app_menu}></AppMenu>
 						<AppSwitch {...props_app_switch}></AppSwitch>
-						<PayModal {...props_pay_modal}></PayModal>
 						<Search {...props_search}></Search>
 						<Setting {...props_setting}></Setting>
 						{/* {process.env.NODE_ENV === 'development' && (

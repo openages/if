@@ -2,6 +2,7 @@ export default {
 	nav: {
 		titles: {
 			Global: '全局设置',
+			Paid: '付费计划',
 			Menu: '菜单设置',
 			Tasks: '任务管理器',
 			Shortcuts: '快捷键',
@@ -60,6 +61,53 @@ export default {
 			error: '指纹生成失败，请联系开发商'
 		}
 	},
+	Paid: {
+		file: '文件',
+		unit: '月',
+		unlimited: '无限',
+		common: {
+			'0': '黑暗模式',
+			'1': '锁屏',
+			'2': '多主题色',
+			'3': '导入导出Markdown'
+		},
+		free: {
+			type: '免费者',
+			value: '¥0',
+			btn_text: '给个好评'
+		},
+		pro: {
+			type: '专业者',
+			value: '¥3',
+			btn_text: '成为专业者'
+		},
+		sponsor: {
+			type: '赞助者',
+			value: '¥600',
+			title_rights: '您将具备以下特权：',
+			rights: {
+				'0': '在IF官网首页展示您的Logo和链接网址',
+				'1': '在IF App设置页展示您的Logo和链接网址',
+				'2': '与开发团队一对一沟通，并参与产品改进的机会'
+			},
+			title_steps: '按照如下步骤成为赞助者：',
+			steps: {
+				'0': '在IF内打开设置界面，点击界面左下角进入付费',
+				'1': '如果您未注册账号，将提示付费需注册账号',
+				'2': '账号注册完成之后点击选择赞助者付费计划进行付款',
+				'3': '付款完成后在设置中的用户界面复制您的uid',
+				'4': '发送您的uid, logo和具备安全内容的链接到 sponsor@openages.com',
+				'5': '15天之后您的logo和链接网址将会展示在官网和App内'
+			},
+			btn_text: '成为赞助者',
+			extra: '限量60个席位，该项付费不支持退款。'
+		},
+		infinity: {
+			type: '永久使用者',
+			extra: '永久使用者包含专业者的所有功能，并永久免费使用。永久使用者仅可通过参加KOL/KOC计划获得。',
+			join: '加入'
+		}
+	},
 	Note: {
 		serif: {
 			title: '衬线字体',
@@ -80,6 +128,36 @@ export default {
 		},
 		batch_import: {
 			desc: '批量导入Markdown文件'
+		}
+	},
+	User: {
+		free: {
+			title: '免费用户',
+			desc: '有使用限制'
+		},
+		pro: {
+			title: '专业用户',
+			desc: '无功能限制'
+		},
+		infinity: {
+			title: '永久',
+			desc: '全功能'
+		},
+		max: {
+			title: '高级用户',
+			desc: '畅享云服务'
+		},
+		sponsor: {
+			title: '赞助者',
+			desc: '用户席位'
+		},
+		gold_sponsor: {
+			title: '金牌赞助商',
+			desc: '一对一支持'
+		},
+		team: {
+			title: '团队用户',
+			desc: '支持团队协作'
 		}
 	}
 }

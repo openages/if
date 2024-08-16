@@ -1,3 +1,4 @@
+import '@/global'
 import '@/presets'
 
 import { createRoot } from 'react-dom/client'

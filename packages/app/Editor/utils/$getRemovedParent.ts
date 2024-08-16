@@ -6,6 +6,9 @@ import type { NodeMap } from 'lexical'
 
 const Index = (key: string, prev_map: NodeMap) => {
 	const node = prev_map.get(key)
+
+	if (!node) return
+
 	const parent = $getNodeByKey(node.__parent)
 
 	if (parent) {

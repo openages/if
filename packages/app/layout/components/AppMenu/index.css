@@ -1,4 +1,6 @@
 ._local {
+	-webkit-app-region: none;
+
 	&.no_dirtree {
 		:global {
 			.if-drawer-content-wrapper {

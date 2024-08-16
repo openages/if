@@ -1,7 +1,7 @@
 export default {
 	migrating: 'Version updated, data Migrating, don`t close.',
 	auth: {
-		confirm: 'The trial usage limit has been reached. Go to subscribe?'
+		confirm: 'The free usage limit has been reached. Go to subscribe?'
 	},
 	search: {
 		to_navigate: 'to navigate',

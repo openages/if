@@ -8,29 +8,17 @@ import { setStorageWhenChange } from '@openages/stk/mobx'
 @injectable()
 export default class Index {
 	user_type = Auth.UserTypes.gold_sponsor as Auth.UserType
-	visible_pay_modal = false
+	infinity = false
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { utils: false }, { autoBind: true })
 	}
 
 	init() {
-		this.utils.acts = [setStorageWhenChange(['user_type'], this)]
-
-		this.on()
-	}
-
-	showVisiblePayModal() {
-		this.visible_pay_modal = true
-	}
-
-	on() {
-		$app.Event.on('global.auth.showVisiblePayModal', this.showVisiblePayModal)
+		this.utils.acts = [setStorageWhenChange(['user_type', 'infinity'], this)]
 	}
 
 	off() {
 		this.utils.off()
-
-		$app.Event.off('global.auth.showVisiblePayModal', this.showVisiblePayModal)
 	}
 }

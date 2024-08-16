@@ -1,7 +1,7 @@
 export default {
 	migrating: '版本更新，数据迁移中，切勿关闭应用',
 	auth: {
-		confirm: '已达到试用版使用上限，前往订阅？'
+		confirm: '已达到免费版使用上限，前往订阅？'
 	},
 	search: {
 		to_navigate: '切换',

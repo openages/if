@@ -1,11 +1,5 @@
 import type { GlobalModel } from '@/context/app'
-import type { App, Auth } from '@/types'
-
-export interface IPropsPayModal {
-	user_type: Auth.UserType
-	visible_pay_modal: GlobalModel['auth']['visible_pay_modal']
-	closeModal: () => void
-}
+import type { App } from '@/types'
 
 export interface IPropsSidebar {
 	current_module: App.ModuleType

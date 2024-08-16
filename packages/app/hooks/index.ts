@@ -17,5 +17,6 @@ export { default as useOptions } from './useOptions'
 export { default as useArchiveOptions } from './useArchiveOptions'
 export { default as useHiddenReactflowROLoop } from './useHiddenReactflowROLoop'
 export { default as useSize } from './useSize'
+export { default as useCopyMemberEmail } from './useCopyMemberEmail'
 
 export * from './useAntdApp'

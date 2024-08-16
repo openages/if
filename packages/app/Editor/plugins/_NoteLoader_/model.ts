@@ -47,10 +47,6 @@ export default class Index {
 		await this.getData()
 
 		this.on()
-
-		// setInterval(() => {
-		// 	console.log(Array.from(this.changes.values()))
-		// }, 1000)
 	}
 
 	async getData() {
@@ -98,6 +94,7 @@ export default class Index {
 
 	async onUpdate(args: Lexical.ArgsUpdateListener) {
 		if (!this.loaded) return (this.loaded = true)
+		if (!args) return
 		if (this.editor.isComposing()) return
 
 		const { dirtyElements, dirtyLeaves, editorState, prevEditorState } = args
@@ -125,6 +122,7 @@ export default class Index {
 						return item
 					})
 				)
+				.filter(item => item)
 		)
 
 		if (!change_nodes.length) return
@@ -237,6 +235,8 @@ export default class Index {
 
 	addEditorListner() {
 		this.unregister = this.editor.registerUpdateListener(this.onUpdate.bind(this))
+
+		this.onUpdate(null)
 	}
 
 	addMutationListner() {

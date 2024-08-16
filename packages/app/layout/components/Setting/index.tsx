@@ -1,17 +1,17 @@
 import { useMemoizedFn } from 'ahooks'
 import { Button, Drawer, Tabs } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useMemo, useState, Fragment } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { Modal, ModuleIcon, Wave } from '@/components'
 import { useSize } from '@/hooks'
-import { List } from '@phosphor-icons/react'
+import { Infinity, List } from '@phosphor-icons/react'
 
 import styles from './index.css'
 import Model from './model'
-import { getModuleItems, getSettingItems } from './options'
+import { getModuleItems, getSettingItems, UserTypeIcon } from './options'
 
 import type { IPropsSetting } from '@/layout/types'
 import type { App } from '@/types'
@@ -19,8 +19,15 @@ import type { App } from '@/types'
 const Index = (props: IPropsSetting) => {
 	const { visible, onClose } = props
 	const [x] = useState(() => container.resolve(Model))
+	const auth = x.global.auth
 	const { t } = useTranslation()
 	const body_width = useSize(() => document.body, 'width') as number
+
+	useLayoutEffect(() => {
+		x.on()
+
+		return () => x.off()
+	}, [])
 
 	useEffect(() => {
 		if (!body_width) return
@@ -30,52 +37,79 @@ const Index = (props: IPropsSetting) => {
 
 	const setting_items = useMemo(() => getSettingItems(t), [t])
 	const module_items = useMemo(() => getModuleItems(t), [t])
+	const UserIcon = useMemo(() => UserTypeIcon[auth.user_type], [auth.user_type])
 
 	const getRef = useMemoizedFn(v => (x.ref = v))
 	const onToggleMenu = useMemoizedFn(() => (x.visible_menu = !x.visible_menu))
 
 	const Menu = (
-		<div className={$cx('h_100 border_box flex', styles.menu)}>
-			<div className='menu_items w_100 border_box flex flex_column'>
-				{setting_items.map(({ label, Icon, key }) => (
-					<Wave key={key}>
-						<Button
-							className={$cx(
-								'menu_item border_box flex justify_start align_center',
-								x.active === key && 'active'
-							)}
-							onMouseDown={() => {
-								x.active = key
-								x.visible_menu = false
-							}}
-						>
-							<Icon className='icon_module'></Icon>
-							<span className='menu_name'>{label}</span>
-						</Button>
-					</Wave>
-				))}
-				<div className='divider w_100 border_box'></div>
-				{module_items.map(({ label, key }) => (
-					<Wave key={key}>
-						<Button
-							className={$cx(
-								'menu_item border_box flex justify_start align_center',
-								x.active === key && 'active'
-							)}
-							onMouseDown={() => {
-								x.active = key
-								x.visible_menu = false
-							}}
-						>
-							<ModuleIcon
-								className='icon_module'
-								type={key as App.ModuleType}
-								size={18}
-							></ModuleIcon>
-							<span className='menu_name'>{label}</span>
-						</Button>
-					</Wave>
-				))}
+		<div className={$cx('h_100 border_box flex flex_column', styles.menu)}>
+			<div className='settings_wrap flex flex_column'>
+				<div className='menu_items w_100 border_box flex flex_column'>
+					{setting_items.map(({ label, Icon, key }) => (
+						<Wave key={key}>
+							<Button
+								className={$cx(
+									'menu_item border_box flex justify_start align_center',
+									x.active === key && 'active'
+								)}
+								onMouseDown={() => {
+									x.active = key
+									x.visible_menu = false
+								}}
+							>
+								<Icon className='icon_module'></Icon>
+								<span className='menu_name'>{label}</span>
+							</Button>
+						</Wave>
+					))}
+					<div className='divider w_100 border_box'></div>
+					{module_items.map(({ label, key }) => (
+						<Wave key={key}>
+							<Button
+								className={$cx(
+									'menu_item border_box flex justify_start align_center',
+									x.active === key && 'active'
+								)}
+								onMouseDown={() => {
+									x.active = key
+									x.visible_menu = false
+								}}
+							>
+								<ModuleIcon
+									className='icon_module'
+									type={key as App.ModuleType}
+									size={18}
+								></ModuleIcon>
+								<span className='menu_name'>{label}</span>
+							</Button>
+						</Wave>
+					))}
+				</div>
+			</div>
+			<div className='user_padding_wrap w_100 border_box'>
+				<div className='user_wrap h_100 border_box flex align_center'>
+					<span className='icon_wrap flex justify_center align_center'>
+						<Choose>
+							<When condition={auth.infinity}>
+								<Infinity size={27}></Infinity>
+							</When>
+							<Otherwise>
+								<UserIcon weight='light'></UserIcon>
+							</Otherwise>
+						</Choose>
+					</span>
+					<div className='flex flex_column'>
+						<span className='user_type'>
+							{t(`translation:setting.User.${auth.user_type}.title`)}
+						</span>
+						<If condition={!auth.infinity}>
+							<span className='desc'>
+								{t(`translation:setting.User.${auth.user_type}.desc`)}
+							</span>
+						</If>
+					</div>
+				</div>
 			</div>
 		</div>
 	)
@@ -105,7 +139,7 @@ const Index = (props: IPropsSetting) => {
 						open={x.visible_menu}
 						placement='left'
 						closeIcon={false}
-						width={150}
+						width={180}
 						maskClosable
 						rootStyle={{ position: 'absolute' }}
 						getContainer={() => x.ref}

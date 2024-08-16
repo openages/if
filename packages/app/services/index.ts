@@ -10,9 +10,10 @@ import type { App } from '@/types'
 
 export const auth = async (module: App.ModuleType) => {
 	const user_type = local.user_type as Auth.UserType
+	const infinity = local.infinity
 
 	if (module === 'note') return true
-	if (user_type !== Auth.UserTypes.trial) return true
+	if ((user_type && user_type !== Auth.UserTypes.free) || infinity === true) return true
 
 	const counts = await $db.dirtree_items.count({ selector: { module, type: 'file' } }).exec()
 
@@ -25,7 +26,7 @@ export const auth = async (module: App.ModuleType) => {
 
 	if (!res) return false
 
-	$app.Event.emit('global.auth.showVisiblePayModal')
+	$app.Event.emit('global.setting.goPaid')
 
 	return false
 }

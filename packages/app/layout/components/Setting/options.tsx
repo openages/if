@@ -1,6 +1,19 @@
-import { Activity, Command, Info, Layout, Sliders } from '@phosphor-icons/react'
+import {
+	Activity,
+	Butterfly,
+	Cloud,
+	Command,
+	CurrencyCircleDollar,
+	HandHeart,
+	Heart,
+	Info,
+	Layout,
+	Medal,
+	Sliders,
+	Users
+} from '@phosphor-icons/react'
 
-import { About, Global, Menu, Shortcuts, Tasks } from './app'
+import { About, Global, Menu, Paid, Shortcuts, Tasks } from './app'
 import { Note } from './modules'
 
 import type { TFunction } from 'i18next'
@@ -11,6 +24,12 @@ export const getSettingItems = (t: TFunction<'translation', undefined>) => [
 		Icon: Sliders,
 		key: 'global',
 		children: <Global></Global>
+	},
+	{
+		label: t('translation:setting.nav.titles.Paid'),
+		Icon: CurrencyCircleDollar,
+		key: 'paid',
+		children: <Paid></Paid>
 	},
 	// {
 	// 	label: t('translation:setting.nav.titles.Menu'),
@@ -45,3 +64,12 @@ export const getModuleItems = (t: TFunction<'translation', undefined>) => [
 		children: <Note></Note>
 	}
 ]
+
+export const UserTypeIcon = {
+	free: Heart,
+	pro: Butterfly,
+	max: Cloud,
+	sponsor: HandHeart,
+	gold_sponsor: Medal,
+	team: Users
+}

@@ -49,44 +49,79 @@
 }
 
 .menu {
-	overflow-y: scroll;
 	width: 180px;
 	border-right: var(--border_light_dashed);
 
 	:global {
-		.menu_items {
+		.settings_wrap {
+			overflow-y: scroll;
+			height: calc(100% - 72px);
+
+			.menu_items {
+				padding: 9px;
+
+				.divider {
+					width: calc(100% - 4px);
+					margin: 6px 0;
+					margin-left: 2px;
+					border-bottom: var(--border_light_dashed);
+				}
+
+				.menu_item {
+					height: 32px;
+					line-height: 1;
+					padding: 0 9px;
+					border: none;
+					border-radius: var(--radius);
+					outline: none;
+					opacity: 0.6;
+					background-color: transparent;
+					box-shadow: none;
+					font-size: 13px;
+
+					&:hover,
+					&.active {
+						opacity: 1;
+					}
+
+					&.active {
+						background-color: var(--color_bg_2);
+					}
+
+					.icon_module {
+						font-size: 15px;
+					}
+				}
+			}
+		}
+
+		.user_padding_wrap {
+			height: 72px;
 			padding: 9px;
 
-			.divider {
-				width: calc(100% - 4px);
-				margin: 6px 0;
-				margin-left: 2px;
-				border-bottom: var(--border_light_dashed);
-			}
-
-			.menu_item {
-				height: 32px;
-				line-height: 1;
-				padding: 0 9px;
-				border: none;
+			.user_wrap {
+				padding: 9px;
 				border-radius: var(--radius);
-				outline: none;
-				opacity: 0.6;
-				background-color: transparent;
-				box-shadow: none;
-				font-size: 13px;
+				background-color: var(--color_bg_1);
 
-				&:hover,
-				&.active {
-					opacity: 1;
+				.icon_wrap {
+					width: 36px;
+					height: 36px;
+					margin-right: 4.5px;
+					font-size: 30px;
 				}
 
-				&.active {
-					background-color: var(--color_bg_2);
+				.user_type {
+					line-height: 1;
+					font-size: 13px;
+					font-weight: 500;
 				}
 
-				.icon_module {
-					font-size: 15px;
+				.desc {
+					line-height: 1;
+					margin-top: 4.5px;
+					color: var(--color_text_light);
+					font-size: 10px;
 				}
 			}
 		}
@@ -95,7 +130,7 @@
 
 @media (max-width: 840px) {
 	.menu {
-		width: 150px;
+		width: 180px;
 		border-right: unset;
 	}
 }

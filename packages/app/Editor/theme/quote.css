@@ -19,7 +19,6 @@
 			border: var(--border_light);
 			border-radius: var(--radius);
 			color: var(--color_text_grey);
-			background-color: var(--color_bg);
 			font-size: 13px;
 
 			&::before {

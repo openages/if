@@ -1,5 +1,4 @@
 ._local {
-
 	--logo_height: 42px;
 	--logo_padding_top: 15px;
 	--logo_padding_bottom: 12px;
@@ -54,7 +53,6 @@
 			}
 
 			.sidebar_item {
-
 				width: 42px;
 				height: 42px;
 				margin-bottom: 9px;
@@ -98,6 +96,8 @@
 			.sidebar_bottom_wrap {
 				.btn_apps_wrap {
 					height: 64px;
+
+					-webkit-app-region: none;
 
 					.btn_apps {
 						width: 42px;
