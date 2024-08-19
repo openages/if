@@ -1,0 +1,53 @@
+._local {
+	:global {
+		.content_title {
+			line-height: 1;
+			margin: 0;
+			margin-bottom: 24px;
+			font-weight: 400;
+		}
+
+		.if-form-item {
+			margin-bottom: 12px;
+
+			.if-form-item-control-input-content {
+				border-radius: var(--radius);
+				background-color: var(--color_bg_1);
+			}
+		}
+
+		.if-input {
+			height: 48px;
+		}
+
+		.if-btn {
+			height: 48px;
+		}
+
+		.header_wrap {
+			margin-bottom: 12px;
+
+			.setting_title {
+				margin-bottom: 0;
+			}
+
+			.sign_type_wrap {
+				color: var(--color_text_light);
+
+				.sign_type {
+					&.active {
+						color: var(--color_text);
+					}
+				}
+
+				.divider {
+					margin: 0 6px;
+				}
+			}
+		}
+
+		.sign_wrap {
+			height: calc(100% - 24px);
+		}
+	}
+}

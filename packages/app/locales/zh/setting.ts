@@ -2,6 +2,7 @@ export default {
 	nav: {
 		titles: {
 			Global: '全局设置',
+			Account: '账号信息',
 			Paid: '付费计划',
 			Menu: '菜单设置',
 			Tasks: '任务管理器',

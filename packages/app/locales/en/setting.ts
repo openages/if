@@ -2,7 +2,8 @@ export default {
 	nav: {
 		titles: {
 			Global: 'Global',
-			Paid: 'Paid Plan',
+			Account: 'Account',
+			Paid: 'Billing',
 			Menu: 'Menu',
 			Tasks: 'Tasks',
 			Shortcuts: 'Shortcuts',

@@ -7,6 +7,7 @@ import { setStorageWhenChange } from '@openages/stk/mobx'
 
 @injectable()
 export default class Index {
+	sign_type = 'signup' as 'signin' | 'signup'
 	user_type = Auth.UserTypes.gold_sponsor as Auth.UserType
 	infinity = false
 

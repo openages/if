@@ -1,6 +1,7 @@
 export { default as Global } from './Global'
+export { default as Account } from './Account'
+export { default as Paid } from './Paid'
 export { default as Menu } from './Menu'
 export { default as Tasks } from './Tasks'
 export { default as Shortcuts } from './Shortcuts'
-export { default as Paid } from './Paid'
 export { default as About } from './About'

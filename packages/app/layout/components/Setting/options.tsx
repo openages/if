@@ -10,10 +10,11 @@ import {
 	Layout,
 	Medal,
 	Sliders,
+	User,
 	Users
 } from '@phosphor-icons/react'
 
-import { About, Global, Menu, Paid, Shortcuts, Tasks } from './app'
+import { About, Account, Global, Menu, Paid, Shortcuts, Tasks } from './app'
 import { Note } from './modules'
 
 import type { TFunction } from 'i18next'
@@ -24,6 +25,12 @@ export const getSettingItems = (t: TFunction<'translation', undefined>) => [
 		Icon: Sliders,
 		key: 'global',
 		children: <Global></Global>
+	},
+	{
+		label: t('translation:setting.nav.titles.Account'),
+		Icon: User,
+		key: 'account',
+		children: <Account></Account>
 	},
 	{
 		label: t('translation:setting.nav.titles.Paid'),
