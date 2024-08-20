@@ -48,9 +48,9 @@ module.exports = defineConfig({
 		outputModule: is_module,
 		lazyCompilation: false
 	},
-	optimization: {
-		minimizer: [new SwcCssMinimizerRspackPlugin()]
-	},
+	// optimization: {
+	// 	// minimizer: [new SwcCssMinimizerRspackPlugin()]
+	// },
 	plugins: [
 		new HtmlRspackPlugin({
 			title: 'IF - GTD for professionals.',
@@ -169,7 +169,7 @@ module.exports = defineConfig({
 			},
 			{
 				test: /\.(png|svg|jpg)$/,
-				type: 'asset/source'
+				type: 'asset'
 			}
 		]
 	}

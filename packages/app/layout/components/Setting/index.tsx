@@ -41,6 +41,7 @@ const Index = (props: IPropsSetting) => {
 
 	const getRef = useMemoizedFn(v => (x.ref = v))
 	const onToggleMenu = useMemoizedFn(() => (x.visible_menu = !x.visible_menu))
+	const goBilling = useMemoizedFn(() => (x.active = 'paid'))
 
 	const Menu = (
 		<div className={$cx('h_100 border_box flex flex_column', styles.menu)}>
@@ -88,7 +89,13 @@ const Index = (props: IPropsSetting) => {
 				</div>
 			</div>
 			<div className='user_padding_wrap w_100 border_box'>
-				<div className='user_wrap h_100 border_box flex align_center'>
+				<div
+					className='user_wrap h_100 border_box flex align_center relative clickable'
+					onClick={goBilling}
+				>
+					<span className='badge_beta flex justify_center align_center absolute top_0 right_0'>
+						Beta
+					</span>
 					<span className='icon_wrap flex justify_center align_center'>
 						<Choose>
 							<When condition={auth.infinity}>

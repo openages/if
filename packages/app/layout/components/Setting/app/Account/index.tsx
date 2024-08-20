@@ -6,14 +6,19 @@ import { useGlobal } from '@/context/app'
 
 import { Sign } from './components'
 import styles from './index.css'
+import { IPropsSign } from './types'
 
 const Index = () => {
 	const { t } = useTranslation()
 	const global = useGlobal()
 	const auth = global.auth
 
-	const setSignIn = useMemoizedFn(() => auth.sign_type === 'signin')
-	const setSignUp = useMemoizedFn(() => auth.sign_type === 'signup')
+	const setSignIn = useMemoizedFn(() => (auth.sign_type = 'signin'))
+	const setSignUp = useMemoizedFn(() => (auth.sign_type = 'signup'))
+
+	const props_sign: IPropsSign = {
+		sign_type: auth.sign_type
+	}
 
 	return (
 		<div className={$cx('w_100 h_100 flex flex_column', styles._local)}>
@@ -36,7 +41,7 @@ const Index = () => {
 				</div>
 			</div>
 			<div className='sign_wrap flex justify_center align_center'>
-				<Sign></Sign>
+				<Sign {...props_sign}></Sign>
 			</div>
 		</div>
 	)
