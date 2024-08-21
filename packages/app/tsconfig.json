@@ -8,12 +8,12 @@
 		"strict": false,
 		"jsxImportSource": "react",
 		"jsx": "react-jsx",
-		"baseUrl": ".",
+		"baseUrl": "../",
 		"esModuleInterop": true,
 		"resolveJsonModule": true,
 		"paths": {
-			"@/*": ["./*"],
-			"*": ["./@mf-types/*"]
+			"@/*": ["./app/*"],
+			"@server/*": ["./if_server/src/*"]
 		},
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true

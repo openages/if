@@ -41,7 +41,14 @@ module.exports = defineConfig({
 		}
 	},
 	devServer: {
-		compress: false
+		compress: false,
+		proxy: [
+			{
+				context: '/trpc',
+				target: 'http://localhost:8787',
+				changeOrigin: true
+			}
+		]
 	},
 	experiments: {
 		css: true,

@@ -1,4 +1,5 @@
 export { default as id, getIds } from './id'
+export { default as trpc } from './trpc'
 export { default as getLang } from './getLang'
 export { default as sleep } from './sleep'
 export { default as setFavicon } from './setFavicon'
@@ -8,6 +9,7 @@ export { default as isShowEmpty } from './isShowEmpty'
 export { default as highlighter } from './highlighter'
 
 export * from './is'
+export * from './env'
 export * from './filter'
 export * from './rxdb'
 export * from './konva'

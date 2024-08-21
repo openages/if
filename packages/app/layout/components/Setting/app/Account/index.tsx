@@ -17,7 +17,9 @@ const Index = () => {
 	const setSignUp = useMemoizedFn(() => (auth.sign_type = 'signup'))
 
 	const props_sign: IPropsSign = {
-		sign_type: auth.sign_type
+		sign_type: auth.sign_type,
+		signin: useMemoizedFn(auth.signin),
+		signup: useMemoizedFn(auth.signup)
 	}
 
 	return (

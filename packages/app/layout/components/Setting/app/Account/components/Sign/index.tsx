@@ -15,7 +15,7 @@ const { Password } = Input
 import type { IPropsSign } from '../../types'
 
 const Index = (props: IPropsSign) => {
-	const { sign_type } = props
+	const { sign_type, signin, signup } = props
 	const [form] = useForm()
 	const email = useWatch('email', form)
 	const password = useWatch('password', form)
@@ -136,10 +136,11 @@ const Index = (props: IPropsSign) => {
 					onVerify={onVerify}
 				/>
 				<Button
-					className={$cx('btn_login', btn_login_disabled && 'disabled')}
+					className={$cx('btn_login', !btn_login_disabled && 'disabled')}
 					type='primary'
 					htmlType='submit'
 					shape='round'
+					onClick={signin}
 				>
 					{title}
 				</Button>
