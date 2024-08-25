@@ -35,10 +35,7 @@ module.exports = defineConfig({
 	},
 	resolve: {
 		extensions: ['.tsx', '.ts', '.js'],
-		tsConfig: resolve(__dirname, 'tsconfig.json'),
-		alias: process.env.DOCTOR && {
-			tslib: resolve(__dirname, 'node_modules/tslib')
-		}
+		tsConfig: resolve(__dirname, 'tsconfig.json')
 	},
 	devServer: {
 		compress: false,
