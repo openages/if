@@ -20,7 +20,7 @@ const Index = (props: IPropsDetailRemark) => {
 				placeholder_classname='textarea_placeholder'
 				max_length={1500}
 				linebreak
-				placeholder={t('translation:todo.Detail.remark.placeholder')}
+				placeholder={t('todo.Detail.remark.placeholder')}
 				onChange={onChange}
 				setEditor={setEditor}
 				setRef={setRef}

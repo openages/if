@@ -125,7 +125,7 @@ const Index = (props: IPropsSearch) => {
 					<input
 						type='text'
 						className='input_search w_100 border_box'
-						placeholder={`${t('translation:dirtree.search_placeholder')}${t(
+						placeholder={`${t('dirtree.search_placeholder')}${t(
 							`translation:modules.${module}`
 						)}`}
 						autoFocus
@@ -166,9 +166,7 @@ const Index = (props: IPropsSearch) => {
 							{history.length > 0 && (
 								<div className='search_history w_100 flex flex_column'>
 									<div className='search_history_header flex justify_between align_center'>
-										<span className='title'>
-											{t('translation:app.search.history')}
-										</span>
+										<span className='title'>{t('app.search.history')}</span>
 										<div
 											className='btn_clear flex justify_center align_center clickable'
 											onClick={clearSearchHistory}
@@ -202,13 +200,13 @@ const Index = (props: IPropsSearch) => {
 							<div className='icon_key_wrap border_box flex justify_center align_center'>
 								<ArrowDown></ArrowDown>
 							</div>
-							<span className='desc'>{t('translation:app.search.to_navigate')}</span>
+							<span className='desc'>{t('app.search.to_navigate')}</span>
 						</div>
 						<div className='key_item flex align_center'>
 							<div className='icon_key_wrap border_box flex justify_center align_center'>
 								<ArrowBendDownLeft></ArrowBendDownLeft>
 							</div>
-							<span className='desc'>{t('translation:app.search.to_select')}</span>
+							<span className='desc'>{t('app.search.to_select')}</span>
 						</div>
 					</div>
 					<div className='flex align_center'>
@@ -216,7 +214,7 @@ const Index = (props: IPropsSearch) => {
 							<div className='icon_key_wrap esc_wrap border_box flex justify_center align_center'>
 								<span className='esc'>esc</span>
 							</div>
-							<span className='desc'>{t('translation:app.search.to_close')}</span>
+							<span className='desc'>{t('app.search.to_close')}</span>
 						</div>
 					</div>
 				</div>

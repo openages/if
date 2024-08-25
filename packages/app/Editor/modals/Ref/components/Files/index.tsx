@@ -11,7 +11,7 @@ const Index = (props: IPropsFiles) => {
 	return (
 		<div className='latest_items_wrap border_box flex flex_column'>
 			<If condition={!search_mode}>
-				<span className='latest_title'>{t('translation:editor.Ref.latest_files')}</span>
+				<span className='latest_title'>{t('editor.Ref.latest_files')}</span>
 			</If>
 			<div className='flex flex_column'>
 				{latest_files.map((item, index) => (

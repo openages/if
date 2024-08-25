@@ -19,7 +19,7 @@ const Index = (props: IPropsSettingsModal) => {
 	const { t, i18n } = useTranslation()
 
 	const archive_options = useMemo(() => {
-		const locale_options = t('translation:todo.SettingsModal.auto_archiving.options') as Record<string, string>
+		const locale_options = t('todo.SettingsModal.auto_archiving.options') as Record<string, string>
 
 		return Object.keys(locale_options).map(key => ({
 			label: locale_options[key],
@@ -42,25 +42,25 @@ const Index = (props: IPropsSettingsModal) => {
 	return (
 		<SettingsModal {...props_settings_modal}>
 			<div className='w_100 flex flex_column'>
-				<Item name='desc' label={t('translation:todo.SettingsModal.desc.label')}>
+				<Item name='desc' label={t('todo.SettingsModal.desc.label')}>
 					<TextEditor
 						className='desc_textarea'
 						placeholder_classname='desc_textarea_placeholder'
-						placeholder={t('translation:todo.SettingsModal.desc.placeholder')}
+						placeholder={t('todo.SettingsModal.desc.placeholder')}
 						max_length={150}
 					></TextEditor>
 				</Item>
-				<Item name='angles' label={t('translation:common.angles.label')}>
+				<Item name='angles' label={t('common.angles.label')}>
 					<AnglesEditor remove={removeAngle}></AnglesEditor>
 				</Item>
-				<Item name='tags' label={t('translation:common.tags.label')}>
+				<Item name='tags' label={t('common.tags.label')}>
 					<TagsEditor remove={removeTag}></TagsEditor>
 				</Item>
-				<Item name='auto_archiving' label={t('translation:todo.SettingsModal.auto_archiving.label')}>
+				<Item name='auto_archiving' label={t('todo.SettingsModal.auto_archiving.label')}>
 					<Select options={archive_options}></Select>
 				</Item>
 				<Button className='btn_clean clickable' type='primary' danger onClick={onClean}>
-					{t('translation:common.clean.title_removed')}
+					{t('common.clean.title_removed')}
 				</Button>
 			</div>
 		</SettingsModal>

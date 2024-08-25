@@ -10,13 +10,13 @@ export const format = (v: Dayjs, ignoreDetail?: boolean) => {
 	if (v.valueOf() <= dayjs().valueOf()) {
 		const diff = dayjs().diff(v, 'day')
 
-		if (diff < 1) return `${$t('translation:common.outdate')} ${dayjs().to(v)}`
+		if (diff < 1) return `${$t('common.outdate')} ${dayjs().to(v)}`
 
 		const unit = match(diff > 1)
-			.with(true, () => $t('translation:common.time.days'))
-			.otherwise(() => $t('translation:common.time.day'))
+			.with(true, () => $t('common.time.days'))
+			.otherwise(() => $t('common.time.day'))
 
-		return `${$t('translation:common.outdate')} ${diff} ${unit}`
+		return `${$t('common.outdate')} ${diff} ${unit}`
 	}
 
 	let detail_time = v.format('HH:mm')

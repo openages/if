@@ -10,9 +10,9 @@ const Index = async (focusing_item: Extend.DirTree.TransformedItem) => {
 	if (counts > 0) {
 		const res = await confirm({
 			id: file_id,
-			title: $t('translation:common.notice'),
+			title: $t('common.notice'),
 			// @ts-ignore
-			content: $t('translation:common.clean.confirm', { counts })
+			content: $t('common.clean.confirm', { counts })
 		})
 
 		if (!res) return false

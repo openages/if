@@ -30,7 +30,7 @@ const Index = (props: IPropsGroupTitle) => {
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<Trash size={16}></Trash>
-							<span className='text ml_6'>{t('translation:todo.context_menu.remove')}</span>
+							<span className='text ml_6'>{t('todo.context_menu.remove')}</span>
 						</div>
 					)
 				}

@@ -302,7 +302,7 @@ export default class Index {
 		}
 
 		if (over_item.todos?.includes(active_item_id)) {
-			$message.warning($t('translation:schedule.todo_exsit'))
+			$message.warning($t('schedule.todo_exsit'))
 		} else {
 			const todos = [...(over_item.todos || []), active_item_id]
 
@@ -471,9 +471,9 @@ export default class Index {
 		if (counts > 0) {
 			const res = await confirm({
 				id: this.id,
-				title: $t('translation:common.notice'),
+				title: $t('common.notice'),
 				// @ts-ignore
-				content: $t('translation:common.tags.remove_confirm', { counts })
+				content: $t('common.tags.remove_confirm', { counts })
 			})
 
 			if (!res) return false

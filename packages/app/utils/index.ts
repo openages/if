@@ -1,5 +1,6 @@
 export { default as id, getIds } from './id'
 export { default as trpc } from './trpc'
+export { default as conf } from './conf'
 export { default as getLang } from './getLang'
 export { default as sleep } from './sleep'
 export { default as setFavicon } from './setFavicon'

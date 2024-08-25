@@ -46,12 +46,12 @@ export default (args: Args) => {
 
 	if (text_mode) {
 		const options = [
-			new Option($t('translation:editor.name.Emoji'), {
+			new Option($t('editor.name.Emoji'), {
 				icon: <Smiley />,
 				shortcut: 'emo',
 				onSelect: () => showModal('Emoji')
 			}),
-			new Option($t('translation:editor.name.Ref'), {
+			new Option($t('editor.name.Ref'), {
 				icon: <CubeFocus />,
 				shortcut: 'ref',
 				onSelect: () => showModal('Ref')
@@ -60,17 +60,17 @@ export default (args: Args) => {
 
 		if (linebreak) {
 			options.push(
-				new Option($t('translation:editor.name.UnorderedList'), {
+				new Option($t('editor.name.UnorderedList'), {
 					icon: <ListBullets />,
 					shortcut: 'ul',
 					onSelect: () => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, null)
 				}),
-				new Option($t('translation:editor.name.OrderedList'), {
+				new Option($t('editor.name.OrderedList'), {
 					icon: <ListNumbers />,
 					shortcut: 'ol',
 					onSelect: () => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, null)
 				}),
-				new Option($t('translation:editor.name.TodoList'), {
+				new Option($t('editor.name.TodoList'), {
 					icon: <ListChecks />,
 					shortcut: 'tl',
 					onSelect: () => editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, null)
@@ -82,47 +82,47 @@ export default (args: Args) => {
 	}
 
 	return [
-		new Option($t('translation:editor.name.Image'), {
+		new Option($t('editor.name.Image'), {
 			icon: <Image />,
 			shortcut: 'img',
 			onSelect: () => showModal('Image')
 		}),
-		new Option($t('translation:editor.name.Emoji'), {
+		new Option($t('editor.name.Emoji'), {
 			icon: <Smiley />,
 			shortcut: 'emo',
 			onSelect: () => showModal('Emoji')
 		}),
-		new Option($t('translation:editor.name.Code'), {
+		new Option($t('editor.name.Code'), {
 			icon: <CodeSimple />,
 			shortcut: 'cd',
 			onSelect: () => editor.dispatchCommand(INSERT_CODE_COMMAND, null)
 		}),
-		new Option($t('translation:editor.name.UnorderedList'), {
+		new Option($t('editor.name.UnorderedList'), {
 			icon: <ListBullets />,
 			shortcut: 'ul',
 			onSelect: () => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, null)
 		}),
-		new Option($t('translation:editor.name.OrderedList'), {
+		new Option($t('editor.name.OrderedList'), {
 			icon: <ListNumbers />,
 			shortcut: 'ol',
 			onSelect: () => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, null)
 		}),
-		new Option($t('translation:editor.name.TodoList'), {
+		new Option($t('editor.name.TodoList'), {
 			icon: <ListChecks />,
 			shortcut: 'tl',
 			onSelect: () => editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, null)
 		}),
-		new Option($t('translation:editor.name.Table'), {
+		new Option($t('editor.name.Table'), {
 			icon: <Table />,
 			shortcut: 'tb',
 			onSelect: () => editor.dispatchCommand(INSERT_TABLE_COMMAND, null)
 		}),
-		new Option($t('translation:editor.name.Divider'), {
+		new Option($t('editor.name.Divider'), {
 			icon: <Divide />,
 			shortcut: 'dv',
 			onSelect: () => editor.dispatchCommand(INSERT_DIVIDER_COMMAND, null)
 		}),
-		new Option($t('translation:editor.name.Quote'), {
+		new Option($t('editor.name.Quote'), {
 			icon: <Quotes />,
 			shortcut: 'qt',
 			onSelect: () => {
@@ -135,27 +135,27 @@ export default (args: Args) => {
 				})
 			}
 		}),
-		new Option($t('translation:editor.name.Toggle'), {
+		new Option($t('editor.name.Toggle'), {
 			icon: <CaretDown />,
 			shortcut: 'tg',
 			onSelect: () => editor.dispatchCommand(INSERT_TOGGLE_COMMAND, null)
 		}),
-		new Option($t('translation:editor.name.Katex'), {
+		new Option($t('editor.name.Katex'), {
 			icon: <Function />,
 			shortcut: 'ktx',
 			onSelect: () => showModal('Katex')
 		}),
-		new Option($t('translation:editor.name.Mermaid'), {
+		new Option($t('editor.name.Mermaid'), {
 			icon: <TreeStructure />,
 			shortcut: 'mmd',
 			onSelect: () => showModal('Mermaid')
 		}),
-		new Option($t('translation:editor.name.Navigation'), {
+		new Option($t('editor.name.Navigation'), {
 			icon: <GpsFix />,
 			shortcut: 'cat',
 			onSelect: () => editor.dispatchCommand(INSERT_NAVIGATION_COMMAND, null)
 		}),
-		new Option($t('translation:editor.name.Ref'), {
+		new Option($t('editor.name.Ref'), {
 			icon: <CubeFocus />,
 			shortcut: 'ref',
 			onSelect: () => showModal('Ref')

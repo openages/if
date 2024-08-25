@@ -44,25 +44,25 @@ const Index = (props: IPropsOptions) => {
 			<ContextMenuItem
 				itemProps={{ onClick: onRename }}
 				Icon={Pencil}
-				text={t('translation:dirtree.options.rename')}
+				text={t('dirtree.options.rename')}
 			></ContextMenuItem>
 			<If condition={focusing_item.type === 'dir'}>
 				<ContextMenuItem
 					itemProps={{ onClick: onAddFile }}
 					Icon={ListPlus}
-					text={t('translation:dirtree.add') + t('translation:dirtree.file')}
+					text={t('dirtree.add') + t('dirtree.file')}
 				></ContextMenuItem>
 				<ContextMenuItem
 					itemProps={{ onClick: onAddDir }}
 					Icon={CirclesThreePlus}
-					text={t('translation:dirtree.add') + t('translation:dirtree.dir')}
+					text={t('dirtree.add') + t('dirtree.dir')}
 				></ContextMenuItem>
 			</If>
 			<ContextMenuItem
 				itemProps={{ closeOnClick: false }}
 				className='red'
 				Icon={Trash}
-				text={t('translation:dirtree.options.delete')}
+				text={t('dirtree.options.delete')}
 				danger={focusing_item.type === 'dir' ? 3 : 1.5}
 				trigger={onDeleteTrigger}
 				pressTrigger={onDeletePressTrigger}

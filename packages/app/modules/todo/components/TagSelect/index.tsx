@@ -37,7 +37,7 @@ const Index = (props: IPropsTagSelect) => {
 				virtual={false}
 				suffixIcon={null}
 				getPopupContainer={() => document.body}
-				placeholder={t('translation:todo.Input.tag_placeholder')}
+				placeholder={t('todo.Input.tag_placeholder')}
 				tagRender={Tag}
 				maxCount={unlimit ? 30 : 3}
 				options={options}

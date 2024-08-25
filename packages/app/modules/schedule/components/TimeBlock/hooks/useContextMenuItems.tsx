@@ -16,7 +16,7 @@ export default () => {
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<Info size={14}></Info>
-							<span className='text ml_6'>{t('translation:common.check')}</span>
+							<span className='text ml_6'>{t('common.check')}</span>
 						</div>
 					)
 				},
@@ -25,7 +25,7 @@ export default () => {
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<Copy size={14}></Copy>
-							<span className='text ml_6'>{t('translation:common.copy')}</span>
+							<span className='text ml_6'>{t('common.copy')}</span>
 						</div>
 					)
 				},
@@ -34,7 +34,7 @@ export default () => {
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<Trash size={14}></Trash>
-							<span className='text ml_6'>{t('translation:common.remove')}</span>
+							<span className='text ml_6'>{t('common.remove')}</span>
 						</div>
 					)
 				}

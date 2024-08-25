@@ -160,9 +160,7 @@ export default class Index {
 			navigator.clipboard
 				.writeText(link)
 				.then(() =>
-					$message.success(
-						`${$t('translation:common.link')}${$t('translation:common.letter_space')}${$t('translation:common.copied')}`
-					)
+					$message.success(`${$t('common.link')}${$t('common.letter_space')}${$t('common.copied')}`)
 				)
 
 			return

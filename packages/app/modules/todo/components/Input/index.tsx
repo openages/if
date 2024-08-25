@@ -93,8 +93,8 @@ const Index = (props: IPropsInput) => {
 							virtual={false}
 							suffixIcon={null}
 							options={[
-								{ label: t('translation:todo.Input.type.todo'), value: 'todo' },
-								{ label: t('translation:todo.Input.type.group'), value: 'group' }
+								{ label: t('todo.Input.type.todo'), value: 'todo' },
+								{ label: t('todo.Input.type.group'), value: 'group' }
 							]}
 							value={input.type}
 							onChange={v => {
@@ -124,7 +124,7 @@ const Index = (props: IPropsInput) => {
 								></Level>
 							</div>
 							<Tooltip
-								title={t('translation:modules.schedule')}
+								title={t('modules.schedule')}
 								destroyTooltipOnHide
 								placement='bottom'
 							>
@@ -144,7 +144,7 @@ const Index = (props: IPropsInput) => {
 								</div>
 							</Tooltip>
 							<Tooltip
-								title={t('translation:todo.Input.Remind.title')}
+								title={t('todo.Input.Remind.title')}
 								destroyTooltipOnHide
 								placement='bottom'
 							>
@@ -153,7 +153,7 @@ const Index = (props: IPropsInput) => {
 								</div>
 							</Tooltip>
 							<Tooltip
-								title={t('translation:todo.Input.Deadline.title')}
+								title={t('todo.Input.Deadline.title')}
 								destroyTooltipOnHide
 								placement='bottom'
 							>
@@ -162,7 +162,7 @@ const Index = (props: IPropsInput) => {
 								</div>
 							</Tooltip>
 							<Tooltip
-								title={t('translation:todo.Input.Cycle.title')}
+								title={t('todo.Input.Cycle.title')}
 								destroyTooltipOnHide
 								placement='bottom'
 							>
@@ -176,7 +176,7 @@ const Index = (props: IPropsInput) => {
 				<Text
 					className='input_add_todo w_100 border_box transition_normal'
 					placeholder_classname='input_add_todo_placeholder'
-					placeholder={t('translation:todo.Input.placeholder')}
+					placeholder={t('todo.Input.placeholder')}
 					max_length={todo.text_max_length}
 					show_on_top
 					onChange={onChange}

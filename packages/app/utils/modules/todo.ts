@@ -26,24 +26,21 @@ export const getCycleSpecificDesc = (cycle: Todo.Todo['cycle']) => {
 	return match(cycle.scale)
 		.with('clock', () =>
 			// @ts-ignore
-			$t('translation:todo.Input.Cycle.specific.clock', { value: cycle.value })
+			$t('todo.Input.Cycle.specific.clock', { value: cycle.value })
 		)
 		.with('weekday', () =>
 			// @ts-ignore
-			$t('translation:todo.Input.Cycle.specific.weekday', {
-				value:
-					cycle.value !== undefined
-						? dayjs().day(cycle.value).format('dddd')
-						: $t('translation:common.unset')
+			$t('todo.Input.Cycle.specific.weekday', {
+				value: cycle.value !== undefined ? dayjs().day(cycle.value).format('dddd') : $t('common.unset')
 			})
 		)
 		.with('date', () =>
 			// @ts-ignore
-			$t('translation:todo.Input.Cycle.specific.date', { value: cycle.value })
+			$t('todo.Input.Cycle.specific.date', { value: cycle.value })
 		)
 		.with('special', () =>
 			// @ts-ignore
-			$t('translation:todo.Input.Cycle.specific.special', {
+			$t('todo.Input.Cycle.specific.special', {
 				month: dayjs(cycle.value).month() + 1,
 				date: dayjs(cycle.value).date()
 			})

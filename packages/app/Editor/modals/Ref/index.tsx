@@ -90,7 +90,7 @@ const Index = (props: IPropsModal) => {
 			<div className='input_search_wrap w_100 flex align_center relative'>
 				<input
 					className='input_search w_100 border_box'
-					placeholder={t('translation:common.search')}
+					placeholder={t('common.search')}
 					maxLength={30}
 					ref={ref}
 					onInput={onInput}

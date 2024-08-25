@@ -20,8 +20,8 @@ export const auth = async (module: App.ModuleType) => {
 	if (counts === 0) return true
 
 	const res = await confirm({
-		title: $t('translation:common.notice'),
-		content: $t('translation:app.auth.confirm')
+		title: $t('common.notice'),
+		content: $t('app.auth.confirm')
 	})
 
 	if (!res) return false

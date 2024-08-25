@@ -172,7 +172,7 @@ const Index = (props: IPropsHeader) => {
 					</div>
 				)}
 				{mode === 'table' && (
-					<Tooltip title={t('translation:todo.Header.table_mode.filter')}>
+					<Tooltip title={t('todo.Header.table_mode.filter')}>
 						<div className='mr_8'>
 							<div
 								className='icon_wrap border_box flex justify_center align_center cursor_point clickable'

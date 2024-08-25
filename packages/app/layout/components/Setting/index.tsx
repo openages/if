@@ -107,13 +107,9 @@ const Index = (props: IPropsSetting) => {
 						</Choose>
 					</span>
 					<div className='flex flex_column'>
-						<span className='user_type'>
-							{t(`translation:setting.User.${auth.user_type}.title`)}
-						</span>
+						<span className='user_type'>{t(`setting.User.${auth.user_type}.title`)}</span>
 						<If condition={!auth.infinity}>
-							<span className='desc'>
-								{t(`translation:setting.User.${auth.user_type}.desc`)}
-							</span>
+							<span className='desc'>{t(`setting.User.${auth.user_type}.desc`)}</span>
 						</If>
 					</div>
 				</div>
@@ -162,7 +158,7 @@ const Index = (props: IPropsSetting) => {
 				<Tabs
 					items={module_items.concat(setting_items)}
 					activeKey={x.active}
-					renderTabBar={() => null}
+					renderTabBar={() => false}
 					destroyInactiveTabPane
 				></Tabs>
 			</div>

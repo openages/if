@@ -33,7 +33,7 @@ const Index = (props: IProps) => {
 						onEmojiSelect={({ shortcodes }) => onChange({ ...value, icon: shortcodes })}
 					/>
 					<div className={$cx('border_box flex align_center', styles.hue_wrap)}>
-						<span className='hue_label'>{t('translation:components.IconEditor.hue')}</span>
+						<span className='hue_label'>{t('components.IconEditor.hue')}</span>
 						<Slider
 							className='hue_slider'
 							min={0}

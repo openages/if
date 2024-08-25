@@ -41,7 +41,7 @@ const Index = (
 				<Item className='name_item_wrap' name='name'>
 					<Input
 						className='name_input'
-						placeholder={t('translation:components.SettingsModal.name_placeholder')}
+						placeholder={t('components.SettingsModal.name_placeholder')}
 						showCount
 						maxLength={72}
 					></Input>

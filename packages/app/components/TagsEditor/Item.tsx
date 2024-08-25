@@ -45,7 +45,7 @@ const Index = (props: IProps) => {
 			></ColorPicker>
 			<Input
 				className='input'
-				placeholder={t('translation:common.tags.placeholder')}
+				placeholder={t('common.tags.placeholder')}
 				maxLength={12}
 				value={item.text}
 				onChange={({ target: { value } }) => onUpdate('text', index, value)}
@@ -58,7 +58,7 @@ const Index = (props: IProps) => {
 						color: text_color
 					}}
 				>
-					{item.text || t('translation:common.tags.placeholder')}
+					{item.text || t('common.tags.placeholder')}
 				</span>
 			</div>
 			<div

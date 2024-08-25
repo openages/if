@@ -32,7 +32,7 @@ const Index = (props: IPropsOffscreenOutlet) => {
 		setCachePages([...cache_pages])
 
 		// @ts-ignore
-		$message.success($t('translation:layout.Sidebar.exit_app_tip', { app: $t(`translation:modules.${title}`) }))
+		$message.success($t('layout.Sidebar.exit_app_tip', { app: $t(`translation:modules.${title}`) }))
 	})
 
 	useEffect(() => {

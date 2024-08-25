@@ -16,7 +16,7 @@ const Index = (props: IPropsSearch) => {
 			onClick={showSearch}
 		>
 			<MagnifyingGlass className='icon_search absolute' size={16}></MagnifyingGlass>
-			<span className='search w_100 cursor_point'>{t('translation:dirtree.search_placeholder')}</span>
+			<span className='search w_100 cursor_point'>{t('dirtree.search_placeholder')}</span>
 		</div>
 	)
 }

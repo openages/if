@@ -19,17 +19,17 @@ const Index = (props: IPropsActions) => {
 
 	const actions = useMemo(
 		() => [
-			{ type: 'edit', Icon: PencilSimple, text: t('translation:pomo.Actions.edit') },
+			{ type: 'edit', Icon: PencilSimple, text: t('pomo.Actions.edit') },
 			{
 				type: 'start',
 				Icon: going ? Stop : Play,
-				text: going ? t('translation:common.stop') : t('translation:common.start')
+				text: going ? t('common.stop') : t('common.start')
 			},
-			{ type: 'next', Icon: SkipForward, text: t('translation:pomo.Actions.next') },
+			{ type: 'next', Icon: SkipForward, text: t('pomo.Actions.next') },
 			{
 				type: 'continuous',
 				Icon: PersonSimpleRun,
-				text: t('translation:pomo.Actions.continuous'),
+				text: t('pomo.Actions.continuous'),
 				active: continuous_mode,
 				disabled: flow_mode
 			}
@@ -75,7 +75,7 @@ const Index = (props: IPropsActions) => {
 							<Plus size={21} weight='bold'></Plus>
 						</Button>
 					</Wave>
-					<span className='text'>{t('translation:pomo.Actions.add')}</span>
+					<span className='text'>{t('pomo.Actions.add')}</span>
 				</div>
 			</Popover>
 			{actions.map(({ type, Icon, text, active, disabled }, index) => (

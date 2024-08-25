@@ -6,18 +6,18 @@ export default (options: Array<string | number | boolean>, locale?: boolean | st
 
 	return locale
 		? useMemo(() => {
-				const locale_prefix = typeof locale === 'boolean' ? 'translation:common' : locale
+				const locale_prefix = typeof locale === 'boolean' ? 'common' : locale
 
 				return Array.from(options).map(item => ({
 					// @ts-ignore
 					label: t(`${locale_prefix}.${item}`),
 					value: item
 				}))
-		  }, [options, i18n.language])
+			}, [options, i18n.language])
 		: useMemo(() => {
 				return Array.from(options).map(item => ({
 					label: item,
 					value: item
 				}))
-		  }, [])
+			}, [])
 }

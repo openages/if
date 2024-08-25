@@ -19,7 +19,7 @@ const Index = (props: IPropsOptions) => {
 				>
 					<div className='flex align_center'>
 						<Export size={16}></Export>
-						<span className='title ml_6'>{t('translation:common.export')}</span>
+						<span className='title ml_6'>{t('common.export')}</span>
 					</div>
 					<FileMd className='symbol' size={12}></FileMd>
 				</div>
@@ -29,7 +29,7 @@ const Index = (props: IPropsOptions) => {
 				>
 					<div className='flex align_center'>
 						<ArrowLineDown size={16}></ArrowLineDown>
-						<span className='title ml_6'>{t('translation:common.import')}</span>
+						<span className='title ml_6'>{t('common.import')}</span>
 					</div>
 					<FileMd className='symbol' size={12}></FileMd>
 				</div>

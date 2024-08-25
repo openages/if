@@ -7,7 +7,7 @@ export default () => {
 	const copy = useMemoizedFn(async () => {
 		await window.navigator.clipboard.writeText('if.member@openages.com')
 
-		$message.success('if.member@openages.com ' + t('translation:common.copied'))
+		$message.success('if.member@openages.com ' + t('common.copied'))
 	})
 
 	return { copy }

@@ -137,7 +137,7 @@ export default class Index {
 			const text = node.getTextContent()
 
 			navigator.clipboard.writeText(text).then(() => {
-				$message.success($t('translation:common.copied'))
+				$message.success($t('common.copied'))
 			})
 		})
 	}
@@ -168,7 +168,7 @@ export default class Index {
 		if (err) {
 			if (err.message) {
 				$modal.error({
-					title: $t('translation:common.error'),
+					title: $t('common.error'),
 					content: err.message,
 					centered: true,
 					getContainer: () => document.getElementById(this.id)

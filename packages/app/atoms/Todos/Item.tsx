@@ -74,7 +74,7 @@ const Index = (props: IProps) => {
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<ListMagnifyingGlass size={14}></ListMagnifyingGlass>
-							<span className='text ml_6'>{t('translation:common.check')}</span>
+							<span className='text ml_6'>{t('common.check')}</span>
 						</div>
 					)
 				},
@@ -83,7 +83,7 @@ const Index = (props: IProps) => {
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<Trash size={14}></Trash>
-							<span className='text ml_6'>{t('translation:common.remove')}</span>
+							<span className='text ml_6'>{t('common.remove')}</span>
 						</div>
 					)
 				}

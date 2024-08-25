@@ -42,10 +42,10 @@ const Index = (props: IPropsSettingsModal) => {
 	return (
 		<SettingsModal {...props_settings_modal}>
 			<div className='w_100 flex flex_column'>
-				<Item name='tags' label={t('translation:common.tags.label')}>
+				<Item name='tags' label={t('common.tags.label')}>
 					<TagsEditor remove={removeTag}></TagsEditor>
 				</Item>
-				<Item name='timeline_angles' label={t('translation:schedule.timeline_angles')}>
+				<Item name='timeline_angles' label={t('schedule.timeline_angles')}>
 					<TimelineAnglesEditor
 						removeTimelineAngle={removeTimelineAngle}
 						removeTimelineRow={removeTimelineRow}
@@ -53,7 +53,7 @@ const Index = (props: IPropsSettingsModal) => {
 				</Item>
 				<Select
 					className='archive_select'
-					placeholder={t('translation:common.clean.title')}
+					placeholder={t('common.clean.title')}
 					suffixIcon={null}
 					allowClear
 					getPopupContainer={() => document.body}

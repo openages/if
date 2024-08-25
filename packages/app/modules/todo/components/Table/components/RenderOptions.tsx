@@ -14,8 +14,8 @@ const Index = (props: IPropsFormTableComponent) => {
 
 	const confirmClean = useMemoizedFn(() => {
 		$modal.confirm({
-			title: t('translation:common.notice'),
-			content: t('translation:common.erase.confirm'),
+			title: t('common.notice'),
+			content: t('common.erase.confirm'),
 			centered: true,
 			onOk() {
 				onAction('clean', deps, row_index)
@@ -28,7 +28,7 @@ const Index = (props: IPropsFormTableComponent) => {
 
 	return (
 		<div className={$cx('flex justify_center align_center', styles.RenderOptions)}>
-			<Tooltip title={t('translation:todo.Detail.title')} getTooltipContainer={() => document.body}>
+			<Tooltip title={t('todo.Detail.title')} getTooltipContainer={() => document.body}>
 				<div>
 					<div
 						className='btn_action flex justify_center align_center cursor_point clickable mr_2'
@@ -38,7 +38,7 @@ const Index = (props: IPropsFormTableComponent) => {
 					</div>
 				</div>
 			</Tooltip>
-			<Tooltip title={t('translation:todo.context_menu.remove')} getTooltipContainer={() => document.body}>
+			<Tooltip title={t('todo.context_menu.remove')} getTooltipContainer={() => document.body}>
 				<div>
 					<div
 						className='btn_action flex justify_center align_center cursor_point clickable mr_2'
@@ -48,7 +48,7 @@ const Index = (props: IPropsFormTableComponent) => {
 					</div>
 				</div>
 			</Tooltip>
-			<Tooltip title={t('translation:common.erase.title')} getTooltipContainer={() => document.body}>
+			<Tooltip title={t('common.erase.title')} getTooltipContainer={() => document.body}>
 				<div>
 					<div
 						className='btn_action flex justify_center align_center cursor_point clickable'

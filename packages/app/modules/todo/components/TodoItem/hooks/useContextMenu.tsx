@@ -34,7 +34,7 @@ export default (args: HookArgs) => {
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<Notepad size={16}></Notepad>
-							<span className='text ml_6'>{t('translation:todo.context_menu.detail')}</span>
+							<span className='text ml_6'>{t('todo.context_menu.detail')}</span>
 						</div>
 					)
 				},
@@ -46,7 +46,7 @@ export default (args: HookArgs) => {
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<Plus size={16}></Plus>
-							<span className='text ml_6'>{t('translation:todo.context_menu.insert')}</span>
+							<span className='text ml_6'>{t('todo.context_menu.insert')}</span>
 						</div>
 					)
 				},
@@ -55,9 +55,7 @@ export default (args: HookArgs) => {
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<Tag size={16}></Tag>
-							<span className='text ml_6'>
-								{t('translation:todo.context_menu.add_tags')}
-							</span>
+							<span className='text ml_6'>{t('todo.context_menu.add_tags')}</span>
 						</div>
 					),
 					disabled: !tags?.length,
@@ -83,9 +81,7 @@ export default (args: HookArgs) => {
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<AlignCenterHorizontal size={16}></AlignCenterHorizontal>
-							<span className='text ml_6'>
-								{t('translation:todo.context_menu.insert_children')}
-							</span>
+							<span className='text ml_6'>{t('todo.context_menu.insert_children')}</span>
 						</div>
 					)
 				},
@@ -95,9 +91,7 @@ export default (args: HookArgs) => {
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<TextIndent size={16}></TextIndent>
-							<span className='text ml_6'>
-								{t('translation:todo.context_menu.move_into')}
-							</span>
+							<span className='text ml_6'>{t('todo.context_menu.move_into')}</span>
 						</div>
 					)
 				},
@@ -107,7 +101,7 @@ export default (args: HookArgs) => {
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<ArrowsOutCardinal size={16}></ArrowsOutCardinal>
-							<span className='text ml_6'>{t('translation:todo.context_menu.move')}</span>
+							<span className='text ml_6'>{t('todo.context_menu.move')}</span>
 						</div>
 					),
 					children: angles?.map(item => ({
@@ -127,7 +121,7 @@ export default (args: HookArgs) => {
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<Trash size={16}></Trash>
-							<span className='text ml_6'>{t('translation:todo.context_menu.remove')}</span>
+							<span className='text ml_6'>{t('todo.context_menu.remove')}</span>
 						</div>
 					)
 				}

@@ -17,16 +17,14 @@ const Index = () => {
 
 	return (
 		<Fragment>
-			<span className='setting_title'>{t('translation:setting.Normal.title')}</span>
+			<span className='setting_title'>{t('setting.Normal.title')}</span>
 			<div className='setting_items w_100 border_box flex flex_column'>
 				<div className='setting_item w_100 border_box flex justify_between align_center'>
 					<div className='title_wrap flex align_center'>
 						<Translate size={24}></Translate>
 						<div className='text_wrap flex flex_column'>
-							<span className='title'>
-								{t('translation:setting.Normal.language.title')}
-							</span>
-							<span className='desc'>{t('translation:setting.Normal.language.desc')}</span>
+							<span className='title'>{t('setting.Normal.language.title')}</span>
+							<span className='desc'>{t('setting.Normal.language.desc')}</span>
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
@@ -46,13 +44,13 @@ const Index = () => {
 					<div className='title_wrap flex align_center'>
 						<Palette size={24}></Palette>
 						<div className='text_wrap flex flex_column'>
-							<span className='title'>{t('translation:setting.Normal.theme.title')}</span>
-							<span className='desc'>{t('translation:setting.Normal.theme.desc')}</span>
+							<span className='title'>{t('setting.Normal.theme.title')}</span>
+							<span className='desc'>{t('setting.Normal.theme.desc')}</span>
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
 						<Tooltip
-							title={t('translation:setting.Normal.theme.auto_theme')}
+							title={t('setting.Normal.theme.auto_theme')}
 							mouseEnterDelay={0.9}
 							overlayStyle={{ width: 180 }}
 						>
@@ -85,12 +83,8 @@ const Index = () => {
 					<div className='title_wrap flex align_center'>
 						<TextAa size={24}></TextAa>
 						<div className='text_wrap flex flex_column'>
-							<span className='title'>
-								{t('translation:setting.Normal.show_bar_title.title')}
-							</span>
-							<span className='desc'>
-								{t('translation:setting.Normal.show_bar_title.desc')}
-							</span>
+							<span className='title'>{t('setting.Normal.show_bar_title.title')}</span>
+							<span className='desc'>{t('setting.Normal.show_bar_title.desc')}</span>
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
@@ -99,15 +93,11 @@ const Index = () => {
 							value={global.setting.show_bar_title}
 							options={[
 								{
-									label: t(
-										'translation:setting.Normal.show_bar_title.options.hide'
-									),
+									label: t('setting.Normal.show_bar_title.options.hide'),
 									value: false
 								},
 								{
-									label: t(
-										'translation:setting.Normal.show_bar_title.options.show'
-									),
+									label: t('setting.Normal.show_bar_title.options.show'),
 									value: true
 								}
 							]}
@@ -119,12 +109,8 @@ const Index = () => {
 					<div className='title_wrap flex align_center'>
 						<Layout size={24}></Layout>
 						<div className='text_wrap flex flex_column'>
-							<span className='title'>
-								{t('translation:setting.Normal.page_width.title')}
-							</span>
-							<span className='desc'>
-								{t('translation:setting.Normal.page_width.desc')}
-							</span>
+							<span className='title'>{t('setting.Normal.page_width.title')}</span>
+							<span className='desc'>{t('setting.Normal.page_width.desc')}</span>
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
@@ -133,13 +119,11 @@ const Index = () => {
 							value={global.setting.page_width}
 							options={[
 								{
-									label: t(
-										'translation:setting.Normal.page_width.options.unlimited'
-									),
+									label: t('setting.Normal.page_width.options.unlimited'),
 									value: '100%'
 								},
 								{
-									label: t('translation:setting.Normal.page_width.options.limited'),
+									label: t('setting.Normal.page_width.options.limited'),
 									value: '780px'
 								}
 							]}
@@ -151,8 +135,8 @@ const Index = () => {
 					<div className='title_wrap flex align_center'>
 						<Circuitry size={24}></Circuitry>
 						<div className='text_wrap flex flex_column'>
-							<span className='title'>{t('translation:common.storage')}</span>
-							<span className='desc'>{t('translation:common.clear_storage_desc')}</span>
+							<span className='title'>{t('common.storage')}</span>
+							<span className='desc'>{t('common.clear_storage_desc')}</span>
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
@@ -160,7 +144,7 @@ const Index = () => {
 							className='btn flex justify_center align_center clickable'
 							onClick={clearStorage}
 						>
-							{t('translation:common.clear_storage')}
+							{t('common.clear_storage')}
 						</button>
 					</div>
 				</div>

@@ -52,9 +52,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 							})}
 						</When>
 						<Otherwise>
-							<span className='color_text_light'>
-								{t('translation:todo.Input.tag_placeholder')}
-							</span>
+							<span className='color_text_light'>{t('todo.Input.tag_placeholder')}</span>
 						</Otherwise>
 					</Choose>
 				</div>

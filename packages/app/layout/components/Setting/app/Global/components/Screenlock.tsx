@@ -52,7 +52,7 @@ const Index = () => {
 	const copy = useMemoizedFn(async () => {
 		await navigator.clipboard.writeText(global.screenlock.keypair.private_key)
 
-		$message.success(t('translation:app.screenlock.copied'))
+		$message.success(t('app.screenlock.copied'))
 	})
 
 	const reset = useMemoizedFn(() => {
@@ -111,7 +111,7 @@ const Index = () => {
 			{global.screenlock.password_mode && (
 				<Password
 					className={$cx('password_input', !global.screenlock.verified && 'unverified')}
-					placeholder={t('translation:app.screenlock.password_placeholder')}
+					placeholder={t('app.screenlock.password_placeholder')}
 					maxLength={18}
 					autoFocus
 					status={!global.screenlock.verified && 'error'}
@@ -126,7 +126,7 @@ const Index = () => {
 					disabled={global.screenlock.input_password.length < 6}
 					onClick={genKeyPair}
 				>
-					{t('translation:app.screenlock.generate_secret_key')}
+					{t('app.screenlock.generate_secret_key')}
 				</Button>
 			)}
 			<AnimatePresence>
@@ -151,7 +151,7 @@ const Index = () => {
 									'password_key',
 									!global.screenlock.verified && 'unverified'
 								)}
-								placeholder={t('translation:app.screenlock.secret_key_placeholder')}
+								placeholder={t('app.screenlock.secret_key_placeholder')}
 								autoFocus={reset_mode}
 								readOnly={global.screenlock.password_mode}
 								status={!global.screenlock.verified && 'error'}
@@ -167,9 +167,7 @@ const Index = () => {
 								}
 							></TextArea>
 							{!reset_mode && (
-								<span className='desc text_center'>
-									{t('translation:app.screenlock.desc')}
-								</span>
+								<span className='desc text_center'>{t('app.screenlock.desc')}</span>
 							)}
 						</div>
 					</motion.div>
@@ -178,10 +176,10 @@ const Index = () => {
 			{reset_mode && (
 				<Button className='btn_toggle_use w_100 mt_12' type='text' onClick={togglePasswordMode}>
 					{/* @ts-ignore */}
-					{t('translation:app.screenlock.use_x_reset', {
+					{t('app.screenlock.use_x_reset', {
 						mode: global.screenlock.password_mode
-							? t('translation:common.secret_key')
-							: t('translation:common.password')
+							? t('common.secret_key')
+							: t('common.password')
 					})}
 				</Button>
 			)}
@@ -190,27 +188,20 @@ const Index = () => {
 
 	return (
 		<Fragment>
-			<span className='setting_title'>{t('translation:setting.Screenlock.title')}</span>
+			<span className='setting_title'>{t('setting.Screenlock.title')}</span>
 			<div className='setting_items screenlock_wrap w_100 border_box flex flex_column'>
 				<div className='setting_item password_item w_100 border_box flex flex_column'>
 					<div className='setting_content w_100 border_box flex justify_between align_center'>
 						<div className='title_wrap flex align_center'>
 							<ShieldStar size={24}></ShieldStar>
 							<div className='text_wrap flex flex_column'>
-								<span className='title'>
-									{t('translation:setting.Screenlock.password.title')}
-								</span>
-								<span className='desc'>
-									{t('translation:setting.Screenlock.password.desc')}
-								</span>
+								<span className='title'>{t('setting.Screenlock.password.title')}</span>
+								<span className='desc'>{t('setting.Screenlock.password.desc')}</span>
 							</div>
 						</div>
 						<div className='value_wrap flex align_center'>
 							{reset_mode && (
-								<Tooltip
-									title={t('translation:app.screenlock.lock')}
-									mouseEnterDelay={0.9}
-								>
+								<Tooltip title={t('app.screenlock.lock')} mouseEnterDelay={0.9}>
 									<button
 										className='btn_action flex justify_center align_center clickable mr_12'
 										onClick={lock}
@@ -232,12 +223,8 @@ const Index = () => {
 					<div className='title_wrap flex align_center'>
 						<Lock size={24}></Lock>
 						<div className='text_wrap flex flex_column'>
-							<span className='title'>
-								{t('translation:setting.Screenlock.autolock.title')}
-							</span>
-							<span className='desc'>
-								{t('translation:setting.Screenlock.autolock.desc')}
-							</span>
+							<span className='title'>{t('setting.Screenlock.autolock.title')}</span>
+							<span className='desc'>{t('setting.Screenlock.autolock.desc')}</span>
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
@@ -252,7 +239,7 @@ const Index = () => {
 			</div>
 			<Modal
 				className={$cx(styles.password_modal, ungenerated && styles.ungenerated)}
-				{...(reset_mode ? { okText: t('translation:app.screenlock.reset_password') } : {})}
+				{...(reset_mode ? { okText: t('app.screenlock.reset_password') } : {})}
 				open={global.screenlock.modal_open}
 				title={title}
 				width={300}

@@ -15,7 +15,7 @@ const Index = (props: IPropsTableFilter) => {
 	const { visible_table_filter, angles, tags, onTableSearch } = props
 	const [form] = useForm()
 	const { t } = useTranslation()
-	const status_options = useOptions(options_status, 'translation:todo.common.status')
+	const status_options = useOptions(options_status, 'todo.common.status')
 	const level_options = useOptions([1, 2, 3, 4])
 	const abled_options = useOptions(options_abled, true)
 	const yes_no_options = useOptions(options_yes_no, true)
@@ -45,7 +45,7 @@ const Index = (props: IPropsTableFilter) => {
 								<Input
 									className='input'
 									allowClear
-									placeholder={t('translation:todo.common.text')}
+									placeholder={t('todo.common.text')}
 									maxLength={15}
 								></Input>
 							</Item>
@@ -55,7 +55,7 @@ const Index = (props: IPropsTableFilter) => {
 									allowClear
 									virtual={false}
 									suffixIcon={null}
-									placeholder={t('translation:todo.common.status.label')}
+									placeholder={t('todo.common.status.label')}
 									options={status_options}
 								></Select>
 							</Item>
@@ -65,7 +65,7 @@ const Index = (props: IPropsTableFilter) => {
 									allowClear
 									virtual={false}
 									suffixIcon={null}
-									placeholder={t('translation:todo.Archive.filter.angle')}
+									placeholder={t('todo.Archive.filter.angle')}
 									fieldNames={{ label: 'text', value: 'id' }}
 									options={angles}
 								></Select>
@@ -76,7 +76,7 @@ const Index = (props: IPropsTableFilter) => {
 									allowClear
 									virtual={false}
 									suffixIcon={null}
-									placeholder={t('translation:todo.Archive.filter.tags')}
+									placeholder={t('todo.Archive.filter.tags')}
 									fieldNames={{ label: 'text', value: 'id' }}
 									options={tags}
 								></Select>
@@ -87,7 +87,7 @@ const Index = (props: IPropsTableFilter) => {
 									allowClear
 									virtual={false}
 									suffixIcon={null}
-									placeholder={t('translation:todo.common.level')}
+									placeholder={t('todo.common.level')}
 									options={level_options}
 								></Select>
 							</Item>
@@ -96,7 +96,7 @@ const Index = (props: IPropsTableFilter) => {
 									className='datepicker'
 									allowClear
 									suffixIcon={null}
-									placeholder={t('translation:todo.Input.Remind.title')}
+									placeholder={t('todo.Input.Remind.title')}
 								></DatePicker>
 							</Item>
 							<Item name='end_time'>
@@ -104,7 +104,7 @@ const Index = (props: IPropsTableFilter) => {
 									className='datepicker'
 									allowClear
 									suffixIcon={null}
-									placeholder={t('translation:todo.Input.Deadline.title')}
+									placeholder={t('todo.Input.Deadline.title')}
 								></DatePicker>
 							</Item>
 							<Item name='cycle_enabled'>
@@ -113,7 +113,7 @@ const Index = (props: IPropsTableFilter) => {
 									allowClear
 									virtual={false}
 									suffixIcon={null}
-									placeholder={t('translation:todo.Input.Cycle.title')}
+									placeholder={t('todo.Input.Cycle.title')}
 									options={abled_options}
 								></Select>
 							</Item>
@@ -123,7 +123,7 @@ const Index = (props: IPropsTableFilter) => {
 									allowClear
 									virtual={false}
 									suffixIcon={null}
-									placeholder={t('translation:modules.schedule')}
+									placeholder={t('modules.schedule')}
 									options={yes_no_options}
 								></Select>
 							</Item>
@@ -133,7 +133,7 @@ const Index = (props: IPropsTableFilter) => {
 									allowClear
 									virtual={false}
 									suffixIcon={null}
-									placeholder={t('translation:todo.Archive.title')}
+									placeholder={t('todo.Archive.title')}
 									options={yes_no_options}
 								></Select>
 							</Item>
@@ -142,16 +142,16 @@ const Index = (props: IPropsTableFilter) => {
 									className='datepicker'
 									allowClear
 									suffixIcon={null}
-									placeholder={t('translation:todo.Header.options.sort.create_at')}
+									placeholder={t('todo.Header.options.sort.create_at')}
 								></DatePicker>
 							</Item>
 						</div>
 						<div className='flex'>
 							<Button className='btn_action mr_12 mb_12' htmlType='reset'>
-								{t('translation:common.reset')}
+								{t('common.reset')}
 							</Button>
 							<Button className='btn_action btn_main mb_12' htmlType='submit'>
-								{t('translation:common.search')}
+								{t('common.search')}
 							</Button>
 						</div>
 					</Form>

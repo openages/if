@@ -15,7 +15,7 @@ const Index = () => {
 
 	return (
 		<Fragment>
-			<span className='setting_title'>{t('translation:setting.ColorSelector.title')}</span>
+			<span className='setting_title'>{t('setting.ColorSelector.title')}</span>
 			<div className='setting_items w_100 border_box flex flex_column'>
 				<div className='setting_item w_100 border_box flex align_center justify_between'>
 					{color_mains.map(item => (

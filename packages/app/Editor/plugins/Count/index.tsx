@@ -42,7 +42,7 @@ const Index = () => {
 						onChangeCountVisible(false)
 					}}
 				>
-					<span>{t('translation:editor.Count.total')}</span>
+					<span>{t('editor.Count.total')}</span>
 					<span className='option_value text_right'>{x.counts_total}</span>
 				</div>
 				<div
@@ -56,7 +56,7 @@ const Index = () => {
 						onChangeCountVisible(false)
 					}}
 				>
-					<span>{t('translation:editor.Count.filted')}</span>
+					<span>{t('editor.Count.filted')}</span>
 					<span className='option_value text_right'>{x.counts_filted}</span>
 				</div>
 			</div>

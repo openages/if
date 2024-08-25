@@ -1,7 +1,8 @@
 export default {
 	migrating: 'Version updated, data Migrating, don`t close.',
 	auth: {
-		confirm: 'The free usage limit has been reached. Go to subscribe?'
+		confirm: 'The free usage limit has been reached. Go to subscribe?',
+		not_login: 'Not logged in, please go to settings to log in!'
 	},
 	search: {
 		to_navigate: 'to navigate',

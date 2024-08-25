@@ -26,16 +26,16 @@ const Index = (props: IPropsDateTime) => {
 		const now = dayjs()
 
 		return [
-			{ label: t('translation:todo.Input.Remind.options.two_hour'), value: now.add(2, 'hour') },
-			{ label: t('translation:todo.Input.Remind.options.half_day'), value: now.add(6, 'hour') },
-			{ label: t('translation:todo.Input.Remind.options.day'), value: now.add(1, 'day') },
-			{ label: t('translation:todo.Input.Remind.options.after_tomorrow'), value: now.add(2, 'day') },
-			{ label: t('translation:todo.Input.Remind.options.three_day'), value: now.add(3, 'day') },
-			{ label: t('translation:todo.Input.Remind.options.week'), value: now.add(1, 'week') },
-			{ label: t('translation:todo.Input.Remind.options.half_month'), value: now.add(15, 'day') },
-			{ label: t('translation:todo.Input.Remind.options.month'), value: now.add(1, 'month') },
-			{ label: t('translation:todo.Input.Remind.options.half_year'), value: now.add(6, 'month') },
-			{ label: t('translation:todo.Input.Remind.options.year'), value: now.add(1, 'year') }
+			{ label: t('todo.Input.Remind.options.two_hour'), value: now.add(2, 'hour') },
+			{ label: t('todo.Input.Remind.options.half_day'), value: now.add(6, 'hour') },
+			{ label: t('todo.Input.Remind.options.day'), value: now.add(1, 'day') },
+			{ label: t('todo.Input.Remind.options.after_tomorrow'), value: now.add(2, 'day') },
+			{ label: t('todo.Input.Remind.options.three_day'), value: now.add(3, 'day') },
+			{ label: t('todo.Input.Remind.options.week'), value: now.add(1, 'week') },
+			{ label: t('todo.Input.Remind.options.half_month'), value: now.add(15, 'day') },
+			{ label: t('todo.Input.Remind.options.month'), value: now.add(1, 'month') },
+			{ label: t('todo.Input.Remind.options.half_year'), value: now.add(6, 'month') },
+			{ label: t('todo.Input.Remind.options.year'), value: now.add(1, 'year') }
 		]
 	}, [i18n.language])
 
@@ -68,7 +68,7 @@ const Index = (props: IPropsDateTime) => {
 				status === 'close' && styles.close
 			)}
 			placement={useByDetail ? 'bottomLeft' : 'topRight'}
-			placeholder={t('translation:common.unset')}
+			placeholder={t('common.unset')}
 			showTime={{ defaultValue: dayjs().startOf('minute') }}
 			suffixIcon={useByDetail ? false : Trigger}
 			variant='borderless'

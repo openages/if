@@ -13,7 +13,7 @@ export default async () => {
 		module: 'schedule',
 		type: 'file',
 		id: file_id,
-		name: $t('translation:common.default'),
+		name: $t('common.default'),
 		icon: ':sa:',
 		create_at: new Date().valueOf()
 	})

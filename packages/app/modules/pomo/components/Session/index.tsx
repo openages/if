@@ -184,15 +184,14 @@ const Index = (props: IPropsSession) => {
 				<span className='title font_bold mb_10'>{title || name}</span>
 				<div className='times flex'>
 					<div className='time_item'>
-						<span>{t('translation:pomo.work')} </span>
+						<span>{t('pomo.work')} </span>
 						{!flow_mode
 							? `${target_work_time.hours}:${target_work_time.minutes}`
 							: `${flow_time.hours}:${flow_time.minutes}:${flow_time.seconds}`}
 					</div>
 					{!flow_mode && (
 						<span className='time_item ml_6'>
-							{t('translation:pomo.break')} {target_break_time.hours}:
-							{target_break_time.minutes}
+							{t('pomo.break')} {target_break_time.hours}:{target_break_time.minutes}
 						</span>
 					)}
 				</div>

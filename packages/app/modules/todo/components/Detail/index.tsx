@@ -146,7 +146,7 @@ const Index = (props: IPropsDetail) => {
 	const props_remark_modal = {
 		bodyClassName: styles.modal,
 		open: visible_remark_modal,
-		title: t('translation:todo.Detail.remark.title'),
+		title: t('todo.Detail.remark.title'),
 		width: 540,
 		minHeight: '72vh',
 		onCancel: useMemoizedFn(() => setVisibleRemarkModal(false)),
@@ -164,7 +164,7 @@ const Index = (props: IPropsDetail) => {
 			)}
 			open={visible_detail_modal}
 			mask={Boolean(breakpoint)}
-			title={t('translation:todo.Detail.title')}
+			title={t('todo.Detail.title')}
 			width={300}
 			zIndex={100}
 			destroyOnClose
@@ -174,7 +174,7 @@ const Index = (props: IPropsDetail) => {
 		>
 			<div className='actions_wrap flex absolute'>
 				<If condition={status === 'unchecked'}>
-					<Tooltip title={t('translation:todo.common.close')} destroyTooltipOnHide>
+					<Tooltip title={t('todo.common.close')} destroyTooltipOnHide>
 						<div
 							className={$cx('btn_action flex justify_center align_center clickable mr_6')}
 							onClick={close}
@@ -184,7 +184,7 @@ const Index = (props: IPropsDetail) => {
 					</Tooltip>
 				</If>
 				<If condition={status === 'closed'}>
-					<Tooltip title={t('translation:todo.common.unclose')} destroyTooltipOnHide>
+					<Tooltip title={t('todo.common.unclose')} destroyTooltipOnHide>
 						<div
 							className={$cx('btn_action flex justify_center align_center clickable mr_6')}
 							onClick={unclose}
@@ -193,7 +193,7 @@ const Index = (props: IPropsDetail) => {
 						</div>
 					</Tooltip>
 				</If>
-				<Tooltip title={t('translation:todo.Header.options.archive')} destroyTooltipOnHide>
+				<Tooltip title={t('todo.Header.options.archive')} destroyTooltipOnHide>
 					<If condition={status === 'checked' || status === 'closed'}>
 						<div
 							className={$cx('btn_action flex justify_center align_center clickable mr_6')}
@@ -235,7 +235,7 @@ const Index = (props: IPropsDetail) => {
 						<div className='option_item w_100 border_box flex align_center'>
 							<div className='name_wrap flex align_center'>
 								<Tag size={16}></Tag>
-								<span className='name'>{t('translation:common.tags.label')}</span>
+								<span className='name'>{t('common.tags.label')}</span>
 							</div>
 							<div className='value_wrap flex align_center'>
 								<TagSelect
@@ -250,7 +250,7 @@ const Index = (props: IPropsDetail) => {
 						<div className='option_item w_100 border_box flex align_center'>
 							<div className='name_wrap flex align_center'>
 								<FireSimple size={16}></FireSimple>
-								<span className='name'>{t('translation:todo.common.level')}</span>
+								<span className='name'>{t('todo.common.level')}</span>
 							</div>
 							<div className='value_wrap flex align_center'>
 								<Level value={level} onChangeLevel={updateLevel}></Level>
@@ -264,7 +264,7 @@ const Index = (props: IPropsDetail) => {
 						>
 							<div className='name_wrap flex align_center'>
 								<Bell size={16}></Bell>
-								<span className='name'>{t('translation:todo.Input.Remind.title')}</span>
+								<span className='name'>{t('todo.Input.Remind.title')}</span>
 							</div>
 							<div className='value_wrap flex align_center'>
 								<DateTime
@@ -282,9 +282,7 @@ const Index = (props: IPropsDetail) => {
 						>
 							<div className='name_wrap flex align_center'>
 								<Calendar size={16}></Calendar>
-								<span className='name'>
-									{t('translation:todo.Input.Deadline.title')}
-								</span>
+								<span className='name'>{t('todo.Input.Deadline.title')}</span>
 							</div>
 							<div className='value_wrap flex align_center'>
 								<DateTime
@@ -302,7 +300,7 @@ const Index = (props: IPropsDetail) => {
 						>
 							<div className='name_wrap flex align_center'>
 								<Repeat size={16}></Repeat>
-								<span className='name'>{t('translation:todo.Input.Cycle.title')}</span>
+								<span className='name'>{t('todo.Input.Cycle.title')}</span>
 							</div>
 							<div className='value_wrap flex align_center'>
 								<Cycle
@@ -322,7 +320,7 @@ const Index = (props: IPropsDetail) => {
 						>
 							<div className='name_wrap flex align_center'>
 								<Sun size={16}></Sun>
-								<span className='name'>{t('translation:modules.schedule')}</span>
+								<span className='name'>{t('modules.schedule')}</span>
 							</div>
 							<div className='value_wrap border_box flex align_center'>
 								<span
@@ -332,9 +330,7 @@ const Index = (props: IPropsDetail) => {
 									)}
 									onClick={updateSchedule}
 								>
-									{schedule
-										? t('translation:common.added')
-										: t('translation:todo.Detail.add_to_shcedule')}
+									{schedule ? t('common.added') : t('todo.Detail.add_to_shcedule')}
 								</span>
 								{schedule && (
 									<span
@@ -361,7 +357,7 @@ const Index = (props: IPropsDetail) => {
 							>
 								<Plus size={15}></Plus>
 								<span className='text ml_6'>
-									{t('translation:todo.context_menu.insert_children')}
+									{t('todo.context_menu.insert_children')}
 								</span>
 							</div>
 						) : (

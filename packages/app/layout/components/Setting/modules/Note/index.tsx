@@ -21,7 +21,7 @@ const Index = () => {
 	}, [])
 
 	const toc_options = useMemo(() => {
-		const options = t('translation:setting.Note.toc.options') as Array<string>
+		const options = t('setting.Note.toc.options') as Array<string>
 
 		return options.map(item => ({ label: item, value: item }))
 	}, [t])
@@ -52,14 +52,14 @@ const Index = () => {
 
 	return (
 		<div className={$cx('flex flex_column', styles._local)}>
-			<span className='setting_title'>{t('translation:modules.note')}</span>
+			<span className='setting_title'>{t('modules.note')}</span>
 			<div className='setting_items w_100 border_box flex flex_column'>
 				<div className='setting_item w_100 border_box flex justify_between align_center'>
 					<div className='title_wrap flex align_center'>
 						<ListDashes size={24}></ListDashes>
 						<div className='text_wrap flex flex_column'>
-							<span className='title'>{t('translation:setting.Note.toc.title')}</span>
-							<span className='desc'>{t('translation:setting.Note.toc.desc')}</span>
+							<span className='title'>{t('setting.Note.toc.title')}</span>
+							<span className='desc'>{t('setting.Note.toc.desc')}</span>
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
@@ -75,8 +75,8 @@ const Index = () => {
 					<div className='title_wrap flex align_center'>
 						<TextT size={24}></TextT>
 						<div className='text_wrap flex flex_column'>
-							<span className='title'>{t('translation:setting.Note.serif.title')}</span>
-							<span className='desc'>{t('translation:setting.Note.serif.desc')}</span>
+							<span className='title'>{t('setting.Note.serif.title')}</span>
+							<span className='desc'>{t('setting.Note.serif.desc')}</span>
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
@@ -87,10 +87,8 @@ const Index = () => {
 					<div className='title_wrap flex align_center'>
 						<ArticleNyTimes size={24}></ArticleNyTimes>
 						<div className='text_wrap flex flex_column'>
-							<span className='title'>
-								{t('translation:setting.Note.small_text.title')}
-							</span>
-							<span className='desc'>{t('translation:setting.Note.small_text.desc')}</span>
+							<span className='title'>{t('setting.Note.small_text.title')}</span>
+							<span className='desc'>{t('setting.Note.small_text.desc')}</span>
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
@@ -101,8 +99,8 @@ const Index = () => {
 					<div className='title_wrap flex align_center'>
 						<Pulse size={24}></Pulse>
 						<div className='text_wrap flex flex_column'>
-							<span className='title'>{t('translation:setting.Note.count.title')}</span>
-							<span className='desc'>{t('translation:setting.Note.count.desc')}</span>
+							<span className='title'>{t('setting.Note.count.title')}</span>
+							<span className='desc'>{t('setting.Note.count.desc')}</span>
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
@@ -113,10 +111,8 @@ const Index = () => {
 					<div className='title_wrap flex align_center'>
 						<ArrowSquareDown size={24}></ArrowSquareDown>
 						<div className='text_wrap flex flex_column'>
-							<span className='title'>{`${t('translation:common.batch')}${t('translation:common.letter_space')}${t('translation:common.import')}`}</span>
-							<span className='desc'>
-								{t('translation:setting.Note.batch_import.desc')}
-							</span>
+							<span className='title'>{`${t('common.batch')}${t('common.letter_space')}${t('common.import')}`}</span>
+							<span className='desc'>{t('setting.Note.batch_import.desc')}</span>
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
@@ -124,7 +120,7 @@ const Index = () => {
 							className='btn flex justify_center align_center clickable'
 							onClick={x.importMds}
 						>
-							{t('translation:common.import')}
+							{t('common.import')}
 						</button>
 					</div>
 				</div>

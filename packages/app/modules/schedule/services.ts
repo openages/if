@@ -91,9 +91,9 @@ export const cleanByTime = async (file_id: string, v: CleanTime) => {
 
 	const res = await confirm({
 		id: file_id,
-		title: $t('translation:common.notice'),
+		title: $t('common.notice'),
 		// @ts-ignore
-		content: $t('translation:common.clean.confirm_with_date', {
+		content: $t('common.clean.confirm_with_date', {
 			date: target_time.format('YYYY-MM-DD'),
 			counts: remove_items.length
 		})

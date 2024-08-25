@@ -105,22 +105,22 @@ const Index = (props: IPropsTimeBlockDetail) => {
 			onContextMenu={stopPropagation}
 			onValuesChange={onValuesChange}
 		>
-			<Item label={t('translation:schedule.TimeBlockDetail.desc')} name='text'>
+			<Item label={t('schedule.TimeBlockDetail.desc')} name='text'>
 				<TextEditor
 					className='text_wrap border_box'
 					placeholder_classname='timeblock_placeholder'
-					placeholder={t('translation:schedule.timeblock_placeholder')}
+					placeholder={t('schedule.timeblock_placeholder')}
 					max_length={schedule.text_max_length}
 				></TextEditor>
 			</Item>
-			<Item label={t('translation:common.tags.single_label')} name='tag'>
+			<Item label={t('common.tags.single_label')} name='tag'>
 				<Select
 					className='select'
 					variant='borderless'
 					popupClassName='small'
 					allowClear
 					suffixIcon={null}
-					placeholder={t('translation:schedule.TimeBlockDetail.tag_placeholder')}
+					placeholder={t('schedule.TimeBlockDetail.tag_placeholder')}
 					fieldNames={{ label: 'text', value: 'id' }}
 					options={tags}
 					optionRender={({ data: { color, text } }: any) => (
@@ -139,9 +139,7 @@ const Index = (props: IPropsTimeBlockDetail) => {
 					allowClear
 					suffixIcon={null}
 					placeholder={
-						t('translation:dirtree.search_placeholder') +
-						t('translation:common.letter_space') +
-						t('translation:modules.todo')
+						t('dirtree.search_placeholder') + t('common.letter_space') + t('modules.todo')
 					}
 					fieldNames={{ label: 'text', value: 'id' }}
 					filterOption={false}

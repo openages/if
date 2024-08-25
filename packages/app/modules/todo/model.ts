@@ -518,9 +518,9 @@ export default class Index {
 		if (counts > 0) {
 			const res = await confirm({
 				id: this.id,
-				title: $t('translation:common.notice'),
+				title: $t('common.notice'),
 				// @ts-ignore
-				content: $t('translation:common.angles.remove_confirm', { counts })
+				content: $t('common.angles.remove_confirm', { counts })
 			})
 
 			if (!res) return false
@@ -537,9 +537,9 @@ export default class Index {
 		if (counts > 0) {
 			const res = await confirm({
 				id: this.id,
-				title: $t('translation:common.notice'),
+				title: $t('common.notice'),
 				// @ts-ignore
-				content: $t('translation:common.tags.remove_confirm', { counts })
+				content: $t('common.tags.remove_confirm', { counts })
 			})
 
 			if (!res) return false

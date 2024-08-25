@@ -19,13 +19,14 @@ const Index = () => {
 	const props_sign: IPropsSign = {
 		sign_type: auth.sign_type,
 		signin: useMemoizedFn(auth.signin),
-		signup: useMemoizedFn(auth.signup)
+		signup: useMemoizedFn(auth.signup),
+		sendVerifyCode: useMemoizedFn(auth.sendVerifyCode)
 	}
 
 	return (
 		<div className={$cx('w_100 h_100 flex flex_column', styles._local)}>
 			<div className='header_wrap flex justify_between align_center'>
-				<span className='setting_title'>{t('translation:setting.nav.titles.Account')}</span>
+				<span className='setting_title'>{t('setting.nav.titles.Account')}</span>
 				<div className='sign_type_wrap flex'>
 					<span
 						className={$cx('sign_type clickable', auth.sign_type === 'signin' && 'active')}

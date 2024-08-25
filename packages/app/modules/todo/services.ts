@@ -338,16 +338,16 @@ export const cleanTodoItems = async (id: string) => {
 	if (!removed_items.length) {
 		return info({
 			id,
-			title: $t('translation:common.notice'),
-			content: $t('translation:common.not_found.confirm')
+			title: $t('common.notice'),
+			content: $t('common.not_found.confirm')
 		})
 	}
 
 	const res = await confirm({
 		id,
-		title: $t('translation:common.notice'),
+		title: $t('common.notice'),
 		// @ts-ignore
-		content: $t('translation:common.clean.confirm', { counts: removed_items.length })
+		content: $t('common.clean.confirm', { counts: removed_items.length })
 	})
 
 	if (!res) return
@@ -398,9 +398,9 @@ export const archiveByTime = async (file_id: string, v: CleanTime) => {
 
 	const res = await confirm({
 		id: file_id,
-		title: $t('translation:common.notice'),
+		title: $t('common.notice'),
 		// @ts-ignore
-		content: $t('translation:todo.Archive.confirm', {
+		content: $t('todo.Archive.confirm', {
 			date: target_time.format('YYYY-MM-DD'),
 			counts: remove_items.length
 		})

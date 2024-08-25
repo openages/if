@@ -125,7 +125,7 @@ export default class Index {
 	}
 
 	private async migrateRxdb() {
-		window.$app.Event.emit('app/setLoading', { visible: true, desc: $t('translation:app.migrating') })
+		window.$app.Event.emit('app/setLoading', { visible: true, desc: $t('app.migrating') })
 
 		await migrateStorage({
 			oldDatabaseName: 'if_v1',
@@ -143,7 +143,7 @@ export default class Index {
 		const migrations = should_migrations.map(item => (item as RxCollection).migratePromise(30))
 
 		if (migrations.length) {
-			window.$app.Event.emit('app/setLoading', { visible: true, desc: $t('translation:app.migrating') })
+			window.$app.Event.emit('app/setLoading', { visible: true, desc: $t('app.migrating') })
 
 			await Promise.all(migrations)
 		}

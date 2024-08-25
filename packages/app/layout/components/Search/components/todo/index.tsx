@@ -90,7 +90,7 @@ const Index = (props: IProps) => {
 						))}
 					</span>
 				)}
-				{item.archive && <span className='archived'>{t('translation:todo.common.archived')}</span>}
+				{item.archive && <span className='archived'>{t('todo.common.archived')}</span>}
 			</div>
 		</div>
 	)

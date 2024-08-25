@@ -83,7 +83,7 @@ const Index = () => {
 	const copy = useMemoizedFn(async () => {
 		await navigator.clipboard.writeText(global.screenlock.data.private_key)
 
-		alert(t('translation:app.screenlock.copied'))
+		alert(t('app.screenlock.copied'))
 	})
 
 	const Content = (
@@ -118,7 +118,7 @@ const Index = () => {
 								value={global.screenlock.data.private_key}
 							/>
 							<div className='text_normal lock_text w_100 border_box text_center mb_12 flex flex_column align_center'>
-								<span>{t('translation:app.screenlock.lock_email_text')}</span>
+								<span>{t('app.screenlock.lock_email_text')}</span>
 								<span>openages@gmail.com</span>
 							</div>
 							<Item name='secret' noStyle>
@@ -127,9 +127,7 @@ const Index = () => {
 										'input w_100 border_box',
 										!global.screenlock.verified && 'unverified'
 									)}
-									placeholder={t(
-										'translation:app.screenlock.email_code_placeholder'
-									)}
+									placeholder={t('app.screenlock.email_code_placeholder')}
 								/>
 							</Item>
 							<button
@@ -137,10 +135,10 @@ const Index = () => {
 								type='submit'
 								disabled={!btn_active}
 							>
-								{t('translation:common.confirm')}
+								{t('common.confirm')}
 							</button>
 							<span className='w_100 text_center mt_12 text_normal'>
-								{t('translation:app.screenlock.in_lock_mode')}
+								{t('app.screenlock.in_lock_mode')}
 							</span>
 						</div>
 					</When>
@@ -154,9 +152,7 @@ const Index = () => {
 											!global.screenlock.verified && 'unverified'
 										)}
 										maxLength={18}
-										placeholder={t(
-											'translation:app.screenlock.lock_password_placeholder'
-										)}
+										placeholder={t('app.screenlock.lock_password_placeholder')}
 										type='password'
 									/>
 								</Item>
@@ -176,9 +172,7 @@ const Index = () => {
 											'input w_100 border_box',
 											!global.screenlock.verified && 'unverified'
 										)}
-										placeholder={t(
-											'translation:app.screenlock.secret_key_placeholder'
-										)}
+										placeholder={t('app.screenlock.secret_key_placeholder')}
 									/>
 								</Item>
 								<button
@@ -192,27 +186,27 @@ const Index = () => {
 						)}
 						<span className='text_normal mt_12 clickable' onClick={togglePasswordMode}>
 							{global.screenlock.password_mode
-								? t('translation:app.screenlock.forget_password')
-								: t('translation:app.screenlock.use_password')}
+								? t('app.screenlock.forget_password')
+								: t('app.screenlock.use_password')}
 						</span>
 					</Otherwise>
 				</Choose>
 			</Form>
 			<div className='actions_wrap flex align_center absolute'>
 				<div className='action_item flex flex_column align_center'>
-					<span className='text'>{t('translation:common.exit')}</span>
+					<span className='text'>{t('common.exit')}</span>
 					<div className='icon_wrap flex justify_center align_center clickable'>
 						<Power size={16} weight='light'></Power>
 					</div>
 				</div>
 				<div className='action_item flex flex_column align_center'>
-					<span className='text'>{t('translation:common.restart')}</span>
+					<span className='text'>{t('common.restart')}</span>
 					<div className='icon_wrap flex justify_center align_center clickable'>
 						<PlayCircle size={16} weight='light'></PlayCircle>
 					</div>
 				</div>
 				<div className='action_item flex flex_column align_center'>
-					<span className='text'>{t('translation:common.minimize')}</span>
+					<span className='text'>{t('common.minimize')}</span>
 					<div className='icon_wrap flex justify_center align_center clickable'>
 						<XCircle size={16} weight='light'></XCircle>
 					</div>

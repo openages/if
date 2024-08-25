@@ -49,7 +49,7 @@ const Index = (props: IProps) => {
 		props_dragger['beforeUpload'] = useMemoizedFn(file => {
 			if (file.size > maxSize * 1024 * 1024) {
 				// @ts-ignore
-				$message.error(t('translation:components.FileUploader.over_size', { maxSize }))
+				$message.error(t('components.FileUploader.over_size', { maxSize }))
 
 				return LIST_IGNORE
 			}
@@ -60,9 +60,7 @@ const Index = (props: IProps) => {
 		<Dragger className={$cx(styles._local, !showProgress && styles.no_progress)} {...props_dragger}>
 			<div className='upload_placeholder_wrap flex align_center'>
 				<UploadSimple className='mr_6' size={14}></UploadSimple>
-				<span className='upload_placeholder'>
-					{t('translation:components.FileUploader.placeholder')}
-				</span>
+				<span className='upload_placeholder'>{t('components.FileUploader.placeholder')}</span>
 			</div>
 		</Dragger>
 	)

@@ -30,9 +30,7 @@ const Index = () => {
 						<span className='name'>{t(`translation:shortcuts.${item.event_path}`)}</span>
 						<div className='flex align_center'>
 							<span className='key_action'>
-								{item?.options?.keyup
-									? t('translation:shortcuts.keyup')
-									: t('translation:shortcuts.keydown')}
+								{item?.options?.keyup ? t('shortcuts.keyup') : t('shortcuts.keydown')}
 							</span>
 							<div className='key_bindings flex justify_end'>
 								{getKeyMap(item).map(key => {

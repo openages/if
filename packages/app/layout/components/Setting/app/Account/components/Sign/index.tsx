@@ -15,7 +15,7 @@ const { Password } = Input
 import type { IPropsSign } from '../../types'
 
 const Index = (props: IPropsSign) => {
-	const { sign_type, signin, signup } = props
+	const { sign_type, signin, signup, sendVerifyCode } = props
 	const [form] = useForm()
 	const email = useWatch('email', form)
 	const password = useWatch('password', form)
@@ -140,7 +140,7 @@ const Index = (props: IPropsSign) => {
 					type='primary'
 					htmlType='submit'
 					shape='round'
-					onClick={signin}
+					onClick={sendVerifyCode}
 				>
 					{title}
 				</Button>

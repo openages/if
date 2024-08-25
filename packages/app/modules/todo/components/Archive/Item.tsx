@@ -110,11 +110,11 @@ const Index = (props: IPropsArchiveItem) => {
 				<div className='actions_wrap flex align_center'>
 					<div className='btn_action flex align_center cursor_point clickable' onClick={restore}>
 						<ArrowCounterClockwise size={12}></ArrowCounterClockwise>
-						<span className='btn_text ml_2'>{t('translation:todo.Archive.restore')}</span>
+						<span className='btn_text ml_2'>{t('todo.Archive.restore')}</span>
 					</div>
 					<div className='btn_action flex align_center cursor_point clickable' onClick={remove}>
 						<Trash size={12}></Trash>
-						<span className='btn_text ml_2'>{t('translation:todo.Archive.remove')}</span>
+						<span className='btn_text ml_2'>{t('todo.Archive.remove')}</span>
 					</div>
 				</div>
 			</div>

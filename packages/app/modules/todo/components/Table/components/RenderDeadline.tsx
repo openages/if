@@ -29,9 +29,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['end_time']>) => {
 					{value ? (
 						<span className='viewer_wrap'>{format(dayjs(value), true)}</span>
 					) : (
-						<span className='viewer_wrap color_text_light'>
-							{t('translation:common.unset')}
-						</span>
+						<span className='viewer_wrap color_text_light'>{t('common.unset')}</span>
 					)}
 				</Otherwise>
 			</Choose>

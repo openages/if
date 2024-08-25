@@ -99,11 +99,11 @@ export default class Index {
 
 		if (error_count) {
 			$message.warning(
-				`${files.length - error_count} ${$t('translation:common.import')}${$t('translation:common.letter_space')}${$t('translation:common.success')},${error_count} ${$t('translation:common.import')}${$t('translation:common.letter_space')}${$t('translation:common.failed')}`
+				`${files.length - error_count} ${$t('common.import')}${$t('common.letter_space')}${$t('common.success')},${error_count} ${$t('common.import')}${$t('common.letter_space')}${$t('common.failed')}`
 			)
 		} else {
 			$message.success(
-				`${$t('translation:common.batch')}${$t('translation:common.letter_space')}${$t('translation:common.import')}${$t('translation:common.letter_space')}${$t('translation:common.success')}`
+				`${$t('common.batch')}${$t('common.letter_space')}${$t('common.import')}${$t('common.letter_space')}${$t('common.success')}`
 			)
 		}
 	}

@@ -36,21 +36,21 @@ export const getAutolockOptions = () => {
 		const getUnit = (unit: string) => $t(`translation:common.time.${unit}`)
 		const target_unit = getUnit(target.unit)
 
-		if (key === 'never') return { label: $t('translation:common.never'), value: 'never' }
+		if (key === 'never') return { label: $t('common.never'), value: 'never' }
 
 		if (target.other) {
 			const other_unit = getUnit(target.other.unit)
 
 			// @ts-ignore
-			label = $t('translation:common.x_y', {
+			label = $t('common.x_y', {
 				// @ts-ignore
-				x: $t('translation:common.time.x_unit', { x: target.value, unit: target_unit }),
+				x: $t('common.time.x_unit', { x: target.value, unit: target_unit }),
 				// @ts-ignore
-				y: $t('translation:common.time.x_unit', { x: target.other.value, unit: other_unit })
+				y: $t('common.time.x_unit', { x: target.other.value, unit: other_unit })
 			})
 		} else {
 			// @ts-ignore
-			label = $t('translation:common.time.x_unit', {
+			label = $t('common.time.x_unit', {
 				x: target.value,
 				unit: target_unit
 			})

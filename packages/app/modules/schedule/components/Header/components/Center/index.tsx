@@ -24,7 +24,7 @@ const Footer = $app.memo(({ scale, changeCurrent }: IPropsFooter) => {
 
 	return (
 		<div className='w_100 clickable' onClick={setCurrentWeek}>
-			{scale === 'month' ? t('translation:common.current_month') : t('translation:common.current_week')}
+			{scale === 'month' ? t('common.current_month') : t('common.current_week')}
 		</div>
 	)
 })

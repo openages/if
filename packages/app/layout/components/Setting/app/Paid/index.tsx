@@ -13,7 +13,7 @@ const Index = () => {
 	return (
 		<div className={$cx('w_100 h_100 flex flex_column', styles._local)}>
 			<div className='padding_wrap w_100 flex flex_column'>
-				<span className='setting_title'>{t('translation:setting.nav.titles.Paid')}</span>
+				<span className='setting_title'>{t('setting.nav.titles.Paid')}</span>
 				<div className='price_items w_100 border_box flex justify_center'>
 					{Object.keys(limit).map((type: 'free' | 'pro') => (
 						<div
@@ -41,9 +41,7 @@ const Index = () => {
 												limit[type][module]
 											)}
 										</div>
-										<span className='desc'>
-											{t('translation:setting.Paid.file')}
-										</span>
+										<span className='desc'>{t('setting.Paid.file')}</span>
 									</div>
 								))}
 								{Array.from({ length: 4 }).map((_, index) => (
@@ -67,7 +65,7 @@ const Index = () => {
 							<div className='icon_wrap flex justify_center align_center mr_12'>
 								<ThumbsUp size={27} weight='duotone'></ThumbsUp>
 							</div>
-							<h3 className='type'>{t('translation:setting.Paid.sponsor.type')}</h3>
+							<h3 className='type'>{t('setting.Paid.sponsor.type')}</h3>
 						</div>
 						<div className='flex align_center'>
 							<div className='price'>
@@ -77,15 +75,13 @@ const Index = () => {
 								<span className='unit'>/ {t(`translation:setting.Paid.unit`)}</span>
 							</div>
 							<button className='btn_action flex justify_center align_center clickable ml_12'>
-								{t('translation:setting.Paid.sponsor.btn_text')}
+								{t('setting.Paid.sponsor.btn_text')}
 							</button>
 						</div>
 					</div>
 					<div className='content_wrap w_100 border_box flex flex_column'>
 						<div className='rights_wrap content_item w_100 border_box flex flex_column'>
-							<span className='title'>
-								{t('translation:setting.Paid.sponsor.title_rights')}
-							</span>
+							<span className='title'>{t('setting.Paid.sponsor.title_rights')}</span>
 							<ul className='step_items items_wrap'>
 								{Array.from({ length: 3 }).map((_, index) => (
 									<li className='right_item item' key={index}>
@@ -95,9 +91,7 @@ const Index = () => {
 							</ul>
 						</div>
 						<div className='steps_wrap content_item w_100 border_box flex flex_column'>
-							<span className='title'>
-								{t('translation:setting.Paid.sponsor.title_steps')}
-							</span>
+							<span className='title'>{t('setting.Paid.sponsor.title_steps')}</span>
 							<ol className='step_items items_wrap'>
 								{Array.from({ length: 6 }).map((_, index) => (
 									<li className='step_item item' key={index}>
@@ -106,7 +100,7 @@ const Index = () => {
 								))}
 							</ol>
 						</div>
-						<span className='desc'>{t('translation:setting.Paid.sponsor.extra')}</span>
+						<span className='desc'>{t('setting.Paid.sponsor.extra')}</span>
 					</div>
 				</div>
 				<div className='infinity_item w_100 border_box flex flex_column align_center'>
@@ -115,19 +109,17 @@ const Index = () => {
 							<div className='icon_wrap flex justify_center align_center mr_12'>
 								<Infinity size={30} weight='duotone'></Infinity>
 							</div>
-							<h3 className='type'>{t('translation:setting.Paid.infinity.type')}</h3>
+							<h3 className='type'>{t('setting.Paid.infinity.type')}</h3>
 						</div>
 						<a
 							className='btn_join flex justify_center align_center clickable'
 							href='mailto:if.member@openages.com'
 							onClick={copy}
 						>
-							{t('translation:setting.Paid.infinity.join')}
+							{t('setting.Paid.infinity.join')}
 						</a>
 					</div>
-					<span className='desc w_100 border_box'>
-						{t('translation:setting.Paid.infinity.extra')}
-					</span>
+					<span className='desc w_100 border_box'>{t('setting.Paid.infinity.extra')}</span>
 				</div>
 			</div>
 		</div>

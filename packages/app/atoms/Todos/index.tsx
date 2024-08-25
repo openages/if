@@ -110,9 +110,7 @@ const Index = (props: IProps) => {
 	})
 
 	if (show_placeholder && !ids.length) {
-		return (
-			<div className={$cx('w_100 pt_6 pb_6', styles.empty)}>{t('translation:atoms.Todos.placeholder')}</div>
-		)
+		return <div className={$cx('w_100 pt_6 pb_6', styles.empty)}>{t('atoms.Todos.placeholder')}</div>
 	}
 
 	return (

@@ -74,7 +74,7 @@ const Index = (props: IPropsImage) => {
 					className={$cx('w_100 border_box', styles.alt)}
 					autoComplete='off'
 					defaultValue={alt}
-					placeholder={t('translation:editor.Image.modal.placeholder.alt')}
+					placeholder={t('editor.Image.modal.placeholder.alt')}
 					maxLength={60}
 					onKeyDown={stopPropagation}
 					onBlur={x.onChangeAlt}

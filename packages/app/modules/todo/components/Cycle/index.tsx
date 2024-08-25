@@ -26,28 +26,28 @@ const Index = (props: IPropsCircle) => {
 		() =>
 			type === 'interval'
 				? [
-						{ label: t('translation:todo.Input.Cycle.options.minute'), value: 'minute' },
-						{ label: t('translation:todo.Input.Cycle.options.hour'), value: 'hour' },
-						{ label: t('translation:todo.Input.Cycle.options.day'), value: 'day' },
-						{ label: t('translation:todo.Input.Cycle.options.week'), value: 'week' },
-						{ label: t('translation:todo.Input.Cycle.options.month'), value: 'month' },
-						{ label: t('translation:todo.Input.Cycle.options.quarter'), value: 'quarter' },
-						{ label: t('translation:todo.Input.Cycle.options.year'), value: 'year' },
-						{ label: t('translation:todo.Input.Cycle.options.reset'), value: 'reset' }
-				  ]
+						{ label: t('todo.Input.Cycle.options.minute'), value: 'minute' },
+						{ label: t('todo.Input.Cycle.options.hour'), value: 'hour' },
+						{ label: t('todo.Input.Cycle.options.day'), value: 'day' },
+						{ label: t('todo.Input.Cycle.options.week'), value: 'week' },
+						{ label: t('todo.Input.Cycle.options.month'), value: 'month' },
+						{ label: t('todo.Input.Cycle.options.quarter'), value: 'quarter' },
+						{ label: t('todo.Input.Cycle.options.year'), value: 'year' },
+						{ label: t('todo.Input.Cycle.options.reset'), value: 'reset' }
+					]
 				: [
-						{ label: t('translation:todo.Input.Cycle.specific.options.clock'), value: 'clock' },
+						{ label: t('todo.Input.Cycle.specific.options.clock'), value: 'clock' },
 						{
-							label: t('translation:todo.Input.Cycle.specific.options.weekday'),
+							label: t('todo.Input.Cycle.specific.options.weekday'),
 							value: 'weekday'
 						},
-						{ label: t('translation:todo.Input.Cycle.specific.options.date'), value: 'date' },
+						{ label: t('todo.Input.Cycle.specific.options.date'), value: 'date' },
 						{
-							label: t('translation:todo.Input.Cycle.specific.options.special'),
+							label: t('todo.Input.Cycle.specific.options.special'),
 							value: 'special'
 						},
-						{ label: t('translation:todo.Input.Cycle.options.reset'), value: 'reset' }
-				  ],
+						{ label: t('todo.Input.Cycle.options.reset'), value: 'reset' }
+					],
 		[i18n.language, type]
 	)
 
@@ -137,7 +137,7 @@ const Index = (props: IPropsCircle) => {
 				<InputNumber
 					className='w_100'
 					size='small'
-					placeholder={t('translation:todo.Input.Cycle.cycle')}
+					placeholder={t('todo.Input.Cycle.cycle')}
 					min={1}
 					max={99}
 					formatter={value => `${every_text} ${value} ${scale_text}`}
@@ -168,7 +168,7 @@ const Index = (props: IPropsCircle) => {
 						<Select
 							className='w_100'
 							size='small'
-							placeholder={t('translation:todo.Input.Cycle.specific.options.weekday')}
+							placeholder={t('todo.Input.Cycle.specific.options.weekday')}
 							options={options_weekday}
 							value={cycle.value !== undefined ? cycle.value : undefined}
 							onChange={onChangeValue}
@@ -185,8 +185,8 @@ const Index = (props: IPropsCircle) => {
 										? dayjs().date(cycle.value)
 										: undefined
 									: cycle.value
-									  ? dayjs(cycle.value)
-									  : undefined
+										? dayjs(cycle.value)
+										: undefined
 							}
 							onChange={onChangeDay}
 						></DatePicker>
@@ -200,20 +200,20 @@ const Index = (props: IPropsCircle) => {
 		<div className='cycle_input_wrap border_box flex flex_column'>
 			<div className='head_wrap flex justify_center align_center relative'>
 				<div className='title_wrap flex align_center absolute'>
-					<span className='title mr_6'>{t('translation:todo.Input.Cycle.title')}</span>
+					<span className='title mr_6'>{t('todo.Input.Cycle.title')}</span>
 				</div>
 				<div className='type_wrap flex' onClick={onChangeType}>
 					<span
 						className={$cx('type_item cursor_point clickable', type === 'interval' && 'active')}
 						data-key='interval'
 					>
-						{t('translation:todo.Input.Cycle.type.interval')}
+						{t('todo.Input.Cycle.type.interval')}
 					</span>
 					<span
 						className={$cx('type_item cursor_point clickable', type === 'specific' && 'active')}
 						data-key='specific'
 					>
-						{t('translation:todo.Input.Cycle.type.specific')}
+						{t('todo.Input.Cycle.type.specific')}
 					</span>
 				</div>
 				<AntdSwitch
@@ -256,32 +256,28 @@ const Index = (props: IPropsCircle) => {
 		}
 
 		if (!cycle_enabled) {
-			return <span className='not_enabled cursor_point'>{t('translation:todo.Input.Cycle.disabled')}</span>
+			return <span className='not_enabled cursor_point'>{t('todo.Input.Cycle.disabled')}</span>
 		}
 
 		if (!cycle) {
-			return <span className='not_enabled cursor_point'>{t('translation:common.unset')}</span>
+			return <span className='not_enabled cursor_point'>{t('common.unset')}</span>
 		}
 
 		if (cycle.type === 'interval') {
 			if (!scale_text) {
-				return (
-					<span className='not_enabled cursor_point'>
-						{t('translation:todo.Input.Cycle.disabled')}
-					</span>
-				)
+				return <span className='not_enabled cursor_point'>{t('todo.Input.Cycle.disabled')}</span>
 			}
 
 			return (
 				<span className='cycle_desc cursor_point'>
-					{`${t('translation:todo.Input.Cycle.every')} ${cycle?.value} ${scale_text}`}
+					{`${t('todo.Input.Cycle.every')} ${cycle?.value} ${scale_text}`}
 					{cycle?.exclude?.length > 0 &&
-						`, ${t('translation:todo.Input.Cycle.exclude')} ${cycle.exclude.join(',')}`}
+						`, ${t('todo.Input.Cycle.exclude')} ${cycle.exclude.join(',')}`}
 				</span>
 			)
 		} else {
 			if (cycle?.value === undefined) {
-				return <span className='not_enabled cursor_point'>{t('translation:common.unset')}</span>
+				return <span className='not_enabled cursor_point'>{t('common.unset')}</span>
 			}
 
 			return <span className='cycle_desc cursor_point'>{getCycleSpecificDesc(cycle)}</span>

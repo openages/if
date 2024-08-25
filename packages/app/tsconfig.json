@@ -5,7 +5,7 @@
 		"lib": ["ESNEXT", "DOM"],
 		"module": "ESNext",
 		"moduleResolution": "Bundler",
-		"strict": false,
+		"strict": true,
 		"jsxImportSource": "react",
 		"jsx": "react-jsx",
 		"baseUrl": "../",

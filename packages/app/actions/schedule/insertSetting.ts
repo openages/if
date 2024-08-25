@@ -12,7 +12,7 @@ export default async (file_id: string) => {
 			timeline_angles: [
 				{
 					id: id(),
-					text: $t('translation:common.default'),
+					text: $t('common.default'),
 					rows: getIds(3)
 				}
 			]

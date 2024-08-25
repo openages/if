@@ -53,7 +53,7 @@ export default (args: HookArgs) => {
 				label: (
 					<div className='menu_item_wrap flex align_center'>
 						<ListChecks size={16}></ListChecks>
-						<span className='text ml_6'>{t('translation:todo.Header.mode.list')}</span>
+						<span className='text ml_6'>{t('todo.Header.mode.list')}</span>
 					</div>
 				)
 			},
@@ -62,7 +62,7 @@ export default (args: HookArgs) => {
 				label: (
 					<div className='menu_item_wrap flex align_center'>
 						<Kanban size={16}></Kanban>
-						<span className='text ml_6'>{t('translation:todo.Header.mode.kanban')}</span>
+						<span className='text ml_6'>{t('todo.Header.mode.kanban')}</span>
 					</div>
 				)
 			},
@@ -71,7 +71,7 @@ export default (args: HookArgs) => {
 				label: (
 					<div className='menu_item_wrap flex align_center'>
 						<Table size={16}></Table>
-						<span className='text ml_6'>{t('translation:todo.Header.mode.table')}</span>
+						<span className='text ml_6'>{t('todo.Header.mode.table')}</span>
 					</div>
 				)
 			},
@@ -80,7 +80,7 @@ export default (args: HookArgs) => {
 				label: (
 					<div className='menu_item_wrap flex align_center'>
 						<GitFork size={16}></GitFork>
-						<span className='text ml_6'>{t('translation:todo.Header.mode.mindmap')}</span>
+						<span className='text ml_6'>{t('todo.Header.mode.mindmap')}</span>
 					</div>
 				)
 			}
@@ -99,7 +99,7 @@ export default (args: HookArgs) => {
 				label: (
 					<div className='menu_item_wrap flex align_center'>
 						<GearSix size={16}></GearSix>
-						<span className='text ml_6'>{t('translation:common.setting')}</span>
+						<span className='text ml_6'>{t('common.setting')}</span>
 					</div>
 				)
 			},
@@ -108,7 +108,7 @@ export default (args: HookArgs) => {
 				label: (
 					<div className='menu_item_wrap flex align_center'>
 						<ArchiveBox size={16}></ArchiveBox>
-						<span className='text ml_6'>{t('translation:todo.Header.options.archive')}</span>
+						<span className='text ml_6'>{t('todo.Header.options.archive')}</span>
 					</div>
 				)
 			},
@@ -118,7 +118,7 @@ export default (args: HookArgs) => {
 				label: (
 					<div className='menu_item_wrap flex align_center'>
 						<ArrowsDownUp size={16}></ArrowsDownUp>
-						<span className='text ml_6'>{t('translation:todo.Header.options.sort.text')}</span>
+						<span className='text ml_6'>{t('todo.Header.options.sort.text')}</span>
 					</div>
 				),
 				children: [
@@ -128,7 +128,7 @@ export default (args: HookArgs) => {
 							<div className='menu_item_wrap flex align_center'>
 								<Star size={16}></Star>
 								<span className='text ml_6'>
-									{t('translation:todo.Header.options.sort.importance')}
+									{t('todo.Header.options.sort.importance')}
 								</span>
 							</div>
 						)
@@ -139,7 +139,7 @@ export default (args: HookArgs) => {
 							<div className='menu_item_wrap flex align_center'>
 								<TextAa size={16}></TextAa>
 								<span className='text ml_6'>
-									{t('translation:todo.Header.options.sort.alphabetical')}
+									{t('todo.Header.options.sort.alphabetical')}
 								</span>
 							</div>
 						)
@@ -150,7 +150,7 @@ export default (args: HookArgs) => {
 							<div className='menu_item_wrap flex align_center'>
 								<CalendarPlus size={16}></CalendarPlus>
 								<span className='text ml_6'>
-									{t('translation:todo.Header.options.sort.create_at')}
+									{t('todo.Header.options.sort.create_at')}
 								</span>
 							</div>
 						)
@@ -163,7 +163,7 @@ export default (args: HookArgs) => {
 				label: (
 					<div className='menu_item_wrap flex align_center'>
 						<Tag size={16}></Tag>
-						<span className='text ml_6'>{t('translation:todo.Header.options.tags')}</span>
+						<span className='text ml_6'>{t('todo.Header.options.tags')}</span>
 					</div>
 				),
 				children: tags?.map(item => ({

@@ -23,8 +23,8 @@ const Index = (props: IPropsTaskPanel) => {
 	return (
 		<div className={$cx('border_box flex flex_column', styles._local)}>
 			<div className='panel_header w_100 border_box flex justify_between align_center'>
-				<span>{t('translation:schedule.pending_todos')}</span>
-				<Tooltip title={t('translation:schedule.clear_mode_tooltip')} destroyTooltipOnHide>
+				<span>{t('schedule.pending_todos')}</span>
+				<Tooltip title={t('schedule.clear_mode_tooltip')} destroyTooltipOnHide>
 					<Switch
 						size='small'
 						checked={task_panel_clear_mode}

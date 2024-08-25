@@ -21,7 +21,7 @@ export default async (editor: LexicalEditor, files: Array<File>) => {
 			} else {
 				$message.error(
 					// @ts-ignore
-					$t('translation:components.FileUploader.over_size', {
+					$t('components.FileUploader.over_size', {
 						maxSize: MAX_SIZE
 					})
 				)

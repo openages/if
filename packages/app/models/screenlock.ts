@@ -160,7 +160,7 @@ export default class Index {
 		const { code, err } = await (await import('@openages/stk/creep')).getFingerprint()
 
 		if (!code && err) {
-			$message.error($t('translation:setting.Screenlock.getFingerprint.error'))
+			$message.error($t('setting.Screenlock.getFingerprint.error'))
 
 			return ''
 		}

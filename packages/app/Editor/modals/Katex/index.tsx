@@ -61,27 +61,25 @@ const Index = (props: IPropsModal) => {
 			<Form form={form} preserve={false} layout='vertical' onFinish={onFinish}>
 				<Item
 					className='inline_wrap absolute'
-					label={t('translation:editor.Katex.modal.label.inline')}
+					label={t('editor.Katex.modal.label.inline')}
 					name='inline'
 				>
 					<Switch size='small'></Switch>
 				</Item>
-				<Item label={t('translation:editor.Katex.modal.label.equation')} name='value'>
+				<Item label={t('editor.Katex.modal.label.equation')} name='value'>
 					<Choose>
 						<When condition={inline}>
-							<Input
-								placeholder={t('translation:editor.Katex.modal.placeholder.equation')}
-							></Input>
+							<Input placeholder={t('editor.Katex.modal.placeholder.equation')}></Input>
 						</When>
 						<Otherwise>
 							<TextArea
 								autoSize={{ minRows: 2 }}
-								placeholder={t('translation:editor.Katex.modal.placeholder.equation')}
+								placeholder={t('editor.Katex.modal.placeholder.equation')}
 							></TextArea>
 						</Otherwise>
 					</Choose>
 				</Item>
-				<Item label={t('translation:common.preview')}>
+				<Item label={t('common.preview')}>
 					<div className='prewview_wrap w_100 border_box flex justify_center align_center transition_normal'>
 						<Choose>
 							<When condition={value}>
@@ -96,7 +94,7 @@ const Index = (props: IPropsModal) => {
 					</div>
 				</Item>
 				<Button className='w_100 mt_4' htmlType='submit' type='primary'>
-					{t('translation:common.confirm')}
+					{t('common.confirm')}
 				</Button>
 			</Form>
 		</div>

@@ -38,13 +38,13 @@ const Index = (props: IPropsCalendarContextMenu) => {
 			<Item onClick={onAddTimeBlock}>
 				<div className='menu_item flex align_center'>
 					<Plus className='icon mr_6' size={14}></Plus>
-					<span className='text'>{t('translation:common.add')}</span>
+					<span className='text'>{t('common.add')}</span>
 				</div>
 			</Item>
 			<Item disabled={!timeblock_copied} onClick={onPasteTimeBlock}>
 				<div className='menu_item flex align_center'>
 					<Copy className='icon mr_6' size={14}></Copy>
-					<span className='text'>{t('translation:common.paste')}</span>
+					<span className='text'>{t('common.paste')}</span>
 				</div>
 			</Item>
 		</Menu>

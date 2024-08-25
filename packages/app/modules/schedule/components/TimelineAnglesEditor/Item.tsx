@@ -39,7 +39,7 @@ const Index = (props: IProps) => {
 			<div className='w_100 flex mb_6'>
 				<Input
 					className='input'
-					placeholder={t('translation:common.angles.placeholder')}
+					placeholder={t('common.angles.placeholder')}
 					maxLength={12}
 					value={item.text}
 					onChange={({ target: { value } }) => onUpdate(index, value)}

@@ -86,12 +86,8 @@
 
 				&.has_value {
 					&::after {
-						top: 4.8px;
+						top: 6px;
 						font-size: 11px;
-					}
-
-					.if-input {
-						margin-top: -1.5px;
 					}
 				}
 
@@ -100,7 +96,7 @@
 					box-shadow: none !important;
 
 					&::after {
-						top: 4.8px;
+						top: 6px;
 						font-size: 11px;
 					}
 
@@ -108,10 +104,6 @@
 						svg {
 							color: rgba(var(--color_main), 1) !important;
 						}
-					}
-
-					.if-input {
-						margin-top: -1.5px;
 					}
 				}
 

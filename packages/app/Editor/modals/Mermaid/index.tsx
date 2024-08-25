@@ -57,13 +57,13 @@ const Index = (props: IPropsModal) => {
 	return (
 		<div className={$cx('relative', styles._local)}>
 			<Form form={form} preserve={false} layout='vertical' onFinish={onFinish}>
-				<Item label={t('translation:editor.Mermaid.modal.label.definition')} name='value'>
+				<Item label={t('editor.Mermaid.modal.label.definition')} name='value'>
 					<TextArea
 						autoSize={{ minRows: 3 }}
-						placeholder={t('translation:editor.Mermaid.modal.placeholder')}
+						placeholder={t('editor.Mermaid.modal.placeholder')}
 					></TextArea>
 				</Item>
-				<Item label={t('translation:common.preview')}>
+				<Item label={t('common.preview')}>
 					<div className='prewview_wrap w_100 border_box flex justify_center align_center transition_normal'>
 						<Choose>
 							<When condition={value}>
@@ -78,7 +78,7 @@ const Index = (props: IPropsModal) => {
 					</div>
 				</Item>
 				<Button className='w_100 mt_4' htmlType='submit' type='primary'>
-					{t('translation:common.confirm')}
+					{t('common.confirm')}
 				</Button>
 			</Form>
 		</div>

@@ -54,33 +54,24 @@ const Index = (props: IPropsArchive) => {
 			initialValues={archive_query_params}
 			onValuesChange={onValuesChange}
 		>
-			<FormItem label={t('translation:todo.Archive.filter.angle')} name='angle_id'>
+			<FormItem label={t('todo.Archive.filter.angle')} name='angle_id'>
 				<Select
 					allowClear
-					placeholder={
-						t('translation:todo.Archive.filter.select') +
-						t('translation:todo.Archive.filter.angle')
-					}
+					placeholder={t('todo.Archive.filter.select') + t('todo.Archive.filter.angle')}
 					fieldNames={{ label: 'text', value: 'id' }}
 					options={angles}
 				></Select>
 			</FormItem>
-			<FormItem label={t('translation:todo.Archive.filter.tags')} name='tags'>
+			<FormItem label={t('todo.Archive.filter.tags')} name='tags'>
 				<Select
 					allowClear
-					placeholder={
-						t('translation:todo.Archive.filter.select') +
-						t('translation:todo.Archive.filter.tags')
-					}
+					placeholder={t('todo.Archive.filter.select') + t('todo.Archive.filter.tags')}
 					mode='tags'
 					fieldNames={{ label: 'text', value: 'id' }}
 					options={tags}
 				></Select>
 			</FormItem>
-			<FormItem
-				label={t('translation:todo.Archive.filter.begin') + t('translation:todo.Archive.filter.date')}
-				name='begin_date'
-			>
+			<FormItem label={t('todo.Archive.filter.begin') + t('todo.Archive.filter.date')} name='begin_date'>
 				<DatePicker
 					className='w_100'
 					showNow={false}
@@ -89,10 +80,7 @@ const Index = (props: IPropsArchive) => {
 					disabledDate={v => v.valueOf() > new Date().valueOf()}
 				></DatePicker>
 			</FormItem>
-			<FormItem
-				label={t('translation:todo.Archive.filter.end') + t('translation:todo.Archive.filter.date')}
-				name='end_date'
-			>
+			<FormItem label={t('todo.Archive.filter.end') + t('todo.Archive.filter.date')} name='end_date'>
 				<DatePicker
 					className='w_100'
 					showNow={false}
@@ -101,10 +89,10 @@ const Index = (props: IPropsArchive) => {
 					disabledDate={v => v.valueOf() > new Date().valueOf()}
 				></DatePicker>
 			</FormItem>
-			<FormItem className='status_item' label={t('translation:todo.Archive.filter.status')} name='status'>
+			<FormItem className='status_item' label={t('todo.Archive.filter.status')} name='status'>
 				<Group>
-					<Radio value='checked'>{t('translation:todo.common.status.checked')}</Radio>
-					<Radio value='closed'>{t('translation:todo.common.status.closed')}</Radio>
+					<Radio value='checked'>{t('todo.common.status.checked')}</Radio>
+					<Radio value='closed'>{t('todo.common.status.closed')}</Radio>
 				</Group>
 			</FormItem>
 		</Form>
@@ -143,11 +131,11 @@ const Index = (props: IPropsArchive) => {
 	const Actions = (
 		<div className='footer_wrap w_100 h_100 flex justify_between align_center'>
 			<div className='flex align_center'>
-				<div className='label mr_2'>{t('translation:todo.Archive.clean.title')}</div>
+				<div className='label mr_2'>{t('todo.Archive.clean.title')}</div>
 				<Select
 					className='select borderless'
 					popupClassName='borderless'
-					placeholder={t('translation:todo.Archive.clean.placeholder')}
+					placeholder={t('todo.Archive.clean.placeholder')}
 					variant='borderless'
 					suffixIcon={false}
 					popupMatchSelectWidth={false}
@@ -158,7 +146,7 @@ const Index = (props: IPropsArchive) => {
 			</div>
 			<span className='counts'>
 				{/* @ts-ignore   */}
-				{t('translation:common.total', { counts: archive_counts })}
+				{t('common.total', { counts: archive_counts })}
 			</span>
 		</div>
 	)
@@ -167,7 +155,7 @@ const Index = (props: IPropsArchive) => {
 		<Drawer
 			rootClassName={styles._local}
 			open={visible_archive_modal}
-			title={t('translation:todo.Archive.title')}
+			title={t('todo.Archive.title')}
 			width={300}
 			destroyOnClose
 			getContainer={false}
@@ -187,7 +175,7 @@ const Index = (props: IPropsArchive) => {
 				<SimpleEmpty></SimpleEmpty>
 			</If>
 			<div className={$cx('end w_100 text_center', !archives.length && end && 'hidden')} ref={setRef}>
-				{end && t('translation:todo.Archive.end')}
+				{end && t('todo.Archive.end')}
 			</div>
 		</Drawer>
 	)

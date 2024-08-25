@@ -155,7 +155,7 @@ const Index = (props: IPropsTimeBlock) => {
 								className='text_wrap w_100 border_box'
 								placeholder_classname='timeblock_placeholder'
 								max_length={schedule.text_max_length}
-								placeholder={t('translation:schedule.timeblock_placeholder')}
+								placeholder={t('schedule.timeblock_placeholder')}
 								onChange={onChange}
 								setEditor={setEditor}
 								onKeyDown={onKeyDown}

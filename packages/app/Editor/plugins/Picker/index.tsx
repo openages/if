@@ -113,8 +113,8 @@ const Index = (props: IProps) => {
 	const modal_title = useMemo(() => {
 		if (x.modal === 'Ref') return
 
-		return `${t(x.node_key ? 'translation:common.update' : 'translation:editor.insert')}${t(
-			'translation:common.letter_space'
+		return `${t(x.node_key ? 'common.update' : 'editor.insert')}${t(
+			'common.letter_space'
 		)}${t(`translation:editor.name.${x.modal}`)}`
 	}, [x.modal, x.node_key])
 

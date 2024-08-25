@@ -73,7 +73,7 @@ const Index = (props: { items: Array<TableOfContentsEntry>; node_key: string }) 
 				onClick={x.block.onClick}
 			>
 				<GpsSlash className='mb_4' size={21}></GpsSlash>
-				<span>{t('translation:editor.Navigation.empty')}</span>
+				<span>{t('editor.Navigation.empty')}</span>
 			</div>
 		)
 	}

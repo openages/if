@@ -28,7 +28,7 @@ const Index = (props: IPropsSettingsModal) => {
 	return (
 		<Modal
 			className={$cx(styles._local, className)}
-			title={`${t('translation:components.SettingsModal.edit')} ${info.name}`}
+			title={`${t('components.SettingsModal.edit')} ${info.name}`}
 			open={visible}
 			width={420}
 			maskClosable

@@ -68,8 +68,8 @@ export default class Index {
 		if (content_size) {
 			const res = await confirm({
 				id: this.id,
-				title: $t('translation:common.notice'),
-				content: $t('translation:editor.Options.import.warning')
+				title: $t('common.notice'),
+				content: $t('editor.Options.import.warning')
 			})
 
 			if (!res) return

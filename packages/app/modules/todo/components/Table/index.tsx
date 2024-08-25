@@ -95,7 +95,7 @@ const Index = (props: IPropsTable) => {
 					getProps: getPropsStatus
 				},
 				{
-					title: t('translation:todo.common.text'),
+					title: t('todo.common.text'),
 					dataIndex: 'text',
 					width: 150,
 					align: 'left',
@@ -103,7 +103,7 @@ const Index = (props: IPropsTable) => {
 					component: RenderText
 				},
 				{
-					title: t('translation:todo.Archive.filter.angle'),
+					title: t('todo.Archive.filter.angle'),
 					dataIndex: 'angle_id',
 					width: 72,
 					align: 'center',
@@ -111,7 +111,7 @@ const Index = (props: IPropsTable) => {
 					component: RenderAngle
 				},
 				{
-					title: t('translation:todo.Header.options.tags'),
+					title: t('todo.Header.options.tags'),
 					dataIndex: 'tag_ids',
 					width: 96,
 					align: 'center',
@@ -119,7 +119,7 @@ const Index = (props: IPropsTable) => {
 					component: RenderTags
 				},
 				{
-					title: t('translation:todo.common.level'),
+					title: t('todo.common.level'),
 					dataIndex: 'level',
 					width: 96,
 					align: 'center',
@@ -127,7 +127,7 @@ const Index = (props: IPropsTable) => {
 					component: RenderLevel
 				},
 				{
-					title: t('translation:todo.Input.Remind.title'),
+					title: t('todo.Input.Remind.title'),
 					dataIndex: 'remind_time',
 					width: 96,
 					align: 'center',
@@ -135,7 +135,7 @@ const Index = (props: IPropsTable) => {
 					component: RenderRemind
 				},
 				{
-					title: t('translation:todo.Input.Deadline.title'),
+					title: t('todo.Input.Deadline.title'),
 					dataIndex: 'end_time',
 					width: 96,
 					align: 'center',
@@ -143,7 +143,7 @@ const Index = (props: IPropsTable) => {
 					component: RenderDeadline
 				},
 				{
-					title: t('translation:todo.Input.Cycle.title'),
+					title: t('todo.Input.Cycle.title'),
 					dataIndex: 'cycle',
 					deps: ['cycle_enabled'],
 					width: 132,
@@ -152,7 +152,7 @@ const Index = (props: IPropsTable) => {
 					component: RenderCycle
 				},
 				{
-					title: t('translation:modules.schedule'),
+					title: t('modules.schedule'),
 					dataIndex: 'schedule',
 					width: 60,
 					align: 'center',
@@ -160,7 +160,7 @@ const Index = (props: IPropsTable) => {
 					component: RenderSchedule
 				},
 				{
-					title: t('translation:todo.common.children'),
+					title: t('todo.common.children'),
 					dataIndex: 'children',
 					width: 60,
 					align: 'center',
@@ -168,7 +168,7 @@ const Index = (props: IPropsTable) => {
 					component: RenderChildren
 				},
 				{
-					title: t('translation:todo.Archive.title'),
+					title: t('todo.Archive.title'),
 					dataIndex: 'archive',
 					deps: ['archive_time'],
 					width: 81,
@@ -177,7 +177,7 @@ const Index = (props: IPropsTable) => {
 					component: RenderArchive
 				},
 				{
-					title: t('translation:todo.Header.options.sort.create_at'),
+					title: t('todo.Header.options.sort.create_at'),
 					dataIndex: 'create_at',
 					width: 102,
 					align: 'center',
@@ -186,7 +186,7 @@ const Index = (props: IPropsTable) => {
 					component: RenderCreateAt
 				},
 				{
-					title: t('translation:todo.common.options'),
+					title: t('todo.common.options'),
 					dataIndex: 'options',
 					deps: ['id'],
 					width: 81,
@@ -205,7 +205,7 @@ const Index = (props: IPropsTable) => {
 		showSizeChanger: true,
 		pageSizeOptions: [15, 30, 60, 120, 180, 300],
 		// @ts-ignore
-		showTotal: useMemoizedFn(total => t('translation:common.total', { counts: total })),
+		showTotal: useMemoizedFn(total => t('common.total', { counts: total })),
 		onChange: onTablePageChange
 	} as PaginationProps
 

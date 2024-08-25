@@ -69,31 +69,29 @@ const Index = (props: IPropsModal) => {
 			>
 				<Item
 					className={$cx('absolute', styles.inline_wrap)}
-					label={t('translation:editor.Image.modal.label.inline')}
+					label={t('editor.Image.modal.label.inline')}
 					name='inline'
 				>
 					<Switch size='small'></Switch>
 				</Item>
 				<Choose>
 					<When condition={x.type === 'URL'}>
-						<Item label={t('translation:editor.Image.modal.label.url')} name='src'>
-							<Input
-								placeholder={t('translation:editor.Image.modal.placeholder.url')}
-							></Input>
+						<Item label={t('editor.Image.modal.label.url')} name='src'>
+							<Input placeholder={t('editor.Image.modal.placeholder.url')}></Input>
 						</Item>
 					</When>
 					<When condition={x.type === 'File'}>
-						<Item label={t('translation:editor.Image.modal.label.file')} name='file'>
+						<Item label={t('editor.Image.modal.label.file')} name='file'>
 							<FileUploader accept='image/*' maxCount={1} maxSize={MAX_SIZE}></FileUploader>
 						</Item>
 					</When>
 				</Choose>
-				<Item label={t('translation:editor.Image.modal.label.alt')} name='alt'>
-					<Input placeholder={t('translation:editor.Image.modal.placeholder.alt')}></Input>
+				<Item label={t('editor.Image.modal.label.alt')} name='alt'>
+					<Input placeholder={t('editor.Image.modal.placeholder.alt')}></Input>
 				</Item>
 
 				<Button className='w_100 mt_4' htmlType='submit' type='primary'>
-					{t('translation:common.confirm')}
+					{t('common.confirm')}
 				</Button>
 			</Form>
 		</div>

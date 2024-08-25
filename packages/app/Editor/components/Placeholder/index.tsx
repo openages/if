@@ -13,7 +13,7 @@ const Index = (props: IProps) => {
 
 	return (
 		<div className={$cx('__editor_placeholder absolute', styles._local, className)}>
-			{placeholder ?? t('translation:editor.placeholder')}
+			{placeholder ?? t('editor.placeholder')}
 		</div>
 	)
 }

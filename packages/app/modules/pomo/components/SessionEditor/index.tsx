@@ -81,7 +81,7 @@ const Index = (props: IPropsSessionEditor) => {
 
 	const onFinish = useMemoizedFn((v: FormValues) => {
 		if ((!v['work_time'] || !v['break_time']) && !v['flow_mode'])
-			return $message.warning(t('translation:pomo.SessionEditor.warning'))
+			return $message.warning(t('pomo.SessionEditor.warning'))
 
 		onChange(setHandler(v))
 		close?.()
@@ -89,15 +89,15 @@ const Index = (props: IPropsSessionEditor) => {
 
 	return (
 		<Form className={$cx('border_box', styles._local)} preserve={false} form={form} onFinish={onFinish}>
-			<Item name='title' label={t('translation:pomo.SessionEditor.target')}>
+			<Item name='title' label={t('pomo.SessionEditor.target')}>
 				<Input
 					className='input'
-					placeholder={t('translation:pomo.SessionEditor.target_placeholder')}
+					placeholder={t('pomo.SessionEditor.target_placeholder')}
 					variant='borderless'
 					maxLength={12}
 				></Input>
 			</Item>
-			<Item name='work_time' label={t('translation:pomo.SessionEditor.work_time')}>
+			<Item name='work_time' label={t('pomo.SessionEditor.work_time')}>
 				<TimePicker
 					className='time_picker'
 					format='HH:mm'
@@ -108,7 +108,7 @@ const Index = (props: IPropsSessionEditor) => {
 				></TimePicker>
 			</Item>
 			{!flow_mode && (
-				<Item name='break_time' label={t('translation:pomo.SessionEditor.break_time')}>
+				<Item name='break_time' label={t('pomo.SessionEditor.break_time')}>
 					<TimePicker
 						className='time_picker'
 						format='HH:mm'
@@ -118,11 +118,11 @@ const Index = (props: IPropsSessionEditor) => {
 					></TimePicker>
 				</Item>
 			)}
-			<Item name='flow_mode' label={t('translation:pomo.SessionEditor.flow_mode')}>
+			<Item name='flow_mode' label={t('pomo.SessionEditor.flow_mode')}>
 				<Switch className='switch' size='small'></Switch>
 			</Item>
 			<button className='btn_main w_100 clickable' type='submit'>
-				{t('translation:common.confirm')}
+				{t('common.confirm')}
 			</button>
 		</Form>
 	)
