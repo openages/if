@@ -32,6 +32,11 @@ export default {
 		感恩节: '感恩节',
 		圣诞节: '圣诞节'
 	},
+	edit: '编辑',
+	save: '保存',
+	save_failed: '保存失败',
+	email: '邮箱',
+	captcha: '验证码',
 	success: '成功',
 	failed: '失败',
 	import: '导入',

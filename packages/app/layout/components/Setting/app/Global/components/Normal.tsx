@@ -72,7 +72,7 @@ const Index = () => {
 							className='select'
 							value={global.setting.theme}
 							options={themes.map(item => ({
-								label: t(`translation:setting.Normal.theme.options.${item}`),
+								label: t(`setting.Normal.theme.options.${item}`),
 								value: item
 							}))}
 							onSelect={v => global.setting.setTheme(v)}

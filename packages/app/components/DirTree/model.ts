@@ -4,7 +4,7 @@ import { injectable } from 'tsyringe'
 import { module_default_icon } from '@/appdata'
 import { Utils } from '@/models'
 import { auth } from '@/services'
-import { id } from '@/utils'
+import { getObjectKeys, id } from '@/utils'
 import { disableWatcher, loading } from '@/utils/decorators'
 import { getDocItemsData } from '@/utils/rxdb'
 import { DirTree as NodeTree } from '@openages/stk/common'
@@ -34,7 +34,7 @@ export default class Index {
 	open_dirtree = false
 	open_folder = [] as Array<string>
 
-	items_watcher = null as Subscription
+	items_watcher = null as Subscription | null
 	disable_watcher = false
 
 	get focusing_item() {
@@ -59,7 +59,7 @@ export default class Index {
 
 		this.module = module
 		this.actions = actions
-		this.simple = simple
+		this.simple = simple!
 
 		const disposer = setStorageWhenChange(
 			[
@@ -88,7 +88,9 @@ export default class Index {
 	@disableWatcher
 	@loading
 	async insert(item: Partial<DirTree.Item>) {
-		if (!item.icon && item.type === 'file') item.icon = module_default_icon[this.module] || ''
+		if (!item.icon && item.type === 'file') {
+			item.icon = module_default_icon[this.module as 'pomo' | 'schedule' | 'note'] || ''
+		}
 
 		const target_id = item.id || id()
 

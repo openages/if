@@ -27,7 +27,7 @@ const Index = () => {
 			{keys.map((item, index) => (
 				<div className='row_item_wrap w_100 border_box' key={index}>
 					<div className='row_item setting_item w_100 border_box flex justify_between align_center'>
-						<span className='name'>{t(`translation:shortcuts.${item.event_path}`)}</span>
+						<span className='name'>{t(`shortcuts.${item.event_path}`)}</span>
 						<div className='flex align_center'>
 							<span className='key_action'>
 								{item?.options?.keyup ? t('shortcuts.keyup') : t('shortcuts.keydown')}

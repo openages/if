@@ -120,9 +120,7 @@ const Index = (props: IPropsHeader) => {
 								onClick={toggleSortOrder}
 							>
 								<span className='text'>
-									{t(
-										`translation:todo.Header.options.sort.${items_sort_param.type}`
-									)}
+									{t(`todo.Header.options.sort.${items_sort_param.type}`)}
 								</span>
 								<span className='btn_order ml_2 flex justify_center align_center'>
 									<Choose>
@@ -185,11 +183,7 @@ const Index = (props: IPropsHeader) => {
 				)}
 				{mode === 'kanban' && tags.length > 0 && (
 					<Tooltip
-						title={t(
-							`translation:todo.Header.kanban_mode.${
-								kanban_mode === 'angle' ? 'tag' : 'angle'
-							}`
-						)}
+						title={t(`todo.Header.kanban_mode.${kanban_mode === 'angle' ? 'tag' : 'angle'}`)}
 					>
 						<div className='mr_8'>
 							<div
@@ -206,7 +200,7 @@ const Index = (props: IPropsHeader) => {
 					</Tooltip>
 				)}
 				{mode !== 'table' && !kanban_mode && (
-					<Tooltip title={t(`translation:todo.Header.visible_mode.${zen_mode ? 'normal' : 'zen'}`)}>
+					<Tooltip title={t(`todo.Header.visible_mode.${zen_mode ? 'normal' : 'zen'}`)}>
 						<div className='mr_8'>
 							<div
 								className='icon_wrap border_box flex justify_center align_center cursor_point clickable'

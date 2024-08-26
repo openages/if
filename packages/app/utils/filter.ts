@@ -44,3 +44,7 @@ export const isFormValuesEqual = (form_values: any, new_values: any) => {
 		return equal
 	}, true)
 }
+
+export const getObjectKeys = <O extends object>(obj: O): (keyof O)[] => {
+	return Object.keys(obj) as (keyof O)[]
+}

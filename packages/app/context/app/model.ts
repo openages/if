@@ -5,7 +5,7 @@ import { App, Auth, DB, Layout, Locale, Screenlock, Search, Setting, Shortcuts, 
 
 @singleton()
 export default class GlobalModel {
-	unlistner = null as NodeJS.Timeout
+	unlistner = null as NodeJS.Timer | null
 
 	constructor(
 		public locale: Locale,
@@ -91,7 +91,7 @@ export default class GlobalModel {
 		this.search.off()
 		this.timer.off()
 
-		clearInterval(this.unlistner)
+		clearInterval(this.unlistner!)
 
 		$app.Event.off('global.app.lock', this.lock)
 		$app.Event.off('global.app.unlock', this.unlock)

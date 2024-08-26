@@ -64,7 +64,7 @@ const Index = (props: IPropsHeaderLeft) => {
 			<div className='toggle_wrap flex align_center' onClick={onChangeView}>
 				{views.map(item => (
 					<Tooltip
-						title={t(`translation:schedule.Header.view.${item.value}`)}
+						title={t(`schedule.Header.view.${item.value}`)}
 						destroyTooltipOnHide
 						key={item.value}
 					>
@@ -84,7 +84,7 @@ const Index = (props: IPropsHeaderLeft) => {
 			<div className='toggle_wrap flex align_center' onClick={onChangeScale}>
 				{target_scales.map(item => (
 					<Tooltip
-						title={t(`translation:common.time.${item.value as IPropsHeaderLeft['scale']}`)}
+						title={t(`common.time.${item.value as IPropsHeaderLeft['scale']}`)}
 						destroyTooltipOnHide
 						key={item.value}
 					>

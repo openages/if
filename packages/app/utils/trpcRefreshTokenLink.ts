@@ -9,7 +9,7 @@ import type { Operation, TRPCLink } from '@trpc/client'
 const queue = new PQueue({ concurrency: 1 })
 
 export type Args = {
-	tokenRefreshNeeded: (op: Operation) => boolean
+	tokenRefreshNeeded: (op: Operation) => true | unknown
 	fetchAccessToken: (op: Operation) => Promise<unknown>
 }
 
@@ -22,7 +22,7 @@ export default <AppRouter extends Router>(args: Args): TRPCLink<AppRouter> => {
 				void queue.add(async () => {
 					const refresh = tokenRefreshNeeded(op)
 
-					if (refresh) {
+					if (refresh === true) {
 						await fetchAccessToken(op)
 					}
 

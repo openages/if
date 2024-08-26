@@ -35,7 +35,7 @@ const Index = (props: IPropsAppSwitch) => {
 						onClick={handleAppSwitch}
 					>
 						<ModuleIcon type={item.app} size={36} weight='duotone'></ModuleIcon>
-						<span className='app_name'>{t(`translation:modules.${item.app}`)}</span>
+						<span className='app_name'>{t(`modules.${item.app}`)}</span>
 					</div>
 				))}
 			</div>

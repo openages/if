@@ -12,7 +12,7 @@ const Index = (props: IPropsSidebarItem) => {
 	const { current_module, show_bar_title, item, active } = props
 	const { t } = useTranslation()
 	const current = current_module === item.title
-	const title = t(`translation:modules.${item.title}`) as string
+	const title = t(`modules.${item.title}`) as string
 
 	const exitApp = useMemoizedFn((e: MouseEvent<HTMLAnchorElement>) => {
 		e.preventDefault()
@@ -61,7 +61,7 @@ const Index = (props: IPropsSidebarItem) => {
 
 	return (
 		<Tooltip
-			title={t(`translation:modules.${item.title}`)}
+			title={t(`modules.${item.title}`)}
 			placement='right'
 			mouseEnterDelay={0.9}
 			destroyTooltipOnHide

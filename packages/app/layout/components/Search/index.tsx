@@ -125,9 +125,7 @@ const Index = (props: IPropsSearch) => {
 					<input
 						type='text'
 						className='input_search w_100 border_box'
-						placeholder={`${t('dirtree.search_placeholder')}${t(
-							`translation:modules.${module}`
-						)}`}
+						placeholder={`${t('dirtree.search_placeholder')}${t(`modules.${module}`)}`}
 						autoFocus
 						maxLength={30}
 						ref={ref}

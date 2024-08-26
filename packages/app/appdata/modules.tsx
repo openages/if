@@ -1,3 +1,5 @@
+import { getObjectKeys } from '@/utils'
+
 import type { App } from '@/types'
 
 const typed_nav_items = [
@@ -120,7 +122,7 @@ export const module_group = {
 }
 
 export const getGroupModules = (modules: App.Modules) => {
-	return Object.keys(module_group).reduce(
+	return getObjectKeys(module_group).reduce(
 		(total, group_name: keyof typeof module_group) => {
 			const groups = module_group[group_name]
 

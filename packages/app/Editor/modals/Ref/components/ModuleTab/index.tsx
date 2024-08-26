@@ -18,7 +18,7 @@ const Index = (props: IPropsModuleTab) => {
 						key={item}
 						onClick={() => onChangeModule(item)}
 					>
-						{t(`translation:modules.${item}`)}
+						{t(`modules.${item}`)}
 					</span>
 				))}
 			</div>

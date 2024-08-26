@@ -18,9 +18,8 @@ const Index = (props: IPropsCircle) => {
 	const { cycle_enabled, cycle, useByDetail, unEditing, onFocus, onChange, onChangeItem } = props
 	const { t, i18n } = useTranslation()
 	const [type, setType] = useState<IPropsCircle['cycle']['type']>(() => cycle?.type ?? 'interval')
-	const every_text = t(`translation:todo.Input.Cycle.every`)
-	const scale_text =
-		cycle?.type === 'interval' && cycle?.scale ? t(`translation:todo.Input.Cycle.options.${cycle.scale}`) : ''
+	const every_text = t(`todo.Input.Cycle.every`)
+	const scale_text = cycle?.type === 'interval' && cycle?.scale ? t(`todo.Input.Cycle.options.${cycle.scale}`) : ''
 
 	const options_scale = useMemo(
 		() =>

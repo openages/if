@@ -51,12 +51,12 @@ const Index = (props: IPropsModal) => {
 	useKeyPress('enter', () => onOk())
 
 	const title = useMemo(() => {
-		if (!current_option || !focusing_item.id) return t('dirtree.add') + t(`translation:dirtree.${modal_type}`)
+		if (!current_option || !focusing_item.id) return t('dirtree.add') + t(`dirtree.${modal_type}`)
 
 		return match(current_option)
 			.with('add_file', () => focusing_item.name + ' / ' + t('dirtree.add') + t('dirtree.file'))
 			.with('add_dir', () => focusing_item.name + ' / ' + t('dirtree.add') + t('dirtree.dir'))
-			.with('rename', () => t('dirtree.options.rename') + t(`translation:dirtree.${focusing_item.type}`))
+			.with('rename', () => t('dirtree.options.rename') + t(`dirtree.${focusing_item.type}`))
 			.exhaustive()
 	}, [modal_type, current_option, focusing_item])
 

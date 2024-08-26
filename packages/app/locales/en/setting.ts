@@ -160,5 +160,8 @@ export default {
 			title: 'Team',
 			desc: 'Collaboration'
 		}
+	},
+	Account: {
+		change_avatar: 'Change Avatar'
 	}
 }

@@ -1,8 +1,36 @@
 export default {
 	migrating: 'Version updated, data Migrating, don`t close.',
 	auth: {
+		signup: 'Signup',
+		signin: 'Signin',
+		confirm_password: 'Confirm Password',
+		confirm_password_error: 'Confirm password do not match',
+		send_captcha: 'Send Captcha',
+		resend_captcha: '{{time}}s resend',
+		send_captcha_done: 'Captcha has been sent to your email',
 		confirm: 'The free usage limit has been reached. Go to subscribe?',
-		not_login: 'Not logged in, please go to settings to log in!'
+		not_login: 'Not logged in, please go to settings to log in!',
+		email_not_input: 'No email entered',
+		send_verify_code_error: 'Failed to retrieve the verification code',
+		mid_exist: 'This device has already registered an account and cannot be registered again',
+		email_exist: 'This email has already registered an account and cannot be registered again',
+		verify_code_error: 'Incorrect verification code',
+		db_insert_error: 'Failed to add user to the database',
+		signup_success: 'Signup Success',
+		user_not_exist: 'User does not exist',
+		verify_password_error: 'Incorrect password',
+		signin_success: 'Signin Success',
+		token_error: 'Signin token verification failed, please log in again',
+		refresh_token_error: 'Signin token refresh token verification failed, please log in again',
+		activation_code_not_exist: 'Activation code does not exist',
+		activation_code_expired: 'Activation code has expired',
+		slider_captcha: {
+			default: 'Drag to complete the puzzle',
+			loading: 'Loading...',
+			verifying: 'Verifying',
+			error: 'Failed'
+		},
+		signout: 'Signout'
 	},
 	search: {
 		to_navigate: 'to navigate',

@@ -29,16 +29,19 @@ export const autolock_map = {
 }
 
 export const getAutolockOptions = () => {
-	return Object.keys(autolock_map).map(key => {
+	return Object.keys(autolock_map).map(_key => {
 		let label = ''
+		const key = _key as keyof typeof autolock_map
 		const target = autolock_map[key]
+		const getUnit = (unit: 'minutes' | 'hours') => $t(`common.time.${unit}`)
 		// @ts-ignore
-		const getUnit = (unit: string) => $t(`translation:common.time.${unit}`)
-		const target_unit = getUnit(target.unit)
+		const target_unit = getUnit(target.unit as 'minutes' | 'hours')
 
 		if (key === 'never') return { label: $t('common.never'), value: 'never' }
 
+		// @ts-ignore
 		if (target.other) {
+			// @ts-ignore
 			const other_unit = getUnit(target.other.unit)
 
 			// @ts-ignore
@@ -51,6 +54,7 @@ export const getAutolockOptions = () => {
 		} else {
 			// @ts-ignore
 			label = $t('common.time.x_unit', {
+				// @ts-ignore
 				x: target.value,
 				unit: target_unit
 			})
@@ -61,19 +65,24 @@ export const getAutolockOptions = () => {
 }
 
 export const autolock_value = Object.keys(autolock_map).reduce(
+	// @ts-ignore
 	(target, key) => {
+		// @ts-ignore
 		const item = autolock_map[key]
 
 		if (key === 'never') return (target[key] = 0)
 
 		if (item.other) {
+			// @ts-ignore
 			target[key] = item.value * 60 * 60 * 1000 + item.other.value * 60 * 1000
 		} else {
 			if (item.unit.indexOf('minute') !== -1) {
+				// @ts-ignore
 				target[key] = item.value * 60 * 1000
 			}
 
 			if (item.unit.indexOf('hour') !== -1) {
+				// @ts-ignore
 				target[key] = item.value * 60 * 60 * 1000
 			}
 		}

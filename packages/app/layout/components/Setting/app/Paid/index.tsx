@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import { useCopyMemberEmail } from '@/hooks'
+import { getObjectKeys } from '@/utils'
 import { Check, Infinity, ThumbsUp } from '@phosphor-icons/react'
 
 import { limit, modules } from './data'
@@ -15,24 +16,22 @@ const Index = () => {
 			<div className='padding_wrap w_100 flex flex_column'>
 				<span className='setting_title'>{t('setting.nav.titles.Paid')}</span>
 				<div className='price_items w_100 border_box flex justify_center'>
-					{Object.keys(limit).map((type: 'free' | 'pro') => (
+					{getObjectKeys(limit).map((type: 'free' | 'pro') => (
 						<div
 							className={$cx('price_item border_box flex flex_column align_center', type)}
 							key={type}
 						>
-							<h3 className='type'>{t(`translation:setting.Paid.${type}.type`)}</h3>
+							<h3 className='type'>{t(`setting.Paid.${type}.type`)}</h3>
 							<div className='price'>
-								<span className='value'>
-									{t(`translation:setting.Paid.${type}.value`)}
-								</span>
-								<span className='unit'>/ {t(`translation:setting.Paid.unit`)}</span>
+								<span className='value'>{t(`setting.Paid.${type}.value`)}</span>
+								<span className='unit'>/ {t(`setting.Paid.unit`)}</span>
 							</div>
 							<div className='features flex flex_column'>
 								{modules.map(module => (
 									<div className='feature flex align_center' key={module}>
 										<Check className='icon_check mr_6'></Check>
 										<span className='module mr_4'>
-											{t(`translation:modules.${module}`)}
+											{t(`modules.${module}`)}
 										</span>
 										<div className='count flex align_center mr_4'>
 											{limit[type][module] === 'unlimited' ? (
@@ -48,13 +47,13 @@ const Index = () => {
 									<div className='feature flex align_center' key={index}>
 										<Check className='icon_check mr_6'></Check>
 										<span className='desc'>
-											{t(`translation:setting.Paid.common.${index as 0}`)}
+											{t(`setting.Paid.common.${index as 0}`)}
 										</span>
 									</div>
 								))}
 							</div>
 							<button className='btn_action w_100 border_box flex justify_center align_center clickable'>
-								{t(`translation:setting.Paid.${type}.btn_text`)}
+								{t(`setting.Paid.${type}.btn_text`)}
 							</button>
 						</div>
 					))}
@@ -69,10 +68,8 @@ const Index = () => {
 						</div>
 						<div className='flex align_center'>
 							<div className='price'>
-								<span className='value'>
-									{t(`translation:setting.Paid.sponsor.value`)}
-								</span>
-								<span className='unit'>/ {t(`translation:setting.Paid.unit`)}</span>
+								<span className='value'>{t(`setting.Paid.sponsor.value`)}</span>
+								<span className='unit'>/ {t(`setting.Paid.unit`)}</span>
 							</div>
 							<button className='btn_action flex justify_center align_center clickable ml_12'>
 								{t('setting.Paid.sponsor.btn_text')}
@@ -85,7 +82,7 @@ const Index = () => {
 							<ul className='step_items items_wrap'>
 								{Array.from({ length: 3 }).map((_, index) => (
 									<li className='right_item item' key={index}>
-										{t(`translation:setting.Paid.sponsor.rights.${index as 0}`)}
+										{t(`setting.Paid.sponsor.rights.${index as 0}`)}
 									</li>
 								))}
 							</ul>
@@ -95,7 +92,7 @@ const Index = () => {
 							<ol className='step_items items_wrap'>
 								{Array.from({ length: 6 }).map((_, index) => (
 									<li className='step_item item' key={index}>
-										{t(`translation:setting.Paid.sponsor.steps.${index as 0}`)}
+										{t(`setting.Paid.sponsor.steps.${index as 0}`)}
 									</li>
 								))}
 							</ol>

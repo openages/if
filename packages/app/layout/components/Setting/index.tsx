@@ -1,7 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { Button, Drawer, Tabs } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useLayoutEffect, useMemo, useState, Fragment } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useState, Fragment, ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
@@ -37,7 +37,7 @@ const Index = (props: IPropsSetting) => {
 
 	const setting_items = useMemo(() => getSettingItems(t), [t])
 	const module_items = useMemo(() => getModuleItems(t), [t])
-	const UserIcon = useMemo(() => UserTypeIcon[auth.user_type], [auth.user_type])
+	const UserIcon = useMemo(() => UserTypeIcon[auth.user.paid_plan], [auth.user.paid_plan])
 
 	const getRef = useMemoizedFn(v => (x.ref = v))
 	const onToggleMenu = useMemoizedFn(() => (x.visible_menu = !x.visible_menu))
@@ -98,7 +98,7 @@ const Index = (props: IPropsSetting) => {
 					</span>
 					<span className='icon_wrap flex justify_center align_center'>
 						<Choose>
-							<When condition={auth.infinity}>
+							<When condition={auth.user.is_infinity}>
 								<Infinity size={27}></Infinity>
 							</When>
 							<Otherwise>
@@ -107,9 +107,9 @@ const Index = (props: IPropsSetting) => {
 						</Choose>
 					</span>
 					<div className='flex flex_column'>
-						<span className='user_type'>{t(`setting.User.${auth.user_type}.title`)}</span>
-						<If condition={!auth.infinity}>
-							<span className='desc'>{t(`setting.User.${auth.user_type}.desc`)}</span>
+						<span className='user_type'>{t(`setting.User.${auth.user.paid_plan}.title`)}</span>
+						<If condition={!auth.user.is_infinity}>
+							<span className='desc'>{t(`setting.User.${auth.user.paid_plan}.desc`)}</span>
 						</If>
 					</div>
 				</div>
@@ -158,7 +158,7 @@ const Index = (props: IPropsSetting) => {
 				<Tabs
 					items={module_items.concat(setting_items)}
 					activeKey={x.active}
-					renderTabBar={() => false}
+					renderTabBar={() => null as unknown as ReactElement}
 					destroyInactiveTabPane
 				></Tabs>
 			</div>

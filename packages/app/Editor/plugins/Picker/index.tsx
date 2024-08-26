@@ -115,7 +115,7 @@ const Index = (props: IProps) => {
 
 		return `${t(x.node_key ? 'common.update' : 'editor.insert')}${t(
 			'common.letter_space'
-		)}${t(`translation:editor.name.${x.modal}`)}`
+		)}${t(`editor.name.${x.modal}`)}`
 	}, [x.modal, x.node_key])
 
 	return (

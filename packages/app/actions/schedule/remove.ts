@@ -11,7 +11,6 @@ const Index = async (focusing_item: Extend.DirTree.TransformedItem) => {
 		const res = await confirm({
 			id: file_id,
 			title: $t('common.notice'),
-			// @ts-ignore
 			content: $t('common.clean.confirm', { counts })
 		})
 

@@ -20,7 +20,7 @@ const Index = () => {
 	const { t } = useTranslation()
 
 	const reset_mode = useMemo(() => global.screenlock.data.public_key !== '', [global.screenlock.data.public_key])
-	const title = useMemo(() => t(`translation:app.screenlock.${reset_mode ? 're' : ''}set_password`), [reset_mode])
+	const title = useMemo(() => t(`app.screenlock.${reset_mode ? 're' : ''}set_password`), [reset_mode])
 	const autolock_options = useMemo(() => getAutolockOptions(), [])
 
 	const toggleModalOpen = useMemoizedFn(

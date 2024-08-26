@@ -22,7 +22,40 @@
 
 		.form_wrap {
 			.input_wrap {
+				position: relative;
 				margin-bottom: 12px;
+
+				&::after {
+					position: absolute;
+					z-index: 1;
+					top: 13.2px;
+					left: 40px;
+					color: var(--color_text);
+					content: attr(data-placeholder);
+					transition: all ease 0.3s;
+					text-transform: capitalize;
+				}
+
+				&.has_value,
+				&.focused {
+					&::after {
+						top: 7.2px;
+						font-size: 11px;
+					}
+				}
+
+				&.captcha_code {
+					.if-input-affix-wrapper {
+						width: calc(100% - 120px - 12px);
+					}
+				}
+
+				&.focused {
+					.if-input-affix-wrapper {
+						border: 1px solid var(--color_text) !important;
+						box-shadow: none !important;
+					}
+				}
 
 				.btn_send {
 					z-index: 2;
@@ -44,71 +77,13 @@
 			}
 
 			.if-input-affix-wrapper {
-				position: relative;
 				height: 50px !important;
 				box-sizing: border-box;
 				border: 1px solid transparent !important;
 				background-color: var(--color_bg_1);
 
-				&::after {
-					position: absolute;
-					top: 12px;
-					left: 40px;
-					color: var(--color_text);
-					transition: all ease 0.3s;
-				}
-
-				&.input_email {
-					&::after {
-						content: '邮箱';
-					}
-				}
-
-				&.input_password {
-					&::after {
-						content: '密码';
-					}
-				}
-
-				&.input_confirm_password {
-					&::after {
-						content: '确认密码';
-					}
-				}
-
-				&.input_captcha_code {
-					width: calc(100% - 120px - 12px);
-
-					&::after {
-						content: '验证码';
-					}
-				}
-
-				&.has_value {
-					&::after {
-						top: 6px;
-						font-size: 11px;
-					}
-				}
-
-				&-focused {
-					border: 1px solid var(--color_text) !important;
-					box-shadow: none !important;
-
-					&::after {
-						top: 6px;
-						font-size: 11px;
-					}
-
-					.if-input-prefix {
-						svg {
-							color: rgba(var(--color_main), 1) !important;
-						}
-					}
-				}
-
 				.if-input-prefix {
-					padding-right: 5px;
+					padding-right: 3px;
 
 					i {
 						color: var(--color_text);

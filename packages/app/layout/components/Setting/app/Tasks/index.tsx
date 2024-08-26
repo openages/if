@@ -21,7 +21,7 @@ const Index = () => {
 					<div className='app_module_item setting_item w_100 border_box flex justify_between align_center'>
 						<div className='module_icon flex align_center'>
 							<ModuleIcon type={item.app} size={24} weight='duotone'></ModuleIcon>
-							<span className='name ml_12'>{t(`translation:modules.${item.app}`)}</span>
+							<span className='name ml_12'>{t(`modules.${item.app}`)}</span>
 						</div>
 						<div
 							className='btn_wrap btn_action flex justify_end align_center ml_12 clickable'

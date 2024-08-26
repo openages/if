@@ -43,7 +43,7 @@ const Index = (props: IPropsAppMenu) => {
 			<div className='group_items w_100 border_box flex_column'>
 				{group_items.map((group, index) => (
 					<div className='group_item w_100 border_box flex flex_column' key={index}>
-						<span className='group_name'>{t(`translation:modules.group.${group.name}`)}</span>
+						<span className='group_name'>{t(`modules.group.${group.name}`)}</span>
 						<div className='menu_items_wrap w_100 border_box flex flex_column'>
 							{group.items.map(item => (
 								<Link
@@ -77,9 +77,7 @@ const Index = (props: IPropsAppMenu) => {
 											weight='duotone'
 										></ModuleIcon>
 									</div>
-									<span className='app_name'>
-										{t(`translation:modules.${item.title}`)}
-									</span>
+									<span className='app_name'>{t(`modules.${item.title}`)}</span>
 								</Link>
 							))}
 						</div>

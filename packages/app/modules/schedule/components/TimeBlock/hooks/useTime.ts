@@ -24,7 +24,7 @@ export default (args: Args) => {
 			return {
 				time: `${start_time.format('MMMM')} - ${end_time.format('MMMM')}`,
 				cross_time: `${months}${t('common.letter_space')}${t(
-					`translation:common.time.month${months > 1 ? 's' : ''}`
+					`common.time.month${months > 1 ? 's' : ''}`
 				)}`
 			}
 		}

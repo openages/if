@@ -25,7 +25,7 @@ const Index = (day: Dayjs) => {
 	const festival = solar.getFestivals()[0] && solar.getFestivals()[0].length <= 4 ? solar.getFestivals()[0] : false
 	const global_festival = match(festival && west_holidays.includes(festival))
 		// @ts-ignore
-		.with(true, () => $t(`translation:common.days.${festival}`))
+		.with(true, () => $t(`common.days.${festival}`))
 		.otherwise(() => false)
 
 	return {

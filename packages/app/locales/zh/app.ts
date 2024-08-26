@@ -1,8 +1,36 @@
 export default {
 	migrating: '版本更新，数据迁移中，切勿关闭应用',
 	auth: {
+		signup: '注册',
+		signin: '登录',
+		confirm_password: '确认密码',
+		confirm_password_error: '密码不一致',
+		send_captcha: '发送验证码',
+		resend_captcha: '{{time}}s后重发',
+		send_captcha_done: '验证码已发送至您的邮箱',
 		confirm: '已达到免费版使用上限，前往订阅？',
-		not_login: '未登录，请前往设置进行登录！'
+		not_login: '未登录，请前往设置进行登录！',
+		email_not_input: '未输入邮箱',
+		send_verify_code_error: '获取验证码失败',
+		mid_exist: '该设备已注册账号，无法重复注册',
+		email_exist: '该邮箱已注册账号，无法重复注册',
+		verify_code_error: '验证码错误',
+		db_insert_error: '数据库添加用户失败',
+		signup_success: '注册成功',
+		user_not_exist: '用户不存在',
+		verify_password_error: '密码错误',
+		signin_success: '登录成功',
+		token_error: '登录凭证验证失败，请重新登录',
+		refresh_token_error: '登录凭证刷新令牌验证失败，请重新登录',
+		activation_code_not_exist: '激活码不存在',
+		activation_code_expired: '激活码已过期',
+		slider_captcha: {
+			default: '向右拖动滑块填充拼图',
+			loading: '加载中',
+			verifying: '验证中',
+			error: '失败'
+		},
+		signout: '退出登录'
 	},
 	search: {
 		to_navigate: '切换',
