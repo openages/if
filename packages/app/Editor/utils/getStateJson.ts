@@ -35,7 +35,7 @@ export default (nodes: Array<Note.Item>, gather: (key: Note.Item['id']) => void)
 
 		state.root.children.push(JSON.parse(node.content))
 
-		current_node_id = node.next
+		current_node_id = node.next!
 	}
 
 	return state

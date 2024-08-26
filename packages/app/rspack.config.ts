@@ -172,8 +172,12 @@ module.exports = defineConfig({
 				]
 			},
 			{
-				test: /\.(png|svg|jpg)$/,
-				type: 'asset'
+				test: /\.(png|jpg)$/,
+				type: 'asset/resource'
+			},
+			{
+				test: /\.svg$/,
+				type: 'asset/source'
 			}
 		]
 	}

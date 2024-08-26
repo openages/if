@@ -15,7 +15,7 @@ import { getDocItem, getDocItemsData } from '@/utils'
 import { disableWatcher } from '@/utils/decorators'
 import { deepEqual } from '@openages/stk/react'
 
-import type { LexicalEditor, RangeSelection } from 'lexical'
+import type { LexicalEditor } from 'lexical'
 import type { Subscription } from 'rxjs'
 import type { IPropsDataLoader, Change } from './types'
 import type { Note } from '@/types'
@@ -23,10 +23,10 @@ import type { Lexical } from '@/types'
 
 @injectable()
 export default class Index {
-	collection: IPropsDataLoader['collection']
+	collection: IPropsDataLoader['collection'] = 'note_items'
 	id = ''
-	editor = null as LexicalEditor
-	total_watcher = null as Subscription
+	editor = null as unknown as LexicalEditor
+	total_watcher = null as unknown as Subscription
 	update_watchers = [] as Array<Subscription>
 	ids_array = [] as Array<string>
 	ids_map = new Map<string, undefined>()
@@ -34,10 +34,10 @@ export default class Index {
 	loaded = false
 	mutation_load_status = false
 	update_load_status = 1
-	timer_change = null as NodeJS.Timeout
+	timer_change = null as unknown as NodeJS.Timer
 	changes = new Map<string, Change>()
 
-	unregister = null as () => void
+	unregister = null as (() => void) | null
 
 	async init(collection: Index['collection'], id: Index['id'], editor: Index['editor']) {
 		this.collection = collection
@@ -50,7 +50,7 @@ export default class Index {
 	}
 
 	async getData() {
-		const parent = this.editor.getRootElement().parentElement
+		const parent = this.editor!.getRootElement()!.parentElement!
 		const placeholer = parent.querySelector('.__editor_placeholder') as HTMLDivElement
 
 		if (placeholer && $getEditorSize(this.editor)) {
@@ -63,7 +63,7 @@ export default class Index {
 		if (!items.length) {
 			const { key, content } = this.editor.getEditorState().read(() => {
 				const root = $getRoot()
-				const node = root.getFirstChild()
+				const node = root.getFirstChild()!
 
 				return { key: node.getKey(), content: JSON.stringify($exportNodeToJson(node)) }
 			})
@@ -85,14 +85,14 @@ export default class Index {
 			const state = getStateJson(items, key => {
 				this.ids_array.push(key)
 				this.ids_map.set(key, undefined)
-			})
+			})!
 
 			this.editor.setEditorState(parseEditorState(state, this.editor))
-			this.editor.focus(null, { defaultSelection: 'rootStart' })
+			this.editor.focus(undefined, { defaultSelection: 'rootStart' })
 		}
 	}
 
-	async onUpdate(args: Lexical.ArgsUpdateListener) {
+	async onUpdate(args: Lexical.ArgsUpdateListener | null) {
 		if (!this.loaded) return (this.loaded = true)
 		if (!args) return
 		if (this.editor.isComposing()) return
@@ -142,7 +142,16 @@ export default class Index {
 			}
 
 			if (curr_node && prev_node) {
-				this.changes.set(id, { type: 'update', id })
+				this.editor.update(() => {
+					const node = $getNodeByKey(id)
+
+					console.log(node?.getTextContent())
+				})
+				if (curr_node.__parent === 'root' && curr_node.__parent !== prev_node.__parent) {
+					this.dispatch([{ type: 'add', id }])
+				} else {
+					this.changes.set(id, { type: 'update', id })
+				}
 			}
 		})
 
@@ -156,17 +165,17 @@ export default class Index {
 		const target = changes || Array.from(this.changes.values())
 
 		const events = target.map(async ({ type, id }) => {
-			let prev: string
-			let next: string
-			let content: string
+			let prev: string = ''
+			let next: string = ''
+			let content: string = ''
 
 			if (type === 'add' || type === 'update') {
 				const res = this.getNodeData(id)
 
 				if (!res) return
 
-				prev = res.prev
-				next = res.next
+				prev = res.prev!
+				next = res.next!
 				content = res.content
 			}
 
@@ -197,7 +206,8 @@ export default class Index {
 
 					break
 				case 'update':
-					const item = await $db.note_items.findOne(id).exec()
+					const item = (await $db.note_items.findOne(id).exec())!
+
 					const euqal_prev = item.prev === prev
 					const euqal_next = item.next === next
 					const euqal_content = deepEqual(item.content, content)
@@ -257,7 +267,7 @@ export default class Index {
 					if (this.ids_map.has(id)) {
 						remove_ids_map.delete(id)
 					} else {
-						add_doc.push(getDocItem(doc))
+						add_doc.push(getDocItem(doc)!)
 					}
 
 					target_ids_array.push(id)
@@ -283,11 +293,11 @@ export default class Index {
 							const node = $restoreNodeFromJson(json, this.editor._nodes)
 
 							if (prev) {
-								const prev_node = $getNodeByKey(prev)
+								const prev_node = $getNodeByKey(prev)!
 
 								prev_node.insertAfter(node)
 							} else if (next) {
-								const next_node = $getNodeByKey(next)
+								const next_node = $getNodeByKey(next)!
 
 								next_node.insertBefore(node)
 							} else {
@@ -316,13 +326,13 @@ export default class Index {
 				if (this.update_load_status !== 0) return this.update_load_status--
 				if (this.disable_watcher) return
 
-				const item = getDocItem(doc)
+				const item = getDocItem(doc!)!
 				const json = JSON.parse(item.content)
 				const node_map = this.editor.getEditorState()._nodeMap
-				const el = this.editor.getElementByKey(item.id)
+				const el = this.editor.getElementByKey(item.id)!
 
 				this.editor.update(() => {
-					const node = $getNodeByKey(item.id)
+					const node = $getNodeByKey(item.id)!
 					const selection = $getSelection()
 
 					if ($isRangeSelection(selection)) {
@@ -363,7 +373,7 @@ export default class Index {
 		this.removeUpdateListner()
 
 		this.total_watcher?.unsubscribe?.()
-		this.total_watcher = null
+		this.total_watcher = null as unknown as Subscription
 
 		if (this.timer_change) {
 			clearTimeout(this.timer_change)

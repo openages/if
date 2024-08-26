@@ -43,11 +43,11 @@ import type { ListNode } from '@lexical/list'
 @injectable()
 export default class Index {
 	id = ''
-	editor = null as LexicalEditor
+	editor = null as unknown as LexicalEditor
 	md = false
-	container = null as HTMLDivElement
-	active_node = null as LexicalNode
-	over_node = null as LexicalNode
+	container = null as unknown as HTMLDivElement
+	active_node = null as unknown as LexicalNode
+	over_node = null as unknown as LexicalNode
 
 	position_handler = { left: 0, top: 0 }
 	style_line = { width: 0, left: 0, top: 0 }
@@ -84,14 +84,14 @@ export default class Index {
 		this.id = id
 		this.editor = editor
 		this.md = md
-		this.container = document.querySelector(`#${id} .__editor_container`)
+		this.container = document.querySelector(`#${id} .__editor_container`)!
 
 		this.on()
 	}
 
 	reset() {
-		this.active_node = null
-		this.over_node = null
+		this.active_node = null as unknown as LexicalNode
+		this.over_node = null as unknown as LexicalNode
 		this.position_handler = { left: 0, top: 0 }
 		this.style_line = { width: 0, left: 0, top: 0 }
 		this.visible_handler = false
@@ -109,7 +109,7 @@ export default class Index {
 		const children = root.getChildren()
 
 		children.forEach(item => {
-			const el = this.editor.getElementByKey(item.getKey())
+			const el = this.editor.getElementByKey(item.getKey())!
 
 			if (el.classList.contains('__editor_fold')) el.classList.remove('__editor_fold')
 			if (el.classList.contains('__editor_hidden')) el.classList.remove('__editor_hidden')
@@ -127,7 +127,7 @@ export default class Index {
 
 		if (!next_el.classList.contains('__editor_list_item_nested')) return
 
-		const over_el = this.editor.getElementByKey(this.over_node.getKey())
+		const over_el = this.editor.getElementByKey(this.over_node.getKey())!
 
 		over_el.classList.remove('__editor_fold')
 		next_el.classList.remove('__editor_hidden')
@@ -143,7 +143,7 @@ export default class Index {
 				? `#${this.active_node.getTextContent()}`
 				: `block://${this.active_node.getKey()}`
 
-			const link_node = $getMatchingParent((this.active_node as HeadingNode).getFirstChild(), $isLinkNode)
+			const link_node = $getMatchingParent((this.active_node as HeadingNode).getFirstChild()!, $isLinkNode)
 
 			if (this.md && !link_node) {
 				const active_key = this.active_node.getKey()
@@ -206,7 +206,7 @@ export default class Index {
 
 			if (!next_el.classList.contains('__editor_list_item_nested')) return
 
-			const active_el = this.editor.getElementByKey(this.active_node.getKey())
+			const active_el = this.editor.getElementByKey(this.active_node.getKey())!
 			const fold = next_el.classList.contains('__editor_hidden')
 
 			if (fold) {
@@ -222,7 +222,7 @@ export default class Index {
 
 		if ($isHeadingNode(this.active_node) && $getHeadingLevel(this.active_node) <= 4) {
 			const active_level = $getHeadingLevel(this.active_node)
-			const active_el = this.editor.getElementByKey(this.active_node.getKey())
+			const active_el = this.editor.getElementByKey(this.active_node.getKey())!
 			const fold = active_el.classList.contains('__editor_fold')
 
 			let child_node = this.active_node.getNextSibling()
@@ -235,7 +235,7 @@ export default class Index {
 					break
 				}
 
-				const child_el = this.editor.getElementByKey(child_node.getKey())
+				const child_el = this.editor.getElementByKey(child_node.getKey())!
 
 				if (fold) {
 					child_el.classList.remove('__editor_hidden')
@@ -261,7 +261,7 @@ export default class Index {
 	}
 
 	onMouseMove(e: MouseEvent) {
-		const target = e.target
+		const target = e.target!
 
 		if (this.dragging) return
 		if (!isHTMLElement(target)) return
@@ -276,7 +276,7 @@ export default class Index {
 
 			this.active_node = active_node
 
-			const fold = this.getToggleNode(active_node)
+			const fold = this.getToggleNode(active_node)!
 
 			runInAction(() => {
 				this.position_handler = this.getNodePosition(this.active_node)
@@ -300,7 +300,7 @@ export default class Index {
 		}
 
 		const key = this.active_node.getKey()
-		const el = this.editor.getElementByKey(key)
+		const el = this.editor.getElementByKey(key)!
 
 		if ($isTableNode(this.active_node)) el.style.transform = 'translateZ(0)'
 
@@ -318,9 +318,9 @@ export default class Index {
 	onDragOver(e: DragEvent) {
 		e.preventDefault()
 
-		if (!this.active_node) return
+		if (!this.active_node) return false
 
-		const target = e.target
+		const target = e.target!
 		const [is_file] = eventFiles(e)
 
 		if (is_file) return
@@ -336,7 +336,7 @@ export default class Index {
 
 			this.over_node = over_node
 
-			const over_el = this.editor.getElementByKey(over_node.getKey())
+			const over_el = this.editor.getElementByKey(over_node.getKey())!
 
 			if ($isListItemNode(over_node) && over_el.classList.contains('__editor_fold')) {
 				this.resetHiddenList()
@@ -369,7 +369,7 @@ export default class Index {
 			}
 		}
 
-		const active_parent_node = this.active_node.getParent()
+		const active_parent_node = this.active_node.getParent()!
 
 		if ($isTableCellNode(active_parent_node) && active_parent_node.getChildren().length === 1) {
 			active_parent_node.append($createParagraphNode())
@@ -426,7 +426,7 @@ export default class Index {
 
 	getToggleNode(node: LexicalNode) {
 		if ($isHeadingNode(node) && parseInt((node as HeadingNode).getTag().replace('h', '')) <= 4) {
-			const active_el = this.editor.getElementByKey(node.getKey())
+			const active_el = this.editor.getElementByKey(node.getKey())!
 
 			return active_el.classList.contains('__editor_fold')
 		}
@@ -435,7 +435,7 @@ export default class Index {
 
 		if (!next_node) return
 
-		const next_el = this.editor.getElementByKey(next_node.getKey())
+		const next_el = this.editor.getElementByKey(next_node.getKey())!
 
 		if ($isListItemNode(next_node) && next_el.classList.contains('__editor_list_item_nested')) {
 			return next_el.classList.contains('__editor_hidden')
@@ -443,7 +443,7 @@ export default class Index {
 	}
 
 	getNodePosition(node: LexicalNode, line?: boolean) {
-		const el_node = this.editor.getElementByKey(node.getKey())
+		const el_node = this.editor.getElementByKey(node.getKey())!
 		const rect_container = this.container.getBoundingClientRect()
 		const rect_node = el_node.getBoundingClientRect()
 
@@ -506,7 +506,7 @@ export default class Index {
 	}
 
 	on() {
-		const container = document.getElementById(this.id)
+		const container = document.getElementById(this.id)!
 
 		container.addEventListener('mousemove', this.onMouseMove)
 		container.addEventListener('mouseleave', this.reset)
@@ -523,7 +523,7 @@ export default class Index {
 	}
 
 	off() {
-		const container = document.getElementById(this.id)
+		const container = document.getElementById(this.id)!
 
 		container.removeEventListener('mousemove', this.onMouseMove)
 		container.removeEventListener('mouseleave', this.reset)

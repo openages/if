@@ -6,7 +6,7 @@ import { useMemo, useRef, useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { genConfig } from 'react-nice-avatar'
 
-import img_puzzle from '@/public/images/img_puzzle.png'
+import img_puzzle from '@/public/images/puzzle.png'
 import { local } from '@openages/stk/storage'
 import { EnvelopeSimple, Lock, LockKey, ShieldCheck } from '@phosphor-icons/react'
 
