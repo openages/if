@@ -162,6 +162,6 @@ export default {
 		}
 	},
 	Account: {
-		change_avatar: 'Change Avatar'
+		change_avatar: 'Change'
 	}
 }

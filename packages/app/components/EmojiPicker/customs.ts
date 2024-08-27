@@ -4,18 +4,20 @@ import feather_icons_data from './feather_icons_data'
 import ionicons_data from './ionicons_data'
 import phosphor_icons_data from './phosphor_icons_data'
 
-type Icon = {
+export type Icon = {
 	id: string
 	name: string
 	keywords: Array<string>
 	skins: Array<{ src: string }>
 }
 
+
 export const feather_icons = Object.keys(feather_icons_data).reduce(
 	(total, key) => {
 		const target = {
 			id: key,
 			name: key,
+                  // @ts-ignore
 			keywords: feather_icons_data[key],
 			skins: [{ src: `/feather_icons/${key}.svg` }]
 		}

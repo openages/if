@@ -4,8 +4,9 @@ import lz from 'lz-string'
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
+import { getVersionName } from '@/appdata'
 import Utils from '@/models/utils'
-import { trpc } from '@/utils'
+import { getUserData, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
 import { local } from '@openages/stk/storage'
 
@@ -23,7 +24,7 @@ export default class Index {
 	}
 
 	init() {
-		const user = this.getUser()
+		const user = getUserData()
 
 		if (user) this.user = user
 
@@ -31,7 +32,7 @@ export default class Index {
 	}
 
 	async refreshToken() {
-		const user = this.getUser()
+		const user = getUserData()
 
 		if (!local.token) return
 		if (!user) return
@@ -65,6 +66,8 @@ export default class Index {
 
 	async updateUser() {
 		if (!Object.keys(this.temp_user).length) return
+
+		if (this.temp_user.name === '') this.temp_user.name = getVersionName()
 
 		const [err, res] = await to(trpc.user.update.mutate({ ...this.temp_user, id: this.user.id }))
 
@@ -130,12 +133,6 @@ export default class Index {
 		local.token = token
 
 		this.saveUser(user)
-	}
-
-	getUser() {
-		const local_user = local.user
-
-		return local_user ? JSON.parse(lz.decompress(local_user)) : null
 	}
 
 	saveUser(v: Index['user']) {

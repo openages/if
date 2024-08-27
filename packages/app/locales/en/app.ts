@@ -30,7 +30,8 @@ export default {
 			verifying: 'Verifying',
 			error: 'Failed'
 		},
-		signout: 'Signout'
+		signout: 'Signout',
+		activate: 'activate'
 	},
 	search: {
 		to_navigate: 'to navigate',

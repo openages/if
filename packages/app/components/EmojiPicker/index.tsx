@@ -9,7 +9,7 @@ import zh from '@emoji-mart/data/i18n/zh.json'
 import Picker from '@emoji-mart/react'
 
 import category_icons from './category'
-import { feather_icons, ionicons, phosphor_icons } from './customs'
+import { feather_icons, ionicons, phosphor_icons, Icon } from './customs'
 
 interface IProps {
 	disableCustom?: boolean
@@ -32,9 +32,9 @@ const Index = (props: IProps) => {
 	const makeImgColor = useMemoizedFn(() => {
 		if (global.setting.theme === 'light') return
 
-		const picker = document.querySelector('em-emoji-picker')
-		const root = picker.shadowRoot
-		const imgs = root.querySelectorAll('.emoji-mart-emoji img')
+		const picker = document.querySelector('em-emoji-picker')!
+		const root = picker.shadowRoot!
+		const imgs = root.querySelectorAll<HTMLImageElement>('.emoji-mart-emoji img')
 
 		imgs.forEach((item: HTMLImageElement) => {
 			item.style.filter = 'invert(80%)'
@@ -46,8 +46,8 @@ const Index = (props: IProps) => {
 	useEffect(() => {
 		if (global.setting.theme === 'light') return
 
-		const picker = document.querySelector('em-emoji-picker')
-		const root = picker.shadowRoot
+		const picker = document.querySelector('em-emoji-picker')!
+		const root = picker.shadowRoot!
 
 		let scroll_container = null as HTMLDivElement | null
 		let nav_buttons: NodeListOf<HTMLButtonElement>
@@ -81,7 +81,7 @@ const Index = (props: IProps) => {
 		delaymakeImgColor()
 	})
 
-	const props_dynamic = {}
+	const props_dynamic = {} as Record<string,Array<{id:string,name:string,emojis:Array<Icon>}>>
 
 	if (!disableCustom) {
 		props_dynamic['custom'] = [

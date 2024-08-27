@@ -2,18 +2,17 @@ import { omit } from 'lodash-es'
 
 import { updateSetting as updateSettingAction } from '@/actions/global'
 import { Auth } from '@/types'
+import { getUserData } from '@/utils'
 import { confirm } from '@/utils/antd'
-import { local } from '@openages/stk/storage'
 
 import type { File } from '@/models'
 import type { App } from '@/types'
 
 export const auth = async (module: App.ModuleType) => {
-	const user_type = local.user_type as Auth.UserType
-	const infinity = local.infinity
+	const user = getUserData()
 
 	if (module === 'note') return true
-	if ((user_type && user_type !== Auth.UserTypes.free) || infinity === true) return true
+	if ((user && user.paid_plan !== Auth.UserTypes.free) || user?.is_infinity === true) return true
 
 	const counts = await $db.dirtree_items.count({ selector: { module, type: 'file' } }).exec()
 

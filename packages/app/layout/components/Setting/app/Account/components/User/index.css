@@ -1,37 +1,78 @@
 ._local {
 	:global {
-		.avatar {
-			width: 90px;
-			height: 90px;
+		.avatar_wrap {
+			&.edit_mode {
+				.avatar {
+					border-radius: var(--radius_large) !important;
+				}
+			}
+
+			.avatar {
+				width: 90px;
+				height: 90px;
+			}
+
+			.btn_change_avatar {
+				top: -10.5px;
+				height: 21px;
+				padding: 0 6px;
+				border: var(--border);
+				border-color: var(--color_border);
+				border-radius: 30px;
+				color: var(--color_bg);
+				background-color: transparent;
+				background-color: rgba(var(--color_text_rgb), 0.48);
+				font-size: 12px;
+				backdrop-filter: var(--blur);
+
+				&:hover {
+					background-color: rgba(var(--color_text_rgb), 0.6);
+				}
+			}
 		}
 
-		.btn_change_avatar {
-			padding: 6px 12px;
-			border: var(--border);
-			border-radius: var(--radius);
-			background-color: transparent;
-			font-size: 12px;
+		.input_name {
+			width: 90px;
+			height: 24px !important;
+			margin: 6px 0;
+			border-radius: 24px;
+			text-align: center;
+		}
 
-			&:hover {
-				border-color: var(--color_text);
-			}
+		.name {
+			line-height: 1;
+			margin: 3px 0;
+			font-size: 18px;
+			font-weight: 500;
 		}
 
 		.email {
 			font-size: 12px;
 		}
 
-		.btn_signout {
-			padding: 3px 6px;
-			border: 1px solid var(--color_danger);
-			border-radius: var(--radius_small);
-			color: var(--color_danger);
-			background-color: transparent;
-			font-size: 12px;
+		.actions_wrap {
+			right: 0;
+			bottom: -36px;
+			color: var(--color_text_light);
+			gap: 12px;
 
-			&:hover {
-				color: white;
-				background-color: var(--color_danger);
+			.action_item {
+				width: 45px;
+				height: 45px;
+
+				&:hover {
+					color: var(--color_text);
+				}
+
+				.icon {
+					margin-bottom: 3px;
+					font-size: 18px;
+				}
+
+				.text {
+					line-height: 1;
+					font-size: 10px;
+				}
 			}
 		}
 	}

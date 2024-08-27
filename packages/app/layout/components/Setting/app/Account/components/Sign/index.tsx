@@ -6,6 +6,7 @@ import { useMemo, useRef, useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { genConfig } from 'react-nice-avatar'
 
+import { getVersionName } from '@/appdata/version'
 import img_puzzle from '@/public/images/puzzle.png'
 import { local } from '@openages/stk/storage'
 import { EnvelopeSimple, Lock, LockKey, ShieldCheck } from '@phosphor-icons/react'
@@ -85,6 +86,7 @@ const Index = (props: IPropsSign) => {
 
 			signup({
 				...args,
+				name: getVersionName(),
 				avatar: JSON.stringify(genConfig(values.email)),
 				code: values.code
 			})
@@ -255,6 +257,7 @@ const Index = (props: IPropsSign) => {
 					type='primary'
 					htmlType='submit'
 					shape='round'
+					loading={loading['signin'] || loading['signup']}
 				>
 					{title}
 				</Button>

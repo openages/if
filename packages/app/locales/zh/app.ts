@@ -30,7 +30,8 @@ export default {
 			verifying: '验证中',
 			error: '失败'
 		},
-		signout: '退出登录'
+		signout: '注销',
+		activate: '激活'
 	},
 	search: {
 		to_navigate: '切换',

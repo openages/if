@@ -21,10 +21,14 @@ const Index = () => {
 	const setSignIn = useMemoizedFn(() => (auth.sign_type = 'signin'))
 	const setSignUp = useMemoizedFn(() => (auth.sign_type = 'signup'))
 
+	const cancelEdit = useMemoizedFn(() => {
+		auth.edit_mode = !auth.edit_mode
+		auth.temp_user = {} as Trpc.UserData
+	})
+
 	const toggleEditMode = useMemoizedFn(() => {
 		if (!auth.edit_mode) {
-			auth.edit_mode = !auth.edit_mode
-			auth.temp_user = {} as Trpc.UserData
+			cancelEdit()
 		} else {
 			auth.updateUser()
 		}
@@ -54,15 +58,23 @@ const Index = () => {
 				<span className='setting_title'>{t('setting.nav.titles.Account')}</span>
 				<Choose>
 					<When condition={has_user_id}>
-						<span className='btn_edit clickable' onClick={toggleEditMode}>
-							{auth.edit_mode ? t('common.save') : t('common.edit')}
-						</span>
+						<div className='action_type_wrap flex'>
+							<If condition={auth.edit_mode}>
+								<span className='action_type clickable active' onClick={cancelEdit}>
+									{t('common.cancel')}
+								</span>
+								<span className='divider'>|</span>
+							</If>
+							<span className='action_type clickable active' onClick={toggleEditMode}>
+								{auth.edit_mode ? t('common.save') : t('common.edit')}
+							</span>
+						</div>
 					</When>
 					<Otherwise>
-						<div className='sign_type_wrap flex'>
+						<div className='action_type_wrap flex'>
 							<span
 								className={$cx(
-									'sign_type clickable',
+									'action_type clickable',
 									auth.sign_type === 'signin' && 'active'
 								)}
 								onClick={setSignIn}
@@ -72,7 +84,7 @@ const Index = () => {
 							<span className='divider'>|</span>
 							<span
 								className={$cx(
-									'sign_type clickable',
+									'action_type clickable',
 									auth.sign_type === 'signup' && 'active'
 								)}
 								onClick={setSignUp}

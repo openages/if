@@ -31,10 +31,10 @@
 				margin-bottom: 0;
 			}
 
-			.sign_type_wrap {
+			.action_type_wrap {
 				color: var(--color_text_light);
 
-				.sign_type {
+				.action_type {
 					&.active {
 						color: var(--color_text);
 					}

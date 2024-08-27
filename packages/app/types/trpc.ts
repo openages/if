@@ -5,6 +5,7 @@ import type { Router } from '@server/rpcs'
 export namespace Trpc {
 	export interface UserData {
 		id: string
+		name: string
 		email: string
 		avatar: string
 		paid_plan: Auth.UserType

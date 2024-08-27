@@ -2,10 +2,6 @@
   "name": "monorepo",
   "private": true,
   "homepage": "https://if.openages.com",
-  "workspaces": [
-    "packages/*",
-    "packages/lexical/packages/*"
-  ],
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",

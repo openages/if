@@ -2,7 +2,7 @@ import { resolve } from 'path'
 
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
 import { defineConfig } from '@rspack/cli'
-import { CopyRspackPlugin, HtmlRspackPlugin, SwcCssMinimizerRspackPlugin } from '@rspack/core'
+import { CopyRspackPlugin, HtmlRspackPlugin } from '@rspack/core'
 import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
 
 const is_dev = process.env.NODE_ENV === 'development'
@@ -52,9 +52,6 @@ module.exports = defineConfig({
 		outputModule: is_module,
 		lazyCompilation: false
 	},
-	// optimization: {
-	// 	// minimizer: [new SwcCssMinimizerRspackPlugin()]
-	// },
 	plugins: [
 		new HtmlRspackPlugin({
 			title: 'IF - GTD for professionals.',

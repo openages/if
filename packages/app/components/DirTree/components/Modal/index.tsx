@@ -26,7 +26,7 @@ const Index = (props: IPropsModal) => {
 		setModalOpen,
 		resetFocusingItem
 	} = props
-	const [icon, setIcon] = useState({ icon: '', icon_hue: undefined })
+	const [icon, setIcon] = useState<{icon:string,icon_hue?:number}>({ icon: '', icon_hue: undefined })
 	const input = useRef<InputRef>(null)
 	const [value, { onChange }] = useEventTarget<string>()
 	const { t } = useTranslation()
