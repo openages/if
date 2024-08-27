@@ -34,7 +34,7 @@ const Index = () => {
 							</span>
 							<div className='key_bindings flex justify_end'>
 								{getKeyMap(item).map(key => {
-									const Icon = icons[key]
+									const Icon = icons[key as keyof typeof icons]
 
 									return (
 										<span className='key flex align_center ml_4' key={key}>

@@ -16,7 +16,7 @@ const Index = (props: IPropsGroupTitle) => {
 	const { sortable_props, item, index, update, remove } = props
 	const { id, text } = item
 	const { t, i18n } = useTranslation()
-	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = sortable_props
+	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = sortable_props!
 	const { input, onInput } = useInput({
 		value: text,
 		update: useMemoizedFn(textContent => update({ type: 'parent', index, value: { text: textContent } }))

@@ -41,7 +41,8 @@ const Index = () => {
 		updateTempUser: useMemoizedFn(
 			(v: Partial<Trpc.UserData>) => (auth.temp_user = { ...auth.temp_user, ...v })
 		),
-		signout: useMemoizedFn(auth.signout)
+		signout: useMemoizedFn(auth.signout),
+		activate: useMemoizedFn(auth.activate)
 	}
 
 	const props_sign: IPropsSign = {

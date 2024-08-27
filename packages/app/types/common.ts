@@ -11,8 +11,8 @@ export type Mutable<T> = {
 	-readonly [K in keyof T]: T[K] extends ReadonlyArray<infer U>
 		? Array<Mutable<U>>
 		: T[K] extends object
-		  ? Mutable<T[K]>
-		  : T[K]
+			? Mutable<T[K]>
+			: T[K]
 }
 
 export type CustomFormItem<T> = {
@@ -34,6 +34,6 @@ export interface DndItemProps {
 	transition: string
 	isDragging: boolean
 	listeners: SyntheticListenerMap
-	setNodeRef: (node: HTMLElement) => void
-	setActivatorNodeRef: (element: HTMLElement) => void
+	setNodeRef: (node: HTMLElement | null) => void
+	setActivatorNodeRef: (element: HTMLElement | null) => void
 }

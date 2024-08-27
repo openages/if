@@ -16,8 +16,8 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['cycle']>) => {
 				cycle={value}
 				cycle_enabled={cycle_enabled}
 				onFocus={onFocus}
-				onChange={onChange}
-				onChangeItem={onRowChange}
+				onChange={onChange!}
+				onChangeItem={onRowChange!}
 			></Cycle>
 		</div>
 	)

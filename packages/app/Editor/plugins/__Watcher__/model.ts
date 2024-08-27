@@ -24,11 +24,11 @@ import type { LexicalEditor, LexicalNode, BaseSelection } from 'lexical'
 
 @injectable()
 export default class Index {
-	editor = null as LexicalEditor
-	path = []
-	selection = null as BaseSelection
+	editor = null as unknown as LexicalEditor
+	path = [] as Array<{ type: string; key: string }>
+	selection = null as unknown as BaseSelection
 
-	unregister = null as () => void
+	unregister = null as unknown as () => void
 
 	constructor(public utils: Utils) {}
 

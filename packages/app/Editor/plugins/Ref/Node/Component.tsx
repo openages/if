@@ -20,11 +20,11 @@ const Index = (props: IPropsRef) => {
 	const { module, id, node_key } = props
 	const [x] = useState(() => new Model())
 	const [editor] = useLexicalComposerContext()
-	const [selected] = useLexicalNodeSelection(node_key)
+	const [selected] = useLexicalNodeSelection(node_key!)
 	const item = $copy(x.item) || {}
 
 	useLayoutEffect(() => {
-		x.init(editor, node_key, module, id)
+		x.init(editor, node_key!, module, id)
 
 		return () => x.off()
 	}, [editor, node_key, module, id])
@@ -50,7 +50,7 @@ const Index = (props: IPropsRef) => {
 				selected && styles.selected,
 				!x.item && styles.removed
 			)}
-			onClick={x.item ? onClick : null}
+			onClick={x.item ? onClick : undefined}
 		>
 			<Choose>
 				<When condition={item?.module && module === 'file'}>

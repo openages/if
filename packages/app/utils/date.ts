@@ -5,7 +5,7 @@ import type { Dayjs } from 'dayjs'
 import type { CleanTime } from '@/types'
 
 export const format = (v: Dayjs, ignoreDetail?: boolean) => {
-	if (!v) return undefined
+	if (!v) return undefined as unknown as string
 
 	if (v.valueOf() <= dayjs().valueOf()) {
 		const diff = dayjs().diff(v, 'day')

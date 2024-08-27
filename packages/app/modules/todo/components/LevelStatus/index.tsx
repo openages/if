@@ -5,7 +5,7 @@ import type { IPropsLevelStatus } from '../../types'
 
 const Index = (props: IPropsLevelStatus) => {
 	const { level } = props
-	const color = getColorByLevel(level)
+	const color = getColorByLevel(level!)
 
 	return (
 		<div

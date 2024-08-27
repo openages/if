@@ -13,6 +13,8 @@ import styles from './index.css'
 import Item from './Item'
 import Model from './model'
 
+import type { Todo } from '@/types'
+
 export interface IProps {
 	ids: Array<string>
 	mode: 'sortable' | 'draggable' | 'view'
@@ -44,21 +46,21 @@ const Index = (props: IProps) => {
 	useDndMonitor({
 		onDragStart({ active }) {
 			if (x.mode !== 'draggable') return
-			if (active.data.current.signal !== 'task_panel') return
+			if (active.data.current!.signal !== 'task_panel') return
 
-			x.active_item = x.items[active.data.current.index]
+			x.active_item = x.items[active.data.current!.index]
 		},
 		onDragEnd({ active }) {
 			if (x.mode !== 'draggable') return
-			if (active.data.current.signal !== 'task_panel') return
+			if (active.data.current!.signal !== 'task_panel') return
 
-			x.active_item = null
+			x.active_item = null as unknown as Todo.Todo
 		},
 		onDragCancel({ active }) {
 			if (x.mode !== 'draggable') return
-			if (active.data.current.signal !== 'task_panel') return
+			if (active.data.current!.signal !== 'task_panel') return
 
-			x.active_item = null
+			x.active_item = null as unknown as Todo.Todo
 		}
 	})
 

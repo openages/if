@@ -2,7 +2,7 @@ import type { Schedule } from '@/types'
 
 import type Model from '../model'
 
-import type { MutableRefObject } from 'react'
+import type { RefObject } from 'react'
 import type { DayDetail } from '../utils'
 
 export interface IProps {
@@ -59,7 +59,7 @@ export interface IPropsDayExtra {
 }
 
 export interface IPropsCalendarView {
-	container: MutableRefObject<HTMLDivElement>
+	container: RefObject<HTMLDivElement>
 	days: Model['days']
 	calendar_days: Model['calendar_days']
 	tags: Schedule.Setting['tags']
@@ -71,7 +71,7 @@ export interface IPropsCalendarView {
 }
 
 export interface IPropsCalendarViewDay {
-	container: MutableRefObject<HTMLDivElement>
+	container: RefObject<HTMLDivElement>
 	day_info: DayDetail
 	day: Schedule.CalendarDay
 	counts: number
@@ -119,7 +119,7 @@ export interface IPropsMonthViewDay {
 }
 
 export interface IPropsTimelineView {
-	container: MutableRefObject<HTMLDivElement>
+	container: RefObject<HTMLDivElement>
 	scale: Model['scale']
 	days: Model['days']
 	setting_timeline_angles: Schedule.Setting['timeline_angles']
@@ -138,7 +138,7 @@ export interface IPropsTimelineViewDay {
 }
 
 export interface IPropsTimelineViewRow {
-	container: MutableRefObject<HTMLDivElement>
+	container: RefObject<HTMLDivElement>
 	scale: Model['scale']
 	tags: Schedule.Setting['tags']
 	step: number
@@ -192,7 +192,7 @@ export interface IPropsSettingsModal {
 }
 
 export interface IPropsScanline {
-	scanline?: MutableRefObject<HTMLDivElement>
+	scanline?: RefObject<HTMLDivElement>
 	timeline?: boolean
 	scale?: Model['scale']
 	step?: number

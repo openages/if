@@ -18,7 +18,7 @@ export default class Index {
 	id = ''
 	data = {} as Pomo.Item
 
-	watcher = null as Subscription
+	watcher = null as unknown as Subscription
 	disable_watcher = false
 
 	view_index = 0
@@ -26,7 +26,7 @@ export default class Index {
 
 	visible_edit_modal = false
 
-	record_timer = null as NodeJS.Timeout
+	record_timer = null as unknown as NodeJS.Timer
 	record_numbers = 0
 
 	constructor(public file: File) {
@@ -113,7 +113,7 @@ export default class Index {
 	async move(active_index: number, over_index: number) {
 		this.data.sessions = arrayMove($copy(this.data.sessions), active_index, over_index)
 
-		this.data.current = ''
+		this.data.current = null
 		this.data.going = false
 		this.data.work_in = 0
 		this.data.break_in = 0
@@ -142,7 +142,7 @@ export default class Index {
 		}
 
 		const reset = (current?: Index['data']['current']) => {
-			this.data.current = current ?? ''
+			this.data.current = current ?? null
 			this.data.going = false
 			this.data.work_in = 0
 			this.data.break_in = 0
@@ -160,7 +160,7 @@ export default class Index {
 		}
 
 		match(this.data.current)
-			.with('', () => {
+			.with(null, () => {
 				goNextSession()
 			})
 			.with('work', () => {
@@ -248,7 +248,7 @@ export default class Index {
 		}
 
 		if (this.data.current === 'break' && getGoingTime(this.data.break_in) >= session.break_time) {
-			this.data.current = ''
+			this.data.current = null
 			this.data.work_in = 0
 			this.data.break_in = 0
 
@@ -306,7 +306,7 @@ export default class Index {
 		if (!this.watcher) return
 
 		this.watcher?.unsubscribe?.()
-		this.watcher = null
+		this.watcher = null as unknown as Subscription
 	}
 
 	on() {
@@ -316,7 +316,7 @@ export default class Index {
 			if (this.disable_watcher) return
 
 			if (!this.data.file_id) {
-				this.data = getDocItem(doc)
+				this.data = getDocItem(doc!)!
 
 				if (this.data.going) this.toggleGoing(true)
 			}

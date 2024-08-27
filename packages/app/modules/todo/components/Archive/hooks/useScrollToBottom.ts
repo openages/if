@@ -3,7 +3,7 @@ import { debounce } from 'lodash-es'
 import { useEffect, useState } from 'react'
 
 export default (callback: () => void, visible: boolean) => {
-	const [node, setRef] = useState<HTMLDivElement>(null)
+	const [node, setRef] = useState<HTMLDivElement | null>(null)
 
 	const handler = useMemoizedFn(() => {
 		if (!node?.parentElement) return

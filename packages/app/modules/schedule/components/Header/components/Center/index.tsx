@@ -40,7 +40,7 @@ const Index = (props: IPropsHeaderCenter) => {
 	if (scale === 'week' || scale === 'month') props_datepicker['renderExtraFooter'] = renderExtraFooter
 
 	const picker = useMemo(() => {
-		return match(scale)
+		return match(scale!)
 			.with('day', () => ({ value: 'date', offset: -51 }))
 			.with('week', () => ({ value: 'week', offset: -66 }))
 			.with('month', () => ({ value: 'month', offset: -40 }))

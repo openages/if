@@ -20,9 +20,9 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['remind_time']>) => {
 					<DateTime
 						useByDetail
 						ignoreDetail
-						value={value}
+						value={value!}
 						onFocus={onFocus}
-						onChange={onChange}
+						onChange={onChange!}
 					></DateTime>
 				</When>
 				<Otherwise>

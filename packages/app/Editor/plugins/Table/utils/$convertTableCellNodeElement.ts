@@ -28,7 +28,7 @@ export default (dom: Node): DOMConversionOutput => {
 			return child_lexical_nodes
 		},
 		forChild: (lexical_node, parent_lexical_node) => {
-			if ($isTableCellNode(parent_lexical_node) && !$isElementNode(lexical_node)) {
+			if ($isTableCellNode(parent_lexical_node!) && !$isElementNode(lexical_node)) {
 				const paragraph_node = $createParagraphNode()
 
 				if ($isLineBreakNode(lexical_node) && lexical_node.getTextContent() === '\n') return null

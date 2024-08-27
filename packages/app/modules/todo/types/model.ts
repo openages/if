@@ -47,7 +47,7 @@ export type ArgsUpdate =
 	| (Indexes & { type: 'unclose'; value: Partial<Omit<Todo.TodoItem, 'id'>> })
 	| (Indexes & { type: 'archive'; value: Partial<Omit<Todo.TodoItem, 'id'>> })
 	| (Indexes & { type: 'children'; value: Todo.Todo['children'] })
-	| (Indexes & { type: 'children_item'; value: Partial<Omit<Todo.Todo['children'][number], 'id'>> })
+	| (Indexes & { type: 'children_item'; value: Partial<Omit<Required<Todo.Todo>['children'][number], 'id'>> })
 	| (Indexes & { type: 'insert_children_item'; value: any })
 	| (Indexes & { type: 'remove_children_item'; value: any })
 

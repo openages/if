@@ -32,7 +32,12 @@ const TextItem = $app.memo((props: IPropsTextItem) => {
 		const el = ref_input.current
 
 		if (!el) return
-		if (!data_children) return el.removeAttribute('data-children')
+
+		if (!data_children) {
+			el.removeAttribute('data-children')
+
+			return
+		}
 
 		el.setAttribute('data-children', data_children)
 	}, [data_children])
@@ -87,7 +92,7 @@ const Index = (props: IPropsArchiveItem) => {
 		<div className='archive_item w_100 border_box flex flex_column'>
 			<TextItem {...{ id, status, text, open, data_children, setOpen }} is_parent></TextItem>
 			<AnimatePresence>
-				{item.children?.length > 0 && open && (
+				{item.children?.length! > 0 && open && (
 					<motion.div
 						className='children_wrap w_100 border_box flex flex_column relative'
 						initial={{ opacity: 0, height: 0 }}
@@ -96,7 +101,7 @@ const Index = (props: IPropsArchiveItem) => {
 						transition={{ duration: 0.18 }}
 						layout
 					>
-						{item.children.map(it => (
+						{item.children!.map(it => (
 							<TextItem id={it.id} status={it.status} text={it.text} key={it.id}></TextItem>
 						))}
 					</motion.div>

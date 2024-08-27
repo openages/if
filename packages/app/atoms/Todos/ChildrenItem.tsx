@@ -8,9 +8,9 @@ import styles from './index.css'
 import type { Todo } from '@/types'
 
 interface IProps {
-	item: Todo.Todo['children'][number]
+	item: Required<Todo.Todo>['children'][number]
 	index: number
-	updateChildStatus: (index: number, status: Todo.Todo['children'][number]['status']) => void
+	updateChildStatus: (index: number, status: Required<Todo.Todo>['children'][number]['status']) => void
 }
 
 const Index = (props: IProps) => {

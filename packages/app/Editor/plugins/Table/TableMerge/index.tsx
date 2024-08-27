@@ -46,7 +46,7 @@ const Index = () => {
 		</div>
 	)
 
-	return createPortal(Content, document.getElementById(id))
+	return createPortal(Content, document.getElementById(id)!)
 }
 
 export default new $app.handle(Index).by(observer).by($app.memo).get()

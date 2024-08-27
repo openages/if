@@ -1,11 +1,11 @@
 import { deepEqual } from '@openages/stk/react'
 
-import type { Instance } from '@xyflow/react'
+import type { GeneralHelpers } from '@xyflow/react'
 
 export const setElements = <T extends { id: string }>(
 	prev: Array<T>,
 	curr: Array<T>,
-	set: Instance.SetNodes | Instance.SetEdges
+	set: GeneralHelpers['setNodes'] | GeneralHelpers['setEdges']
 ) => {
 	const prev_map = prev.reduce(
 		(total, item) => {

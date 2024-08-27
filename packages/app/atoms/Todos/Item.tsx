@@ -46,7 +46,7 @@ const Index = (props: IProps) => {
 	const { t, i18n } = useTranslation()
 	const [open, setOpen] = useState(false)
 	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } =
-		sortable_props || draggable_props
+		(sortable_props || draggable_props)!
 
 	useEffect(() => {
 		if (isDragging) setOpen(false)
@@ -59,11 +59,11 @@ const Index = (props: IProps) => {
 	const toggleChildren = useMemoizedFn(() => setOpen(!open))
 
 	const children_status = useMemo(() => {
-		if (!(children?.length > 0)) return ''
+		if (!(children?.length! > 0)) return ''
 
-		const checked_children = children.filter(item => item?.status === 'checked')
+		const checked_children = children!.filter(item => item?.status === 'checked')
 
-		return `${checked_children.length}/${children.length}`
+		return `${checked_children.length}/${children!.length}`
 	}, [children])
 
 	const context_menu_items = useMemo(
@@ -98,8 +98,8 @@ const Index = (props: IProps) => {
 	})
 
 	const updateChildStatus = useMemoizedFn(
-		(child_index: number, status: Todo.Todo['children'][number]['status']) => {
-			const target_children = $copy(children)
+		(child_index: number, status: Required<Todo.Todo>['children'][number]['status']) => {
+			const target_children = $copy(children)!
 
 			target_children[child_index].status = status
 
@@ -159,11 +159,11 @@ const Index = (props: IProps) => {
 					<span
 						className={$cx(
 							'todo_text cursor_point',
-							!open && children?.length > 0 && 'has_children'
+							!open && children?.length! > 0 && 'has_children'
 						)}
 						data-children={children_status}
 						ref={setActivatorNodeRef}
-						onClick={children && children.length && toggleChildren}
+						onClick={children && children.length ? toggleChildren : undefined}
 						{...attributes}
 						{...listeners}
 					>

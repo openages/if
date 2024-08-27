@@ -72,13 +72,13 @@ export default (
 	table_element[LEXICAL_ELEMENT_KEY] = observer
 
 	const getObserverCellFromCellNode = (table_cell_node: TableCellNode) => {
-		const current_cords = table_node.getCordsFromCellNode(table_cell_node, observer.table)
+		const current_cords = table_node.getCordsFromCellNode(table_cell_node, observer.table)!
 
 		return table_node.getDOMCellFromCords(current_cords.x, current_cords.y, observer.table)
 	}
 
 	const onDeleteText = (command: LexicalCommand<boolean>) => () => {
-		const selection = $getSelection()
+		const selection = $getSelection()!
 
 		if (!$isSelectionInTable(selection, table_node)) return false
 
@@ -87,7 +87,7 @@ export default (
 
 			return true
 		} else if ($isRangeSelection(selection)) {
-			const table_cell_node = $findMatchingParent(selection.anchor.getNode(), n => $isTableCellNode(n))
+			const table_cell_node = $findMatchingParent(selection.anchor.getNode(), n => $isTableCellNode(n))!
 
 			if (!$isTableCellNode(table_cell_node)) {
 				return false
@@ -110,7 +110,7 @@ export default (
 				nearest_element_node &&
 				$findMatchingParent(
 					nearest_element_node,
-					n => $isElementNode(n) && $isTableCellNode(n.getParent())
+					n => $isElementNode(n) && $isTableCellNode(n.getParent()!)
 				)
 
 			if (!$isElementNode(top_level_cell_element_node) || !$isElementNode(nearest_element_node)) {
@@ -126,7 +126,7 @@ export default (
 	}
 
 	const onDeleteCell = (event: KeyboardEvent): boolean => {
-		const selection = $getSelection()
+		const selection = $getSelection()!
 
 		if (!$isSelectionInTable(selection, table_node) || !$isRangeSelection(selection)) {
 			return false
@@ -138,8 +138,8 @@ export default (
 
 		if (!table_row_node || !table_cell_node) return false
 
-		const is_first_row = table_node.getChildren().at(0).getKey() === table_row_node.getKey()
-		const is_first_column = table_row_node.getChildren().at(0).getKey() === table_cell_node.getKey()
+		const is_first_row = table_node.getChildren().at(0)!.getKey() === table_row_node.getKey()
+		const is_first_column = table_row_node.getChildren().at(0)!.getKey() === table_cell_node.getKey()
 
 		if (is_first_row && is_first_column && table_cell_node.getTextContentSize() === 0) {
 			const prev = table_node.getPreviousSibling()
@@ -171,7 +171,7 @@ export default (
 
 			return true
 		} else if ($isRangeSelection(selection)) {
-			const table_cell_node = $findMatchingParent(selection.anchor.getNode(), n => $isTableCellNode(n))
+			const table_cell_node = $findMatchingParent(selection.anchor.getNode(), n => $isTableCellNode(n))!
 
 			if (!$isTableCellNode(table_cell_node)) {
 				return false
@@ -259,7 +259,7 @@ export default (
 				const selection = $getSelection() as TableSelection
 
 				if ($isTableSelection(selection)) {
-					const focus_cell_node = $findMatchingParent(selection.focus.getNode(), $isTableCellNode)
+					const focus_cell_node = $findMatchingParent(selection.focus.getNode(), $isTableCellNode)!
 
 					if ($isTableCellNode(focus_cell_node)) {
 						stopEvent(event)
@@ -288,7 +288,7 @@ export default (
 		editor.registerCommand<TextFormatType>(
 			FORMAT_TEXT_COMMAND,
 			payload => {
-				const selection = $getSelection()
+				const selection = $getSelection()!
 
 				if (!$isSelectionInTable(selection, table_node)) {
 					return false
@@ -301,7 +301,7 @@ export default (
 				} else if ($isRangeSelection(selection)) {
 					const table_cell_node = $findMatchingParent(selection.anchor.getNode(), n =>
 						$isTableCellNode(n)
-					)
+					)!
 
 					if (!$isTableCellNode(table_cell_node)) {
 						return false
@@ -369,7 +369,7 @@ export default (
 		editor.registerCommand(
 			CONTROLLED_TEXT_INSERTION_COMMAND,
 			payload => {
-				const selection = $getSelection()
+				const selection = $getSelection()!
 
 				if (!$isSelectionInTable(selection, table_node)) {
 					return false
@@ -380,7 +380,7 @@ export default (
 				} else if ($isRangeSelection(selection)) {
 					const table_cell_node = $findMatchingParent(selection.anchor.getNode(), n =>
 						$isTableCellNode(n)
-					)
+					)!
 
 					if (!$isTableCellNode(table_cell_node)) {
 						return false
@@ -426,7 +426,7 @@ export default (
 
 				stopEvent(event)
 
-				const current_cords = table_node.getCordsFromCellNode(table_cell_node, observer.table)
+				const current_cords = table_node.getCordsFromCellNode(table_cell_node, observer.table)!
 
 				selectTableNodeInDirection(
 					observer,
@@ -474,7 +474,7 @@ export default (
 				const new_grid_rows = new_grid.getChildren() as Array<TableRowNode>
 				const new_column_count = new_grid.getFirstChildOrThrow<TableNode>().getChildrenSize()
 				const new_row_count = new_grid.getChildrenSize()
-				const grid_cell_node = $findMatchingParent(anchor.getNode(), n => $isTableCellNode(n))
+				const grid_cell_node = $findMatchingParent(anchor.getNode(), n => $isTableCellNode(n))!
 				const grid_row_node =
 					grid_cell_node &&
 					($findMatchingParent(grid_cell_node, n => $isTableRowNode(n)) as TableRowNode)
@@ -557,7 +557,7 @@ export default (
 					new_row_idx++
 				}
 
-				if (new_anchor_cell_key && new_focus_cell_key) {
+				if (new_anchor_cell_key! && new_focus_cell_key!) {
 					const new_table_selection = $createTableSelection()
 
 					new_table_selection.set(nodes[0].getKey(), new_anchor_cell_key, new_focus_cell_key)
@@ -617,11 +617,11 @@ export default (
 					} else if (is_within_table) {
 						if (!anchor_cell_node.is(focus_cell_node)) {
 							observer.setAnchorCellForSelection(
-								getObserverCellFromCellNode(anchor_cell_node)
+								getObserverCellFromCellNode(anchor_cell_node)!
 							)
 
 							observer.setFocusCellForSelection(
-								getObserverCellFromCellNode(focus_cell_node)
+								getObserverCellFromCellNode(focus_cell_node)!
 							)
 
 							if (!observer.selecting) {
@@ -683,7 +683,7 @@ export default (
 						$isTableSelection(prev_selection) &&
 						prev_selection.table_key === observer.table_node_key
 					) {
-						observer.updateTableSelection(null)
+						observer.updateTableSelection(null!)
 					}
 
 					return false
@@ -715,8 +715,9 @@ export default (
 
 				if (!table_row_node || !table_cell_node) return false
 
-				const is_last_row = table_node.getChildren().at(-1).getKey() === table_row_node.getKey()
-				const is_last_column = table_row_node.getChildren().at(-1).getKey() === table_cell_node.getKey()
+				const is_last_row = table_node.getChildren().at(-1)!.getKey() === table_row_node.getKey()
+				const is_last_column =
+					table_row_node.getChildren().at(-1)!.getKey() === table_cell_node.getKey()
 				const children = table_cell_node.getChildren()
 				const children_length = children.length
 
@@ -739,10 +740,10 @@ export default (
 					}
 
 					editor.update(() => {
-						children.at(-1).remove()
+						children.at(-1)!.remove()
 
 						if (children_length > 2) {
-							children.at(-2).remove()
+							children.at(-2)!.remove()
 						}
 
 						table_node.selectNext()

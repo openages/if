@@ -60,7 +60,7 @@ const Index = (props: IPropsDateScale) => {
 							timeline_month && 'cursor_point'
 						)}
 						style={{ width: `calc(100% / ${show_time_scale || timeline ? days.length : 7})` }}
-						onClick={timeline_month ? () => jump(item.value) : null}
+						onClick={timeline_month ? () => jump(item.value) : undefined}
 						key={index}
 					>
 						<div className='flex align_center'>

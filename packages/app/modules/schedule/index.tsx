@@ -145,7 +145,7 @@ const Index = ({ id }: IProps) => {
 		scrollToScanline
 	}
 
-	const onDragMove = useMemoizedFn(args => x.onDragMove(container.current, args))
+	const onDragMove = useMemoizedFn(args => x.onDragMove(container.current!, args))
 	const onDragEnd = useMemoizedFn(x.onDragEnd)
 	const onDragCancel = useMemoizedFn(x.onDragCancel)
 	const toggleTaskPanelClearMode = useMemoizedFn(() => (x.task_panel_clear_mode = !x.task_panel_clear_mode))

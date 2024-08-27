@@ -1,7 +1,7 @@
 import type { Todo } from '@/types'
 
 export const updateTodoItem = async (id: string, v: Partial<Todo.Todo>) => {
-	const doc = await $db.todo_items.findOne(id).exec()
+	const doc = (await $db.todo_items.findOne(id).exec())!
 
 	return doc.updateCRDT({ ifMatch: { $set: v } })
 }

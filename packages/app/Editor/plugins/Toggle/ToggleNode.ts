@@ -10,7 +10,7 @@ export default class ToggleNode extends ElementNode {
 	constructor(props: IPropsToggle) {
 		super(props.node_key)
 
-		this.__open = props.open
+		this.__open = props.open!
 	}
 
 	static getType() {

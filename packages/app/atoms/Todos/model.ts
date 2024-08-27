@@ -18,11 +18,11 @@ export default class Index {
 	ids = [] as Array<string>
 	mode = 'view' as IProps['mode']
 	items = [] as Array<Todo.Todo>
-	active_item = null as Todo.Todo
+	active_item = null as unknown as Todo.Todo
 
-	watcher = null as Subscription
+	watcher = null as unknown as Subscription
 
-	onChange = null as (ids: Array<string>) => void
+	onChange = null as unknown as (ids: Array<string>) => void
 
 	constructor() {
 		makeAutoObservable(this, { ids: false, mode: false, watcher: false, onChange: false }, { autoBind: true })
@@ -34,7 +34,7 @@ export default class Index {
 		this.ids = ids
 		this.mode = mode
 
-		this.onChange = onChange
+		this.onChange = onChange!
 
 		this.watchItems()
 	}
@@ -50,12 +50,16 @@ export default class Index {
 	}
 
 	onDragEnd({ active, over }: DragEndEvent) {
-		this.active_item = null
+		this.active_item = null as unknown as Todo.Todo
 
 		if (!over?.id) return
 		if (active.id === over.id) return
 
-		const target = arrayMove(this.items, active.data.current.index as number, over.data.current.index as number)
+		const target = arrayMove(
+			this.items,
+			active.data.current!.index as number,
+			over.data.current!.index as number
+		)
 
 		this.items = target
 
@@ -65,7 +69,7 @@ export default class Index {
 	async check(index: number) {
 		const { id, file_id } = this.items[index]
 
-		const file = await $db.dirtree_items.findOne(file_id).exec()
+		const file = (await $db.dirtree_items.findOne(file_id).exec())!
 
 		await $app.Event.emit('global.app.check', { id, file: getDocItem(file) })
 	}
@@ -81,10 +85,10 @@ export default class Index {
 
 		this.items[index] = { ...this.items[index], status }
 
-		const settings_string = await $db.module_setting.findOne(file_id).exec()
-		const file = await $db.dirtree_items.findOne(file_id).exec()
+		const settings_string = (await $db.module_setting.findOne(file_id).exec())!
+		const file = (await $db.dirtree_items.findOne(file_id).exec())!
 
-		const todo_setting = getDocItem(settings_string)
+		const todo_setting = getDocItem(settings_string)!
 		const target_setting = JSON.parse(todo_setting.setting)
 
 		await check({
@@ -120,7 +124,7 @@ export default class Index {
 	checkExsit(keys: Array<string>) {
 		this.ids.forEach((item, index) => {
 			if (!keys.includes(item)) {
-				this.ids[index] = null
+				this.ids[index] = null as unknown as string
 			}
 		})
 
@@ -133,7 +137,7 @@ export default class Index {
 		this.watcher = getTodoItems(this.ids).$.subscribe(doc => {
 			if (!this.mode) this.checkExsit(Array.from(doc.keys()))
 
-			this.items = this.ids.map(id => getDocItem(doc.get(id))) as Array<Todo.Todo>
+			this.items = this.ids.map(id => getDocItem(doc.get(id)!)) as Array<Todo.Todo>
 		})
 	}
 

@@ -16,7 +16,7 @@ const Index = (props: IPropsRemindStatus) => {
 		const timer = setInterval(() => {
 			const now = new Date().valueOf()
 
-			if (now >= remind_time) {
+			if (now >= remind_time!) {
 				setTimeout(true)
 
 				clearInterval(timer)

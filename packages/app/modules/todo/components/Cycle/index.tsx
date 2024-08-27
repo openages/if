@@ -3,6 +3,7 @@ import { DatePicker, InputNumber, Popover, Radio, Select, Switch as AntdSwitch, 
 import dayjs from 'dayjs'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { DeepRequired } from 'ts-essentials'
 
 import { getCycleSpecificDesc } from '@/utils/modules/todo'
 import { Repeat } from '@phosphor-icons/react'
@@ -11,13 +12,14 @@ import styles from './index.css'
 
 import type { IPropsCircle } from '../../types'
 import type { Dayjs } from 'dayjs'
+import type { Todo } from '@/types'
 
 const { Group } = Radio
 
 const Index = (props: IPropsCircle) => {
 	const { cycle_enabled, cycle, useByDetail, unEditing, onFocus, onChange, onChangeItem } = props
 	const { t, i18n } = useTranslation()
-	const [type, setType] = useState<IPropsCircle['cycle']['type']>(() => cycle?.type ?? 'interval')
+	const [type, setType] = useState<Todo.Cycle['type']>(() => cycle?.type ?? 'interval')
 	const every_text = t(`todo.Input.Cycle.every`)
 	const scale_text = cycle?.type === 'interval' && cycle?.scale ? t(`todo.Input.Cycle.options.${cycle.scale}`) : ''
 
@@ -71,7 +73,7 @@ const Index = (props: IPropsCircle) => {
 			target_exclude.push(day)
 		}
 
-		onChange({ ...cycle, exclude: target_exclude })
+		onChange({ ...cycle!, exclude: target_exclude })
 	})
 
 	const onChangeEnabled = useMemoizedFn(v => onChangeItem({ cycle_enabled: v }))
@@ -93,13 +95,13 @@ const Index = (props: IPropsCircle) => {
 		})
 	})
 
-	const onChangeValue = useMemoizedFn(v => onChange({ ...cycle, value: v }))
+	const onChangeValue = useMemoizedFn(v => onChange({ ...cycle!, value: v }))
 
 	const onChangeDay = useMemoizedFn((v: Dayjs) =>
-		onChange({ ...cycle, value: cycle.scale === 'date' ? v.date() : v.valueOf() })
+		onChange({ ...cycle!, value: cycle!.scale === 'date' ? v.date() : v.valueOf() })
 	)
 
-	const onChangeHour = useMemoizedFn((v: Dayjs) => onChange({ ...cycle, value: v.hour() }))
+	const onChangeHour = useMemoizedFn((v: Dayjs) => onChange({ ...cycle!, value: v.hour() }))
 
 	const options_weekday = useMemo(() => {
 		return [0, 1, 2, 3, 4, 5, 6].map(item => ({
@@ -140,7 +142,7 @@ const Index = (props: IPropsCircle) => {
 					min={1}
 					max={99}
 					formatter={value => `${every_text} ${value} ${scale_text}`}
-					parser={value => Number(value.replace(every_text, '').replace(scale_text, '').trim())}
+					parser={value => Number(value!.replace(every_text, '').replace(scale_text, '').trim())}
 					value={cycle.value}
 					onChange={onChangeValue}
 				></InputNumber>
@@ -270,8 +272,8 @@ const Index = (props: IPropsCircle) => {
 			return (
 				<span className='cycle_desc cursor_point'>
 					{`${t('todo.Input.Cycle.every')} ${cycle?.value} ${scale_text}`}
-					{cycle?.exclude?.length > 0 &&
-						`, ${t('todo.Input.Cycle.exclude')} ${cycle.exclude.join(',')}`}
+					{cycle?.exclude?.length! > 0 &&
+						`, ${t('todo.Input.Cycle.exclude')} ${cycle.exclude!.join(',')}`}
 				</span>
 			)
 		} else {

@@ -11,10 +11,11 @@ import { IPropsSessionEditor } from '../../types'
 import styles from './index.css'
 
 import type { Dayjs } from 'dayjs'
+import type { Pomo } from '@/types'
 
 const { Item, useForm, useWatch } = Form
 
-type FormValues = Omit<IPropsSessionEditor['item'], 'work_time' | 'break_time'> & {
+type FormValues = Omit<Pomo.Session, 'work_time' | 'break_time'> & {
 	work_time: Dayjs
 	break_time: Dayjs
 }
@@ -33,11 +34,11 @@ const Index = (props: IPropsSessionEditor) => {
 	}, [flow_mode])
 
 	const getHandler = useMemoizedFn((v: IPropsSessionEditor['item']) => {
-		const target = pick(v, ['title', 'flow_mode']) as FormValues
+		const target = pick(v, ['title', 'flow_mode']) as unknown as FormValues
 		const now = dayjs()
 
-		const work_time = dayjs.duration({ minutes: v.work_time })
-		const break_time = dayjs.duration({ minutes: v.break_time })
+		const work_time = dayjs.duration({ minutes: v!.work_time })
+		const break_time = dayjs.duration({ minutes: v!.break_time })
 
 		target['work_time'] = now.hour(work_time.hours()).minute(work_time.minutes())
 		target['break_time'] = now.hour(break_time.hours()).minute(break_time.minutes())
@@ -46,7 +47,7 @@ const Index = (props: IPropsSessionEditor) => {
 	})
 
 	const setHandler = useMemoizedFn((v: FormValues) => {
-		const target = pick(v, ['title', 'flow_mode']) as IPropsSessionEditor['item']
+		const target = (pick(v, ['title', 'flow_mode']) as unknown as IPropsSessionEditor['item'])!
 
 		if (!target.title) target['title'] = ''
 

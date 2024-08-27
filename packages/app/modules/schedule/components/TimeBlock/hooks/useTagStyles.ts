@@ -8,7 +8,7 @@ export default (tags: Schedule.Setting['tags'], tag: Schedule.Item['tag']) => {
 		if (!tags.length) return {}
 		if (!tag) return {}
 
-		const target = tags.find(it => it.id === tag)
+		const target = tags.find(it => it.id === tag)!
 
 		return {
 			'--tag_color': Color(target.color).rgb().array().join(','),

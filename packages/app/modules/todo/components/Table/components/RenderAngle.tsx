@@ -30,7 +30,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['angle_id'], { angles: 
 					onChange={onChange}
 				></Select>
 			) : (
-				target_angle.text
+				target_angle!.text
 			)}
 		</div>
 	)

@@ -12,7 +12,7 @@ import type { SerializedNavigationNode } from './types'
 const Component = lazy(() => import('./Component'))
 
 export default class NavigationNode extends DecoratorNode<JSX.Element> {
-	__items: Array<TableOfContentsEntry>
+	__items: Array<TableOfContentsEntry> = []
 
 	constructor(key?: string) {
 		super(key)
@@ -33,7 +33,7 @@ export default class NavigationNode extends DecoratorNode<JSX.Element> {
 	static importJSON(serializedNode: SerializedNavigationNode, update?: boolean) {
 		const node = $createNavigationNode(serializedNode.node_key)
 
-		if (!update) $setImportNode(serializedNode.node_key, node)
+		if (!update) $setImportNode(serializedNode.node_key!, node)
 
 		return node
 	}

@@ -5,7 +5,7 @@ import type TableRowNode from '../TableRowNode'
 import type TableCellNode from '../TableCellNode'
 
 export default (editor: LexicalEditor, node: TableNode) => {
-	const cols = node.getLatest().__cols
+	const cols = node.getLatest().__cols!
 	const rows = node.getChildren() as Array<TableRowNode>
 
 	rows.forEach(row => {

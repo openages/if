@@ -22,7 +22,7 @@ const Index = (props: IPropsScanline) => {
 				if (scale === 'week') begin = now.startOf('week')
 				if (scale === 'month') begin = now.startOf('month')
 
-				const target = (now.diff(begin, 'hours') * step) / 12
+				const target = (now.diff(begin, 'hours') * step!) / 12
 
 				setOffset(target + 90)
 			} else {
@@ -53,7 +53,7 @@ const Index = (props: IPropsScanline) => {
 		const timer_scroll = setTimeout(() => {
 			if (mounted.current) return
 
-			scrollToScanline()
+			scrollToScanline?.()
 
 			mounted.current = true
 		}, 300)

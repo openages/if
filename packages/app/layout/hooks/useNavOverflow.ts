@@ -8,8 +8,8 @@ import type { Timer } from '@/models'
 export default (timer: Timer['timer']) => {
 	const ref_sidebar = useRef<HTMLDivElement>(null)
 	const ref_items_wrap = useRef<HTMLDivElement>(null)
-	const sidebar_height = useSize(() => ref_sidebar.current, 'height') as number
-	const items_height = useSize(() => ref_items_wrap.current, 'height') as number
+	const sidebar_height = useSize(() => ref_sidebar.current!, 'height') as number
+	const items_height = useSize(() => ref_items_wrap.current!, 'height') as number
 
 	const overflow = useMemo(() => {
 		if (!sidebar_height || !items_height) return false

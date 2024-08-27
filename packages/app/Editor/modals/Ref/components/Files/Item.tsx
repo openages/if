@@ -19,7 +19,7 @@ const Index = (props: IPropsFileItem) => {
 				<div className='target_icon_wrap flex justify_center align_center mr_2'>
 					<Choose>
 						<When condition={!!item.icon}>
-							<Emoji shortcodes={item.icon} size={12} hue={item.icon_hue}></Emoji>
+							<Emoji shortcodes={item.icon!} size={12} hue={item.icon_hue}></Emoji>
 						</When>
 						<Otherwise>
 							<LeftIcon module={module} item={item} size={12}></LeftIcon>

@@ -14,7 +14,7 @@ import type { Watch } from '@openages/stk/mobx'
 
 @injectable()
 export default class Index {
-	observer = null as ResizeObserver
+	observer = null as unknown as ResizeObserver
 	columns = [] as Stack.Columns
 	focus = { column: -1, view: -1 } as Stack.Position
 	container_width = 0
@@ -22,8 +22,9 @@ export default class Index {
 
 	watch = {
 		columns(v) {
-			if (v.length) return
+			if (v!.length) return
 
+			// @ts-ignore
 			this.focus = { column: -1, view: -1 }
 		}
 	} as Watch<Index>
@@ -215,10 +216,10 @@ export default class Index {
 
 	move({ active, over }: Pick<DragEndEvent, 'active' | 'over'>) {
 		if (!over?.id) return false
-		if (active.data.current.type !== 'stack' || over.data.current.type !== 'stack') return
+		if (active.data.current!.type !== 'stack' || over.data.current!.type !== 'stack') return
 
-		const active_column = active.data.current.column as number
-		const active_view = active.data.current.view as number
+		const active_column = active.data.current!.column as number
+		const active_view = active.data.current!.view as number
 
 		if (!this.columns[active_column].views[active_view].fixed) {
 			this.columns[active_column].views[active_view].fixed = true
@@ -228,9 +229,9 @@ export default class Index {
 
 		if (active.id === over.id) return
 
-		const over_column = over.data.current.column as number
-		const over_view = over.data.current.view as number
-		const split = over.data.current.split as boolean
+		const over_column = over.data.current!.column as number
+		const over_view = over.data.current!.view as number
+		const split = over.data.current!.split as boolean
 
 		if (!split) {
 			if (active_column === over_column) {
@@ -273,7 +274,7 @@ export default class Index {
 		} else {
 			if (this.columns[active_column].views.length === 1) return
 
-			const direction = over.data.current.direction as 'left' | 'right'
+			const direction = over.data.current!.direction as 'left' | 'right'
 			const target_column = this.columns[active_column]
 			const target_views = [$copy(target_column.views[active_view])]
 
@@ -326,7 +327,7 @@ export default class Index {
 	}
 
 	observe() {
-		this.observer.observe(document.getElementById('stacks_container'))
+		this.observer.observe(document.getElementById('stacks_container')!)
 	}
 
 	unobserve() {

@@ -24,8 +24,8 @@ import type TableCellNode from '../TableCellNode'
 @injectable()
 export default class Index {
 	id = ''
-	editor = null as LexicalEditor
-	ref = null as HTMLDivElement
+	editor = null as unknown as LexicalEditor
+	ref = null as unknown as HTMLDivElement
 	tables = [] as Array<{ type: string; key: string }>
 	info = {} as { table_node: TableNode; col_index: number; start: number }
 
@@ -90,8 +90,8 @@ export default class Index {
 			if (!cell_node) return this.reset()
 
 			const table_node = $getMatchingParent(cell_node, $isTableNode) as TableNode
-			const cell_el = this.editor.getElementByKey(cell_node.getKey())
-			const table_el = this.editor.getElementByKey(table_node.getKey())
+			const cell_el = this.editor.getElementByKey(cell_node.getKey())!
+			const table_el = this.editor.getElementByKey(table_node.getKey())!
 			const rect_cell = cell_el.getBoundingClientRect()
 			const rect_table = table_el.getBoundingClientRect()
 			const col_index = $getTableColumnIndexFromTableCellNode(cell_node)
@@ -184,7 +184,7 @@ export default class Index {
 		this.editor.update(() => {
 			this.tables.forEach(item => {
 				const node = $getNodeByKey(item.key) as TableNode
-				const el = this.editor.getElementByKey(item.key)
+				const el = this.editor.getElementByKey(item.key)!
 
 				if (node.existColspan()) {
 					el.removeEventListener('mousemove', this.check)
@@ -200,7 +200,7 @@ export default class Index {
 	removeListners() {
 		this.editor.update(() => {
 			this.tables.forEach(item => {
-				const el = this.editor.getElementByKey(item.key)
+				const el = this.editor.getElementByKey(item.key)!
 
 				el.removeEventListener('mousemove', this.check)
 			})

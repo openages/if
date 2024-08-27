@@ -73,7 +73,7 @@ const Index = () => {
 					)}
 					style={{ left: x.position_col.left, top: x.position_col.top }}
 				>
-					<ConfigProvider getPopupContainer={() => document.getElementById(id)}>
+					<ConfigProvider getPopupContainer={() => document.getElementById(id)!}>
 						<Dropdown
 							destroyPopupOnHide
 							trigger={['click']}
@@ -111,7 +111,7 @@ const Index = () => {
 		</Fragment>
 	)
 
-	return createPortal(Content, document.getElementById(id))
+	return createPortal(Content, document.getElementById(id)!)
 }
 
 export default new $app.handle(Index).by(observer).by($app.memo).get()

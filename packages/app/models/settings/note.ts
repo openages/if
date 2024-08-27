@@ -13,7 +13,7 @@ import type { DocKV } from '@/schemas'
 import type { SerializedLexicalNode } from 'lexical'
 
 export default class Index {
-	doc = null as DocKV
+	doc = null as unknown as DocKV
 	settings = {} as Note.Setting
 	settings_watcher = {} as Subscription
 
@@ -66,7 +66,7 @@ export default class Index {
 				icon: module_default_icon.note
 			})
 
-			const items = nodes.map((item, index) => {
+			const items = nodes!.map((item, index) => {
 				let prev = undefined
 				let next = undefined
 
@@ -110,7 +110,7 @@ export default class Index {
 
 	on() {
 		this.settings_watcher = $db.kv.findOne('note_settings').$.subscribe(doc => {
-			this.settings = JSON.parse(doc.value)
+			this.settings = JSON.parse(doc!.value)
 		})
 	}
 

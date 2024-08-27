@@ -1,6 +1,6 @@
-import { bundledLanguagesInfo, getHighlighter } from 'shiki'
+import { bundledLanguagesInfo, createHighlighter } from 'shiki'
 
-export default await getHighlighter({
+export default await createHighlighter({
 	langs: bundledLanguagesInfo.map(item => item.id),
 	themes: ['github-light', 'github-dark-dimmed']
 })

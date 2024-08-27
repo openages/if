@@ -43,7 +43,7 @@ export const getMaxMinSort = async (angle_id: string, min?: boolean) => {
 }
 
 export const getTotalCounts = async (selector: MangoQuerySelector<Todo.TodoItem>) => {
-	return $db.todo_items.count({ selector: { ...selector, type: 'todo' } }).exec()
+	return $db.todo_items.count({ selector: { ...selector, type: 'todo' } as Todo.Todo }).exec()
 }
 
 export const getQueryItems = (args: ArgsQueryItems) => {
@@ -100,12 +100,14 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 	}
 
 	if (!table_mode) {
-		return $db.todo_items.find({ selector }).sort(sort) as RxDB.ItemsQuery<Todo.TodoItem>
+		return $db.todo_items
+			.find({ selector: selector as Todo.TodoItem })
+			.sort(sort) as RxDB.ItemsQuery<Todo.TodoItem>
 	} else {
 		return $db.todo_items
-			.find({ selector })
-			.skip((table_page - 1) * table_pagesize)
-			.limit(table_pagesize)
+			.find({ selector: selector as Todo.TodoItem })
+			.skip((table_page! - 1) * table_pagesize!)
+			.limit(table_pagesize!)
 			.sort(sort) as RxDB.ItemsQuery<Todo.TodoItem>
 	}
 }
@@ -119,7 +121,7 @@ export const create = async (item: Todo.TodoItem, options?: { quick?: boolean; t
 	})
 
 	if (!options?.quick) {
-		const container = document.getElementById(item.file_id)
+		const container = document.getElementById(item.file_id)!
 
 		container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' })
 	}
@@ -134,7 +136,7 @@ export const queryItem = (id: string) => {
 export const queryArchives = (args: ArgsQueryArchives, query_params: ArchiveQueryParams) => {
 	const { file_id, page } = args
 	const { angle_id, tags, begin_date, end_date, status } = query_params
-	const selector: MangoQuerySelector<Todo.TodoItem> = {}
+	const selector: MangoQuerySelector<Todo.Todo> = {}
 
 	if (angle_id) {
 		selector['angle_id'] = angle_id
@@ -155,8 +157,10 @@ export const queryArchives = (args: ArgsQueryArchives, query_params: ArchiveQuer
 	}
 
 	if (end_date) {
+		// @ts-ignore
 		if (selector?.['create_at']?.['$gte']) {
 			selector['create_at'] = {
+				// @ts-ignore
 				$gte: selector['create_at']['$gte'],
 				$lte: end_date.valueOf()
 			}
@@ -209,7 +213,7 @@ export const updateTodoSetting = async (args: ArgsUpdateTodoData) => {
 }
 
 export const update = async (data: ArgsUpdate) => {
-	const todo_item = await $db.todo_items.findOne({ selector: { id: data.id } }).exec()
+	const todo_item = (await $db.todo_items.findOne({ selector: { id: data.id } }).exec())!
 
 	await todo_item.updateCRDT({
 		ifMatch: {
@@ -233,7 +237,7 @@ export const check = async (args: ArgsCheck) => {
 	const { file_id, setting, id, status } = args
 	const { auto_archiving } = setting
 
-	const exsit_index = setting?.relations?.findIndex(item => item.items.includes(id))
+	const exsit_index = setting?.relations?.findIndex(item => item.items.includes(id))!
 
 	await updateStatus({ id, status, auto_archiving })
 
@@ -361,7 +365,7 @@ export const restoreArchiveItem = async (
 	tags: Todo.Setting['tags'],
 	current_angle_id: string
 ) => {
-	const doc = await $db.todo_items.findOne({ selector: { id } }).exec()
+	const doc = (await $db.todo_items.findOne({ selector: { id } }).exec())!
 	const angle_exsit = angles.find(item => item.id === doc.angle_id)
 	const tags_exsit_items = doc.tag_ids && doc.tag_ids.filter(item => tags.find(tag => tag.id === item))
 	const sort = await getMaxMinSort(current_angle_id)

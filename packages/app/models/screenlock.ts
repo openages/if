@@ -61,7 +61,7 @@ export default class Index {
 
 		if (!key) return
 
-		this.data = JSON.parse(getDocItem(key).value)
+		this.data = JSON.parse(getDocItem(key)!.value)
 	}
 
 	async genKeyPair(password: string, by_unlocking?: boolean) {
@@ -94,11 +94,11 @@ export default class Index {
 		let private_key = ''
 
 		if (use_password) {
-			private_key = ntry(() => AES.decrypt(this.data.private_key, value).toString(enc.Utf8))
+			private_key = ntry(() => AES.decrypt(this.data.private_key, value).toString(enc.Utf8))!
 		} else {
-			const password = ntry(() => AES.decrypt(this.data.password, value).toString(enc.Utf8))
+			const password = ntry(() => AES.decrypt(this.data.password, value).toString(enc.Utf8))!
 
-			private_key = ntry(() => AES.decrypt(this.data.private_key, password).toString(enc.Utf8))
+			private_key = ntry(() => AES.decrypt(this.data.private_key, password).toString(enc.Utf8))!
 		}
 
 		if (!by_sceenlock) await sleep(600)
@@ -151,7 +151,7 @@ export default class Index {
 
 	async setAutoLock(v: App.Screenlock['autolock']) {
 		this.data.autolock = v
-		this.idle.time = autolock_value[v]
+		this.idle.time = autolock_value[v as keyof typeof autolock_value] as number
 
 		await this.saveKeyPair()
 	}
@@ -171,7 +171,7 @@ export default class Index {
 	async unlocking() {
 		const code = await this.getFingerprint()
 
-		const { private_key, public_key, password } = await this.genKeyPair(code, true)
+		const { private_key, public_key, password } = (await this.genKeyPair(code, true))!
 
 		this.data = { private_key, public_key, password, autolock: this.data.autolock, unlocking: true }
 
@@ -208,10 +208,15 @@ export default class Index {
 
 	on() {
 		if (!this.data.unlocking && this.data.password) {
-			this.idle.init(this.screenlock_open ? 0 : autolock_value[this.data.autolock], {
-				context: this,
-				onIdle: this.lock
-			})
+			this.idle.init(
+				this.screenlock_open
+					? 0
+					: (autolock_value[this.data.autolock as keyof typeof autolock_value] as number),
+				{
+					context: this,
+					onIdle: this.lock
+				}
+			)
 		}
 
 		$app.Event.on('global.screenlock.lock', this.lock)

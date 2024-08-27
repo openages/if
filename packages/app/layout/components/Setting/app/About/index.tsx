@@ -15,7 +15,7 @@ const Index = () => {
 				<a className='media_item' href='https://www.reddit.com/r/ifinity/' target='_blank'>
 					Reddit
 				</a>
-				<a className='media_item' href='https://x.com/iyasa_hq' target='_blank'>
+				<a className='media_item' href='https://x.com/if_else_hq' target='_blank'>
 					X(Twitter)
 				</a>
 				<a className='media_item' href='https://if.openages.com/privacy' target='_blank'>

@@ -9,15 +9,13 @@ import type { Node } from '@xyflow/react'
 
 export default (args: Pick<IPropsMindmap, 'file_id' | 'kanban_items'>, nodes: Array<Node>) => {
 	const { file_id, kanban_items } = args
-	const raw_tree = { type: 'root', id: file_id, isRoot: () => true }
+	const raw_tree = { type: 'root', id: file_id, isRoot: () => true, children: [] as Array<any> }
 
 	const nodes_map = nodes.reduce(
 		(total, item) => {
 			total[item.id] = {
-				// @ts-ignore
-				width: item.measured.width,
-				// @ts-ignore
-				height: item.measured.height,
+				width: item.measured!.width!,
+				height: item.measured!.height!,
 				position: { x: 0, y: 0 }
 			}
 
@@ -27,13 +25,13 @@ export default (args: Pick<IPropsMindmap, 'file_id' | 'kanban_items'>, nodes: Ar
 	)
 
 	raw_tree['children'] = Object.keys(kanban_items).map(angle_id => {
-		const angle_item = {}
+		const angle_item = {} as any
 
 		angle_item['type'] = 'angle'
 		angle_item['id'] = angle_id
 
 		angle_item['children'] = kanban_items[angle_id].items.map(item => {
-			const todo_item = {}
+			const todo_item = {} as any
 
 			todo_item['type'] = 'todo_item'
 			todo_item['id'] = item.id
@@ -91,7 +89,7 @@ export default (args: Pick<IPropsMindmap, 'file_id' | 'kanban_items'>, nodes: Ar
 		const symbols = Object.getOwnPropertySymbols(item)
 
 		for (const symbol of symbols) {
-			delete item[symbol]
+			delete item[symbol as unknown as keyof typeof item]
 		}
 
 		return item

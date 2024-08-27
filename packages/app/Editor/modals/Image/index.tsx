@@ -30,7 +30,7 @@ const Index = (props: IPropsModal) => {
 	const onValuesChange = useMemoizedFn(v => {
 		if (v.file?.length !== 1) return
 
-		const file = (v.file as UploadProps['fileList'])[0]
+		const file = (v.file as UploadProps['fileList'])![0]
 
 		if (file.status !== 'done') return
 
@@ -44,7 +44,7 @@ const Index = (props: IPropsModal) => {
 		const target = { alt: v.alt, src: v.src, inline: v.inline }
 
 		if (x.type === 'File') {
-			const file = (v.file as UploadProps['fileList'])[0]
+			const file = (v.file as UploadProps['fileList'])![0]
 
 			target['src'] = file.response
 

@@ -52,14 +52,14 @@ export const uploadFile = (args?: { max_count?: number; accept?: string }) => {
 
 	input.style.display = 'none'
 	input.type = 'file'
-	input.multiple = max_count > 1
+	input.multiple = max_count! > 1
 
 	if (accept) input.accept = accept
 
 	const { promise, resolve } = Promise.withResolvers<Array<File> | false>()
 
 	const onChange = (e: Event) => {
-		let files = Array.from((e.target as HTMLInputElement).files)
+		let files = Array.from((e.target as HTMLInputElement).files!)
 
 		if (max_count && files.length > max_count) {
 			files = files.slice(0, max_count)

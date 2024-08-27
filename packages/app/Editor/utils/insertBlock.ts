@@ -12,7 +12,7 @@ export default (node: LexicalNode) => {
 	const selected_node = getSelectedNode(selection)
 
 	if (selected_node.getTextContentSize()) {
-		selected_node.getTopLevelElement().insertAfter(node)
+		selected_node.getTopLevelElement()!.insertAfter(node)
 	} else {
 		selected_node.replace(node)
 

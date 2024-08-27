@@ -13,7 +13,7 @@ export default async (file_id: string) => {
 			}
 		],
 		index: 0,
-		current: '',
+		current: null,
 		going: false,
 		work_in: 0,
 		break_in: 0,

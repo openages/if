@@ -16,7 +16,7 @@ const Index = (props: IPropsRender) => {
 	const ref = useRef(null)
 	const global = useGlobal()
 	const theme = global.setting.theme
-	const width = useSize(() => ref.current, 'width') as number
+	const width = useSize(() => ref.current!, 'width') as number
 
 	useEffect(() => {
 		const el = ref.current
@@ -31,7 +31,7 @@ const Index = (props: IPropsRender) => {
 
 		if (!el || !value || !width) return
 
-		let timer: NodeJS.Timeout = null
+		let timer: NodeJS.Timer | null = null
 
 		mermaidRender(value, el, width).then(() => {
 			timer = setTimeout(() => {
@@ -39,7 +39,7 @@ const Index = (props: IPropsRender) => {
 			}, 300)
 		})
 
-		return () => clearTimeout(timer)
+		return () => clearTimeout(timer!)
 	}, [theme, width])
 
 	return (

@@ -33,8 +33,8 @@ import type TableRowNode from '../TableRowNode'
 @injectable()
 export default class Index {
 	id = ''
-	editor = null as LexicalEditor
-	selection = null as RangeSelection
+	editor = null as unknown as LexicalEditor
+	selection = null as unknown as RangeSelection
 
 	type = '' as 'merge' | 'unmerge'
 	style = { left: 0, top: 0 }
@@ -42,7 +42,7 @@ export default class Index {
 
 	watch = {
 		visible: v => {
-			const container = document.getElementById(this.id)
+			const container = document.getElementById(this.id)!
 			const handler = this.type === 'merge' ? this.getMergePosition : this.getUnmergePosition
 
 			if (v) {
@@ -99,8 +99,8 @@ export default class Index {
 			const selection = $getSelection() as TableSelection
 			const anchor_node = selection.anchor.getNode() as TableCellNode
 			const focus_node = selection.focus.getNode() as TableCellNode
-			const anchor_el = this.editor.getElementByKey(anchor_node.getKey())
-			const focus_el = this.editor.getElementByKey(focus_node.getKey())
+			const anchor_el = this.editor.getElementByKey(anchor_node.getKey())!
+			const focus_el = this.editor.getElementByKey(focus_node.getKey())!
 
 			const rect_anchor = anchor_el.getBoundingClientRect()
 			const rect_focus = focus_el.getBoundingClientRect()
@@ -123,7 +123,7 @@ export default class Index {
 	getUnmergePosition() {
 		this.editor.update(() => {
 			const cell_node = this.getLargeCell()
-			const cell_el = this.editor.getElementByKey(cell_node.getKey())
+			const cell_el = this.editor.getElementByKey(cell_node.getKey())!
 			const { right, top } = cell_el.getBoundingClientRect()
 
 			this.type = 'unmerge'
@@ -137,18 +137,18 @@ export default class Index {
 		const { anchor, focus } = selection
 		const { merge_node_type } = selection.getShape()
 		const target_node = (merge_node_type === 'anchor' ? anchor : focus).getNode() as TableCellNode
-		const rowspan_values = []
-		const colspan_values = []
+		const rowspan_values = [] as Array<number>
+		const colspan_values = [] as Array<number>
 
 		const cells = selection.getNodes().filter(item => $isTableCellNode(item)) as Array<TableCellNode>
 		const els = cells.map(item => this.editor.getElementByKey(item.getKey()))
 
-		if (!(els.every(item => item.tagName === 'TD') || els.every(item => item.tagName === 'TH'))) {
+		if (!(els.every(item => item!.tagName === 'TD') || els.every(item => item!.tagName === 'TH'))) {
 			return this.reset()
 		}
 
-		const group_cols = groupBy(cells, item => $getTableCellNodeRect(item).column_index)
-		const group_rows = groupBy(cells, item => item.getParent().getKey())
+		const group_cols = groupBy(cells, item => $getTableCellNodeRect(item)!.column_index)
+		const group_rows = groupBy(cells, item => item.getParent()!.getKey())
 
 		Object.keys(group_cols).forEach(col_index => {
 			const cells = group_cols[col_index]
@@ -188,13 +188,13 @@ export default class Index {
 		})
 
 		target_node.setRowSpan(rows).setColSpan(cols)
-		target_node.getLastDescendant().selectEnd()
+		target_node.getLastDescendant()!.selectEnd()
 	}
 
 	unmergeCells() {
 		const cell_node = this.getLargeCell()
 		const table_node = $getMatchingParent(cell_node, $isTableNode) as TableNode
-		const { row_index, column_index, row_span, col_span } = $getTableCellNodeRect(cell_node)
+		const { row_index, column_index, row_span, col_span } = $getTableCellNodeRect(cell_node)!
 		const rows_arr = Array.from({ length: row_span })
 		const cols_arr = Array.from({ length: col_span })
 		const rows = table_node.getChildren() as Array<TableRowNode>

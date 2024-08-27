@@ -20,9 +20,9 @@ import type { LexicalEditor } from 'lexical'
 
 @injectable()
 export default class Index {
-	editor = null as LexicalEditor
+	editor = null as unknown as LexicalEditor
 
-	unregister = null as () => void
+	unregister = null as unknown as () => void
 
 	constructor(public utils: Utils) {}
 
@@ -112,7 +112,7 @@ export default class Index {
 
 		this.unregister()
 
-		this.unregister = null
+		this.unregister = null as unknown as () => void
 	}
 
 	on() {

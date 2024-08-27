@@ -20,4 +20,5 @@ export interface IPropsUser {
 	edit_mode: Auth['edit_mode']
 	updateTempUser: (v: Partial<Trpc.UserData>) => void
 	signout: Auth['signout']
+	activate: Auth['activate']
 }

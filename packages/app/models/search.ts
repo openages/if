@@ -55,8 +55,8 @@ export default class Index {
 
 			this.items = file_ids.map((_, index) => ({
 				item: getDocItem(docs[index]),
-				file: getDocItem(files.get(docs[index].file_id)),
-				setting: JSON.parse(getDocItem(settings.get(docs[index].file_id)).setting)
+				file: getDocItem(files.get(docs[index].file_id)!)!,
+				setting: JSON.parse(getDocItem(settings.get(docs[index].file_id)!)!.setting)
 			}))
 		}
 
@@ -76,7 +76,7 @@ export default class Index {
 
 			this.items = file_ids.map((_, index) => ({
 				item: getDocItem(docs[index]),
-				file: getDocItem(files.get(docs[index].file_id))
+				file: getDocItem(files.get(docs[index].file_id)!)!
 			}))
 		}
 
@@ -100,7 +100,7 @@ export default class Index {
 
 			this.items = file_ids.map((_, index) => ({
 				item: getDocItem(docs[index]),
-				file: getDocItem(files.get(docs[index].file_id))
+				file: getDocItem(files.get(docs[index].file_id)!)!
 			}))
 		}
 
@@ -160,7 +160,7 @@ export default class Index {
 
 		if (!id) return
 
-		scrollIntoView(document.getElementById(`search_item_${id}`), {
+		scrollIntoView(document.getElementById(`search_item_${id}`)!, {
 			behavior: 'smooth',
 			inline: 'center',
 			block: 'nearest'

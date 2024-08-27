@@ -54,7 +54,7 @@ const Index = (props: IPropsAppMenu) => {
 										item.deving && 'deving'
 									)}
 									key={item.title}
-									to={!item.plan && item.path}
+									to={!item.plan ? item.path : ''}
 									onClick={e => {
 										if (item.event) {
 											e.preventDefault()
@@ -65,7 +65,7 @@ const Index = (props: IPropsAppMenu) => {
 										onClose()
 									}}
 								>
-									<If condition={item.deving}>
+									<If condition={Boolean(item.deving)}>
 										<span className='deving_badge flex justify_center align_center absolute'>
 											<Barricade weight='bold'></Barricade>
 										</span>

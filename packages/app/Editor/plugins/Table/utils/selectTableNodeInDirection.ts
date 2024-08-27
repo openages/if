@@ -19,7 +19,7 @@ export default (table_observer: TableObserver, table_node: TableNode, x: number,
 		case 'forward':
 			if (x !== (is_forward ? table_observer.table.col_counts - 1 : 0)) {
 				selectTableCellNode(
-					table_node.getCellNodeFromCords(x + (is_forward ? 1 : -1), y, table_observer.table),
+					table_node.getCellNodeFromCords(x + (is_forward ? 1 : -1), y, table_observer.table)!,
 					is_forward
 				)
 			} else {
@@ -29,7 +29,7 @@ export default (table_observer: TableObserver, table_node: TableNode, x: number,
 							is_forward ? 0 : table_observer.table.col_counts - 1,
 							y + (is_forward ? 1 : -1),
 							table_observer.table
-						),
+						)!,
 						is_forward
 					)
 				} else if (!is_forward) {
@@ -43,7 +43,7 @@ export default (table_observer: TableObserver, table_node: TableNode, x: number,
 
 		case 'up':
 			if (y !== 0) {
-				selectTableCellNode(table_node.getCellNodeFromCords(x, y - 1, table_observer.table), false)
+				selectTableCellNode(table_node.getCellNodeFromCords(x, y - 1, table_observer.table)!, false)
 			} else {
 				table_node.selectPrevious()
 			}
@@ -52,7 +52,7 @@ export default (table_observer: TableObserver, table_node: TableNode, x: number,
 
 		case 'down':
 			if (y !== table_observer.table.row_counts - 1) {
-				selectTableCellNode(table_node.getCellNodeFromCords(x, y + 1, table_observer.table), true)
+				selectTableCellNode(table_node.getCellNodeFromCords(x, y + 1, table_observer.table)!, true)
 			} else {
 				table_node.selectNext()
 			}

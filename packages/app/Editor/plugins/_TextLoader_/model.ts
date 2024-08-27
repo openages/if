@@ -9,17 +9,17 @@ import type { Lexical } from '@/types'
 import type { LexicalEditor } from 'lexical'
 
 export default class Index {
-	editor = null as LexicalEditor
+	editor = null as unknown as LexicalEditor
 	max_length = 0
 	linebreak = false
 
-	onChange: IPropsTextLoader['onChange']
-	onKeyDown: IPropsTextLoader['onKeyDown']
-	onFocus: IPropsTextLoader['onFocus']
-	unregister = null as () => void
+	onChange = null as unknown as IPropsTextLoader['onChange']
+	onKeyDown = null as unknown as IPropsTextLoader['onKeyDown']
+	onFocus = null as unknown as IPropsTextLoader['onFocus']
+	unregister = null as unknown as () => void
 
-	listener_keydown = null as () => void
-	listener_focus = null as () => void
+	listener_keydown = null as unknown as () => void
+	listener_focus = null as unknown as () => void
 
 	init(
 		editor: Index['editor'],
@@ -59,7 +59,7 @@ export default class Index {
 			const text = editorState.read(() => $getRoot().getTextContent())
 
 			if (text.length > this.max_length) {
-				this.editor.dispatchCommand(UNDO_COMMAND, null)
+				this.editor.dispatchCommand(UNDO_COMMAND, null as unknown as void)
 			}
 		}
 
@@ -93,7 +93,7 @@ export default class Index {
 			this.editor.registerCommand(
 				FOCUS_COMMAND,
 				() => {
-					this.onFocus(true)
+					this.onFocus!(true)
 
 					return false
 				},
@@ -102,7 +102,7 @@ export default class Index {
 			this.editor.registerCommand(
 				BLUR_COMMAND,
 				() => {
-					this.onFocus(false)
+					this.onFocus!(false)
 
 					return false
 				},

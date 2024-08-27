@@ -219,6 +219,46 @@ export default {
                   "setting"
             ]
       },
+      "Todo.Cycle": {
+            "type": "object",
+            "properties": {
+                  "type": {
+                        "type": "string",
+                        "enum": [
+                              "interval",
+                              "specific"
+                        ]
+                  },
+                  "scale": {
+                        "type": "string",
+                        "enum": [
+                              "minute",
+                              "hour",
+                              "day",
+                              "week",
+                              "month",
+                              "quarter",
+                              "year",
+                              "clock",
+                              "weekday",
+                              "date",
+                              "special"
+                        ]
+                  },
+                  "value": {
+                        "type": "number"
+                  },
+                  "exclude": {
+                        "type": "array",
+                        "items": {
+                              "type": "number"
+                        }
+                  }
+            },
+            "required": [
+                  "type"
+            ]
+      },
       "Todo.Todo": {
             "type": "object",
             "properties": {
@@ -288,9 +328,7 @@ export default {
                               }
                         },
                         "required": [
-                              "type",
-                              "scale",
-                              "value"
+                              "type"
                         ]
                   },
                   "recycle_time": {
@@ -511,9 +549,7 @@ export default {
                               }
                         },
                         "required": [
-                              "type",
-                              "scale",
-                              "value"
+                              "type"
                         ]
                   },
                   "recycle_time": {

@@ -6,11 +6,11 @@ import { deepEqual } from '@openages/stk/react'
 
 import { $getEditorSize } from '../utils'
 
-import type { MutableRefObject } from 'react'
+import type { RefObject } from 'react'
 import type { LexicalEditor } from 'lexical'
 
 interface Args {
-	ref_editor: MutableRefObject<LexicalEditor>
+	ref_editor: RefObject<LexicalEditor | undefined>
 	text: string
 }
 

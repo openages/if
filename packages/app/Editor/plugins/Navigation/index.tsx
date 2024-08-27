@@ -27,7 +27,7 @@ interface IPropsContent {
 	toc: Model['toc']
 	visible_items: Array<string>
 	active_items: Array<string>
-	setRef: (v: HTMLElement) => void
+	setRef: (v: HTMLElement | null) => void
 	scrollIntoEl: (node_key: string) => void
 }
 
@@ -37,7 +37,7 @@ const Toc = $app.memo(({ setItems }: IPropsToc) => {
 			{items => {
 				setItems(items)
 
-				return null
+				return null as any
 			}}
 		</TableOfContentsPlugin>
 	)
@@ -99,7 +99,7 @@ const Index = () => {
 	const setRef = useMemoizedFn(v => (x.ref = v))
 
 	const scrollIntoEl = useMemoizedFn((node_key: string) => {
-		smoothScrollIntoView(editor.getElementByKey(node_key))
+		smoothScrollIntoView(editor.getElementByKey(node_key)!)
 	})
 
 	const props_content: IPropsContent = {
@@ -145,7 +145,7 @@ const Index = () => {
 			</Fragment>
 		)
 
-		return createPortal(Button, document.getElementById(id))
+		return createPortal(Button, document.getElementById(id)!)
 	}
 
 	return createPortal(
@@ -153,7 +153,7 @@ const Index = () => {
 			<Toc setItems={setItems}></Toc>
 			<Content {...props_content} />
 		</Fragment>,
-		document.getElementById(id)
+		document.getElementById(id)!
 	)
 }
 

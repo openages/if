@@ -104,7 +104,7 @@ const Index = () => {
 				onValuesChange={onValuesChange}
 			>
 				<Choose>
-					<When condition={global.screenlock.data.unlocking}>
+					<When condition={!!global.screenlock.data.unlocking}>
 						<div className='input_wrap secret w_100 flex flex_column relative'>
 							<div
 								className='btn_copy flex justify_center align_center absolute clickable'

@@ -5,4 +5,4 @@ export const options_yes_no = ['yes', 'no']
 export const module_map = {
 	todo: 'todo_items',
 	schedule: 'schedule_items'
-}
+} as const

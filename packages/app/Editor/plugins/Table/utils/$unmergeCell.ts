@@ -33,7 +33,7 @@ export default () => {
 			const current_row = start_row + i
 			const current_row_map = map[current_row]
 
-			current_row_node = (current_row_node || row).getNextSibling()
+			current_row_node = (current_row_node! || row).getNextSibling()!
 
 			let insert_after_cell = null
 

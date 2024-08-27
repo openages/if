@@ -25,7 +25,7 @@ export default (editor: LexicalEditor, selection: RangeSelection, table_node: Ta
 
 	if (!anchor_cell_node) return
 
-	const parent_table = $findMatchingParent(anchor_cell_node, n => $isTableNode(n))
+	const parent_table = $findMatchingParent(anchor_cell_node, n => $isTableNode(n))!
 
 	if (!$isTableNode(parent_table) || !parent_table.is(table_node)) return
 

@@ -13,7 +13,7 @@ export const sortLinkNodes = <T extends { id: string; prev?: string; next?: stri
 	let head_id: string | undefined
 
 	for (const id in node_map) {
-		if (!node_map.get(id).prev) {
+		if (!node_map.get(id)!.prev) {
 			head_id = id
 
 			break
@@ -26,6 +26,7 @@ export const sortLinkNodes = <T extends { id: string; prev?: string; next?: stri
 	let current_node_id = head_id
 
 	while (current_node_id) {
+		// @ts-ignore
 		const node = node_map[current_node_id]
 
 		sorted_nodes.push(node)

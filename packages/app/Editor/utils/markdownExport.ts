@@ -35,7 +35,12 @@ export function createMarkdownExport(
 			} else if ($isNavigationNode(child)) {
 				result = outputNavigation(child as NavigationNode)
 			} else {
-				result = exportTopLevelElements(child, byType.element, textFormatTransformers, byType.textMatch)
+				result = exportTopLevelElements(
+					child,
+					byType.element,
+					textFormatTransformers,
+					byType.textMatch
+				)!
 			}
 
 			if (result != null) {

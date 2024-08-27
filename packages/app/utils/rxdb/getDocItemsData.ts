@@ -5,6 +5,7 @@ export default <T>(arr: RxDB.ItemsDoc<T>) => {
 	return arr.map(item => {
 		const target = item.toMutableJSON()
 
+		// @ts-ignore
 		if (target['crdts']) delete target['crdts']
 
 		return target
@@ -16,6 +17,7 @@ export const getDocItem = <T>(item: RxDocument<T>) => {
 
 	const target = item.toMutableJSON()
 
+	// @ts-ignore
 	if (target['crdts']) delete target['crdts']
 
 	return target

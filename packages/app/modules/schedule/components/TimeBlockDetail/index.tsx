@@ -38,7 +38,7 @@ const Index = (props: IPropsTimeBlockDetail) => {
 		const form_item = getFieldsValue()
 		const target = $copy(pick(item, ['text', 'tag']))
 
-		if (!target.tag) target.tag = undefined
+		if (!target.tag) target.tag = undefined as unknown as string
 		if (deepEqual(target, form_item)) return
 
 		setFieldsValue(target)

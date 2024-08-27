@@ -14,7 +14,7 @@ import type { RxDocument, MangoQuerySelector } from 'rxdb'
 
 @injectable()
 export default class Index {
-	editor = null as LexicalEditor
+	editor = null as unknown as LexicalEditor
 	node_key = ''
 
 	module = 'todo' as App.ModuleType
@@ -163,7 +163,7 @@ export default class Index {
 
 		this.latest_items = file_ids.map((_, index) => ({
 			item: getDocItem(docs[index]),
-			file: getDocItem(files.get(docs[index].file_id))
+			file: getDocItem(files.get(docs[index].file_id)!)!
 		}))
 	}
 

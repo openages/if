@@ -31,21 +31,21 @@ const text_formats = ['bold', 'italic', 'strikethrough', 'underline', 'code']
 
 export default class Index {
 	id = ''
-	editor = null as LexicalEditor
+	editor = null as unknown as LexicalEditor
 	md = false
-	ref = null as HTMLElement
-	node = null as LexicalNode
+	ref = null as unknown as HTMLElement
+	node = null as unknown as LexicalNode
 	oveflow_x = 0
 
 	visible = false
-	position = null as { x: number; y: number }
+	position = null as unknown as { x: number; y: number }
 	formats = {} as Formats
 	heading_type = '' as HeadingTagType
 	list_type = '' as ListType
 
-	timer_click = null as NodeJS.Timeout
-	listener_blur = null as () => void
-	unregister = null as () => void
+	timer_click = null as unknown as NodeJS.Timeout
+	listener_blur = null as unknown as () => void
+	unregister = null as unknown as () => void
 
 	constructor() {
 		makeAutoObservable(
@@ -75,13 +75,13 @@ export default class Index {
 	reset() {
 		if (!this.visible) return
 
-		this.node = null
+		this.node = null!
 		this.oveflow_x = 0
 		this.visible = false
-		this.position = null
+		this.position = null!
 		this.formats = {} as Index['formats']
-		this.heading_type = null
-		this.list_type = null
+		this.heading_type = null!
+		this.list_type = null!
 
 		return false
 	}
@@ -92,7 +92,7 @@ export default class Index {
 
 			if (!$isRangeSelection(selection)) return this.reset()
 
-			const native_selection = window.getSelection()
+			const native_selection = window.getSelection()!
 			const rect = native_selection.getRangeAt(0)?.getBoundingClientRect?.()
 
 			if (rect) this.position = { x: rect.left, y: rect.y - 42 }
@@ -154,7 +154,7 @@ export default class Index {
 						check: INSERT_CHECK_LIST_COMMAND
 					}
 
-					this.editor.dispatchCommand(commands[v], null)
+					this.editor.dispatchCommand(commands[v as keyof typeof commands], null!)
 				}
 			}
 		}
@@ -181,7 +181,7 @@ export default class Index {
 		const native_selection = window.getSelection()
 		const active_element = document.activeElement
 
-		const is_contain = root?.contains(native_selection?.anchorNode)
+		const is_contain = root?.contains(native_selection?.anchorNode!)
 		const is_editable = this.editor.isEditable()
 		const is_not_select = selection.anchor.offset === selection.focus.offset
 		const is_collapsed = native_selection?.isCollapsed
@@ -254,7 +254,7 @@ export default class Index {
 	removeBlurListener() {
 		this.listener_blur?.()
 
-		this.listener_blur = null
+		this.listener_blur = null as unknown as () => void
 	}
 
 	onClick(e: MouseEvent) {
@@ -268,13 +268,13 @@ export default class Index {
 	addClickListener() {
 		this.removeClickListener()
 
-		const el = document.getElementById(this.id)
+		const el = document.getElementById(this.id)!
 
 		el.addEventListener('mousedown', this.onClick)
 	}
 
 	removeClickListener() {
-		const el = document.getElementById(this.id)
+		const el = document.getElementById(this.id)!
 
 		el.removeEventListener('mousedown', this.onClick)
 	}

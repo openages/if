@@ -41,8 +41,8 @@ const Index = (props: IPropsTodos) => {
 	const container = useRef<HTMLDivElement>(null)
 	const stoper = useRef<number>()
 	const [lines, setLines] = useState<Array<JSX.Element>>([])
-	const [link_points, setLinkPoints] = useState<Array<number>>(null)
-	const size = useSize(() => container.current, 'height') as number
+	const [link_points, setLinkPoints] = useState<Array<number> | null>(null)
+	const size = useSize(() => container.current!, 'height') as number
 	const height = useMemo(() => (size ? size : 0), [size])
 	const color_text_line = useCssVariable('--color_text_line')
 	const color_text_softlight = useCssVariable('--color_text_softlight')
@@ -73,7 +73,7 @@ const Index = (props: IPropsTodos) => {
 
 		const target: Array<{ point: [string, string]; checked: boolean }> = []
 
-		relations.map(item => {
+		relations!.map(item => {
 			let links = item.items
 
 			if (kanban_mode) {
@@ -96,8 +96,8 @@ const Index = (props: IPropsTodos) => {
 
 		if (!active || !over) return
 
-		const y_1 = getRelativePostion(container.current, active) + 7
-		const y_2 = getRelativePostion(container.current, over) + 7
+		const y_1 = getRelativePostion(container.current!, active) + 7
+		const y_2 = getRelativePostion(container.current!, over) + 7
 		const [up, down] = y_1 < y_2 ? [y_1, y_2] : [y_2, y_1]
 
 		return points([8, up], [1, up], [1, down], [8, down])
@@ -108,8 +108,8 @@ const Index = (props: IPropsTodos) => {
 
 		const { active_id, y } = args
 
-		const y_1 = getRelativePostion(container.current, document.getElementById(active_id) as HTMLDivElement) + 7
-		const y_2 = y - container.current.getBoundingClientRect().y
+		const y_1 = getRelativePostion(container.current!, document.getElementById(active_id) as HTMLDivElement) + 7
+		const y_2 = y - container.current!.getBoundingClientRect().y
 		const [up, down] = y_1 < y_2 ? [y_1, y_2] : [y_2, y_1]
 
 		setLinkPoints(points([8, up], [1, up], [1, down], [8, down]))
@@ -142,7 +142,7 @@ const Index = (props: IPropsTodos) => {
 
 		stoper.current = requestAnimationFrame(frameRenderLines)
 
-		setTimeout(() => cancelAnimationFrame(stoper.current), 180)
+		setTimeout(() => cancelAnimationFrame(stoper.current!), 180)
 	})
 
 	useDeepCompareEffect(() => {

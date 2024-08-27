@@ -7,7 +7,7 @@ export interface IPropsTextBar extends IPropsCommon {
 
 export type Format = 'bold' | 'italic' | 'strikethrough' | 'underline' | 'code' | 'link' | 'heading' | 'list'
 
-export type Formats = Record<Format, boolean>
+export type Formats = Partial<Record<Format, boolean>>
 
 export type ListType = 'bullet' | 'number' | 'check'
 

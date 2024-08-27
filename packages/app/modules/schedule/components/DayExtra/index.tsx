@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import styles from './index.css'
 
 import type { IPropsDayExtra } from '../../types'
+import type { Extra } from '../../utils/getDayDetails'
 
 const Index = (props: IPropsDayExtra) => {
 	const { item } = props
@@ -12,7 +13,7 @@ const Index = (props: IPropsDayExtra) => {
 	return (
 		<div className={$cx((item.global_festival || is_zh) && 'ml_6', styles._local)}>
 			<Choose>
-				<When condition={item.global_festival}>
+				<When condition={!!item.global_festival}>
 					<span className='holiday'>{item.global_festival}</span>
 				</When>
 				<Otherwise>
@@ -21,12 +22,14 @@ const Index = (props: IPropsDayExtra) => {
 							<When condition={!!item.extra}>
 								<div className='extra_wrap flex align_center'>
 									<Choose>
-										<When condition={item.extra.target}>
-											<span className='holiday'>{item.extra.holiday}</span>
+										<When condition={(item.extra as Extra).target}>
+											<span className='holiday'>
+												{(item.extra as Extra).holiday}
+											</span>
 										</When>
 										<Otherwise>
 											<Choose>
-												<When condition={item.extra.work}>
+												<When condition={(item.extra as Extra).work}>
 													<span className='status work'>班</span>
 												</When>
 												<Otherwise>

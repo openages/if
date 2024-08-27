@@ -27,7 +27,7 @@ export default () => {
 
 	const column_count = grid_map[0].length
 	const next_row = grid_map[focus_end_row + 1]
-	const next_row_node: TableRowNode = grid.getChildAtIndex(focus_end_row + 1)
+	const next_row_node: TableRowNode = grid.getChildAtIndex(focus_end_row + 1)!
 
 	for (let row = focus_end_row; row >= anchor_start_row; row--) {
 		for (let column = column_count - 1; column >= 0; column--) {
@@ -54,7 +54,7 @@ export default () => {
 			}
 		}
 
-		const row_node = grid.getChildAtIndex(row)
+		const row_node = grid.getChildAtIndex(row)!
 
 		row_node.remove()
 	}

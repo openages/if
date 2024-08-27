@@ -16,6 +16,7 @@ export default {
 		email_exist: 'This email has already registered an account and cannot be registered again',
 		verify_code_error: 'Incorrect verification code',
 		db_insert_error: 'Failed to add user to the database',
+		db_update_error: 'Database failed to update user',
 		signup_success: 'Signup Success',
 		user_not_exist: 'User does not exist',
 		verify_password_error: 'Incorrect password',
@@ -31,7 +32,8 @@ export default {
 			error: 'Failed'
 		},
 		signout: 'Signout',
-		activate: 'activate'
+		activate: 'activate',
+		activate_success: 'Activate Success'
 	},
 	search: {
 		to_navigate: 'to navigate',

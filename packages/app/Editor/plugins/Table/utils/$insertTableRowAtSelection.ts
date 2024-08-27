@@ -35,7 +35,7 @@ export default (insert_after = true) => {
 			}
 		}
 
-		const focus_end_row_node = grid.getChildAtIndex(focus_end_row)
+		const focus_end_row_node = grid.getChildAtIndex(focus_end_row)!
 
 		focus_end_row_node.insertAfter(new_row)
 	} else {
@@ -51,7 +51,7 @@ export default (insert_after = true) => {
 			}
 		}
 
-		const focus_start_row_node = grid.getChildAtIndex(focus_start_row)
+		const focus_start_row_node = grid.getChildAtIndex(focus_start_row)!
 
 		focus_start_row_node.insertBefore(new_row)
 	}

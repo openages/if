@@ -19,7 +19,7 @@ const Index = (props: IPropsChildren) => {
 	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
 		if (!over?.id) return
 
-		const children = arrayMove(items, active.data.current.index, over.data.current.index)
+		const children = arrayMove(items!, active.data.current!.index, over.data.current!.index)
 
 		update({ type: 'children', dimension_id, index, value: children })
 	})

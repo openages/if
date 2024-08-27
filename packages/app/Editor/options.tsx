@@ -63,17 +63,17 @@ export default (args: Args) => {
 				new Option($t('editor.name.UnorderedList'), {
 					icon: <ListBullets />,
 					shortcut: 'ul',
-					onSelect: () => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, null)
+					onSelect: () => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, null!)
 				}),
 				new Option($t('editor.name.OrderedList'), {
 					icon: <ListNumbers />,
 					shortcut: 'ol',
-					onSelect: () => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, null)
+					onSelect: () => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, null!)
 				}),
 				new Option($t('editor.name.TodoList'), {
 					icon: <ListChecks />,
 					shortcut: 'tl',
-					onSelect: () => editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, null)
+					onSelect: () => editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, null!)
 				})
 			)
 		}
@@ -100,17 +100,17 @@ export default (args: Args) => {
 		new Option($t('editor.name.UnorderedList'), {
 			icon: <ListBullets />,
 			shortcut: 'ul',
-			onSelect: () => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, null)
+			onSelect: () => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, null!)
 		}),
 		new Option($t('editor.name.OrderedList'), {
 			icon: <ListNumbers />,
 			shortcut: 'ol',
-			onSelect: () => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, null)
+			onSelect: () => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, null!)
 		}),
 		new Option($t('editor.name.TodoList'), {
 			icon: <ListChecks />,
 			shortcut: 'tl',
-			onSelect: () => editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, null)
+			onSelect: () => editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, null!)
 		}),
 		new Option($t('editor.name.Table'), {
 			icon: <Table />,

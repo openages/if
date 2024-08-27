@@ -9,7 +9,7 @@ import type { IPropsFormTableComponent } from '@/components'
 const Index = (props: IPropsFormTableComponent<Todo.Todo['schedule']>) => {
 	const { value, onChange } = props
 
-	const onToggleValue = useMemoizedFn(() => onChange(!value))
+	const onToggleValue = useMemoizedFn(() => onChange!(!value))
 
 	return (
 		<div className={$cx('flex justify_center', styles.RenderSchedule)}>

@@ -25,7 +25,7 @@ const Index = (props: IPropsCalendarView) => {
 					counts={calendar_days.length}
 					index={index}
 					tags={tags}
-					move_item={move_item?.day_index === index && move_item}
+					move_item={move_item?.day_index === index ? move_item : undefined}
 					updateTimeBlock={updateTimeBlock}
 					removeTimeBlock={removeTimeBlock}
 					copyTimeBlock={copyTimeBlock}

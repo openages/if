@@ -55,7 +55,7 @@ export default class MermaidNode extends DecoratorNode<JSX.Element> {
 	static importJSON(serializedNode: SerializedMermaidNode, update?: boolean) {
 		const node = $createMermaidNode(serializedNode)
 
-		if (!update) $setImportNode(serializedNode.node_key, node)
+		if (!update) $setImportNode(serializedNode.node_key!, node)
 
 		return node
 	}

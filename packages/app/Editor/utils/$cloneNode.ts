@@ -31,7 +31,7 @@ const Index = (node: LexicalNode) => {
 		$updateTextNodeProperties(clone_node as TextNode, node)
 	}
 
-	return clone_node
+	return clone_node!
 }
 
 export default Index

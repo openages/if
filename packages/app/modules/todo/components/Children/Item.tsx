@@ -32,7 +32,7 @@ const Index = (props: IPropsChildrenItem) => {
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = sortable_props || {}
 
 	const updateChildren = useMemoizedFn(
-		async (children_index: number, value: Partial<Omit<Todo.Todo['children'][number], 'id'>>) => {
+		async (children_index: number, value: Partial<Omit<Required<Todo.Todo>['children'][number], 'id'>>) => {
 			await update({ type: 'children_item', index, children_index, dimension_id, value: value })
 		}
 	)
@@ -84,10 +84,12 @@ const Index = (props: IPropsChildrenItem) => {
 		}
 	})
 
-	const sortable_attrs: RefAttributes<HTMLDivElement> & HTMLAttributes<HTMLDivElement> = !useByMindmap && {
-		ref: setNodeRef,
-		style: { transform: CSS.Translate.toString(transform), transition }
-	}
+	const sortable_attrs: RefAttributes<HTMLDivElement> & HTMLAttributes<HTMLDivElement> = !useByMindmap
+		? {
+				ref: setNodeRef,
+				style: { transform: CSS.Translate.toString(transform!), transition }
+			}
+		: {}
 
 	return (
 		<div

@@ -5,7 +5,7 @@ import { setElements } from '@/utils'
 
 import { getNodeEdge, layout } from './utils'
 
-import type { Node, Edge, Instance, FitView } from '@xyflow/react'
+import type { Node, Edge, GeneralHelpers, FitView } from '@xyflow/react'
 import type { IPropsMindmap } from '@/modules/todo/types'
 
 @injectable()
@@ -17,13 +17,13 @@ export default class Index {
 	signal = false
 
 	shadow_handlers = {} as {
-		setNodes: Instance.SetNodes
+		setNodes: GeneralHelpers['setNodes']
 	}
 
 	graph_handlers = {} as {
 		fitView: FitView
-		setNodes: Instance.SetNodes
-		setEdges: Instance.SetEdges
+		setNodes: GeneralHelpers['setNodes']
+		setEdges: GeneralHelpers['setEdges']
 	}
 
 	constructor() {

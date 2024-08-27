@@ -31,7 +31,7 @@ export default class ToggleBtnNode extends DecoratorNode<JSX.Element> {
 	static importJSON(serializedNode: SerializedLexicalNode, update?: boolean) {
 		const node = $createToggleBtnNode(serializedNode.key)
 
-		if (!update) $setImportNode(serializedNode.key, node)
+		if (!update) $setImportNode(serializedNode.key!, node)
 
 		return node
 	}
@@ -69,7 +69,7 @@ const Btn = $app.memo((props: { node_key: string }) => {
 
 	const onClick = useMemoizedFn(() => {
 		editor.update(() => {
-			const node = $getNodeByKey(node_key)
+			const node = $getNodeByKey(node_key)!
 
 			const toggle_node = $findMatchingParent(node, $isToggleNode) as ToggleNode
 

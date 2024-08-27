@@ -6,7 +6,7 @@ import type { LexicalNode, LineBreakNode, TabNode } from 'lexical'
 import type CodeTextNode from '../CodeTextNode'
 
 export default (anchor: LexicalNode, offset: number) => {
-	let last: { node: CodeTextNode | TabNode | LineBreakNode; offset: number } = null
+	let last: { node: CodeTextNode | TabNode | LineBreakNode; offset: number } | null = null
 	let last_non_blank: null | { node: CodeTextNode; offset: number } = null
 	let node: CodeTextNode | TabNode | LineBreakNode | LexicalNode = anchor
 	let node_offset = offset
@@ -14,7 +14,7 @@ export default (anchor: LexicalNode, offset: number) => {
 
 	while (true) {
 		if (node_offset === 0) {
-			node = node.getPreviousSibling()
+			node = node.getPreviousSibling()!
 
 			if (node === null) {
 				break
@@ -56,7 +56,7 @@ export default (anchor: LexicalNode, offset: number) => {
 			code_character_at_anchor_offset = anchor.getTextContent()[offset]
 		}
 	} else {
-		const next_sibling = anchor.getNextSibling()
+		const next_sibling = anchor.getNextSibling()!
 
 		if ($isCodeTextNode(next_sibling)) {
 			code_character_at_anchor_offset = next_sibling.getTextContent()[0]

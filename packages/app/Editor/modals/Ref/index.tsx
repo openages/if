@@ -23,10 +23,10 @@ const Index = (props: IPropsModal) => {
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const { t } = useTranslation()
-	const ref = useRef(null)
+	const ref = useRef<HTMLInputElement>(null)
 
 	useLayoutEffect(() => {
-		x.init(editor, node_key)
+		x.init(editor, node_key!)
 	}, [editor, node_key])
 
 	useEventListener('compositionstart', () => (x.compositing = true), { target: ref })
@@ -36,7 +36,7 @@ const Index = (props: IPropsModal) => {
 		() => {
 			x.compositing = false
 
-			x.search(ref.current?.value)
+			x.search(ref.current?.value!)
 		},
 		{ target: ref }
 	)

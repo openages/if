@@ -41,7 +41,7 @@ const Index = (props: IProps) => {
 		return item.tag_ids
 			.map(tag_id => setting.tags.find(i => i.id === tag_id))
 			.filter(it => it)
-			.map(it => it.text)
+			.map(it => it!.text)
 	}, [item.tag_ids, setting.tags])
 
 	const onItem = useMemoizedFn(() => onCheck({ id: item.id, file }))
@@ -71,7 +71,7 @@ const Index = (props: IProps) => {
 					<div className='icon_wrap flex justify_center align_center'>
 						<Choose>
 							<When condition={!!file.icon}>
-								<Emoji shortcodes={file.icon} size={10} hue={file.icon_hue}></Emoji>
+								<Emoji shortcodes={file.icon!} size={10} hue={file.icon_hue}></Emoji>
 							</When>
 							<Otherwise>
 								<LeftIcon module='todo' item={file} size={10}></LeftIcon>
@@ -80,7 +80,7 @@ const Index = (props: IProps) => {
 					</div>
 					<span className='file_name ml_2'>{file.name}</span>
 				</div>
-				<span className='angle mr_8'>{angle.text}</span>
+				<span className='angle mr_8'>{angle!.text}</span>
 				{tags.length > 0 && (
 					<span className='tags flex align_center mr_8'>
 						{tags.map((i, idx) => (

@@ -3,12 +3,13 @@ import { useMemo } from 'react'
 import styles from './index.css'
 
 import type { IPropsCalendarViewTimeBlockSignal } from '../../types'
+import type { CSSProperties } from 'react'
 
 const Index = (props: IPropsCalendarViewTimeBlockSignal) => {
 	const { item, step = 16, timeline } = props
 
 	const style = useMemo(() => {
-		const target = {}
+		const target = {} as CSSProperties
 
 		if (!timeline) {
 			target['left'] = 1

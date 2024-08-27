@@ -3,6 +3,7 @@ import { $createKatexNode, $isKatexNode } from '@/Editor/plugins/Katex/utils'
 import { insertBlock } from '@/Editor/utils'
 
 import type { TextMatchTransformer, ElementTransformer } from '@lexical/markdown'
+import type { LexicalNode } from 'lexical'
 
 export const Katex_inline = {
 	type: 'text-match',
@@ -10,10 +11,10 @@ export const Katex_inline = {
 	importRegExp: /(?<!\$)\$\s*([^$]+?)\s*\$/,
 	trigger: '$',
 	dependencies: [KatexNode],
-	export(node: KatexNode) {
+	export(node: LexicalNode) {
 		if (!$isKatexNode(node)) return null
 
-		return `$ ${node.__value} $`
+		return `$ ${(node as KatexNode).__value} $`
 	},
 	replace(node, match) {
 		const [, value] = match
@@ -26,10 +27,10 @@ export const Katex_block = {
 	type: 'element',
 	regExp: /\$\$\s*([^$]+?)\s*\$\$\s{0,1}$/,
 	dependencies: [KatexNode],
-	export(node: KatexNode) {
+	export(node: LexicalNode) {
 		if (!$isKatexNode(node)) return null
 
-		return `$$ ${node.__value} $$`
+		return `$$ ${(node as KatexNode).__value} $$`
 	},
 	replace(parent, _children, match, is_import) {
 		const node = $createKatexNode({ value: match[1], inline: false })

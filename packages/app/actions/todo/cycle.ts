@@ -29,12 +29,12 @@ const uncycle = async (item: RxDocument<Todo.Todo>, schedule_args?: ScheduleArgs
 }
 
 const recycle = async (item: RxDocument<Todo.Todo>) => {
-	let schedule_args = undefined as ScheduleArgs
+	let schedule_args = null as unknown as ScheduleArgs
 
-	if (item.cycle.type === 'specific' && item.schedule && item.start_time && item.end_time) {
+	if (item.cycle!.type === 'specific' && item.schedule && item.start_time && item.end_time) {
 		const recycle_time = dayjs(item.recycle_time)
 
-		schedule_args = match(item.cycle.scale)
+		schedule_args = match(item.cycle!.scale)
 			.with(P.union('clock', 'weekday'), () => ({
 				start_time: dayjs(item.start_time).date(recycle_time.date()).valueOf(),
 				end_time: dayjs(item.start_time).date(recycle_time.date()).valueOf()
@@ -50,7 +50,7 @@ const recycle = async (item: RxDocument<Todo.Todo>) => {
 			.exhaustive()
 	}
 
-	return match(item.cycle)
+	return match(item.cycle!)
 		.with({ type: 'interval', scale: P.union('minute', 'hour', 'day', 'month', 'year') }, async () => {
 			return uncycle(item)
 		})

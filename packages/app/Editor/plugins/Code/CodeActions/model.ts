@@ -23,9 +23,9 @@ import type { BundledLanguage } from 'shiki'
 @injectable()
 export default class Index {
 	id = ''
-	editor = null as LexicalEditor
+	editor = null as unknown as LexicalEditor
 	key = ''
-	resize_observer = null as ResizeObserver
+	resize_observer = null as unknown as ResizeObserver
 
 	lang = '' as BundledLanguage
 	formatable = false
@@ -34,7 +34,7 @@ export default class Index {
 
 	watch = {
 		visible: v => {
-			const container = document.getElementById(this.id)
+			const container = document.getElementById(this.id)!
 
 			if (v) {
 				container.addEventListener('scroll', this.onScroll)
@@ -49,7 +49,7 @@ export default class Index {
 				if (container) this.resize_observer.unobserve(container)
 
 				this.resize_observer.disconnect()
-				this.resize_observer = null
+				this.resize_observer = null as unknown as ResizeObserver
 			}
 		}
 	} as Watch<Index>
@@ -80,7 +80,7 @@ export default class Index {
 	}
 
 	getPosition(key: string) {
-		const el = this.editor.getElementByKey(key)
+		const el = this.editor.getElementByKey(key)!
 		const { right, top } = el.getBoundingClientRect()
 
 		this.position = { left: right - (78 + 52 + 2), top: top - 32 }
@@ -133,7 +133,7 @@ export default class Index {
 		if (!this.key) return
 
 		this.editor.getEditorState().read(() => {
-			const node = $getNodeByKey(this.key)
+			const node = $getNodeByKey(this.key)!
 			const text = node.getTextContent()
 
 			navigator.clipboard.writeText(text).then(() => {
@@ -171,7 +171,7 @@ export default class Index {
 					title: $t('common.error'),
 					content: err.message,
 					centered: true,
-					getContainer: () => document.getElementById(this.id)
+					getContainer: () => document.getElementById(this.id)!
 				})
 			}
 

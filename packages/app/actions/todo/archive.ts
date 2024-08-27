@@ -30,7 +30,7 @@ export default async (file_id: string, todo_id?: string) => {
 
 	await Promise.all(archive_items.map(item => item.updateCRDT({ ifMatch: { $set: { archive: true } } })))
 
-	const module_setting = await $db.module_setting.findOne({ selector: { file_id } }).exec()
+	const module_setting = (await $db.module_setting.findOne({ selector: { file_id } }).exec())!
 
 	const info = JSON.parse(module_setting.setting) as Todo.Setting
 

@@ -15,14 +15,14 @@ import type { LexicalEditor } from 'lexical'
 @injectable()
 export default class Index {
 	id = ''
-	editor = null as LexicalEditor
-	container = null as HTMLElement
-	observer = null as ResizeObserver
+	editor = null as unknown as LexicalEditor
+	container = null as unknown as HTMLElement
+	observer = null as unknown as ResizeObserver
 
 	style = {} as CSSProperties
 	visible_options = false
 
-	unregister = null as () => void
+	unregister = null as unknown as () => void
 
 	constructor(public file: File) {
 		makeAutoObservable(
@@ -42,7 +42,7 @@ export default class Index {
 	init(id: Index['id'], editor: Index['editor']) {
 		this.id = id
 		this.editor = editor
-		this.container = document.getElementById(this.id)
+		this.container = document.getElementById(this.id)!
 
 		this.file.init(id)
 
@@ -57,7 +57,7 @@ export default class Index {
 	}
 
 	exportMd() {
-		const res = $convertToMarkdownString(transformers, null, false)
+		const res = $convertToMarkdownString(transformers, null!, false)
 
 		downloadFile(this.file.data.name, res, 'md')
 	}

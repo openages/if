@@ -35,7 +35,7 @@ import type {
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const breakpoint = useStackSelector(v => v.breakpoint)
-	const [drag_todo_item, setDragTodoItem] = useState<DragTodoItem>(null)
+	const [drag_todo_item, setDragTodoItem] = useState<DragTodoItem | null>(null)
 
 	const items = $copy(x.items)
 	const angles = $copy(x.setting?.setting?.angles || [])
@@ -195,36 +195,38 @@ const Index = ({ id }: IProps) => {
 		})
 	}
 
-	const props_drag_todo_item: IPropsTodoItem = drag_todo_item && {
-		item: drag_todo_item.item as Todo.Todo,
-		index: 0,
-		tags,
-		angles: props_todos.angles,
-		drag_disabled: false,
-		zen_mode: props_todos.zen_mode,
-		open_items: props_todos.open_items,
-		mode: x.mode,
-		kanban_mode: x.kanban_mode,
-		dimension_id: drag_todo_item.dimension_id,
-		drag_overlay: true,
-		makeLinkLine: () => {},
-		renderLines: () => {},
-		check: props_todos.check,
-		updateRelations: props_todos.updateRelations,
-		insert: props_todos.insert,
-		update: props_todos.update,
-		tab: props_todos.tab,
-		moveTo: props_todos.moveTo,
-		remove: props_todos.remove,
-		handleOpenItem: props_todos.handleOpenItem,
-		showDetailModal: props_todos.showDetailModal
-	}
+	const props_drag_todo_item: IPropsTodoItem = drag_todo_item
+		? {
+				item: drag_todo_item.item as Todo.Todo,
+				index: 0,
+				tags,
+				angles: props_todos.angles,
+				drag_disabled: false,
+				zen_mode: props_todos.zen_mode,
+				open_items: props_todos.open_items,
+				mode: x.mode,
+				kanban_mode: x.kanban_mode,
+				dimension_id: drag_todo_item.dimension_id,
+				drag_overlay: true,
+				makeLinkLine: () => {},
+				renderLines: () => {},
+				check: props_todos.check,
+				updateRelations: props_todos.updateRelations,
+				insert: props_todos.insert,
+				update: props_todos.update,
+				tab: props_todos.tab,
+				moveTo: props_todos.moveTo,
+				remove: props_todos.remove,
+				handleOpenItem: props_todos.handleOpenItem,
+				showDetailModal: props_todos.showDetailModal
+			}
+		: ({} as IPropsTodoItem)
 
 	const onDragStart = useMemoizedFn(({ active }: DragStartEvent) => {
 		if (x.mode === 'list') return
 
-		const active_index = active.data.current.index
-		const dimension_id = active.data.current.dimension_id
+		const active_index = active.data.current!.index
+		const dimension_id = active.data.current!.dimension_id
 
 		setDragTodoItem({
 			index: active_index,
@@ -239,8 +241,8 @@ const Index = ({ id }: IProps) => {
 		if (!over?.id) return
 
 		x.move({
-			active: { index: active.data.current.index, dimension_id: active.data.current.dimension_id },
-			over: { index: over.data.current.index, dimension_id: over.data.current.dimension_id }
+			active: { index: active.data.current!.index, dimension_id: active.data.current!.dimension_id },
+			over: { index: over.data.current!.index, dimension_id: over.data.current!.dimension_id }
 		})
 	})
 

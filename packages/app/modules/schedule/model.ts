@@ -54,15 +54,15 @@ export default class Index {
 	disable_watcher = false
 
 	setting = {} as Schedule.ScheduleSetting
-	setting_watcher = null as Subscription
+	setting_watcher = null as unknown as Subscription
 	schedule_ids = [] as Array<string>
-	schedule_ids_watcher = null as Subscription
+	schedule_ids_watcher = null as unknown as Subscription
 	calendar_days = [] as Schedule.CalendarDays
-	calendar_days_watcher = null as Subscription
+	calendar_days_watcher = null as unknown as Subscription
 	timeline_rows = {} as Record<string, Schedule.CalendarDay>
-	timeline_rows_watcher = null as Subscription
+	timeline_rows_watcher = null as unknown as Subscription
 
-	timeblock_copied = null as Omit<Schedule.CalendarItem, 'id'>
+	timeblock_copied = null as unknown as Omit<Schedule.CalendarItem, 'id'>
 	filter_tags = [] as Array<string>
 
 	visible_task_panel = false
@@ -70,7 +70,11 @@ export default class Index {
 
 	task_panel_clear_mode = true
 
-	move_item = null as Schedule.CalendarItem & { day_index?: number; angle_index?: number; row_index?: number }
+	move_item = null as unknown as Schedule.CalendarItem & {
+		day_index?: number
+		angle_index?: number
+		row_index?: number
+	}
 
 	watch = {
 		filter_tags: () => {
@@ -126,7 +130,7 @@ export default class Index {
 	}
 
 	changeView(v: Index['view']) {
-		this.timeblock_copied = null
+		this.timeblock_copied = null as unknown as Index['timeblock_copied']
 		this.current = v === 'fixed' ? dayjs('1970-1-1') : dayjs()
 
 		if (this.view === 'timeline' && this.scale === 'year') this.scale = 'day'
@@ -164,7 +168,7 @@ export default class Index {
 			.with('week', () => getWeekdays(this.current))
 			.with('month', () => getMonthDays(this.current, this.view === 'fixed' || this.view === 'timeline'))
 			.with('year', () => getYearDays(this.current))
-			.otherwise(() => null)
+			.otherwise(() => null) as unknown as Index['days']
 
 		if (this.view === 'timeline') {
 			if (!this.setting?.setting?.timeline_angles) return
@@ -178,22 +182,22 @@ export default class Index {
 	}
 
 	onDragMove(container: HTMLDivElement, { active, over, activatorEvent }: DragMoveEvent) {
-		if (active.data.current.signal === 'task_panel') return
-		if (!over) return (this.move_item = null)
+		if (active.data.current!.signal === 'task_panel') return
+		if (!over) return (this.move_item = null as unknown as Index['move_item'])
 
 		const target = findParent(activatorEvent.target as HTMLElement, '.timeblock_item_wrap')
 
 		if (!target) return
 
 		if (this.view === 'timeline') {
-			if (!over.data.current.row_id) return
+			if (!over.data.current!.row_id) return
 
-			const { step, angle_index, row_index, row_id } = over.data.current
-			const { angle_row_id, timeblock_index } = active.data.current
+			const { step, angle_index, row_index, row_id } = over.data.current!
+			const { angle_row_id, timeblock_index } = active.data.current!
 			const active_item = this.timeline_rows[angle_row_id][timeblock_index]
 			const total = this.scale !== 'year' ? 2 * this.days.length : this.days.length
 
-			let start = getStartByX(container, step, target.getBoundingClientRect().left)
+			let start = getStartByX(container, step, target.getBoundingClientRect().left)!
 
 			if (start < 0) start = 0
 			if (start + active_item.length > total) start = total - active_item.length
@@ -205,7 +209,7 @@ export default class Index {
 				active.id as string
 			)
 
-			if (!length) return (this.move_item = null)
+			if (!length) return (this.move_item = null as unknown as Index['move_item'])
 
 			this.move_item = { angle_index, row_index, start, length } as Index['move_item']
 		} else {
@@ -213,11 +217,11 @@ export default class Index {
 				over?.data?.current?.signal === 'task_panel_drop_container'
 					? over.data.current.day_index
 					: over.id
-			const { day_index: active_day_index, timeblock_index } = active.data.current
+			const { day_index: active_day_index, timeblock_index } = active.data.current!
 
 			const active_item = this.calendar_days[active_day_index][timeblock_index]
 
-			let start = getStartByY(container, target.getBoundingClientRect().top)
+			let start = getStartByY(container, target.getBoundingClientRect().top)!
 
 			if (start < 0) start = 0
 			if (start + active_item.length > 72) start = 72 - active_item.length
@@ -229,14 +233,14 @@ export default class Index {
 				active.id as string
 			)
 
-			if (!length) return (this.move_item = null)
+			if (!length) return (this.move_item = null as unknown as Index['move_item'])
 
 			this.move_item = { day_index: over_day_index, start, length } as Index['move_item']
 		}
 	}
 
 	onDragCancel() {
-		this.move_item = null
+		this.move_item = null as unknown as Index['move_item']
 	}
 
 	jump(v: Dayjs) {
@@ -260,7 +264,7 @@ export default class Index {
 		const date = this.days[timeline ? 0 : index].value
 		const target_length = info?.length && !overflow ? info.length : length
 		const { start_time, end_time } = getStartEnd(date, start, target_length, timeline, year_scale)
-		const target_info = info ? omit(info, ['start', 'length']) : {}
+		const target_info = (info ? omit(info, ['start', 'length']) : {}) as Partial<Schedule.Item>
 
 		if (this.view === 'fixed') target_info['fixed_scale'] = this.scale
 
@@ -268,7 +272,7 @@ export default class Index {
 			const angle = this.setting.setting.timeline_angles[index]
 
 			target_info['timeline_angle_id'] = angle.id
-			target_info['timeline_angle_row_id'] = angle.rows[row_index]
+			target_info['timeline_angle_row_id'] = angle.rows[row_index!]
 
 			if (this.scale === 'year') target_info['timeline_year'] = true
 		}
@@ -291,9 +295,9 @@ export default class Index {
 
 	async addTodoToTimeblock(active: DragEndEvent['active'], over: DragEndEvent['over']) {
 		const active_item_id = active.id as string
-		const { day_index, angle_row_id, timeblock_index } = over.data.current
+		const { day_index, angle_row_id, timeblock_index } = over!.data.current!
 
-		let over_item = null as Schedule.CalendarItem
+		let over_item = null as unknown as Schedule.CalendarItem
 
 		if (this.view === 'timeline') {
 			over_item = this.timeline_rows[angle_row_id][timeblock_index]
@@ -319,7 +323,7 @@ export default class Index {
 		if (over?.id === undefined) return
 
 		if (
-			active.data.current.signal === 'task_panel' &&
+			active.data.current!.signal === 'task_panel' &&
 			over?.data?.current?.signal === 'task_panel_drop_container'
 		) {
 			return this.addTodoToTimeblock(active, over)
@@ -330,14 +334,14 @@ export default class Index {
 		const over_day_index =
 			over?.data?.current?.signal === 'task_panel_drop_container' ? over.data.current.day_index : over.id
 
-		const { day_index, angle_row_id, timeblock_index } = active.data.current
+		const { day_index, angle_row_id, timeblock_index } = active.data.current!
 		const { angle_id, row_id } = over.data.current || {}
 
-		let active_item = null as Schedule.CalendarItem
-		let date = null as Dayjs
+		let active_item = null as unknown as Schedule.CalendarItem
+		let date = null as unknown as Dayjs
 
 		if (this.view === 'timeline') {
-			if (!over.data.current.row_id) return (this.move_item = null)
+			if (!over.data.current!.row_id) return (this.move_item = null as unknown as Index['move_item'])
 
 			active_item = this.timeline_rows[angle_row_id][timeblock_index]
 			date = this.days[0].value
@@ -379,7 +383,7 @@ export default class Index {
 				this.timeline_rows[row_id].push($copy(active_item))
 			}
 
-			this.move_item = null
+			this.move_item = null as unknown as Index['move_item']
 
 			await this.updateTimeBlock(active_item.id, data)
 		} else {
@@ -390,7 +394,7 @@ export default class Index {
 				this.calendar_days[over_day_index].push($copy(active_item))
 			}
 
-			this.move_item = null
+			this.move_item = null as unknown as Index['move_item']
 
 			await this.updateTimeBlock(active_item.id, { start_time, end_time })
 		}
@@ -432,13 +436,13 @@ export default class Index {
 
 			this.updateTimeBlock(item.id, { end_time: item.end_time })
 		} else {
-			const item = this.calendar_days[day_index][timeblock_index]
+			const item = this.calendar_days[day_index!][timeblock_index]
 			const after_length = item.length + step
 
 			if (!after_length) return
 
 			const target_length = collisionDetection(
-				this.calendar_days[day_index],
+				this.calendar_days[day_index!],
 				item.start,
 				after_length,
 				item.id
@@ -456,7 +460,7 @@ export default class Index {
 	}
 
 	async updateTodoSchedule(id: string) {
-		const doc = await $db.todo_items.findOne(id).exec()
+		const doc = (await $db.todo_items.findOne(id).exec())!
 
 		if (!doc.schedule) return
 
@@ -472,7 +476,6 @@ export default class Index {
 			const res = await confirm({
 				id: this.id,
 				title: $t('common.notice'),
-				// @ts-ignore
 				content: $t('common.tags.remove_confirm', { counts })
 			})
 
@@ -520,9 +523,9 @@ export default class Index {
 	}
 
 	async redirect(id: string) {
-		const doc = await $db.schedule_items.findOne(id).exec()
-		const target = getDocItem(doc)
-		const container = document.getElementById(this.id)
+		const doc = (await $db.schedule_items.findOne(id).exec())!
+		const target = getDocItem(doc)!
+		const container = document.getElementById(this.id)!
 
 		this.changeView(target.type)
 		this.changeCurrent(dayjs(target.start_time))
@@ -544,7 +547,7 @@ export default class Index {
 
 	watchSetting() {
 		this.setting_watcher = getQuerySetting(this.id).$.subscribe(setting => {
-			const doc_setting = getDocItem(setting)
+			const doc_setting = getDocItem(setting!)!
 			const current_setting = JSON.parse(doc_setting.setting)
 			const prev_setting = $copy(this.setting)
 
@@ -569,8 +572,8 @@ export default class Index {
 		this.stopWatchTimelineAngles()
 		this.stopWatchCalendarDays()
 
-		const start_time = this.days.at(0).value.startOf('day')
-		const end_time = this.days.at(-1).value.endOf('day')
+		const start_time = this.days.at(0)!.value.startOf('day')
+		const end_time = this.days.at(-1)!.value.endOf('day')
 
 		const selector: MangoQuerySelector<Schedule.Item> = {}
 
@@ -588,9 +591,9 @@ export default class Index {
 		).$.subscribe(doc => {
 			if (this.disable_watcher) return
 
-			const items = getDocItemsData(doc)
+			const items = getDocItemsData(doc) as Schedule.CalendarDay
 			const now = dayjs()
-			const target = this.days.map(_ => [])
+			const target = this.days.map(_ => []) as Schedule.CalendarDays
 
 			items.forEach(item => {
 				const start_time = dayjs(item.start_time)
@@ -607,7 +610,7 @@ export default class Index {
 				}
 
 				if (index !== -1) {
-					target[index].push(item as Schedule.CalendarItem)
+					target[index].push(item)
 				} else {
 					target[index] = []
 				}
@@ -621,7 +624,7 @@ export default class Index {
 		if (!this.calendar_days_watcher) return
 
 		this.calendar_days_watcher.unsubscribe()
-		this.calendar_days_watcher = null
+		this.calendar_days_watcher = null as unknown as Index['calendar_days_watcher']
 	}
 
 	watchTimelineAngles() {
@@ -630,8 +633,8 @@ export default class Index {
 
 		const now = dayjs()
 		const begin = this.days[0].value.startOf('day')
-		const view_start_time = this.days.at(0).value.startOf('day')
-		const view_end_time = this.days.at(-1).value.endOf(this.scale !== 'year' ? 'day' : 'year')
+		const view_start_time = this.days.at(0)!.value.startOf('day')
+		const view_end_time = this.days.at(-1)!.value.endOf(this.scale !== 'year' ? 'day' : 'year')
 
 		const selector: MangoQuerySelector<Schedule.Item> = {}
 
@@ -689,7 +692,7 @@ export default class Index {
 
 				item['past'] = now.valueOf() >= item.end_time
 
-				target[item.timeline_angle_row_id].push(item)
+				target[item.timeline_angle_row_id!].push(item)
 			})
 
 			this.timeline_rows = target
@@ -700,7 +703,7 @@ export default class Index {
 		if (!this.timeline_rows_watcher) return
 
 		this.timeline_rows_watcher.unsubscribe()
-		this.timeline_rows_watcher = null
+		this.timeline_rows_watcher = null as unknown as Index['timeline_rows_watcher']
 	}
 
 	on() {

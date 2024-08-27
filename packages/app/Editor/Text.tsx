@@ -40,7 +40,7 @@ const Index = (props: IPropsText) => {
 		contentEditable: <ContentEditable />,
 		text_mode: !linebreak,
 		ErrorBoundary: LexicalErrorBoundary
-	}
+	} as any
 
 	if (placeholder) {
 		props_rich_text['placeholder'] = <Placeholder className={placeholder_classname} placeholder={placeholder} />

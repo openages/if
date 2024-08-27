@@ -16,8 +16,8 @@ type CustomTagProps = {
 
 const Index = (tags: Required<IPropsInput['tags']>, options: { useByTodo?: boolean }) => (props: CustomTagProps) => {
 	const { value, onClose } = props
-	const { text, color } = tags.find(item => item.id === value) || {}
-	const { bg_color, text_color } = useTagColor(color)
+	const { text, color } = tags!.find(item => item.id === value) || {}
+	const { bg_color, text_color } = useTagColor(color!)
 
 	const onPreventMouseDown = useMemoizedFn((e: React.MouseEvent<HTMLSpanElement>) => {
 		e.preventDefault()

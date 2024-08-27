@@ -27,9 +27,9 @@ export default (args: HookArgs) => {
 		if (textContent?.length > max_length) {
 			textContent = textContent.slice(0, max_length)
 
-			input.current.textContent = textContent
+			input.current!.textContent = textContent
 
-			input.current.blur()
+			input.current!.blur()
 
 			update(textContent)
 
@@ -48,7 +48,7 @@ export default (args: HookArgs) => {
 		() => {
 			setCompositing(false)
 
-			updateValue(input.current.textContent)
+			updateValue(input.current!.textContent!)
 		},
 		{ target: input }
 	)

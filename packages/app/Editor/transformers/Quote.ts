@@ -4,15 +4,16 @@ import { $convertFromMarkdownString, $convertToMarkdownString } from '../utils'
 import transformers from './'
 
 import type { ElementTransformer } from '@lexical/markdown'
+import type { LexicalNode } from 'lexical'
 
 export default {
 	type: 'element',
 	regExp: /^>\s/,
 	dependencies: [QuoteNode],
-	export(node: QuoteNode) {
+	export(node: LexicalNode) {
 		if (!$isQuoteNode(node)) return null
 
-		const res = $convertToMarkdownString(transformers, node, true)
+		const res = $convertToMarkdownString(transformers, node as QuoteNode, true)
 
 		const lines = res.split('\n')
 		const output = []

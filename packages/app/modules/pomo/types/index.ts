@@ -1,6 +1,6 @@
-import { Pomo } from '@/types'
+import type { Pomo } from '@/types'
 
-import Model from '../model'
+import type Model from '../model'
 
 export interface IProps {
 	id: string

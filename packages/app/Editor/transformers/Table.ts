@@ -14,6 +14,7 @@ import { $convertFromMarkdownString, $convertToMarkdownString } from '../utils'
 import transformers from './'
 
 import type { ElementTransformer } from '@lexical/markdown'
+import type { LexicalNode } from 'lexical'
 
 const TABLE_ROW_REG_EXP = /^(?:\|)(.+)(?:\|)\s?$/
 const TABLE_ROW_DIVIDER_REG_EXP = /^(\| ?:?-*:? ?)+\|\s?$/
@@ -46,15 +47,16 @@ export default {
 	type: 'element',
 	regExp: TABLE_ROW_REG_EXP,
 	dependencies: [TableNode, TableRowNode, TableCellNode],
-	export: (node: TableNode) => {
-		if (!$isTableNode(node)) return null
+	export: (_node: LexicalNode) => {
+		if (!$isTableNode(_node)) return null
 
+		const node = _node as TableNode
 		const output = [] as Array<string>
 		const rows = node.getChildren() as Array<TableRowNode>
-		const cols = node.__cols
+		const cols = node.__cols!
 
 		rows.forEach((row, row_index) => {
-			const row_output = []
+			const row_output = [] as Array<string>
 			const cells = row.getChildren() as Array<TableCellNode>
 
 			cells.forEach(cell => {
@@ -108,9 +110,9 @@ export default {
 					const target = table.getWritable()
 
 					if (arr.at(0) === ':' && arr.at(-1) === ':') {
-						target.__cols[index] = { align: 'center' }
+						target.__cols![index] = { align: 'center' }
 					} else if (arr.at(-1) === ':') {
-						target.__cols[index] = { align: 'right' }
+						target.__cols![index] = { align: 'right' }
 					}
 				}
 			})

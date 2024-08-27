@@ -2,13 +2,16 @@ import NavigationNode from '../plugins/Navigation/Node'
 import { $isNavigationNode } from '../plugins/Navigation/utils'
 
 import type { ElementTransformer } from '@lexical/markdown'
+import type { LexicalNode } from 'lexical'
 
 export default {
 	type: 'element',
 	regExp: new RegExp(''),
 	dependencies: [NavigationNode],
-	export(node: NavigationNode) {
-		if (!$isNavigationNode(node)) return
+	export(_node: LexicalNode) {
+		if (!$isNavigationNode(_node)) return
+
+		const node = _node as NavigationNode
 
 		let max_value = 7
 

@@ -19,11 +19,11 @@ const Index = (props: IPropsLinkEditor) => {
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
-	const ref = useRef()
+	const ref = useRef(null)
 	const position = $copy(x.position)
 
 	useLayoutEffect(() => {
-		x.init(id, editor, show_on_top)
+		x.init(id, editor, show_on_top!)
 
 		return () => x.off()
 	}, [id, editor, show_on_top])

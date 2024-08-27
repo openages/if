@@ -6,7 +6,7 @@ import type { RegisteredNodes, InternalSerializedNode } from '@/Editor/types'
 import type { NodeMap } from 'lexical'
 
 const Index = (json: InternalSerializedNode, register_node_map: RegisteredNodes, update_node_map?: NodeMap) => {
-	const node_registed = register_node_map.get(json.type)
+	const node_registed = register_node_map.get(json.type)!
 	const node = node_registed.klass.importJSON(json, update_node_map ? true : false)
 	const children = json.children
 

@@ -1,9 +1,9 @@
 import { useMemoizedFn } from 'ahooks'
 import { debounce } from 'lodash-es'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default (callback: () => void) => {
-	const [node, setRef] = useState<HTMLDivElement>(null)
+	const [node, setRef] = useState<HTMLDivElement>()
 
 	const handler = useMemoizedFn(() => {
 		if (!node) return

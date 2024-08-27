@@ -25,13 +25,13 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 
 		const { src, width, height, alt, align, object_fit, inline } = props
 
-		this.__src = src
-		this.__width = width
-		this.__height = height
-		this.__alt = alt
+		this.__src = src!
+		this.__width = width!
+		this.__height = height!
+		this.__alt = alt!
 		this.__align = align || 'center'
 		this.__object_fit = object_fit
-		this.__inline = inline
+		this.__inline = inline!
 	}
 
 	static getType() {
@@ -58,7 +58,7 @@ export default class ImageNode extends DecoratorNode<JSX.Element> {
 	static importJSON(serializedNode: SerializedImageNode, update?: boolean) {
 		const node = $createImageNode(serializedNode)
 
-		if (!update) $setImportNode(serializedNode.node_key, node)
+		if (!update) $setImportNode(serializedNode.node_key!, node)
 
 		return node
 	}

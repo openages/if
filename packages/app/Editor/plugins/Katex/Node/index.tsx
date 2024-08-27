@@ -21,7 +21,7 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 		const { value, inline } = props
 
 		this.__value = value
-		this.__inline = inline
+		this.__inline = inline!
 	}
 
 	static getType() {
@@ -60,7 +60,7 @@ export default class KatexNode extends DecoratorNode<JSX.Element> {
 	static importJSON(serializedNode: SerializedKatexNode, update?: boolean) {
 		const node = $createKatexNode(serializedNode)
 
-		if (!update) $setImportNode(serializedNode.node_key, node)
+		if (!update) $setImportNode(serializedNode.node_key!, node)
 
 		return node
 	}

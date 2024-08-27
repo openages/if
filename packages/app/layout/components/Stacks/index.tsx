@@ -26,7 +26,7 @@ const Index = (props: IPropsStacks) => {
 		observe,
 		unobserve
 	} = props
-	const [drag_view, setDragView] = useState<{ column_index: number; view_index: number; view: Stack.View }>(null)
+	const [drag_view, setDragView] = useState<{ column_index: number; view_index: number; view: Stack.View }>(null!)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
 
 	useEffect(() => {
@@ -36,14 +36,14 @@ const Index = (props: IPropsStacks) => {
 	}, [])
 
 	const onDragStart = useMemoizedFn(({ active }: DragStartEvent) => {
-		const column_index = active.data.current.column as number
-		const view_index = active.data.current.view as number
+		const column_index = active.data.current!.column as number
+		const view_index = active.data.current!.view as number
 
 		setDragView({ column_index, view_index, view: columns[column_index].views[view_index] })
 	})
 
 	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
-		setDragView(null)
+		setDragView(null!)
 
 		move({ active, over })
 	})

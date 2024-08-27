@@ -40,9 +40,9 @@ import type { LexicalEditor, LexicalNode } from 'lexical'
 
 @injectable()
 export default class Index {
-	editor = null as LexicalEditor
+	editor = null as unknown as LexicalEditor
 
-	unregister = null as () => void
+	unregister = null as unknown as () => void
 
 	constructor(public utils: Utils) {}
 
@@ -141,10 +141,10 @@ export default class Index {
 		}
 
 		const anchor = selection.anchor.getNode()
-		const node = anchor.getParent()
+		const node = anchor.getParent()!
 
 		if ($isToggleHeadNode(node) && $isToggleNode(anchor.getTopLevelElement())) {
-			removeAndCheck(anchor.getTopLevelElement())
+			removeAndCheck(anchor.getTopLevelElement()!)
 
 			return true
 		}
@@ -156,7 +156,7 @@ export default class Index {
 				node.append($createParagraphNode())
 			}
 
-			node.getPreviousSibling().selectEnd()
+			node.getPreviousSibling()!.selectEnd()
 
 			return true
 		}
@@ -200,8 +200,8 @@ export default class Index {
 
 				window.requestAnimationFrame(() =>
 					this.editor.update(() => {
-						children.at(-1).remove()
-						children.at(-2).remove()
+						children.at(-1)!.remove()
+						children.at(-2)!.remove()
 
 						p.selectEnd()
 					})
@@ -327,7 +327,7 @@ export default class Index {
 
 		this.unregister()
 
-		this.unregister = null
+		this.unregister = null as unknown as () => void
 	}
 
 	on() {

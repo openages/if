@@ -28,7 +28,7 @@ const Index = (props: IPropsCalendarViewDay) => {
 		changeTimeBlockLength
 	} = props
 	const { show } = useContextMenu({ id: 'timeblock_context_menu' })
-	const [signal, setSignal] = useState(null)
+	const [signal, setSignal] = useState<IPropsCalendarViewDay['move_item'] | null>(null)
 	const { setNodeRef } = useDroppable({ id: index })
 
 	const clearSignal = useMemoizedFn(v => {
@@ -57,7 +57,7 @@ const Index = (props: IPropsCalendarViewDay) => {
 		let length = 3
 		let overflow = false
 
-		const start = getStartByY(container.current, e.clientY)
+		const start = getStartByY(container.current, e.clientY)!
 
 		if (start + 3 >= 72) {
 			length = 72 - start
@@ -68,7 +68,7 @@ const Index = (props: IPropsCalendarViewDay) => {
 
 		if (!target_length) return
 
-		setSignal({ start, length: target_length })
+		setSignal({ start, length: target_length } as IPropsCalendarViewDay['move_item'])
 		show({ event: e, props: { index, start, length: target_length, overflow } })
 	})
 

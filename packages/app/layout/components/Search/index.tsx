@@ -25,7 +25,7 @@ const Index = (props: IPropsSearch) => {
 		clearSearchHistory
 	} = props
 	const { t } = useTranslation()
-	const ref = useRef(null)
+	const ref = useRef<HTMLInputElement>(null)
 	const focusing = useFocusWithin(ref)
 	const [compositing, setCompositing] = useState(false)
 	const [text, setText] = useState('')
@@ -36,8 +36,8 @@ const Index = (props: IPropsSearch) => {
 		'compositionend',
 		() => {
 			setCompositing(false)
-			searchByInput(ref.current?.value)
-			setText(ref.current?.value)
+			searchByInput(ref.current?.value!)
+			setText(ref.current?.value!)
 		},
 		{ target: ref }
 	)

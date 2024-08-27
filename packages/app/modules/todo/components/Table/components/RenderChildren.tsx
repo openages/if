@@ -34,12 +34,12 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['children']>) => {
 							className='progress'
 							size='small'
 							showInfo={false}
-							steps={value.length}
-							percent={(checked_children.length * 100) / value.length}
+							steps={value!.length}
+							percent={(checked_children!.length * 100) / value!.length}
 						></Progress>
 					)
 				)
-				.otherwise(() => `${checked_children?.length}/${value.length}`)}
+				.otherwise(() => `${checked_children?.length}/${value!.length}`)}
 		</div>
 	)
 }

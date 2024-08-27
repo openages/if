@@ -23,15 +23,15 @@ import type { MouseEvent } from 'react'
 
 @injectable()
 export default class Index {
-	editor = null as LexicalEditor
+	editor = null as unknown as LexicalEditor
 	key = ''
-	ref = null as HTMLElement
+	ref = null as unknown as HTMLElement
 
 	selected = false
 
-	setSelected = null as (v: boolean) => void
-	clearSelection = null as () => void
-	unregister = null as () => void
+	setSelected = null as unknown as (v: boolean) => void
+	clearSelection = null as unknown as () => void
+	unregister = null as unknown as () => void
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(
@@ -57,7 +57,7 @@ export default class Index {
 	) {
 		this.editor = editor
 		this.key = key
-		this.ref = this.editor.getElementByKey(this.key)
+		this.ref = this.editor.getElementByKey(this.key)!
 
 		this.setSelected = setSelected
 		this.clearSelection = clearSelection
@@ -65,7 +65,7 @@ export default class Index {
 		this.on()
 	}
 
-	onClick(e: MouseEvent<HTMLSpanElement>) {
+	onClick(e: MouseEvent<Element>) {
 		if (this.selected) return true
 
 		if (e.target === this.ref || this.ref.contains(e.target as HTMLElement)) {
@@ -81,7 +81,7 @@ export default class Index {
 	onEnter() {
 		if (!this.selected) return false
 
-		const node = $getNodeByKey(this.key)
+		const node = $getNodeByKey(this.key)!
 		const p = $createParagraphNode()
 
 		node.insertAfter(p)
@@ -92,7 +92,7 @@ export default class Index {
 	}
 
 	onDelete(e: KeyboardEvent | MouseEvent) {
-		const node = $getNodeByKey(this.key)
+		const node = $getNodeByKey(this.key)!
 
 		if ((e as MouseEvent).nativeEvent instanceof PointerEvent) {
 			e.preventDefault()
@@ -142,7 +142,7 @@ export default class Index {
 
 		this.unregister()
 
-		this.unregister = null
+		this.unregister = null as unknown as () => void
 	}
 
 	on() {

@@ -15,10 +15,10 @@ const Index = (props: IPropsKatex) => {
 	const { value, inline, node_key } = props
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
-	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(node_key)
+	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(node_key!)
 
 	useLayoutEffect(() => {
-		x.block.init(editor, node_key, setSelected, clearSelection)
+		x.block.init(editor, node_key!, setSelected, clearSelection)
 
 		return () => x.block.off()
 	}, [editor, node_key, setSelected, clearSelection])

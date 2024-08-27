@@ -29,7 +29,7 @@ const Index = () => {
 		if (active.id === over.id) return
 
 		global.app.update(
-			arrayMove(app_modules, active.data.current.index as number, over.data.current.index as number)
+			arrayMove(app_modules, active.data.current!.index as number, over.data.current!.index as number)
 		)
 	})
 

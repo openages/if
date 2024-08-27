@@ -28,13 +28,13 @@ export default (args: HookArgs) => {
 
 	const setOpen = useMemoizedFn((v: boolean) => {
 		_setOpen(v)
-		handleOpenItem(id, v)
+		handleOpenItem!(id, v)
 	})
 
 	const onCheck = useMemoizedFn(() => {
 		if (status === 'closed') return
 
-		check({ index, dimension_id, status: status === 'unchecked' ? 'checked' : 'unchecked' })
+		check!({ index, dimension_id, status: status === 'unchecked' ? 'checked' : 'unchecked' })
 	})
 
 	const updateTags = useMemoizedFn(v => {
@@ -69,7 +69,7 @@ export default (args: HookArgs) => {
 		if (status !== 'unchecked') return
 		if (kanban_mode === 'tag') return
 
-		makeLinkLine({ active_id: id, y: clientY })
+		makeLinkLine!({ active_id: id, y: clientY })
 	})
 
 	const toggleChildren = useMemoizedFn(() => {
@@ -86,7 +86,7 @@ export default (args: HookArgs) => {
 		if (e.key === 'Enter') {
 			e.preventDefault()
 
-			insert({ index, dimension_id })
+			insert!({ index, dimension_id })
 		}
 
 		if (kanban_mode === 'tag') return
@@ -94,7 +94,7 @@ export default (args: HookArgs) => {
 		if (e.key === 'Tab') {
 			e.preventDefault()
 
-			tab({ type: 'in', index, dimension_id })
+			tab!({ type: 'in', index, dimension_id })
 		}
 	})
 

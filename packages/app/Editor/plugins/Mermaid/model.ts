@@ -11,9 +11,9 @@ import type { LexicalEditor } from 'lexical'
 import type { IPropsMermaid } from './types'
 
 export default class Index {
-	editor = null as LexicalEditor
+	editor = null as unknown as LexicalEditor
 
-	unregister = null as () => void
+	unregister = null as unknown as () => void
 
 	constructor() {
 		makeObservable(this, {}, { autoBind: true })

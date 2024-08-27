@@ -5,7 +5,7 @@ import { GlobalModel } from '@/context/app'
 
 @injectable()
 export default class Index {
-	ref = null as HTMLElement
+	ref = null as unknown as HTMLElement
 
 	active = 'global'
 	mini = false

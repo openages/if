@@ -34,7 +34,7 @@ const Index = (props: IPropsSettingsModal) => {
 		visible: visible_settings_modal,
 		info: setting,
 		IconEditCenter: true,
-		getContainer: useMemoizedFn(() => document.getElementById(id)),
+		getContainer: useMemoizedFn(() => document.getElementById(id)!),
 		onClose: closeSettingsModal,
 		onValuesChange: updateSetting
 	}

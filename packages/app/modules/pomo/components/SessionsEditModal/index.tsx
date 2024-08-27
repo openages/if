@@ -21,7 +21,7 @@ const Index = (props: IPropsSessionsEditModal) => {
 
 		const session = data.sessions[data.index]
 
-		scrollIntoView(document.getElementById(session.id), {
+		scrollIntoView(document.getElementById(session.id)!, {
 			behavior: 'smooth',
 			block: 'center'
 		})
@@ -31,7 +31,7 @@ const Index = (props: IPropsSessionsEditModal) => {
 		if (!over?.id) return
 		if (active.id === over.id) return
 
-		move(active.data.current.index as number, over.data.current.index as number)
+		move(active.data.current!.index as number, over.data.current!.index as number)
 	})
 
 	const getTimeline = useMemoizedFn((index: number) => {

@@ -1,6 +1,6 @@
-import { useMemoizedFn } from 'ahooks'
-import { Input } from 'antd'
-import { useMemo } from 'react'
+import { useMemoizedFn, useToggle } from 'ahooks'
+import { Button, Input } from 'antd'
+import { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import Avatar, { genConfig } from 'react-nice-avatar'
 
@@ -9,20 +9,24 @@ import { CaretDoubleUp, Power } from '@phosphor-icons/react'
 import styles from './index.css'
 
 import type { ChangeEvent } from 'react'
-
 import type { IPropsUser } from '../../types'
+import type { TextAreaRef } from 'antd/es/input/TextArea'
+
+const { TextArea } = Input
 
 const Index = (props: IPropsUser) => {
-	const { user, temp_user, edit_mode, updateTempUser, signout } = props
+	const { user, temp_user, edit_mode, updateTempUser, signout, activate } = props
 	const { name, email, avatar } = user
 	const { name: temp_name, avatar: temp_avatar } = temp_user
 	const { t } = useTranslation()
+	const [visible_activate, { toggle }] = useToggle(false)
+	const ref_input_activate = useRef<TextAreaRef>(null)
 
 	const avatar_config = useMemo(() => JSON.parse(temp_avatar ?? avatar), [avatar, temp_avatar])
 
 	const changeName = useMemoizedFn((e: ChangeEvent<HTMLInputElement>) => updateTempUser({ name: e.target.value }))
-
 	const changeAvatar = useMemoizedFn(() => updateTempUser({ avatar: JSON.stringify(genConfig()) }))
+	const onActivate = useMemoizedFn(() => activate(ref_input_activate.current?.resizableTextArea?.textArea?.value!))
 
 	return (
 		<div className={$cx('w_100 h_100 flex flex_column align_center justify_center relative', styles._local)}>
@@ -52,17 +56,33 @@ const Index = (props: IPropsUser) => {
 			</Choose>
 			<span className='email'>{email}</span>
 			<If condition={!edit_mode}>
-				<div className='actions_wrap w_100 flex justify_center align_center absolute'>
-					<div
-						className='action_item flex flex_column align_center justify_center clickable'
-						onClick={signout}
-					>
-						<Power className='icon'></Power>
-						<span className='text'>{t('app.auth.signout')}</span>
-					</div>
-					<div className='action_item flex flex_column align_center justify_center clickable'>
-						<CaretDoubleUp className='icon'></CaretDoubleUp>
-						<span className='text'>{t('app.auth.activate')}</span>
+				<div className='actions_wrap w_100 flex flex_column align_center absolute'>
+					<If condition={visible_activate}>
+						<div className='activate_wrap flex flex_column'>
+							<TextArea className='input_activate' ref={ref_input_activate}></TextArea>
+							<Button className='btn_activate' onClick={onActivate}>
+								{t('common.confirm')}
+							</Button>
+						</div>
+					</If>
+					<div className='action_items flex w_100 flex justify_center align_center'>
+						<div
+							className='action_item flex flex_column align_center justify_center clickable'
+							onClick={signout}
+						>
+							<Power className='icon'></Power>
+							<span className='text'>{t('app.auth.signout')}</span>
+						</div>
+						<div
+							className={$cx(
+								'action_item flex flex_column align_center justify_center clickable',
+								visible_activate && 'active'
+							)}
+							onClick={toggle}
+						>
+							<CaretDoubleUp className='icon'></CaretDoubleUp>
+							<span className='text'>{t('app.auth.activate')}</span>
+						</div>
 					</div>
 				</div>
 			</If>

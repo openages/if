@@ -67,7 +67,10 @@ export default {
                         "type": "number"
                   },
                   "current": {
-                        "type": "string",
+                        "type": [
+                              "string",
+                              "null"
+                        ],
                         "enum": [
                               "work",
                               "break",

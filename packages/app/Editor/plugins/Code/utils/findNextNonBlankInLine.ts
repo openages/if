@@ -13,7 +13,7 @@ export default (anchor: LexicalNode, offset: number) => {
 
 	while (true) {
 		if (!$isCodeTextNode(node) || node_offset === node_text_content_size) {
-			node = node.getNextSibling()
+			node = node.getNextSibling()!
 			if (node === null || $isLineBreakNode(node)) {
 				return null
 			}

@@ -43,12 +43,12 @@ const Index = (props: IPropsInput) => {
 	}, [loading])
 
 	const props_remind: IPropsDateTime = {
-		value: (input as Todo.Todo).remind_time,
+		value: (input as Todo.Todo).remind_time!,
 		onChange: useMemoizedFn(v => setInput(input => ({ ...input, remind_time: v })))
 	}
 
 	const props_deadline: IPropsDateTime = {
-		value: (input as Todo.Todo).end_time,
+		value: (input as Todo.Todo).end_time!,
 		Icon: Calendar,
 		onChange: useMemoizedFn(v => setInput(input => ({ ...input, end_time: v })))
 	}
@@ -105,10 +105,10 @@ const Index = (props: IPropsInput) => {
 								setInput(target)
 							}}
 						></Select>
-						<If condition={Boolean(tags) && tags?.length && input.type === 'todo'}>
+						<If condition={Boolean(tags) && !!tags?.length && input.type === 'todo'}>
 							<TagSelect
-								options={tags}
-								value={(input as Todo.Todo).tag_ids}
+								options={tags!}
+								value={(input as Todo.Todo).tag_ids!}
 								onChange={v => {
 									setInput(input => ({ ...input, tag_ids: v }))
 								}}

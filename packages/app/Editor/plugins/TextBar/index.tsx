@@ -19,7 +19,7 @@ const Index = (props: IPropsTextBar) => {
 	const position = $copy(x.position)
 
 	useLayoutEffect(() => {
-		x.init(id, editor, md)
+		x.init(id, editor, md!)
 
 		return () => x.off()
 	}, [id, editor, md])
@@ -35,7 +35,7 @@ const Index = (props: IPropsTextBar) => {
 	}, [x.visible])
 
 	const props_formats: IPropsFormats = {
-		md,
+		md: md!,
 		only_text,
 		heading_type: x.heading_type,
 		list_type: x.list_type,

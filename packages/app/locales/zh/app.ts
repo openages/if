@@ -16,6 +16,7 @@ export default {
 		email_exist: '该邮箱已注册账号，无法重复注册',
 		verify_code_error: '验证码错误',
 		db_insert_error: '数据库添加用户失败',
+		db_update_error: '数据库更新用户失败',
 		signup_success: '注册成功',
 		user_not_exist: '用户不存在',
 		verify_password_error: '密码错误',
@@ -31,7 +32,8 @@ export default {
 			error: '失败'
 		},
 		signout: '注销',
-		activate: '激活'
+		activate: '激活',
+		activate_success: '激活成功'
 	},
 	search: {
 		to_navigate: '切换',

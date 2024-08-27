@@ -115,7 +115,7 @@ const Index = (props: IPropsDetail) => {
 
 	const prev = useMemoizedFn(() => {
 		setCurrentDetailIndex({
-			id: prev_id,
+			id: prev_id!,
 			index: index - 1,
 			dimension_id
 		})
@@ -123,7 +123,7 @@ const Index = (props: IPropsDetail) => {
 
 	const next = useMemoizedFn(() => {
 		setCurrentDetailIndex({
-			id: next_id,
+			id: next_id!,
 			index: index + 1,
 			dimension_id
 		})
@@ -150,7 +150,7 @@ const Index = (props: IPropsDetail) => {
 		width: 540,
 		minHeight: '72vh',
 		onCancel: useMemoizedFn(() => setVisibleRemarkModal(false)),
-		getContainer: useMemoizedFn(() => document.getElementById(container_id))
+		getContainer: useMemoizedFn(() => document.getElementById(container_id)!)
 	}
 
 	return (
@@ -160,7 +160,7 @@ const Index = (props: IPropsDetail) => {
 				styles._local,
 				breakpoint && styles.breakpoint,
 				breakpoint === 390 && styles.narrow,
-				breakpoint && 'breakpoint'
+				!!breakpoint && 'breakpoint'
 			)}
 			open={visible_detail_modal}
 			mask={Boolean(breakpoint)}
@@ -241,7 +241,7 @@ const Index = (props: IPropsDetail) => {
 								<TagSelect
 									className='tag_select'
 									options={tags}
-									value={tag_ids}
+									value={tag_ids!}
 									useByDetail
 									onChange={updateTags}
 								></TagSelect>
@@ -269,7 +269,7 @@ const Index = (props: IPropsDetail) => {
 							<div className='value_wrap flex align_center'>
 								<DateTime
 									useByDetail
-									value={remind_time}
+									value={remind_time!}
 									onChange={updateRemind}
 								></DateTime>
 							</div>
@@ -287,7 +287,7 @@ const Index = (props: IPropsDetail) => {
 							<div className='value_wrap flex align_center'>
 								<DateTime
 									useByDetail
-									value={end_time}
+									value={end_time!}
 									onChange={updateDeadline}
 								></DateTime>
 							</div>
@@ -346,7 +346,7 @@ const Index = (props: IPropsDetail) => {
 					<div
 						className={$cx(
 							'detail_children_wrap w_100 border_box flex flex_column relative',
-							item?.children?.length && 'has_children'
+							!!item?.children?.length && 'has_children'
 						)}
 					>
 						{!item?.children?.length ? (

@@ -9,6 +9,7 @@ import { container } from 'tsyringe'
 import { LazyElement, LoadingCircle, Modal } from '@/components'
 import { useStackSelector } from '@/context/stack'
 import { $getMatchingParent } from '@/Editor/utils'
+import { getObjectKeys } from '@/utils'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useBasicTypeaheadTriggerMatch, LexicalTypeaheadMenuPlugin } from '@lexical/react/LexicalTypeaheadMenuPlugin'
 
@@ -25,7 +26,6 @@ import type Option from './option'
 import type { IPropsMenu, IProps } from './types'
 import type { IPropsModal } from '../../types'
 import type { TypeaheadMenuPluginProps } from '@lexical/react/LexicalTypeaheadMenuPlugin'
-
 const Index = (props: IProps) => {
 	const { text_mode, linebreak } = props
 	const [x] = useState(() => container.resolve(Model))
@@ -34,14 +34,14 @@ const Index = (props: IProps) => {
 	const { t } = useTranslation()
 
 	useLayoutEffect(() => {
-		x.init(editor, text_mode)
+		x.init(editor, text_mode!)
 
 		return () => x.off()
 	}, [editor, text_mode])
 
 	const showModal = useMemoizedFn(x.show)
 	const closeModal = useMemoizedFn(x.close)
-	const setQuery = useMemoizedFn((v: Model['query']) => (x.query = v))
+	const setQuery = useMemoizedFn((v: Model['query'] | null) => v && (x.query = v))
 	const onSelectOption = useMemoizedFn(x.onSelectOption)
 	const checkForTriggerMatch = useBasicTypeaheadTriggerMatch('/', { minLength: 0 })
 
@@ -98,7 +98,7 @@ const Index = (props: IProps) => {
 				all_options: x.options,
 				latest_blocks: target_latest,
 				options: target,
-				selected_index: selectedIndex,
+				selected_index: selectedIndex!,
 				text_mode,
 				selectOptionAndCleanUp,
 				setHighlightedIndex
@@ -108,7 +108,7 @@ const Index = (props: IProps) => {
 		}
 	)
 
-	const getModalContainer = useMemoizedFn(() => document.getElementById(id))
+	const getModalContainer = useMemoizedFn(() => document.getElementById(id)!)
 
 	const modal_title = useMemo(() => {
 		if (x.modal === 'Ref') return
@@ -118,13 +118,15 @@ const Index = (props: IProps) => {
 		)}${t(`editor.name.${x.modal}`)}`
 	}, [x.modal, x.node_key])
 
+	const width = useMemo(() => config[x.modal as keyof typeof config]?.width || 300, [x.modal])
+
 	return (
 		<Fragment>
 			<Modal
 				bodyClassName={$cx(styles.modal, x.modal && styles[x.modal])}
 				open={x.modal !== ('' as Model['modal'])}
 				title={modal_title}
-				width={config[x.modal]?.width || 300}
+				width={width}
 				maskClosable
 				onCancel={closeModal}
 				getContainer={getModalContainer}

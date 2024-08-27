@@ -204,7 +204,6 @@ const Index = (props: IPropsTable) => {
 		...table_pagination,
 		showSizeChanger: true,
 		pageSizeOptions: [15, 30, 60, 120, 180, 300],
-		// @ts-ignore
 		showTotal: useMemoizedFn(total => t('common.total', { counts: total })),
 		onChange: onTablePageChange
 	} as PaginationProps

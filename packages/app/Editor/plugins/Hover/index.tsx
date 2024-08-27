@@ -23,13 +23,13 @@ const Index = (props: IPropsCommon) => {
 	const id = useStackSelector(v => v.id)
 
 	useLayoutEffect(() => {
-		x.init(id, editor, md)
+		x.init(id, editor, md!)
 
 		return () => x.off()
 	}, [id, editor, md])
 
 	const options = useMemo(() => {
-		if (!md || (md && x.is_heading)) return options_heading.concat(options_common)
+		if (!md || (md && x.is_heading)) return options_heading!.concat(options_common!)
 
 		return options_common
 	}, [md, x.is_heading])
@@ -45,7 +45,7 @@ const Index = (props: IPropsCommon) => {
 	const Content = (
 		<Fragment>
 			{x.visible_handler && (
-				<ConfigProvider getPopupContainer={() => document.getElementById(id)}>
+				<ConfigProvider getPopupContainer={() => document.getElementById(id)!}>
 					<Dropdown
 						destroyPopupOnHide
 						trigger={['click']}
@@ -101,7 +101,7 @@ const Index = (props: IPropsCommon) => {
 		</Fragment>
 	)
 
-	return createPortal(Content, document.querySelector(`#${id} .__editor_container`))
+	return createPortal(Content, document.querySelector(`#${id} .__editor_container`)!)
 }
 
 export default new $app.handle(Index).by(observer).by($app.memo).get()

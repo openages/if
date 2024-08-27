@@ -29,7 +29,7 @@ const Index = (
 	direction: Direction,
 	table_node: TableNode,
 	table_observer: TableObserver
-) => {
+): boolean => {
 	if ((direction === 'up' || direction === 'down') && isPickerInView(editor)) return false
 
 	const selection = $getSelection() as TableSelection
@@ -140,7 +140,7 @@ const Index = (
 			const cords = table_node.getCordsFromCellNode(anchor_cell_node, table_observer.table)
 
 			if (event.shiftKey) {
-				const cell = table_node.getDOMCellFromCords(cords.x, cords.y, table_observer.table)
+				const cell = table_node.getDOMCellFromCords(cords.x, cords.y, table_observer.table)!
 
 				table_observer.setAnchorCellForSelection(cell)
 				table_observer.setFocusCellForSelection(cell)
@@ -171,7 +171,7 @@ const Index = (
 
 		const grid = getTable(table_element)
 		const cords_anchor = table_node.getCordsFromCellNode(anchor_cell_node, grid)
-		const anchor_cell = table_node.getDOMCellFromCords(cords_anchor.x, cords_anchor.y, grid)
+		const anchor_cell = table_node.getDOMCellFromCords(cords_anchor.x, cords_anchor.y, grid)!
 
 		table_observer.setAnchorCellForSelection(anchor_cell)
 

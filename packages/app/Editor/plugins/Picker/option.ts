@@ -21,8 +21,8 @@ export default class Index extends MenuOption {
 		const { icon, shortcut, keyboard, onSelect } = options
 
 		this.title = title
-		this.icon = icon
-		this.shortcut = shortcut
+		this.icon = icon!
+		this.shortcut = shortcut!
 		this.keyboard = keyboard
 		this.onSelect = onSelect.bind(this)
 	}

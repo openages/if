@@ -5,6 +5,7 @@ import { $createImageNode, $isImageNode } from '@/Editor/plugins/Image/utils'
 import { insertBlock } from '@/Editor/utils'
 
 import type { ElementTransformer, TextMatchTransformer } from '@lexical/markdown'
+import type { LexicalNode } from 'lexical'
 
 export const Image_text = {
 	type: 'text-match',
@@ -12,15 +13,15 @@ export const Image_text = {
 	importRegExp: /^!(?:\[([^[]*)\])(?:\(([^(]+)\))/,
 	trigger: ')',
 	dependencies: [ImageNode],
-	export(node: ImageNode) {
+	export(node: LexicalNode) {
 		if (!$isImageNode(node)) return null
 
-		return `![${node.__alt || 'img_alt'}](${node.__src})`
+		return `![${(node as ImageNode).__alt || 'img_alt'}](${(node as ImageNode).__src})`
 	},
 	replace(node, match) {
 		const [, alt, src] = match
 
-		const parent = node.getParent()
+		const parent = node.getParent()!
 		const target = $createImageNode({ src, alt })
 		const p = $createParagraphNode()
 
@@ -35,10 +36,10 @@ export const Image_element = {
 	type: 'element',
 	regExp: /^!(?:\[([^[]*)\])(?:\(([^(]+)\))$/,
 	dependencies: [ImageNode],
-	export(node: ImageNode) {
+	export(node: LexicalNode) {
 		if (!$isImageNode(node)) return null
 
-		return `![${node.__alt || 'img_alt'}](${node.__src})`
+		return `![${(node as ImageNode).__alt || 'img_alt'}](${(node as ImageNode).__src})`
 	},
 	replace(_parent, _children, match) {
 		const [, alt, src] = match

@@ -39,19 +39,19 @@ export default class Index {
 	async query() {
 		this.loading = true
 
-		const item = await this.getQuery().exec()
+		const item = (await this.getQuery().exec())!
 
 		if (!this.checkExsit(item)) return (this.loading = false)
 
-		this.data = getDocItem(item)
+		this.data = getDocItem(item)!
 		this.loading = false
 	}
 
 	watch() {
 		this.data_watcher = this.getQuery().$.subscribe(item => {
-			if (!this.checkExsit(item)) return
+			if (!this.checkExsit(item!)) return
 
-			this.data = getDocItem(item) as DirTree.Item
+			this.data = getDocItem(item!) as DirTree.Item
 		})
 	}
 

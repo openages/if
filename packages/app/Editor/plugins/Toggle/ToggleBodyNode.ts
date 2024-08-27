@@ -20,7 +20,7 @@ export default class ToggleBodyNode extends ElementNode {
 	static importDOM(): DOMConversionMap {
 		return {
 			div: (dom: HTMLElement) => {
-				if (!dom.hasAttribute('lexical-toggle-body')) return
+				if (!dom.hasAttribute('lexical-toggle-body')) return null
 
 				return {
 					conversion: convertToggleBodyElement,

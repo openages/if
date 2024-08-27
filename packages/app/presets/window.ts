@@ -11,6 +11,7 @@ import type { NotificationInstance } from 'antd/es/notification/interface'
 window.$is_dev = process.env.NODE_ENV === 'development'
 
 window.$app = {
+	// @ts-ignore
 	memo,
 	handle,
 	Event: new Emittery()

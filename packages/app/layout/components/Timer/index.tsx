@@ -11,7 +11,7 @@ const Index = () => {
 	const timer = global.timer.timer
 	const percent = timer?.percent
 	const [blink, setBlink] = useState(false)
-	const timeout = useRef<NodeJS.Timeout>(null)
+	const timeout = useRef<NodeJS.Timer>()
 
 	useEffect(() => {
 		if (percent !== 100) return

@@ -20,22 +20,22 @@ import type { Note } from '@/types'
 
 export default class Index {
 	id = ''
-	editor = null as LexicalEditor
+	editor = null as unknown as LexicalEditor
 	page_width = ''
-	container = null as HTMLElement
-	ref = null as HTMLElement
-	observer = null as ResizeObserver
+	container = null as unknown as HTMLElement
+	ref = null as unknown as HTMLElement
+	observer = null as unknown as ResizeObserver
 	items = [] as Array<TableOfContentsEntry>
 	toc = 'default' as Note.Setting['toc']
 
 	visible_mini_nav = false
 	minimize = false
 	scroll = false
-	style = null as CSSProperties
+	style = null as unknown as CSSProperties
 	visible_items = [] as Array<string>
 	active_items = [] as Array<string>
 
-	unregister = null as () => void
+	unregister = null as unknown as () => void
 
 	constructor() {
 		makeAutoObservable(
@@ -61,14 +61,14 @@ export default class Index {
 		this.id = id
 		this.editor = editor
 		this.page_width = page_width
-		this.container = document.getElementById(this.id)
+		this.container = document.getElementById(this.id)!
 
 		this.on()
 		this.getPosition()
 	}
 
 	getPosition() {
-		const editor_container = document.querySelector(`#${this.id} .__editor_container`)
+		const editor_container = document.querySelector(`#${this.id} .__editor_container`)!
 
 		const { top, right: right_container, width, height } = this.container.getBoundingClientRect()
 		const { right: right_editor_container } = editor_container.getBoundingClientRect()
@@ -95,12 +95,12 @@ export default class Index {
 		if (!this.items.length) return
 
 		this.editor.update(() => {
-			let target_top = null as number
+			let target_top = null as unknown as number
 			let target_index: number
 			let list_max_level = 6
 
-			const visible_items = []
-			const active_items = []
+			const visible_items = [] as Array<string>
+			const active_items = [] as Array<string>
 
 			const { height } = this.container.getBoundingClientRect()
 
@@ -110,7 +110,7 @@ export default class Index {
 				if (!el) return
 
 				const { top } = el.getBoundingClientRect()
-				const level = $getHeadingLevel($getNodeByKey(node_key))
+				const level = $getHeadingLevel($getNodeByKey(node_key)!)
 
 				if (level < list_max_level) {
 					list_max_level = level
@@ -134,9 +134,9 @@ export default class Index {
 				}
 			})
 
-			const prev_items = this.items.slice(0, target_index)
-			const next_items = this.items.slice(target_index)
-			const target_key = this.items[target_index][0]
+			const prev_items = this.items.slice(0, target_index!)
+			const next_items = this.items.slice(target_index!)
+			const target_key = this.items[target_index!][0]
 			const target_node = $getNodeByKey(target_key) as HeadingNode
 			const target_level = $getHeadingLevel(target_node)
 
@@ -148,7 +148,7 @@ export default class Index {
 			let has_prev_max_level = false
 
 			while (current_prev_index >= 0 && prev_items[current_prev_index]) {
-				const current_node: HeadingNode = $getNodeByKey(prev_items[current_prev_index][0])
+				const current_node: HeadingNode = $getNodeByKey(prev_items[current_prev_index][0])!
 				const current_key = current_node.getKey()
 				const current_level = $getHeadingLevel(current_node)
 
@@ -181,7 +181,7 @@ export default class Index {
 			let has_next_max_level = false
 
 			while (current_next_index < next_items.length && next_items[current_next_index]) {
-				const current_node: HeadingNode = $getNodeByKey(next_items[current_next_index][0])
+				const current_node: HeadingNode = $getNodeByKey(next_items[current_next_index][0])!
 				const current_key = current_node.getKey()
 				const current_level = $getHeadingLevel(current_node)
 
@@ -213,7 +213,7 @@ export default class Index {
 				const nav_is_scroll = this.ref.scrollHeight > this.ref.clientHeight
 
 				if (nav_is_scroll) {
-					smoothScrollIntoView(this.ref.querySelector(`.nav_item_${target_key}`), {
+					smoothScrollIntoView(this.ref.querySelector(`.nav_item_${target_key}`)!, {
 						scrollMode: 'if-needed',
 						boundary: this.ref
 					})

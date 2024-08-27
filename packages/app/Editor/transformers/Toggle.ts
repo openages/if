@@ -12,6 +12,7 @@ import transformers from './'
 import type { ElementTransformer } from '@lexical/markdown'
 import type ToggleHeadNode from '../plugins/Toggle/ToggleHeadNode'
 import type ToggleBodyNode from '../plugins/Toggle/ToggleBodyNode'
+import type { LexicalNode } from 'lexical'
 
 export const Toggle_import = {
 	type: 'element',
@@ -25,7 +26,7 @@ export const Toggle_import = {
 
 		let text = parent.getTextContent()
 
-		const [_, summary] = text.match(/<summary>(.*?)<\/summary>/)
+		const [_, summary] = text.match(/<summary>(.*?)<\/summary>/)!
 
 		text = text.replace(/<summary>(.*?)<\/summary>/, '')
 
@@ -46,10 +47,10 @@ export const Toggle_export = {
 	type: 'element',
 	regExp: new RegExp(''),
 	dependencies: [ToggleNode],
-	export(node: ToggleNode) {
+	export(node: LexicalNode) {
 		if (!$isToggleNode(node)) return null
 
-		const [_, head_node, body_node] = node.getChildren()
+		const [_, head_node, body_node] = (node as ToggleNode).getChildren()
 
 		const head_node_text = $convertToMarkdownString(transformers, head_node as ToggleHeadNode, true)
 		const body_node_text = $convertToMarkdownString(transformers, body_node as ToggleBodyNode, false)

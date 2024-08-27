@@ -172,7 +172,7 @@ export interface IPropsChildren {
 
 export interface IPropsChildrenItem {
 	sortable_props?: DndItemProps
-	item: Todo.Todo['children'][number]
+	item: Required<Todo.Todo>['children'][number]
 	index: number
 	children_index: number
 	dimension_id?: string

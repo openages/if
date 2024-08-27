@@ -14,7 +14,6 @@ const Index = (props: IPropsShadow) => {
 
 	useEffect(() => {
 		if (!nodes.length) return
-		// @ts-ignore
 		if (nodes.some(item => !item?.measured?.width || !item?.measured?.height)) return
 
 		layout(nodes)

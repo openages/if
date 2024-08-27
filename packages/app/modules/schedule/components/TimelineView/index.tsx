@@ -22,7 +22,7 @@ const Index = (props: IPropsTimelineView) => {
 		copyTimeBlock,
 		changeTimeBlockLength
 	} = props
-	const width = useSize(() => container.current, 'width') as number
+	const width = useSize(() => container.current!, 'width') as number
 	const limit = useMemo(() => (scale === 'year' ? 1 : 2), [scale])
 
 	const step = useMemo(() => {
@@ -63,8 +63,9 @@ const Index = (props: IPropsTimelineView) => {
 										timeblocks={timeline_rows?.[row_id] || []}
 										move_item={
 											move_item?.angle_index === angle_index &&
-											move_item.row_index === row_index &&
-											move_item
+											move_item.row_index === row_index
+												? move_item
+												: undefined
 										}
 										updateTimeBlock={updateTimeBlock}
 										removeTimeBlock={removeTimeBlock}

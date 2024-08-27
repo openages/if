@@ -128,6 +128,7 @@
 		"postcss-nested": "^6.2.0",
 		"react-refresh": "^0.14.2",
 		"swc-plugin-jsx-control-statements": "link:../stk/crates/swc-plugin-jsx-control-statements",
+		"ts-essentials": "^10.0.2",
 		"ts-json-schema-generator": "^2.3.0",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.5.4"

@@ -1,5 +1,4 @@
 import type Model from './model'
-import type { DirTree } from '@/types'
 
 export interface IPropsModuleTab {
 	module: Model['module']

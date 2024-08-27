@@ -10,7 +10,7 @@ export default (todos: Schedule.Item['todos']) => {
 	const [status, setStatus] = useState('')
 
 	useDeepEffect(() => {
-		let watcher = null as Subscription
+		let watcher = null as unknown as Subscription
 
 		if (todos?.length) {
 			watcher = $db.todo_items.findByIds(todos).$.subscribe(doc => {

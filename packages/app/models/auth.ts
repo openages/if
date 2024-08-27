@@ -114,6 +114,26 @@ export default class Index {
 		this.afterSign(res.data as Trpc.ResSign)
 	}
 
+	@loading
+	async activate(activation_code: string) {
+		if (!activation_code) return
+
+		const [err, res] = await to(
+			trpc.auth.activate.mutate({
+				id: this.user.id,
+				activation_code,
+				refresh_token: this.user.refresh_token
+			})
+		)
+
+		if (err) return
+		if (res.error) return $message.error($t(`app.auth.${res.error}`))
+
+		$message.success($t('app.auth.signin_success'))
+
+		this.afterSign(res.data as Trpc.ResSign)
+	}
+
 	async signout() {
 		const [err, res] = await to(trpc.auth.signout.mutate({ mid: local.mid, id: this.user.id }))
 

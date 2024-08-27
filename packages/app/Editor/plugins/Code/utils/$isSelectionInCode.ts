@@ -5,7 +5,7 @@ import { $isCodeNode } from './index'
 import type { BaseSelection } from 'lexical'
 
 export default (selection?: BaseSelection) => {
-	selection = selection ?? $getSelection()
+	selection = selection ?? $getSelection()!
 
 	if (!$isRangeSelection(selection)) return false
 
@@ -14,7 +14,7 @@ export default (selection?: BaseSelection) => {
 
 	if (anchor_node.is(focus_node) && $isCodeNode(anchor_node)) return true
 
-	const anchor_parent = anchor_node.getParent()
+	const anchor_parent = anchor_node.getParent()!
 
 	return $isCodeNode(anchor_parent) && anchor_parent.is(focus_node.getParent())
 }

@@ -14,7 +14,7 @@ const Index = (props: IPropsTextLoader) => {
 	useLayoutEffect(() => {
 		setEditor(editor)
 
-		x.init(editor, max_length, linebreak, onChange, onKeyDown, onFocus)
+		x.init(editor, max_length!, linebreak!, onChange, onKeyDown, onFocus)
 
 		return () => x.off()
 	}, [editor, max_length, linebreak, onChange, setEditor, onKeyDown, onFocus])

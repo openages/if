@@ -13,7 +13,7 @@ export default class CodeTextNode extends TextNode {
 
 		super(text, node_key)
 
-		this.__color = color
+		this.__color = color!
 	}
 
 	static getType(): string {
@@ -35,7 +35,7 @@ export default class CodeTextNode extends TextNode {
 			node_key: serializedNode.key
 		})
 
-		if (!update) $setImportNode(serializedNode.key, node)
+		if (!update) $setImportNode(serializedNode.key!, node)
 
 		return node
 	}

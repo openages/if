@@ -26,7 +26,7 @@ const Index = (day: Dayjs) => {
 	const global_festival = match(festival && west_holidays.includes(festival))
 		// @ts-ignore
 		.with(true, () => $t(`common.days.${festival}`))
-		.otherwise(() => false)
+		.otherwise(() => false) as boolean | string
 
 	return {
 		value: day,
@@ -52,3 +52,9 @@ const Index = (day: Dayjs) => {
 export default Index
 
 export type DayDetail = ReturnType<typeof Index> & { is_current_month?: boolean }
+
+export interface Extra {
+	holiday: string
+	work: boolean
+	target: boolean
+}

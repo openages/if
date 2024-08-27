@@ -16,8 +16,8 @@ export default (args: Args) => {
 			return {
 				class: ['absolute', styles.timeline],
 				style: {
-					left: `calc(${item.start * step}px + 1px)`,
-					width: `calc(${item.length * step}px - 2px)`
+					left: `calc(${item.start * step!}px + 1px)`,
+					width: `calc(${item.length * step!}px - 2px)`
 				}
 			}
 		}

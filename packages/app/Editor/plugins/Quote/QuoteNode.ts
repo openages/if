@@ -48,7 +48,7 @@ export default class QuoteNode extends ElementNode {
 		const { element } = super.exportDOM(editor)
 
 		if (element && isHTMLElement(element)) {
-			if (this.isEmpty()) element.append(document.createElement('br'))
+			if (this.isEmpty()) element.append(document.createElement('br') as unknown as string)
 
 			const direction = this.getDirection()
 			const align = this.getFormatType()

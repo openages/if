@@ -24,16 +24,16 @@ import type { FocusEvent } from 'react'
 @injectable()
 export default class Index {
 	id = ''
-	editor = null as LexicalEditor
-	node = null as LinkNode
-	dom = null as HTMLAnchorElement
+	editor = null as unknown as LexicalEditor
+	node = null as unknown as LinkNode
+	dom = null as unknown as HTMLAnchorElement
 	show_on_top = false
 
 	visible = false
-	position = null as { x: number; y: number }
+	position = null as unknown as { x: number; y: number }
 	link = ''
 
-	unregister = null as () => void
+	unregister = null as unknown as () => void
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(
@@ -52,11 +52,11 @@ export default class Index {
 	}
 
 	reset() {
-		this.node = null
-		this.dom = null
+		this.node = null as unknown as LinkNode
+		this.dom = null as unknown as HTMLAnchorElement
 
 		this.visible = false
-		this.position = null
+		this.position = null as unknown as { x: number; y: number }
 		this.link = ''
 
 		return false
@@ -84,8 +84,8 @@ export default class Index {
 		if ($isRangeSelection(selection)) node = selection.anchor.getNode()
 		if ($isNodeSelection(selection)) node = selection.getNodes()[0]
 
-		const target = ($getMatchingParent(node, $isLinkNode) ||
-			$getMatchingParent(node, $isAutoLinkNode)) as LinkNode
+		const target = ($getMatchingParent(node!, $isLinkNode) ||
+			$getMatchingParent(node!, $isAutoLinkNode)) as LinkNode
 
 		if (target) {
 			this.node = target
@@ -103,7 +103,7 @@ export default class Index {
 	updatePosition() {
 		if (!this.node || !this.visible) return
 
-		const rect = this.editor.getElementByKey(this.node.getKey()).getBoundingClientRect()
+		const rect = this.editor.getElementByKey(this.node.getKey())!.getBoundingClientRect()
 
 		this.position = { x: rect.x, y: rect.y + (this.show_on_top ? -42 : rect.height) }
 	}
@@ -116,15 +116,15 @@ export default class Index {
 		if (e && (!this.editor.isEditable() || e.metaKey || e.ctrlKey)) {
 			const url = this.node.getURL()
 
-			let el = null as HTMLElement
+			let el = null as unknown as HTMLElement
 
 			if (url.startsWith('#')) {
-				const container = document.getElementById(this.id)
+				const container = document.getElementById(this.id)!
 
-				const els = container.querySelectorAll(`a[href="${url}"]`)
+				const els = container.querySelectorAll<HTMLElement>(`a[href="${url}"]`)
 
 				els.forEach((element: HTMLElement) => {
-					const node = $getNearestNodeFromDOMNode(element)
+					const node = $getNearestNodeFromDOMNode(element)!
 
 					if (`#${node.getTextContent()}` === url) {
 						el = element
@@ -135,7 +135,7 @@ export default class Index {
 			if (url.startsWith('block://')) {
 				const key = url.replace('block://', '')
 
-				el = this.editor.getElementByKey(key)
+				el = this.editor.getElementByKey(key)!
 			}
 
 			if (el) {
@@ -185,7 +185,7 @@ export default class Index {
 	removeListners() {
 		if (this.unregister) this.unregister()
 
-		this.unregister = null
+		this.unregister = null as unknown as () => void
 	}
 
 	on() {

@@ -41,7 +41,7 @@ export default class RefNode extends DecoratorNode<JSX.Element> {
 	static importJSON(serializedNode: SerializedRefNode, update?: boolean) {
 		const node = $createRefNode(serializedNode)
 
-		if (!update) $setImportNode(serializedNode.node_key, node)
+		if (!update) $setImportNode(serializedNode.node_key!, node)
 
 		return node
 	}

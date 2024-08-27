@@ -12,17 +12,17 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['text']>) => {
 	const { value, editing, onFocus, onBlur, onChange: onChangeItem } = props
 
 	const { ref_editor, onChange, setEditor } = useText({
-		text: value,
-		update: v => onChangeItem(v)
+		text: value!,
+		update: v => onChangeItem!(v)
 	})
 
-	useTextChange({ ref_editor, text: value })
+	useTextChange({ ref_editor, text: value! })
 
 	const onEditorFocus = useMemoizedFn((v: boolean) => {
 		if (v) {
-			onFocus()
+			onFocus!()
 		} else {
-			onBlur()
+			onBlur!()
 		}
 	})
 

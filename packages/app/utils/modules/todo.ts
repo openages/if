@@ -23,7 +23,7 @@ export const getItemStatus = (args: {
 }
 
 export const getCycleSpecificDesc = (cycle: Todo.Todo['cycle']) => {
-	return match(cycle.scale)
+	return match(cycle!.scale)
 		.with('clock', () =>
 			// @ts-ignore
 			$t('todo.Input.Cycle.specific.clock', { value: cycle.value })
@@ -31,7 +31,8 @@ export const getCycleSpecificDesc = (cycle: Todo.Todo['cycle']) => {
 		.with('weekday', () =>
 			// @ts-ignore
 			$t('todo.Input.Cycle.specific.weekday', {
-				value: cycle.value !== undefined ? dayjs().day(cycle.value).format('dddd') : $t('common.unset')
+				value:
+					cycle!.value !== undefined ? dayjs().day(cycle!.value).format('dddd') : $t('common.unset')
 			})
 		)
 		.with('date', () =>
@@ -41,8 +42,8 @@ export const getCycleSpecificDesc = (cycle: Todo.Todo['cycle']) => {
 		.with('special', () =>
 			// @ts-ignore
 			$t('todo.Input.Cycle.specific.special', {
-				month: dayjs(cycle.value).month() + 1,
-				date: dayjs(cycle.value).date()
+				month: dayjs(cycle!.value).month() + 1,
+				date: dayjs(cycle!.value).date()
 			})
 		)
 		.otherwise(() => '')

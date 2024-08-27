@@ -1,4 +1,4 @@
-import type { MemoExoticComponent, MutableRefObject } from 'react'
+import type { MemoExoticComponent, RefObject } from 'react'
 import type { PaginationProps } from 'antd'
 
 export interface IProps {
@@ -7,7 +7,7 @@ export interface IProps {
 	rowKey?: string
 	loading?: boolean
 	stickyTop?: number
-	scroller?: MutableRefObject<HTMLDivElement>
+	scroller?: RefObject<HTMLDivElement>
 	scrollX?: number
 	pagination?: PaginationProps | false
 	onChange: (index: number, v: any) => void
@@ -31,7 +31,7 @@ export interface Column {
 	resetEditing?: boolean
 	useRowChange?: boolean
 	getProps?: (...args: any) => any
-	onAction?: (action: string, deps: any, index: number) => void
+	onAction?: (action: 'detail' | 'remove' | 'clean', deps: any, index: number) => void
 }
 
 export interface IPropsColGroup {

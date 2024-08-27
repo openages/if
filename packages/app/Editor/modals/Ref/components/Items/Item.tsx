@@ -32,7 +32,7 @@ const Index = (props: IPropsItem) => {
 				<div className='icon_wrap flex justify_center align_center'>
 					<Choose>
 						<When condition={!!file.icon}>
-							<Emoji shortcodes={file.icon} size={10} hue={file.icon_hue}></Emoji>
+							<Emoji shortcodes={file.icon!} size={10} hue={file.icon_hue}></Emoji>
 						</When>
 						<Otherwise>
 							<LeftIcon module={module} item={file} size={10}></LeftIcon>

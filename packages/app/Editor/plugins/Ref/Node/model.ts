@@ -13,11 +13,11 @@ import type { RxQuery } from 'rxdb'
 import type { App, DirTree } from '@/types'
 
 export default class Index {
-	editor = null as LexicalEditor
+	editor = null as unknown as LexicalEditor
 	key = ''
 	module = '' as IPropsRef['module']
 	id = '' as IPropsRef['id']
-	watcher = null as Subscription
+	watcher = null as unknown as Subscription
 
 	item = null as any
 
@@ -56,9 +56,9 @@ export default class Index {
 				module = this.module
 				file_id = this.item.file_id
 
-				const file_doc = await $db.dirtree_items.findOne(file_id).exec()
+				const file_doc = (await $db.dirtree_items.findOne(file_id).exec())!
 
-				file = getDocItem(file_doc)
+				file = getDocItem(file_doc)!
 			}
 
 			const find_view = await $app.Event.emit('global.stack.find', file_id)
@@ -89,7 +89,9 @@ export default class Index {
 		if (this.module === 'file') {
 			query = $db.dirtree_items.findOne(this.id)
 		} else {
-			query = $db.collections[module_map[this.module]].findOne(this.id)
+			const module = module_map[this.module as keyof typeof module_map]
+
+			query = $db.collections[module].findOne(this.id)
 		}
 
 		this.watcher = query.$.subscribe(res => {

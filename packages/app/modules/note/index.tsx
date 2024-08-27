@@ -29,7 +29,7 @@ const Index = ({ id }: IProps) => {
 
 	const setEditor = useMemoizedFn(editor => (x.editor = editor))
 
-	if (!x?.file?.id) return
+	if (!x?.file?.id) return null
 
 	return (
 		<div className={$cx('w_100 border_box flex flex_column limited_content_wrap', styles._local)}>

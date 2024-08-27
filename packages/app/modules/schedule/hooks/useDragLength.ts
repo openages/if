@@ -43,7 +43,7 @@ export default (args: Args) => {
 			move = e.clientX - changed.current
 
 			if (changed.current === 0) return (changed.current = e.clientX)
-			if (Math.abs(move) < step) return
+			if (Math.abs(move) < step!) return
 
 			changed.current = 0
 		} else {
@@ -66,7 +66,7 @@ export default (args: Args) => {
 	useEffect(() => {
 		if (!changeTimeBlockLength) return
 
-		const drag_ref = ref.current
+		const drag_ref = ref.current!
 
 		drag_ref.addEventListener('mousedown', start)
 		document.addEventListener('mouseup', stop)

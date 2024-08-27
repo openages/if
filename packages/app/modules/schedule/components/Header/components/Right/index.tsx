@@ -21,7 +21,7 @@ const Index = (props: IPropsHeaderRight) => {
 	return (
 		<div className={$cx('absolute flex align_center', styles._local)}>
 			<Select
-				className={$cx(filter_tags.length && 'has_value')}
+				className={$cx(filter_tags.length > 0 && 'has_value')}
 				variant='borderless'
 				popupClassName='borderless'
 				placement='bottomRight'

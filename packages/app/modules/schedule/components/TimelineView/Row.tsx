@@ -30,7 +30,7 @@ const Index = (props: IPropsTimelineViewRow) => {
 		copyTimeBlock,
 		changeTimeBlockLength
 	} = props
-	const [signal, setSignal] = useState(null)
+	const [signal, setSignal] = useState<IPropsTimelineViewRow['move_item'] | null>(null)
 	const { show } = useContextMenu({ id: 'timeblock_context_menu' })
 	const { setNodeRef } = useDroppable({ id: row_id, data: { step, angle_index, row_index, angle_id, row_id } })
 
@@ -60,7 +60,7 @@ const Index = (props: IPropsTimelineViewRow) => {
 		let length = limit
 		let overflow = false
 
-		const start = getStartByX(container.current, step, e.clientX)
+		const start = getStartByX(container.current!, step, e.clientX)!
 
 		if (start + limit >= days_length * limit) {
 			length = days_length * limit - start
@@ -71,7 +71,7 @@ const Index = (props: IPropsTimelineViewRow) => {
 
 		if (!target_length) return
 
-		setSignal({ start, length: target_length })
+		setSignal({ start, length: target_length } as IPropsTimelineViewRow['move_item'])
 		show({ event: e, props: { index: angle_index, row_index, start, length: target_length, overflow } })
 	})
 

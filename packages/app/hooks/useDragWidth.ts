@@ -34,7 +34,7 @@ export default (args: Args) => {
 
 	const overflow = useMemoizedFn((v: number) => {
 		if (min || max) {
-			if (v <= min || v >= max) {
+			if (v <= min! || v >= max!) {
 				stop()
 
 				return true

@@ -13,7 +13,7 @@ import type { Todo } from '@/types'
 
 const Index = (props: IPropsFormTableComponent<Todo.Todo['status']>) => {
 	const { value, deps, getProps, onChange } = props
-	const linked = getProps({ id: deps.id, status: value })
+	const linked = getProps!({ id: deps.id, status: value })
 
 	const style = useMemo(() => {
 		if (!linked) return {} as CSSProperties
@@ -29,7 +29,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['status']>) => {
 	const onCheck = useMemoizedFn(() => {
 		if (value === 'closed') return
 
-		onChange(value === 'unchecked' ? 'checked' : 'unchecked')
+		onChange!(value === 'unchecked' ? 'checked' : 'unchecked')
 	})
 
 	return (

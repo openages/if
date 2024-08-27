@@ -53,7 +53,7 @@ export default class TableNode extends ElementNode {
 
 		el.className = '__editor_table __editor_block'
 
-		const col_keys = Object.keys(this.__cols)
+		const col_keys = Object.keys(this.__cols!)
 
 		if (col_keys.length) {
 			const editor = $getEditor()
@@ -61,7 +61,7 @@ export default class TableNode extends ElementNode {
 
 			col_keys.forEach(key => {
 				const target_key = Number(key)
-				const target_value = this.__cols[target_key]
+				const target_value = this.__cols![target_key]
 
 				const row = rows[target_key]
 
@@ -94,7 +94,7 @@ export default class TableNode extends ElementNode {
 				if (el) {
 					const new_el = el.cloneNode() as ParentNode
 					const col_group = document.createElement('colgroup')
-					const t_body = document.createElement('tbody')
+					const t_body = document.createElement('tbody') as any
 
 					if (isHTMLElement(el)) {
 						t_body.append(...(el.children as HTMLCollection & Iterable<HTMLTableElement>))
@@ -105,7 +105,7 @@ export default class TableNode extends ElementNode {
 					for (let i = 0; i < first_row.getChildrenSize(); i++) {
 						const col = document.createElement('col')
 
-						col_group.append(col)
+						col_group.append(col as unknown as string)
 					}
 
 					new_el.replaceChildren(col_group, t_body)
@@ -138,31 +138,31 @@ export default class TableNode extends ElementNode {
 
 	cloneCol(col_index: number) {
 		const target = this.getWritable()
-		const col_value = target.__cols[col_index]
+		const col_value = target.__cols![col_index]
 
-		target.__cols[col_index + 1] = col_value
+		target.__cols![col_index + 1] = col_value
 	}
 
 	updateCol(col_index: number, v: IPropsTableCol) {
 		const target = this.getWritable()
-		const col_value = target.__cols[col_index]
+		const col_value = target.__cols![col_index]
 
 		if (col_value) {
-			target.__cols[col_index] = { ...col_value, ...v }
+			target.__cols![col_index] = { ...col_value, ...v }
 		} else {
-			target.__cols[col_index] = v
+			target.__cols![col_index] = v
 		}
 	}
 
 	resetColAttr(col_index: number, attr: 'align' | 'width') {
 		const target = this.getWritable()
 
-		if (!target.__cols[col_index]?.[attr]) return
+		if (!target.__cols![col_index]?.[attr]) return
 
-		if (Object.keys(target.__cols[col_index]).length === 1) {
-			delete target.__cols[col_index]
+		if (Object.keys(target.__cols![col_index]).length === 1) {
+			delete target.__cols![col_index]
 		} else {
-			delete target.__cols[col_index][attr]
+			delete target.__cols![col_index][attr]
 		}
 	}
 
@@ -187,13 +187,13 @@ export default class TableNode extends ElementNode {
 	existRowspan() {
 		const rows = this.getChildren() as Array<TableRowNode>
 
-		return rows.some(row => row.getChildren().some((cell: TableCellNode) => cell.getRowSpan() > 1))
+		return rows.some(row => row.getChildren().some(((cell: TableCellNode) => cell.getRowSpan() > 1) as any))
 	}
 
 	existColspan() {
 		const rows = this.getChildren() as Array<TableRowNode>
 
-		return rows.some(row => row.getChildren().some((cell: TableCellNode) => cell.getColSpan() > 1))
+		return rows.some(row => row.getChildren().some(((cell: TableCellNode) => cell.getColSpan() > 1) as any))
 	}
 
 	existLargeRowspan() {
@@ -207,7 +207,7 @@ export default class TableNode extends ElementNode {
 
 		if (!table_node) return
 
-		const [table_map, table_node_map] = $computeTableMap(table_node, table_cell_node, null)
+		const [table_map, table_node_map] = $computeTableMap(table_node, table_cell_node, null!)
 		const { start_row } = table_node_map
 
 		if (table_cell_node.getRowSpan() > 1) return true
@@ -228,7 +228,7 @@ export default class TableNode extends ElementNode {
 
 		if (!table_node) return
 
-		const [table_map, table_node_map] = $computeTableMap(table_node, table_cell_node, null)
+		const [table_map, table_node_map] = $computeTableMap(table_node, table_cell_node, null!)
 		const { start_column } = table_node_map
 
 		if (table_cell_node.getColSpan() > 1) return true
@@ -250,7 +250,7 @@ export default class TableNode extends ElementNode {
 		return target
 	}
 
-	getCordsFromCellNode(table_cell_node: TableCellNode, table: Table): { x: number; y: number } {
+	getCordsFromCellNode(table_cell_node: TableCellNode, table: Table) {
 		const { rows, row_counts } = table
 
 		for (let y = 0; y < row_counts; y++) {
@@ -294,7 +294,7 @@ export default class TableNode extends ElementNode {
 
 		if (!cell) return null
 
-		const node = $getNearestNodeFromDOMNode(cell.el)
+		const node = $getNearestNodeFromDOMNode(cell.el)!
 
 		if ($isTableCellNode(node)) return node as TableCellNode
 

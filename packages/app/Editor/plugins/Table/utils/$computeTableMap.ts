@@ -10,8 +10,8 @@ export default (
 ): [TableMap, TableMapValue, TableMapValue] => {
 	const table_map: TableMap = []
 
-	let cell_a_value: TableMapValue = null
-	let cell_b_value: TableMapValue = null
+	let cell_a_value: TableMapValue | null = null
+	let cell_b_value: TableMapValue | null = null
 
 	const write = (start_row: number, start_column: number, cell: TableCellNode) => {
 		const value = { start_row, start_column, cell } as TableMapValue
@@ -53,5 +53,5 @@ export default (
 		}
 	}
 
-	return [table_map, cell_a_value, cell_b_value]
+	return [table_map, cell_a_value!, cell_b_value!]
 }

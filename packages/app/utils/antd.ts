@@ -4,7 +4,7 @@ export const confirm = async ({ id, title, content }: { id?: string; title: stri
 			title,
 			content,
 			centered: true,
-			getContainer: () => (id ? document.getElementById(id) : document.body),
+			getContainer: () => (id ? document.getElementById(id) : document.body)!,
 			onOk() {
 				resolve(true)
 			},
@@ -21,7 +21,7 @@ export const info = async ({ id, title, content }: { id?: string; title: string;
 			title,
 			content,
 			centered: true,
-			getContainer: () => (id ? document.getElementById(id) : document.body),
+			getContainer: () => (id ? document.getElementById(id) : document.body)!,
 			onOk() {
 				resolve(true)
 			}

@@ -1,5 +1,5 @@
 export const getCursorPosition = (el: HTMLDivElement) => {
-	const selection = window.getSelection()
+	const selection = window.getSelection()!
 	const range = selection.getRangeAt(0)
 	const preSelectionRange = range.cloneRange()
 
@@ -15,7 +15,7 @@ export const setCursorPosition = (el: HTMLDivElement, start: number) => {
 	if (!el.firstChild) return
 
 	const range = document.createRange()
-	const selection = window.getSelection()
+	const selection = window.getSelection()!
 
 	try {
 		range.setStart(el.firstChild, start > el.innerText.length ? el.innerText.length : start)

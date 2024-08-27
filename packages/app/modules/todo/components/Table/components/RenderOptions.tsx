@@ -18,13 +18,13 @@ const Index = (props: IPropsFormTableComponent) => {
 			content: t('common.erase.confirm'),
 			centered: true,
 			onOk() {
-				onAction('clean', deps, row_index)
+				onAction!('clean', deps, row_index)
 			}
 		})
 	})
 
-	const onDetail = useMemoizedFn(() => onAction('detail', deps, row_index))
-	const onRemove = useMemoizedFn(() => onAction('remove', deps, row_index))
+	const onDetail = useMemoizedFn(() => onAction!('detail', deps, row_index))
+	const onRemove = useMemoizedFn(() => onAction!('remove', deps, row_index))
 
 	return (
 		<div className={$cx('flex justify_center align_center', styles.RenderOptions)}>

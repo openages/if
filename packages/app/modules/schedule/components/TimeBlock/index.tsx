@@ -77,7 +77,7 @@ const Index = (props: IPropsTimeBlock) => {
 		angle_row_id,
 		step,
 		timeblock_index,
-		changeTimeBlockLength
+		changeTimeBlockLength: changeTimeBlockLength!
 	})
 	const { ref_editor, onChange, setEditor, setRef } = useText({
 		text: item.text,

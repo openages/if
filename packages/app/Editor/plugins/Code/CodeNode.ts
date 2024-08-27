@@ -128,7 +128,7 @@ export default class CodeNode extends ElementNode {
 			while (true) {
 				if ($isTabNode(node)) {
 					insert_nodes.push($createTabNode())
-					node = node.getNextSibling()
+					node = node.getNextSibling()!
 				} else if ($isCodeTextNode(node)) {
 					let spaces = 0
 
@@ -147,7 +147,7 @@ export default class CodeNode extends ElementNode {
 						break
 					}
 
-					node = node.getNextSibling()
+					node = node.getNextSibling()!
 				} else {
 					break
 				}

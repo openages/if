@@ -54,7 +54,7 @@ const Index = ({ id }: IProps) => {
 		close: useMemoizedFn(() => (x.visible_edit_modal = false))
 	}
 
-	if (!x.data.file_id) return
+	if (!x.data.file_id) return null
 
 	return (
 		<div

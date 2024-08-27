@@ -9,9 +9,9 @@ import type { IPropsDetailRemark } from '@/modules/todo/types'
 const Index = (props: IPropsDetailRemark) => {
 	const { remark, in_modal, updateRemark } = props
 	const { t } = useTranslation()
-	const { ref_editor, onChange, setEditor, setRef } = useText({ text: remark, update: updateRemark })
+	const { ref_editor, onChange, setEditor, setRef } = useText({ text: remark!, update: updateRemark })
 
-	useTextChange({ ref_editor, text: remark })
+	useTextChange({ ref_editor, text: remark! })
 
 	return (
 		<div className={$cx('w_100 border_box relative', styles._local, in_modal && styles.in_modal)}>

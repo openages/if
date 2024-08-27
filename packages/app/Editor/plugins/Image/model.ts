@@ -13,9 +13,9 @@ import type { IPropsImage } from './types'
 import type ImageNode from './Node'
 
 export default class Index {
-	editor = null as LexicalEditor
+	editor = null as unknown as LexicalEditor
 
-	unregister = null as () => void
+	unregister = null as unknown as () => void
 
 	constructor() {
 		makeObservable(this, {}, { autoBind: true })

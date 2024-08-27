@@ -88,10 +88,10 @@ export default class TableSelection implements BaseSelection {
 	}
 
 	getShape() {
-		const anchor_cell_node = $getNodeByKey(this.anchor.key) as TableCellNode
-		const anchor_cell_node_rect = $getTableCellNodeRect(anchor_cell_node)
-		const focus_cell_node = $getNodeByKey(this.focus.key) as TableCellNode
-		const focus_cell_node_rect = $getTableCellNodeRect(focus_cell_node)
+		const anchor_cell_node = $getNodeByKey(this.anchor.key)! as TableCellNode
+		const anchor_cell_node_rect = $getTableCellNodeRect(anchor_cell_node)!
+		const focus_cell_node = $getNodeByKey(this.focus.key)! as TableCellNode
+		const focus_cell_node_rect = $getTableCellNodeRect(focus_cell_node)!
 		const start_x = Math.min(anchor_cell_node_rect.column_index, focus_cell_node_rect.column_index)
 		const start_y = Math.min(anchor_cell_node_rect.row_index, focus_cell_node_rect.row_index)
 		const stop_x = Math.max(anchor_cell_node_rect.column_index, focus_cell_node_rect.column_index)
@@ -121,18 +121,18 @@ export default class TableSelection implements BaseSelection {
 		const anchor_cell = $getMatchingParent(anchor_node, $isTableCellNode) as TableCellNode
 		const focus_cell = $getMatchingParent(focus_node, $isTableCellNode) as TableCellNode
 
-		const anchor_row = anchor_cell.getParent()
+		const anchor_row = anchor_cell.getParent()!
 		const table_node = anchor_row.getParent() as TableNode
 
 		const focus_cell_grid = focus_cell.getParents()[1]
 
 		if (focus_cell_grid !== table_node) {
 			if (!table_node.isParentOf(focus_cell)) {
-				const grid_parent = table_node.getParent()
+				const grid_parent = table_node.getParent()!
 
 				this.set(this.table_key, grid_parent.getKey(), focus_cell.getKey())
 			} else {
-				const focus_cell_parent = focus_cell_grid.getParent()
+				const focus_cell_parent = focus_cell_grid.getParent()!
 
 				this.set(this.table_key, focus_cell.getKey(), focus_cell_parent.getKey())
 			}
@@ -229,7 +229,7 @@ export default class TableSelection implements BaseSelection {
 			}
 		}
 
-		const target_nodes = uniqWith(nodes, (a: TableCellNode, b: TableCellNode) => a.getKey() === b.getKey())
+		const target_nodes = uniqWith(nodes, (a: LexicalNode, b: LexicalNode) => a.getKey() === b.getKey())
 
 		if (!isCurrentlyReadOnlyMode()) {
 			this._cachedNodes = target_nodes

@@ -15,17 +15,17 @@ import type { IProps } from './types'
 
 @injectable()
 export default class Index {
-	editor = null as LexicalEditor
+	editor = null as unknown as LexicalEditor
 	options = [] as Array<Option>
 	text_mode = false as IProps['text_mode']
 
 	modal = '' as 'Image' | 'Emoji' | 'Katex' | 'Mermaid' | 'Ref'
 	node_key = ''
 	query = ''
-	index = null as number
+	index = null as unknown as number
 	latest_blocks = [] as Array<number>
 
-	unregister = null as () => void
+	unregister = null as unknown as () => void
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(

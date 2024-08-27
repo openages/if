@@ -28,7 +28,7 @@ export default class DividerNode extends DecoratorNode<JSX.Element> {
 	static importJSON(serializedNode: SerializedDividerNode, update?: boolean) {
 		const node = $createDividerNode(serializedNode.node_key)
 
-		if (!update) $setImportNode(serializedNode.node_key, node)
+		if (!update) $setImportNode(serializedNode.node_key!, node)
 
 		return node
 	}

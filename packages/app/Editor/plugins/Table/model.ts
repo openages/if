@@ -13,7 +13,7 @@ import type { LexicalEditor, NodeMutation } from 'lexical'
 
 @injectable()
 export default class Index {
-	editor = null as LexicalEditor
+	editor = null as unknown as LexicalEditor
 	table_selections = {} as Record<string, TableObserver>
 
 	constructor(public utils: Utils) {}
@@ -42,7 +42,7 @@ export default class Index {
 		for (const [node_key, mutation] of mutations) {
 			if (mutation === 'created') {
 				this.editor.getEditorState().read(() => {
-					const table_node = $getNodeByKey<TableNode>(node_key)
+					const table_node = $getNodeByKey<TableNode>(node_key)!
 
 					if ($isTableNode(table_node)) {
 						this.addObservers(node_key)

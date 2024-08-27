@@ -21,7 +21,7 @@ const Index = (props: IProps) => {
 		if (!over?.id) return false
 		if (active.id === over.id) return
 
-		onChange(arrayMove(value, active.data.current.index as number, over.data.current.index as number))
+		onChange!(arrayMove(value, active.data.current!.index as number, over.data.current!.index as number))
 	})
 
 	const onAdd = useMemoizedFn(index => {
@@ -29,7 +29,7 @@ const Index = (props: IProps) => {
 
 		items.splice(index + 1, 0, { id: id(), text: '', rows: getIds(3) })
 
-		onChange(items)
+		onChange!(items)
 	})
 
 	const onAddRow = useMemoizedFn(index => {
@@ -37,7 +37,7 @@ const Index = (props: IProps) => {
 
 		items[index].rows.push(id())
 
-		onChange(items)
+		onChange!(items)
 	})
 
 	const onRemove = useMemoizedFn(async index => {
@@ -49,7 +49,7 @@ const Index = (props: IProps) => {
 
 		items.splice(index, 1)
 
-		onChange(items)
+		onChange!(items)
 	})
 
 	const onRemoveRow = useMemoizedFn(async (index, row_index) => {
@@ -61,7 +61,7 @@ const Index = (props: IProps) => {
 
 		items[index].rows.splice(row_index, 1)
 
-		onChange(items)
+		onChange!(items)
 	})
 
 	const onUpdate = useMemoizedFn((index, v) => {
@@ -69,7 +69,7 @@ const Index = (props: IProps) => {
 
 		items[index].text = v
 
-		onChange(items)
+		onChange!(items)
 	})
 
 	return (

@@ -22,9 +22,9 @@ const Index = (props: IPropsCircleStatus) => {
 		const now = new Date().valueOf()
 
 		const duration =
-			(cycle.scale === 'quarter'
-				? dayjs.duration(cycle.value, 'month').asSeconds() * 3
-				: dayjs.duration(cycle.value, cycle.scale).asSeconds()) * 1000
+			(cycle!.scale === 'quarter'
+				? dayjs.duration(cycle!.value!, 'month').asSeconds() * 3
+				: dayjs.duration(cycle!.value!, cycle!.scale).asSeconds()) * 1000
 
 		if (now >= recycle_time) {
 			setPercent(100)
@@ -34,7 +34,7 @@ const Index = (props: IPropsCircleStatus) => {
 	}, [cycle, recycle_time])
 
 	const desc = useMemo(() => {
-		if (cycle.type === 'interval') return `${cycle?.value} ${scale_text}`
+		if (cycle!.type === 'interval') return `${cycle?.value} ${scale_text}`
 
 		return getCycleSpecificDesc(cycle)
 	}, [cycle])

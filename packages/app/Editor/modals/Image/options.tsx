@@ -1,5 +1,7 @@
 import { FileImage, LinkSimple } from '@phosphor-icons/react'
 
+import type { SegmentedProps } from 'antd'
+
 export default [
 	{
 		label: 'URL',
@@ -11,4 +13,4 @@ export default [
 		value: 'File',
 		icon: <FileImage />
 	}
-]
+] as SegmentedProps<any>['options']

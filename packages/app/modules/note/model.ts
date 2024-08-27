@@ -13,7 +13,7 @@ import type { LexicalEditor } from 'lexical'
 export default class Index {
 	id = ''
 	module = '' as App.ModuleType
-	editor = null as LexicalEditor
+	editor = null as unknown as LexicalEditor
 
 	constructor(public file: File) {
 		makeAutoObservable(this, { file: false, id: false, module: false, editor: false }, { autoBind: true })

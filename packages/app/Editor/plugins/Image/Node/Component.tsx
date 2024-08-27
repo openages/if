@@ -27,14 +27,14 @@ const Index = (props: IPropsImage) => {
 	const { src, width = 'auto', height = 'auto', alt, align, object_fit, inline, node_key } = props
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
-	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(node_key)
+	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(node_key!)
 	const { t } = useTranslation()
 
 	const style_wrap = {} as CSSProperties
 	const style_img = {} as CSSProperties
 
 	useLayoutEffect(() => {
-		x.block.init(editor, node_key, setSelected, clearSelection)
+		x.block.init(editor, node_key!, setSelected, clearSelection)
 
 		return () => x.block.off()
 	}, [editor, node_key, setSelected, clearSelection])

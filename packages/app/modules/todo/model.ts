@@ -69,15 +69,15 @@ export default class Index {
 	mode = 'list' as Mode
 	zen_mode = true
 	kanban_mode = '' as KanbanMode
-	timer_cycle: NodeJS.Timeout = null
-	timer_archive: NodeJS.Timeout = null
+	timer_cycle: NodeJS.Timer | null = null
+	timer_archive: NodeJS.Timer | null = null
 	disable_watcher = false
 	open_items = [] as Array<string>
 
 	setting = {} as Todo.TodoSetting
-	setting_watcher = null as Subscription
+	setting_watcher = null as Subscription | null
 	items = [] as Array<Todo.TodoItem>
-	items_watcher = null as Subscription
+	items_watcher = null as Subscription | null
 	kanban_items = {} as KanbanItems
 	kanban_items_watcher = [] as Array<Subscription>
 
@@ -85,7 +85,7 @@ export default class Index {
 	archive_counts = 0
 	archive_query_params = {} as ArchiveQueryParams
 
-	items_sort_param = null as ItemsSortParams
+	items_sort_param = null as ItemsSortParams | null
 	items_filter_tags = [] as Array<string>
 
 	visible_settings_modal = false
@@ -121,10 +121,10 @@ export default class Index {
 			if (!this.id) return
 			if (!this.setting.file_id) return
 
-			const exist = v.find(item => item.id === this.current_angle_id)
+			const exist = v!.find(item => item.id === this.current_angle_id)
 
 			if (!exist) {
-				this.current_angle_id = v[0].id
+				this.current_angle_id = v![0].id
 			}
 		},
 		['visible_archive_modal']: v => {
@@ -212,7 +212,7 @@ export default class Index {
 
 		const items =
 			this.mode === 'kanban' || this.mode === 'mindmap'
-				? this.kanban_items[this.current_detail_index.dimension_id]?.items
+				? this.kanban_items[this.current_detail_index.dimension_id!]?.items
 				: this.items
 
 		if (!items) return {} as CurrentDetailItem
@@ -333,12 +333,12 @@ export default class Index {
 		}
 
 		if (this.kanban_mode === 'angle') {
-			data['angle_id'] = options?.dimension_id
+			data['angle_id'] = options?.dimension_id!
 		}
 
 		if (this.kanban_mode === 'tag') {
 			data['angle_id'] = this.current_angle_id
-			data['tag_ids'] = [options?.dimension_id]
+			;(data as Todo.Todo)['tag_ids'] = [options?.dimension_id!]
 		}
 
 		return create({ ...item, ...data, file_id: this.id } as Todo.TodoItem, {
@@ -357,11 +357,11 @@ export default class Index {
 		await check({
 			file_id: this.id,
 			setting: this.setting.setting,
-			id: item.id,
+			id: item!.id,
 			status
 		})
 
-		const todo_item = (await queryItem(item.id)) as RxDocument<Todo.Todo>
+		const todo_item = (await queryItem(item!.id)) as RxDocument<Todo.Todo>
 
 		if (status === 'checked' || status === 'closed') {
 			if (this.setting.setting.auto_archiving === '0m') {
@@ -387,7 +387,7 @@ export default class Index {
 
 		const { item } = this.getItem({ index, dimension_id })
 
-		let data = type === 'parent' ? { id: item.id, ...value } : { id: item.id, children: value }
+		let data = type === 'parent' ? { id: item!.id, ...value } : { id: item!.id, children: value }
 
 		if (type === 'close') {
 			return this.check({ index, dimension_id, status: 'closed' })
@@ -398,25 +398,25 @@ export default class Index {
 		}
 
 		if (type === 'archive') {
-			return archive(this.id, item.id)
+			return archive(this.id, item!.id)
 		}
 
-		if (type === 'children' && !(value?.length > 0)) {
+		if (type === 'children' && !(value?.length! > 0)) {
 			data['children'] = undefined
 		}
 
 		if (type === 'children_item') {
-			const children = $copy(item.children)
+			const children = $copy(item!.children)
 
-			if (!children?.[children_index]) return
+			if (!children?.[children_index!]) return
 
-			children[children_index] = { ...children[children_index], ...value }
+			children[children_index!] = { ...children[children_index!], ...value }
 
 			data['children'] = children
 		}
 
 		if (type === 'insert_children_item') {
-			const children = [...($copy(item.children) || [])]
+			const children = [...($copy(item!.children) || [])]
 			const target = { id: id(), text: '', status: 'unchecked' } as const
 
 			if (children_index === undefined) {
@@ -450,9 +450,9 @@ export default class Index {
 		}
 
 		if (type === 'remove_children_item') {
-			const children = [...($copy(item.children) || [])]
+			const children = [...($copy(item!.children) || [])]
 
-			children.splice(children_index, 1)
+			children.splice(children_index!, 1)
 
 			data['children'] = children
 		}
@@ -478,9 +478,9 @@ export default class Index {
 		const { index: over_index, dimension_id: over_dimension_id } = over
 
 		if (!active_dimension_id) {
-			const items = arrayMove($copy(this.items), active_index, over_index)
+			const items = arrayMove($copy(this.items), active_index!, over_index!)
 
-			const { item, sort } = updateSort(items, over_index)
+			const { item, sort } = updateSort(items, over_index!)
 
 			this.items = items
 
@@ -489,23 +489,23 @@ export default class Index {
 			if (active_dimension_id === over_dimension_id) {
 				const items = arrayMove(
 					$copy(this.kanban_items[active_dimension_id].items),
-					active_index,
-					over_index
+					active_index!,
+					over_index!
 				)
 
-				const { item, sort } = updateSort(items, over_index)
+				const { item, sort } = updateSort(items, over_index!)
 
 				this.kanban_items[active_dimension_id].items = items
 
 				await update({ id: item.id, sort })
 			} else {
-				if (this.isLinked(this.kanban_items[active_dimension_id].items[active_index].id)) return
+				if (this.isLinked(this.kanban_items[active_dimension_id].items[active_index!].id)) return
 
-				const [active_item] = this.kanban_items[active_dimension_id].items.splice(active_index, 1)
+				const [active_item] = this.kanban_items[active_dimension_id].items.splice(active_index!, 1)
 
-				this.kanban_items[over_dimension_id].items.splice(over_index + 1, 0, active_item)
+				this.kanban_items[over_dimension_id!].items.splice(over_index! + 1, 0, active_item)
 
-				const { sort } = updateSort(this.kanban_items[over_dimension_id].items, over_index + 1)
+				const { sort } = updateSort(this.kanban_items[over_dimension_id!].items, over_index! + 1)
 
 				await update({ id: active_item.id, angle_id: over_dimension_id, sort })
 			}
@@ -568,7 +568,7 @@ export default class Index {
 
 				this.kanban_items = $copy(this.kanban_items)
 			} else {
-				items.splice(index + 1, 0, item as Todo.TodoItem)
+				items.splice(index! + 1, 0, item as Todo.TodoItem)
 			}
 
 			if (callback) callback()
@@ -579,7 +579,7 @@ export default class Index {
 
 			setTimeout(
 				() => {
-					const el = document.getElementById(`todo_${item.id}`)
+					const el = document.getElementById(`todo_${item!.id}`)
 
 					if (el) {
 						;(el.querySelector('.__editor_root') as HTMLDivElement)?.focus()
@@ -590,9 +590,9 @@ export default class Index {
 		}
 
 		if (index !== -1) {
-			const { sort } = updateSort(items, index + 1)
+			const { sort } = updateSort(items, index! + 1)
 
-			await update({ id: item.id, sort })
+			await update({ id: item!.id, sort })
 		}
 	}
 
@@ -605,28 +605,31 @@ export default class Index {
 		const { items, item } = this.getItem({ index, dimension_id })
 
 		if (type === 'in') {
-			const prev_item = items[index - 1]
+			const prev_item = items[index! - 1]
 
 			if (!prev_item || prev_item.type === 'group') return
 
 			const exsit_index = this.setting.setting.relations
 				? this.setting.setting.relations.findIndex(
 						relation =>
-							relation.items.includes(item.id) || relation.items.includes(prev_item.id)
+							relation.items.includes(item!.id) || relation.items.includes(prev_item.id)
 					)
 				: -1
 
 			if (exsit_index !== -1) return
-			if (item.children?.length) return
+			if (item!.children?.length) return
 
-			const data = { ...pick(item, ['id', 'text']), status: 'unchecked' } as Todo.Todo['children'][number]
+			const data = {
+				...pick(item, ['id', 'text']),
+				status: 'unchecked'
+			} as Required<Todo.Todo>['children'][number]
 
 			const children = prev_item.children ? [...prev_item.children, data] : [data]
 
 			await this.remove({
 				index,
 				dimension_id,
-				id: item.id,
+				id: item!.id,
 				callback() {
 					prev_item.children = children
 				}
@@ -635,11 +638,11 @@ export default class Index {
 			await update({ id: prev_item.id, children: $copy(children) })
 		} else {
 			const children_index = args.children_index
-			const data = item.children[children_index]
+			const data = item!.children![children_index]
 			const target_item = {
 				...getTodo(),
 				text: data.text,
-				angle_id: item.angle_id,
+				angle_id: item!.angle_id,
 				status: 'unchecked'
 			} as Todo.Todo
 
@@ -648,15 +651,15 @@ export default class Index {
 				dimension_id,
 				data: target_item,
 				callback() {
-					item.children.splice(children_index, 1)
+					item!.children!.splice(children_index, 1)
 
-					if (!item.children.length) {
-						item.children = undefined
+					if (!item!.children!.length) {
+						item!.children = undefined
 					}
 				}
 			})
 
-			await update({ id: item.id, children: $copy(item.children) })
+			await update({ id: item!.id, children: $copy(item!.children) })
 		}
 	}
 
@@ -674,7 +677,7 @@ export default class Index {
 		const { items } = this.getItem({ index, dimension_id })
 
 		runInAction(() => {
-			items.splice(index, 1)
+			items.splice(index!, 1)
 
 			if (callback) callback()
 		})
@@ -687,7 +690,7 @@ export default class Index {
 	}
 
 	async restoreArchiveItem(id: string) {
-		const todo_item = await queryItem(id)
+		const todo_item = (await queryItem(id))!
 
 		if (todo_item.recycle_time) {
 			await todo_item.updateCRDT({ ifMatch: { $set: { recycle_time: undefined } } })
@@ -732,7 +735,7 @@ export default class Index {
 	}
 
 	async redirect(id: string) {
-		const target = await $db.todo_items.findOne(id).exec()
+		const target = (await $db.todo_items.findOne(id).exec())!
 
 		if (target.archive) {
 			this.table_selector = { id }
@@ -742,8 +745,8 @@ export default class Index {
 			this.current_angle_id = target.angle_id
 
 			setTimeout(() => {
-				const target_dom = document.getElementById(target.id)
-				const target_todo = document.getElementById(`todo_${target.id}`)
+				const target_dom = document.getElementById(target.id)!
+				const target_todo = document.getElementById(`todo_${target.id}`)!
 
 				scrollIntoView(target_dom, { block: 'center', behavior: 'smooth' })
 
@@ -781,7 +784,7 @@ export default class Index {
 		}
 
 		if (key === 'archive') {
-			return this.restoreArchiveItem(item.id)
+			return this.restoreArchiveItem(item!.id)
 		}
 
 		this.update({ type: 'parent', index, value: values })
@@ -915,7 +918,7 @@ export default class Index {
 		const kanban_mode = dimension_id !== undefined
 
 		const items = match(kanban_mode)
-			.with(true, () => this.kanban_items[dimension_id].items)
+			.with(true, () => this.kanban_items[dimension_id!].items)
 			.otherwise(() => this.items)
 
 		return { items, item: index === undefined ? null : (items[index] as Todo.Todo) }
@@ -958,7 +961,7 @@ export default class Index {
 
 	watchSetting() {
 		this.setting_watcher = getQuerySetting(this.id).$.subscribe(setting => {
-			const todo_setting = getDocItem(setting)
+			const todo_setting = getDocItem(setting!)!
 
 			this.setting = { ...omit(todo_setting, 'setting'), setting: JSON.parse(todo_setting.setting) }
 
@@ -1089,8 +1092,8 @@ export default class Index {
 		this.kanban_items_watcher.forEach(item => item?.unsubscribe?.())
 		this.kanban_items_watcher = []
 
-		clearInterval(this.timer_cycle)
-		clearInterval(this.timer_archive)
+		clearInterval(this.timer_cycle!)
+		clearInterval(this.timer_archive!)
 
 		window.$app.Event.off(`todo/${this.id}/redirect`, this.redirect)
 		window.$app.Event.off(`todo/${this.id}/getVisibleDetailModal`, this.getVisibleDetailModal)

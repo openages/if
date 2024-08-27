@@ -13,10 +13,10 @@ const Index = (props: IPropsComponent) => {
 	const { node_key } = props
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
-	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(node_key)
+	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(node_key!)
 
 	useLayoutEffect(() => {
-		x.block.init(editor, node_key, setSelected, clearSelection)
+		x.block.init(editor, node_key!, setSelected, clearSelection)
 
 		x.block.ref.className = styles._local
 

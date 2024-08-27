@@ -58,7 +58,7 @@ const Index = (props: { items: Array<TableOfContentsEntry>; node_key: string }) 
 	}, [items])
 
 	const scrollIntoEl = useMemoizedFn((node_key: string) => {
-		smoothScrollIntoView(editor.getElementByKey(node_key))
+		smoothScrollIntoView(editor.getElementByKey(node_key)!)
 	})
 
 	if (!items.length) {

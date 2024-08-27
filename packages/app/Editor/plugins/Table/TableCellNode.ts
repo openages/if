@@ -17,7 +17,7 @@ export default class TableCellNode extends ElementNode {
 
 		super(node_key)
 
-		this.__is_header = is_header
+		this.__is_header = is_header!
 		this.__row_span = row_span || 1
 		this.__col_span = col_span || 1
 	}

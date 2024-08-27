@@ -45,11 +45,11 @@ export default class TableObserver {
 		this.focus_x = -1
 		this.focus_y = -1
 		this.table_node_key = table_node_key
-		this.anchor_cell_node_key = null
-		this.focus_cell_node_key = null
-		this.anchor_cell = null
-		this.focus_cell = null
-		this.table_selection = null
+		this.anchor_cell_node_key = null!
+		this.focus_cell_node_key = null!
+		this.anchor_cell = null!
+		this.focus_cell = null!
+		this.table_selection = null!
 		this.selecting = false
 		this.listeners = new Set()
 
@@ -84,7 +84,7 @@ export default class TableObserver {
 
 				if (!grid_needs_redraw) return
 
-				const table = this.editor.getElementByKey(this.table_node_key)
+				const table = this.editor.getElementByKey(this.table_node_key)!
 
 				this.table = getTable(table)
 
@@ -93,7 +93,7 @@ export default class TableObserver {
 		})
 
 		this.editor.update(() => {
-			const table = this.editor.getElementByKey(this.table_node_key)
+			const table = this.editor.getElementByKey(this.table_node_key)!
 
 			this.table = getTable(table)
 
@@ -106,11 +106,11 @@ export default class TableObserver {
 		this.anchor_y = -1
 		this.focus_x = -1
 		this.focus_y = -1
-		this.anchor_cell_node_key = null
-		this.focus_cell_node_key = null
-		this.anchor_cell = null
-		this.focus_cell = null
-		this.table_selection = null
+		this.anchor_cell_node_key = null!
+		this.focus_cell_node_key = null!
+		this.anchor_cell = null!
+		this.focus_cell = null!
+		this.table_selection = null!
 		this.selecting = false
 
 		this.editor.update(() => {
@@ -120,7 +120,7 @@ export default class TableObserver {
 
 	addSelectedCellsBg(cells: Array<TableCellNode>) {
 		cells.forEach(cell => {
-			const cell_el = this.editor.getElementByKey(cell.getKey())
+			const cell_el = this.editor.getElementByKey(cell.getKey())!
 
 			cell_el.setAttribute('style', 'background-color:var(--color_bg_2); caret-color:transparent')
 		})
@@ -129,9 +129,9 @@ export default class TableObserver {
 	removeSelectedCellsBg() {
 		this.table.rows.forEach(cells => {
 			cells.forEach(cell => {
-				const cell_node = $getNearestNodeFromDOMNode(cell.el)
+				const cell_node = $getNearestNodeFromDOMNode(cell.el)!
 
-				const cell_el = this.editor.getElementByKey(cell_node.getKey())
+				const cell_el = this.editor.getElementByKey(cell_node.getKey())!
 
 				if (cell_el.hasAttribute('style')) cell_el.removeAttribute('style')
 			})
@@ -187,7 +187,7 @@ export default class TableObserver {
 
 			$setSelection(this.table_selection)
 
-			editor.dispatchCommand(SELECTION_CHANGE_COMMAND, null)
+			editor.dispatchCommand(SELECTION_CHANGE_COMMAND, null!)
 		})
 	}
 
@@ -197,7 +197,7 @@ export default class TableObserver {
 		this.anchor_y = cell.y
 
 		this.editor.update(() => {
-			const anchor_table_cell_node = $getNearestNodeFromDOMNode(cell.el)
+			const anchor_table_cell_node = $getNearestNodeFromDOMNode(cell.el)!
 
 			if ($isTableCellNode(anchor_table_cell_node)) {
 				const anchor_node_key = anchor_table_cell_node.getKey()
@@ -213,15 +213,15 @@ export default class TableObserver {
 
 	formatCells(type: TextFormatType) {
 		this.editor.update(() => {
-			const selection = $getSelection()
+			const selection = $getSelection()!
 			const format_selection = $createRangeSelection()
 			const anchor = format_selection.anchor
 			const focus = format_selection.focus
 
-			selection.getNodes().forEach((cell_node: ElementNode) => {
+			selection.getNodes().forEach(cell_node => {
 				if ($isTableCellNode(cell_node) && cell_node.getTextContentSize() !== 0) {
 					anchor.set(cell_node.getKey(), 0, 'element')
-					focus.set(cell_node.getKey(), cell_node.getChildrenSize(), 'element')
+					focus.set(cell_node.getKey(), (cell_node as ElementNode).getChildrenSize(), 'element')
 
 					format_selection.formatText(type)
 				}
@@ -237,8 +237,8 @@ export default class TableObserver {
 		const editor = this.editor
 
 		editor.update(() => {
-			const table_node = $getNodeByKey(this.table_node_key)
-			const selection = $getSelection()
+			const table_node = $getNodeByKey(this.table_node_key)!
+			const selection = $getSelection()!
 			const selected_nodes = selection.getNodes().filter($isTableCellNode)
 
 			if (selected_nodes.length === this.table.col_counts * this.table.row_counts) {

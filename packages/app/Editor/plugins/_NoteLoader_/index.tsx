@@ -16,7 +16,7 @@ const Index = (props: IPropsDataLoader) => {
 	const id = useStackSelector(v => v.id)
 
 	useLayoutEffect(() => {
-		setEditor(editor)
+		setEditor?.(editor)
 
 		x.init(collection, id, editor)
 

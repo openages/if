@@ -16,7 +16,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['archive']>) => {
 	const ref = useRef(null)
 	const hover = useHover(ref)
 
-	const archive = useMemoizedFn(() => onChange(false))
+	const archive = useMemoizedFn(() => onChange!(false))
 
 	return (
 		<div className={$cx('flex flex_column justify_center align_center', styles.RenderArchive)}>

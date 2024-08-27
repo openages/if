@@ -127,7 +127,7 @@ const Index = (props: IPropsTodoItem) => {
 
 	const props_children: IPropsChildren = {
 		mode,
-		kanban_mode,
+		kanban_mode: kanban_mode!,
 		items: children,
 		index,
 		open,
@@ -161,12 +161,12 @@ const Index = (props: IPropsTodoItem) => {
 		() => (
 			<div className={$cx('options_wrap w_100 border_box flex align_center', open && 'open', status)}>
 				<div className='options_content w_100 flex align_center'>
-					{level > 0 && <LevelStatus level={level}></LevelStatus>}
-					{tags?.length > 0 && tag_ids?.length > 0 && (
+					{level! > 0 && <LevelStatus level={level}></LevelStatus>}
+					{tags?.length > 0 && tag_ids?.length! > 0 && (
 						<TagSelect
 							className='tag_select'
 							options={tags}
-							value={tag_ids}
+							value={tag_ids!}
 							useByTodo
 							onChange={updateTags}
 						></TagSelect>
@@ -188,7 +188,7 @@ const Index = (props: IPropsTodoItem) => {
 	const is_dragging = useMemo(() => kanban_mode && isDragging, [kanban_mode, isDragging])
 
 	const is_over = useMemo(
-		() => kanban_mode && isOver && active.data.current.dimension_id !== dimension_id,
+		() => kanban_mode && isOver && active!.data.current!.dimension_id !== dimension_id,
 		[kanban_mode, isOver, active, dimension_id]
 	)
 
@@ -223,7 +223,7 @@ const Index = (props: IPropsTodoItem) => {
 					setDropRef(ref)
 				})
 			}
-			style={{ transform: CSS.Translate.toString(transform), transition }}
+			style={{ transform: CSS.Translate.toString(transform!), transition }}
 			onContextMenu={disableContextMenu}
 		>
 			{is_over && <div className='over_line w_100 absolute left_0 flex align_center'></div>}
@@ -287,8 +287,8 @@ const Index = (props: IPropsTodoItem) => {
 								id={`todo_${id}`}
 								className={$cx(
 									'text_wrap',
-									children && children?.length && !open && 'has_children',
-									outdate && 'outdate'
+									children && !!children?.length && !open && 'has_children',
+									!!outdate && 'outdate'
 								)}
 								max_length={todo.text_max_length}
 								onChange={onChange}

@@ -10,7 +10,7 @@ export default (anchor: LexicalNode) => {
 
 	while ($isCodeTextNode(node) || $isTabNode(node)) {
 		nextNode = node
-		node = node.getNextSibling()
+		node = node.getNextSibling()!
 	}
 
 	return nextNode

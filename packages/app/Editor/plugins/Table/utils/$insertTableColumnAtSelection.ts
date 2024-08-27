@@ -31,12 +31,12 @@ export default (insert_after = true) => {
 	const insert_after_column = insert_after ? start_column + focus_cell.__col_span - 1 : start_column - 1
 	const grid_first_child = grid.getFirstChild()
 
-	let first_inserted_cell: TableCellNode = null
+	let first_inserted_cell: TableCellNode | null = null
 	let loop_row = grid_first_child as TableRowNode
 
 	row_loop: for (let i = 0; i < row_count; i++) {
 		if (i !== 0) {
-			loop_row = loop_row.getNextSibling()
+			loop_row = loop_row.getNextSibling()!
 		}
 
 		const row_map = grid_map[i]

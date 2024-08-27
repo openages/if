@@ -11,4 +11,4 @@ export default {
 	Ref: {
 		width: 450
 	}
-} as const
+}

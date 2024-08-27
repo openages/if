@@ -53,11 +53,11 @@ const Index = (props: IPropsHeader) => {
 	const { t } = useTranslation()
 
 	const { ref_editor, onChange, setEditor, setRef } = useText({
-		text: desc,
+		text: desc!,
 		update: v => updateSetting({ desc: v })
 	})
 
-	const { editor_size } = useTextChange({ ref_editor, text: desc })
+	const { editor_size } = useTextChange({ ref_editor, text: desc! })
 
 	const { options_mode, options_menu, onModeContextMenu, onOptionsContextMenu } = useContextMenu({
 		tags,
@@ -76,7 +76,7 @@ const Index = (props: IPropsHeader) => {
 	})
 
 	const resetSortParam = useMemoizedFn(() => {
-		setItemsSortParam(null)
+		setItemsSortParam(null!)
 	})
 
 	const resetFilterTags = useMemoizedFn(() => {
@@ -146,7 +146,7 @@ const Index = (props: IPropsHeader) => {
 			<div className='left_wrap flex flex_column'>
 				<div className='flex align_center'>
 					<If condition={!!icon}>
-						<Emoji className='icon_emoji' shortcodes={icon} size={21} hue={icon_hue}></Emoji>
+						<Emoji className='icon_emoji' shortcodes={icon!} size={21} hue={icon_hue}></Emoji>
 					</If>
 					<div className='name flex justify_between align_center'>{name}</div>
 				</div>

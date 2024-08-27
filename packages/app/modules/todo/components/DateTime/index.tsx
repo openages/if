@@ -41,7 +41,7 @@ const Index = (props: IPropsDateTime) => {
 
 	const Trigger = useMemo(
 		() => (
-			<div className={$cx('btn_clock flex justify_center align_center clickable', value && 'has_value')}>
+			<div className={$cx('btn_clock flex justify_center align_center clickable', !!value && 'has_value')}>
 				{Icon ? <Icon size={16}></Icon> : <Bell size={15}></Bell>}
 			</div>
 		),
@@ -49,13 +49,13 @@ const Index = (props: IPropsDateTime) => {
 	)
 
 	const onChangeTime = useMemoizedFn((v: Dayjs) => {
-		if (!v) return onChange(undefined)
+		if (!v) return onChange(undefined as unknown as number)
 		if (v.valueOf() <= dayjs().valueOf()) return
 
 		onChange(v.startOf('minute').valueOf())
 	})
 
-	const formatIgnoreDetail = useMemoizedFn(v => format(v, true))
+	const formatIgnoreDetail = useMemoizedFn(v => format(v, true)!)
 
 	return (
 		<DatePicker

@@ -8,13 +8,13 @@ import type { LexicalEditor } from 'lexical'
 
 @injectable()
 export default class Index {
-	container = null as HTMLElement
-	editor = null as LexicalEditor
+	container = null as unknown as HTMLElement
+	editor = null as unknown as LexicalEditor
 
 	constructor(public settings: NoteSettings) {}
 
 	init(id: string, editor: Index['editor']) {
-		this.container = document.getElementById(id)
+		this.container = document.getElementById(id)!
 		this.editor = editor
 	}
 
@@ -22,12 +22,12 @@ export default class Index {
 		return this.editor.getEditorState().read(() => {
 			const root = $getRoot()
 
-			return this.editor.getElementByKey(root.getKey()).parentElement
+			return this.editor.getElementByKey(root.getKey())!.parentElement
 		})
 	}
 
 	setSerif(v: boolean) {
-		const container = this.getContainer()
+		const container = this.getContainer()!
 		const title_el = this.container.querySelector('.article_title') as HTMLElement
 
 		if (v) {
@@ -40,7 +40,7 @@ export default class Index {
 	}
 
 	setSmallText(v: boolean) {
-		const container = this.getContainer()
+		const container = this.getContainer()!
 
 		if (v) {
 			container.classList.add(small_text)

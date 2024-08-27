@@ -36,17 +36,17 @@ export namespace Todo {
 		update_at?: number
 	}
 
-	type Cycle =
+	export type Cycle =
 		| {
 				type: 'interval'
-				scale: 'minute' | 'hour' | 'day' | 'week' | 'month' | 'quarter' | 'year'
-				value: number
+				scale?: 'minute' | 'hour' | 'day' | 'week' | 'month' | 'quarter' | 'year'
+				value?: number
 				exclude?: Array<number>
 		  }
 		| {
 				type: 'specific'
-				scale: 'clock' | 'weekday' | 'date' | 'special'
-				value: number
+				scale?: 'clock' | 'weekday' | 'date' | 'special'
+				value?: number
 				exclude?: Array<number>
 		  }
 

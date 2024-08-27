@@ -25,20 +25,20 @@ export default (args: HookArgs) => {
 		},
 		onDragEnd: () => {
 			setDragging(false)
-			makeLinkLine(null)
+			makeLinkLine!(null)
 		}
 	})
 
 	useDrop(linker, {
-		onDom: (active_id: string, { target }) => {
+		onDom: (active_id: string, e) => {
 			if (status !== 'unchecked') return
 
-			const over = target as HTMLDivElement
+			const over = e?.target as HTMLDivElement
 			const over_id = over.getAttribute('data-id')
 
 			if (active_id === over_id) return
 
-			updateRelations(active_id, id, dimension_id)
+			updateRelations!(active_id, id, dimension_id)
 			setHovering(false)
 		},
 		onDragEnter: () => {

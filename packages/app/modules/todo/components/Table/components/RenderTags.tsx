@@ -26,7 +26,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 				<TagSelect
 					useByTable
 					options={tags}
-					value={value}
+					value={value!}
 					onChange={onChange}
 					onFocus={onFocus}
 				></TagSelect>
@@ -35,7 +35,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 					<Choose>
 						<When condition={items !== undefined && items?.length > 0}>
 							{items?.map(item => {
-								const tag_color = getTagColor(item.color)
+								const tag_color = getTagColor(item!.color)
 
 								return (
 									<span
@@ -44,9 +44,9 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 											backgroundColor: tag_color.bg_color,
 											color: tag_color.text_color
 										}}
-										key={item.id}
+										key={item!.id}
 									>
-										{item.text}
+										{item!.text}
 									</span>
 								)
 							})}

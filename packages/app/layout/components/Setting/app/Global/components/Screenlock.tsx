@@ -114,7 +114,7 @@ const Index = () => {
 					placeholder={t('app.screenlock.password_placeholder')}
 					maxLength={18}
 					autoFocus
-					status={!global.screenlock.verified && 'error'}
+					status={!global.screenlock.verified ? 'error' : undefined}
 					value={global.screenlock.input_password}
 					onChange={onChangePassword}
 				></Password>
@@ -154,16 +154,16 @@ const Index = () => {
 								placeholder={t('app.screenlock.secret_key_placeholder')}
 								autoFocus={reset_mode}
 								readOnly={global.screenlock.password_mode}
-								status={!global.screenlock.verified && 'error'}
+								status={!global.screenlock.verified ? 'error' : undefined}
 								value={
 									!reset_mode && global.screenlock.password_mode
 										? global.screenlock.keypair.private_key
 										: global.screenlock.input_private_key
 								}
 								onChange={
-									reset_mode &&
-									!global.screenlock.password_mode &&
-									onChangePrivateKey
+									reset_mode && !global.screenlock.password_mode
+										? onChangePrivateKey
+										: undefined
 								}
 							></TextArea>
 							{!reset_mode && (

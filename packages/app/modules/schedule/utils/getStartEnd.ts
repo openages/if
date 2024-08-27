@@ -2,9 +2,9 @@ import type { Dayjs } from 'dayjs'
 
 export default (date: Dayjs, start: number, length: number, timeline?: boolean, year_scale?: boolean) => {
 	if (timeline) {
-		let date_start = null as Dayjs
-		let start_time = null as Dayjs
-		let end_time = null as Dayjs
+		let date_start = null as unknown as Dayjs
+		let start_time = null as unknown as Dayjs
+		let end_time = null as unknown as Dayjs
 
 		if (!year_scale) {
 			date_start = date.startOf('day')

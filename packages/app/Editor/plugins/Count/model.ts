@@ -16,9 +16,9 @@ import type { CSSProperties } from 'react'
 @injectable()
 export default class Index {
 	id = ''
-	editor = null as LexicalEditor
-	container = null as HTMLElement
-	observer = null as ResizeObserver
+	editor = null as unknown as LexicalEditor
+	container = null as unknown as HTMLElement
+	observer = null as unknown as ResizeObserver
 
 	count = false
 	visible = false
@@ -28,7 +28,7 @@ export default class Index {
 	counts_filted = 0
 	visible_count_popover = false
 
-	unregister = null as () => void
+	unregister = null as unknown as () => void
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(
@@ -53,7 +53,7 @@ export default class Index {
 
 		this.id = id
 		this.editor = editor
-		this.container = document.getElementById(this.id)
+		this.container = document.getElementById(this.id)!
 
 		this.on()
 
@@ -108,7 +108,7 @@ export default class Index {
 		if (this.unregister) {
 			this.unregister()
 
-			this.unregister = null
+			this.unregister = null as unknown as () => void
 		}
 
 		if (this.observer) {

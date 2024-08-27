@@ -10,6 +10,7 @@ import styles from './index.css'
 
 import type { IPropsHeaderLeft } from '../../../../types'
 import type { MouseEvent } from 'react'
+import type { Schedule } from '@/types'
 
 const Index = (props: IPropsHeaderLeft) => {
 	const { view, scale, visible_task_panel, toggleVisibleTaskPanel, changeView, changeScale } = props
@@ -84,7 +85,7 @@ const Index = (props: IPropsHeaderLeft) => {
 			<div className='toggle_wrap flex align_center' onClick={onChangeScale}>
 				{target_scales.map(item => (
 					<Tooltip
-						title={t(`common.time.${item.value as IPropsHeaderLeft['scale']}`)}
+						title={t(`common.time.${item.value as Required<Schedule.Item>['fixed_scale']}`)}
 						destroyTooltipOnHide
 						key={item.value}
 					>
