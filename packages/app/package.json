@@ -106,7 +106,6 @@
 		"@rspack/cli": "1.0.0-rc.1",
 		"@rspack/core": "1.0.0-rc.1",
 		"@rspack/plugin-react-refresh": "1.0.0",
-		"@svgr/webpack": "^8.1.0",
 		"@types/color": "^3.0.6",
 		"@types/crypto-js": "^4.2.2",
 		"@types/fs-extra": "^11.0.4",

@@ -21,3 +21,7 @@
 [submodule "packages/if_electron"]
 	path = packages/if_electron
 	url = git@1yasa:openages/if_electron.git
+
+[submodule "packages/if_admin"]
+	path = packages/if_admin
+	url = git@1yasa:openages/if_admin.git
