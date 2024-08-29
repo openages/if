@@ -24,7 +24,7 @@ interface IProps {
 	zIndex?: number
 	onCancel?: (e: MouseEvent<HTMLDivElement>) => void
 	getContainer?: () => Element
-	getRef?: (v: HTMLElement) => void
+	getRef?: (v: HTMLElement | null) => void
 }
 
 const Index = (props: IProps) => {

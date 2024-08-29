@@ -152,7 +152,7 @@ const Index = (props: IProps) => {
 
 	const props_content: IPropsContent = {
 		dirtree_width: global.layout.dirtree_width,
-		simple,
+		simple: simple!,
 		height,
 		props_search,
 		props_dir_items,

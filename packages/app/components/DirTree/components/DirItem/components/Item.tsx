@@ -40,7 +40,7 @@ const Index = (props: IPropsDirItem_Item) => {
 				<div className='left_icon_wrap flex justify_center align_center'>
 					<Choose>
 						<When condition={!!item.icon}>
-							<Emoji shortcodes={item.icon} size={16} hue={item.icon_hue}></Emoji>
+							<Emoji shortcodes={item.icon!} size={16} hue={item.icon_hue}></Emoji>
 						</When>
 						<Otherwise>
 							<LeftIcon module={module} item={item}></LeftIcon>
@@ -64,7 +64,7 @@ const Index = (props: IPropsDirItem_Item) => {
 								'no_children'
 						)}
 					>
-						<If condition={(item as Extend.DirTree.TransformedItem)?.children?.length > 0}>
+						<If condition={(item as Extend.DirTree.TransformedItem)?.children?.length! > 0}>
 							<span className='children_count text_center'>
 								{(item as Extend.DirTree.TransformedItem)?.children?.length}
 							</span>

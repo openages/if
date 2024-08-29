@@ -29,7 +29,7 @@ const PressItem = $app.memo((props: IProps) => {
 
 	useLongPress(
 		() => {
-			pressTrigger()
+			pressTrigger?.()
 			setPressStart(Date.now())
 		},
 		ref,

@@ -31,7 +31,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 	})
 
 	useDeepCompareEffect(() => {
-		setOpen(open_folder.includes(item.id))
+		setOpen(open_folder!.includes(item.id))
 	}, [open_folder, item.id])
 
 	useDeepUpdateEffect(() => {

@@ -13,11 +13,11 @@ const Index = (props: IPropsDirItem_SortableWrap) => {
 			className={$cx(
 				'w_100 border_box flex flex_column relative',
 				styles._local,
-				isOver && (over && over.data.current.item.type === 'dir' ? styles.is_dir : styles.is_file)
+				isOver && (over && over.data.current!.item.type === 'dir' ? styles.is_dir : styles.is_file)
 			)}
 			ref={setNodeRef}
 		>
-			{isOver && over && over.data.current.item.type === 'file' && (
+			{isOver && over && over.data.current!.item.type === 'file' && (
 				<div className='over_line absolute flex align_center'></div>
 			)}
 			{children}
