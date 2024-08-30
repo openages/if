@@ -25,6 +25,8 @@ export default {
 		refresh_token_error: 'Signin token refresh token verification failed, please log in again',
 		activation_code_not_exist: 'Activation code does not exist',
 		activation_code_expired: 'Activation code has expired',
+		activation_code_user_not_match: 'Activation Code User Not Match',
+		activation_code_used: 'Activation code has been used',
 		slider_captcha: {
 			default: 'Drag to complete the puzzle',
 			loading: 'Loading...',

@@ -25,6 +25,8 @@ export default {
 		refresh_token_error: '登录凭证刷新令牌验证失败，请重新登录',
 		activation_code_not_exist: '激活码不存在',
 		activation_code_expired: '激活码已过期',
+		activation_code_user_not_match: '激活码用户不匹配',
+		activation_code_used: '激活码已被使用',
 		slider_captcha: {
 			default: '向右拖动滑块填充拼图',
 			loading: '加载中',
