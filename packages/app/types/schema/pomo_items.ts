@@ -19,5 +19,6 @@ export namespace Pomo {
 		continuous_mode: boolean
 		create_at: number
 		update_at?: number
+		extends?: string
 	}
 }

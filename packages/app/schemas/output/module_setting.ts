@@ -18,6 +18,9 @@ export default {
                   },
                   "update_at": {
                         "type": "number"
+                  },
+                  "extends": {
+                        "type": "string"
                   }
             },
             "required": [

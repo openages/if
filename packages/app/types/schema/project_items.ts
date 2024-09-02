@@ -20,5 +20,6 @@ export namespace Project {
 		pages: Array<string>
 		create_at: number
 		update_at?: number
+		extends?: string
 	}
 }

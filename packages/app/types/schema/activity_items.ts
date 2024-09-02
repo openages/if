@@ -10,6 +10,7 @@ export namespace Activity {
 		action: string
 		context?: string
 		update_at?: number
+		extends?: string
 	}
 
 	export type TodoAction = 'insert' | 'check'

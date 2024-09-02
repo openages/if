@@ -88,6 +88,7 @@ export namespace Todo {
 			status: 'checked' | 'unchecked'
 		}>
 		collaborators?: Array<string | number>
+		extends?: string
 	}
 
 	export type Group = Common & {

@@ -49,6 +49,9 @@ export default {
                         "items": {
                               "type": "string"
                         }
+                  },
+                  "extends": {
+                        "type": "string"
                   }
             },
             "required": [
@@ -111,6 +114,9 @@ export default {
                               "items": {
                                     "type": "string"
                               }
+                        },
+                        "extends": {
+                              "type": "string"
                         }
                   },
                   "required": [

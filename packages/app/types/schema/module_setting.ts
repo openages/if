@@ -7,5 +7,6 @@ export namespace ModuleSetting {
 		setting: string
 		create_at: number
 		update_at?: number
+		extends?: string
 	}
 }

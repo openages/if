@@ -49,6 +49,7 @@ export namespace Schedule {
 		timeline_year?: boolean
 		create_at?: number
 		update_at?: number
+		extends?: string
 	}
 
 	export type CalendarItem = Item & {

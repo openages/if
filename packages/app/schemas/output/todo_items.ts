@@ -396,6 +396,9 @@ export default {
                               ]
                         }
                   },
+                  "extends": {
+                        "type": "string"
+                  },
                   "id": {
                         "type": "string",
                         "maxLength": 30
@@ -616,6 +619,9 @@ export default {
                                     "number"
                               ]
                         }
+                  },
+                  "extends": {
+                        "type": "string"
                   },
                   "id": {
                         "type": "string",
