@@ -21,8 +21,8 @@ const trpc = createTRPCProxyClient<Router>({
 
 				if (!local.token) return $message.warning($t('app.auth.not_login'))
 
-				const exp = jwtDecode(local.token).exp!
-				const now = Math.floor(Date.now() / 1000)
+				const exp = jwtDecode(local.token).exp! * 1000
+				const now = Date.now()
 
 				if (exp <= now) return true
 
