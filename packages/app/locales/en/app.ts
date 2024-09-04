@@ -9,7 +9,7 @@ export default {
 		resend_captcha: '{{time}}s resend',
 		send_captcha_done: 'Captcha has been sent to your email',
 		confirm: 'The free usage limit has been reached. Go to subscribe?',
-		not_login: 'Not logged in, please go to settings to log in!',
+		not_login: 'Login has expired, please relogin!',
 		email_not_input: 'No email entered',
 		send_verify_code_error: 'Failed to retrieve the verification code',
 		mid_exist: 'This device has already registered an account and cannot be registered again',

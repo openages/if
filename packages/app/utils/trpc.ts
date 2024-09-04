@@ -1,17 +1,21 @@
 import to from 'await-to-js'
+import dayjs from 'dayjs'
 import { jwtDecode } from 'jwt-decode'
 import lz from 'lz-string'
 
 import { local } from '@openages/stk/storage'
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client'
 
+import { goLogin } from './auth'
 import { BASE_URL } from './env'
+import getJson from './getJson'
+import hono from './hono'
 import { request } from './ofetch'
 import trpcRefreshTokenLink from './trpcRefreshTokenLink'
 
 import type { Router } from '@server/rpcs'
 
-const ignore_paths = ['auth.sendVerifyCode', 'auth.signup', 'auth.signin', 'auth.refreshToken']
+const ignore_paths = ['auth.sendVerifyCode', 'auth.signup', 'auth.signin']
 
 const trpc = createTRPCProxyClient<Router>({
 	links: [
@@ -19,10 +23,13 @@ const trpc = createTRPCProxyClient<Router>({
 			tokenRefreshNeeded(op) {
 				if (ignore_paths.includes(op.path)) return
 
-				if (!local.token) return $message.warning($t('app.auth.not_login'))
+				if (!local.token) return goLogin()
 
 				const exp = jwtDecode(local.token).exp! * 1000
 				const now = Date.now()
+				const left_time = dayjs(exp).diff(now, 'minute')
+
+				if (exp > now && left_time <= 90) return true
 
 				if (exp <= now) return true
 
@@ -31,23 +38,25 @@ const trpc = createTRPCProxyClient<Router>({
 			async fetchAccessToken() {
 				const compressed_user = local.user
 
-				if (!compressed_user) return $message.error($t('app.auth.not_login'))
+				if (!compressed_user) return goLogin()
 
 				const user = JSON.parse(lz.decompress(compressed_user))
 
-				const [err, res] = await to(
-					trpc.auth.refreshToken.mutate({
+				const response = await hono.refreshToken.$post({
+					json: {
 						mid: local.mid,
 						id: user.id,
 						token: local.token,
 						refresh_token: user.refresh_token
-					})
-				)
+					}
+				})
+
+				const [err, res] = await to(getJson(response))
 
 				if (err || res.error) {
-					local.removeItem('user')
+					$message.error(err?.message || res?.error)
 
-					return window.location.reload()
+					return goLogin()
 				}
 
 				const { data } = res
@@ -56,7 +65,6 @@ const trpc = createTRPCProxyClient<Router>({
 					local.token = data
 				} else {
 					local.token = data.token
-
 					local.user = lz.compress(JSON.stringify({ ...user, refresh_token: data.refresh_token }))
 				}
 			}

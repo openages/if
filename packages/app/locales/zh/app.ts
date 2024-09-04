@@ -9,7 +9,7 @@ export default {
 		resend_captcha: '{{time}}s后重发',
 		send_captcha_done: '验证码已发送至您的邮箱',
 		confirm: '已达到免费版使用上限，前往订阅？',
-		not_login: '未登录，请前往设置进行登录！',
+		not_login: '登录已过期，请重新登录！',
 		email_not_input: '未输入邮箱',
 		send_verify_code_error: '获取验证码失败',
 		mid_exist: '该设备已注册账号，无法重复注册',

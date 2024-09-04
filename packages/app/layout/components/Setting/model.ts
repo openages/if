@@ -15,16 +15,23 @@ export default class Index {
 		makeAutoObservable(this, { ref: false }, { autoBind: true })
 	}
 
+	goLogin() {
+		this.active = 'account'
+		this.global.setting.visible = true
+	}
+
 	goPaid() {
 		this.active = 'paid'
 		this.global.setting.visible = true
 	}
 
 	on() {
+		window.$app.Event.on('global.setting.goLogin', this.goLogin)
 		window.$app.Event.on('global.setting.goPaid', this.goPaid)
 	}
 
 	off() {
+		window.$app.Event.off('global.setting.goLogin', this.goLogin)
 		window.$app.Event.off('global.setting.goPaid', this.goPaid)
 	}
 }

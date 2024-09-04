@@ -1,7 +1,8 @@
 import PQueue from 'p-queue'
 
-import { local } from '@openages/stk/storage'
 import { observable } from '@trpc/server/observable'
+
+import { goLogin } from './auth'
 
 import type { Router } from '@server/rpcs'
 import type { Operation, TRPCLink } from '@trpc/client'
@@ -23,13 +24,19 @@ export default <AppRouter extends Router>(args: Args): TRPCLink<AppRouter> => {
 					const refresh = tokenRefreshNeeded(op)
 
 					if (refresh === true) {
-						await fetchAccessToken(op)
+						const res = await fetchAccessToken(op)
+
+						if (res === false) return queue.clear()
+					}
+
+					if (refresh === false) {
+						return queue.clear()
 					}
 
 					next(op).subscribe({
 						error(error) {
 							if (error.data?.code === 'UNAUTHORIZED') {
-								local.removeItem('token')
+								goLogin()
 							}
 
 							observer.error(error)
