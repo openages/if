@@ -3,6 +3,8 @@
 
 	:global {
 		.rc-slider-captcha {
+			margin-bottom: 18px;
+
 			.rc-slider-captcha-control {
 				border: none !important;
 			}
@@ -98,7 +100,6 @@
 
 			.btn_login {
 				height: 44px;
-				margin-top: 18px;
 				font-weight: 600;
 				backdrop-filter: var(--blur);
 

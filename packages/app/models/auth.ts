@@ -27,41 +27,6 @@ export default class Index {
 		const user = getUserData()
 
 		if (user) this.user = user
-
-		this.refreshToken()
-	}
-
-	async refreshToken() {
-		const user = getUserData()
-
-		if (!local.token) return
-		if (!user) return
-
-		const [err, res] = await to(
-			trpc.auth.refreshToken.mutate({
-				mid: local.mid,
-				id: user.id,
-				token: local.token,
-				refresh_token: user.refresh_token
-			})
-		)
-
-		if (err || res.error) {
-			local.removeItem('token')
-			local.removeItem('user')
-
-			return window.location.reload()
-		}
-
-		const { data } = res
-
-		if (typeof data === 'string') {
-			local.token = data
-		} else {
-			local.token = data.token
-		}
-
-		this.saveUser({ ...this.user, ...res.user })
 	}
 
 	async updateUser() {

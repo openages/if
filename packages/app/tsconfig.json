@@ -13,7 +13,8 @@
 		"resolveJsonModule": true,
 		"paths": {
 			"@/*": ["./app/*"],
-			"@server/*": ["./if_server/src/*"]
+			"@server/*": ["./if_server/src/*"],
+			"@schema": ["./if_server/schema/index.ts"]
 		},
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true

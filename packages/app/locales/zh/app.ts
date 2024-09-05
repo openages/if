@@ -35,6 +35,7 @@ export default {
 		},
 		signout: '注销',
 		activate: '激活',
+		activate_code: '激活码',
 		activate_success: '激活成功'
 	},
 	search: {

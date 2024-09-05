@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { genConfig } from 'react-nice-avatar'
 
 import { getVersionName } from '@/appdata/version'
+import { ShowUseHeight } from '@/components'
 import img_puzzle from '@/public/images/puzzle.png'
 import { local } from '@openages/stk/storage'
 import { EnvelopeSimple, Lock, LockKey, ShieldCheck } from '@phosphor-icons/react'
@@ -224,34 +225,36 @@ const Index = (props: IPropsSign) => {
 						</div>
 					</Fragment>
 				)}
-				<SliderCaptcha
-					mode='float'
-					bgSize={{ width: 324, height: 172 }}
-					loadingDelay={300}
-					tipText={{
-						default: t('app.auth.slider_captcha.default'),
-						loading: t('app.auth.slider_captcha.loading'),
-						verifying: t('app.auth.slider_captcha.verifying'),
-						error: t('app.auth.slider_captcha.error')
-					}}
-					style={{
-						'--rcsc-primary': 'var(--color_text)',
-						'--rcsc-primary-light': 'rgba(var(--color_text_rgb),0.06)',
-						'--rcsc-success': 'rgba(var(--color_success_rgb),0.81)',
-						'--rcsc-success-light': 'rgba(var(--color_success_rgb),0.12)',
-						'--rcsc-error': 'var(--color_danger)',
-						'--rcsc-error-light': 'rgba(var(--color_danger_rgb),0.12)',
-						'--rcsc-bg-color': 'var(--color_bg_1)',
-						'--rcsc-text-color': 'var(--color_text)',
-						'--rcsc-button-color': 'var(--color_text)',
-						'--rcsc-button-bg-color': 'var(--color_bg_2)',
-						'--rcsc-panel-border-radius': '6px',
-						'--rcsc-control-border-radius': '6px',
-						zIndex: 100
-					}}
-					request={request}
-					onVerify={onVerify}
-				/>
+				<ShowUseHeight visible={!verified}>
+					<SliderCaptcha
+						mode='float'
+						bgSize={{ width: 324, height: 172 }}
+						loadingDelay={300}
+						tipText={{
+							default: t('app.auth.slider_captcha.default'),
+							loading: t('app.auth.slider_captcha.loading'),
+							verifying: t('app.auth.slider_captcha.verifying'),
+							error: t('app.auth.slider_captcha.error')
+						}}
+						style={{
+							'--rcsc-primary': 'var(--color_text)',
+							'--rcsc-primary-light': 'rgba(var(--color_text_rgb),0.06)',
+							'--rcsc-success': 'rgba(var(--color_success_rgb),0.81)',
+							'--rcsc-success-light': 'rgba(var(--color_success_rgb),0.12)',
+							'--rcsc-error': 'var(--color_danger)',
+							'--rcsc-error-light': 'rgba(var(--color_danger_rgb),0.12)',
+							'--rcsc-bg-color': 'var(--color_bg_1)',
+							'--rcsc-text-color': 'var(--color_text)',
+							'--rcsc-button-color': 'var(--color_text)',
+							'--rcsc-button-bg-color': 'var(--color_bg_2)',
+							'--rcsc-panel-border-radius': '6px',
+							'--rcsc-control-border-radius': '6px',
+							zIndex: 100
+						}}
+						request={request}
+						onVerify={onVerify}
+					/>
+				</ShowUseHeight>
 				<Button
 					className={$cx('btn_login', btn_login_disabled && 'disabled')}
 					type='primary'

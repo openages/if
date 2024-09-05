@@ -35,7 +35,9 @@
 			width: 90px;
 			height: 24px !important;
 			margin: 6px 0;
+			border-style: solid;
 			border-radius: 24px;
+			background-color: transparent;
 			text-align: center;
 		}
 
@@ -85,25 +87,14 @@
 			margin-bottom: 12px;
 
 			.if-input {
-				height: 60px;
-				margin-bottom: 12px;
-				border: none;
-				color: var(--color_text_light);
-				background-color: var(--color_bg_1);
-				resize: none;
-				font-size: 10px;
+				height: 32px;
+				margin-bottom: 9px;
+				border-style: solid;
+				text-align: center;
 			}
 
 			.if-btn {
 				height: 30px;
-				padding-right: 12px;
-				padding-left: 12px;
-				border: none;
-				background-color: var(--color_bg_1);
-
-				&:hover {
-					background-color: var(--color_bg_2);
-				}
 			}
 		}
 	}

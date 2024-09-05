@@ -4,15 +4,14 @@ import { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import Avatar, { genConfig } from 'react-nice-avatar'
 
+import { ShowUseHeight } from '@/components'
 import { CaretDoubleUp, Power } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
 import type { ChangeEvent } from 'react'
 import type { IPropsUser } from '../../types'
-import type { TextAreaRef } from 'antd/es/input/TextArea'
-
-const { TextArea } = Input
+import type { InputRef } from 'antd'
 
 const Index = (props: IPropsUser) => {
 	const { user, temp_user, edit_mode, updateTempUser, signout, activate } = props
@@ -20,13 +19,17 @@ const Index = (props: IPropsUser) => {
 	const { name: temp_name, avatar: temp_avatar } = temp_user
 	const { t } = useTranslation()
 	const [visible_activate, { toggle }] = useToggle(false)
-	const ref_input_activate = useRef<TextAreaRef>(null)
+	const ref_input_activate = useRef<InputRef>(null)
 
 	const avatar_config = useMemo(() => JSON.parse(temp_avatar ?? avatar), [avatar, temp_avatar])
 
 	const changeName = useMemoizedFn((e: ChangeEvent<HTMLInputElement>) => updateTempUser({ name: e.target.value }))
 	const changeAvatar = useMemoizedFn(() => updateTempUser({ avatar: JSON.stringify(genConfig()) }))
-	const onActivate = useMemoizedFn(() => activate(ref_input_activate.current?.resizableTextArea?.textArea?.value!))
+
+	const onActivate = useMemoizedFn(() => {
+		activate(ref_input_activate.current?.input?.value!)
+		toggle()
+	})
 
 	return (
 		<div className={$cx('w_100 h_100 flex flex_column align_center justify_center relative', styles._local)}>
@@ -43,12 +46,7 @@ const Index = (props: IPropsUser) => {
 			</div>
 			<Choose>
 				<When condition={edit_mode}>
-					<Input
-						className='input_name'
-						variant='filled'
-						value={temp_name ?? name}
-						onChange={changeName}
-					></Input>
+					<Input className='input_name' value={temp_name ?? name} onChange={changeName}></Input>
 				</When>
 				<Otherwise>
 					<span className='name'>{temp_name ?? name}</span>
@@ -57,14 +55,23 @@ const Index = (props: IPropsUser) => {
 			<span className='email'>{email}</span>
 			<If condition={!edit_mode}>
 				<div className='actions_wrap w_100 flex flex_column align_center absolute'>
-					<If condition={visible_activate}>
+					<ShowUseHeight visible={visible_activate}>
 						<div className='activate_wrap flex flex_column'>
-							<TextArea className='input_activate' ref={ref_input_activate}></TextArea>
-							<Button className='btn_activate' onClick={onActivate}>
+							<Input
+								className='input_activate'
+								ref={ref_input_activate}
+								placeholder={t('app.auth.activate_code')}
+								maxLength={12}
+							></Input>
+							<Button
+								className='btn_activate clickable'
+								type='primary'
+								onClick={onActivate}
+							>
 								{t('common.confirm')}
 							</Button>
 						</div>
-					</If>
+					</ShowUseHeight>
 					<div className='action_items flex w_100 flex justify_center align_center'>
 						<div
 							className='action_item flex flex_column align_center justify_center clickable'

@@ -78,8 +78,7 @@ const trpc = createTRPCProxyClient<Router>({
 				return request.raw(input as string, options)
 			}
 		})
-	],
-	transformer: undefined
+	]
 })
 
 export default trpc

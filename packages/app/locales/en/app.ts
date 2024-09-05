@@ -35,6 +35,7 @@ export default {
 		},
 		signout: 'Signout',
 		activate: 'activate',
+		activate_code: 'Activate Code',
 		activate_success: 'Activate Success'
 	},
 	search: {
