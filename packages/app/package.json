@@ -1,10 +1,10 @@
 {
 	"name": "@openages/if-app",
-	"version": "0.3",
+	"version": "0.1",
 	"description": "GTD for professionals.",
 	"scripts": {
 		"dev": "rspack serve",
-		"dev:electron": "rspack serve",
+		"dev:sandbox": "cross-env SANDBOX=1 rspack serve",
 		"build": "rspack build",
 		"preview": "rspack preview",
 		"build:theme": "bun ./build/theme",
@@ -103,9 +103,9 @@
 		"zod": "^3.23.8"
 	},
 	"devDependencies": {
-		"@rsdoctor/rspack-plugin": "^0.3.11",
-		"@rspack/cli": "1.0.0-rc.1",
-		"@rspack/core": "1.0.0-rc.1",
+		"@rsdoctor/rspack-plugin": "^0.4.1",
+		"@rspack/cli": "1.0.3",
+		"@rspack/core": "1.0.3",
 		"@rspack/plugin-react-refresh": "1.0.0",
 		"@types/color": "^3.0.6",
 		"@types/crypto-js": "^4.2.2",
