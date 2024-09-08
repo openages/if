@@ -14,7 +14,8 @@
 		"paths": {
 			"@/*": ["./app/*"],
 			"@server/*": ["./if_server/src/*"],
-			"@schema": ["./if_server/schema/index.ts"]
+			"@schema": ["./if_server/schema/index.ts"],
+			"@electron/*": ["./if_electron/src/*"]
 		},
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true

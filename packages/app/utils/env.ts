@@ -1,6 +1,6 @@
 import { is_prod } from './is'
 
-const { SANDBOX } = process.env
+const SANDBOX = process.env.SANDBOX
 
 export const BASE_URL = SANDBOX
 	? 'https://if-server-sandbox.openages.com'

@@ -6,7 +6,7 @@ import { injectable } from 'tsyringe'
 
 import { getVersionName } from '@/appdata'
 import Utils from '@/models/utils'
-import { getUserData, trpc } from '@/utils'
+import { getUserData, ipc, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
 import { local } from '@openages/stk/storage'
 
@@ -27,6 +27,12 @@ export default class Index {
 		const user = getUserData()
 
 		if (user) this.user = user
+
+		this.getProductList()
+	}
+
+	async getProductList() {
+		const res = await ipc.auth.getProductList.mutate()
 	}
 
 	async updateUser() {

@@ -2,7 +2,7 @@ import { resolve } from 'path'
 
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
 import { defineConfig } from '@rspack/cli'
-import { CopyRspackPlugin, HtmlRspackPlugin } from '@rspack/core'
+import { CopyRspackPlugin, DefinePlugin, HtmlRspackPlugin } from '@rspack/core'
 import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
 
 const is_dev = process.env.NODE_ENV === 'development'
@@ -53,6 +53,9 @@ module.exports = defineConfig({
 		lazyCompilation: false
 	},
 	plugins: [
+		new DefinePlugin({
+			'process.env.SANDBOX': process.env.SANDBOX ?? '0'
+		}),
 		new HtmlRspackPlugin({
 			title: 'IF - GTD for professionals.',
 			template: './public/index.html',
