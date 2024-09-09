@@ -10,7 +10,7 @@
 		"build:theme": "bun ./build/theme",
 		"build:schema": "bun ./build/schema",
 		"build:doctor": "cross-env DOCTOR=true rspack build",
-		"build:electron": "cross-env BUILD_TARGET=electron max build"
+		"build:electron": "cross-env BUILD_TARGET=electron rspack build && bun ./build/after"
 	},
 	"keywords": [],
 	"author": "1yasa",
