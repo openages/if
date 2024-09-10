@@ -55,7 +55,7 @@ export default class Index {
 
 		await this.getLocale(lang)
 
-		window.location.reload()
+		$app.Event.emit('global.app.relaunch')
 	}
 
 	off() {

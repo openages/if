@@ -8,7 +8,7 @@ import styles from './index.css'
 const Index = () => {
 	const { t } = useTranslation()
 
-	const reload = useMemoizedFn(() => window.location.reload())
+	const reload = useMemoizedFn(() => $app.Event.emit('global.app.relaunch'))
 
 	return (
 		<div className={$cx('fixed top_0 left_0 w_100vw h_100vh flex justify_center align_center', styles._local)}>

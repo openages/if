@@ -11,6 +11,7 @@ import { loading } from '@/utils/decorators'
 import { local } from '@openages/stk/storage'
 
 import type { Trpc } from '@/types'
+import type { Product } from 'electron'
 
 @injectable()
 export default class Index {
@@ -18,6 +19,7 @@ export default class Index {
 	user = { paid_plan: 'free', is_infinity: false } as Trpc.UserData
 	temp_user = {} as Trpc.UserData
 	edit_mode = false
+	products = [] as Array<Product>
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { utils: false }, { autoBind: true })
@@ -28,11 +30,17 @@ export default class Index {
 
 		if (user) this.user = user
 
-		this.getProductList()
+		this.getProducts()
 	}
 
-	async getProductList() {
-		const res = await ipc.auth.getProductList.mutate()
+	async getProducts() {
+		console.log('getProducts')
+		const res = await ipc.ipa.getProducts.query()
+
+		if (res.error !== null) return $message.error(res.error)
+
+		console.log(res)
+		this.products = res.data
 	}
 
 	async updateUser() {

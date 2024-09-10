@@ -3,6 +3,7 @@ import { injectable } from 'tsyringe'
 
 import { modules } from '@/appdata'
 import Utils from '@/models/utils'
+import { ipc, is_electron } from '@/utils'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
 
 import type { App } from '@/types'
@@ -58,6 +59,14 @@ export default class Index {
 		this.actives = v
 	}
 
+	relaunch() {
+		if (is_electron) {
+			ipc.app.relaunch.query()
+		} else {
+			window.location.reload()
+		}
+	}
+
 	toggleAppMenu() {
 		this.visible_app_menu = !this.visible_app_menu
 	}
@@ -93,6 +102,7 @@ export default class Index {
 	}
 
 	on() {
+		$app.Event.on('global.app.relaunch', this.relaunch)
 		$app.Event.on('global.app.toggleAppMenu', this.toggleAppMenu)
 		$app.Event.on('global.app.appSwitch', this.appSwitch)
 		$app.Event.on('global.app.handleAppSwitch', this.handleAppSwitch)
@@ -103,6 +113,7 @@ export default class Index {
 	off() {
 		this.utils.off()
 
+		$app.Event.off('global.app.relaunch', this.relaunch)
 		$app.Event.off('global.app.toggleAppMenu', this.toggleAppMenu)
 		$app.Event.off('global.app.appSwitch', this.appSwitch)
 		$app.Event.off('global.app.handleAppSwitch', this.handleAppSwitch)
