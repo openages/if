@@ -2,6 +2,7 @@
 	--logo_height: 42px;
 	--logo_padding_top: 15px;
 	--logo_padding_bottom: 12px;
+
 	width: var(--sidebar_width);
 	background-color: var(--color_bg);
 	box-shadow: var(--shadow);
@@ -17,10 +18,12 @@
 			width: 100%;
 			padding-top: var(--logo_padding_top);
 			padding-bottom: var(--logo_padding_bottom);
+			transition: padding ease 0.18s;
 		}
 
 		.sidebar_items {
 			height: calc(100vh - var(--logo_height) - var(--logo_padding_top) - var(--logo_padding_bottom));
+			transition: height ease 0.18s;
 
 			&.dark {
 				.sidebar_item {

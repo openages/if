@@ -2,13 +2,14 @@ import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { getComputedStyleValue } from '@/utils'
+import { getComputedStyleValue, ipc } from '@/utils'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 
 @injectable()
 export default class Index {
 	dirtree_width = 0
 	dirtree_prev = 0
+	blur = false
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { utils: false }, { autoBind: true })
@@ -24,6 +25,13 @@ export default class Index {
 		}
 
 		this.setDirTreeWidth(this.dirtree_width)
+		this.onWindowBlur()
+	}
+
+	onWindowBlur() {
+		ipc.app.onBlur.subscribe(undefined, {
+			onData: v => (this.blur = v)
+		})
 	}
 
 	toggleDirTreeVisible() {

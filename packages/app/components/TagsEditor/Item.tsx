@@ -16,12 +16,12 @@ interface IProps {
 	limitMax: boolean
 	onAdd: (index: number) => void
 	onRemove: (index: number) => void
-	onUpdate: (key: string, index: number, v: string) => void
+	onUpdate: (key: 'id' | 'color' | 'text', index: number, v: string) => void
 }
 
 const Index = (props: IProps) => {
 	const { sortable_props, item, index, limitMax, onAdd, onRemove, onUpdate } = props
-	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = sortable_props
+	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = sortable_props!
 
 	const { t } = useTranslation()
 	const { bg_color, text_color } = useTagColor(item.color)

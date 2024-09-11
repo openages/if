@@ -11,8 +11,8 @@ import styles from './index.css'
 import type { IPropsSidebar } from '../../types'
 
 const Index = (props: IPropsSidebar) => {
-	const { current_module, theme, show_bar_title, apps, actives, timer, showAppMenu } = props
-	const { ref_sidebar, ref_items_wrap, overflow } = useNavOverflow(timer)
+	const { current_module, blur, theme, show_bar_title, apps, actives, timer, showAppMenu } = props
+	const { ref_sidebar, ref_items_wrap, overflow } = useNavOverflow(blur, timer)
 
 	useAntdApp()
 
@@ -21,7 +21,7 @@ const Index = (props: IPropsSidebar) => {
 			className={$cx(
 				'fixed h_100vh border_box flex flex_column z_index_1000',
 				styles._local,
-				is_mac_electron && styles.is_mac_electron
+				!blur && is_mac_electron && styles.is_mac_electron
 			)}
 			ref={ref_sidebar}
 		>

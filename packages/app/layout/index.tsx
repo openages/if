@@ -67,6 +67,7 @@ const Index = () => {
 
 	const props_sidebar: IPropsSidebar = {
 		current_module,
+		blur: global.layout.blur,
 		theme: global.setting.theme,
 		show_bar_title: global.setting.show_bar_title,
 		apps,

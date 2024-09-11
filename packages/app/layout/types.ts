@@ -3,6 +3,7 @@ import type { App } from '@/types'
 
 export interface IPropsSidebar {
 	current_module: App.ModuleType
+	blur: GlobalModel['layout']['blur']
 	theme: GlobalModel['setting']['theme']
 	show_bar_title: GlobalModel['setting']['show_bar_title']
 	apps: GlobalModel['app']['apps']
