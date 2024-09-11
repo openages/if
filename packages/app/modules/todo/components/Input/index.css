@@ -12,7 +12,7 @@
 			border-radius: var(--radius);
 			outline: none;
 
-			&:focus {
+			&:focus-within {
 				border-color: var(--color_text);
 			}
 

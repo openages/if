@@ -34,6 +34,7 @@ export default {
 			error: '失败'
 		},
 		signout: '注销',
+		passport: '用户码',
 		activate: '激活',
 		activate_code: '激活码',
 		activate_success: '激活成功'

@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import { singleton } from 'tsyringe'
 
-import { App, Auth, DB, Layout, Locale, Screenlock, Search, Setting, Shortcuts, Stack, Timer } from '@/models'
+import { App, Auth, DB, Iap, Layout, Locale, Screenlock, Search, Setting, Shortcuts, Stack, Timer } from '@/models'
 
 @singleton()
 export default class GlobalModel {
@@ -14,6 +14,7 @@ export default class GlobalModel {
 		public db: DB,
 		public screenlock: Screenlock,
 		public auth: Auth,
+		public iap: Iap,
 		public layout: Layout,
 		public app: App,
 		public shortcuts: Shortcuts,
@@ -29,6 +30,7 @@ export default class GlobalModel {
 				db: false,
 				screenlock: false,
 				auth: false,
+				iap: false,
 				layout: false,
 				app: false,
 				shortcuts: false,
@@ -51,6 +53,7 @@ export default class GlobalModel {
 		if (this.screenlock.screenlock_open) return this.lock()
 
 		this.auth.init()
+		this.iap.init()
 		this.layout.init()
 		this.app.init()
 		this.shortcuts.init()
@@ -85,6 +88,7 @@ export default class GlobalModel {
 		this.db.off()
 		this.screenlock.off()
 		this.auth.off()
+		this.iap.off()
 		this.layout.off()
 		this.app.off()
 		this.shortcuts.off()

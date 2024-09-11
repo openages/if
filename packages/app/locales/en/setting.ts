@@ -74,7 +74,6 @@ export default {
 		},
 		free: {
 			type: 'Free',
-			value: '$0',
 			btn_text: 'Rate In Mac App Store'
 		},
 		pro: {

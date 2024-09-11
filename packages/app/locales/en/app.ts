@@ -33,7 +33,8 @@ export default {
 			verifying: 'Verifying',
 			error: 'Failed'
 		},
-		signout: 'Signout',
+		signout: 'signout',
+		passport: 'passport',
 		activate: 'activate',
 		activate_code: 'Activate Code',
 		activate_success: 'Activate Success'

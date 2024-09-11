@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Avatar, { genConfig } from 'react-nice-avatar'
 
 import { ShowUseHeight } from '@/components'
-import { CaretDoubleUp, Power } from '@phosphor-icons/react'
+import { AndroidLogo, CaretDoubleUp, Power } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -15,7 +15,7 @@ import type { InputRef } from 'antd'
 
 const Index = (props: IPropsUser) => {
 	const { user, temp_user, edit_mode, updateTempUser, signout, activate } = props
-	const { name, email, avatar } = user
+	const { id, name, email, avatar } = user
 	const { name: temp_name, avatar: temp_avatar } = temp_user
 	const { t } = useTranslation()
 	const [visible_activate, { toggle }] = useToggle(false)
@@ -25,6 +25,12 @@ const Index = (props: IPropsUser) => {
 
 	const changeName = useMemoizedFn((e: ChangeEvent<HTMLInputElement>) => updateTempUser({ name: e.target.value }))
 	const changeAvatar = useMemoizedFn(() => updateTempUser({ avatar: JSON.stringify(genConfig()) }))
+
+	const copyPassport = useMemoizedFn(async () => {
+		await window.navigator.clipboard.writeText(id)
+
+		$message.success(t('app.auth.passport') + t('common.letter_space') + t('common.copied'))
+	})
 
 	const onActivate = useMemoizedFn(() => {
 		activate(ref_input_activate.current?.input?.value!)
@@ -79,6 +85,13 @@ const Index = (props: IPropsUser) => {
 						>
 							<Power className='icon'></Power>
 							<span className='text'>{t('app.auth.signout')}</span>
+						</div>
+						<div
+							className='action_item flex flex_column align_center justify_center clickable'
+							onClick={copyPassport}
+						>
+							<AndroidLogo className='icon'></AndroidLogo>
+							<span className='text'>{t('app.auth.passport')}</span>
 						</div>
 						<div
 							className={$cx(

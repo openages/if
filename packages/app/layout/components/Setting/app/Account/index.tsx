@@ -12,8 +12,8 @@ import type { IPropsSign, IPropsUser } from './types'
 import type { Trpc } from '@/types'
 
 const Index = () => {
-	const { t } = useTranslation()
 	const global = useGlobal()
+	const { t } = useTranslation()
 	const auth = global.auth
 
 	const has_user_id = useMemo(() => Boolean(auth.user.id), [auth.user.id])

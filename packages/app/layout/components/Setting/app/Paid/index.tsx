@@ -1,5 +1,9 @@
+import { useMemoizedFn } from 'ahooks'
+import { observer } from 'mobx-react-lite'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useGlobal } from '@/context/app'
 import { useCopyMemberEmail } from '@/hooks'
 import { getObjectKeys } from '@/utils'
 import { Check, Infinity, ThumbsUp } from '@phosphor-icons/react'
@@ -7,9 +11,28 @@ import { Check, Infinity, ThumbsUp } from '@phosphor-icons/react'
 import { limit, modules } from './data'
 import styles from './index.css'
 
+import type { Iap } from '@/types'
+
 const Index = () => {
+	const global = useGlobal()
 	const { t } = useTranslation()
 	const { copy } = useCopyMemberEmail()
+	const iap = global.iap
+	const products = $copy(iap.products)
+
+	const currency = useMemo(() => products['PRO'].formattedPrice.charAt(0), [products])
+
+	const purchase = useMemoizedFn((plan: Iap.Plan) => {
+		if (!global.auth.user.id) {
+			t('app.auth.not_login')
+
+			$app.Event.emit('global.setting.goLogin')
+
+			return
+		}
+
+		iap.purchase(products[plan].productIdentifier)
+	})
 
 	return (
 		<div className={$cx('w_100 h_100 flex flex_column', styles._local)}>
@@ -23,7 +46,16 @@ const Index = () => {
 						>
 							<h3 className='type'>{t(`setting.Paid.${type}.type`)}</h3>
 							<div className='price'>
-								<span className='value'>{t(`setting.Paid.${type}.value`)}</span>
+								<Choose>
+									<When condition={type == 'pro'}>
+										<span className='value'>
+											{products['PRO'].formattedPrice.replace('.00', '')}
+										</span>
+									</When>
+									<Otherwise>
+										<span className='value'>{currency}0</span>
+									</Otherwise>
+								</Choose>
 								<span className='unit'>/ {t(`setting.Paid.unit`)}</span>
 							</div>
 							<div className='features flex flex_column'>
@@ -52,7 +84,14 @@ const Index = () => {
 									</div>
 								))}
 							</div>
-							<button className='btn_action w_100 border_box flex justify_center align_center clickable'>
+							<button
+								className='btn_action w_100 border_box flex justify_center align_center clickable'
+								onClick={
+									type === 'free'
+										? undefined
+										: () => purchase(type.toUpperCase() as Iap.Plan)
+								}
+							>
 								{t(`setting.Paid.${type}.btn_text`)}
 							</button>
 						</div>
@@ -68,10 +107,15 @@ const Index = () => {
 						</div>
 						<div className='flex align_center'>
 							<div className='price'>
-								<span className='value'>{t(`setting.Paid.sponsor.value`)}</span>
+								<span className='value'>
+									{products['SPONSOR'].formattedPrice.replace('.00', '')}
+								</span>
 								<span className='unit'>/ {t(`setting.Paid.unit`)}</span>
 							</div>
-							<button className='btn_action flex justify_center align_center clickable ml_12'>
+							<button
+								className='btn_action flex justify_center align_center clickable ml_12'
+								onClick={() => purchase('SPONSOR')}
+							>
 								{t('setting.Paid.sponsor.btn_text')}
 							</button>
 						</div>
@@ -123,4 +167,4 @@ const Index = () => {
 	)
 }
 
-export default $app.memo(Index)
+export default new $app.handle(Index).by(observer).by($app.memo).get()

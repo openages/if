@@ -74,7 +74,6 @@ export default {
 		},
 		free: {
 			type: '免费者',
-			value: '¥0',
 			btn_text: '给个好评'
 		},
 		pro: {

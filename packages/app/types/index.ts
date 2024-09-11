@@ -1,6 +1,7 @@
 export * from './build'
 export * from './dayjs'
 export * from './auth'
+export * from './iap'
 export * from './app'
 export * from './stack'
 export * from './common'
