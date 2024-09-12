@@ -6,7 +6,7 @@ import { injectable } from 'tsyringe'
 
 import { getVersionName } from '@/appdata'
 import Utils from '@/models/utils'
-import { getUserData, ipc, trpc } from '@/utils'
+import { getUserData, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
 import { local } from '@openages/stk/storage'
 
@@ -18,6 +18,7 @@ export default class Index {
 	user = { paid_plan: 'free', is_infinity: false } as Trpc.UserData
 	temp_user = {} as Trpc.UserData
 	edit_mode = false
+	frozen = false
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { utils: false }, { autoBind: true })

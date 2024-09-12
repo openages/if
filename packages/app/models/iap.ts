@@ -37,7 +37,11 @@ export default class Index {
 		console.log('purchase', id)
 		const res = await ipc.ipa.purchase.mutate({ id })
 
-		console.log(res)
+		if (res.error !== null || !res.ok) return
+
+		$app.Event.emit('app/setLoading', { visible: true, desc: $t('iap.loading.purchasing') })
+
+		console.log(res.ok)
 	}
 
 	off() {

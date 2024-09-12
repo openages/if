@@ -116,15 +116,15 @@
 						font-weight: 500;
 					}
 				}
-
-				.btn_action {
-					border: 1px solid var(--color_text);
-					background-color: var(--color_bg);
-				}
 			}
 
 			.content_wrap {
 				padding: 12px 18px;
+
+				.btn_action {
+					color: var(--color_bg);
+					background-color: var(--color_text);
+				}
 
 				.content_item {
 					padding-bottom: 12px;
@@ -193,6 +193,16 @@
 			.desc {
 				padding: 18px;
 			}
+		}
+	}
+}
+
+.empty {
+	color: var(--color_text_light);
+
+	:global {
+		.desc {
+			font-size: 12px;
 		}
 	}
 }

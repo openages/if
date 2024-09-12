@@ -12,6 +12,7 @@ import styles from './index.css'
 import type { ChangeEvent } from 'react'
 import type { IPropsUser } from '../../types'
 import type { InputRef } from 'antd'
+import type { NiceAvatarProps } from 'react-nice-avatar'
 
 const Index = (props: IPropsUser) => {
 	const { user, temp_user, edit_mode, updateTempUser, signout, activate } = props
@@ -40,7 +41,7 @@ const Index = (props: IPropsUser) => {
 	return (
 		<div className={$cx('w_100 h_100 flex flex_column align_center justify_center relative', styles._local)}>
 			<div className={$cx('avatar_wrap relative flex justify_center mb_12', edit_mode && 'edit_mode')}>
-				<Avatar className='avatar' {...avatar_config}></Avatar>
+				<Avatar className='avatar' {...(avatar_config as NiceAvatarProps)}></Avatar>
 				<If condition={edit_mode}>
 					<button
 						className='btn_change_avatar flex justify_center align_center clickable absolute'

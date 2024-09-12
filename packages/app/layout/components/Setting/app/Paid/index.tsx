@@ -3,10 +3,11 @@ import { observer } from 'mobx-react-lite'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { plan_level } from '@/appdata'
 import { useGlobal } from '@/context/app'
 import { useCopyMemberEmail } from '@/hooks'
 import { getObjectKeys } from '@/utils'
-import { Check, Infinity, ThumbsUp } from '@phosphor-icons/react'
+import { Check, Infinity, ThumbsUp, WifiSlash } from '@phosphor-icons/react'
 
 import { limit, modules } from './data'
 import styles from './index.css'
@@ -17,14 +18,17 @@ const Index = () => {
 	const global = useGlobal()
 	const { t } = useTranslation()
 	const { copy } = useCopyMemberEmail()
+
 	const iap = global.iap
+	const user = $copy(global.auth.user)
 	const products = $copy(iap.products)
 
-	const currency = useMemo(() => products['PRO'].formattedPrice.charAt(0), [products])
+	const user_level = useMemo(() => plan_level.get(user.paid_plan)!, [user.paid_plan])
+	const currency = useMemo(() => (products['PRO'] ? products['PRO'].formattedPrice.charAt(0) : '$'), [products])
 
 	const purchase = useMemoizedFn((plan: Iap.Plan) => {
 		if (!global.auth.user.id) {
-			t('app.auth.not_login')
+			$message.info(t('app.not_login'))
 
 			$app.Event.emit('global.setting.goLogin')
 
@@ -33,6 +37,17 @@ const Index = () => {
 
 		iap.purchase(products[plan].productIdentifier)
 	})
+
+	if (Object.keys(products).length === 0) {
+		return (
+			<div className={$cx('w_100 h_100 flex flex_column align_center justify_center', styles.empty)}>
+				<div className='flex flex_column align_center'>
+					<WifiSlash size={90}></WifiSlash>
+					<span className='desc mt_6'>{t('app.no_data')}</span>
+				</div>
+			</div>
+		)
+	}
 
 	return (
 		<div className={$cx('w_100 h_100 flex flex_column', styles._local)}>
@@ -85,7 +100,12 @@ const Index = () => {
 								))}
 							</div>
 							<button
-								className='btn_action w_100 border_box flex justify_center align_center clickable'
+								className={$cx(
+									'btn_action w_100 border_box flex justify_center align_center clickable',
+									user_level > 0 &&
+										user_level >= plan_level.get(type)! &&
+										'disabled'
+								)}
 								onClick={
 									type === 'free'
 										? undefined
@@ -112,15 +132,18 @@ const Index = () => {
 								</span>
 								<span className='unit'>/ {t(`setting.Paid.unit`)}</span>
 							</div>
-							<button
-								className='btn_action flex justify_center align_center clickable ml_12'
-								onClick={() => purchase('SPONSOR')}
-							>
-								{t('setting.Paid.sponsor.btn_text')}
-							</button>
 						</div>
 					</div>
 					<div className='content_wrap w_100 border_box flex flex_column'>
+						<button
+							className={$cx(
+								'btn_action mt_12 mb_18 flex justify_center align_center clickable ml_12',
+								user_level >= plan_level.get('sponsor')! && 'disabled'
+							)}
+							onClick={() => purchase('SPONSOR')}
+						>
+							{t('setting.Paid.sponsor.btn_text')}
+						</button>
 						<div className='rights_wrap content_item w_100 border_box flex flex_column'>
 							<span className='title'>{t('setting.Paid.sponsor.title_rights')}</span>
 							<ul className='step_items items_wrap'>

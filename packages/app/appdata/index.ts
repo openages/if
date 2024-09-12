@@ -12,5 +12,6 @@ export * from './colors'
 export * from './options'
 export * from './const'
 export * from './version'
+export * from './pay'
 
 export type { ShortcutEventPaths } from './shortcuts'

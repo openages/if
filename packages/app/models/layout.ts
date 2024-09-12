@@ -30,7 +30,9 @@ export default class Index {
 
 	onWindowBlur() {
 		ipc.app.onBlur.subscribe(undefined, {
-			onData: v => (this.blur = v)
+			onData: v => {
+				if (this.blur !== v) this.blur = v
+			}
 		})
 	}
 

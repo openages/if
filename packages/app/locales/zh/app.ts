@@ -1,4 +1,6 @@
 export default {
+	not_login: '未登录，请登录后操作',
+	no_data: '未请求到数据',
 	migrating: '版本更新，数据迁移中，切勿关闭应用',
 	auth: {
 		signup: '注册',

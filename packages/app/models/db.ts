@@ -99,7 +99,7 @@ export default class Index {
 
 		this.ready = true
 
-		window.$app.Event.emit('app/setLoading', { visible: false })
+		$app.Event.emit('app/setLoading', { visible: false })
 
 		this.hooks()
 	}
@@ -125,7 +125,7 @@ export default class Index {
 	}
 
 	private async migrateRxdb() {
-		window.$app.Event.emit('app/setLoading', { visible: true, desc: $t('app.migrating') })
+		$app.Event.emit('app/setLoading', { visible: true, desc: $t('app.migrating') })
 
 		await migrateStorage({
 			oldDatabaseName: 'if_v1',

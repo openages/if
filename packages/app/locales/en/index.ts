@@ -4,6 +4,7 @@ import common from './common'
 import components from './components'
 import dirtree from './dirtree'
 import editor from './editor'
+import iap from './iap'
 import layout from './layout'
 import modules from './modules'
 import pomo from './pomo'
@@ -15,6 +16,7 @@ import todo from './todo'
 export default {
 	translation: {
 		app,
+		iap,
 		common,
 		setting,
 		modules,
