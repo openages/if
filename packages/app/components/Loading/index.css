@@ -65,10 +65,11 @@
 		}
 
 		.desc {
-			width: 160px;
-			margin-top: 15px;
+			width: 162px;
+			margin-top: 6px;
 			color: var(--color_main);
 			user-select: none;
+			font-weight: 500;
 		}
 	}
 }

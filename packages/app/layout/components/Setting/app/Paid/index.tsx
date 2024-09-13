@@ -107,6 +107,7 @@ const Index = () => {
 										user_level >= plan_level.get(type)! &&
 										'disabled'
 								)}
+								type={type === 'free' ? 'default' : 'primary'}
 								loading={type !== 'free' && iap.utils.loading['purchase']}
 								onClick={
 									type === 'free'
@@ -139,9 +140,10 @@ const Index = () => {
 					<div className='content_wrap w_100 border_box flex flex_column'>
 						<Button
 							className={$cx(
-								'btn_action mt_12 mb_18 flex justify_center align_center clickable ml_12',
+								'btn_action mt_12 mb_18 flex justify_center align_center clickable',
 								user_level >= plan_level.get('sponsor')! && 'disabled'
 							)}
+							type='primary'
 							loading={iap.utils.loading['purchase']}
 							onClick={() => purchase('SPONSOR')}
 						>

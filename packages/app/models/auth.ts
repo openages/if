@@ -8,6 +8,7 @@ import { getVersionName } from '@/appdata'
 import Utils from '@/models/utils'
 import { getUserData, ipc, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
+import { setStorageWhenChange } from '@openages/stk/mobx'
 import { local } from '@openages/stk/storage'
 
 import type { Trpc } from '@/types'
@@ -25,6 +26,8 @@ export default class Index {
 	}
 
 	init() {
+		this.utils.acts = [setStorageWhenChange(['frozen'], this, { useSession: true })]
+
 		const user = getUserData()
 
 		if (user) this.user = user
@@ -36,10 +39,11 @@ export default class Index {
 	onVerify() {
 		ipc.ipa.onVerify.subscribe(undefined, {
 			onData: v => {
-				if (v) return
-				if (!this.user.id) return
-
-				this.frozen = true
+				if (v || !this.user.id) {
+					this.frozen = false
+				} else {
+					this.frozen = true
+				}
 			}
 		})
 	}

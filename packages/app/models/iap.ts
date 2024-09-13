@@ -1,7 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
-import { GlobalModel } from '@/context/app'
 import Utils from '@/models/utils'
 import { getUserData, ipc, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
@@ -13,11 +12,8 @@ import type { Iap } from '@/types'
 export default class Index {
 	products = {} as Record<Iap.Plan, Product>
 
-	constructor(
-		public utils: Utils,
-		public global: GlobalModel
-	) {
-		makeAutoObservable(this, { utils: false, global: false }, { autoBind: true })
+	constructor(public utils: Utils) {
+		makeAutoObservable(this, { utils: false }, { autoBind: true })
 	}
 
 	async init() {
@@ -85,11 +81,11 @@ export default class Index {
 
 		const res_update = await trpc.iap.updateReceipt.mutate({ id, refresh_token, tid, receipt_url })
 
-		if (res_update.error !== null) return $message.error($t('iap.error'))
+		if (res_update.error !== null) return $message.error($t('iap.error'), 60)
 
 		const res_verify = await trpc.iap.verifyReceipt.mutate({ id, after_update: true })
 
-		if (res_verify.error !== null) return $message.error($t('iap.error'))
+		if (res_verify.error !== null) return $message.error($t('iap.error'), 60)
 
 		const data = res_verify.data!
 

@@ -1,8 +1,9 @@
 export default {
 	state: {
-		purchasing: 'purchasing',
-		purchased: 'purchased',
-		failed: 'failed'
+		purchasing: 'Purchasing',
+		purchased: 'Purchased',
+		failed: 'Payment failed'
 	},
+	frozen: 'Please connect to the internet to verify your subscription status',
 	error: 'Payment successful, but data validation failed. Please contact via email at if.support@openages.com'
 }

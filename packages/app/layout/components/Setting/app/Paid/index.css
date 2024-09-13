@@ -23,6 +23,7 @@
 		.btn_action {
 			height: 42px;
 			padding: 0 18px;
+			border: none;
 			border-radius: 21px;
 			background-color: var(--color_bg_1);
 			font-family: var(--font_family);
