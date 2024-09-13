@@ -159,8 +159,5 @@ export default {
 			title: '团队用户',
 			desc: '支持团队协作'
 		}
-	},
-	Account: {
-		change_avatar: '更换头像'
 	}
 }

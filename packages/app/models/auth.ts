@@ -6,7 +6,7 @@ import { injectable } from 'tsyringe'
 
 import { getVersionName } from '@/appdata'
 import Utils from '@/models/utils'
-import { getUserData, trpc } from '@/utils'
+import { getUserData, ipc, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
 import { local } from '@openages/stk/storage'
 
@@ -28,6 +28,20 @@ export default class Index {
 		const user = getUserData()
 
 		if (user) this.user = user
+
+		this.on()
+		this.onVerify()
+	}
+
+	onVerify() {
+		ipc.ipa.onVerify.subscribe(undefined, {
+			onData: v => {
+				if (v) return
+				if (!this.user.id) return
+
+				this.frozen = true
+			}
+		})
 	}
 
 	async updateUser() {
@@ -121,13 +135,19 @@ export default class Index {
 		this.saveUser(user)
 	}
 
-	saveUser(v: Index['user']) {
-		this.user = v
+	saveUser(v: Partial<Index['user']>) {
+		this.user = { ...this.user, ...v }
 
 		local.user = lz.compress(JSON.stringify(v))
 	}
 
+	on() {
+		$app.Event.on('global.auth.saveUser', this.saveUser)
+	}
+
 	off() {
 		this.utils.off()
+
+		$app.Event.off('global.auth.saveUser', this.saveUser)
 	}
 }

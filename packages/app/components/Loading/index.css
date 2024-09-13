@@ -10,10 +10,9 @@
 
 ._local {
 	z-index: 10000;
+	backdrop-filter: var(--blur);
 
 	&.dark {
-		background-color: #232326;
-
 		:global {
 			.loading_wrap {
 				fill: white;
@@ -27,8 +26,6 @@
 
 	&.useByComponent {
 		&.dark {
-			background-color: #232326;
-
 			:global {
 				.loading_wrap {
 					fill: #555;

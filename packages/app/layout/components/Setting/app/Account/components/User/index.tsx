@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Avatar, { genConfig } from 'react-nice-avatar'
 
 import { ShowUseHeight } from '@/components'
-import { AndroidLogo, CaretDoubleUp, Power } from '@phosphor-icons/react'
+import { AndroidLogo, ArrowsClockwise, CaretDoubleUp, Power } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -47,7 +47,7 @@ const Index = (props: IPropsUser) => {
 						className='btn_change_avatar flex justify_center align_center clickable absolute'
 						onClick={changeAvatar}
 					>
-						{t('setting.Account.change_avatar')}
+						<ArrowsClockwise size={12}></ArrowsClockwise>
 					</button>
 				</If>
 			</div>

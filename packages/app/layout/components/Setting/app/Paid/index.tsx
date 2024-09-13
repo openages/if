@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import { Button } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -99,13 +100,14 @@ const Index = () => {
 									</div>
 								))}
 							</div>
-							<button
+							<Button
 								className={$cx(
 									'btn_action w_100 border_box flex justify_center align_center clickable',
 									user_level > 0 &&
 										user_level >= plan_level.get(type)! &&
 										'disabled'
 								)}
+								loading={type !== 'free' && iap.utils.loading['purchase']}
 								onClick={
 									type === 'free'
 										? undefined
@@ -113,7 +115,7 @@ const Index = () => {
 								}
 							>
 								{t(`setting.Paid.${type}.btn_text`)}
-							</button>
+							</Button>
 						</div>
 					))}
 				</div>
@@ -135,15 +137,16 @@ const Index = () => {
 						</div>
 					</div>
 					<div className='content_wrap w_100 border_box flex flex_column'>
-						<button
+						<Button
 							className={$cx(
 								'btn_action mt_12 mb_18 flex justify_center align_center clickable ml_12',
 								user_level >= plan_level.get('sponsor')! && 'disabled'
 							)}
+							loading={iap.utils.loading['purchase']}
 							onClick={() => purchase('SPONSOR')}
 						>
 							{t('setting.Paid.sponsor.btn_text')}
-						</button>
+						</Button>
 						<div className='rights_wrap content_item w_100 border_box flex flex_column'>
 							<span className='title'>{t('setting.Paid.sponsor.title_rights')}</span>
 							<ul className='step_items items_wrap'>

@@ -13,16 +13,15 @@
 			}
 
 			.btn_change_avatar {
-				top: -10.5px;
-				height: 21px;
-				padding: 0 6px;
-				border: var(--border);
-				border-color: var(--color_border);
+				right: 4.5px;
+				bottom: 4.5px;
+				width: 18px;
+				height: 18px;
+				padding: 0;
+				border: none;
 				border-radius: 30px;
 				color: var(--color_bg);
-				background-color: transparent;
 				background-color: rgba(var(--color_text_rgb), 0.48);
-				font-size: 12px;
 				backdrop-filter: var(--blur);
 
 				&:hover {

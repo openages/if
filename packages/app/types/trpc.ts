@@ -10,6 +10,7 @@ export namespace Trpc {
 		avatar: string
 		paid_plan: Auth.UserType
 		paid_expire: number | null
+		paid_renewal: boolean | null
 		is_infinity: boolean
 		refresh_token: string
 	}

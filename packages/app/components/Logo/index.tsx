@@ -1,3 +1,6 @@
+import { observer } from 'mobx-react-lite'
+
+import { useGlobal } from '@/context/app'
 import { local } from '@openages/stk/storage'
 
 interface IProps {
@@ -7,7 +10,9 @@ interface IProps {
 }
 
 const Index = (props: IProps) => {
-	const { className, size = 48, color = local.theme === 'dark' ? 'var(--color_text)' : 'var(--color_main)' } = props
+	const global = useGlobal()
+	const is_dark = (global?.setting?.theme || local.theme) === 'dark'
+	const { className, size = 48, color = is_dark ? 'var(--color_text)' : 'var(--color_main)' } = props
 
 	return (
 		<div className={$cx('flex', className)} style={{ width: size, height: size, fill: color }}>
@@ -43,4 +48,4 @@ const Index = (props: IProps) => {
 	)
 }
 
-export default $app.memo(Index)
+export default new $app.handle(Index).by(observer).by($app.memo).get()
