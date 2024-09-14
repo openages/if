@@ -5,12 +5,12 @@
 	"scripts": {
 		"dev": "rspack serve",
 		"dev:sandbox": "cross-env SANDBOX=1 rspack serve",
-		"build": "rspack build",
 		"preview": "rspack preview",
 		"build:theme": "bun ./build/theme",
 		"build:schema": "bun ./build/schema",
 		"build:doctor": "cross-env DOCTOR=true rspack build",
-		"build:electron": "cross-env BUILD_TARGET=electron rspack build && bun ./build/after"
+		"build:sandbox": "cross-env SANDBOX=1 rspack build && bun ./build/after",
+		"build:electron": "cross-env rspack build && bun ./build/after"
 	},
 	"keywords": [],
 	"author": "1yasa",

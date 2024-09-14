@@ -11,6 +11,7 @@ import type { Iap } from '@/types'
 @injectable()
 export default class Index {
 	products = {} as Record<Iap.Plan, Product>
+	current = null as 'pro' | 'sponsor' | null
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { utils: false }, { autoBind: true })
@@ -36,7 +37,11 @@ export default class Index {
 						break
 				}
 
-				$app.Event.emit('app/setLoading', { visible: false })
+				if (v.state !== 'purchasing') {
+					this.current = null
+
+					$app.Event.emit('app/setLoading', { visible: false })
+				}
 			}
 		})
 	}

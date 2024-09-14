@@ -14,6 +14,7 @@ import { limit, modules } from './data'
 import styles from './index.css'
 
 import type { Iap } from '@/types'
+import type { Iap as IapModel } from '@/models'
 
 const Index = () => {
 	const global = useGlobal()
@@ -35,6 +36,8 @@ const Index = () => {
 
 			return
 		}
+
+		iap.current = plan.toLowerCase() as IapModel['current']
 
 		iap.purchase(products[plan].productIdentifier)
 	})
@@ -103,12 +106,16 @@ const Index = () => {
 							<Button
 								className={$cx(
 									'btn_action w_100 border_box flex justify_center align_center clickable',
-									user_level > 0 &&
-										user_level >= plan_level.get(type)! &&
+									((user_level > 0 && user_level >= plan_level.get(type)!) ||
+										(iap.current && iap.current !== type)) &&
 										'disabled'
 								)}
 								type={type === 'free' ? 'default' : 'primary'}
-								loading={type !== 'free' && iap.utils.loading['purchase']}
+								loading={
+									type !== 'free' &&
+									iap.current === type &&
+									iap.utils.loading['purchase']
+								}
 								onClick={
 									type === 'free'
 										? undefined
@@ -141,10 +148,12 @@ const Index = () => {
 						<Button
 							className={$cx(
 								'btn_action mt_12 mb_18 flex justify_center align_center clickable',
-								user_level >= plan_level.get('sponsor')! && 'disabled'
+								(user_level >= plan_level.get('sponsor')! ||
+									(iap.current && iap.current !== 'sponsor')) &&
+									'disabled'
 							)}
 							type='primary'
-							loading={iap.utils.loading['purchase']}
+							loading={iap.current === 'sponsor' && iap.utils.loading['purchase']}
 							onClick={() => purchase('SPONSOR')}
 						>
 							{t('setting.Paid.sponsor.btn_text')}

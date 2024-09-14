@@ -106,8 +106,12 @@
 						}
 
 						&.plan:not(.deving) {
-							opacity: 0.6;
-							filter: blur(3px);
+							opacity: 0.18;
+							filter: blur(2.4px);
+						}
+
+						&.deving {
+							opacity: 0.48;
 						}
 
 						.deving_badge {

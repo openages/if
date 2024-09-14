@@ -44,6 +44,11 @@ module.exports = defineConfig({
 				context: '/trpc',
 				target: 'http://localhost:8787',
 				changeOrigin: true
+			},
+			{
+				context: '/api',
+				target: 'http://localhost:8787',
+				changeOrigin: true
 			}
 		]
 	},
