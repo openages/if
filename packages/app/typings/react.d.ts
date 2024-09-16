@@ -19,6 +19,10 @@ declare module 'react' {
 	}
 }
 
+declare module 'react-dom' {
+	var prefetchDNS: (v: string) => void
+}
+
 declare global {
 	interface DragEvent {
 		rangeParent?: Node

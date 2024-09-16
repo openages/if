@@ -10,7 +10,7 @@
 		"build:schema": "bun ./build/schema",
 		"build:doctor": "cross-env DOCTOR=true rspack build",
 		"build:sandbox": "cross-env SANDBOX=1 rspack build && bun ./build/after",
-		"build:electron": "cross-env rspack build && bun ./build/after"
+		"build:release": "cross-env rspack build && bun ./build/after"
 	},
 	"keywords": [],
 	"author": "1yasa",

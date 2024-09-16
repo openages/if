@@ -7,14 +7,25 @@ import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
 
 const is_dev = process.env.NODE_ENV === 'development'
 const is_prod = process.env.NODE_ENV === 'production'
+const is_sandbox = process.env.SANDBOX === '1'
 const is_doctor = process.env.DOCTOR === 'true'
 const is_module = false
+
+const defines = {} as Record<string, string>
+const BASE_URL = is_sandbox
+	? 'https://if-server-sandbox.openages.com'
+	: is_prod
+		? 'https://if-server.openages.com'
+		: 'http://localhost:8787'
+
+if (is_sandbox) defines['process.env.SANDBOX'] = process.env.SANDBOX!
 
 const plugins_dev = [
 	new ReactRefreshPlugin({
 		exclude: [/node_modules/]
 	})
 ]
+
 const plugins_prod = [
 	is_doctor && new RsdoctorRspackPlugin(),
 	new CopyRspackPlugin({
@@ -42,12 +53,12 @@ module.exports = defineConfig({
 		proxy: [
 			{
 				context: '/trpc',
-				target: 'http://localhost:8787',
+				target: BASE_URL,
 				changeOrigin: true
 			},
 			{
 				context: '/api',
-				target: 'http://localhost:8787',
+				target: BASE_URL,
 				changeOrigin: true
 			}
 		]
@@ -58,13 +69,12 @@ module.exports = defineConfig({
 		lazyCompilation: false
 	},
 	plugins: [
-		new DefinePlugin({
-			'process.env.SANDBOX': process.env.SANDBOX ?? '0'
-		}),
+		new DefinePlugin(defines),
 		new HtmlRspackPlugin({
 			title: 'IF - GTD for professionals.',
 			template: './public/index.html',
-			scriptLoading: is_module ? 'module' : 'defer'
+			scriptLoading: is_module ? 'module' : 'defer',
+			templateParameters: {}
 		}),
 		...(is_dev ? plugins_dev : plugins_prod)
 	],

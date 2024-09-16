@@ -123,7 +123,7 @@ export default class Index {
 					})
 				)
 				.filter(item => item)
-		)
+		) as Array<string>
 
 		if (!change_nodes.length) return
 
@@ -144,8 +144,6 @@ export default class Index {
 			if (curr_node && prev_node) {
 				this.editor.update(() => {
 					const node = $getNodeByKey(id)
-
-					console.log(node?.getTextContent())
 				})
 				if (curr_node.__parent === 'root' && curr_node.__parent !== prev_node.__parent) {
 					this.dispatch([{ type: 'add', id }])

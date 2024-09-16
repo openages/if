@@ -1,8 +1,6 @@
-import { is_prod } from './is'
+import { is_prod, is_sandbox } from './is'
 
-const SANDBOX = process.env.SANDBOX
-
-export const BASE_URL = SANDBOX
+export const BASE_URL = is_sandbox
 	? 'https://if-server-sandbox.openages.com'
 	: is_prod
 		? 'https://if-server.openages.com'

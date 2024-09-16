@@ -1,33 +1,29 @@
 {
-  "name": "monorepo",
-  "private": true,
-  "homepage": "https://if.openages.com",
-  "scripts": {
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "dev:app": "turbo run dev --filter=app",
-    "build:app": "turbo run build --filter=app",
-    "submodule:init": "git submodule update --init --recursive",
-    "submodule:update": "git submodule sync && git submodule update --recursive --remote --merge",
-    "prettier": "prettier --parser=typescript --write \"**/*.ts?(x)\"",
-    "biome": "biome format --write ./packages"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged --allow-empty"
-  },
-  "lint-staged": {
-    "*.{css,md}": [
-      "prettier --write"
-    ],
-    "*.(j|t)s?(x)": [
-      "biome format --write --changed ./packages"
-    ]
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^1.8.3",
-    "lint-staged": "^15.2.7",
-    "prettier": "^4.0.0-alpha.9",
-    "turbo": "^2.0.6",
-    "yorkie": "^2.0.0"
-  }
+	"name": "monorepo",
+	"private": true,
+	"homepage": "https://if.openages.com",
+	"scripts": {
+		"dev": "turbo run dev",
+		"build": "turbo run build",
+		"dev:app": "turbo run dev --filter=app",
+		"build:app": "turbo run build --filter=app",
+		"submodule:init": "git submodule update --init --recursive",
+		"submodule:update": "git submodule sync && git submodule update --recursive --remote --merge",
+		"prettier": "prettier --parser=typescript --write \"**/*.ts?(x)\"",
+		"biome": "biome format --write ./packages"
+	},
+	"gitHooks": {
+		"pre-commit": "lint-staged --allow-empty"
+	},
+	"lint-staged": {
+		"*.{css,md}": ["prettier --write"],
+		"*.(j|t)s?(x)": ["biome format --write --changed ./packages"]
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.1",
+		"lint-staged": "^15.2.10",
+		"prettier": "^4.0.0-alpha.10",
+		"turbo": "^2.0.6",
+		"yorkie": "^2.0.0"
+	}
 }

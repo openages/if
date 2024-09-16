@@ -5,6 +5,7 @@ import { App, ConfigProvider } from 'antd'
 import { minimatch } from 'minimatch'
 import { observer } from 'mobx-react-lite'
 import { unstable_Activity as Activity, useEffect, useLayoutEffect, useMemo, useState } from 'react'
+import { prefetchDNS } from 'react-dom'
 import { IconContext } from 'react-icons'
 import { useLocation } from 'react-router-dom'
 import { container } from 'tsyringe'
@@ -13,6 +14,7 @@ import { exclude_paths } from '@/appdata'
 import { GlobalLoading, LazyElement, OffscreenOutlet } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
+import { is_prod, is_sandbox } from '@/utils'
 import { useDeepMemo } from '@openages/stk/react'
 
 import { AppMenu, AppSwitch, Screenlock, Search, Setting, Sidebar, Stacks } from './components'
@@ -40,6 +42,8 @@ const Index = () => {
 	useGlobalTranslate()
 
 	useLayoutEffect(() => {
+		if (is_prod) prefetchDNS(`https://if-server${is_sandbox ? '-sandbox' : ''}.openages.com`)
+
 		global.init()
 
 		return () => global.off()

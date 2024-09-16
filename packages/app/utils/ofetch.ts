@@ -3,7 +3,11 @@ import { ofetch } from 'ofetch'
 import { goLogin } from './auth'
 import { BASE_URL } from './env'
 
-const handleError = async (status: number, err: unknown) => {
+const handleReqError = async (status: number, err: Error) => {
+	$message.error(`${status}: ${err?.message}`)
+}
+
+const handleResError = async (status: number, err: unknown) => {
 	if (status === 401) return goLogin()
 
 	if (status === 400 && Array.isArray(err)) {
@@ -19,24 +23,34 @@ const handleError = async (status: number, err: unknown) => {
 
 export const request = ofetch.create({
 	responseType: 'stream',
-	onRequest() {},
-	onResponse() {},
+	onRequestError(res) {
+		const { response, error } = res
+		const { status } = response!
+
+		handleReqError(status, error)
+	},
 	async onResponseError(res) {
 		const { response } = res
 		const { status } = response
 
 		const err = await response.json()
 
-		handleError(status, err)
+		handleResError(status, err)
 	}
 })
 
 export const api = ofetch.create({
 	baseURL: BASE_URL + '/api',
+	onRequestError(res) {
+		const { response, error } = res
+		const { status } = response!
+
+		handleReqError(status, error)
+	},
 	async onResponseError(res) {
 		const { response, error } = res
 		const { status } = response
 
-		handleError(status, error)
+		handleResError(status, error)
 	}
 })
