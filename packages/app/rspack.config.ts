@@ -11,14 +11,15 @@ const is_sandbox = process.env.SANDBOX === '1'
 const is_doctor = process.env.DOCTOR === 'true'
 const is_module = false
 
-const defines = {} as Record<string, string>
+const defines = {} as Record<string, string | number | boolean>
+
 const BASE_URL = is_sandbox
 	? 'https://if-server-sandbox.openages.com'
 	: is_prod
 		? 'https://if-server.openages.com'
 		: 'http://localhost:8787'
 
-if (is_sandbox) defines['process.env.SANDBOX'] = process.env.SANDBOX!
+defines['process.env.SANDBOX'] = is_sandbox ? 1 : 0
 
 const plugins_dev = [
 	new ReactRefreshPlugin({

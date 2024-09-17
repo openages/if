@@ -10,6 +10,7 @@ import type { Iap } from '@/types'
 
 @injectable()
 export default class Index {
+	paying = false
 	products = {} as Record<Iap.Plan, Product>
 	current = null as 'pro' | 'sponsor' | null
 
@@ -26,6 +27,10 @@ export default class Index {
 	onPurchaseUpdated() {
 		ipc.ipa.onUpdated.subscribe(undefined, {
 			onData: async v => {
+				if (!this.paying) return
+
+				this.paying = false
+
 				switch (v.state) {
 					case 'purchased':
 						$message.warning($t('iap.state.purchased'))
@@ -72,9 +77,15 @@ export default class Index {
 
 	@loading
 	async purchase(id: string) {
+		this.paying = true
+
 		const res = await ipc.ipa.purchase.mutate({ id })
 
-		if (res.error !== null || !res.ok) return $message.error(res.error)
+		if (res.error !== null || !res.ok) {
+			this.paying = false
+
+			return $message.error(res.error)
+		}
 
 		$app.Event.emit('app/setLoading', { visible: true, desc: $t('iap.state.purchasing') })
 	}
