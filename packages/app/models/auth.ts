@@ -6,20 +6,23 @@ import { injectable } from 'tsyringe'
 
 import { getVersionName } from '@/appdata'
 import Utils from '@/models/utils'
-import { getUserData, ipc, trpc } from '@/utils'
+import { getJson, getUserData, hono, ipc, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 import { local } from '@openages/stk/storage'
 
 import type { Trpc } from '@/types'
 
+const user_preset = { paid_plan: 'free', is_infinity: false } as Trpc.UserData
+
 @injectable()
 export default class Index {
 	sign_type = 'signin' as 'signin' | 'signup'
-	user = { paid_plan: 'free', is_infinity: false } as Trpc.UserData
+	user = user_preset
 	temp_user = {} as Trpc.UserData
 	edit_mode = false
 	frozen = false
+	test_status = 'untest' as 'untest' | 'testing' | 'ok' | 'error'
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { utils: false }, { autoBind: true })
@@ -130,6 +133,22 @@ export default class Index {
 		local.removeItem('user')
 	}
 
+	async test() {
+		this.test_status = 'testing'
+
+		const [err_raw] = await to(hono.test.$get())
+
+		if (err_raw) {
+			$message.error($t('app.auth.test_failed'), 12)
+
+			return (this.test_status = 'error')
+		}
+
+		this.test_status = 'ok'
+
+		$message.success($t('app.auth.test_ok'))
+	}
+
 	afterSign(data: Trpc.ResSign) {
 		const { token } = data
 		const user = omit(data, 'token') as Trpc.UserData
@@ -145,13 +164,19 @@ export default class Index {
 		local.user = lz.compress(JSON.stringify(v))
 	}
 
+	resetUser() {
+		this.user = user_preset
+	}
+
 	on() {
 		$app.Event.on('global.auth.saveUser', this.saveUser)
+		$app.Event.on('global.auth.resetUser', this.resetUser)
 	}
 
 	off() {
 		this.utils.off()
 
 		$app.Event.off('global.auth.saveUser', this.saveUser)
+		$app.Event.off('global.auth.resetUser', this.resetUser)
 	}
 }

@@ -16,6 +16,7 @@ export const goLogin = () => {
 
 	$message.warning($t('app.auth.not_login'))
 
+	$app.Event.emit('global.auth.resetUser')
 	$app.Event.emit('global.setting.goLogin')
 
 	return false

@@ -1,3 +1,13 @@
+@keyframes testing {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0.18;
+	}
+}
+
 ._local {
 	:global {
 		.content_title {
@@ -29,10 +39,48 @@
 
 			.setting_title {
 				margin-bottom: 0;
+
+				.btn_test {
+					width: 21px;
+					height: 21px;
+					border-radius: 50%;
+					font-size: 14px;
+
+					&:hover {
+						background-color: var(--color_bg_1);
+					}
+
+					&.untest {
+						color: var(--color_text_light);
+
+						&:hover {
+							color: var(--color_text);
+						}
+					}
+
+					&.testing {
+						color: var(--color_text);
+						background-color: var(--color_bg_1);
+						pointer-events: none;
+
+						:local {
+							animation: testing 1.2s infinite;
+						}
+					}
+
+					&.ok {
+						color: var(--color_text);
+					}
+
+					&.error {
+						color: var(--color_danger);
+					}
+				}
 			}
 
 			.action_type_wrap {
 				color: var(--color_text_light);
+				user-select: none;
 
 				.action_type {
 					&.active {

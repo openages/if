@@ -2,7 +2,10 @@ export default {
 	not_login: '未登录，请登录后操作',
 	no_data: '未请求到数据',
 	migrating: '版本更新，数据迁移中，切勿关闭应用',
+	too_many_req: '短时间请求过多，请稍后再试',
 	auth: {
+		test_ok: '接口测试通过',
+		test_failed: '接口测试失败，您所在地区网络异常，请切换网络，使用手机热点连接电脑或使用代理访问',
 		signup: '注册',
 		signin: '登录',
 		confirm_password: '确认密码',

@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useGlobal } from '@/context/app'
+import { WifiHigh, WifiX } from '@phosphor-icons/react'
 
 import { Sign, User } from './components'
 import styles from './index.css'
@@ -56,7 +57,25 @@ const Index = () => {
 	return (
 		<div className={$cx('w_100 h_100 flex flex_column', styles._local)}>
 			<div className='header_wrap flex justify_between align_center'>
-				<span className='setting_title'>{t('setting.nav.titles.Account')}</span>
+				<div className='setting_title flex align_center'>
+					<span className='mr_6'>{t('setting.nav.titles.Account')}</span>
+					<div
+						className={$cx(
+							'btn_test flex justify_center align_center clickable',
+							auth.test_status
+						)}
+						onClick={auth.test}
+					>
+						<Choose>
+							<When condition={auth.test_status === 'error'}>
+								<WifiX></WifiX>
+							</When>
+							<Otherwise>
+								<WifiHigh></WifiHigh>
+							</Otherwise>
+						</Choose>
+					</div>
+				</div>
 				<Choose>
 					<When condition={has_user_id}>
 						<div className='action_type_wrap flex'>

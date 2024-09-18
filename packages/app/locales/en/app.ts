@@ -2,7 +2,11 @@ export default {
 	not_login: 'Please login first before this operations',
 	no_data: 'No data retrieved',
 	migrating: 'Version updated, data Migrating, don`t close.',
+	too_many_req: 'Too many requests,please try again later',
 	auth: {
+		test_ok: 'Api Test OK',
+		test_failed:
+			'Api test failed. There is a network anomaly in your area. Please switch to a different network, connect your computer to the mobile hotspot, or use a proxy to access',
 		signup: 'Signup',
 		signin: 'Signin',
 		confirm_password: 'Confirm Password',

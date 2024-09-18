@@ -42,19 +42,23 @@ const trpc = createTRPCProxyClient<Router>({
 
 				const user = JSON.parse(lz.decompress(compressed_user))
 
-				const response = await hono.refreshToken.$post({
-					json: {
-						mid: local.mid,
-						id: user.id,
-						token: local.token,
-						refresh_token: user.refresh_token
-					}
-				})
+				const [err_raw, res_raw] = await to(
+					hono.refreshToken.$post({
+						json: {
+							mid: local.mid,
+							id: user.id,
+							token: local.token,
+							refresh_token: user.refresh_token
+						}
+					})
+				)
 
-				const [err, res] = await to(getJson(response))
+				if (err_raw) return goLogin()
 
-				if (err || res.error) {
-					$message.error(err?.message || res?.error)
+				const res = await getJson(res_raw)
+
+				if (res.error) {
+					$message.error(res?.error)
 
 					return goLogin()
 				}

@@ -725,6 +725,9 @@ importers:
 
   packages/if_server:
     dependencies:
+      '@hono-rate-limiter/cloudflare':
+        specifier: ^0.2.1
+        version: 0.2.1(@cloudflare/workers-types@4.20240909.0)(hono@4.6.2)
       '@hono/trpc-server':
         specifier: ^0.3.2
         version: 0.3.2(@trpc/server@10.45.2)(hono@4.6.2)
@@ -2522,6 +2525,12 @@ packages:
     resolution: {integrity: sha512-AiXO/bfe9bmxBjxxtYxFAXGZvMaN5s8kO+jBHAJCON8rJoB5YS/D6X7ZNc6XQkuHNmyl4CYaMI1fJ/Gn27RGGw==}
     engines: {node: '>=6'}
     hasBin: true
+
+  '@hono-rate-limiter/cloudflare@0.2.1':
+    resolution: {integrity: sha512-Ax0xHm3Q9V0dJ8nfdAZOm34tT9uoF+GY4qFXSiNliLb78wMhRp9wg0v7YlQYPSXMNu8aoEmdCwx2LpQw8iVDMA==}
+    peerDependencies:
+      '@cloudflare/workers-types': ^4.20240529.0
+      hono: ^4.4.8
 
   '@hono/trpc-server@0.3.2':
     resolution: {integrity: sha512-dTKDrSldjBn0hi9FjHOGdiHgMCWPoW5NaBUTQRNLyVL9JcJJu9oiwTFoIscPFxc9CF2rAeA8aRGHoFJK+A8cLw==}
@@ -4352,6 +4361,7 @@ packages:
 
   bun@1.1.27:
     resolution: {integrity: sha512-FLnMaOuVVuhjPIfmlRtAE42B2x+oSWO6jW8MZ/Ss179qokN//nzIhuj/07bdA016U6d11HyLvvGb6eaH0HKhBQ==}
+    cpu: [arm64, x64]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -11186,6 +11196,11 @@ snapshots:
       long: 5.2.3
       protobufjs: 7.4.0
       yargs: 17.7.2
+
+  '@hono-rate-limiter/cloudflare@0.2.1(@cloudflare/workers-types@4.20240909.0)(hono@4.6.2)':
+    dependencies:
+      '@cloudflare/workers-types': 4.20240909.0
+      hono: 4.6.2
 
   '@hono/trpc-server@0.3.2(@trpc/server@10.45.2)(hono@4.6.2)':
     dependencies:
