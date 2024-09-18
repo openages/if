@@ -139,7 +139,7 @@ export default class Index {
 		const [err_raw] = await to(hono.test.$get())
 
 		if (err_raw) {
-			$message.error($t('app.auth.test_failed'), 12)
+			$message.error($t('app.auth.test_failed'), 24)
 
 			return (this.test_status = 'error')
 		}

@@ -12,7 +12,6 @@
 		"build:sandbox": "cross-env SANDBOX=1 rspack build && bun ./build/after",
 		"build:release": "cross-env rspack build && bun ./build/after"
 	},
-	"keywords": [],
 	"author": "1yasa",
 	"dependencies": {
 		"@abraham/reflection": "^0.12.0",

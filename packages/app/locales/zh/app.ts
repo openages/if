@@ -4,6 +4,7 @@ export default {
 	migrating: '版本更新，数据迁移中，切勿关闭应用',
 	too_many_req: '短时间请求过多，请稍后再试',
 	auth: {
+		test_title: '测试是否能连接到服务器',
 		test_ok: '接口测试通过',
 		test_failed: '接口测试失败，您所在地区网络异常，请切换网络，使用手机热点连接电脑或使用代理访问',
 		signup: '注册',

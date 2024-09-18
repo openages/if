@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import { Tooltip } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -58,23 +59,30 @@ const Index = () => {
 		<div className={$cx('w_100 h_100 flex flex_column', styles._local)}>
 			<div className='header_wrap flex justify_between align_center'>
 				<div className='setting_title flex align_center'>
-					<span className='mr_6'>{t('setting.nav.titles.Account')}</span>
-					<div
-						className={$cx(
-							'btn_test flex justify_center align_center clickable',
-							auth.test_status
-						)}
-						onClick={auth.test}
+					<span className='title mr_6'>{t('setting.nav.titles.Account')}</span>
+					<Tooltip
+						title={t('app.auth.test_title')}
+						mouseEnterDelay={0.6}
+						zIndex={9999}
+						getTooltipContainer={() => document.body}
 					>
-						<Choose>
-							<When condition={auth.test_status === 'error'}>
-								<WifiX></WifiX>
-							</When>
-							<Otherwise>
-								<WifiHigh></WifiHigh>
-							</Otherwise>
-						</Choose>
-					</div>
+						<div
+							className={$cx(
+								'btn_test flex justify_center align_center clickable',
+								auth.test_status
+							)}
+							onClick={auth.test}
+						>
+							<Choose>
+								<When condition={auth.test_status === 'error'}>
+									<WifiX></WifiX>
+								</When>
+								<Otherwise>
+									<WifiHigh></WifiHigh>
+								</Otherwise>
+							</Choose>
+						</div>
+					</Tooltip>
 				</div>
 				<Choose>
 					<When condition={has_user_id}>

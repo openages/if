@@ -4,6 +4,7 @@ export default {
 	migrating: 'Version updated, data Migrating, don`t close.',
 	too_many_req: 'Too many requests,please try again later',
 	auth: {
+		test_title: 'Test if it can connect to the server',
 		test_ok: 'Api Test OK',
 		test_failed:
 			'Api test failed. There is a network anomaly in your area. Please switch to a different network, connect your computer to the mobile hotspot, or use a proxy to access',
