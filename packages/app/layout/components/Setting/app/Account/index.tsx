@@ -66,21 +66,23 @@ const Index = () => {
 						zIndex={9999}
 						getTooltipContainer={() => document.body}
 					>
-						<div
-							className={$cx(
-								'btn_test flex justify_center align_center clickable',
-								auth.test_status
-							)}
-							onClick={auth.test}
-						>
-							<Choose>
-								<When condition={auth.test_status === 'error'}>
-									<WifiX></WifiX>
-								</When>
-								<Otherwise>
-									<WifiHigh></WifiHigh>
-								</Otherwise>
-							</Choose>
+						<div>
+							<div
+								className={$cx(
+									'btn_test flex justify_center align_center clickable',
+									auth.test_status
+								)}
+								onClick={auth.test}
+							>
+								<Choose>
+									<When condition={auth.test_status === 'error'}>
+										<WifiX></WifiX>
+									</When>
+									<Otherwise>
+										<WifiHigh></WifiHigh>
+									</Otherwise>
+								</Choose>
+							</div>
 						</div>
 					</Tooltip>
 				</div>

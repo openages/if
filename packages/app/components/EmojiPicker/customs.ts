@@ -1,3 +1,4 @@
+import { is_prod } from '@/utils'
 import { Record } from '@phosphor-icons/react'
 
 import feather_icons_data from './feather_icons_data'
@@ -11,15 +12,14 @@ export type Icon = {
 	skins: Array<{ src: string }>
 }
 
-
 export const feather_icons = Object.keys(feather_icons_data).reduce(
 	(total, key) => {
 		const target = {
 			id: key,
 			name: key,
-                  // @ts-ignore
+			// @ts-ignore
 			keywords: feather_icons_data[key],
-			skins: [{ src: `/feather_icons/${key}.svg` }]
+			skins: [{ src: is_prod ? require(`@/public/feather_icons/${key}.svg`) : `/feather_icons/${key}.svg` }]
 		}
 
 		total.icon_array.push(target)
@@ -39,7 +39,9 @@ export const ionicons = ionicons_data.reduce(
 			id: item.name,
 			name: item.name,
 			keywords: item.tags,
-			skins: [{ src: `/ionicons/${item.name}.svg` }]
+			skins: [
+				{ src: is_prod ? require(`@/public/ionicons/${item.name}.svg`) : `/ionicons/${item.name}.svg` }
+			]
 		}
 
 		total.icon_array.push(target)
@@ -63,7 +65,13 @@ export const phosphor_icons = phosphor_icons_data.reduce(
 				id: key,
 				name: key,
 				keywords: item.tags,
-				skins: [{ src: `/phosphor_icons/${key}.svg` }]
+				skins: [
+					{
+						src: is_prod
+							? require(`@/public/phosphor_icons/${key}.svg`)
+							: `/phosphor_icons/${key}.svg`
+					}
+				]
 			}
 
 			total.icon_object[key] = target

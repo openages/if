@@ -1,6 +1,8 @@
 import to from 'await-to-js'
 import { ofetch } from 'ofetch'
 
+import { getHTTPStatusCodeFromError } from '@trpc/server/http'
+
 import { goLogin } from './auth'
 import { BASE_URL } from './env'
 
@@ -48,8 +50,23 @@ const onResponseError = async (res: FetchContext) => {
 			}
 
 			break
+		case 500:
+			if (Array.isArray(err)) {
+				err.forEach(item => {
+					const error = item.error
+
+					if (error) {
+						const code = getHTTPStatusCodeFromError(error)
+
+						$message.error(`${code}: ${error?.message}`)
+					}
+				})
+			}
 		default:
-			$message.error(err as string)
+			if (typeof err === 'string') {
+				$message.error(err as string)
+			}
+
 			break
 	}
 

@@ -1,3 +1,4 @@
+import to from 'await-to-js'
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
@@ -7,7 +8,6 @@ import { loading } from '@/utils/decorators'
 
 import type { Product } from 'electron'
 import type { Iap } from '@/types'
-
 @injectable()
 export default class Index {
 	paying = false
@@ -31,6 +31,12 @@ export default class Index {
 
 				this.paying = false
 
+				if (v.state !== 'purchasing') {
+					this.current = null
+
+					$app.Event.emit('app/setLoading', { visible: false })
+				}
+
 				switch (v.state) {
 					case 'purchased':
 						$message.warning($t('iap.state.purchased'))
@@ -41,12 +47,6 @@ export default class Index {
 						$message.warning($t('iap.state.failed'))
 						break
 				}
-
-				if (v.state !== 'purchasing') {
-					this.current = null
-
-					$app.Event.emit('app/setLoading', { visible: false })
-				}
 			}
 		})
 	}
@@ -56,9 +56,9 @@ export default class Index {
 
 		if (!user) return
 
-		const res = await trpc.iap.verifyReceipt.mutate({ id: user.id })
+		const [err, res] = await to(trpc.iap.verifyReceipt.mutate({ id: user.id }))
 
-		if (res.error !== null || !res.data) return
+		if (err || res.error !== null || !res.data) return
 
 		const data = res.data!
 
@@ -95,13 +95,15 @@ export default class Index {
 
 		const { id, refresh_token } = getUserData()!
 
-		const res_update = await trpc.iap.updateReceipt.mutate({ id, refresh_token, tid, receipt_url })
+		const [err_update, res_update] = await to(
+			trpc.iap.updateReceipt.mutate({ id, refresh_token, tid, receipt_url })
+		)
 
-		if (res_update.error !== null) return $message.error($t('iap.error'), 60)
+		if (err_update || res_update.error !== null) return $message.error($t('iap.error'), 60)
 
-		const res_verify = await trpc.iap.verifyReceipt.mutate({ id, after_update: true })
+		const [err_verify, res_verify] = await to(trpc.iap.verifyReceipt.mutate({ id, after_update: true }))
 
-		if (res_verify.error !== null) return $message.error($t('iap.error'), 60)
+		if (err_verify || res_verify.error !== null) return $message.error($t('iap.error'), 60)
 
 		const data = res_verify.data!
 

@@ -5,7 +5,7 @@ import { initReactI18next } from 'react-i18next'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { getLang } from '@/utils'
+import { getLang, relaunch } from '@/utils'
 import { resourcesToBackend } from '@/utils/i18n'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 import { local } from '@openages/stk/storage'
@@ -55,7 +55,7 @@ export default class Index {
 
 		await this.getLocale(lang)
 
-		$app.Event.emit('global.app.relaunch')
+		relaunch()
 	}
 
 	off() {
