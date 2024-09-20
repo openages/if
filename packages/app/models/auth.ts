@@ -35,6 +35,7 @@ export default class Index {
 
 		if (user) this.user = user
 
+		this.test()
 		this.on()
 		this.onVerify()
 	}
