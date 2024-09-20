@@ -3,11 +3,12 @@ import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { getUserData, ipc, trpc } from '@/utils'
+import { getUserData, hono, ipc, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
 
 import type { Product } from 'electron'
 import type { Iap } from '@/types'
+
 @injectable()
 export default class Index {
 	paying = false
@@ -39,12 +40,14 @@ export default class Index {
 
 				switch (v.state) {
 					case 'purchased':
-						$message.warning($t('iap.state.purchased'))
+						$message.success($t('iap.state.purchased'))
 
 						await this.afterPurchase(v.data!)
+
 						break
 					case 'failed':
 						$message.warning($t('iap.state.failed'))
+
 						break
 				}
 			}
@@ -77,9 +80,17 @@ export default class Index {
 
 	@loading
 	async purchase(id: string) {
-		this.paying = true
+		const close = $message.loading($t('app.auth.test_title'), 30)
+
+		const [err_raw] = await to(hono.test.$get())
+
+		close()
+
+		if (err_raw) return $message.error($t('app.auth.test_failed'), 24)
 
 		const res = await ipc.ipa.purchase.mutate({ id })
+
+		this.paying = true
 
 		if (res.error !== null || !res.ok) {
 			this.paying = false
@@ -109,7 +120,7 @@ export default class Index {
 
 		$app.Event.emit('global.auth.saveUser', data)
 
-		ipc.ipa.verify.mutate(data)
+		if (data) ipc.ipa.verify.mutate(data)
 	}
 
 	off() {

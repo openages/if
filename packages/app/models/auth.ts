@@ -6,7 +6,7 @@ import { injectable } from 'tsyringe'
 
 import { getVersionName } from '@/appdata'
 import Utils from '@/models/utils'
-import { getJson, getUserData, hono, ipc, trpc } from '@/utils'
+import { getUserData, hono, ipc, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 import { local } from '@openages/stk/storage'
@@ -134,9 +134,13 @@ export default class Index {
 	}
 
 	async test() {
+		const close = $message.loading($t('app.auth.test_title'), 30)
+
 		this.test_status = 'testing'
 
 		const [err_raw] = await to(hono.test.$get())
+
+		close()
 
 		if (err_raw) {
 			$message.error($t('app.auth.test_failed'), 24)
@@ -161,7 +165,7 @@ export default class Index {
 	saveUser(v: Partial<Index['user']>) {
 		this.user = { ...this.user, ...v }
 
-		local.user = lz.compress(JSON.stringify(v))
+		local.user = lz.compress(JSON.stringify(this.user))
 	}
 
 	resetUser() {

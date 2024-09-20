@@ -75,12 +75,14 @@ const onResponseError = async (res: FetchContext) => {
 
 export const request = ofetch.create({
 	responseType: 'stream',
+      timeout:9000,
 	onRequestError,
 	onResponseError
 })
 
 export const api = ofetch.create({
 	baseURL: BASE_URL + '/api',
+      timeout:9000,
 	onRequestError,
 	onResponseError
 })

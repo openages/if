@@ -79,7 +79,7 @@ const trpc = createTRPCProxyClient<Router>({
 				return local.token ? { Authorization: `Bearer ${local.token}` } : {}
 			},
 			async fetch(input, options) {
-				return request(input as string, options)
+				return request.raw(input as string, options)
 			}
 		})
 	]

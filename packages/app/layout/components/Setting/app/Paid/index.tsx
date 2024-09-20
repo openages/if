@@ -103,27 +103,34 @@ const Index = () => {
 									</div>
 								))}
 							</div>
-							<Button
-								className={$cx(
-									'btn_action w_100 border_box flex justify_center align_center clickable',
-									((user_level > 0 && user_level >= plan_level.get(type)!) ||
-										(iap.current && iap.current !== type)) &&
-										'disabled'
-								)}
-								type={type === 'free' ? 'default' : 'primary'}
-								loading={
-									type !== 'free' &&
-									iap.current === type &&
-									iap.utils.loading['purchase']
-								}
-								onClick={
-									type === 'free'
-										? undefined
-										: () => purchase(type.toUpperCase() as Iap.Plan)
-								}
-							>
-								{t(`setting.Paid.${type}.btn_text`)}
-							</Button>
+							<Choose>
+								<When condition={type !== 'free'}>
+									<Button
+										className={$cx(
+											'btn_action w_100 border_box flex justify_center align_center clickable'
+											// ((user_level > 0 &&
+											// 	user_level >= plan_level.get(type)!) ||
+											// 	(iap.current && iap.current !== type)) &&
+											// 	'disabled'
+										)}
+										type='primary'
+										loading={
+											iap.current === type && iap.utils.loading['purchase']
+										}
+										onClick={() => purchase(type.toUpperCase() as Iap.Plan)}
+									>
+										{t(`setting.Paid.${type}.btn_text`)}
+									</Button>
+								</When>
+								<Otherwise>
+									<Button
+										className='btn_action w_100 border_box flex justify_center align_center clickable'
+										type='default'
+									>
+										{t(`setting.Paid.${type}.btn_text`)}
+									</Button>
+								</Otherwise>
+							</Choose>
 						</div>
 					))}
 				</div>
