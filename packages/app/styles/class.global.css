@@ -76,3 +76,7 @@
 .transparent {
 	opacity: 0;
 }
+
+.no_drag {
+	-webkit-app-region: none;
+}

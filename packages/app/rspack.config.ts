@@ -75,7 +75,9 @@ module.exports = defineConfig({
 			title: 'IF - GTD for professionals.',
 			template: './public/index.html',
 			scriptLoading: is_module ? 'module' : 'defer',
-			templateParameters: {}
+			templateParameters: {
+				NODE_ENV: process.env.NODE_ENV!
+			}
 		}),
 		...(is_dev ? plugins_dev : plugins_prod)
 	],
@@ -106,8 +108,8 @@ module.exports = defineConfig({
 							},
 							minify: {
 								compress: {
-									// drop_console: is_prod
-									drop_console: false
+									drop_console: is_prod
+									// drop_console: false
 								}
 							},
 							externalHelpers: true

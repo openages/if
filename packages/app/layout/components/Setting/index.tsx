@@ -131,7 +131,7 @@ const Index = (props: IPropsSetting) => {
 			{x.mini ? (
 				<Fragment>
 					<div
-						className='btn_toggle_menu flex justify_center align_center absolute clickable'
+						className='btn_toggle_menu flex justify_center align_center absolute clickable no_drag'
 						onClick={onToggleMenu}
 					>
 						<List size={15}></List>

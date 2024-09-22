@@ -59,6 +59,10 @@ export default class Index {
 
 		if (!user) return
 
+		const res_test = await this.test()
+
+		if (res_test !== true) return
+
 		const [err, res] = await to(trpc.iap.verifyReceipt.mutate({ id: user.id }))
 
 		if (err || res.error !== null || !res.data) return
@@ -80,13 +84,9 @@ export default class Index {
 
 	@loading
 	async purchase(id: string) {
-		const close = $message.loading($t('app.auth.test_title'), 30)
+		const res_test = await this.test()
 
-		const [err_raw] = await to(hono.test.$get())
-
-		close()
-
-		if (err_raw) return $message.error($t('app.auth.test_failed'), 24)
+		if (res_test !== true) return
 
 		const res = await ipc.ipa.purchase.mutate({ id })
 
@@ -121,6 +121,18 @@ export default class Index {
 		$app.Event.emit('global.auth.saveUser', data)
 
 		if (data) ipc.ipa.verify.mutate(data)
+	}
+
+	async test() {
+		const close = $message.loading($t('app.auth.test_title'), 30)
+
+		const [err_raw] = await to(hono.test.$get())
+
+		close()
+
+		if (err_raw) return $message.error($t('app.auth.test_failed'), 24)
+
+		return true
 	}
 
 	off() {

@@ -186,8 +186,8 @@ const Index = () => {
 						<Search {...props_search}></Search>
 						<Setting {...props_setting}></Setting>
 						{/* {process.env.NODE_ENV === 'development' && (
-							<LazyElement type='dev' path=''></LazyElement>
-						)} */}
+                                   <LazyElement type='dev' path=''></LazyElement>
+                             )} */}
 					</IconContext.Provider>
 				</App>
 			</ConfigProvider>
