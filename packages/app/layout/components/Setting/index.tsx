@@ -108,9 +108,16 @@ const Index = (props: IPropsSetting) => {
 					</span>
 					<div className='flex flex_column'>
 						<span className='user_type'>{t(`setting.User.${auth.user.paid_plan}.title`)}</span>
-						<If condition={!auth.user.is_infinity}>
-							<span className='desc'>{t(`setting.User.${auth.user.paid_plan}.desc`)}</span>
-						</If>
+						<Choose>
+							<When condition={!auth.user.is_infinity}>
+								<span className='desc'>
+									{t(`setting.User.${auth.user.paid_plan}.desc`)}
+								</span>
+							</When>
+							<Otherwise>
+								<span className='desc'>{t(`setting.User.infinity.desc`)}</span>
+							</Otherwise>
+						</Choose>
 					</div>
 				</div>
 			</div>

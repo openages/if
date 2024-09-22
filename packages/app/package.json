@@ -5,7 +5,6 @@
 	"scripts": {
 		"dev": "rspack serve",
 		"dev:sandbox": "cross-env SANDBOX=1 rspack serve",
-		"build": "rspack build",
 		"preview": "rspack preview",
 		"build:theme": "bun ./build/theme",
 		"build:schema": "bun ./build/schema",
