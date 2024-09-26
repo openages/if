@@ -71,9 +71,15 @@ export default class Index {
 
 	@loading
 	async sendVerifyCode(email: string) {
-		const [err] = await to(trpc.auth.sendVerifyCode.mutate({ email }))
+		const [err, res] = await to(trpc.auth.sendVerifyCode.mutate({ mid: local.mid, email }))
 
 		if (err) return
+
+		if (res.error) {
+			$message.error($t(`app.auth.${res.error}`))
+
+			return false
+		}
 
 		$message.success($t('app.auth.send_captcha_done'))
 	}

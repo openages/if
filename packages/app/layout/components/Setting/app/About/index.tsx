@@ -24,6 +24,12 @@ const Index = () => {
 				<a className='media_item' href='https://if.openages.com/privacy'>
 					Privacy Policy
 				</a>
+				<a
+					className='media_item'
+					href='https://www.apple.com/legal/internet-services/itunes/dev/stdeula/'
+				>
+					Terms of Use
+				</a>
 			</div>
 			<div className='statement flex flex_column align_center'>
 				<span className='words text_center'>Time is the most valuable thing a man can spend.</span>

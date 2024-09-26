@@ -8,6 +8,7 @@ import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
 const is_dev = process.env.NODE_ENV === 'development'
 const is_prod = process.env.NODE_ENV === 'production'
 const is_sandbox = process.env.SANDBOX === '1'
+const is_release = process.env.RELEASE === '1'
 const is_doctor = process.env.DOCTOR === 'true'
 const is_module = false
 
@@ -20,6 +21,7 @@ const BASE_URL = is_sandbox
 		: 'http://localhost:8787'
 
 defines['process.env.SANDBOX'] = is_sandbox ? 1 : 0
+defines['process.env.RELEASE'] = is_release ? 1 : 0
 
 const plugins_dev = [
 	new ReactRefreshPlugin({

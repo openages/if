@@ -17,6 +17,7 @@ export default {
 		confirm: '已达到免费版使用上限，前往订阅？',
 		not_login: '登录已过期，请重新登录！',
 		email_not_input: '未输入邮箱',
+		send_verify_code_exsit: '验证码已发送，请六分钟之后再试',
 		send_verify_code_error: '获取验证码失败',
 		mid_exist: '该设备已注册账号，无法重复注册',
 		email_exist: '该邮箱已注册账号，无法重复注册',

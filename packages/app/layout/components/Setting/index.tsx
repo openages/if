@@ -5,6 +5,7 @@ import { useEffect, useLayoutEffect, useMemo, useState, Fragment, ReactElement }
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
+import { version_name } from '@/appdata'
 import { Modal, ModuleIcon, Wave } from '@/components'
 import { useSize } from '@/hooks'
 import { Infinity, List } from '@phosphor-icons/react'
@@ -93,8 +94,8 @@ const Index = (props: IPropsSetting) => {
 					className='user_wrap h_100 border_box flex align_center relative clickable'
 					onClick={goBilling}
 				>
-					<span className='badge_beta flex justify_center align_center absolute top_0 right_0'>
-						Beta
+					<span className='badge flex justify_center align_center absolute top_0 right_0'>
+						{version_name}
 					</span>
 					<span className='icon_wrap flex justify_center align_center'>
 						<Choose>

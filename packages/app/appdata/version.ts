@@ -7,5 +7,7 @@ export const version_map = new Map([[0, 'Davinci']])
 export const getVersionName = () => version_map.get(main_version)!
 
 export const getVersion = () => {
-	return `${getVersionName()} (${version}) Beta`
+	return `${getVersionName()} (${version})`
 }
+
+export const version_name = getVersionName()

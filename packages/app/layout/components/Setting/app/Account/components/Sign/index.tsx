@@ -47,7 +47,7 @@ const Index = (props: IPropsSign) => {
 			return false
 		}
 
-		await sendVerifyCode(email)
+		return sendVerifyCode(email)
 	})
 
 	const request = useMemoizedFn(() =>

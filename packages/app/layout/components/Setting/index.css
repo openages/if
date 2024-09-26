@@ -104,10 +104,10 @@
 				border-radius: var(--radius);
 				background-color: var(--color_bg_1);
 
-				.badge_beta {
-					width: 30px;
+				.badge {
 					height: 18px;
 					line-height: 1;
+					padding: 0 6px;
 					border-top-right-radius: var(--radius);
 					border-bottom-left-radius: var(--radius);
 					color: var(--color_text_light);

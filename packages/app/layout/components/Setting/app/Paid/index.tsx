@@ -107,11 +107,11 @@ const Index = () => {
 								<When condition={type !== 'free'}>
 									<Button
 										className={$cx(
-											'btn_action w_100 border_box flex justify_center align_center clickable'
-											// ((user_level > 0 &&
-											// 	user_level >= plan_level.get(type)!) ||
-											// 	(iap.current && iap.current !== type)) &&
-											// 	'disabled'
+											'btn_action w_100 border_box flex justify_center align_center clickable',
+											((user_level > 0 &&
+												user_level >= plan_level.get(type)!) ||
+												(iap.current && iap.current !== type)) &&
+												'disabled'
 										)}
 										type='primary'
 										loading={
@@ -188,7 +188,7 @@ const Index = () => {
 						<span className='desc'>{t('setting.Paid.sponsor.extra')}</span>
 					</div>
 				</div>
-				<div className='infinity_item w_100 border_box flex flex_column align_center'>
+				{/* <div className='infinity_item w_100 border_box flex flex_column align_center'>
 					<div className='header_wrap w_100 border_box flex justify_between align_center'>
 						<div className='flex align_center'>
 							<div className='icon_wrap flex justify_center align_center mr_12'>
@@ -205,7 +205,7 @@ const Index = () => {
 						</a>
 					</div>
 					<span className='desc w_100 border_box'>{t('setting.Paid.infinity.extra')}</span>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	)
