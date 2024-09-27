@@ -140,6 +140,18 @@ export default class Index {
 		local.removeItem('user')
 	}
 
+	async shutdown() {
+		const [err, res] = await to(trpc.auth.shutdown.mutate({ id: this.user.id }))
+
+		if (err) return
+		if (res.error) return $message.error($t(`app.auth.${res.error}`))
+
+		this.user = { paid_plan: 'free', is_infinity: false } as Trpc.UserData
+
+		local.removeItem('token')
+		local.removeItem('user')
+	}
+
 	async test() {
 		const close = $message.loading($t('app.auth.test_title'), 30)
 

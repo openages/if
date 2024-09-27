@@ -1,0 +1,10 @@
+._local {
+	overflow: hidden;
+	border-radius: var(--radius);
+
+	:global {
+		.bg_danger_wrap {
+			transition: width ease 0.18s;
+		}
+	}
+}

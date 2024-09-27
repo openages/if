@@ -4,8 +4,9 @@ import { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import Avatar, { genConfig } from 'react-nice-avatar'
 
-import { ShowUseHeight } from '@/components'
-import { AndroidLogo, ArrowsClockwise, CaretDoubleUp, Power } from '@phosphor-icons/react'
+import { PressButton, ShowUseHeight } from '@/components'
+import { confirm } from '@/utils/antd'
+import { AndroidLogo, ArrowsClockwise, CaretDoubleUp, Power, UserCircleMinus } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -15,11 +16,11 @@ import type { InputRef } from 'antd'
 import type { NiceAvatarProps } from 'react-nice-avatar'
 
 const Index = (props: IPropsUser) => {
-	const { user, temp_user, edit_mode, updateTempUser, signout, activate } = props
+	const { user, temp_user, edit_mode, updateTempUser, signout, activate, shutdown } = props
 	const { id, name, email, avatar } = user
 	const { name: temp_name, avatar: temp_avatar } = temp_user
 	const { t } = useTranslation()
-	const [visible_activate, { toggle }] = useToggle(false)
+	const [visible_activate, { toggle: toggleActivate }] = useToggle(false)
 	const ref_input_activate = useRef<InputRef>(null)
 
 	const avatar_config = useMemo(() => JSON.parse(temp_avatar ?? avatar), [avatar, temp_avatar])
@@ -35,7 +36,37 @@ const Index = (props: IPropsUser) => {
 
 	const onActivate = useMemoizedFn(() => {
 		activate(ref_input_activate.current?.input?.value!)
-		toggle()
+		toggleActivate()
+	})
+
+	const onShutdown = useMemoizedFn(async () => {
+		const { destroy } = $modal.confirm({
+			title: t('app.auth.shutdown.confirm.title'),
+			content: t('app.auth.shutdown.confirm.content'),
+			zIndex: 9999,
+			centered: true,
+			footer(_, actions) {
+				const { CancelBtn } = actions
+
+				return (
+					<div className={$cx('w_100 flex flex_column', styles.shutdown_footer)}>
+						<PressButton
+							className='w_100 mb_12'
+							time={6}
+							trigger={() => {
+								destroy()
+								shutdown()
+							}}
+						>
+							<Button className='btn_confirm' danger>
+								{t('common.press') + t('common.letter_space') + t('common.confirm')}
+							</Button>
+						</PressButton>
+						<CancelBtn></CancelBtn>
+					</div>
+				)
+			}
+		})
 	})
 
 	return (
@@ -94,7 +125,7 @@ const Index = (props: IPropsUser) => {
 							<AndroidLogo className='icon'></AndroidLogo>
 							<span className='text'>{t('app.auth.passport')}</span>
 						</div>
-						<div
+						{/* <div
 							className={$cx(
 								'action_item flex flex_column align_center justify_center clickable',
 								visible_activate && 'active'
@@ -103,6 +134,13 @@ const Index = (props: IPropsUser) => {
 						>
 							<CaretDoubleUp className='icon'></CaretDoubleUp>
 							<span className='text'>{t('app.auth.activate')}</span>
+						</div> */}
+						<div
+							className='action_item flex flex_column align_center justify_center clickable'
+							onClick={onShutdown}
+						>
+							<UserCircleMinus className='icon'></UserCircleMinus>
+							<span className='text'>{t('app.auth.shutdown.title')}</span>
 						</div>
 					</div>
 				</div>

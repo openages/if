@@ -25,6 +25,7 @@ export default {
 		verify_code_error: 'Incorrect verification code',
 		db_insert_error: 'Failed to add user to the database',
 		db_update_error: 'Database failed to update user',
+		db_delete_error: 'Database failed to delete user',
 		signup_success: 'Signup Success',
 		user_not_exist: 'User does not exist',
 		verify_password_error: 'Incorrect password',
@@ -45,7 +46,14 @@ export default {
 		passport: 'passport',
 		activate: 'activate',
 		activate_code: 'Activate Code',
-		activate_success: 'Activate Success'
+		activate_success: 'Activate Success',
+		shutdown: {
+			title: 'shutdown',
+			confirm: {
+				title: 'Shutdown Account',
+				content: 'Your user data will be completely destroyed, and the data stored locally will not be affected. The account cannot be recovered after shutdown. Confirm Shutdown account?'
+			}
+		}
 	},
 	search: {
 		to_navigate: 'to navigate',

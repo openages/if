@@ -63,6 +63,12 @@ export default {
 		}
 	},
 	Paid: {
+		desc_wrap: {
+			text: '订阅将自动续费，可随时取消。成功购买后若用户计划未更新，可尝试',
+			restore_purchase: '恢复购买',
+			privacy: '隐私政策',
+			terms: '使用条款'
+		},
 		file: '文件',
 		unit: '月',
 		unlimited: '无限',
@@ -106,7 +112,8 @@ export default {
 			type: '永久使用者',
 			extra: '永久使用者包含专业者的所有功能，并永久免费使用。永久使用者仅可通过参加KOL/KOC计划获得。',
 			join: '加入'
-		}
+		},
+		login: 'IF使用Apple服务端API验证您的订阅状态，以实现订阅状态的跨平台同步。这要求您在订阅前使用邮箱进行注册和登录，您的邮箱将仅用于登录，前往注册/登录？'
 	},
 	Note: {
 		serif: {

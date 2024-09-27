@@ -75,6 +75,7 @@
 
 					.text {
 						line-height: 1;
+						user-select: none;
 						font-size: 10px;
 					}
 				}
@@ -94,6 +95,18 @@
 
 			.if-btn {
 				height: 30px;
+			}
+		}
+	}
+}
+
+.shutdown_footer {
+	:global {
+		.btn_confirm {
+			&:hover {
+				border-style: solid;
+				border-color: var(--color_main) !important;
+				color: var(--color_main) !important;
 			}
 		}
 	}

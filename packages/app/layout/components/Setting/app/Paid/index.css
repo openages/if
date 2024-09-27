@@ -4,6 +4,26 @@
 			padding-bottom: 60px;
 		}
 
+		.desc_wrap {
+			padding: 12px;
+			margin-bottom: 18px;
+			border-radius: var(--radius_large);
+			color: var(--color_text_light);
+			background-color: var(--color_bg_1);
+			font-size: 12px;
+
+			.link {
+				margin: 0 2px;
+				color: var(--color_text_light);
+				user-select: none;
+				text-decoration: underline;
+
+				&:hover {
+					color: var(--color_text);
+				}
+			}
+		}
+
 		.price {
 			line-height: 1;
 			margin-bottom: 30px;

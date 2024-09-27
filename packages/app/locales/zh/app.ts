@@ -24,6 +24,7 @@ export default {
 		verify_code_error: '验证码错误',
 		db_insert_error: '数据库添加用户失败',
 		db_update_error: '数据库更新用户失败',
+		db_delete_error: '数据库删除用户失败',
 		signup_success: '注册成功',
 		user_not_exist: '用户不存在',
 		verify_password_error: '密码错误',
@@ -44,7 +45,14 @@ export default {
 		passport: '用户码',
 		activate: '激活',
 		activate_code: '激活码',
-		activate_success: '激活成功'
+		activate_success: '激活成功',
+		shutdown: {
+			title: '销户',
+			confirm: {
+				title: '销毁账户',
+				content: '您的用户数据将会被全部销毁，您存储在本地的数据将不会受到影响，账户销毁后不可恢复，确认销毁账户？'
+			}
+		}
 	},
 	search: {
 		to_navigate: '切换',

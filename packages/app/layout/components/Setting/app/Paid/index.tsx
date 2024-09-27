@@ -8,6 +8,7 @@ import { plan_level } from '@/appdata'
 import { useGlobal } from '@/context/app'
 import { useCopyMemberEmail } from '@/hooks'
 import { getObjectKeys } from '@/utils'
+import { confirm } from '@/utils/antd'
 import { Check, Infinity, ThumbsUp, WifiSlash } from '@phosphor-icons/react'
 
 import { limit, modules } from './data'
@@ -28,18 +29,38 @@ const Index = () => {
 	const user_level = useMemo(() => plan_level.get(user.paid_plan)!, [user.paid_plan])
 	const currency = useMemo(() => (products['PRO'] ? products['PRO'].formattedPrice.charAt(0) : '$'), [products])
 
-	const purchase = useMemoizedFn((plan: Iap.Plan) => {
+	const before = useMemoizedFn(async () => {
 		if (!global.auth.user.id) {
-			$message.info(t('app.not_login'))
+			const res = await confirm({
+				title: t('common.notice'),
+				content: t('setting.Paid.login'),
+				zIndex: 9999
+			})
+
+			if (!res) return
 
 			$app.Event.emit('global.setting.goLogin')
-
-			return
 		}
+
+		return true
+	})
+
+	const purchase = useMemoizedFn(async (plan: Iap.Plan) => {
+		const ok = await before()
+
+		if (!ok) return
 
 		iap.current = plan.toLowerCase() as IapModel['current']
 
 		iap.purchase(products[plan].productIdentifier)
+	})
+
+	const restore = useMemoizedFn(async () => {
+		const ok = await before()
+
+		if (!ok) return
+
+		iap.restore()
 	})
 
 	if (Object.keys(products).length === 0) {
@@ -133,6 +154,22 @@ const Index = () => {
 							</Choose>
 						</div>
 					))}
+				</div>
+				<div className='desc_wrap w_100 border_box'>
+					<span>{t('setting.Paid.desc_wrap.text')}</span>
+					<span className='link clickable' onClick={restore}>
+						{t('setting.Paid.desc_wrap.restore_purchase')}
+					</span>
+					。
+					<a className='link clickable' href='https://if.openages.com/privacy'>
+						{t('setting.Paid.desc_wrap.privacy')}
+					</a>
+					<a
+						className='link clickable'
+						href='https://www.apple.com/legal/internet-services/itunes/dev/stdeula/'
+					>
+						{t('setting.Paid.desc_wrap.terms')}
+					</a>
 				</div>
 				<div className='sponsor_item w_100 border_box flex flex_column align_center'>
 					<div className='header_wrap w_100 border_box flex justify_between align_center'>

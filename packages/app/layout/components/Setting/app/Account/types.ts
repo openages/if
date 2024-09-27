@@ -1,5 +1,6 @@
 import type { Auth } from '@/models'
 import type { Trpc } from '@/types'
+import type { FC } from 'react'
 
 export interface IPropsSign {
 	sign_type: Auth['sign_type']
@@ -21,4 +22,5 @@ export interface IPropsUser {
 	updateTempUser: (v: Partial<Trpc.UserData>) => void
 	signout: Auth['signout']
 	activate: Auth['activate']
+	shutdown: Auth['shutdown']
 }

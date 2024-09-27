@@ -45,6 +45,14 @@ export default class Index {
 						await this.afterPurchase(v.data!)
 
 						break
+					case 'restored':
+						if (v.data?.tid) {
+							$message.success($t('iap.state.restored'))
+
+							await this.afterPurchase(v.data!)
+						}
+
+						break
 					case 'failed':
 						$message.warning($t('iap.state.failed'))
 
@@ -99,6 +107,18 @@ export default class Index {
 		}
 
 		$app.Event.emit('app/setLoading', { visible: true, desc: $t('iap.state.purchasing') })
+	}
+
+	async restore() {
+		const res_test = await this.test()
+
+		if (res_test !== true) return
+
+		this.paying = true
+
+		await ipc.ipa.restore.query()
+
+		$app.Event.emit('app/setLoading', { visible: true, desc: $t('iap.state.restoring') })
 	}
 
 	async afterPurchase(args: { tid: string; receipt_url: string }) {
