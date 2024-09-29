@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { getUserData, hono, ipc, trpc } from '@/utils'
+import { conf, getUserData, hono, ipc, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
 
 import type { Product } from 'electron'
@@ -11,7 +11,6 @@ import type { Iap } from '@/types'
 
 @injectable()
 export default class Index {
-	paying = false
 	products = {} as Record<Iap.Plan, Product>
 	current = null as 'pro' | 'sponsor' | null
 
@@ -26,17 +25,15 @@ export default class Index {
 	}
 
 	onPurchaseUpdated() {
-		ipc.ipa.onUpdated.subscribe(undefined, {
+		const { unsubscribe } = ipc.ipa.onUpdated.subscribe(undefined, {
 			onData: async v => {
-				if (!this.paying) return
+				if (v.state === 'purchasing') return
 
-				this.paying = false
+				this.current = null
 
-				if (v.state !== 'purchasing') {
-					this.current = null
+				await conf.set('oniap', false)
 
-					$app.Event.emit('app/setLoading', { visible: false })
-				}
+				$app.Event.emit('app/setLoading', { visible: false })
 
 				switch (v.state) {
 					case 'purchased':
@@ -60,6 +57,8 @@ export default class Index {
 				}
 			}
 		})
+
+		this.utils.acts.push(unsubscribe)
 	}
 
 	async verify() {
@@ -96,13 +95,11 @@ export default class Index {
 
 		if (res_test !== true) return
 
+		await conf.set('oniap', true)
+
 		const res = await ipc.ipa.purchase.mutate({ id })
 
-		this.paying = true
-
 		if (res.error !== null || !res.ok) {
-			this.paying = false
-
 			return $message.error(res.error)
 		}
 
@@ -114,7 +111,7 @@ export default class Index {
 
 		if (res_test !== true) return
 
-		this.paying = true
+		await conf.set('oniap', true)
 
 		await ipc.ipa.restore.query()
 

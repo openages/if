@@ -15,6 +15,7 @@
 		padding: 18px;
 
 		.if-modal-header {
+			margin-bottom: 12px;
 			background-color: transparent;
 
 			.if-modal-title {

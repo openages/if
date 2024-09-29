@@ -33,9 +33,12 @@ export default class Index {
 
 		const user = getUserData()
 
-		if (user) this.user = user
+		if (user) {
+			this.user = user
+		} else {
+			this.test()
+		}
 
-		this.test()
 		this.on()
 		this.onVerify()
 	}
