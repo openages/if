@@ -40,6 +40,8 @@ const Index = () => {
 			if (!res) return
 
 			$app.Event.emit('global.setting.goLogin')
+
+			return
 		}
 
 		return true

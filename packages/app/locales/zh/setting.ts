@@ -106,7 +106,7 @@ export default {
 				'5': '15天之后您的logo和链接网址将会展示在官网和App内'
 			},
 			btn_text: '成为赞助者',
-			extra: '限量60个席位，该项付费不支持退款。'
+			extra: '限量60个席位。'
 		},
 		infinity: {
 			type: '永久使用者',

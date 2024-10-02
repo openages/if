@@ -106,7 +106,7 @@ export default {
 				'5': '15 days later, your logo and link will be displayed on the official website and in the App'
 			},
 			btn_text: 'Become Sponsor',
-			extra: 'Limited to 60 seats, this payment does not support refunds.'
+			extra: 'Limited to 60 seats.'
 		},
 		infinity: {
 			type: 'Infinity',

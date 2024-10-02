@@ -36,7 +36,7 @@ export default class Index {
 		if (user) {
 			this.user = user
 		} else {
-			this.test()
+			this.test(true)
 		}
 
 		this.on()
@@ -46,10 +46,10 @@ export default class Index {
 	onVerify() {
 		ipc.ipa.onVerify.subscribe(undefined, {
 			onData: v => {
-				if (v || !this.user.id) {
-					this.frozen = false
+				if (this.user.id && this.user.paid_plan !== 'free') {
+					this.frozen = v
 				} else {
-					this.frozen = true
+					this.frozen = false
 				}
 			}
 		})
@@ -155,7 +155,7 @@ export default class Index {
 		local.removeItem('user')
 	}
 
-	async test() {
+	async test(ignore_message?: boolean) {
 		const close = $message.loading($t('app.auth.test_title'), 30)
 
 		this.test_status = 'testing'
@@ -172,7 +172,7 @@ export default class Index {
 
 		this.test_status = 'ok'
 
-		$message.success($t('app.auth.test_ok'))
+		if (!ignore_message) $message.success($t('app.auth.test_ok'))
 	}
 
 	afterSign(data: Trpc.ResSign) {

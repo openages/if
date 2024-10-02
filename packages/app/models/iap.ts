@@ -1,3 +1,4 @@
+import { MessageType } from 'antd/es/message/interface'
 import to from 'await-to-js'
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
@@ -66,19 +67,19 @@ export default class Index {
 
 		if (!user) return
 
-		const res_test = await this.test()
+		const res_test = await this.test(true)
 
 		if (res_test !== true) return
 
 		const [err, res] = await to(trpc.iap.verifyReceipt.mutate({ id: user.id }))
 
-		if (err || res.error !== null || !res.data) return
+		if (err || res.error !== null) return
 
-		const data = res.data!
+		const data = res.data
 
-		$app.Event.emit('global.auth.saveUser', data)
+		if (res.data) $app.Event.emit('global.auth.saveUser', data)
 
-		ipc.ipa.verify.mutate(data)
+		ipc.ipa.verify.mutate(data || { paid_plan: 'free' })
 	}
 
 	async getProducts() {
@@ -140,12 +141,14 @@ export default class Index {
 		if (data) ipc.ipa.verify.mutate(data)
 	}
 
-	async test() {
-		const close = $message.loading($t('app.auth.test_title'), 30)
+	async test(ignore_message?: boolean) {
+		let close: MessageType | null = null
+
+		if (!ignore_message) close = $message.loading($t('app.auth.test_title'), 30)
 
 		const [err_raw] = await to(hono.test.$get())
 
-		close()
+		if (close) close()
 
 		if (err_raw) return $message.error($t('app.auth.test_failed'), 24)
 
