@@ -12,6 +12,7 @@ import type { Iap } from '@/types'
 
 @injectable()
 export default class Index {
+	data = {} as { tid: string; receipt_url: string }
 	products = {} as Record<Iap.Plan, Product>
 	current = null as 'pro' | 'sponsor' | null
 
@@ -19,15 +20,25 @@ export default class Index {
 		makeAutoObservable(this, { utils: false }, { autoBind: true })
 	}
 
-	async init() {
+	init() {
 		this.getProducts()
 		this.onPurchaseUpdated()
 		this.verify()
+
+		this.on()
 	}
 
 	onPurchaseUpdated() {
 		const { unsubscribe } = ipc.ipa.onUpdated.subscribe(undefined, {
 			onData: async v => {
+				if (v.type === 'onlocal') {
+					this.data = v.data
+
+					this.afterOnlocal()
+
+					return
+				}
+
 				if (v.state === 'purchasing') return
 
 				this.current = null
@@ -65,7 +76,7 @@ export default class Index {
 	async verify() {
 		const user = getUserData()
 
-		if (!user) return
+		if (!user?.id) return
 
 		const res_test = await this.test(true)
 
@@ -122,7 +133,17 @@ export default class Index {
 	async afterPurchase(args: { tid: string; receipt_url: string }) {
 		const { tid, receipt_url } = args
 
-		const { id, refresh_token } = getUserData()!
+		const user = getUserData()
+
+		if (!user?.id) {
+			this.data = args
+
+			this.afterOnlocal()
+
+			return
+		}
+
+		const { id, refresh_token } = user
 
 		const [err_update, res_update] = await to(
 			trpc.iap.updateReceipt.mutate({ id, refresh_token, tid, receipt_url })
@@ -141,6 +162,29 @@ export default class Index {
 		if (data) ipc.ipa.verify.mutate(data)
 	}
 
+	async afterOnlocal() {
+		if (!this.data.tid) return
+
+		const res_test = await this.test(true)
+
+		if (res_test !== true) return
+
+		const [err, res] = await to(trpc.iap.getStatus.mutate({ tid: this.data.tid }))
+
+		if (err) return
+		if (res.error !== null) return $message.error(res.error)
+
+		$app.Event.emit('global.auth.saveUser', res.data)
+
+		ipc.ipa.verify.mutate(res.data)
+	}
+
+	async afterSign() {
+		if (!this.data.tid) return
+
+		await this.afterPurchase(this.data)
+	}
+
 	async test(ignore_message?: boolean) {
 		let close: MessageType | null = null
 
@@ -155,7 +199,15 @@ export default class Index {
 		return true
 	}
 
+	on() {
+		$app.Event.on('global.iap.afterOnlocal', this.afterOnlocal)
+		$app.Event.on('global.iap.afterSign', this.afterSign)
+	}
+
 	off() {
 		this.utils.off()
+
+		$app.Event.off('global.iap.afterOnlocal', this.afterOnlocal)
+		$app.Event.off('global.iap.afterSign', this.afterSign)
 	}
 }

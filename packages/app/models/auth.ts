@@ -141,6 +141,8 @@ export default class Index {
 
 		local.removeItem('token')
 		local.removeItem('user')
+
+		$app.Event.emit('global.iap.afterOnlocal')
 	}
 
 	async shutdown() {
@@ -182,6 +184,8 @@ export default class Index {
 		local.token = token
 
 		this.saveUser(user)
+
+		$app.Event.emit('global.iap.afterSign')
 	}
 
 	saveUser(v: Partial<Index['user']>) {

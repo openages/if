@@ -112,8 +112,7 @@ export default {
 			type: 'Infinity',
 			extra: 'Permanent users include all the features of the professional version and can use them for free permanently. Permanent users can only be obtained by participating in the KOL/KOC plan.',
 			join: 'Join'
-		},
-		login: `IF uses Apple's server-side API to verify your subscription status to achieve cross-platform synchronization of your subscription status. This requires you to register and log in with your email before subscribing. Your email will only be used for signin, go to signup/signin?`
+		}
 	},
 	Note: {
 		serif: {

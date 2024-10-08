@@ -18,7 +18,7 @@
 		.statement {
 			width: 81%;
 			padding: 12px;
-			margin-top: 18px;
+			margin-top: 9px;
 			font-family: 'SourceSerif4', Georgia, ui-serif, serif;
 
 			.words {
@@ -38,6 +38,20 @@
 
 			.person {
 				color: var(--color_text_light);
+			}
+		}
+
+		.link_wrap {
+			bottom: -36px;
+			line-height: 1;
+			font-size: 12px;
+
+			a {
+				color: var(--color_text_light);
+
+				&:hover {
+					color: var(--color_text);
+				}
 			}
 		}
 	}

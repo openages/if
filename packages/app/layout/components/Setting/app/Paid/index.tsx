@@ -8,7 +8,6 @@ import { plan_level } from '@/appdata'
 import { useGlobal } from '@/context/app'
 import { useCopyMemberEmail } from '@/hooks'
 import { getObjectKeys } from '@/utils'
-import { confirm } from '@/utils/antd'
 import { Check, Infinity, ThumbsUp, WifiSlash } from '@phosphor-icons/react'
 
 import { limit, modules } from './data'
@@ -29,39 +28,13 @@ const Index = () => {
 	const user_level = useMemo(() => plan_level.get(user.paid_plan)!, [user.paid_plan])
 	const currency = useMemo(() => (products['PRO'] ? products['PRO'].formattedPrice.charAt(0) : '$'), [products])
 
-	const before = useMemoizedFn(async () => {
-		if (!global.auth.user.id) {
-			const res = await confirm({
-				title: t('common.notice'),
-				content: t('setting.Paid.login'),
-				zIndex: 9999
-			})
-
-			if (!res) return
-
-			$app.Event.emit('global.setting.goLogin')
-
-			return
-		}
-
-		return true
-	})
-
 	const purchase = useMemoizedFn(async (plan: Iap.Plan) => {
-		const ok = await before()
-
-		if (!ok) return
-
 		iap.current = plan.toLowerCase() as IapModel['current']
 
 		iap.purchase(products[plan].productIdentifier)
 	})
 
-	const restore = useMemoizedFn(async () => {
-		const ok = await before()
-
-		if (!ok) return
-
+	const restore = useMemoizedFn(() => {
 		iap.restore()
 	})
 

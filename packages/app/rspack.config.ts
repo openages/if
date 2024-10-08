@@ -148,7 +148,7 @@ module.exports = defineConfig({
 							},
 							minify: {
 								compress: {
-									drop_console: is_prod
+									drop_console: !is_sandbox && is_prod
 								}
 							},
 							externalHelpers: true,
