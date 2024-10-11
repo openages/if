@@ -855,6 +855,9 @@ importers:
       '@swc/helpers':
         specifier: ^0.5.12
         version: 0.5.13
+      '@trpc/client':
+        specifier: ^10.45.2
+        version: 10.45.2(@trpc/server@10.45.2)
       ahooks:
         specifier: ^3.8.1
         version: 3.8.1(react@18.3.1)
