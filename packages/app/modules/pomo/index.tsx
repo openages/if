@@ -5,7 +5,6 @@ import { useLayoutEffect, useState } from 'react'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
-import { useStackSelector } from '@/context/stack'
 
 import { Actions, Indicators, Session, SessionsEditModal } from './components'
 import styles from './index.css'
@@ -16,7 +15,6 @@ import type { IProps, IPropsActions, IPropsIndicators, IPropsSessionsEditModal }
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const global = useGlobal()
-	const breakpoint = useStackSelector(v => v.breakpoint)
 	const data = $copy(x.data)
 	const sessions = $copy(x.data.sessions) || []
 	const add = useMemoizedFn(x.add)
@@ -61,7 +59,6 @@ const Index = ({ id }: IProps) => {
 			className={$cx(
 				'w_100 h_100 border_box',
 				styles._local,
-				breakpoint && styles.breakpoint,
 				x.visible_edit_modal && styles.visible_edit_modal
 			)}
 		>

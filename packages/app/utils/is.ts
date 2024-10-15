@@ -3,3 +3,4 @@ export const is_mac_electron = window.$shell?.platform === 'darwin' && window.$s
 export const is_dev = process.env.NODE_ENV === 'development'
 export const is_prod = process.env.NODE_ENV === 'production'
 export const is_sandbox = Boolean(process.env.SANDBOX)
+export const is_mas_id = window.$shell!.id_platform === 'mas'

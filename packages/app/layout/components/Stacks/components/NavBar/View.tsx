@@ -36,7 +36,7 @@ const Index = (props: IPropsStacksNavBarView) => {
 
 	return (
 		<div
-			className='drag_wrap inline_block h_100'
+			className='drag_wrap inline_block h_100 no_drag'
 			ref={setNodeRef}
 			style={{ transform: CSS.Translate.toString(transform), transition }}
 			{...attributes}

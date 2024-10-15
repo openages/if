@@ -1,9 +1,11 @@
+import { ScrollMenu } from 'react-horizontal-scrolling-menu'
+
 import { onWheel } from '@/utils'
 import { useDroppable } from '@dnd-kit/core'
-import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
-import { ScrollMenu } from 'react-horizontal-scrolling-menu'
-import View from './View'
+import { horizontalListSortingStrategy, SortableContext } from '@dnd-kit/sortable'
+
 import styles from './index.css'
+import View from './View'
 
 import type { IPropsStacksNavBarColumn } from '../../../../types'
 
@@ -17,7 +19,7 @@ const Index = (props: IPropsStacksNavBarColumn) => {
 	return (
 		<div
 			className={$cx(
-				'border_box relative',
+				'border_box relative is_drag',
 				styles.Column,
 				resizing && styles.resizing,
 				active?.data?.current?.column !== column_index && isOver && styles.isOver

@@ -102,6 +102,7 @@ export default class Index {
 
 	@disableWatcher
 	async remove(index: number) {
+		if (this.data.sessions.length === 1) return
 		if (this.view_index === index) this.view_index = 0
 
 		this.data.sessions.splice(index, 1)

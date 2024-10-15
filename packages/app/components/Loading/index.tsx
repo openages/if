@@ -1,17 +1,21 @@
+import { useTranslation } from 'react-i18next'
+
 import { Logo } from '@/components'
 import { local } from '@openages/stk/storage'
 
 import styles from './index.css'
 
 interface IProps {
+	className?: string
 	size?: number
 	desc?: string
 	useByComponent?: boolean
-	className?: string
+	close?: () => void
 }
 
 const Index = (props: IProps) => {
-	const { size = 96, desc, useByComponent, className } = props
+	const { className, size = 96, desc, useByComponent, close } = props
+	const { t } = useTranslation()
 
 	return (
 		<div
@@ -38,6 +42,11 @@ const Index = (props: IProps) => {
 				></Logo>
 			</div>
 			{desc && <span className='desc border_box text_center'>{desc}</span>}
+			<If condition={!!close}>
+				<button className='btn_close flex justify_center align_center mt_12 clickable' onClick={close}>
+					{t('todo.common.close')}
+				</button>
+			</If>
 		</div>
 	)
 }

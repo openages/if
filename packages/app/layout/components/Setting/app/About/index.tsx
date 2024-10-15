@@ -1,6 +1,6 @@
 import { getVersion } from '@/appdata/version'
 import { Logo } from '@/components'
-import { EnvelopeSimple, LinkSimpleHorizontal } from '@phosphor-icons/react'
+import { EnvelopeSimple } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -34,9 +34,6 @@ const Index = () => {
 				<span className='person'>Theophrastus</span>
 			</div>
 			<div className='link_wrap flex absolute'>
-				<a className='link_item flex align_center mr_12' href='https://openages.com'>
-					<LinkSimpleHorizontal className='mr_4'></LinkSimpleHorizontal> openages.com
-				</a>
 				<a className='link_item flex align_center' href='mailto:if.support@openages.com'>
 					<EnvelopeSimple className='mr_4'></EnvelopeSimple> if.support@openages.com
 				</a>

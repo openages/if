@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { setFavicon, setGlobalAnimation } from '@/utils'
+import { conf, setFavicon, setGlobalAnimation } from '@/utils'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 
 import type { Theme } from '@/appdata'
@@ -43,6 +43,8 @@ export default class Index {
 
 			document.documentElement.setAttribute('data-theme', v)
 			document.documentElement.style.colorScheme = v
+
+			this.setBgColorLoad()
 		}
 
 		if (!initial) {
@@ -72,9 +74,17 @@ export default class Index {
 	setColorMain(v: string) {
 		this.color_main_rgb = v
 
+		const color = `rgb(${v})`
+
 		document.documentElement.style.setProperty('--color_main_rgb', v)
 
-		setFavicon(`rgb(${v})`)
+		setFavicon(color)
+
+		this.setBgColorLoad()
+	}
+
+	setBgColorLoad() {
+		conf.set('bg_color_load', this.theme === 'light' ? `rgb(${this.color_main_rgb})` : '#3b3b41')
 	}
 
 	setPageWidth(v: string) {

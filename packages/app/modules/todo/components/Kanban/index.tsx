@@ -52,19 +52,17 @@ const Index = (props: IPropsKanban) => {
 								<span className='count ml_6'>{item.items.length}</span>
 							)}
 						</div>
-						{!item.items.length && (
-							<div
-								className='btn_insert border_box flex justify_center align_center clickable'
-								onClick={() =>
-									insert({
-										index: -1,
-										dimension_id: Object.keys(kanban_items)[index]
-									})
-								}
-							>
-								<Plus size={15}></Plus>
-							</div>
-						)}
+						<div
+							className='btn_insert border_box flex justify_center align_center clickable'
+							onClick={() =>
+								insert({
+									index: -1,
+									dimension_id: Object.keys(kanban_items)[index]
+								})
+							}
+						>
+							<Plus size={15}></Plus>
+						</div>
 					</div>
 					<Todos
 						{...{

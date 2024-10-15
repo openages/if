@@ -36,6 +36,7 @@ const Index = (props: IPropsSign) => {
 	const ref_code = useRef<InputRef>(null)
 	const [verified, setVerified] = useState(false)
 	const [focus_field, setFocusField] = useState('')
+	const { submit } = form
 
 	const is_signin = sign_type === 'signin'
 	const title = useMemo(() => (is_signin ? t('app.auth.signin') : t('app.auth.signup')), [is_signin])
@@ -258,9 +259,9 @@ const Index = (props: IPropsSign) => {
 				<Button
 					className={$cx('btn_login', btn_login_disabled && 'disabled')}
 					type='primary'
-					htmlType='submit'
 					shape='round'
 					loading={loading['signin'] || loading['signup']}
+					onClick={submit}
 				>
 					{title}
 				</Button>

@@ -6,6 +6,6 @@ export default {
 	input_placeholder: 'Please input name',
 	options: {
 		rename: 'Rename ',
-		delete: 'Delete'
+		delete: 'Press Delete'
 	}
 }

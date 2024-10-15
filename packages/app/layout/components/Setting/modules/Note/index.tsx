@@ -107,7 +107,7 @@ const Index = () => {
 						<Switch value={x.settings.count} onChange={onChangeCount}></Switch>
 					</div>
 				</div>
-				<div className='setting_item w_100 border_box flex justify_between align_center'>
+				{/* <div className='setting_item w_100 border_box flex justify_between align_center'>
 					<div className='title_wrap flex align_center'>
 						<ArrowSquareDown size={24}></ArrowSquareDown>
 						<div className='text_wrap flex flex_column'>
@@ -123,7 +123,7 @@ const Index = () => {
 							{t('common.import')}
 						</button>
 					</div>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	)

@@ -87,7 +87,13 @@ const Index = (props: IPropsStacks) => {
 					</DndContext>
 				</When>
 				<Otherwise>
-					<div className={'w_100 h_100 flex justify_center align_center'}>
+					<div
+						className={$cx(
+							'w_100 h_100 flex justify_center align_center relative',
+							styles.placeholder
+						)}
+					>
+						<div className='drag_handler is_drag w_100 absolute top_0'></div>
 						<Logo size={96}></Logo>
 					</div>
 				</Otherwise>

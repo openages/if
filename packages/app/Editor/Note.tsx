@@ -13,6 +13,7 @@ import { Placeholder } from './components'
 import { note_nodes } from './nodes'
 import {
 	AutoLink,
+	Clicker,
 	Code,
 	CodeActions,
 	Count,
@@ -64,6 +65,7 @@ const Index = (props: IPropsNote) => {
 				<TabIndentationPlugin />
 
 				<Watcher />
+				<Clicker />
 				<NoteLoader {...{ collection, setEditor }} />
 				<Settings />
 				<Hover md />

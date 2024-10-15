@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { ConfigProvider, Dropdown, Tooltip } from 'antd'
+import { ConfigProvider, Dropdown, Input, Tooltip } from 'antd'
 import { Shapes } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
@@ -23,6 +23,7 @@ import { useContextMenu } from './hooks'
 import styles from './index.css'
 
 import type { IPropsHeader } from '../../types'
+import type { FocusEvent } from 'react'
 
 const Index = (props: IPropsHeader) => {
 	const {
@@ -71,8 +72,16 @@ const Index = (props: IPropsHeader) => {
 		setItemsFilterTags
 	})
 
+	const onChangeName = useMemoizedFn((e: FocusEvent<HTMLInputElement, Element>) => {
+		const v = e.target.value
+
+		if (!v) return
+
+		updateSetting({ name: v })
+	})
+
 	const toggleSortOrder = useMemoizedFn(() => {
-		setItemsSortParam({ ...items_sort_param, order: items_sort_param.order === 'asc' ? 'desc' : 'asc' })
+		setItemsSortParam({ ...items_sort_param!, order: items_sort_param!.order === 'asc' ? 'desc' : 'asc' })
 	})
 
 	const resetSortParam = useMemoizedFn(() => {
@@ -148,7 +157,12 @@ const Index = (props: IPropsHeader) => {
 					<If condition={!!icon}>
 						<Emoji className='icon_emoji' shortcodes={icon!} size={21} hue={icon_hue}></Emoji>
 					</If>
-					<div className='name flex justify_between align_center'>{name}</div>
+					<Input
+						className='name flex justify_between align_center'
+						maxLength={72}
+						defaultValue={name}
+						onBlur={onChangeName}
+					></Input>
 				</div>
 				<Text
 					className={$cx('desc', (mode !== 'list' || !editor_size) && 'none')}

@@ -16,3 +16,11 @@
 		}
 	}
 }
+
+.placeholder {
+	:global {
+		.drag_handler {
+			height: 36px;
+		}
+	}
+}

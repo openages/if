@@ -22,6 +22,7 @@ declare global {
 		$shell?: {
 			type: 'electron'
 			platform: 'darwin' | 'win32'
+			id_platform: 'mas' | 'mac' | 'win'
 			stopLoading: () => void
 		}
 

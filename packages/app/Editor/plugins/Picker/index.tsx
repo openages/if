@@ -41,7 +41,7 @@ const Index = (props: IProps) => {
 
 	const showModal = useMemoizedFn(x.show)
 	const closeModal = useMemoizedFn(x.close)
-	const setQuery = useMemoizedFn((v: Model['query'] | null) => v && (x.query = v))
+	const setQuery = useMemoizedFn((v: Model['query'] | null) => (x.query = v || ''))
 	const onSelectOption = useMemoizedFn(x.onSelectOption)
 	const checkForTriggerMatch = useBasicTypeaheadTriggerMatch('/', { minLength: 0 })
 

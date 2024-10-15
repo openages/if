@@ -1,33 +1,9 @@
 ._local {
-
 	--height_actions: 90px;
 	transition: padding 0.3s;
 
 	&.visible_edit_modal {
 		padding-right: 90px;
-	}
-
-	&.breakpoint {
-		:global {
-			.page_content_wrap {
-				padding-right: 48px;
-				padding-left: 48px;
-			}
-
-			.actions_wrap {
-				padding-right: 18px;
-				padding-left: 18px;
-
-				.action_item {
-					font-size: 12px;
-
-					.icon_wrap {
-						width: 45px;
-						height: 45px;
-					}
-				}
-			}
-		}
 	}
 
 	:global {

@@ -6,6 +6,6 @@ export default {
 	input_placeholder: '请输入名称',
 	options: {
 		rename: '重命名',
-		delete: '删除'
+		delete: '长按删除'
 	}
 }

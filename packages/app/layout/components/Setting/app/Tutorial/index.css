@@ -1,0 +1,31 @@
+._local {
+	width: calc(100% + 18px);
+	padding: 18px 0;
+	margin-left: -9px;
+
+	:global {
+		.video_items {
+			.video_item_wrap {
+				width: 50%;
+				padding: 0 9px;
+
+				.video_item {
+					margin-bottom: 18px;
+
+					.video {
+						height: 180px;
+						margin-bottom: 12px;
+						border-radius: var(--radius);
+						object-fit: cover;
+					}
+
+					h3 {
+						line-height: 1;
+						margin: 0;
+						font-weight: normal;
+					}
+				}
+			}
+		}
+	}
+}

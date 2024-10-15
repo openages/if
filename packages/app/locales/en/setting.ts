@@ -7,6 +7,7 @@ export default {
 			Menu: 'Menu',
 			Tasks: 'Tasks',
 			Shortcuts: 'Shortcuts',
+			Tutorial: 'Tutorial',
 			About: 'About'
 		}
 	},
@@ -165,5 +166,12 @@ export default {
 			title: 'Team',
 			desc: 'Collaboration'
 		}
+	},
+	Tutotial: {
+		learn_features: 'IF Features',
+		learn_todo: 'How to use Todo',
+		learn_note: 'How to use Note',
+		learn_pomo: 'How to use Pomo',
+		learn_schedule: 'How to use Schedule'
 	}
 }

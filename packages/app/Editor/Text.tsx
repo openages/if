@@ -10,7 +10,7 @@ import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin
 
 import { Placeholder } from './components'
 import { text_nodes } from './nodes'
-import { AutoLink, LinkEditor, Picker, Ref, TextBar, TextLoader, Watcher } from './plugins'
+import { AutoLink, Clicker, LinkEditor, Picker, Ref, TextBar, TextLoader, Watcher } from './plugins'
 import { linebreak_style, text_style, token } from './theme'
 import { onError } from './utils'
 
@@ -73,6 +73,10 @@ const Index = (props: IPropsText) => {
 				<Watcher />
 				<TextLoader {...{ max_length, linebreak, onChange, setEditor, onKeyDown, onFocus }} />
 				<Picker text_mode linebreak={linebreak} />
+
+				<If condition={!!linebreak}>
+					<Clicker />
+				</If>
 
 				<If condition={!disable_textbar}>
 					<TextBar only_text={!linebreak} />

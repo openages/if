@@ -98,6 +98,8 @@
 
 			.name {
 				line-height: 1;
+				padding: 0;
+				border: none;
 				user-select: none;
 				font-size: 24px;
 				font-weight: 500;

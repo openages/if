@@ -7,6 +7,7 @@ export default {
 			Menu: '菜单设置',
 			Tasks: '任务管理器',
 			Shortcuts: '快捷键',
+			Tutorial: '教程',
 			About: '关于'
 		}
 	},
@@ -165,5 +166,12 @@ export default {
 			title: '团队用户',
 			desc: '支持团队协作'
 		}
+	},
+	Tutotial: {
+		learn_features: 'IF的全局特性',
+		learn_todo: '如何使用待办',
+		learn_note: '如何使用笔记',
+		learn_pomo: '如何使用番茄钟',
+		learn_schedule: '如何使用日程'
 	}
 }

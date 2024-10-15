@@ -1,6 +1,7 @@
 export { default as Watcher } from './__Watcher__'
 export { default as NoteLoader } from './_NoteLoader_'
 export { default as TextLoader } from './_TextLoader_'
+export { default as Clicker } from './Clicker'
 export { default as Settings } from './Settings'
 export { default as Hover } from './Hover'
 

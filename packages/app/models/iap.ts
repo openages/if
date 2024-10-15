@@ -4,7 +4,7 @@ import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { conf, getUserData, hono, ipc, trpc } from '@/utils'
+import { conf, getUserData, hono, ipc, is_mas_id, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
 
 import type { Product } from 'electron'
@@ -21,6 +21,8 @@ export default class Index {
 	}
 
 	init() {
+		if (!is_mas_id) return
+
 		this.getProducts()
 		this.onPurchaseUpdated()
 		this.verify()
@@ -31,6 +33,14 @@ export default class Index {
 	onPurchaseUpdated() {
 		const { unsubscribe } = ipc.ipa.onUpdated.subscribe(undefined, {
 			onData: async v => {
+				if (v.type === 'empty') {
+					await conf.set('oniap', false)
+
+					$app.Event.emit('app/setLoading', { visible: false })
+
+					return
+				}
+
 				if (v.type === 'onlocal') {
 					this.data = v.data
 
@@ -115,7 +125,7 @@ export default class Index {
 			return $message.error(res.error)
 		}
 
-		$app.Event.emit('app/setLoading', { visible: true, desc: $t('iap.state.purchasing') })
+		$app.Event.emit('app/setLoading', { visible: true, desc: $t('iap.state.purchasing'), showClose: true })
 	}
 
 	async restore() {
@@ -127,7 +137,7 @@ export default class Index {
 
 		await ipc.ipa.restore.query()
 
-		$app.Event.emit('app/setLoading', { visible: true, desc: $t('iap.state.restoring') })
+		$app.Event.emit('app/setLoading', { visible: true, desc: $t('iap.state.restoring'), showClose: true })
 	}
 
 	async afterPurchase(args: { tid: string; receipt_url: string }) {
@@ -205,6 +215,8 @@ export default class Index {
 	}
 
 	off() {
+		if (!is_mas_id) return
+
 		this.utils.off()
 
 		$app.Event.off('global.iap.afterOnlocal', this.afterOnlocal)
