@@ -158,16 +158,18 @@ export default class Index {
 	}
 
 	async test(ignore_message?: boolean) {
-		const close = $message.loading($t('app.auth.test_title'), 30)
+		let close = null
+
+            if(!ignore_message) close= $message.loading($t('app.auth.test_title'), 30)
 
 		this.test_status = 'testing'
 
 		const [err_raw] = await to(hono.test.$get())
 
-		close()
+		close?.()
 
 		if (err_raw) {
-			$message.error($t('app.auth.test_failed'), 24)
+			if(!ignore_message) $message.error($t('app.auth.test_failed'), 24)
 
 			return (this.test_status = 'error')
 		}
