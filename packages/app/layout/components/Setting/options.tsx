@@ -1,4 +1,4 @@
-import { is_mas_id } from '@/utils'
+import { is_mas_id, is_win_id } from '@/utils'
 import {
 	Activity,
 	Butterfly,
@@ -20,6 +20,7 @@ import { About, Account, Global, Menu, Paid, Shortcuts, Tasks, Tutorial } from '
 import { Note } from './modules'
 
 import type { TFunction } from 'i18next'
+import type { Icon } from '@phosphor-icons/react'
 
 export const getSettingItems = (t: TFunction<'translation', undefined>) => {
 	const target = [
@@ -59,7 +60,7 @@ export const getSettingItems = (t: TFunction<'translation', undefined>) => {
 			key: 'shortcuts',
 			children: <Shortcuts></Shortcuts>
 		},
-		{
+		!is_win_id && {
 			label: t('setting.nav.titles.Tutorial'),
 			Icon: YoutubeLogo,
 			key: 'tutorial',
@@ -73,7 +74,12 @@ export const getSettingItems = (t: TFunction<'translation', undefined>) => {
 		}
 	]
 
-	return target.filter(item => item)
+	return target.filter((item) => item) as Array<{
+		label: string
+		Icon: Icon
+		key: string
+		children: JSX.Element
+	}>
 }
 
 export const getModuleItems = (t: TFunction<'translation', undefined>) => [

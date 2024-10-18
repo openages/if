@@ -22,6 +22,7 @@ const Index = () => {
 
 	const setSignIn = useMemoizedFn(() => (auth.sign_type = 'signin'))
 	const setSignUp = useMemoizedFn(() => (auth.sign_type = 'signup'))
+	const test = useMemoizedFn(() => auth.test())
 
 	const cancelEdit = useMemoizedFn(() => {
 		auth.edit_mode = !auth.edit_mode
@@ -73,7 +74,7 @@ const Index = () => {
 									'btn_test flex justify_center align_center clickable',
 									auth.test_status
 								)}
-								onClick={auth.test}
+								onClick={test}
 							>
 								<Choose>
 									<When condition={auth.test_status === 'error'}>

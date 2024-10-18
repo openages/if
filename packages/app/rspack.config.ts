@@ -83,7 +83,7 @@ module.exports = defineConfig({
 		}),
 		...(is_dev ? plugins_dev : plugins_prod)
 	],
-	ignoreWarnings: [/Conflicting order/],
+	ignoreWarnings: [/Conflicting order/,/differ in casing/],
 	module: {
 		parser: {
 			css: { namedExports: false },

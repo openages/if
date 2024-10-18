@@ -40,7 +40,7 @@ const Index = (props: IPropsSetting) => {
 	const module_items = useMemo(() => getModuleItems(t), [t])
 	const UserIcon = useMemo(() => UserTypeIcon[auth.user.paid_plan], [auth.user.paid_plan])
 
-	const getRef = useMemoizedFn(v => (x.ref = v))
+	const getRef = useMemoizedFn((v) => (x.ref = v))
 	const onToggleMenu = useMemoizedFn(() => (x.visible_menu = !x.visible_menu))
 	const goBilling = useMemoizedFn(() => (x.active = 'paid'))
 
@@ -164,7 +164,7 @@ const Index = (props: IPropsSetting) => {
 			)}
 			<div className={$cx('h_100 border_box flex flex_column', styles._local)}>
 				<Tabs
-					items={module_items.concat(setting_items)}
+					items={module_items!.concat(setting_items as any)}
 					activeKey={x.active}
 					renderTabBar={() => null as unknown as ReactElement}
 					destroyInactiveTabPane

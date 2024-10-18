@@ -10,6 +10,7 @@ export default class Index {
 	dirtree_width = 0
 	dirtree_prev = 0
 	blur = false
+	maximize = false
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { utils: false }, { autoBind: true })
@@ -29,9 +30,16 @@ export default class Index {
 	}
 
 	onWindowBlur() {
-		ipc.app.onBlur.subscribe(undefined, {
-			onData: v => {
-				if (this.blur !== v) this.blur = v
+		ipc.app.on.subscribe(undefined, {
+			onData: ({ type, value }) => {
+				switch (type) {
+					case 'blur':
+						if (this.blur !== value) this.blur = value
+						break
+					case 'maximize':
+						if (this.maximize !== value) this.maximize = value
+						break
+				}
 			}
 		})
 	}

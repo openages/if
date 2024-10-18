@@ -70,7 +70,6 @@ const Content = $app.memo((props: IPropsContent) => {
 const Index = (props: IProps) => {
 	const { module, actions, height = '100vh', simple } = props
 	const [x] = useState(() => container.resolve(Model))
-
 	const global = useGlobal()
 
 	const { show } = useContextMenu({ id: 'dirtree_options' })

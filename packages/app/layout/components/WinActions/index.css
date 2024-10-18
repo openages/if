@@ -1,0 +1,21 @@
+._local {
+	z-index: 100000;
+	height: 36px;
+
+	:global {
+		.win_option {
+			width: 36px;
+			color: var(--color_text_light);
+			font-size: 13.2px;
+
+			&:hover {
+				color: var(--color_text);
+				background-color: var(--color_bg_1);
+			}
+
+			&:active {
+				background-color: var(--color_bg_2);
+			}
+		}
+	}
+}

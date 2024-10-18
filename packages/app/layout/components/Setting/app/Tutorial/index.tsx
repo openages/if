@@ -9,10 +9,16 @@ const Index = () => {
 	return (
 		<div className={$cx('w_100', styles._local)}>
 			<div className='video_items flex flex_wrap'>
-				{videos.map(item => (
-					<div className='video_item_wrap border_box'>
+				{videos.map((item) => (
+					<div className='video_item_wrap border_box' key={item.title}>
 						<div className='video_item flex flex_column'>
-							<video className='video' controls src={item.src} key={item.title}></video>
+							<video
+								className='video'
+								controls
+								preload='metadata'
+							>
+                                                <source src={item.src}  type="video/mp4"  />
+                                          </video>
 							<h3>{t(`setting.Tutotial.${item.title}`)}</h3>
 						</div>
 					</div>

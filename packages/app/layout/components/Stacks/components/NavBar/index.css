@@ -30,6 +30,12 @@
 			outline: none;
 		}
 
+            .scroll_wrap{
+                  &.column_is_last{
+                        width: calc(100% - 36px * 3);
+                  }
+            }
+
 		.nav_bar_item_wrap {
 			position: relative;
 			line-height: 1;

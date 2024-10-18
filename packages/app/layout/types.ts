@@ -52,6 +52,7 @@ export interface IPropsStacksNavBar
 
 export interface IPropsStacksNavBarColumn extends Omit<IPropsStacksNavBar, 'columns' | 'move'> {
 	column_index: number
+	column_is_last?: boolean
 	column: IPropsStacksNavBar['columns'][number]
 }
 

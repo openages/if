@@ -2,8 +2,10 @@ import { useMemoizedFn } from 'ahooks'
 import { useEffect, useState } from 'react'
 
 import { Logo } from '@/components'
+import { is_win_electron } from '@/utils'
 import { useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
 
+import { WinActions } from '../'
 import { Content, NavBar, View } from './components'
 import styles from './index.css'
 
@@ -93,7 +95,11 @@ const Index = (props: IPropsStacks) => {
 							styles.placeholder
 						)}
 					>
-						<div className='drag_handler is_drag w_100 absolute top_0'></div>
+						<div className='drag_handler is_drag w_100 absolute z_index_10 top_0 left_0 flex justify_end'>
+							<If condition={is_win_electron}>
+								<WinActions></WinActions>
+							</If>
+						</div>
 						<Logo size={96}></Logo>
 					</div>
 				</Otherwise>

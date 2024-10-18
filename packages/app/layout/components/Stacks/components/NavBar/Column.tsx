@@ -1,6 +1,7 @@
 import { ScrollMenu } from 'react-horizontal-scrolling-menu'
 
-import { onWheel } from '@/utils'
+import { WinActions } from '@/layout/components'
+import { is_win_electron, onWheel } from '@/utils'
 import { useDroppable } from '@dnd-kit/core'
 import { horizontalListSortingStrategy, SortableContext } from '@dnd-kit/sortable'
 
@@ -10,7 +11,7 @@ import View from './View'
 import type { IPropsStacksNavBarColumn } from '../../../../types'
 
 const Index = (props: IPropsStacksNavBarColumn) => {
-	const { column, column_index, focus, resizing, click, remove, update } = props
+	const { column, column_index, column_is_last, focus, resizing, click, remove, update } = props
 	const { active, isOver, setNodeRef } = useDroppable({
 		id: `nav_column_${column_index}`,
 		data: { type: 'stack', column: column_index }
@@ -19,7 +20,7 @@ const Index = (props: IPropsStacksNavBarColumn) => {
 	return (
 		<div
 			className={$cx(
-				'border_box relative is_drag',
+				'border_box flex relative is_drag',
 				styles.Column,
 				resizing && styles.resizing,
 				active?.data?.current?.column !== column_index && isOver && styles.isOver
@@ -28,7 +29,13 @@ const Index = (props: IPropsStacksNavBarColumn) => {
 			ref={setNodeRef}
 		>
 			<SortableContext items={column.views} strategy={horizontalListSortingStrategy}>
-				<ScrollMenu onWheel={onWheel}>
+				<ScrollMenu
+					wrapperClassName={$cx(
+						'scroll_wrap',
+						is_win_electron && column_is_last && 'column_is_last'
+					)}
+					onWheel={onWheel}
+				>
 					{column.views.map((view, view_index) => (
 						<View
 							{...{ column_index, view_index, view, focus, click, remove, update }}
@@ -37,6 +44,9 @@ const Index = (props: IPropsStacksNavBarColumn) => {
 					))}
 				</ScrollMenu>
 			</SortableContext>
+			<If condition={is_win_electron && column_is_last!}>
+				<WinActions></WinActions>
+			</If>
 		</div>
 	)
 }

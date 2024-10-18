@@ -52,7 +52,7 @@ const Index = (props: IPropsSign) => {
 	})
 
 	const request = useMemoizedFn(() =>
-		createPuzzle(img_puzzle, { format: 'blob' }).then(res => {
+		createPuzzle(img_puzzle, { format: 'blob' }).then((res) => {
 			ref_offset_x.current = res.x
 
 			return {
@@ -62,7 +62,7 @@ const Index = (props: IPropsSign) => {
 		})
 	)
 
-	const onVerify = useMemoizedFn(data => {
+	const onVerify = useMemoizedFn((data) => {
 		if (data.x >= ref_offset_x.current - 3 && data.x < ref_offset_x.current + 3) {
 			setVerified(true)
 
@@ -76,7 +76,7 @@ const Index = (props: IPropsSign) => {
 
 	const onBlur = useMemoizedFn(() => setFocusField(''))
 
-	const onFinish = useMemoizedFn(async values => {
+	const onFinish = useMemoizedFn(async (values) => {
 		const args = {
 			mid: local.mid,
 			email: values.email,
@@ -123,13 +123,12 @@ const Index = (props: IPropsSign) => {
 					data-placeholder={t('common.email')}
 					onClick={() => ref_email.current?.focus()}
 				>
-					<Item noStyle name='email'>
+					<Item noStyle name='email' rules={[{ required: true, type: 'email' }]}>
 						<Input
 							className='input input_email'
-							type='email'
+							type='text'
 							maxLength={30}
 							prefix={<EnvelopeSimple size={21} />}
-							autoComplete='off'
 							ref={ref_email}
 							onFocus={() => setFocusField('email')}
 							onBlur={onBlur}
@@ -145,13 +144,12 @@ const Index = (props: IPropsSign) => {
 					data-placeholder={t('common.password')}
 					onClick={() => ref_password.current?.focus()}
 				>
-					<Item noStyle name='password'>
+					<Item noStyle name='password' rules={[{ required: true }]}>
 						<Password
 							className='input input_password'
 							type='password'
 							maxLength={24}
 							prefix={<Lock size={21} />}
-							autoComplete='new-password'
 							ref={ref_password}
 							onFocus={() => setFocusField('password')}
 							onBlur={onBlur}
