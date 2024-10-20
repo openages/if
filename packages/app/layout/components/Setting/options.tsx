@@ -1,4 +1,4 @@
-import { is_mas_id, is_win_id } from '@/utils'
+import { is_mas_id } from '@/utils'
 import {
 	Activity,
 	Butterfly,
@@ -60,7 +60,7 @@ export const getSettingItems = (t: TFunction<'translation', undefined>) => {
 			key: 'shortcuts',
 			children: <Shortcuts></Shortcuts>
 		},
-		!is_win_id && {
+		{
 			label: t('setting.nav.titles.Tutorial'),
 			Icon: YoutubeLogo,
 			key: 'tutorial',
@@ -74,7 +74,7 @@ export const getSettingItems = (t: TFunction<'translation', undefined>) => {
 		}
 	]
 
-	return target.filter((item) => item) as Array<{
+	return target.filter(item => item) as Array<{
 		label: string
 		Icon: Icon
 		key: string
