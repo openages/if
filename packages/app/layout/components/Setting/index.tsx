@@ -8,6 +8,7 @@ import { container } from 'tsyringe'
 import { version_name } from '@/appdata'
 import { Modal, ModuleIcon, Wave } from '@/components'
 import { useSize } from '@/hooks'
+import { is_win_electron } from '@/utils'
 import { Infinity, List } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -92,7 +93,7 @@ const Index = (props: IPropsSetting) => {
 			<div className='user_padding_wrap w_100 border_box'>
 				<div
 					className='user_wrap h_100 border_box flex align_center relative clickable'
-					onClick={goBilling}
+					onClick={is_win_electron?undefined:goBilling}
 				>
 					<span className='badge flex justify_center align_center absolute top_0 right_0'>
 						{version_name}
