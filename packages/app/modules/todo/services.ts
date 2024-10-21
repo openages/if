@@ -115,12 +115,20 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 export const create = async (item: Todo.TodoItem, options?: { quick?: boolean; top?: boolean }) => {
 	const sort = await getMaxMinSort(item.angle_id, options?.top)
 
+	let target_sort: number
+
+	if (options?.top) {
+		target_sort = sort === 0 ? 666666 : parseFloat((sort / 1.00000002).toFixed(24))
+	} else {
+		target_sort = sort * 2
+	}
+
 	const res = await $db.todo_items.insert({
 		...item,
-		sort: options?.top ? sort - 0.01 : sort + 1
+		sort: target_sort
 	})
 
-	if (!options?.quick) {
+	if (options?.quick) {
 		const container = document.getElementById(item.file_id)!
 
 		container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' })

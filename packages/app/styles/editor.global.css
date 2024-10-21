@@ -1,4 +1,7 @@
 #typeahead-menu {
 	z-index: 1011;
+	display: flex !important;
+	align-items: flex-end;
 	width: 135px !important;
+	height: 300px !important;
 }

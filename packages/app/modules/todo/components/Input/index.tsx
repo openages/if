@@ -1,6 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { Select, Tooltip } from 'antd'
-import { $getRoot } from 'lexical'
+import { $createParagraphNode, $getRoot, FORMAT_ELEMENT_COMMAND } from 'lexical'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -18,6 +18,8 @@ import styles from './index.css'
 
 import type { Todo } from '@/types'
 import type { IPropsCircle, IPropsInput, IPropsDateTime } from '../../types'
+import type { ParagraphNode } from 'lexical'
+
 const Index = (props: IPropsInput) => {
 	const { loading, tags, create } = props
 	const { t } = useTranslation()
@@ -77,7 +79,12 @@ const Index = (props: IPropsInput) => {
 
 		create({ ...input, text, create_at: new Date().valueOf() } as Todo.TodoItem, { top: true })
 
-		ref_editor.current.update(() => $getRoot().clear())
+		ref_editor.current.update(() => {
+			const root = $getRoot()
+			const node = root.getFirstChild() as ParagraphNode
+
+			node.clear()
+		})
 	})
 
 	return (

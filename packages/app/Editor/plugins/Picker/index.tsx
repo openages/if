@@ -26,6 +26,7 @@ import type Option from './option'
 import type { IPropsMenu, IProps } from './types'
 import type { IPropsModal } from '../../types'
 import type { TypeaheadMenuPluginProps } from '@lexical/react/LexicalTypeaheadMenuPlugin'
+
 const Index = (props: IProps) => {
 	const { text_mode, linebreak } = props
 	const [x] = useState(() => container.resolve(Model))

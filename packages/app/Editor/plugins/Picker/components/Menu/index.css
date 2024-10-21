@@ -1,4 +1,5 @@
 ._local {
+	overflow-y: scroll;
 	line-height: 1;
 	padding: 3px;
 	border: var(--border);

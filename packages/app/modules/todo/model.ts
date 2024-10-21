@@ -8,7 +8,7 @@ import { archive, cycle } from '@/actions/todo'
 import { GlobalModel } from '@/context/app'
 import { File, Loadmore, Utils } from '@/models'
 import { getQuerySetting } from '@/services'
-import { getDocItem, getDocItemsData, id } from '@/utils'
+import { getDocItem, getDocItemsData, id, sleep } from '@/utils'
 import { confirm } from '@/utils/antd'
 import { disableWatcher, loading } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
@@ -341,10 +341,14 @@ export default class Index {
 			;(data as Todo.Todo)['tag_ids'] = [options?.dimension_id!]
 		}
 
-		return create({ ...item, ...data, file_id: this.id } as Todo.TodoItem, {
+		const res = await create({ ...item, ...data, file_id: this.id } as Todo.TodoItem, {
 			quick: options?.quick,
 			top: options?.top
 		})
+
+		await sleep(900)
+
+		return res
 	}
 
 	async check(args: ArgsCheck) {
