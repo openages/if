@@ -6,7 +6,7 @@ import { injectable } from 'tsyringe'
 
 import { getVersionName } from '@/appdata'
 import Utils from '@/models/utils'
-import { getUserData, hono, ipc, trpc } from '@/utils'
+import { getUserData, hono, ipc, is_electron_shell, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 import { local } from '@openages/stk/storage'
@@ -40,7 +40,7 @@ export default class Index {
 		}
 
 		this.on()
-		this.onVerify()
+		if (is_electron_shell) this.onVerify()
 	}
 
 	onVerify() {
@@ -160,7 +160,7 @@ export default class Index {
 	async test(ignore_message?: boolean) {
 		let close = null
 
-            if(!ignore_message) close= $message.loading($t('app.auth.test_title'), 30)
+		if (!ignore_message) close = $message.loading($t('app.auth.test_title'), 30)
 
 		this.test_status = 'testing'
 
@@ -169,7 +169,7 @@ export default class Index {
 		close?.()
 
 		if (err_raw) {
-			if(!ignore_message) $message.error($t('app.auth.test_failed'), 24)
+			if (!ignore_message) $message.error($t('app.auth.test_failed'), 24)
 
 			return (this.test_status = 'error')
 		}

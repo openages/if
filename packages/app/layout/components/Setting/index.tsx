@@ -8,7 +8,7 @@ import { container } from 'tsyringe'
 import { version_name } from '@/appdata'
 import { Modal, ModuleIcon, Wave } from '@/components'
 import { useSize } from '@/hooks'
-import { is_win_electron } from '@/utils'
+import { is_mac_electron } from '@/utils'
 import { Infinity, List } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -41,7 +41,7 @@ const Index = (props: IPropsSetting) => {
 	const module_items = useMemo(() => getModuleItems(t), [t])
 	const UserIcon = useMemo(() => UserTypeIcon[auth.user.paid_plan], [auth.user.paid_plan])
 
-	const getRef = useMemoizedFn((v) => (x.ref = v))
+	const getRef = useMemoizedFn(v => (x.ref = v))
 	const onToggleMenu = useMemoizedFn(() => (x.visible_menu = !x.visible_menu))
 	const goBilling = useMemoizedFn(() => (x.active = 'paid'))
 
@@ -92,8 +92,11 @@ const Index = (props: IPropsSetting) => {
 			</div>
 			<div className='user_padding_wrap w_100 border_box'>
 				<div
-					className='user_wrap h_100 border_box flex align_center relative clickable'
-					onClick={is_win_electron?undefined:goBilling}
+					className={$cx(
+						'user_wrap h_100 border_box flex align_center relative',
+						is_mac_electron && 'clickable'
+					)}
+					onClick={is_mac_electron ? goBilling : undefined}
 				>
 					<span className='badge flex justify_center align_center absolute top_0 right_0'>
 						{version_name}

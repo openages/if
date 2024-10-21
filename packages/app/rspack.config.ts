@@ -22,6 +22,7 @@ const BASE_URL = is_sandbox
 
 defines['process.env.SANDBOX'] = is_sandbox ? 1 : 0
 defines['process.env.RELEASE'] = is_release ? 1 : 0
+defines['process.env.SHELL'] = JSON.stringify(process.env.SHELL)
 
 const plugins_dev = [
 	new ReactRefreshPlugin({
@@ -83,7 +84,7 @@ module.exports = defineConfig({
 		}),
 		...(is_dev ? plugins_dev : plugins_prod)
 	],
-	ignoreWarnings: [/Conflicting order/,/differ in casing/],
+	ignoreWarnings: [/Conflicting order/, /differ in casing/],
 	module: {
 		parser: {
 			css: { namedExports: false },

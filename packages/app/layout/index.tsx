@@ -18,7 +18,7 @@ import { is_prod, is_sandbox } from '@/utils'
 import { useDeepMemo } from '@openages/stk/react'
 
 import { AppMenu, AppSwitch, Screenlock, Search, Setting, Sidebar, Stacks } from './components'
-import { useGlobalNavigate, useGlobalTranslate, useLayout } from './hooks'
+import { useGlobalNavigate, useGlobalTranslate, useLayout, usePathChange } from './hooks'
 import styles from './index.css'
 
 import type { IPropsOffscreenOutlet } from '@/components/OffscreenOutlet'
@@ -40,6 +40,7 @@ const Index = () => {
 
 	useGlobalNavigate()
 	useGlobalTranslate()
+	usePathChange()
 
 	useLayoutEffect(() => {
 		if (is_prod) prefetchDNS(`https://if-server${is_sandbox ? '-sandbox' : ''}.openages.com`)

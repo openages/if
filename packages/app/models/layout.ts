@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { getComputedStyleValue, ipc } from '@/utils'
+import { getComputedStyleValue, ipc, is_electron_shell } from '@/utils'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 
 @injectable()
@@ -26,7 +26,8 @@ export default class Index {
 		}
 
 		this.setDirTreeWidth(this.dirtree_width)
-		this.onWindowBlur()
+
+		if (is_electron_shell) this.onWindowBlur()
 	}
 
 	onWindowBlur() {

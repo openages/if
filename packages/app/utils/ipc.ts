@@ -5,5 +5,6 @@ import { createTRPCProxyClient } from '@trpc/client'
 import type { Router } from '@electron/rpcs'
 
 export default createTRPCProxyClient<Router>({
-	links: [ipcLink()]
+	// @ts-ignore
+	links: globalThis.electronTRPC ? [ipcLink()] : []
 })

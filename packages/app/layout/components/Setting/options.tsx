@@ -1,4 +1,4 @@
-import { is_mas_id } from '@/utils'
+import { is_mac_dev, is_mas_id } from '@/utils'
 import {
 	Activity,
 	Butterfly,
@@ -36,7 +36,7 @@ export const getSettingItems = (t: TFunction<'translation', undefined>) => {
 			key: 'account',
 			children: <Account></Account>
 		},
-		is_mas_id && {
+		(is_mas_id || is_mac_dev) && {
 			label: t('setting.nav.titles.Paid'),
 			Icon: CurrencyCircleDollar,
 			key: 'paid',

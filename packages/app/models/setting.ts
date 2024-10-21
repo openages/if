@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { conf, setFavicon, setGlobalAnimation } from '@/utils'
+import { conf, is_electron_shell, setFavicon, setGlobalAnimation } from '@/utils'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 
 import type { Theme } from '@/appdata'
@@ -84,6 +84,8 @@ export default class Index {
 	}
 
 	setBgColorLoad() {
+		if (!is_electron_shell) return
+
 		conf.set('bg_color_load', this.theme === 'light' ? `rgb(${this.color_main_rgb})` : '#3b3b41')
 	}
 

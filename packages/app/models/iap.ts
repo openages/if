@@ -4,7 +4,7 @@ import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { conf, getUserData, hono, ipc, is_mas_id, trpc } from '@/utils'
+import { conf, getUserData, hono, ipc, is_mac_dev, is_mas_id, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
 
 import type { Product } from 'electron'
@@ -21,7 +21,7 @@ export default class Index {
 	}
 
 	init() {
-		if (!is_mas_id) return
+		if (!is_mas_id && !is_mac_dev) return
 
 		this.getProducts()
 		this.onPurchaseUpdated()
