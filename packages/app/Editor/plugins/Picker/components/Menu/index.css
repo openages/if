@@ -1,7 +1,6 @@
 ._local {
 	overflow-y: scroll;
 	line-height: 1;
-	padding: 3px;
 	border: var(--border);
 	border-radius: var(--radius);
 	background-color: var(--color_bg);
@@ -9,49 +8,55 @@
 	font-size: 12px;
 
 	:global {
-		.latest_blocks {
-			padding-bottom: 3px;
-			margin-bottom: 3px;
-			border-bottom: var(--border_light_dashed);
+		.menu_wrap {
+			.latest_blocks {
+				padding: 3px;
+				border-bottom: var(--border_light_dashed);
+				background-color: var(--color_bg);
 
-			.latest_block {
-				width: calc((100% - 12px) / 5);
-				margin-right: 3px;
-				border-radius: var(--radius);
-				font-size: 14px;
-				aspect-ratio: 1;
+				.latest_block {
+					width: calc((100% - 12px) / 5);
+					margin-right: 3px;
+					border-radius: var(--radius);
+					font-size: 14px;
+					aspect-ratio: 1;
 
-				&:hover {
-					background-color: var(--color_bg_1);
-				}
+					&:hover {
+						background-color: var(--color_bg_1);
+					}
 
-				&:last-child {
-					margin-right: 0;
-				}
-			}
-		}
-
-		.picker_menu_item {
-			padding: 6px 9px;
-			border-radius: var(--radius_small);
-
-			&:hover,
-			&.selected {
-				background-color: var(--color_bg_1);
-			}
-
-			.left_wrap {
-				.icon_wrap {
-					font-size: 16px;
-				}
-
-				.text {
-					white-space: nowrap;
+					&:last-child {
+						margin-right: 0;
+					}
 				}
 			}
 
-			.shortcut {
-				color: var(--color_text_light);
+			.menu_items {
+				padding: 3px;
+
+				.picker_menu_item {
+					padding: 6px 9px;
+					border-radius: var(--radius_small);
+
+					&:hover,
+					&.selected {
+						background-color: var(--color_bg_1);
+					}
+
+					.left_wrap {
+						.icon_wrap {
+							font-size: 16px;
+						}
+
+						.text {
+							white-space: nowrap;
+						}
+					}
+
+					.shortcut {
+						color: var(--color_text_light);
+					}
+				}
 			}
 		}
 	}

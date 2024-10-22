@@ -4,7 +4,7 @@ const Index = (props: IPropsMenuLatest) => {
 	const { blocks, selectOptionAndCleanUp } = props
 
 	return (
-		<div className='latest_blocks flex align_center'>
+		<div className='latest_blocks flex align_center sticky top_0'>
 			{blocks.map(item => (
 				<span
 					className='latest_block flex justify_center align_center clickable'

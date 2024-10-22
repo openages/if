@@ -25,31 +25,31 @@ const Index = (props: IPropsMenu) => {
 
 	const blocks = useMemo(() => latest_blocks.map(item => all_options[item]), [all_options, latest_blocks])
 
-	useEffect(() => {
-		const observer = new IntersectionObserver(
-			entries => {
-				console.log(entries)
+	// useEffect(() => {
+	// 	const observer = new IntersectionObserver(
+	// 		entries => {
+	// 			console.log(entries)
 
-				// entries.forEach(entry => {
-				// 	if (!entry.boundingClientRect.width) return
+	// 			// entries.forEach(entry => {
+	// 			// 	if (!entry.boundingClientRect.width) return
 
-				// 	const height_bounding = entry.boundingClientRect.height
-				// 	const height_intersection = entry.intersectionRect.height
+	// 			// 	const height_bounding = entry.boundingClientRect.height
+	// 			// 	const height_intersection = entry.intersectionRect.height
 
-				// 	if (height_bounding !== height_intersection) {
-				// 		setMaxHeight(height_intersection)
-				// 	} else {
-				// 		// setMaxHeight(0)
-				// 	}
-				// })
-			},
-			{ root: null, rootMargin: '0px', threshold: 0 }
-		)
+	// 			// 	if (height_bounding !== height_intersection) {
+	// 			// 		setMaxHeight(height_intersection)
+	// 			// 	} else {
+	// 			// 		// setMaxHeight(0)
+	// 			// 	}
+	// 			// })
+	// 		},
+	// 		{ root: null, rootMargin: '0px', threshold: 0 }
+	// 	)
 
-		observer.observe(ref.current!)
+	// 	observer.observe(ref.current!)
 
-		return () => observer.disconnect()
-	}, [])
+	// 	return () => observer.disconnect()
+	// }, [])
 
 	// useEffect(() => {
 	// 	// const timer = setInterval(() => {
@@ -76,29 +76,31 @@ const Index = (props: IPropsMenu) => {
 	// 	}
 	// }, [])
 
-	const style = useMemo(() => {
-		if (!max_height) return {}
+	// const style = useMemo(() => {
+	// 	if (!max_height) return {}
 
-		return { maxHeight: max_height } as CSSProperties
-	}, [max_height])
-
-	console.log(style)
+	// 	return { maxHeight: max_height } as CSSProperties
+	// }, [max_height])
 
 	return (
-		<div className={$cx('flex flex_column border_box', styles._local)} ref={ref} style={style}>
-			<If condition={!text_mode && blocks.length > 0}>
-				<Latest blocks={blocks} selectOptionAndCleanUp={selectOptionAndCleanUp}></Latest>
-			</If>
-			{options.map((option, index) => (
-				<Item
-					option={option}
-					index={index}
-					selected={selected_index === index}
-					selectOptionAndCleanUp={selectOptionAndCleanUp}
-					setHighlightedIndex={setHighlightedIndex}
-					key={option.key}
-				/>
-			))}
+		<div className={$cx('flex flex_column border_box relative', styles._local)} ref={ref}>
+			<div className='menu_wrap w_100 border_box flex flex_column'>
+				<If condition={!text_mode && blocks.length > 0}>
+					<Latest blocks={blocks} selectOptionAndCleanUp={selectOptionAndCleanUp}></Latest>
+				</If>
+				<div className='menu_items w_100 border_box flex flex_column'>
+					{options.map((option, index) => (
+						<Item
+							option={option}
+							index={index}
+							selected={selected_index === index}
+							selectOptionAndCleanUp={selectOptionAndCleanUp}
+							setHighlightedIndex={setHighlightedIndex}
+							key={option.key}
+						/>
+					))}
+				</div>
+			</div>
 		</div>
 	)
 }
