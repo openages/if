@@ -16,7 +16,6 @@ import { injectable } from 'tsyringe'
 import blocks from '@/Editor/blocks'
 import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
 import { $getSelectionType } from '@/Editor/utils'
-import Utils from '@/models/utils'
 import { mergeRegister } from '@lexical/utils'
 import { deepEqual } from '@openages/stk/react'
 
@@ -30,7 +29,7 @@ export default class Index {
 
 	unregister = null as unknown as () => void
 
-	constructor(public utils: Utils) {}
+	constructor() {}
 
 	init(editor: Index['editor']) {
 		this.editor = editor
@@ -84,14 +83,6 @@ export default class Index {
 		this.path = path
 		this.selection = selection
 
-		const root = $getRoot()
-
-		if (root.getChildren().length > 1) {
-			this.removeEventListners()
-		} else {
-			this.addEventListners()
-		}
-
 		return false
 	}
 
@@ -128,20 +119,9 @@ export default class Index {
 		}
 	}
 
-	addEventListners() {
-		this.removeEventListners()
-
-		this.utils.acts = [this.editor.registerNodeTransform(RootNode, this.onRootTranform.bind(this))]
-	}
-
-	removeEventListners() {
-		this.utils.acts.forEach(item => item())
-
-		this.utils.acts = []
-	}
-
 	on() {
 		this.unregister = mergeRegister(
+			this.editor.registerNodeTransform(RootNode, this.onRootTranform.bind(this)),
 			this.editor.registerCommand(
 				SELECTION_CHANGE_COMMAND,
 				this.watch.bind(this),
@@ -156,8 +136,6 @@ export default class Index {
 	}
 
 	off() {
-		this.removeEventListners()
-
 		this.unregister()
 	}
 }

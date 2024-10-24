@@ -36,6 +36,7 @@ export default class Index {
 
 		if (
 			!(
+				target.classList.contains('__view_container') ||
 				target.classList.contains('limited_content_wrap') ||
 				target.classList.contains('__editor_container')
 			)
@@ -65,7 +66,9 @@ export default class Index {
 				const root = $getRoot()
 				const last = root.getLastChild()
 
-				if (last && $isParagraphNode(last)) last.select()
+				if (last && $isParagraphNode(last)) {
+					last.select()
+				}
 			})
 		}
 

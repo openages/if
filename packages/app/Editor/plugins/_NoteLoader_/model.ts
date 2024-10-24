@@ -125,6 +125,11 @@ export default class Index {
 				.filter(item => item)
 		) as Array<string>
 
+		// if (change_nodes.length) {
+		// 	console.log('args: ', args)
+		// 	console.log('change_nodes: ', change_nodes)
+		// }
+
 		if (!change_nodes.length) return
 
 		clearTimeout(this.timer_change)
@@ -134,20 +139,22 @@ export default class Index {
 			const prev_node = prev_map.get(id)
 
 			if (curr_node && !prev_node) {
+				// console.log('add: ', curr_node)
 				this.dispatch([{ type: 'add', id }])
 			}
 
 			if (!curr_node && prev_node) {
+				// console.log('remove: ', prev_node)
+
 				this.dispatch([{ type: 'remove', id }])
 			}
 
 			if (curr_node && prev_node) {
-				this.editor.update(() => {
-					const node = $getNodeByKey(id)
-				})
 				if (curr_node.__parent === 'root' && curr_node.__parent !== prev_node.__parent) {
+					// console.log(123)
 					this.dispatch([{ type: 'add', id }])
 				} else {
+					// console.log(666)
 					this.changes.set(id, { type: 'update', id })
 				}
 			}

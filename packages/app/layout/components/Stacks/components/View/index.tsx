@@ -29,7 +29,11 @@ const Index = (props: IPropsStacksView) => {
 			<div className={$cx('w_100 h_100 relative', styles.position_wrap)} onMouseDown={onMouseDown}>
 				<div
 					id={id}
-					className={$cx('w_100 h_100', styles._local, breakpoint === 390 && styles.breakpoint_390)}
+					className={$cx(
+						'__view_container w_100 h_100',
+						styles._local,
+						breakpoint === 390 && styles.breakpoint_390
+					)}
 				>
 					<LazyElement type='modules' path={module} props={{ id }} />
 				</div>
