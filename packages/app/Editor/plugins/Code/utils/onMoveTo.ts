@@ -1,7 +1,7 @@
 import { $getSelection, $isLineBreakNode, $isRangeSelection, $isTabNode, MOVE_TO_START } from 'lexical'
 
 import CodeTextNode from '../CodeTextNode'
-import { $isCodeTextNode, getLastCodeNodeOfLine, getStartOfCodeInLine } from './index'
+import { $isCodeTextNode, $isSelectionInCode, getLastCodeNodeOfLine, getStartOfCodeInLine } from './index'
 
 import type { LexicalCommand } from 'lexical'
 
@@ -16,6 +16,7 @@ export default (type: LexicalCommand<KeyboardEvent>, event: KeyboardEvent): bool
 	const is_move_to_start = type === MOVE_TO_START
 
 	if (
+		!$isSelectionInCode(selection) ||
 		!($isCodeTextNode(anchor_node) || $isTabNode(anchor_node)) ||
 		!($isCodeTextNode(focus_node) || $isTabNode(focus_node))
 	) {

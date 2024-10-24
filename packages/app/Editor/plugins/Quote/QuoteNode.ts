@@ -89,4 +89,8 @@ export default class QuoteNode extends ElementNode {
 
 		return true
 	}
+
+	canMergeWhenEmpty() {
+		return true
+	}
 }

@@ -342,6 +342,10 @@ function importTextMatchTransformers(textNode_: TextNode, textMatchTransformers:
 
 	mainLoop: while (textNode) {
 		for (const transformer of textMatchTransformers) {
+			if (!transformer.replace || !transformer.importRegExp) {
+				continue
+			}
+
 			const match = textNode.getTextContent().match(transformer.importRegExp)
 
 			if (!match) {
