@@ -114,7 +114,7 @@ export default class Index {
 
 			this.redo_stack.push(change_nodes)
 		} else if (tags.has('redo') && this.redo_stack.length && dirtyElements.size) {
-			const change_nodes = this.redo_stack.pop()!
+			change_nodes = this.redo_stack.pop()!
 
 			this.undo_stack.push(change_nodes)
 		} else {
