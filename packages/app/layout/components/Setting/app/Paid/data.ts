@@ -2,10 +2,10 @@ export const modules = ['todo', 'note', 'pomo', 'schedule'] as const
 
 export const limit = {
 	free: {
-		todo: 1,
+		todo: 6,
 		note: 'unlimited',
-		pomo: 1,
-		schedule: 1
+		pomo: 6,
+		schedule: 6
 	},
 	pro: {
 		todo: 'unlimited',

@@ -13,6 +13,7 @@ import {
 } from '@/Editor/utils'
 import { getDocItem, getDocItemsData } from '@/utils'
 import { disableWatcher } from '@/utils/decorators'
+import { mergeRegister } from '@lexical/utils'
 import { deepEqual } from '@openages/stk/react'
 
 import type { LexicalEditor } from 'lexical'
@@ -36,6 +37,8 @@ export default class Index {
 	update_load_status = 1
 	timer_change = null as unknown as NodeJS.Timer
 	changes = new Map<string, Change>()
+	undo_stack = [] as Array<Array<string>>
+	redo_stack = [] as Array<Array<string>>
 
 	unregister = null as (() => void) | null
 
@@ -97,40 +100,48 @@ export default class Index {
 		if (!args) return
 		if (this.editor.isComposing()) return
 
-		const { dirtyElements, dirtyLeaves, editorState, prevEditorState } = args
+		const { dirtyElements, dirtyLeaves, editorState, prevEditorState, tags } = args
 		const dirty_els = $copy(dirtyElements)
 		const curr_map = editorState._nodeMap
 		const prev_map = prevEditorState._nodeMap
 
+		let change_nodes: Array<string> = []
+
 		dirty_els.delete('root')
 
-		const change_nodes = uniq(
-			Array.from(dirty_els.keys())
-				.concat(Array.from(dirtyLeaves))
-				.map(item =>
-					editorState.read(() => {
-						const node = $getNodeByKey(item)
+		if (tags.has('undo') && this.undo_stack.length && dirtyElements.size) {
+			change_nodes = this.undo_stack.pop()!
 
-						if (node?.__parent !== 'root') {
-							if (node) {
-								return $getTopLevelNode(node).getKey()
-							} else {
-								return $getRemovedParent(item, prev_map)
+			this.redo_stack.push(change_nodes)
+		} else if (tags.has('redo') && this.redo_stack.length && dirtyElements.size) {
+			const change_nodes = this.redo_stack.pop()!
+
+			this.undo_stack.push(change_nodes)
+		} else {
+			change_nodes = uniq(
+				Array.from(dirty_els.keys())
+					.concat(Array.from(dirtyLeaves))
+					.map(item =>
+						editorState.read(() => {
+							const node = $getNodeByKey(item)
+
+							if (node?.__parent !== 'root') {
+								if (node) {
+									return $getTopLevelNode(node).getKey()
+								} else {
+									return $getRemovedParent(item, prev_map)
+								}
 							}
-						}
 
-						return item
-					})
-				)
-				.filter(item => item)
-		) as Array<string>
-
-		// if (change_nodes.length) {
-		// 	console.log('args: ', args)
-		// 	console.log('change_nodes: ', change_nodes)
-		// }
+							return item
+						})
+					)
+					.filter(item => item)
+			) as Array<string>
+		}
 
 		if (!change_nodes.length) return
+		if (!tags.has('undo') && !tags.has('redo')) this.undo_stack.push(change_nodes)
 
 		clearTimeout(this.timer_change)
 
@@ -139,22 +150,17 @@ export default class Index {
 			const prev_node = prev_map.get(id)
 
 			if (curr_node && !prev_node) {
-				// console.log('add: ', curr_node)
 				this.dispatch([{ type: 'add', id }])
 			}
 
 			if (!curr_node && prev_node) {
-				// console.log('remove: ', prev_node)
-
 				this.dispatch([{ type: 'remove', id }])
 			}
 
 			if (curr_node && prev_node) {
 				if (curr_node.__parent === 'root' && curr_node.__parent !== prev_node.__parent) {
-					// console.log(123)
 					this.dispatch([{ type: 'add', id }])
 				} else {
-					// console.log(666)
 					this.changes.set(id, { type: 'update', id })
 				}
 			}
@@ -162,7 +168,7 @@ export default class Index {
 
 		this.timer_change = setTimeout(() => {
 			this.dispatch()
-		}, 1500)
+		}, 1200)
 	}
 
 	@disableWatcher
@@ -249,7 +255,7 @@ export default class Index {
 	}
 
 	addEditorListner() {
-		this.unregister = this.editor.registerUpdateListener(this.onUpdate.bind(this))
+		this.unregister = mergeRegister(this.editor.registerUpdateListener(this.onUpdate.bind(this)))
 
 		this.onUpdate(null)
 	}
