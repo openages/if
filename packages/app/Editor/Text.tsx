@@ -38,8 +38,8 @@ const Index = (props: IPropsText) => {
 
 	const props_rich_text = {
 		contentEditable: <ContentEditable />,
-		text_mode: !linebreak,
-		ErrorBoundary: LexicalErrorBoundary
+		ErrorBoundary: LexicalErrorBoundary,
+		options: { text_mode: !linebreak }
 	} as any
 
 	if (placeholder) {

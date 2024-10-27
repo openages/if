@@ -141,30 +141,54 @@ export default class Index {
 		}
 
 		if (!change_nodes.length) return
-		if (!tags.has('undo') && !tags.has('redo')) this.undo_stack.push(change_nodes)
+
+		if (!tags.has('undo') && !tags.has('redo')) {
+			if (this.undo_stack.length >= 30) {
+				this.undo_stack.shift()
+			}
+
+			this.undo_stack.push(change_nodes)
+		}
 
 		clearTimeout(this.timer_change)
+
+		const add_nodes = [] as Array<string>
+		const remove_nodes = [] as Array<string>
 
 		change_nodes.forEach(id => {
 			const curr_node = curr_map.get(id)
 			const prev_node = prev_map.get(id)
 
 			if (curr_node && !prev_node) {
-				this.dispatch([{ type: 'add', id }])
+				add_nodes.push(id)
 			}
 
 			if (!curr_node && prev_node) {
-				this.dispatch([{ type: 'remove', id }])
+				remove_nodes.push(id)
 			}
 
 			if (curr_node && prev_node) {
 				if (curr_node.__parent === 'root' && curr_node.__parent !== prev_node.__parent) {
-					this.dispatch([{ type: 'add', id }])
+					add_nodes.push(id)
 				} else {
 					this.changes.set(id, { type: 'update', id })
 				}
 			}
 		})
+
+		if (add_nodes.length) {
+			this.dispatch(
+				add_nodes.map(id => ({ type: 'add', id })),
+				'add'
+			)
+		}
+
+		if (remove_nodes.length) {
+			this.dispatch(
+				remove_nodes.map(id => ({ type: 'remove', id })),
+				'remove'
+			)
+		}
 
 		this.timer_change = setTimeout(() => {
 			this.dispatch()
@@ -172,7 +196,7 @@ export default class Index {
 	}
 
 	@disableWatcher
-	async dispatch(changes?: Array<Change>) {
+	async dispatch(changes?: Array<Change>, bulk_type?: 'add' | 'remove') {
 		const target = changes || Array.from(this.changes.values())
 
 		const events = target.map(async ({ type, id }) => {
@@ -204,16 +228,12 @@ export default class Index {
 						create_at: new Date().valueOf()
 					})
 
-					this.addUpdateListner()
-
 					break
 				case 'remove':
 					this.ids_array = this.ids_array.filter(v => v !== id)
 					this.ids_map.delete(id)
 
 					await $db.note_items.findOne(id).remove()
-
-					this.addUpdateListner()
 
 					break
 				case 'update':
@@ -238,6 +258,10 @@ export default class Index {
 		})
 
 		await Promise.all(events)
+
+		if (changes && bulk_type) {
+			this.addUpdateListner()
+		}
 
 		if (!changes) this.changes.clear()
 	}

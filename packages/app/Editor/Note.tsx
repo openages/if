@@ -1,3 +1,4 @@
+import getNodesFromText from '@/Editor/utils/getNodesFromText'
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
@@ -54,6 +55,7 @@ const Index = (props: IPropsNote) => {
 					contentEditable={<ContentEditable />}
 					placeholder={<Placeholder />}
 					ErrorBoundary={LexicalErrorBoundary}
+					options={{ getNodesFromText }}
 				/>
 				<HistoryPlugin />
 				<AutoFocusPlugin />

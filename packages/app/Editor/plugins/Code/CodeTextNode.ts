@@ -43,7 +43,7 @@ export default class CodeTextNode extends TextNode {
 	createDOM(config: EditorConfig) {
 		const el = super.createDOM(config)
 
-		el.style.cssText = this.__color
+		el.style.color = this.__color
 
 		return el
 	}
