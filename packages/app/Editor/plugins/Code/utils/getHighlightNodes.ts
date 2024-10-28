@@ -11,7 +11,16 @@ export default (tokens: Array<Array<ThemedToken>>) => {
 	tokens.forEach((line, index) => {
 		line.forEach(token => {
 			const { content, htmlStyle } = token
-			const color = typeof htmlStyle === 'string' ? htmlStyle : htmlStyle?.color
+
+			let color: string
+
+			if (typeof htmlStyle === 'object') {
+				color = Object.entries(htmlStyle)
+					.map(([k, v]) => `${k}:${v};`)
+					.join('')
+			} else {
+				color = htmlStyle!
+			}
 
 			if (content === '\t') {
 				nodes.push($createTabNode())

@@ -82,7 +82,7 @@ export default class Index {
 		const text = await convertFile(files[0])
 
 		this.editor.update(() => {
-			$convertFromMarkdownString(text, transformers, $getRoot(), false)
+			$convertFromMarkdownString(text, transformers, $getRoot(), false, { import: true })
 		})
 	}
 

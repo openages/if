@@ -2,9 +2,11 @@ import {
 	$createLineBreakNode,
 	$createParagraphNode,
 	$createTabNode,
+	$getEditor,
 	$isTabNode,
 	$isTextNode,
 	$setImportNode,
+	getActiveEditor,
 	ElementNode
 } from 'lexical'
 
@@ -16,12 +18,14 @@ import {
 	$isCodeNode,
 	$isCodeTextNode,
 	convertCodeElement,
+	getCodeTokenNodes,
 	getFirstCodeNodeOfLine
 } from './utils'
 
 import type { IPropsCode, SerializedCodeNode } from './types'
 import type { BundledLanguage } from 'shiki'
 import type { DOMExportOutput, RangeSelection, DOMConversionMap } from 'lexical'
+import type CodeTextNode from './CodeTextNode'
 
 export default class CodeNode extends ElementNode {
 	__lang: BundledLanguage
@@ -92,6 +96,22 @@ export default class CodeNode extends ElementNode {
 			type: 'code',
 			lang: this.__lang
 		}
+	}
+
+	append(...nodes: Array<CodeTextNode>) {
+		const only_node = nodes.at(0)
+
+		super.append(...nodes)
+
+		if (this.getChildren().length === 1 && only_node && !only_node.__color) {
+			const token_nodes = getCodeTokenNodes(this.getTextContent(), this.__lang)
+
+			only_node.remove()
+
+			super.append(...token_nodes)
+		}
+
+		return this
 	}
 
 	insertNewAfter(selection: RangeSelection, restoreSelection = true) {

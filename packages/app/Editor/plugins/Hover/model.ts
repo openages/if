@@ -90,6 +90,8 @@ export default class Index {
 	}
 
 	reset() {
+		if (!this.active_node) return
+
 		this.active_node = null as unknown as LexicalNode
 		this.over_node = null as unknown as LexicalNode
 		this.position_handler = { left: 0, top: 0 }
@@ -135,6 +137,12 @@ export default class Index {
 
 	onClick(args: { key: string; keyPath: Array<string> }) {
 		if (!this.active_node) return
+
+		const node_map = this.editor.getEditorState()._nodeMap
+
+		if (!node_map.has(this.active_node.getKey())) {
+			return this.reset()
+		}
 
 		const { key } = args
 
@@ -271,7 +279,7 @@ export default class Index {
 		this.editor.update(() => {
 			const active_node = this.getDragNode(e)
 
-			if (!active_node) return
+			if (!active_node) return this.reset()
 			if (this.active_node && this.active_node.is(active_node)) return
 
 			this.active_node = active_node

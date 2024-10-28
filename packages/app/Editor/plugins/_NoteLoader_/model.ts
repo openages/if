@@ -199,6 +199,8 @@ export default class Index {
 	async dispatch(changes?: Array<Change>, bulk_type?: 'add' | 'remove') {
 		const target = changes || Array.from(this.changes.values())
 
+		if (changes && bulk_type) this.removeUpdateListner()
+
 		const events = target.map(async ({ type, id }) => {
 			let prev: string = ''
 			let next: string = ''
@@ -259,10 +261,7 @@ export default class Index {
 
 		await Promise.all(events)
 
-		if (changes && bulk_type) {
-			this.addUpdateListner()
-		}
-
+		if (changes && bulk_type) this.addUpdateListner()
 		if (!changes) this.changes.clear()
 	}
 

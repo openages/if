@@ -23,7 +23,7 @@ const Index = (props: IPropsOptions) => {
 					</div>
 					<FileMd className='symbol' size={12}></FileMd>
 				</div>
-				{/* <div
+				<div
 					className='option_item w_100 border_box flex justify_between align_center cursor_point'
 					onClick={importMd}
 				>
@@ -32,7 +32,7 @@ const Index = (props: IPropsOptions) => {
 						<span className='title ml_6'>{t('common.import')}</span>
 					</div>
 					<FileMd className='symbol' size={12}></FileMd>
-				</div> */}
+				</div>
 			</div>
 		</div>
 	)

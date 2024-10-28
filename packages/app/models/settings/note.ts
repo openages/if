@@ -1,4 +1,4 @@
-import { $createRootNode, createEditor } from 'lexical'
+import { $getRoot, createEditor } from 'lexical'
 import { makeAutoObservable } from 'mobx'
 
 import { module_default_icon } from '@/appdata'
@@ -40,13 +40,14 @@ export default class Index {
 
 		const events = files.map(async file => {
 			const text = await convertFile(file)
-			const root = $createRootNode()
 
 			let nodes: Array<SerializedLexicalNode>
 
 			editor.update(
 				() => {
 					try {
+						const root = $getRoot()
+
 						$convertFromMarkdownString(text, transformers, root, false)
 
 						nodes = $exportNodeToJson(root).children

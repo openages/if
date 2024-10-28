@@ -1,4 +1,4 @@
-import { $createRootNode, createEditor } from 'lexical'
+import { $createParagraphNode, createEditor } from 'lexical'
 
 import { note_nodes } from '@/Editor/nodes'
 import transformers from '@/Editor/transformers'
@@ -6,11 +6,11 @@ import { $convertFromMarkdownString } from '@/Editor/utils'
 
 export default (text: string) => {
 	const editor = createEditor({ nodes: note_nodes })
-	const root = $createRootNode()
+	const container = $createParagraphNode()
 
 	editor._headless = true
 
-	$convertFromMarkdownString(text, transformers, root, false)
+	$convertFromMarkdownString(text, transformers, container, false)
 
-	return root.getChildren()
+	return container.getChildren()
 }

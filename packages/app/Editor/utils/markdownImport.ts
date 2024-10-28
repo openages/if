@@ -35,9 +35,14 @@ type TextFormatTransformersIndex = Readonly<{
 	transformersByTag: Readonly<Record<string, TextFormatTransformer>>
 }>
 
+interface Options {
+	import?: boolean
+}
+
 export function createMarkdownImport(
 	transformers: Array<Transformer>,
-	shouldPreserveNewLines = false
+	shouldPreserveNewLines = false,
+	options?: Options
 ): (markdownString: string, node?: ElementNode) => void {
 	const byType = transformersByType(transformers)
 	const textFormatTransformersIndex = createTextFormatTransformersIndex(byType.textFormat)
@@ -99,7 +104,7 @@ export function createMarkdownImport(
 			}
 		}
 
-		if ($getSelection() !== null) {
+		if ($getSelection() !== null && options?.import) {
 			root.selectStart()
 		}
 	}
@@ -109,9 +114,10 @@ export function $convertFromMarkdownString(
 	markdown: string,
 	transformers: Array<Transformer>,
 	node?: ElementNode,
-	shouldPreserveNewLines = false
+	shouldPreserveNewLines = false,
+	options?: Options
 ): void {
-	const importMarkdown = createMarkdownImport(transformers, shouldPreserveNewLines)
+	const importMarkdown = createMarkdownImport(transformers, shouldPreserveNewLines, options)
 
 	return importMarkdown(markdown, node)
 }
