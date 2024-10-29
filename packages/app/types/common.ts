@@ -37,3 +37,8 @@ export interface DndItemProps {
 	setNodeRef: (node: HTMLElement | null) => void
 	setActivatorNodeRef: (element: HTMLElement | null) => void
 }
+
+export interface ArgsKV<T = any> {
+	key: string
+	value: T
+}

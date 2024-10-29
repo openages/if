@@ -1,7 +1,7 @@
 import { $getSelection, $isRangeSelection, COMMAND_PRIORITY_EDITOR, COMMAND_PRIORITY_HIGH } from 'lexical'
 import { injectable } from 'tsyringe'
 
-import { INSERT_CODE_COMMAND, SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
+import { CHANGE_SELECTION_ELEMENTS, INSERT_CODE_COMMAND } from '@/Editor/commands'
 import { getSelectedNode } from '@/Editor/utils'
 import Utils from '@/models/utils'
 
@@ -65,7 +65,7 @@ export default class Index {
 		this.utils.acts.push(
 			this.editor.registerCommand(INSERT_CODE_COMMAND, this.onInsert.bind(this), COMMAND_PRIORITY_EDITOR),
 			this.editor.registerCommand(
-				SELECTION_ELEMENTS_CHANGE,
+				CHANGE_SELECTION_ELEMENTS,
 				this.checkSelection.bind(this),
 				COMMAND_PRIORITY_HIGH
 			)

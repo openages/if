@@ -3,7 +3,7 @@ import { debounce, throttle } from 'lodash-es'
 import { makeAutoObservable, runInAction } from 'mobx'
 import smoothScrollIntoView from 'smooth-scroll-into-view-if-needed'
 
-import { INSERT_NAVIGATION_COMMAND, UPDATE_NAVIGATION_TOC } from '@/Editor/commands'
+import { CHANGE_EDITOR_SETTINGS, INSERT_NAVIGATION_COMMAND } from '@/Editor/commands'
 import { $getHeadingLevel, insertBlock } from '@/Editor/utils'
 import { getComputedStyleValue } from '@/utils'
 import { mergeRegister } from '@lexical/utils'
@@ -16,7 +16,7 @@ import type { CSSProperties } from 'react'
 
 import type { TableOfContentsEntry } from '@lexical/react/LexicalTableOfContentsPlugin'
 import type { HeadingNode } from '@lexical/rich-text'
-import type { Note } from '@/types'
+import type { Note, ArgsKV } from '@/types'
 
 export default class Index {
 	id = ''
@@ -240,10 +240,12 @@ export default class Index {
 		return true
 	}
 
-	updateToc(v: Index['toc']) {
-		this.toc = v
+	updateToc(args: ArgsKV<Index['toc']>) {
+		if (args.key !== 'toc') return
 
-		if (v === 'hidden') {
+		this.toc = args.value
+
+		if (args.value === 'hidden') {
 			this.removeEventListener()
 		} else {
 			this.addEventListener()
@@ -267,7 +269,7 @@ export default class Index {
 	on() {
 		this.unregister = mergeRegister(
 			this.editor.registerCommand(INSERT_NAVIGATION_COMMAND, this.insert, COMMAND_PRIORITY_LOW),
-			this.editor.registerCommand(UPDATE_NAVIGATION_TOC, this.updateToc, COMMAND_PRIORITY_LOW)
+			this.editor.registerCommand(CHANGE_EDITOR_SETTINGS, this.updateToc, COMMAND_PRIORITY_LOW)
 		)
 
 		this.addEventListener()

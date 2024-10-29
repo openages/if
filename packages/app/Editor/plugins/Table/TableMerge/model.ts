@@ -10,7 +10,7 @@ import { groupBy } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
-import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
+import { CHANGE_SELECTION_ELEMENTS } from '@/Editor/commands'
 import { $cloneNode, $getMatchingParent } from '@/Editor/utils'
 import Utils from '@/models/utils'
 import { useInstanceWatch, Watch } from '@openages/stk/mobx'
@@ -255,7 +255,7 @@ export default class Index {
 
 	on() {
 		this.utils.acts.push(
-			this.editor.registerCommand(SELECTION_ELEMENTS_CHANGE, this.checkSelection, COMMAND_PRIORITY_HIGH)
+			this.editor.registerCommand(CHANGE_SELECTION_ELEMENTS, this.checkSelection, COMMAND_PRIORITY_HIGH)
 		)
 	}
 

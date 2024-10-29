@@ -1,7 +1,7 @@
 import { $getNodeByKey, $insertNodes, $isTextNode, COMMAND_PRIORITY_EDITOR, COMMAND_PRIORITY_HIGH } from 'lexical'
 import { injectable } from 'tsyringe'
 
-import { INSERT_TABLE_COMMAND, SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
+import { CHANGE_SELECTION_ELEMENTS, INSERT_TABLE_COMMAND } from '@/Editor/commands'
 import Utils from '@/models/utils'
 
 import TableNode from './TableNode'
@@ -121,7 +121,7 @@ export default class Index {
 			this.editor.registerNodeTransform(TableNode, this.onTransformTable.bind(this)),
 			this.editor.registerMutationListener(TableNode, this.onMutation.bind(this)),
 			this.editor.registerCommand(
-				SELECTION_ELEMENTS_CHANGE,
+				CHANGE_SELECTION_ELEMENTS,
 				this.checkSelection.bind(this),
 				COMMAND_PRIORITY_HIGH
 			)

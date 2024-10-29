@@ -13,7 +13,7 @@ import {
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
-import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
+import { CHANGE_SELECTION_ELEMENTS } from '@/Editor/commands'
 import { removeAndCheck } from '@/Editor/utils'
 import Utils from '@/models/utils'
 import { mergeRegister } from '@lexical/utils'
@@ -148,7 +148,7 @@ export default class Index {
 	on() {
 		this.utils.acts.push(
 			this.editor.registerCommand(
-				SELECTION_ELEMENTS_CHANGE,
+				CHANGE_SELECTION_ELEMENTS,
 				this.checkSelection.bind(this),
 				COMMAND_PRIORITY_HIGH
 			)

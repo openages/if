@@ -5,13 +5,14 @@ import getLength from 'string-length'
 import { injectable } from 'tsyringe'
 
 import { regex_punctuation } from '@/appdata'
-import { TOGGLE_COUNT } from '@/Editor/commands'
+import { CHANGE_EDITOR_SETTINGS } from '@/Editor/commands'
 import Utils from '@/models/utils'
 import { mergeRegister } from '@lexical/utils'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 
 import type { LexicalEditor } from 'lexical'
 import type { CSSProperties } from 'react'
+import type { ArgsKV } from '@/types'
 
 @injectable()
 export default class Index {
@@ -70,10 +71,12 @@ export default class Index {
 		this.visible = true
 	}
 
-	updateCount(v: Index['count']) {
-		this.count = v
+	updateCount(args: ArgsKV<Index['count']>) {
+		if (args.key !== 'count') return
 
-		if (v) {
+		this.count = args.value
+
+		if (args.value) {
 			this.addEventListener()
 			this.getPosition()
 		} else {
@@ -118,7 +121,9 @@ export default class Index {
 	}
 
 	on() {
-		this.utils.acts.push(this.editor.registerCommand(TOGGLE_COUNT, this.updateCount, COMMAND_PRIORITY_LOW))
+		this.utils.acts.push(
+			this.editor.registerCommand(CHANGE_EDITOR_SETTINGS, this.updateCount, COMMAND_PRIORITY_LOW)
+		)
 	}
 
 	off() {

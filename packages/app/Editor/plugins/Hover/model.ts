@@ -17,7 +17,7 @@ import { makeAutoObservable, runInAction } from 'mobx'
 import ntry from 'nice-try'
 import { injectable } from 'tsyringe'
 
-import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
+import { CHANGE_SELECTION_ELEMENTS } from '@/Editor/commands'
 import { $cloneNode, $getHeadingLevel, $getMatchingParent } from '@/Editor/utils'
 import Utils from '@/models/utils'
 import { getComputedStyleValue } from '@/utils'
@@ -523,7 +523,7 @@ export default class Index {
 			this.editor.registerCommand(DRAGOVER_COMMAND, this.onDragOver.bind(this), COMMAND_PRIORITY_LOW),
 			this.editor.registerCommand(DROP_COMMAND, this.onDrop.bind(this), COMMAND_PRIORITY_HIGH),
 			this.editor.registerCommand(
-				SELECTION_ELEMENTS_CHANGE,
+				CHANGE_SELECTION_ELEMENTS,
 				this.checkSelection.bind(this),
 				COMMAND_PRIORITY_LOW
 			)

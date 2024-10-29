@@ -14,12 +14,13 @@ import {
 import { injectable } from 'tsyringe'
 
 import blocks from '@/Editor/blocks'
-import { SELECTION_ELEMENTS_CHANGE } from '@/Editor/commands'
+import { CHANGE_EDITOR_SETTINGS, CHANGE_SELECTION_ELEMENTS } from '@/Editor/commands'
 import { $getSelectionType } from '@/Editor/utils'
 import { mergeRegister } from '@lexical/utils'
 import { deepEqual } from '@openages/stk/react'
 
 import type { LexicalEditor, LexicalNode, BaseSelection } from 'lexical'
+import type { ArgsKV } from '@/types'
 
 @injectable()
 export default class Index {
@@ -78,12 +79,18 @@ export default class Index {
 
 		if (deepEqual(path, this.path) && prev_selection_type === current_selection_type) return
 
-		this.editor.dispatchCommand(SELECTION_ELEMENTS_CHANGE, path)
+		this.editor.dispatchCommand(CHANGE_SELECTION_ELEMENTS, path)
 
 		this.path = path
 		this.selection = selection
 
 		return false
+	}
+
+	onChangeSettings(args: ArgsKV) {
+		const { key, value } = args
+
+		this.editor.settings[key] = value
 	}
 
 	onDelete() {
@@ -125,6 +132,11 @@ export default class Index {
 			this.editor.registerCommand(
 				SELECTION_CHANGE_COMMAND,
 				this.watch.bind(this),
+				COMMAND_PRIORITY_CRITICAL
+			),
+			this.editor.registerCommand(
+				CHANGE_EDITOR_SETTINGS,
+				this.onChangeSettings.bind(this),
 				COMMAND_PRIORITY_CRITICAL
 			),
 			this.editor.registerCommand(
