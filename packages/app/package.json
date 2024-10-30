@@ -32,6 +32,7 @@
 		"@lexical/selection": "workspace:*",
 		"@lexical/text": "workspace:*",
 		"@lexical/utils": "workspace:*",
+		"@lexical/history": "workspace:*",
 		"@openages/stk": "workspace:*",
 		"@phosphor-icons/react": "^2.1.7",
 		"@plait/layouts": "^0.64.9",

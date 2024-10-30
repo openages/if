@@ -98,20 +98,10 @@ export default class CodeNode extends ElementNode {
 		}
 	}
 
-	append(...nodes: Array<CodeTextNode>) {
-		const only_node = nodes.at(0)
+	appendTextToTokens(text: string) {
+		const token_nodes = getCodeTokenNodes(text, this.__lang)
 
-		super.append(...nodes)
-
-		if (this.getChildren().length === 1 && only_node && !only_node.__color) {
-			const token_nodes = getCodeTokenNodes(this.getTextContent(), this.__lang)
-
-			only_node.remove()
-
-			super.append(...token_nodes)
-		}
-
-		return this
+		super.append(...token_nodes)
 	}
 
 	insertNewAfter(selection: RangeSelection, restoreSelection = true) {

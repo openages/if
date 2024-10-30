@@ -191,11 +191,8 @@ function $importCodeBlock(
 			if (closeMatch) {
 				const codeBlockNode = $createCodeNode({ lang: openMatch[1] as BundledLanguage })
 
-				const textNode = $createCodeTextNode({
-					text: lines.slice(startLineIndex + 1, endLineIndex).join('\n')
-				})
+				codeBlockNode.appendTextToTokens(lines.slice(startLineIndex + 1, endLineIndex).join('\n'))
 
-				codeBlockNode.append(textNode)
 				rootNode.append(codeBlockNode)
 
 				return [codeBlockNode, endLineIndex]
