@@ -8,7 +8,6 @@ import { container } from 'tsyringe'
 import { version_name } from '@/appdata'
 import { Modal, ModuleIcon, Wave } from '@/components'
 import { useSize } from '@/hooks'
-import { is_mac_electron } from '@/utils'
 import { Infinity, List } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -91,13 +90,7 @@ const Index = (props: IPropsSetting) => {
 				</div>
 			</div>
 			<div className='user_padding_wrap w_100 border_box'>
-				<div
-					className={$cx(
-						'user_wrap h_100 border_box flex align_center relative',
-						is_mac_electron && 'clickable'
-					)}
-					onClick={is_mac_electron ? goBilling : undefined}
-				>
+				<div className='user_wrap h_100 border_box flex align_center relative' onClick={goBilling}>
 					<span className='badge flex justify_center align_center absolute top_0 right_0'>
 						{version_name}
 					</span>

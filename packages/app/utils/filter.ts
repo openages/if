@@ -48,3 +48,33 @@ export const isFormValuesEqual = (form_values: any, new_values: any) => {
 export const getObjectKeys = <O extends object>(obj: O): (keyof O)[] => {
 	return Object.keys(obj) as (keyof O)[]
 }
+
+export const markJsonUndefined = <T extends object>(json: T) => {
+	for (const key in json) {
+		if (json[key] === undefined) {
+			// @ts-ignore
+			json[key] = '__undefined__'
+		} else {
+			const value: object = json[key] as any
+
+			if (value && typeof value === 'object') {
+				markJsonUndefined(value)
+			}
+		}
+	}
+}
+
+export const unmarkJsonUndefined = <T extends object>(json: T) => {
+	for (const key in json) {
+		if (json[key] === '__undefined__') {
+			// @ts-ignore
+			json[key] = undefined
+		} else {
+			const value: object = json[key] as any
+
+			if (value && typeof value === 'object') {
+				unmarkJsonUndefined(value)
+			}
+		}
+	}
+}

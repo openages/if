@@ -219,8 +219,7 @@ export default {
                               "week",
                               "month",
                               "year"
-                        ],
-                        "maxLength": 6
+                        ]
                   },
                   "timeline_angle_id": {
                         "type": "string",
@@ -320,8 +319,7 @@ export default {
                               "week",
                               "month",
                               "year"
-                        ],
-                        "maxLength": 6
+                        ]
                   },
                   "timeline_angle_id": {
                         "type": "string",
@@ -426,8 +424,7 @@ export default {
                                     "week",
                                     "month",
                                     "year"
-                              ],
-                              "maxLength": 6
+                              ]
                         },
                         "timeline_angle_id": {
                               "type": "string",
@@ -535,8 +532,7 @@ export default {
                                           "week",
                                           "month",
                                           "year"
-                                    ],
-                                    "maxLength": 6
+                                    ]
                               },
                               "timeline_angle_id": {
                                     "type": "string",

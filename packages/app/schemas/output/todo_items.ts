@@ -332,10 +332,7 @@ export default {
                         ]
                   },
                   "recycle_time": {
-                        "type": "number",
-                        "multipleOf": 1,
-                        "minimum": 1,
-                        "maximum": 9007199254740991
+                        "type": "number"
                   },
                   "remark": {
                         "type": "string"
@@ -344,19 +341,13 @@ export default {
                         "type": "boolean"
                   },
                   "archive_time": {
-                        "type": "number",
-                        "multipleOf": 1,
-                        "minimum": 1,
-                        "maximum": 9007199254740991
+                        "type": "number"
                   },
                   "schedule": {
                         "type": "boolean"
                   },
                   "start_time": {
-                        "type": "number",
-                        "multipleOf": 1,
-                        "minimum": 1,
-                        "maximum": 9007199254740991
+                        "type": "number"
                   },
                   "end_time": {
                         "type": "number"
@@ -556,10 +547,7 @@ export default {
                         ]
                   },
                   "recycle_time": {
-                        "type": "number",
-                        "multipleOf": 1,
-                        "minimum": 1,
-                        "maximum": 9007199254740991
+                        "type": "number"
                   },
                   "remark": {
                         "type": "string"
@@ -568,19 +556,13 @@ export default {
                         "type": "boolean"
                   },
                   "archive_time": {
-                        "type": "number",
-                        "multipleOf": 1,
-                        "minimum": 1,
-                        "maximum": 9007199254740991
+                        "type": "number"
                   },
                   "schedule": {
                         "type": "boolean"
                   },
                   "start_time": {
-                        "type": "number",
-                        "multipleOf": 1,
-                        "minimum": 1,
-                        "maximum": 9007199254740991
+                        "type": "number"
                   },
                   "end_time": {
                         "type": "number"

@@ -223,6 +223,25 @@
 	}
 }
 
+.mac_app_store {
+	:global {
+		.icon {
+			color: var(--color_text_sub);
+		}
+
+		.desc {
+			width: 300px;
+			font-size: 12px;
+		}
+
+		.btn_pay {
+			height: 32px;
+			border-style: solid;
+			border-color: var(--color_text);
+		}
+	}
+}
+
 .empty {
 	color: var(--color_text_light);
 

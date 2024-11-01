@@ -60,26 +60,11 @@ export namespace Todo {
 		remind_time?: number
 		cycle_enabled?: boolean
 		cycle?: Cycle
-		/**
-		 * @multipleOf 1
-		 * @minimum 1
-		 * @maximum 9007199254740991
-		 * */
 		recycle_time?: number
 		remark?: string
 		archive: boolean
-		/**
-		 * @multipleOf 1
-		 * @minimum 1
-		 * @maximum 9007199254740991
-		 * */
 		archive_time?: number
 		schedule?: boolean
-		/**
-		 * @multipleOf 1
-		 * @minimum 1
-		 * @maximum 9007199254740991
-		 * */
 		start_time?: number
 		end_time?: number
 		children?: Array<{

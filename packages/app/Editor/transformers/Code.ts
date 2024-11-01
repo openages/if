@@ -20,7 +20,7 @@ export default {
 		return '```' + ((node as CodeNode).__lang || '') + (text ? '\n' + text : '') + '\n' + '```'
 	},
 	replace(parent, _children, match) {
-		const lang = (match ? match[1] : 'js') as BundledLanguage
+		const lang = (match?.[1] ?? 'shell') as BundledLanguage
 		const target = getLangName(lang)
 
 		if (!shiki_langs[target]) return

@@ -64,6 +64,10 @@ export default {
 		}
 	},
 	Paid: {
+		mac_app_store: {
+			desc: '前往App Store付费订阅，在App Store版本登录后订阅，在独立发行版登录账号即可',
+			btn_pay: '前往订阅'
+		},
 		desc_wrap: {
 			text: '订阅将自动续费，可随时取消。成功购买后若用户计划未更新，可尝试',
 			restore_purchase: '恢复购买',
@@ -173,5 +177,19 @@ export default {
 		learn_note: '如何使用笔记',
 		learn_pomo: '如何使用番茄钟',
 		learn_schedule: '如何使用日程'
+	},
+	Backup: {
+		title: '备份',
+		export: {
+			title: '导出',
+			desc: '导出文件作为备份',
+			loading: '导出中'
+		},
+		import: {
+			title: '导入',
+			desc: '导入之前导出的备份文件',
+			loading: '导入中',
+			error: '出现错误，请检查导入数据是否正确'
+		}
 	}
 }

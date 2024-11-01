@@ -1,4 +1,4 @@
-import { ColorSelector, Normal, Screenlock } from './components'
+import { Backup, ColorSelector, Normal, Screenlock } from './components'
 import styles from './index.css'
 
 const Index = () => {
@@ -7,6 +7,7 @@ const Index = () => {
 			<Normal></Normal>
 			<ColorSelector></ColorSelector>
 			<Screenlock></Screenlock>
+			<Backup></Backup>
 		</div>
 	)
 }

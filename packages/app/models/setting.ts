@@ -1,9 +1,22 @@
+import { compress, decompress } from 'compress-json'
 import dayjs from 'dayjs'
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { conf, is_electron_shell, setFavicon, setGlobalAnimation } from '@/utils'
+import {
+	conf,
+	convertFile,
+	downloadFile,
+	is_electron_shell,
+	markJsonUndefined,
+	now,
+	setFavicon,
+	setGlobalAnimation,
+	sleep,
+	unmarkJsonUndefined,
+	uploadFile
+} from '@/utils'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 
 import type { Theme } from '@/appdata'
@@ -101,6 +114,47 @@ export default class Index {
 		} else {
 			this.visible = !this.visible
 		}
+	}
+
+	async backupExport() {
+		$app.Event.emit('app/setLoading', { visible: true, desc: $t('setting.Backup.export.loading') })
+
+		const json = await $db.exportJSON()
+
+		await sleep(600)
+
+		markJsonUndefined(json)
+
+		const ifbk = compress(json)
+		const target = JSON.stringify(ifbk)
+
+		$app.Event.emit('app/setLoading', { visible: false })
+
+		downloadFile(`if_backup_file_${now()}`, target, 'ifbk')
+	}
+
+	async backupImport() {
+		const files = await uploadFile({ accept: '.ifbk' })
+
+		if (files) {
+			try {
+				$app.Event.emit('app/setLoading', { visible: true, desc: $t('setting.Backup.import.loading') })
+
+				const text = await convertFile(files[0])
+
+				await sleep(600)
+
+				const json = decompress(JSON.parse(text))
+
+				unmarkJsonUndefined(json)
+
+				await $db.importJSON(json)
+			} catch (error) {
+				$message.error(`${$t('setting.Backup.import.error')} error: ${(error as Error)?.message}`)
+			}
+		}
+
+		$app.Event.emit('app/setLoading', { visible: false })
 	}
 
 	on() {

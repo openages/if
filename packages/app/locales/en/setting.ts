@@ -64,6 +64,10 @@ export default {
 		}
 	},
 	Paid: {
+		mac_app_store: {
+			desc: 'Log in to the App Store version and subscribe. Log in to the account in the independent distribution version',
+			btn_pay: 'Go to AppStore'
+		},
 		desc_wrap: {
 			text: `The subscription will renew automatically and can be canceled at any time. If the user's plan does not update after a successful purchase, you can try`,
 			restore_purchase: 'Restore Purchase',
@@ -173,5 +177,19 @@ export default {
 		learn_note: 'How to use Note',
 		learn_pomo: 'How to use Pomo',
 		learn_schedule: 'How to use Schedule'
+	},
+	Backup: {
+		title: 'Backup',
+		export: {
+			title: 'Export',
+			desc: 'Export file as backup',
+			loading: 'Exporting'
+		},
+		import: {
+			title: 'Import',
+			desc: 'Import previously exported backup file',
+			loading: 'Importing',
+			error: 'An error occurred, please check whether the imported data is correct'
+		}
 	}
 }

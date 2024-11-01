@@ -15,8 +15,9 @@ import type { Trpc } from '@/types'
 
 const Index = () => {
 	const global = useGlobal()
-	const { t } = useTranslation()
+	const { t, i18n } = useTranslation()
 	const auth = global.auth
+	const is_cn = i18n.language === 'zh'
 
 	const has_user_id = useMemo(() => Boolean(auth.user.id), [auth.user.id])
 
@@ -62,31 +63,33 @@ const Index = () => {
 			<div className='header_wrap flex justify_between align_center'>
 				<div className='setting_title flex align_center'>
 					<span className='title mr_6'>{t('setting.nav.titles.Account')}</span>
-					<Tooltip
-						title={t('app.auth.test_title')}
-						mouseEnterDelay={0.6}
-						zIndex={9999}
-						getTooltipContainer={() => document.body}
-					>
-						<div>
-							<div
-								className={$cx(
-									'btn_test flex justify_center align_center clickable',
-									auth.test_status
-								)}
-								onClick={test}
-							>
-								<Choose>
-									<When condition={auth.test_status === 'error'}>
-										<WifiX></WifiX>
-									</When>
-									<Otherwise>
-										<WifiHigh></WifiHigh>
-									</Otherwise>
-								</Choose>
+					<If condition={is_cn}>
+						<Tooltip
+							title={t('app.auth.test_title')}
+							mouseEnterDelay={0.6}
+							zIndex={9999}
+							getTooltipContainer={() => document.body}
+						>
+							<div>
+								<div
+									className={$cx(
+										'btn_test flex justify_center align_center clickable',
+										auth.test_status
+									)}
+									onClick={test}
+								>
+									<Choose>
+										<When condition={auth.test_status === 'error'}>
+											<WifiX></WifiX>
+										</When>
+										<Otherwise>
+											<WifiHigh></WifiHigh>
+										</Otherwise>
+									</Choose>
+								</div>
 							</div>
-						</div>
-					</Tooltip>
+						</Tooltip>
+					</If>
 				</div>
 				<Choose>
 					<When condition={has_user_id}>

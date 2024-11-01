@@ -1,6 +1,6 @@
 {
 	"name": "@openages/if-app",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "GTD for professionals.",
 	"scripts": {
 		"dev": "cross-env SHELL=browser rspack serve",
@@ -24,6 +24,7 @@
 		"@dnd-kit/utilities": "^3.2.2",
 		"@emoji-mart/data": "^1.2.1",
 		"@emoji-mart/react": "^1.1.1",
+		"@lexical/history": "workspace:*",
 		"@lexical/link": "workspace:*",
 		"@lexical/list": "workspace:*",
 		"@lexical/markdown": "workspace:*",
@@ -32,7 +33,6 @@
 		"@lexical/selection": "workspace:*",
 		"@lexical/text": "workspace:*",
 		"@lexical/utils": "workspace:*",
-		"@lexical/history": "workspace:*",
 		"@openages/stk": "workspace:*",
 		"@phosphor-icons/react": "^2.1.7",
 		"@plait/layouts": "^0.64.9",
@@ -46,6 +46,7 @@
 		"await-to-js": "^3.0.0",
 		"classix": "^2.2.0",
 		"color": "^4.2.3",
+		"compress-json": "^3.1.0",
 		"console-ban": "^5.0.0",
 		"create-puzzle": "^3.0.2",
 		"crypto-js": "^4.2.0",

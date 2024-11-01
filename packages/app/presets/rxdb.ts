@@ -1,5 +1,6 @@
 import { addRxPlugin } from 'rxdb'
 import { RxDBCleanupPlugin } from 'rxdb/plugins/cleanup'
+import { RxDBJsonDumpPlugin } from 'rxdb/plugins/json-dump'
 import { RxDBLeaderElectionPlugin } from 'rxdb/plugins/leader-election'
 import { RxDBMigrationPlugin } from 'rxdb/plugins/migration-schema'
 import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder'
@@ -13,7 +14,8 @@ const plugins = [
 	RxDBLeaderElectionPlugin,
 	RxDBMigrationPlugin,
 	RxDBQueryBuilderPlugin,
-	RxDBUpdatePlugin
+	RxDBUpdatePlugin,
+	RxDBJsonDumpPlugin
 ]
 
 plugins.forEach(item => addRxPlugin(item))

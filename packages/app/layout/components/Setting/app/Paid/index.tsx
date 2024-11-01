@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next'
 import { plan_level } from '@/appdata'
 import { useGlobal } from '@/context/app'
 import { useCopyMemberEmail } from '@/hooks'
-import { getObjectKeys } from '@/utils'
-import { Check, Infinity, ThumbsUp, WifiSlash } from '@phosphor-icons/react'
+import { getObjectKeys, is_mas_id } from '@/utils'
+import { AppStoreLogo, Check, Infinity, ThumbsUp, WifiSlash } from '@phosphor-icons/react'
 
 import { limit, modules } from './data'
 import styles from './index.css'
@@ -37,6 +37,25 @@ const Index = () => {
 	const restore = useMemoizedFn(() => {
 		iap.restore()
 	})
+
+	if (!is_mas_id) {
+		return (
+			<div
+				className={$cx(
+					'w_100 h_100 flex flex_column align_center justify_center',
+					styles.mac_app_store
+				)}
+			>
+				<div className='flex flex_column align_center'>
+					<AppStoreLogo className='icon' size={90}></AppStoreLogo>
+					<span className='desc text_center mt_6'>{t('setting.Paid.mac_app_store.desc')}</span>
+					<a href='https://apps.apple.com/us/app/if-gtd-for-professionals/id6460080040'>
+						<Button className='btn_pay mt_18'>{t('setting.Paid.mac_app_store.btn_pay')}</Button>
+					</a>
+				</div>
+			</div>
+		)
+	}
 
 	if (Object.keys(products).length === 0) {
 		return (
@@ -200,24 +219,26 @@ const Index = () => {
 						<span className='desc'>{t('setting.Paid.sponsor.extra')}</span>
 					</div>
 				</div>
-				{/* <div className='infinity_item w_100 border_box flex flex_column align_center'>
-					<div className='header_wrap w_100 border_box flex justify_between align_center'>
-						<div className='flex align_center'>
-							<div className='icon_wrap flex justify_center align_center mr_12'>
-								<Infinity size={30} weight='duotone'></Infinity>
+				<If condition={!is_mas_id}>
+					<div className='infinity_item w_100 border_box flex flex_column align_center'>
+						<div className='header_wrap w_100 border_box flex justify_between align_center'>
+							<div className='flex align_center'>
+								<div className='icon_wrap flex justify_center align_center mr_12'>
+									<Infinity size={30} weight='duotone'></Infinity>
+								</div>
+								<h3 className='type'>{t('setting.Paid.infinity.type')}</h3>
 							</div>
-							<h3 className='type'>{t('setting.Paid.infinity.type')}</h3>
+							<a
+								className='btn_join flex justify_center align_center clickable'
+								href='mailto:if.member@openages.com'
+								onClick={copy}
+							>
+								{t('setting.Paid.infinity.join')}
+							</a>
 						</div>
-						<a
-							className='btn_join flex justify_center align_center clickable'
-							href='mailto:if.member@openages.com'
-							onClick={copy}
-						>
-							{t('setting.Paid.infinity.join')}
-						</a>
+						<span className='desc w_100 border_box'>{t('setting.Paid.infinity.extra')}</span>
 					</div>
-					<span className='desc w_100 border_box'>{t('setting.Paid.infinity.extra')}</span>
-				</div> */}
+				</If>
 			</div>
 		</div>
 	)
