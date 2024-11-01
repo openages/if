@@ -130,7 +130,7 @@ export default class Index {
 
 		$app.Event.emit('app/setLoading', { visible: false })
 
-		downloadFile(`if_backup_file_${now()}`, target, 'ifbk')
+		downloadFile(`if_backup_file_${dayjs().format('YYYY-MM-DD_HH-mm-ss')}`, target, 'ifbk')
 	}
 
 	async backupImport() {
