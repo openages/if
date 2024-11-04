@@ -10,6 +10,7 @@ const nodes_currently_highlighting = new Set()
 export default (node: CodeNode, editor: LexicalEditor) => {
 	const node_key = node.getKey()
 
+	if (editor.isComposing()) return
 	if (nodes_currently_highlighting.has(node_key)) return
 
 	nodes_currently_highlighting.add(node_key)

@@ -1,4 +1,6 @@
-import { Backup, ColorSelector, Normal, Screenlock } from './components'
+import { is_mas_id } from '@/utils'
+
+import { Backup, ColorSelector, Normal, Screenlock, Update } from './components'
 import styles from './index.css'
 
 const Index = () => {
@@ -8,6 +10,9 @@ const Index = () => {
 			<ColorSelector></ColorSelector>
 			<Screenlock></Screenlock>
 			<Backup></Backup>
+			<If condition={!is_mas_id}>
+				<Update></Update>
+			</If>
 		</div>
 	)
 }

@@ -191,5 +191,17 @@ export default {
 			loading: 'Importing',
 			error: 'An error occurred, please check whether the imported data is correct'
 		}
+	},
+	Update: {
+		title: 'Version Update',
+		subtitle: 'Update',
+		desc: 'Current version',
+		btn_update: 'Check update',
+		btn_download: 'Download',
+		no_update: 'The latest version of IF is currently in use',
+		has_update: 'New version detected',
+		downloading: 'Downloading new version',
+		downloaded: 'Content has been downloaded, restart to install',
+		btn_install: 'Install'
 	}
 }

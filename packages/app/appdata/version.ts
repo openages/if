@@ -11,3 +11,5 @@ export const getVersion = () => {
 }
 
 export const version_name = getVersionName()
+
+export { version }

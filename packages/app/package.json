@@ -1,6 +1,6 @@
 {
 	"name": "@openages/if-app",
-	"version": "0.2.0",
+	"version": "0.2.4",
 	"description": "GTD for professionals.",
 	"scripts": {
 		"dev": "cross-env SHELL=browser rspack serve",
@@ -59,7 +59,7 @@
 		"fast-equals": "^5.0.1",
 		"fflate": "^0.8.2",
 		"framer-motion": "^11.11.10",
-		"hono": "^4.6.7",
+		"hono": "^4.6.8",
 		"hotkeys-js": "^3.13.7",
 		"i18next": "^23.16.4",
 		"js-xxhash": "^4.0.0",

@@ -198,6 +198,7 @@ export default class CodeNode extends ElementNode {
 	}
 
 	collapseAtStart() {
+		console.log(123)
 		const paragraph = $createParagraphNode()
 		const children = this.getChildren()
 

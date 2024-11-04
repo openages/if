@@ -258,7 +258,7 @@
 				}
 
 				.value_wrap {
-					min-height: 30px;
+					min-height: 38px;
 
 					.btn {
 						width: 120px;
@@ -330,6 +330,12 @@
 
 					.color_item {
 						border-radius: 50%;
+					}
+				}
+
+				.progress_circle {
+					.if-progress-text {
+						font-size: 10px;
 					}
 				}
 			}

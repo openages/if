@@ -3,10 +3,23 @@ import { injectable } from 'tsyringe'
 
 import { modules } from '@/appdata'
 import Utils from '@/models/utils'
+import { ipc, is_electron_shell, is_mas_id } from '@/utils'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
 
 import type { App } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
+
+export interface HasUpdate {
+	type: 'has_update'
+	version: string
+}
+
+export interface Downloading {
+	type: 'downloading'
+	percent: number
+}
+
+type UpdateState = null | HasUpdate | Downloading | { type: 'downloaded' }
 
 @injectable()
 export default class Index {
@@ -15,6 +28,8 @@ export default class Index {
 	visible_app_menu = false
 	visible_app_switch = false
 	switch_index = 0
+	update_silence = true
+	update_status = null as UpdateState
 
 	get visibles() {
 		return [this.visible_app_menu, this.visible_app_switch]
@@ -48,6 +63,11 @@ export default class Index {
 		]
 
 		this.on()
+
+		if (!is_mas_id && is_electron_shell) {
+			this.onAppUpdate()
+			this.checkUpdate(true)
+		}
 	}
 
 	update(v: App.Modules) {
@@ -90,6 +110,44 @@ export default class Index {
 		} else {
 			this.switch_index = next_value
 		}
+	}
+
+	onAppUpdate() {
+		ipc.app.update.subscribe(undefined, {
+			onData: args => {
+				switch (args.type) {
+					case 'can_update':
+						this.update_status = { type: 'has_update', version: args.value }
+						break
+					case 'cant_update':
+						if (!this.update_silence) $message.info($t('setting.Update.no_update'))
+
+						break
+					case 'progress':
+						this.update_status = { type: 'downloading', percent: args.value }
+
+						break
+					case 'downloaded':
+						this.update_status = { type: 'downloaded' }
+
+						break
+				}
+			}
+		})
+	}
+
+	checkUpdate(silence?: boolean) {
+		if (!silence) this.update_silence = false
+
+		ipc.app.checkUpdate.query()
+	}
+
+	download() {
+		ipc.app.download.query()
+	}
+
+	install() {
+		ipc.app.install.query()
 	}
 
 	on() {

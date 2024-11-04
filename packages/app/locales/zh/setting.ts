@@ -191,5 +191,17 @@ export default {
 			loading: '导入中',
 			error: '出现错误，请检查导入数据是否正确'
 		}
+	},
+	Update: {
+		title: '版本更新',
+		subtitle: '更新',
+		desc: '当前版本',
+		btn_update: '检查更新',
+		btn_download: '下载更新',
+		no_update: '当前使用的IF是最新版本',
+		has_update: '检测到新版本',
+		downloading: '正在下载新版本',
+		downloaded: '已下载更新内容，重启安装更新',
+		btn_install: '安装更新'
 	}
 }

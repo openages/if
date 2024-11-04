@@ -118,7 +118,7 @@ export const create = async (item: Todo.TodoItem, options?: { quick?: boolean; t
 	let target_sort: number
 
 	if (options?.top) {
-		target_sort = sort === 0 ? 666666 : parseFloat((sort / 1.00000002).toFixed(24))
+		target_sort = sort === 0 ? 666666 : parseFloat((sort / 1.002).toFixed(6))
 	} else {
 		target_sort = sort * 2
 	}

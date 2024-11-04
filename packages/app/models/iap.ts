@@ -31,7 +31,7 @@ export default class Index {
 	}
 
 	onPurchaseUpdated() {
-		const { unsubscribe } = ipc.ipa.onUpdated.subscribe(undefined, {
+		const { unsubscribe } = ipc.iap.onUpdated.subscribe(undefined, {
 			onData: async v => {
 				if (v.type === 'empty') {
 					await conf.set('oniap', false)
@@ -100,11 +100,11 @@ export default class Index {
 
 		if (res.data) $app.Event.emit('global.auth.saveUser', data)
 
-		ipc.ipa.verify.mutate(data || { paid_plan: 'free' })
+		ipc.iap.verify.mutate(data || { paid_plan: 'free' })
 	}
 
 	async getProducts() {
-		const res = await ipc.ipa.getProducts.query()
+		const res = await ipc.iap.getProducts.query()
 
 		if (res.error !== null) return $message.error(res.error)
 
@@ -119,7 +119,7 @@ export default class Index {
 
 		await conf.set('oniap', true)
 
-		const res = await ipc.ipa.purchase.mutate({ id })
+		const res = await ipc.iap.purchase.mutate({ id })
 
 		if (res.error !== null || !res.ok) {
 			return $message.error(res.error)
@@ -135,7 +135,7 @@ export default class Index {
 
 		await conf.set('oniap', true)
 
-		await ipc.ipa.restore.query()
+		await ipc.iap.restore.query()
 
 		$app.Event.emit('app/setLoading', { visible: true, desc: $t('iap.state.restoring'), showClose: true })
 	}
@@ -169,7 +169,7 @@ export default class Index {
 
 		$app.Event.emit('global.auth.saveUser', data)
 
-		if (data) ipc.ipa.verify.mutate(data)
+		if (data) ipc.iap.verify.mutate(data)
 	}
 
 	async afterOnlocal() {
@@ -186,7 +186,7 @@ export default class Index {
 
 		$app.Event.emit('global.auth.saveUser', res.data)
 
-		ipc.ipa.verify.mutate(res.data)
+		ipc.iap.verify.mutate(res.data)
 	}
 
 	async afterSign() {

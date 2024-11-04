@@ -44,7 +44,7 @@ export default class Index {
 	}
 
 	onVerify() {
-		ipc.ipa.onVerify.subscribe(undefined, {
+		ipc.iap.onVerify.subscribe(undefined, {
 			onData: v => {
 				if (this.user.id && this.user.paid_plan !== 'free') {
 					this.frozen = v
