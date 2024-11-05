@@ -32,8 +32,6 @@ export default class Index {
 	onChangeFileName(e: ChangeEvent<HTMLTextAreaElement>) {
 		const name = e.target.value
 
-		if (!name) return
-
 		this.file.data = { ...this.file.data, name }
 	}
 
