@@ -81,6 +81,9 @@ export default class Index {
 
 	getPosition(key: string) {
 		const el = this.editor.getElementByKey(key)!
+
+		if (!el) return
+
 		const { right, top } = el.getBoundingClientRect()
 
 		this.position = { left: right - (78 + 52 + 2), top: top - 32 }
