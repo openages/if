@@ -9,8 +9,7 @@ const Index = () => {
 		actions: {
 			insert: insertSetting,
 			remove
-		},
-		simple: true
+		}
 	}
 
 	return <DirTree {...props_dir_tree}></DirTree>

@@ -186,6 +186,7 @@ export default class Index {
 		const is_not_select = selection.anchor.offset === selection.focus.offset
 		const is_collapsed = native_selection?.isCollapsed
 		const is_composing = this.editor.isComposing()
+		const is_select_none = !native_selection?.toString()?.trim()?.length
 
 		if (
 			!native_selection ||
@@ -195,7 +196,8 @@ export default class Index {
 			!is_editable ||
 			is_not_select ||
 			is_collapsed ||
-			is_composing
+			is_composing ||
+			is_select_none
 		) {
 			return this.reset()
 		}

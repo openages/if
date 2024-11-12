@@ -1,5 +1,6 @@
 export namespace Note {
 	export interface Setting {
+		show_heading_level: boolean
 		serif: boolean
 		small_text: boolean
 		toc: 'default' | 'visible' | 'minimize' | 'hidden'

@@ -1,7 +1,7 @@
 import { $getRoot } from 'lexical'
 import { injectable } from 'tsyringe'
 
-import { serif, small_text } from '@/Editor/theme/init.css'
+import { serif, show_heading_level, small_text } from '@/Editor/theme/init.css'
 import { NoteSettings } from '@/models'
 
 import type { LexicalEditor } from 'lexical'
@@ -24,6 +24,16 @@ export default class Index {
 
 			return this.editor.getElementByKey(root.getKey())!.parentElement
 		})
+	}
+
+	setShowHeadingLevel(v: boolean) {
+		const container = this.getContainer()!
+
+		if (v) {
+			container.classList.add(show_heading_level)
+		} else {
+			container.classList.remove(show_heading_level)
+		}
 	}
 
 	setSerif(v: boolean) {

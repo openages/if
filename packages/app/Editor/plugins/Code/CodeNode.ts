@@ -2,11 +2,9 @@ import {
 	$createLineBreakNode,
 	$createParagraphNode,
 	$createTabNode,
-	$getEditor,
 	$isTabNode,
 	$isTextNode,
 	$setImportNode,
-	getActiveEditor,
 	ElementNode
 } from 'lexical'
 
@@ -25,7 +23,6 @@ import {
 import type { IPropsCode, SerializedCodeNode } from './types'
 import type { BundledLanguage } from 'shiki'
 import type { DOMExportOutput, RangeSelection, DOMConversionMap } from 'lexical'
-import type CodeTextNode from './CodeTextNode'
 
 export default class CodeNode extends ElementNode {
 	__lang: BundledLanguage
@@ -198,7 +195,10 @@ export default class CodeNode extends ElementNode {
 	}
 
 	collapseAtStart() {
-		console.log(123)
+		const selected = window.getSelection()?.toString().trim().length
+
+		if (selected) return false
+
 		const paragraph = $createParagraphNode()
 		const children = this.getChildren()
 

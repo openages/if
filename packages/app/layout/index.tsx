@@ -18,7 +18,7 @@ import { is_prod, is_sandbox } from '@/utils'
 import { useDeepMemo } from '@openages/stk/react'
 
 import { AppMenu, AppSwitch, Screenlock, Search, Setting, Sidebar, Stacks } from './components'
-import { useGlobalNavigate, useGlobalTranslate, useLayout, usePathChange } from './hooks'
+import { useGlobalNavigate, useGlobalTranslate, usePathChange } from './hooks'
 import styles from './index.css'
 
 import type { IPropsOffscreenOutlet } from '@/components/OffscreenOutlet'
@@ -31,7 +31,6 @@ const Index = () => {
 	const [global] = useState(() => container.resolve(GlobalModel))
 	const theme = useTheme(global.setting.theme, global.setting.color_main_rgb)
 	const locale = useAntdLocale(global.locale.lang)
-	const { no_dirtree } = useLayout()
 	const current_module = useCurrentModule()
 	const apps = $copy(global.app.apps)
 	const actives = $copy(global.app.actives)
@@ -168,13 +167,7 @@ const Index = () => {
 					<IconContext.Provider value={{ className: 'ricon', style: { verticalAlign: 'middle' } }}>
 						<GlobalLoading></GlobalLoading>
 						<Sidebar {...props_sidebar} />
-						<div
-							className={$cx(
-								'w_100vw border_box',
-								styles.container,
-								no_dirtree && styles.no_dirtree
-							)}
-						>
+						<div className={$cx('w_100vw border_box', styles.container)}>
 							<div className='w_100 border_box'>
 								<OffscreenOutlet {...props_offscreen_pages_outlet} />
 								<Activity mode={is_exclude_router ? 'hidden' : 'visible'}>

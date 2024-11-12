@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 
 import { updateSetting } from '@/actions/note'
 import { NoteSettings } from '@/models'
-import { ArrowSquareDown, ArticleNyTimes, ListDashes, Pulse, TextT } from '@phosphor-icons/react'
+import { ArrowSquareDown, ArticleNyTimes, ListDashes, Pulse, TextHThree, TextT } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -25,6 +25,12 @@ const Index = () => {
 
 		return options.map(item => ({ label: item, value: item }))
 	}, [t])
+
+	const onChangeShowHeadingLevel = useMemoizedFn((v: boolean) => {
+		x.settings.show_heading_level = v
+
+		updateSetting({ show_heading_level: v })
+	})
 
 	const onChangeSerif = useMemoizedFn((v: boolean) => {
 		x.settings.serif = v
@@ -69,6 +75,21 @@ const Index = () => {
 							options={toc_options}
 							onSelect={onChangeToc}
 						></Select>
+					</div>
+				</div>
+				<div className='setting_item w_100 border_box flex justify_between align_center'>
+					<div className='title_wrap flex align_center'>
+						<TextHThree size={24}></TextHThree>
+						<div className='text_wrap flex flex_column'>
+							<span className='title'>{t('setting.Note.show_heading_text.title')}</span>
+							<span className='desc'>{t('setting.Note.show_heading_text.desc')}</span>
+						</div>
+					</div>
+					<div className='value_wrap flex align_center'>
+						<Switch
+							value={x.settings.show_heading_level}
+							onChange={onChangeShowHeadingLevel}
+						></Switch>
 					</div>
 				</div>
 				<div className='setting_item w_100 border_box flex justify_between align_center'>

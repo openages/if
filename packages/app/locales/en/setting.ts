@@ -120,6 +120,10 @@ export default {
 		}
 	},
 	Note: {
+		show_heading_text: {
+			title: 'Show Heading Level',
+			desc: 'Show heading level on the left side of the heading'
+		},
 		serif: {
 			title: 'Serif',
 			desc: 'Readability, professionalism, and recognizability'

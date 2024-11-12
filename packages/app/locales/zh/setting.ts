@@ -120,6 +120,10 @@ export default {
 		}
 	},
 	Note: {
+		show_heading_text: {
+			title: '展示标题级别',
+			desc: '在标题的左侧展示标题的级别'
+		},
 		serif: {
 			title: '衬线字体',
 			desc: '衬线字体有易读、专业、可识别等优点'

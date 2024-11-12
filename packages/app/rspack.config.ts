@@ -2,7 +2,7 @@ import { resolve } from 'path'
 
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
 import { defineConfig } from '@rspack/cli'
-import { CopyRspackPlugin, DefinePlugin, HtmlRspackPlugin } from '@rspack/core'
+import { CopyRspackPlugin, DefinePlugin, HtmlRspackPlugin, LightningCssMinimizerRspackPlugin } from '@rspack/core'
 import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
 
 const is_dev = process.env.NODE_ENV === 'development'
@@ -11,6 +11,7 @@ const is_sandbox = process.env.SANDBOX === '1'
 const is_release = process.env.RELEASE === '1'
 const is_doctor = process.env.DOCTOR === 'true'
 const is_module = false
+const targets = 'chrome >= 120'
 
 const defines = {} as Record<string, string | number | boolean>
 
@@ -71,6 +72,15 @@ module.exports = defineConfig({
 		css: true,
 		outputModule: is_module,
 		lazyCompilation: false
+	},
+	optimization: {
+		minimizer: [
+			new LightningCssMinimizerRspackPlugin({
+				minimizerOptions: {
+					targets
+				}
+			})
+		]
 	},
 	plugins: [
 		new DefinePlugin(defines),
@@ -159,7 +169,7 @@ module.exports = defineConfig({
 							}
 						},
 						env: {
-							targets: 'chrome >= 120'
+							targets
 						}
 					}
 				}

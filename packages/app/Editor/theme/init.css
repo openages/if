@@ -13,6 +13,33 @@
 		}
 	}
 
+	&.show_heading_level {
+		:global {
+			.__editor_heading {
+				position: relative;
+
+				&:not(.__editor_fold) {
+					&::after {
+						left: -1.71em;
+					}
+				}
+
+				&.__editor_fold {
+					&::after {
+						left: -2.4em;
+					}
+				}
+
+				&::after {
+					position: absolute;
+					color: var(--color_text_softlight);
+					content: attr(data-level);
+					font-weight: 200;
+				}
+			}
+		}
+	}
+
 	&.small_text {
 		font-size: 13px;
 	}

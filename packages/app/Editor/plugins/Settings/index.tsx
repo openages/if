@@ -22,6 +22,10 @@ const Index = () => {
 	}, [id, editor])
 
 	useEffect(() => {
+		editor.update(() => x.setShowHeadingLevel(settings.show_heading_level))
+	}, [settings.show_heading_level])
+
+	useEffect(() => {
 		editor.update(() => x.setSerif(settings.serif))
 	}, [settings.serif])
 

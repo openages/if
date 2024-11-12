@@ -19,5 +19,5 @@ if (is_dev) {
 		if (iframe?.tagName === 'IFRAME') {
 			iframe.remove()
 		}
-	}, 30)
+	}, 300)
 }
