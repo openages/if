@@ -24,6 +24,12 @@
 					}
 				}
 
+				&:hover {
+					&::after {
+						display: none;
+					}
+				}
+
 				&.__editor_fold {
 					&::after {
 						left: -2.4em;

@@ -9,6 +9,8 @@ import type { FocusEvent, CSSProperties } from 'react'
 
 @injectable()
 export default class Index {
+	show_error = false
+
 	constructor(public block: Block) {
 		makeAutoObservable(this, { block: false }, { autoBind: true })
 	}

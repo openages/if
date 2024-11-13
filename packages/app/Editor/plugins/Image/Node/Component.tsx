@@ -1,3 +1,4 @@
+import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,6 +15,7 @@ import {
 	ArrowCounterClockwise,
 	CornersIn,
 	CornersOut,
+	ImageBroken,
 	Trash
 } from '@phosphor-icons/react'
 
@@ -22,7 +24,6 @@ import styles from './index.css'
 import Model from './model'
 
 import type { CSSProperties } from 'react'
-
 const Index = (props: IPropsImage) => {
 	const { src, width = 'auto', height = 'auto', alt, align, object_fit, inline, node_key } = props
 	const [x] = useState(() => container.resolve(Model))
@@ -43,6 +44,14 @@ const Index = (props: IPropsImage) => {
 		x.block.selected = selected
 	}, [selected])
 
+	const onLoad = useMemoizedFn(() => {
+		if (x.show_error) x.show_error = false
+	})
+
+	const onError = useMemoizedFn(() => {
+		x.show_error = true
+	})
+
 	if (align) style_wrap['justifyContent'] = align
 	if (object_fit) style_img['objectFit'] = object_fit
 
@@ -58,7 +67,7 @@ const Index = (props: IPropsImage) => {
 		)
 
 	return (
-		<span className={$cx('flex w_100', styles.wrap)} style={style_wrap}>
+		<span className={$cx('flex w_100', styles.wrap, x.show_error && styles.show_error)} style={style_wrap}>
 			<span className='__editor_image_wrap relative' style={{ width }}>
 				<img
 					className={$cx('__editor_image', styles._local, x.block.selected && styles.selected)}
@@ -69,7 +78,14 @@ const Index = (props: IPropsImage) => {
 					style={style_img}
 					draggable={false}
 					onClick={x.block.onClick}
+					onLoad={onLoad}
+					onError={onError}
 				/>
+				<If condition={x.show_error}>
+					<div className='error_wrap w_100 flex justify_center align_center'>
+						<ImageBroken size={36} weight='light'></ImageBroken>
+					</div>
+				</If>
 				<input
 					className={$cx('w_100 border_box', styles.alt)}
 					autoComplete='off'

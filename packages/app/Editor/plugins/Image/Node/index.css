@@ -35,6 +35,27 @@
 		}
 	}
 
+	&.show_error {
+		:global {
+			.__editor_image_wrap {
+				min-width: 100%;
+
+				.__editor_image {
+					position: absolute;
+					z-index: -1;
+					opacity: 0;
+				}
+
+				.error_wrap {
+					height: 150px;
+					border-radius: var(--radius);
+					color: var(--color_danger);
+					background-color: rgba(var(--color_danger_rgb), 0.03);
+				}
+			}
+		}
+	}
+
 	:global {
 		.options_wrap {
 			overflow: hidden;
