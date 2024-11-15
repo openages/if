@@ -1,3 +1,17 @@
+[data-theme='dark'] {
+	.init_note {
+		&.show_heading_level {
+			:global {
+				.__editor_heading {
+					&::after {
+						background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath fill='none' d='M0 0h256v256H0z'/%3E%3Cpath fill='none' stroke='rgba(162,165,185,0.48)' stroke-linecap='round' stroke-linejoin='round' stroke-width='16' d='M40 64h176M40 128h64M40 192h64'/%3E%3C/svg%3E");
+					}
+				}
+			}
+		}
+	}
+}
+
 .init_note {
 	line-height: 1.8;
 	padding-bottom: 60vh;
@@ -20,11 +34,12 @@
 
 				&:not(.__editor_fold) {
 					&::after {
-						left: -1.71em;
+						left: -3em;
 					}
 				}
 
-				&:hover {
+				&:hover,
+				&:empty {
 					&::after {
 						display: none;
 					}
@@ -32,15 +47,60 @@
 
 				&.__editor_fold {
 					&::after {
-						left: -2.4em;
+						left: -4.5em;
+					}
+				}
+
+				&.__editor_heading_h1 {
+					&::after {
+						bottom: 1.5em;
+					}
+				}
+
+				&.__editor_heading_h2 {
+					&::after {
+						bottom: 1.11em;
+					}
+				}
+
+				&.__editor_heading_h3 {
+					&::after {
+						bottom: 0.09em;
+					}
+				}
+
+				&.__editor_heading_h4 {
+					&::after {
+						bottom: -0.06em;
+					}
+				}
+
+				&.__editor_heading_h5 {
+					&::after {
+						bottom: -0.12em;
+					}
+				}
+
+				&.__editor_heading_h6 {
+					&::after {
+						bottom: -0.15em;
 					}
 				}
 
 				&::after {
 					position: absolute;
-					color: var(--color_text_softlight);
+					overflow: visible;
+					line-height: 1;
+					padding-top: 7.2px;
+					padding-left: 15px;
+					color: var(--color_text_light);
+					background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath fill='none' d='M0 0h256v256H0z'/%3E%3Cpath fill='none' stroke='%23ccc' stroke-linecap='round' stroke-linejoin='round' stroke-width='16' d='M40 64h176M40 128h64M40 192h64'/%3E%3C/svg%3E");
+					background-repeat: no-repeat;
+					background-position: 3px 0;
+					background-size: 21px 21px;
 					content: attr(data-level);
-					font-weight: 200;
+					font-size: 12px;
+					font-weight: 500;
 				}
 			}
 		}
