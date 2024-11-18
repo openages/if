@@ -1,3 +1,4 @@
+import getNodesFromText from '@/Editor/utils/getNodesFromText'
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
@@ -39,7 +40,7 @@ const Index = (props: IPropsText) => {
 	const props_rich_text = {
 		contentEditable: <ContentEditable />,
 		ErrorBoundary: LexicalErrorBoundary,
-		options: { text_mode: !linebreak }
+		options: { text_mode: !linebreak, getNodesFromText }
 	} as any
 
 	if (placeholder) {

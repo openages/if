@@ -1,6 +1,6 @@
 {
 	"name": "@openages/if-app",
-	"version": "0.2.11",
+	"version": "0.2.12",
 	"description": "GTD for professionals.",
 	"scripts": {
 		"dev": "cross-env SHELL=browser rspack serve",

@@ -346,7 +346,7 @@ export default class Index {
 			top: options?.top
 		})
 
-		await sleep(900)
+		if (!options?.quick) await sleep(900)
 
 		return res
 	}
