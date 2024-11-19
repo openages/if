@@ -3,3 +3,7 @@
 .react-flow__attribution {
 	display: none;
 }
+
+.react-flow.dark {
+	background-color: var(--color_bg);
+}

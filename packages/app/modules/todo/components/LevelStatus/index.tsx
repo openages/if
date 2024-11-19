@@ -10,7 +10,7 @@ const Index = (props: IPropsLevelStatus) => {
 	return (
 		<div
 			className={$cx('other_wrap border_box flex justify_center align_center')}
-			style={{ color, marginRight: 2 }}
+			style={{ color, marginRight: 6 }}
 		>
 			<FireSimple fontSize={12} weight='fill'></FireSimple>
 		</div>

@@ -57,7 +57,7 @@ const Index = (props: IPropsCalendarViewDay) => {
 		let length = 3
 		let overflow = false
 
-		const start = getStartByY(container.current, e.clientY)!
+		const start = getStartByY(container.current!, e.clientY)!
 
 		if (start + 3 >= 72) {
 			length = 72 - start

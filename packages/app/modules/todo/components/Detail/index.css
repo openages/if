@@ -11,8 +11,8 @@
 	}
 
 	&.narrow {
-		.if-drawer {
-			&-content-wrapper {
+		:global {
+			.if-drawer-content-wrapper {
 				width: 100% !important;
 				box-sizing: border-box !important;
 
@@ -211,6 +211,13 @@
 					background-color: var(--color_bg_2);
 				}
 			}
+		}
+
+		.footer_wrap {
+			height: 30px;
+			padding: 0 calc(var(--padding) - 6px);
+			color: var(--color_text_light);
+			font-size: 12px;
 		}
 	}
 }

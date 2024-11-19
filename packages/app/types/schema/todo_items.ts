@@ -29,7 +29,6 @@ export namespace Todo {
 		file_id: string
 		/** @maxLength 30 */
 		angle_id: string
-		/** @maxLength 150 */
 		text: string
 		sort: number
 		create_at: number
@@ -67,6 +66,7 @@ export namespace Todo {
 		schedule?: boolean
 		start_time?: number
 		end_time?: number
+		done_time?: number
 		children?: Array<{
 			id: string
 			text: string

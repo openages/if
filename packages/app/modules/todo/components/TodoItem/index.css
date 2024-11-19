@@ -293,7 +293,7 @@
 			.other_wrap {
 				z-index: 1;
 				line-height: 1;
-				margin-right: 6px;
+				margin-right: 9px;
 				margin-bottom: -1px;
 				border-radius: 7px;
 				color: var(--color_text_grey);

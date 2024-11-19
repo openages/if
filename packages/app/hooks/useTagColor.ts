@@ -3,8 +3,10 @@ import { useMemo } from 'react'
 
 import { getTagColor } from '@/utils'
 
-export default (v: string) => {
+import type { Theme } from '@/appdata'
+
+export default (v: string, theme: Theme) => {
 	const color = useDebounce(v, { wait: 450 })
 
-	return useMemo(() => getTagColor(color), [color])
+	return useMemo(() => getTagColor(color, theme), [color, theme])
 }

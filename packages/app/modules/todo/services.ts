@@ -233,12 +233,19 @@ export const update = async (data: ArgsUpdate) => {
 export const updateStatus = async (args: ArgsUpdateStatus) => {
 	const { id, status, auto_archiving } = args
 
-	await update({
+	const data = {
 		id,
 		status,
-		create_at: new Date().valueOf(),
 		archive_time: status === 'checked' || status === 'closed' ? getArchiveTime(auto_archiving) : undefined
-	})
+	} as Partial<Todo.Todo> & { id: string }
+
+	if (status === 'checked' || status === 'closed') {
+		data['done_time'] = new Date().valueOf()
+	} else {
+		data['done_time'] = undefined
+	}
+
+	await update(data)
 }
 
 export const check = async (args: ArgsCheck) => {
@@ -381,6 +388,7 @@ export const restoreArchiveItem = async (
 	const target = {
 		archive: false,
 		archive_time: undefined,
+		done_time: undefined,
 		status: 'unchecked',
 		sort: sort + 1
 	} as Todo.Todo

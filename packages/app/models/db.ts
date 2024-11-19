@@ -9,6 +9,7 @@ import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 import { insertDefault as insertDefaultNote } from '@/actions/note'
 import { insertDefault as insertDefaultSchedule } from '@/actions/schedule'
 import { keyCompression } from '@/config'
+import { migration_todo_items } from '@/migrations'
 import {
 	schema_activity_items,
 	schema_dirtree_items,
@@ -71,7 +72,8 @@ export default class Index {
 			todo_items: {
 				autoMigrate: false,
 				schema: schema_todo_items,
-				statics
+				statics,
+				migrationStrategies: migration_todo_items
 			},
 			note_items: {
 				autoMigrate: false,

@@ -22,6 +22,7 @@ const uncycle = async (item: RxDocument<Todo.Todo>, schedule_args?: ScheduleArgs
 				archive: false,
 				archive_time: undefined,
 				recycle_time: undefined,
+				done_time: undefined,
 				...todo_schedule_args
 			}
 		}
@@ -34,7 +35,7 @@ const recycle = async (item: RxDocument<Todo.Todo>) => {
 	if (item.cycle!.type === 'specific' && item.schedule && item.start_time && item.end_time) {
 		const recycle_time = dayjs(item.recycle_time)
 
-		schedule_args = match(item.cycle!.scale)
+		schedule_args = match(item.cycle!.scale!)
 			.with(P.union('clock', 'weekday'), () => ({
 				start_time: dayjs(item.start_time).date(recycle_time.date()).valueOf(),
 				end_time: dayjs(item.start_time).date(recycle_time.date()).valueOf()

@@ -12,7 +12,9 @@ export default {
 		options: 'Options',
 		archived: 'Archived',
 		close: 'Close',
-		unclose: 'Unclose'
+		unclose: 'Unclose',
+		done_time: 'Done Time',
+		duration: 'Duration'
 	},
 	context_menu: {
 		detail: 'Detail',

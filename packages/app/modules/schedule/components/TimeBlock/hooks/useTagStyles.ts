@@ -1,24 +1,22 @@
 import Color from 'color'
 import { useMemo } from 'react'
 
-import type { Schedule } from '@/types'
+import { getTagColor } from '@/utils'
 
-export default (tags: Schedule.Setting['tags'], tag: Schedule.Item['tag']) => {
+import type { Schedule } from '@/types'
+import type { Theme } from '@/appdata'
+
+export default (tags: Schedule.Setting['tags'], tag: Schedule.Item['tag'], theme: Theme) => {
 	return useMemo(() => {
 		if (!tags.length) return {}
 		if (!tag) return {}
 
 		const target = tags.find(it => it.id === tag)!
+		const { bg_color } = getTagColor(target.color, theme)
 
 		return {
 			'--tag_color': Color(target.color).rgb().array().join(','),
-			'--tag_bg_color': Color(target.color)
-				.alpha(0.18)
-				.lighten(0.6)
-				.saturationl(90)
-				.saturationv(30)
-				.toString(),
-			'--tag_text_color': Color(target.color).saturationl(0).saturationv(100).chroma(36).toString()
+			'--tag_bg_color': bg_color
 		}
-	}, [tag, tags])
+	}, [tag, tags, theme])
 }

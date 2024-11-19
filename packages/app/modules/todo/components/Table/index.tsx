@@ -15,6 +15,8 @@ import {
 	RenderCreateAt,
 	RenderCycle,
 	RenderDeadline,
+	RenderDoneTime,
+	RenderDuration,
 	RenderLevel,
 	RenderOptions,
 	RenderRemind,
@@ -184,6 +186,24 @@ const Index = (props: IPropsTable) => {
 					ignoreArchive: true,
 					sort: true,
 					component: RenderCreateAt
+				},
+				{
+					title: t('todo.common.done_time'),
+					dataIndex: 'done_time',
+					width: 102,
+					align: 'center',
+					ignoreArchive: true,
+					sort: true,
+					component: RenderDoneTime
+				},
+				{
+					title: t('todo.common.duration'),
+					dataIndex: 'duration',
+					deps: ['create_at', 'done_time'],
+					width: 102,
+					align: 'center',
+					ignoreArchive: true,
+					component: RenderDuration
 				},
 				{
 					title: t('todo.common.options'),

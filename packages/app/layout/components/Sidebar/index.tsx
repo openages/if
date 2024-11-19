@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 
 import { LogoWithBg } from '@/components'
 import { useAntdApp } from '@/hooks'
-import { is_mac_electron } from '@/utils'
+import { is_browser_shell, is_mac_electron } from '@/utils'
 import { DotsNine } from '@phosphor-icons/react'
 
 import { useNavOverflow } from '../../hooks'
@@ -14,7 +14,12 @@ import type { IPropsSidebar } from '../../types'
 
 const Index = (props: IPropsSidebar) => {
 	const { current_module, blur, theme, show_bar_title, apps, actives, timer, showAppMenu } = props
-	const padding = useMemo(() => theme === 'dark' || (!blur && is_mac_electron), [theme, blur])
+
+	const padding = useMemo(
+		() => (theme === 'dark' || (!blur && is_mac_electron)) && !is_browser_shell,
+		[theme, blur]
+	)
+
 	const { ref_sidebar, ref_items_wrap, overflow } = useNavOverflow(padding, timer)
 
 	useAntdApp()

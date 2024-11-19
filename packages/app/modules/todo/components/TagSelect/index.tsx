@@ -1,6 +1,9 @@
 import { Select } from 'antd'
+import { observer } from 'mobx-react-lite'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { useGlobal } from '@/context/app'
 
 import getTag from './getTag'
 import styles from './index.css'
@@ -11,12 +14,14 @@ const Index = (props: IPropsTagSelect) => {
 	const { options, value, useByTodo, useByDetail, useByTable, className, placement, unlimit, onChange, onFocus } =
 		props
 	const { t } = useTranslation()
+	const global = useGlobal()
+	const theme = global.setting.theme
 
 	const Tag = useMemo(() => {
 		if (!options || !options?.length) return null
 
-		return getTag(options, { useByTodo: useByTodo || useByTable })
-	}, [options, useByTodo, useByTable])
+		return getTag(options, { useByTodo: useByTodo || useByTable, theme })
+	}, [options, useByTodo, useByTable, theme])
 
 	return (
 		<div className={$cx('flex', className)}>
@@ -49,4 +54,4 @@ const Index = (props: IPropsTagSelect) => {
 	)
 }
 
-export default $app.memo(Index)
+export default new $app.handle(Index).by(observer).by($app.memo).get()

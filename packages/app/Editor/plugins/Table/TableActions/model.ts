@@ -572,6 +572,8 @@ export default class Index {
 			const table_cell_node_el = this.editor.getElementByKey(table_cell_node.getKey())
 			const target_col_node_el = this.editor.getElementByKey(target_col_node.getKey())
 
+			if (!table_node_el || !table_row_node_el || !table_cell_node_el || !target_col_node_el) return
+
 			const rect_row = table_row_node_el!.getBoundingClientRect()
 			const rect_cell = table_cell_node_el!.getBoundingClientRect()
 			const rect_col = target_col_node_el!.getBoundingClientRect()

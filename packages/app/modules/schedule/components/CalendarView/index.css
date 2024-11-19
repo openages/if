@@ -18,7 +18,6 @@
 
 			.hour_item {
 				height: 48px;
-				border-bottom: var(--border_dashed);
 			}
 		}
 	}

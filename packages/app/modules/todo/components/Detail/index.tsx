@@ -1,5 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { Drawer, Tooltip } from 'antd'
+import dayjs from 'dayjs'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -15,7 +16,9 @@ import {
 	Calendar,
 	CaretDown,
 	CaretUp,
+	ClockCountdown,
 	FireSimple,
+	MapPinPlus,
 	Plus,
 	Repeat,
 	SignIn,
@@ -70,8 +73,10 @@ const Index = (props: IPropsDetail) => {
 		cycle_enabled,
 		cycle,
 		end_time,
+		done_time,
 		schedule,
-		remark
+		remark,
+		create_at
 	} = item
 
 	const { ref_editor, onChange, setEditor, setRef } = useText({
@@ -100,6 +105,14 @@ const Index = (props: IPropsDetail) => {
 	})
 
 	const item_status = useMemo(() => getItemStatus({ relations, id, status }), [relations, id, status])
+
+	const consuming_time = useMemo(() => {
+		if (!done_time) return
+
+		const diff_time = dayjs(done_time).diff(dayjs(create_at))
+
+		return dayjs.duration(diff_time).humanize()
+	}, [create_at, done_time])
 
 	const close = useMemoizedFn(() => {
 		update({ type: 'close', index, dimension_id, value: {} })
@@ -222,7 +235,7 @@ const Index = (props: IPropsDetail) => {
 					<CaretDown size={16}></CaretDown>
 				</div>
 			</div>
-			{item.id && (
+			<If condition={Boolean(item.id)}>
 				<div className='detail_item_wrap w_100 border_box flex flex_column'>
 					<Text
 						className='todo_text_wrap w_100 border_box'
@@ -379,7 +392,19 @@ const Index = (props: IPropsDetail) => {
 						</If>
 					</div>
 				</div>
-			)}
+				<div className='footer_wrap w_100 border_box flex justify_between align_center absolute bottom_0'>
+					<span className='create_at flex align_center'>
+						<MapPinPlus className='mr_4' size={13}></MapPinPlus>
+						{dayjs(create_at).format('YYYY-MM-DD HH:mm')}
+					</span>
+					<If condition={Boolean(consuming_time)}>
+						<span className='done_time flex align_center'>
+							<ClockCountdown className='mr_4'></ClockCountdown>
+							{consuming_time}
+						</span>
+					</If>
+				</div>
+			</If>
 		</Drawer>
 	)
 }

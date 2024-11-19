@@ -12,7 +12,9 @@ export default {
 		options: '操作',
 		archived: '已归档',
 		close: '关闭',
-		unclose: '取消关闭'
+		unclose: '取消关闭',
+		done_time: '完成时间',
+		duration: '耗时'
 	},
 	context_menu: {
 		detail: '查看详情',

@@ -1,6 +1,8 @@
+import { observer } from 'mobx-react-lite'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useGlobal } from '@/context/app'
 import { getTagColor } from '@/utils'
 
 import TagSelect from '../../TagSelect'
@@ -13,6 +15,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 	const { value, extra, editing, onFocus, onChange } = props
 	const { tags } = extra
 	const { t } = useTranslation()
+	const global = useGlobal()
 
 	const items = useMemo(() => {
 		if (!value) return
@@ -35,7 +38,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 					<Choose>
 						<When condition={items !== undefined && items?.length > 0}>
 							{items?.map(item => {
-								const tag_color = getTagColor(item!.color)
+								const tag_color = getTagColor(item!.color, global.setting.theme)
 
 								return (
 									<span
@@ -61,4 +64,4 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 	)
 }
 
-export default $app.memo(Index)
+export default new $app.handle(Index).by(observer).by($app.memo).get()

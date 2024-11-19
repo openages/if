@@ -2,6 +2,9 @@ export default {
       "Note.Setting": {
             "type": "object",
             "properties": {
+                  "show_heading_level": {
+                        "type": "boolean"
+                  },
                   "serif": {
                         "type": "boolean"
                   },
@@ -22,6 +25,7 @@ export default {
                   }
             },
             "required": [
+                  "show_heading_level",
                   "serif",
                   "small_text",
                   "toc",

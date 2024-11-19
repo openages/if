@@ -352,6 +352,9 @@ export default {
                   "end_time": {
                         "type": "number"
                   },
+                  "done_time": {
+                        "type": "number"
+                  },
                   "children": {
                         "type": "array",
                         "items": {
@@ -403,8 +406,7 @@ export default {
                         "maxLength": 30
                   },
                   "text": {
-                        "type": "string",
-                        "maxLength": 150
+                        "type": "string"
                   },
                   "sort": {
                         "type": "number"
@@ -448,8 +450,7 @@ export default {
                         "maxLength": 30
                   },
                   "text": {
-                        "type": "string",
-                        "maxLength": 150
+                        "type": "string"
                   },
                   "sort": {
                         "type": "number"
@@ -567,6 +568,9 @@ export default {
                   "end_time": {
                         "type": "number"
                   },
+                  "done_time": {
+                        "type": "number"
+                  },
                   "children": {
                         "type": "array",
                         "items": {
@@ -618,8 +622,7 @@ export default {
                         "maxLength": 30
                   },
                   "text": {
-                        "type": "string",
-                        "maxLength": 150
+                        "type": "string"
                   },
                   "sort": {
                         "type": "number"

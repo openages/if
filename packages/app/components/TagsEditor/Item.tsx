@@ -1,8 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
 import { ColorPicker, Input } from 'antd'
 import { debounce } from 'lodash-es'
+import { observer } from 'mobx-react-lite'
 import { useTranslation } from 'react-i18next'
 
+import { useGlobal } from '@/context/app'
 import { useTagColor } from '@/hooks'
 import { CSS } from '@dnd-kit/utilities'
 import { DotsSixVertical, Plus, Trash } from '@phosphor-icons/react'
@@ -23,8 +25,9 @@ const Index = (props: IProps) => {
 	const { sortable_props, item, index, limitMax, onAdd, onRemove, onUpdate } = props
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = sortable_props!
 
+	const global = useGlobal()
 	const { t } = useTranslation()
-	const { bg_color, text_color } = useTagColor(item.color)
+	const { bg_color, text_color } = useTagColor(item.color, global.setting.theme)
 
 	const getPopupContainer = useMemoizedFn(() => document.body)
 	const onDebounceChange = useMemoizedFn(debounce((_, v) => onUpdate('color', index, v), 300))
@@ -40,7 +43,7 @@ const Index = (props: IProps) => {
 				disabledAlpha
 				placement='topLeft'
 				getPopupContainer={getPopupContainer}
-				value={item.color}
+				defaultValue={item.color}
 				onChange={onDebounceChange}
 			></ColorPicker>
 			<Input
@@ -88,4 +91,4 @@ const Index = (props: IProps) => {
 	)
 }
 
-export default $app.memo(Index)
+export default new $app.handle(Index).by(observer).by($app.memo).get()
