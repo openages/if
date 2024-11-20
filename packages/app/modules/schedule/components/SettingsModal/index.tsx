@@ -43,7 +43,7 @@ const Index = (props: IPropsSettingsModal) => {
 		<SettingsModal {...props_settings_modal}>
 			<div className='w_100 flex flex_column'>
 				<Item name='tags' label={t('common.tags.label')}>
-					<TagsEditor remove={removeTag}></TagsEditor>
+					<TagsEditor pureColor remove={removeTag}></TagsEditor>
 				</Item>
 				<Item name='timeline_angles' label={t('schedule.timeline_angles')}>
 					<TimelineAnglesEditor

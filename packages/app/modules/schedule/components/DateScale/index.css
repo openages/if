@@ -1,7 +1,7 @@
 ._local {
 	height: 36px;
 	line-height: 1;
-	border-bottom: var(--border);
+	border-bottom: var(--border_light);
 	background-color: var(--color_bg);
 	user-select: none;
 	font-size: 12px;
@@ -18,7 +18,7 @@
 		:global {
 			.btn_now_wrap {
 				width: 90px;
-				border-right: var(--border);
+				border-right: var(--border_light);
 			}
 
 			.weekday_items {
@@ -55,7 +55,7 @@
 	:global {
 		.btn_now_wrap {
 			width: 48px;
-			border-right: var(--border);
+			border-right: var(--border_light);
 		}
 
 		.weekday_items {
@@ -64,7 +64,7 @@
 			.weekday_item {
 				overflow: hidden;
 				padding: 0 9px;
-				border-right: var(--border);
+				border-right: var(--border_light);
 				white-space: nowrap;
 
 				&.today {

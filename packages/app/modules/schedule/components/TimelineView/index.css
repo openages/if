@@ -4,21 +4,23 @@
 	:global {
 		.timeline_angle {
 			padding-left: 90px;
-			border-bottom: var(--border);
+			border-bottom: var(--border_light);
 
 			.angle_header {
 				width: 90px;
 				line-height: 1.2;
 				padding: 0 12px;
-				border-right: var(--border);
+				border-right: var(--border_light);
 				font-size: 12px;
 				font-weight: 500;
 			}
 
 			.angle_rows {
+				padding: 6px 0;
+
 				.timeline_row {
 					height: 36px;
-					padding: 1px 0;
+					padding: 6px 0;
 				}
 			}
 		}

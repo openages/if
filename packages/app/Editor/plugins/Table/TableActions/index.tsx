@@ -24,6 +24,9 @@ const Index = () => {
 	}, [id, editor])
 
 	const onRowOpenChange = useMemoizedFn(v => (x.visible_menu_type = (v ? 'row' : '') as Model['visible_menu_type']))
+	const onRowRightOpenChange = useMemoizedFn(
+		v => (x.visible_menu_type = (v ? 'row_right' : '') as Model['visible_menu_type'])
+	)
 	const onColOpenChange = useMemoizedFn(v => (x.visible_menu_type = (v ? 'col' : '') as Model['visible_menu_type']))
 
 	const onClick: MenuProps['onClick'] = useMemoizedFn(e => {
@@ -37,7 +40,7 @@ const Index = () => {
 			{x.position_row.left && x.position_row.top && (
 				<div
 					className={$cx(
-						'fixed z_index_100 border_box flex align_center',
+						'__editor_handler fixed z_index_100 border_box flex align_center',
 						styles.action,
 						styles.action_row
 					)}
@@ -64,10 +67,40 @@ const Index = () => {
 					</Dropdown>
 				</div>
 			)}
+			{x.position_row_right.left && x.position_row_right.top && (
+				<div
+					className={$cx(
+						'__editor_handler fixed z_index_100 border_box flex align_center',
+						styles.action,
+						styles.action_row
+					)}
+					style={{ left: x.position_row_right.left, top: x.position_row_right.top }}
+				>
+					<Dropdown
+						destroyPopupOnHide
+						trigger={['click']}
+						open={x.visible_menu_type === 'row_right'}
+						menu={{ items: menu_row, rootClassName: styles.dropdown_menu, onClick }}
+						onOpenChange={onRowRightOpenChange}
+					>
+						<div
+							className={$cx(
+								'btn_action_row btn_action flex flex_column justify_center align_center absolute clickable cursor_point',
+								(x.visible_menu_type === 'row' || x.dragging_type === 'row') && 'active'
+							)}
+							ref={v => x.setRefBtnRow(v!, true)}
+						>
+							<span className='dot'></span>
+							<span className='dot'></span>
+							<span className='dot'></span>
+						</div>
+					</Dropdown>
+				</div>
+			)}
 			{x.position_col.left && x.position_col.top && (
 				<div
 					className={$cx(
-						'fixed z_index_100 border_box flex align_center',
+						'__editor_handler fixed z_index_100 border_box flex align_center',
 						styles.action,
 						styles.action_col
 					)}
@@ -99,7 +132,7 @@ const Index = () => {
 			)}
 			{x.position_dragline.left && x.position_dragline.top && (
 				<div
-					className={$cx('fixed z_index_100', styles.dragline)}
+					className={$cx('__editor_handler fixed z_index_100', styles.dragline)}
 					style={{
 						left: x.position_dragline.left,
 						top: x.position_dragline.top,

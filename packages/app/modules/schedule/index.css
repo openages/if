@@ -35,6 +35,7 @@
 }
 
 .view_wrap {
+	overflow-x: hidden;
 	overflow-y: scroll;
 	height: 100%;
 	outline: none;

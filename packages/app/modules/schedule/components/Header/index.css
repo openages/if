@@ -1,6 +1,6 @@
 ._local {
 	height: 36px;
-	border-bottom: var(--border);
+	border-bottom: var(--border_light);
 	background-color: var(--color_bg);
 
 	:global {

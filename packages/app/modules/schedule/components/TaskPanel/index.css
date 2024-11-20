@@ -1,13 +1,13 @@
 ._local {
 	width: 180px;
 	height: 100%;
-	border-right: var(--border);
+	border-right: var(--border_light);
 
 	:global {
 		.panel_header {
 			height: 36px;
 			padding: 0 15px;
-			border-bottom: var(--border);
+			border-bottom: var(--border_light);
 			font-size: 12px;
 			font-weight: 500;
 		}

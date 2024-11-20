@@ -19,7 +19,7 @@ const Index = (props: IPropsCalendarViewTimeBlockSignal) => {
 			return target
 		}
 
-		target['top'] = 1
+		target['top'] = 6
 		target['width'] = item.length * step
 		target['height'] = 36
 

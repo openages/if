@@ -8,8 +8,7 @@
 		.hours_wrap {
 			.hour_item {
 				height: 48px;
-				border-right: var(--border);
-				border-bottom: var(--border);
+				border-bottom: var(--border_light);
 			}
 		}
 	}

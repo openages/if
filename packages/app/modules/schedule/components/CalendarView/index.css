@@ -1,11 +1,13 @@
 .Day {
-	padding: 0 1.5px;
-
 	&.today {
+		background-image: radial-gradient(circle, rgba(var(--color_text_rgb), 0.048) 2px, transparent 2px);
+		background-size: 26px 26px;
+
 		:global {
 			.hours_wrap {
 				.hour_item {
-					background-color: rgba(var(--color_text_rgb), 0.018);
+					border-bottom: none;
+					background-color: rgba(var(--color_text_rgb), 0.012);
 				}
 			}
 		}
@@ -14,10 +16,12 @@
 	:global {
 		.hours_wrap {
 			width: calc(100% + 3px);
-			margin-left: -1.5px;
+			margin-left: -1px;
 
 			.hour_item {
 				height: 48px;
+				border-bottom: var(--border_light_dashed);
+				border-left: var(--border_light);
 			}
 		}
 	}

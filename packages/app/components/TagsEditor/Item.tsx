@@ -16,13 +16,14 @@ interface IProps {
 	item: { id: string; color: string; text: string }
 	index: number
 	limitMax: boolean
+	pureColor?: boolean
 	onAdd: (index: number) => void
 	onRemove: (index: number) => void
 	onUpdate: (key: 'id' | 'color' | 'text', index: number, v: string) => void
 }
 
 const Index = (props: IProps) => {
-	const { sortable_props, item, index, limitMax, onAdd, onRemove, onUpdate } = props
+	const { sortable_props, item, index, limitMax, pureColor, onAdd, onRemove, onUpdate } = props
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = sortable_props!
 
 	const global = useGlobal()
@@ -57,8 +58,8 @@ const Index = (props: IProps) => {
 				<span
 					className='tag w_100 h_100 flex justify_center align_center transition_normal'
 					style={{
-						backgroundColor: bg_color,
-						color: text_color
+						backgroundColor: pureColor ? item.color : bg_color,
+						color: pureColor ? 'rgba(255,255,255,0.9)' : text_color
 					}}
 				>
 					{item.text || t('common.tags.placeholder')}

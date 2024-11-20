@@ -39,7 +39,9 @@ export default class Index {
 				target.classList.contains('__view_container') ||
 				target.classList.contains('limited_content_wrap') ||
 				target.classList.contains('__editor_container')
-			)
+			) ||
+			target.classList.contains('__editor_handler') ||
+			target.closest('.__editor_handler')
 		) {
 			return
 		}

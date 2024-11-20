@@ -1,10 +1,8 @@
 import { Dropdown, Popover } from 'antd'
-import { observer } from 'mobx-react-lite'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { schedule } from '@/appdata'
-import { useGlobal } from '@/context/app'
 import { useText, useTextChange, Text } from '@/Editor'
 import { useDraggable, useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
@@ -34,12 +32,11 @@ const Index = (props: IPropsTimeBlock) => {
 		copyTimeBlock,
 		changeTimeBlockLength
 	} = props
-	const global = useGlobal()
 	const context_menu_items = useContextMenuItems()
 	const { t } = useTranslation()
 	const { visible_detail, toggleVisibleDetail } = useVisibleDetail()
 	const status = useTodos(item?.todos || [])
-	const tag_styles = useTagStyles(tags, item.tag, global.setting.theme)
+	const tag_styles = useTagStyles(tags, item.tag)
 	const timeline = useMemo(() => angle_row_id !== undefined, [angle_row_id])
 	const look = useLook({ item, month_mode, step, timeline })
 	const time = useTime({ year_scale, item, timeline })
@@ -194,4 +191,4 @@ const Index = (props: IPropsTimeBlock) => {
 	)
 }
 
-export default new $app.handle(Index).by(observer).by($app.memo).get()
+export default $app.memo(Index)

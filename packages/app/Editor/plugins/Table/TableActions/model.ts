@@ -8,6 +8,7 @@ import {
 	SELECTION_CHANGE_COMMAND
 } from 'lexical'
 import { makeAutoObservable, runInAction } from 'mobx'
+import ntry from 'nice-try'
 import { injectable } from 'tsyringe'
 
 import { CHANGE_SELECTION_ELEMENTS } from '@/Editor/commands'
@@ -46,14 +47,16 @@ export default class Index {
 	nodes = [] as [TableNode, TableRowNode, TableCellNode] | []
 	resize_observer = null as unknown as ResizeObserver
 	ref_btn_row = null as unknown as HTMLDivElement
+	ref_btn_row_right = null as unknown as HTMLDivElement
 	ref_btn_col = null as unknown as HTMLDivElement
 	ref_overlay = null as unknown as HTMLDivElement
 	drag_acts = [] as Array<CleanupFn>
 
 	position_row = { left: 0, top: 0 }
+	position_row_right = { left: 0, top: 0 }
 	position_col = { left: 0, top: 0 }
 	visible = false
-	visible_menu_type = '' as 'row' | 'col'
+	visible_menu_type = '' as 'row' | 'row_right' | 'col'
 	dragging_type = '' as 'row' | 'col'
 	position_dragline = { left: 0, top: 0, width: 0, height: 0 }
 
@@ -106,6 +109,7 @@ export default class Index {
 				nodes: false,
 				resize_observer: false,
 				ref_btn_row: false,
+				ref_btn_row_right: false,
 				ref_btn_col: false,
 				ref_overlay: false,
 				drag_acts: false,
@@ -133,6 +137,7 @@ export default class Index {
 
 		this.nodes = []
 		this.position_row = { left: 0, top: 0 }
+		this.position_row_right = { left: 0, top: 0 }
 		this.position_col = { left: 0, top: 0 }
 		this.visible = false
 	}
@@ -148,8 +153,12 @@ export default class Index {
 		}
 	}
 
-	setRefBtnRow(el: HTMLDivElement) {
-		this.ref_btn_row = el
+	setRefBtnRow(el: HTMLDivElement, right?: boolean) {
+		if (right) {
+			this.ref_btn_row_right = el
+		} else {
+			this.ref_btn_row = el
+		}
 
 		const [table_node] = this.nodes
 
@@ -167,7 +176,7 @@ export default class Index {
 				onGenerateDragPreview: args => {
 					const { nativeSetDragImage } = args
 
-					nativeSetDragImage!(this.ref_btn_row, 5, 5)
+					nativeSetDragImage!(el, 5, 5)
 				},
 				onDrag: args => {
 					this.editor.update(() => {
@@ -481,7 +490,7 @@ export default class Index {
 			}
 
 			if (key === 'remove_row') {
-				if (table_row_node!.isLastChild()) return
+				if (table_map.length === 1 && table_row_node!.isLastChild()) return
 
 				table_row_node!.remove()
 
@@ -549,7 +558,7 @@ export default class Index {
 							cell.append($createParagraphNode())
 						}
 
-						if (key === 'remove_col') {
+						if (cells.length > 1 && key === 'remove_col') {
 							cell.remove()
 						}
 					})
@@ -561,22 +570,28 @@ export default class Index {
 	getPosition() {
 		this.editor.getEditorState().read(() => {
 			const [table_node, table_row_node, table_cell_node] = this.nodes
-			const col_index = $getTableColumnIndexFromTableCellNode(table_cell_node!)
+			const col_index = ntry(() => $getTableColumnIndexFromTableCellNode(table_cell_node!))
+
+			if (col_index === undefined) return
+
 			const first_row_node = table_node!.getChildren().at(0) as TableRowNode
 			const target_col_node = first_row_node.getChildren().at(col_index)
 
 			if (!table_node || !table_row_node || !table_cell_node || !target_col_node) return
 
+			const root = this.editor.getRootElement()
 			const table_node_el = this.editor.getElementByKey(table_node.getKey())
 			const table_row_node_el = this.editor.getElementByKey(table_row_node.getKey())
 			const table_cell_node_el = this.editor.getElementByKey(table_cell_node.getKey())
 			const target_col_node_el = this.editor.getElementByKey(target_col_node.getKey())
 
-			if (!table_node_el || !table_row_node_el || !table_cell_node_el || !target_col_node_el) return
+			if (!root || !table_node_el || !table_row_node_el || !table_cell_node_el || !target_col_node_el)
+				return
 
-			const rect_row = table_row_node_el!.getBoundingClientRect()
-			const rect_cell = table_cell_node_el!.getBoundingClientRect()
-			const rect_col = target_col_node_el!.getBoundingClientRect()
+			const rect_root = root.getBoundingClientRect()
+			const rect_row = table_row_node_el.getBoundingClientRect()
+			const rect_cell = table_cell_node_el.getBoundingClientRect()
+			const rect_col = target_col_node_el.getBoundingClientRect()
 
 			const exsit_large_rowspan = table_node.existLargeRowspan()
 			const exsit_large_colspan = table_node.existLargeColspan()
@@ -585,10 +600,24 @@ export default class Index {
 				return this.reset()
 			}
 
+			const row_top = rect_row.y + rect_row.height / 2 - 5
+
 			this.position_row = !exsit_large_rowspan
 				? {
-						left: rect_row.x - 0.5 + table_node_el!.scrollLeft,
-						top: rect_row.y + rect_row.height / 2 - 5
+						left: rect_row.x - 0.5 + table_node_el.scrollLeft,
+						top: row_top
+					}
+				: { left: 0, top: 0 }
+
+			const row_right_left =
+				rect_row.width > rect_root.width
+					? rect_root.x + rect_root.width - 1.5
+					: rect_root.x + rect_row.width - 0.5
+
+			this.position_row_right = !exsit_large_rowspan
+				? {
+						left: row_right_left,
+						top: row_top
 					}
 				: { left: 0, top: 0 }
 
