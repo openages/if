@@ -969,6 +969,9 @@ importers:
       smooth-scroll-into-view-if-needed:
         specifier: ^2.0.2
         version: 2.0.2
+      smoothscroll-for-websites:
+        specifier: ^1.5.1
+        version: 1.5.1
       ts-pattern:
         specifier: ^5.5.0
         version: 5.5.0
@@ -10051,6 +10054,9 @@ packages:
 
   smooth-scroll-into-view-if-needed@2.0.2:
     resolution: {integrity: sha512-z54WzUSlM+xHHvJu3lMIsh+1d1kA4vaakcAtQvqzeGJ5Ffau7EKjpRrMHh1/OBo5zyU2h30ZYEt77vWmPHqg7Q==}
+
+  smoothscroll-for-websites@1.5.1:
+    resolution: {integrity: sha512-/Fp3jBhp8HQ/pID+U5hOe+Q7Uw58uEQMe7mIW1FBVtsVgLl/mOPXO39lRcsLVFGgUDh83KaiYmxFnuNAkBlVrw==}
 
   socket.io-adapter@2.5.5:
     resolution: {integrity: sha512-eLDQas5dzPgOWCk9GuuJC2lBqItuhKI4uxGgo9aIV7MYbk2h9Q6uULEh8WBzThoI7l+qU9Ast9fVUmkqPP9wYg==}
@@ -22230,6 +22236,8 @@ snapshots:
   smooth-scroll-into-view-if-needed@2.0.2:
     dependencies:
       scroll-into-view-if-needed: 3.1.0
+
+  smoothscroll-for-websites@1.5.1: {}
 
   socket.io-adapter@2.5.5:
     dependencies:
