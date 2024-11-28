@@ -24,7 +24,7 @@ export const auth = async (module: App.ModuleType) => {
 
 	const counts = await $db.dirtree_items.count({ selector: { module, type: 'file' } }).exec()
 
-	if (counts < 6) return true
+	if (counts < 3) return true
 
 	const res = await confirm({
 		title: $t('common.notice'),
