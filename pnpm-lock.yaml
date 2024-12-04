@@ -894,6 +894,9 @@ importers:
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
+      detect-gpu:
+        specifier: ^5.0.59
+        version: 5.0.59
       fast-equals:
         specifier: ^5.0.1
         version: 5.0.1
@@ -972,6 +975,9 @@ importers:
       smoothscroll-for-websites:
         specifier: ^1.5.1
         version: 1.5.1
+      sniffr:
+        specifier: ^1.3.2
+        version: 1.3.2
       ts-pattern:
         specifier: ^5.5.0
         version: 5.5.0
@@ -5939,6 +5945,9 @@ packages:
     resolution: {integrity: sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
 
+  detect-gpu@5.0.59:
+    resolution: {integrity: sha512-tBS01N6Lu7D2T6nmoA5or39u12PqtmO4RPCSfgvbgcOUGPhExU8RDiyUiT3iVxCKX9XTxIM1k+mVaeirLv6pwA==}
+
   detect-libc@1.0.3:
     resolution: {integrity: sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==}
     engines: {node: '>=0.10'}
@@ -10058,6 +10067,9 @@ packages:
   smoothscroll-for-websites@1.5.1:
     resolution: {integrity: sha512-/Fp3jBhp8HQ/pID+U5hOe+Q7Uw58uEQMe7mIW1FBVtsVgLl/mOPXO39lRcsLVFGgUDh83KaiYmxFnuNAkBlVrw==}
 
+  sniffr@1.3.2:
+    resolution: {integrity: sha512-T887ehviMeNlOsCFEVKenrtPNJskxIVufT+r7OnLZ/HIHKpoSl4nW11yCJR3M2ju015Wc/eXFD5L4NR5WxLKVw==}
+
   socket.io-adapter@2.5.5:
     resolution: {integrity: sha512-eLDQas5dzPgOWCk9GuuJC2lBqItuhKI4uxGgo9aIV7MYbk2h9Q6uULEh8WBzThoI7l+qU9Ast9fVUmkqPP9wYg==}
 
@@ -10848,6 +10860,9 @@ packages:
 
   web-worker@1.3.0:
     resolution: {integrity: sha512-BSR9wyRsy/KOValMgd5kMyr3JzpdeoR9KVId8u5GVlTTAtNChlsE4yTxeY7zMdNSyOmoKBv8NH2qeRY9Tg+IaA==}
+
+  webgl-constants@1.1.1:
+    resolution: {integrity: sha512-LkBXKjU5r9vAW7Gcu3T5u+5cvSvh5WwINdr0C+9jpzVB41cjQAP5ePArDtk/WHYdVj0GefCgM73BA7FlIiNtdg==}
 
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
@@ -16995,6 +17010,10 @@ snapshots:
 
   destroy@1.2.0: {}
 
+  detect-gpu@5.0.59:
+    dependencies:
+      webgl-constants: 1.1.1
+
   detect-libc@1.0.3: {}
 
   detect-libc@2.0.3: {}
@@ -22239,6 +22258,8 @@ snapshots:
 
   smoothscroll-for-websites@1.5.1: {}
 
+  sniffr@1.3.2: {}
+
   socket.io-adapter@2.5.5:
     dependencies:
       debug: 4.3.7
@@ -23175,6 +23196,8 @@ snapshots:
   web-vitals@0.2.4: {}
 
   web-worker@1.3.0: {}
+
+  webgl-constants@1.1.1: {}
 
   webidl-conversions@3.0.1: {}
 
