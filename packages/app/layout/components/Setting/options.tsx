@@ -1,5 +1,4 @@
 import {
-	Activity,
 	Butterfly,
 	Cloud,
 	Command,
@@ -7,15 +6,13 @@ import {
 	HandHeart,
 	Heart,
 	Info,
-	Layout,
 	Medal,
 	Sliders,
 	User,
-	Users,
-	YoutubeLogo
+	Users
 } from '@phosphor-icons/react'
 
-import { About, Account, Global, Menu, Paid, Shortcuts, Tasks, Tutorial } from './app'
+import { About, Account, Billing, Global, Menu, Shortcuts } from './app'
 import { Note } from './modules'
 
 import type { TFunction } from 'i18next'
@@ -36,10 +33,10 @@ export const getSettingItems = (t: TFunction<'translation', undefined>) => {
 			children: <Account></Account>
 		},
 		{
-			label: t('setting.nav.titles.Paid'),
+			label: t('setting.nav.titles.Billing'),
 			Icon: CurrencyCircleDollar,
 			key: 'paid',
-			children: <Paid></Paid>
+			children: <Billing></Billing>
 		},
 		// {
 		// 	label: t('setting.nav.titles.Menu'),
@@ -48,22 +45,10 @@ export const getSettingItems = (t: TFunction<'translation', undefined>) => {
 		// 	children: <Menu></Menu>
 		// },
 		{
-			label: t('setting.nav.titles.Tasks'),
-			Icon: Activity,
-			key: 'tasks',
-			children: <Tasks></Tasks>
-		},
-		{
 			label: t('setting.nav.titles.Shortcuts'),
 			Icon: Command,
 			key: 'shortcuts',
 			children: <Shortcuts></Shortcuts>
-		},
-		{
-			label: t('setting.nav.titles.Tutorial'),
-			Icon: YoutubeLogo,
-			key: 'tutorial',
-			children: <Tutorial></Tutorial>
 		},
 		{
 			label: t('setting.nav.titles.About'),

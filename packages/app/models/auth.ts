@@ -36,10 +36,11 @@ export default class Index {
 		if (user) {
 			this.user = user
 		} else {
-			this.test(true)
+			// this.test(true)
 		}
 
 		this.on()
+
 		if (is_electron_shell) this.onVerify()
 	}
 

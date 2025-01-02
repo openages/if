@@ -3,11 +3,9 @@ export default {
 		titles: {
 			Global: 'Global',
 			Account: 'Account',
-			Paid: 'Billing',
+			Billing: 'Billing',
 			Menu: 'Menu',
-			Tasks: 'Tasks',
 			Shortcuts: 'Shortcuts',
-			Tutorial: 'Tutorial',
 			About: 'About'
 		}
 	},
@@ -63,60 +61,45 @@ export default {
 			error: 'Fingerprint generation failed, please contact the developer.'
 		}
 	},
-	Paid: {
-		mac_app_store: {
-			desc: 'Log in to the App Store version and subscribe. Log in to the account in the independent distribution version',
-			btn_pay: 'Go to AppStore'
-		},
-		desc_wrap: {
-			text: `The subscription will renew automatically and can be canceled at any time. If the user's plan does not update after a successful purchase, you can try`,
-			restore_purchase: 'Restore Purchase',
-			privacy: 'Privacy Policy',
-			terms: 'Terms of Use'
-		},
-		file: 'File',
-		unit: 'MO',
-		unlimited: 'Unlimited',
-		common: {
-			'0': 'Dark Mode',
-			'1': 'Screenlock',
-			'2': 'Multi Theme Color',
-			'3': 'Import & Export Markdown'
-		},
+	Billing: {
+		upgrade: 'Upgrade',
+		unit: 'Year',
+		payonce: 'Payonce',
 		free: {
-			type: 'Free',
-			btn_text: 'Rate In Mac App Store'
+			title: 'Free',
+			items: {
+				'0': 'Free access to all modules',
+				'1': 'No account or registration required',
+				'2': 'Offline use',
+				'3': 'Support import, export and backup',
+				'4': 'Dark mode',
+				'5': 'App lock screen',
+				'6': 'Multiple themes'
+			}
 		},
 		pro: {
-			type: 'Pro',
-			value: '$3',
-			btn_text: 'Become Professional'
-		},
-		sponsor: {
-			type: 'Sponsor',
-			value: '$100',
-			title_rights: 'The following privileges will be granted to you:',
-			rights: {
-				'0': 'Display your Logo and website link on the homepage of the IF official website',
-				'1': 'Display your Logo and website link on the settings page of the IF App',
-				'2': 'Opportunity to communicate one-on-one with the development team and participate in product improvement'
+			title: 'Pro',
+			items: {
+				'0': 'All free version features plus...',
+				'1': '6 devices (macOS or Windows)',
+				'2': 'Daily data insights',
+				'3': 'File-based synchronization'
 			},
-			title_steps: 'Follow these steps to become a sponsor:',
-			steps: {
-				'0': 'Open the settings interface within IF, and click the bottom left corner to enter the payment section',
-				'1': 'If you have not registered an account, you will be prompted that payment requires account registration',
-				'2': 'After completing the account registration, click to select the sponsor payment plan for payment',
-				'3': 'After the payment is completed, copy your uid in the user interface in settings',
-				'4': 'Send your uid, logo, and the link with safe content to sponsor@openages.com',
-				'5': '15 days later, your logo and link will be displayed on the official website and in the App'
+			todo: {
+				'0': 'Analysis panel, automatic daily report generation'
 			},
-			btn_text: 'Become Sponsor',
-			extra: 'Limited to 60 seats.'
+			note: {
+				'0': 'Customized image hosting'
+			},
+			pomo: {
+				'0': 'Mindfulness meditation mode'
+			},
+			schedule: {
+				'0': 'Timeline view, fixed view'
+			}
 		},
 		infinity: {
-			type: 'Infinity',
-			extra: 'Permanent users include all the features of the professional version and can use them for free permanently. Permanent users can only be obtained by participating in the KOL/KOC plan.',
-			join: 'Join'
+			title: 'Lifetime'
 		}
 	},
 	Note: {

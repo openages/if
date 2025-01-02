@@ -3,84 +3,62 @@ import to from 'await-to-js'
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
+import { paddle } from '@/appdata/pay'
 import Utils from '@/models/utils'
-import { conf, getUserData, hono, ipc, is_mac_dev, is_mas_id, trpc } from '@/utils'
+import { conf, getUserData, hono, ipc, is_mas_id, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
+import { initializePaddle } from '@paddle/paddle-js'
 
-import type { Product } from 'electron'
 import type { Iap } from '@/types'
+
+import type { Paddle } from '@paddle/paddle-js'
 
 @injectable()
 export default class Index {
 	data = {} as { tid: string; receipt_url: string }
-	products = {} as Record<Iap.Plan, Product>
-	current = null as 'pro' | 'sponsor' | null
+	type = 'pro' as 'pro' | 'infinity'
+	paddle = null as unknown as Paddle
+	prices = {} as Record<Iap.Plan, string>
 
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, { utils: false }, { autoBind: true })
+		makeAutoObservable(this, { utils: false, paddle: false }, { autoBind: true })
 	}
 
 	init() {
-		if (!is_mas_id && !is_mac_dev) return
-
-		this.getProducts()
-		this.onPurchaseUpdated()
-		this.verify()
-
-		this.on()
+		this.initPaddle()
 	}
 
-	onPurchaseUpdated() {
-		const { unsubscribe } = ipc.iap.onUpdated.subscribe(undefined, {
-			onData: async v => {
-				if (v.type === 'empty') {
-					await conf.set('oniap', false)
-
-					$app.Event.emit('app/setLoading', { visible: false })
-
-					return
-				}
-
-				if (v.type === 'onlocal') {
-					this.data = v.data
-
-					this.afterOnlocal()
-
-					return
-				}
-
-				if (v.state === 'purchasing') return
-
-				this.current = null
-
-				await conf.set('oniap', false)
-
-				$app.Event.emit('app/setLoading', { visible: false })
-
-				switch (v.state) {
-					case 'purchased':
-						$message.success($t('iap.state.purchased'))
-
-						await this.afterPurchase(v.data!)
-
-						break
-					case 'restored':
-						if (v.data?.tid) {
-							$message.success($t('iap.state.restored'))
-
-							await this.afterPurchase(v.data!)
-						}
-
-						break
-					case 'failed':
-						$message.warning($t('iap.state.failed'))
-
-						break
-				}
-			}
+	async initPaddle() {
+		const res = await initializePaddle({
+			environment: 'sandbox',
+			token: 'test_42487f9c268654736359e895d17'
 		})
 
-		this.utils.acts.push(unsubscribe)
+		if (!res) return
+
+		this.paddle = res
+
+		this.getPrices()
+	}
+
+	async getPrices() {
+		const { data } = await this.paddle.PricePreview({
+			items: [
+				{ priceId: paddle.sandbox.price_id.pro, quantity: 1 },
+				{ priceId: paddle.sandbox.price_id.infinity, quantity: 1 }
+			]
+		})
+
+		this.prices = {
+			pro: data.details.lineItems[0].formattedTotals.subtotal,
+			infinity: data.details.lineItems[1].formattedTotals.subtotal
+		}
+	}
+
+	async upgrade() {
+		this.paddle.Checkout.open({
+			items: [{ priceId: paddle.sandbox.price_id[this.type], quantity: 1 }]
+		})
 	}
 
 	async verify() {
@@ -101,14 +79,6 @@ export default class Index {
 		if (res.data) $app.Event.emit('global.auth.saveUser', data)
 
 		ipc.iap.verify.mutate(data || { paid_plan: 'free' })
-	}
-
-	async getProducts() {
-		const res = await ipc.iap.getProducts.query()
-
-		if (res.error !== null) return $message.error(res.error)
-
-		this.products = res.data
 	}
 
 	@loading

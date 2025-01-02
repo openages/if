@@ -3,11 +3,9 @@ export default {
 		titles: {
 			Global: '全局设置',
 			Account: '账号信息',
-			Paid: '付费计划',
+			Billing: '付费计划',
 			Menu: '菜单设置',
-			Tasks: '任务管理器',
 			Shortcuts: '快捷键',
-			Tutorial: '教程',
 			About: '关于'
 		}
 	},
@@ -63,60 +61,45 @@ export default {
 			error: '指纹生成失败，请联系开发商'
 		}
 	},
-	Paid: {
-		mac_app_store: {
-			desc: '前往App Store付费订阅，在App Store版本登录后订阅，在独立发行版登录账号即可',
-			btn_pay: '前往订阅'
-		},
-		desc_wrap: {
-			text: '订阅将自动续费，可随时取消。成功购买后若用户计划未更新，可尝试',
-			restore_purchase: '恢复购买',
-			privacy: '隐私政策',
-			terms: '使用条款'
-		},
-		file: '文件',
-		unit: '月',
-		unlimited: '无限',
-		common: {
-			'0': '黑暗模式',
-			'1': '锁屏',
-			'2': '多主题色',
-			'3': '导入导出Markdown'
-		},
+	Billing: {
+		upgrade: '升级计划',
+		unit: '年',
+		payonce: '一次性付费',
 		free: {
-			type: '免费者',
-			btn_text: '给个好评'
+			title: '免费版',
+			items: {
+				'0': '免费使用所有功能模块',
+				'1': '无需账号或注册',
+				'2': '离线使用',
+				'3': '支持导入导出备份',
+				'4': '暗色模式',
+				'5': '应用锁屏',
+				'6': '多主题'
+			}
 		},
 		pro: {
-			type: '专业者',
-			value: '¥3',
-			btn_text: '成为专业者'
-		},
-		sponsor: {
-			type: '赞助者',
-			value: '¥600',
-			title_rights: '您将具备以下特权：',
-			rights: {
-				'0': '在IF官网首页展示您的Logo和链接网址',
-				'1': '在IF App设置页展示您的Logo和链接网址',
-				'2': '与开发团队一对一沟通，并参与产品改进的机会'
+			title: '专业版',
+			items: {
+				'0': '所有免费版特性以及...',
+				'1': '6台设备（macOS 或 Windows）',
+				'2': '日常数据洞察',
+				'3': '基于文件的同步'
 			},
-			title_steps: '按照如下步骤成为赞助者：',
-			steps: {
-				'0': '在IF内打开设置界面，点击界面左下角进入付费',
-				'1': '如果您未注册账号，将提示付费需注册账号',
-				'2': '账号注册完成之后点击选择赞助者付费计划进行付款',
-				'3': '付款完成后在设置中的用户界面复制您的uid',
-				'4': '发送您的uid, logo和具备安全内容的链接到 sponsor@openages.com',
-				'5': '15天之后您的logo和链接网址将会展示在官网和App内'
+			todo: {
+				'0': '分析面板，每日自动生成报表'
 			},
-			btn_text: '成为赞助者',
-			extra: '限量60个席位。'
+			note: {
+				'0': '自定义图床'
+			},
+			pomo: {
+				'0': '正念冥想模式'
+			},
+			schedule: {
+				'0': '时间线视图，固定视图'
+			}
 		},
 		infinity: {
-			type: '永久使用者',
-			extra: '永久使用者包含专业者的所有功能，并永久免费使用。永久使用者仅可通过参加KOL/KOC计划获得。',
-			join: '加入'
+			title: '终身版'
 		}
 	},
 	Note: {
