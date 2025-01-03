@@ -20,18 +20,18 @@ export default class Index {
 		this.global.setting.visible = true
 	}
 
-	goPaid() {
-		this.active = 'paid'
+	goBilling() {
+		this.active = 'billing'
 		this.global.setting.visible = true
 	}
 
 	on() {
 		window.$app.Event.on('global.setting.goLogin', this.goLogin)
-		window.$app.Event.on('global.setting.goPaid', this.goPaid)
+		window.$app.Event.on('global.setting.goBilling', this.goBilling)
 	}
 
 	off() {
 		window.$app.Event.off('global.setting.goLogin', this.goLogin)
-		window.$app.Event.off('global.setting.goPaid', this.goPaid)
+		window.$app.Event.off('global.setting.goBilling', this.goBilling)
 	}
 }

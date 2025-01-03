@@ -60,7 +60,7 @@ const Index = (props: IPropsSetting) => {
 									x.visible_menu = false
 								}}
 							>
-								<Icon className='icon_module'></Icon>
+								<Icon className='icon_module' size={15} strokeWidth={1.5}></Icon>
 								<span className='menu_name'>{label}</span>
 							</Button>
 						</Wave>

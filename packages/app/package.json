@@ -4,6 +4,7 @@
 	"description": "GTD for professionals.",
 	"scripts": {
 		"dev": "cross-env SHELL=browser rspack serve",
+		"dev:sandbox": "cross-env SHELL=browser SANDBOX=1 rspack serve",
 		"dev:electron": "cross-env SHELL=electron rspack serve",
 		"dev:electron:sandbox": "cross-env SHELL=electron SANDBOX=1 rspack serve",
 		"preview": "rspack preview",
@@ -69,7 +70,7 @@
 		"konva": "^9.3.18",
 		"lexical": "workspace:*",
 		"lodash-es": "^4.17.21",
-		"lucide-react": "^0.394.0",
+		"lucide-react": "^0.469.0",
 		"lunar-typescript": "^1.7.6",
 		"lz-string": "^1.5.0",
 		"mermaid": "^10.9.3",
@@ -110,8 +111,8 @@
 	},
 	"devDependencies": {
 		"@rsdoctor/rspack-plugin": "^0.4.12",
-		"@rspack/cli": "1.1.1",
-		"@rspack/core": "1.1.1",
+		"@rspack/cli": "1.1.8",
+		"@rspack/core": "1.1.8",
 		"@rspack/plugin-react-refresh": "1.0.0",
 		"@types/color": "^3.0.6",
 		"@types/crypto-js": "^4.2.2",

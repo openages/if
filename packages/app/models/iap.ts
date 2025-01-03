@@ -56,8 +56,27 @@ export default class Index {
 	}
 
 	async upgrade() {
+		const user = getUserData()
+
+		if (!user?.id) {
+			$app.Event.emit('global.setting.goLogin')
+
+			return $message.info($t('app.not_login'))
+		}
+
 		this.paddle.Checkout.open({
-			items: [{ priceId: paddle.sandbox.price_id[this.type], quantity: 1 }]
+			items: [{ priceId: paddle.sandbox.price_id[this.type], quantity: 1 }],
+			customData: { type: this.type, user_id: user.id }
+		})
+	}
+
+	async cancelBilling() {
+		// 弹窗提示发送退款请求到support.if@openages.com
+	}
+
+	async cancelSubscription() {
+		this.paddle.Retain.initCancellationFlow({
+			subscriptionId: ''
 		})
 	}
 

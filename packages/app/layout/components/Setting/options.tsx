@@ -1,11 +1,11 @@
+import { CircleArrowUp, Info, Settings2, SquareChevronUp, UserRound } from 'lucide-react'
+
 import {
 	Butterfly,
 	Cloud,
-	Command,
 	CurrencyCircleDollar,
 	HandHeart,
 	Heart,
-	Info,
 	Medal,
 	Sliders,
 	User,
@@ -16,26 +16,26 @@ import { About, Account, Billing, Global, Menu, Shortcuts } from './app'
 import { Note } from './modules'
 
 import type { TFunction } from 'i18next'
-import type { Icon } from '@phosphor-icons/react'
+import type { LucideIcon } from 'lucide-react'
 
 export const getSettingItems = (t: TFunction<'translation', undefined>) => {
 	const target = [
 		{
 			label: t('setting.nav.titles.Global'),
-			Icon: Sliders,
+			Icon: Settings2,
 			key: 'global',
 			children: <Global></Global>
 		},
 		{
 			label: t('setting.nav.titles.Account'),
-			Icon: User,
+			Icon: UserRound,
 			key: 'account',
 			children: <Account></Account>
 		},
 		{
 			label: t('setting.nav.titles.Billing'),
-			Icon: CurrencyCircleDollar,
-			key: 'paid',
+			Icon: CircleArrowUp,
+			key: 'billing',
 			children: <Billing></Billing>
 		},
 		// {
@@ -46,7 +46,7 @@ export const getSettingItems = (t: TFunction<'translation', undefined>) => {
 		// },
 		{
 			label: t('setting.nav.titles.Shortcuts'),
-			Icon: Command,
+			Icon: SquareChevronUp,
 			key: 'shortcuts',
 			children: <Shortcuts></Shortcuts>
 		},
@@ -60,7 +60,7 @@ export const getSettingItems = (t: TFunction<'translation', undefined>) => {
 
 	return target.filter(item => item) as Array<{
 		label: string
-		Icon: Icon
+		Icon: LucideIcon
 		key: string
 		children: JSX.Element
 	}>

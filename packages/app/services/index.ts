@@ -1,41 +1,19 @@
 import { omit } from 'lodash-es'
 
 import { updateSetting as updateSettingAction } from '@/actions/global'
-import { Auth } from '@/types'
-import { getUserData } from '@/utils'
-import { confirm } from '@/utils/antd'
 import { session } from '@openages/stk/storage'
 
 import type { File } from '@/models'
 import type { App } from '@/types'
 
-export const auth = async (module: App.ModuleType) => {
-	const user = getUserData()
-
-	if (module === 'note') return true
-
+export const auth = async () => {
 	if (session.frozen === true) {
 		$message.warning($t('iap.frozen'))
 
 		return false
 	}
 
-	if ((user && user.paid_plan !== Auth.UserTypes.free) || user?.is_infinity === true) return true
-
-	const counts = await $db.dirtree_items.count({ selector: { module, type: 'file' } }).exec()
-
-	if (counts < 3) return true
-
-	const res = await confirm({
-		title: $t('common.notice'),
-		content: $t('app.auth.confirm')
-	})
-
-	if (!res) return false
-
-	$app.Event.emit('global.setting.goPaid')
-
-	return false
+	return true
 }
 
 export const getQuerySetting = (file_id: string) => {
