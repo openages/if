@@ -1,7 +1,9 @@
 import to from 'await-to-js'
+import { enc, AES } from 'crypto-js'
 import { omit } from 'lodash-es'
-import lz from 'lz-string'
+import { compress, decompressFromUTF16 } from 'lz-string'
 import { makeAutoObservable } from 'mobx'
+import ntry from 'nice-try'
 import { injectable } from 'tsyringe'
 
 import { getVersionName } from '@/appdata'
@@ -180,6 +182,32 @@ export default class Index {
 		if (!ignore_message) $message.success($t('app.auth.test_ok'))
 	}
 
+	async getStatus() {
+		if (!local.token) return
+
+		const data = JSON.stringify({ user_id: this.user.id, refresh_token: this.user.refresh_token })
+		const key = AES.encrypt(data, local.token).toString()
+
+		const [err, res] = await to(trpc.auth.getStatus.mutate({ key }))
+
+		if (err) return
+		if (res.error) return $message.error($t(`app.auth.${res.error}`))
+
+		const decrypt_data = ntry(() => AES.decrypt(res.data, this.user.refresh_token).toString(enc.Utf8))
+
+		if (!decrypt_data) return $message.error($t('app.auth.validate_error'))
+
+		const res_data = ntry(() => JSON.parse(decompressFromUTF16(decrypt_data)))
+
+		if (!res_data) return $message.error($t('app.auth.validate_error'))
+
+		if (!Object.keys(res_data).length) return
+
+		this.saveUser(res_data)
+
+		ipc.iap.verify.mutate(res_data)
+	}
+
 	afterSign(data: Trpc.ResSign) {
 		const { token } = data
 		const user = omit(data, 'token') as Trpc.UserData
@@ -194,7 +222,7 @@ export default class Index {
 	saveUser(v: Partial<Index['user']>) {
 		this.user = { ...this.user, ...v }
 
-		local.user = lz.compress(JSON.stringify(this.user))
+		local.user = compress(JSON.stringify(this.user))
 	}
 
 	resetUser() {

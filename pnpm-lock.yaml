@@ -773,6 +773,9 @@ importers:
       await-to-js:
         specifier: ^3.0.0
         version: 3.0.0
+      crypto-js:
+        specifier: ^4.2.0
+        version: 4.2.0
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
@@ -791,15 +794,24 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      lz-string:
+        specifier: ^1.5.0
+        version: 1.5.0
       nanoid:
         specifier: ^5.0.9
         version: 5.0.9
+      nice-try:
+        specifier: ^3.0.1
+        version: 3.0.1
       ofetch:
         specifier: ^1.4.1
         version: 1.4.1
       resend:
         specifier: ^4.0.1
         version: 4.0.1(react-dom@19.0.0-rc.1(react@19.0.0-rc.1))(react@19.0.0-rc.1)
+      ts-pattern:
+        specifier: ^5.6.0
+        version: 5.6.0
       zod:
         specifier: ^3.24.1
         version: 3.24.1
@@ -813,9 +825,15 @@ importers:
       '@rspack/core':
         specifier: 1.1.8
         version: 1.1.8(@swc/helpers@0.5.15)
+      '@types/crypto-js':
+        specifier: ^4.2.2
+        version: 4.2.2
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
+      '@types/nice-try':
+        specifier: ^2.1.2
+        version: 2.1.2
       '@types/node':
         specifier: ^22.10.5
         version: 22.10.5

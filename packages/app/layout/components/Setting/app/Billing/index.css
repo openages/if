@@ -1,8 +1,25 @@
+[data-theme='dark'] {
+	._local {
+		:global {
+			.btn_upgrade {
+				color: var(--color_bg);
+				background-color: rgba(255, 255, 255, 0.81);
+
+				&:hover {
+					color: var(--color_bg);
+					background-color: rgba(255, 255, 255, 1) !important;
+				}
+			}
+		}
+	}
+}
+
 ._local {
 	:global {
 		.btn_upgrade {
 			border: none;
 			background-color: var(--color_text_sub);
+			font-weight: 500;
 
 			&:hover {
 				background-color: var(--color_text) !important;

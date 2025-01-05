@@ -63,7 +63,12 @@ const Index = () => {
 								)}
 							</div>
 						</div>
-						<Button className='btn_upgrade clickable' type='primary' onClick={iap.upgrade}>
+						<Button
+							className='btn_upgrade clickable'
+							type='primary'
+							loading={iap.loading}
+							onClick={iap.upgrade}
+						>
 							{t('setting.Billing.upgrade')}
 						</Button>
 					</div>
