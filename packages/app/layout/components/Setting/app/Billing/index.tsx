@@ -1,7 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { Button, Segmented } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useGlobal } from '@/context/app'
@@ -10,15 +10,42 @@ import { CalendarCheck, Check, CheckCircle, MarkdownLogo, Timer, WifiSlash } fro
 import styles from './index.css'
 
 import type { Iap } from '@/models'
+
 const Index = () => {
 	const global = useGlobal()
 	const { t } = useTranslation()
 
+	const auth = global.auth
 	const iap = global.iap
 	const type = iap.type
+	const is_infinity = auth?.user?.is_infinity
+	const paid_plan = auth?.user?.paid_plan
 	const prices = $copy(iap.prices)
 
+	useEffect(() => {
+		if (is_infinity) iap.type = 'infinity'
+	}, [is_infinity])
+
 	const currency = useMemo(() => (prices['pro'] ? prices['pro'].charAt(0) : '$'), [prices])
+
+	const btn_status = useMemo(() => {
+		let text: string
+		let billed = false
+		let disabled = false
+
+		if (type === 'pro') {
+			text = t(`setting.Billing.${paid_plan === 'pro' ? 'upgraded' : 'upgrade'}`)
+		} else {
+			text = t(`setting.Billing.${is_infinity ? 'purchased' : 'purchase'}`)
+		}
+
+		const subscribed = type === 'pro' && paid_plan === 'pro'
+
+		billed = subscribed || (type === 'infinity' && is_infinity)
+		disabled = subscribed || is_infinity
+
+		return { text, billed, disabled }
+	}, [type, is_infinity, paid_plan])
 
 	const setType = useMemoizedFn((v: Iap['type']) => (iap.type = v))
 
@@ -51,6 +78,7 @@ const Index = () => {
 										value: 'infinity'
 									}
 								]}
+								disabled={is_infinity}
 								value={type}
 								onChange={setType}
 							></Segmented>
@@ -64,12 +92,14 @@ const Index = () => {
 							</div>
 						</div>
 						<Button
-							className='btn_upgrade clickable'
+							className={$cx('btn_upgrade clickable', btn_status.billed && 'billed')}
 							type='primary'
+							disabled={btn_status.disabled}
 							loading={iap.loading}
+							icon={btn_status.billed && <CheckCircle size={16} weight='fill' />}
 							onClick={iap.upgrade}
 						>
-							{t('setting.Billing.upgrade')}
+							{btn_status.text}
 						</Button>
 					</div>
 					<div className='features border_box flex flex_column'>

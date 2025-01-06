@@ -145,7 +145,7 @@ export default class Index {
 		const migrations = should_migrations.map(item => (item as RxCollection).migratePromise(30))
 
 		if (migrations.length) {
-			window.$app.Event.emit('app/setLoading', { visible: true, desc: $t('app.migrating') })
+			$app.Event.emit('app/setLoading', { visible: true, desc: $t('app.migrating') })
 
 			await Promise.all(migrations)
 		}

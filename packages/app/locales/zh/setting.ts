@@ -63,6 +63,9 @@ export default {
 	},
 	Billing: {
 		upgrade: '升级计划',
+		purchase: '购买',
+		upgraded: '已升级',
+		purchased: '已购买',
 		unit: '年',
 		payonce: '一次性付费',
 		free: {
@@ -134,11 +137,11 @@ export default {
 			desc: '有使用限制'
 		},
 		pro: {
-			title: '专业用户',
+			title: '专业会员',
 			desc: '无功能限制'
 		},
 		infinity: {
-			title: '永久',
+			title: '终生会员',
 			desc: '全功能'
 		},
 		max: {

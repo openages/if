@@ -10,11 +10,12 @@ interface IProps {
 	size?: number
 	desc?: string
 	useByComponent?: boolean
+	close_text?: string
 	close?: () => void
 }
 
 const Index = (props: IProps) => {
-	const { className, size = 96, desc, useByComponent, close } = props
+	const { className, size = 96, desc, useByComponent, close_text, close } = props
 	const { t } = useTranslation()
 
 	return (
@@ -44,7 +45,7 @@ const Index = (props: IProps) => {
 			{desc && <span className='desc border_box text_center'>{desc}</span>}
 			<If condition={!!close}>
 				<button className='btn_close flex justify_center align_center mt_12 clickable' onClick={close}>
-					{t('todo.common.close')}
+					{close_text ?? t('todo.common.close')}
 				</button>
 			</If>
 		</div>

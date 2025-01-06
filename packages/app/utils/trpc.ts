@@ -2,6 +2,7 @@ import to from 'await-to-js'
 import dayjs from 'dayjs'
 import { jwtDecode } from 'jwt-decode'
 import lz from 'lz-string'
+import { RecognizedBrowser } from 'sniffr'
 
 import { local } from '@openages/stk/storage'
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client'
@@ -48,7 +49,8 @@ const trpc = createTRPCProxyClient<Router>({
 							mid: local.mid,
 							id: user.id,
 							token: local.token,
-							refresh_token: user.refresh_token
+							refresh_token: user.refresh_token,
+							platform: RecognizedBrowser.os.name as 'macos' | 'windows'
 						}
 					})
 				)

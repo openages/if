@@ -22,10 +22,7 @@ const Index = () => {
 				<a className='media_item' href='https://if.openages.com/privacy'>
 					Privacy Policy
 				</a>
-				<a
-					className='media_item'
-					href='https://www.apple.com/legal/internet-services/itunes/dev/stdeula/'
-				>
+				<a className='media_item' href='https://if.openages.com/terms'>
 					Terms of Use
 				</a>
 			</div>

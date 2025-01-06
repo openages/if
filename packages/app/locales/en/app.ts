@@ -3,6 +3,8 @@ export default {
 	no_data: 'No data retrieved',
 	migrating: 'Version updated, data Migrating, don`t close.',
 	too_many_req: 'Too many requests,please try again later',
+	paying: 'Paying...',
+	done: 'Done',
 	auth: {
 		validate_error: 'Parameter validation error, please confirm whether the parameters are correct',
 		test_title: 'Test if it can connect to the server',

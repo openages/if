@@ -6,12 +6,13 @@ import { injectable } from 'tsyringe'
 
 import { paddle } from '@/appdata/pay'
 import Utils from '@/models/utils'
-import { getUserData, hono, is_mas_id } from '@/utils'
+import { getUserData, hono, is_mas_id, is_sandbox, paddle_client_token } from '@/utils'
 import { initializePaddle } from '@paddle/paddle-js'
 
 import type { Iap } from '@/types'
 
 import type { Paddle } from '@paddle/paddle-js'
+import type { GlobalLoadingState } from '@/components/GlobalLoading'
 
 @injectable()
 export default class Index {
@@ -31,8 +32,8 @@ export default class Index {
 
 	async initPaddle() {
 		const res = await initializePaddle({
-			environment: 'sandbox',
-			token: 'test_42487f9c268654736359e895d17'
+			environment: is_sandbox ? 'sandbox' : 'production',
+			token: paddle_client_token
 		})
 
 		if (!res) return
@@ -59,6 +60,13 @@ export default class Index {
 	async upgrade() {
 		this.loading = true
 
+		$app.Event.emit('app/setLoading', {
+			visible: true,
+			desc: $t('app.paying'),
+			close_text: $t('app.done'),
+			close: () => $app.Event.emit('global.auth.getStatus')
+		} as GlobalLoadingState)
+
 		const user = getUserData()
 
 		if (!user?.id) {
@@ -80,12 +88,6 @@ export default class Index {
 		setTimeout(() => {
 			this.loading = false
 		}, 1500)
-	}
-
-	async cancelSubscription() {
-		this.paddle.Retain.initCancellationFlow({
-			subscriptionId: ''
-		})
 	}
 
 	async test(ignore_message?: boolean) {

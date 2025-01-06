@@ -63,6 +63,9 @@ export default {
 	},
 	Billing: {
 		upgrade: 'Upgrade',
+		purchase: 'Purchase',
+		upgraded: 'Upgraded',
+		purchased: 'Purchased',
 		unit: 'Year',
 		payonce: 'Payonce',
 		free: {
@@ -138,7 +141,7 @@ export default {
 			desc: 'Unlimited'
 		},
 		infinity: {
-			title: 'Infinity',
+			title: 'Lifetime',
 			desc: 'Full Features'
 		},
 		max: {

@@ -16,13 +16,43 @@
 
 ._local {
 	:global {
+		.if-segmented {
+			.if-segmented-group {
+				.if-segmented-item {
+					.if-segmented-item-label {
+						font-weight: 500;
+					}
+				}
+			}
+		}
+
 		.btn_upgrade {
 			border: none;
 			background-color: var(--color_text_sub);
 			font-weight: 500;
+			gap: 6px;
 
 			&:hover {
 				background-color: var(--color_text) !important;
+			}
+
+			&:disabled {
+				pointer-events: none;
+			}
+
+			&.billed {
+				border: 1px solid var(--color_text);
+				color: var(--color_text);
+				background-color: unset;
+
+				&:hover {
+					color: var(--color_text);
+					background-color: unset !important;
+				}
+			}
+
+			.if-btn-icon {
+				display: flex;
 			}
 		}
 

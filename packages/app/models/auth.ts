@@ -4,13 +4,13 @@ import { omit } from 'lodash-es'
 import { compress, decompressFromUTF16 } from 'lz-string'
 import { makeAutoObservable } from 'mobx'
 import ntry from 'nice-try'
+import { RecognizedBrowser } from 'sniffr'
 import { injectable } from 'tsyringe'
 
 import { getVersionName } from '@/appdata'
 import Utils from '@/models/utils'
 import { getUserData, hono, ipc, is_electron_shell, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
-import { setStorageWhenChange } from '@openages/stk/mobx'
 import { local } from '@openages/stk/storage'
 
 import type { Trpc } from '@/types'
@@ -23,7 +23,6 @@ export default class Index {
 	user = user_preset
 	temp_user = {} as Trpc.UserData
 	edit_mode = false
-	frozen = false
 	test_status = 'untest' as 'untest' | 'testing' | 'ok' | 'error'
 
 	constructor(public utils: Utils) {
@@ -31,8 +30,6 @@ export default class Index {
 	}
 
 	init() {
-		this.utils.acts = [setStorageWhenChange(['frozen'], this, { useSession: true })]
-
 		const user = getUserData()
 
 		if (user) {
@@ -41,6 +38,7 @@ export default class Index {
 			// this.test(true)
 		}
 
+		this.getStatus()
 		this.on()
 
 		if (is_electron_shell) this.onVerify()
@@ -49,10 +47,8 @@ export default class Index {
 	onVerify() {
 		ipc.iap.onVerify.subscribe(undefined, {
 			onData: v => {
-				if (this.user.id && this.user.paid_plan !== 'free') {
-					this.frozen = v
-				} else {
-					this.frozen = false
+				if (v && this.user.id && (this.user.paid_plan !== 'free' || this.user.is_infinity)) {
+					this.forceSignout()
 				}
 			}
 		})
@@ -92,7 +88,7 @@ export default class Index {
 
 	@loading
 	async signup(args: Trpc.Input['auth']['signup']) {
-		const [err, res] = await to(trpc.auth.signup.mutate(args))
+		const [err, res] = await to(trpc.auth.signup.mutate({ ...args, platform: this.getPlatform() }))
 
 		if (err) return
 		if (res.error) return $message.error($t(`app.auth.${res.error}`))
@@ -104,7 +100,7 @@ export default class Index {
 
 	@loading
 	async signin(args: Trpc.Input['auth']['signin']) {
-		const [err, res] = await to(trpc.auth.signin.mutate(args))
+		const [err, res] = await to(trpc.auth.signin.mutate({ ...args, platform: this.getPlatform() }))
 
 		if (err) return
 		if (res.error) return $message.error($t(`app.auth.${res.error}`))
@@ -140,12 +136,13 @@ export default class Index {
 		if (err) return
 		if (res.error) return $message.error($t(`app.auth.${res.error}`))
 
-		this.user = { paid_plan: 'free', is_infinity: false } as Trpc.UserData
+		this.clearUser()
+	}
 
-		local.removeItem('token')
-		local.removeItem('user')
+	async forceSignout() {
+		this.clearUser()
 
-		$app.Event.emit('global.iap.afterOnlocal')
+		await to(trpc.auth.signout.mutate({ mid: local.mid, id: this.user.id }))
 	}
 
 	async shutdown() {
@@ -154,10 +151,7 @@ export default class Index {
 		if (err) return
 		if (res.error) return $message.error($t(`app.auth.${res.error}`))
 
-		this.user = { paid_plan: 'free', is_infinity: false } as Trpc.UserData
-
-		local.removeItem('token')
-		local.removeItem('user')
+		this.clearUser()
 	}
 
 	async test(ignore_message?: boolean) {
@@ -186,26 +180,39 @@ export default class Index {
 		if (!local.token) return
 
 		const data = JSON.stringify({ user_id: this.user.id, refresh_token: this.user.refresh_token })
-		const key = AES.encrypt(data, local.token).toString()
+		const key = AES.encrypt(data, window.__key__()).toString()
 
 		const [err, res] = await to(trpc.auth.getStatus.mutate({ key }))
 
 		if (err) return
-		if (res.error) return $message.error($t(`app.auth.${res.error}`))
+
+		if (res.error) {
+			this.clearUser()
+
+			return $message.error($t(`app.auth.${res.error}`))
+		}
 
 		const decrypt_data = ntry(() => AES.decrypt(res.data, this.user.refresh_token).toString(enc.Utf8))
 
-		if (!decrypt_data) return $message.error($t('app.auth.validate_error'))
+		if (!decrypt_data) {
+			this.clearUser()
+
+			return $message.error($t('app.auth.validate_error'))
+		}
 
 		const res_data = ntry(() => JSON.parse(decompressFromUTF16(decrypt_data)))
 
-		if (!res_data) return $message.error($t('app.auth.validate_error'))
+		if (!res_data) {
+			this.clearUser()
+
+			return $message.error($t('app.auth.validate_error'))
+		}
 
 		if (!Object.keys(res_data).length) return
 
 		this.saveUser(res_data)
 
-		ipc.iap.verify.mutate(res_data)
+		if (is_electron_shell) ipc.iap.savePaidInfo.mutate(res_data)
 	}
 
 	afterSign(data: Trpc.ResSign) {
@@ -215,8 +222,6 @@ export default class Index {
 		local.token = token
 
 		this.saveUser(user)
-
-		$app.Event.emit('global.iap.afterSign')
 	}
 
 	saveUser(v: Partial<Index['user']>) {
@@ -229,7 +234,19 @@ export default class Index {
 		this.user = user_preset
 	}
 
+	clearUser() {
+		this.user = { paid_plan: 'free', is_infinity: false } as Trpc.UserData
+
+		local.removeItem('token')
+		local.removeItem('user')
+	}
+
+	getPlatform() {
+		return RecognizedBrowser.os.name as 'macos' | 'windows'
+	}
+
 	on() {
+		$app.Event.on('global.auth.getStatus', this.getStatus)
 		$app.Event.on('global.auth.saveUser', this.saveUser)
 		$app.Event.on('global.auth.resetUser', this.resetUser)
 	}
@@ -237,6 +254,7 @@ export default class Index {
 	off() {
 		this.utils.off()
 
+		$app.Event.off('global.auth.getStatus', this.getStatus)
 		$app.Event.off('global.auth.saveUser', this.saveUser)
 		$app.Event.off('global.auth.resetUser', this.resetUser)
 	}

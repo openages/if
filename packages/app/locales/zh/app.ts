@@ -3,6 +3,8 @@ export default {
 	no_data: '未请求到数据',
 	migrating: '版本更新，数据迁移中，切勿关闭应用',
 	too_many_req: '短时间请求过多，请稍后再试',
+	paying: '支付中...',
+	done: '已完成',
 	auth: {
 		validate_error: '参数验证错误，请确认参数是否正确',
 		test_title: '测试是否能连接到服务器',
