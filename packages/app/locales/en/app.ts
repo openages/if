@@ -1,6 +1,5 @@
 export default {
 	not_login: 'Please login first before this operations',
-	no_data: 'No data retrieved',
 	migrating: 'Version updated, data Migrating, don`t close.',
 	too_many_req: 'Too many requests,please try again later',
 	paying: 'Paying...',

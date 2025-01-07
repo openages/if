@@ -32,6 +32,7 @@ export default {
 		感恩节: 'Thanksgiving',
 		圣诞节: 'Christmas'
 	},
+	retry: 'Retry',
 	press: 'Press',
 	cancel: 'Cancel',
 	edit: 'Edit',

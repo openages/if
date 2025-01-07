@@ -3,8 +3,7 @@ import { injectable } from 'tsyringe'
 
 import { module_default_icon } from '@/appdata'
 import { Utils } from '@/models'
-import { auth } from '@/services'
-import { getObjectKeys, id } from '@/utils'
+import { id } from '@/utils'
 import { disableWatcher, loading } from '@/utils/decorators'
 import { getDocItemsData } from '@/utils/rxdb'
 import { DirTree as NodeTree } from '@openages/stk/common'
@@ -93,10 +92,6 @@ export default class Index {
 		}
 
 		const target_id = item.id || id()
-
-		const authed = await auth(this.module)
-
-		if (!authed) return
 
 		const { item: target, effect_items } = this.node_tree.insert(
 			{ ...item, id: target_id, module: this.module } as DirTree.Item,

@@ -70,6 +70,17 @@
 					margin-bottom: 15px;
 					border-bottom: var(--border_light);
 
+					.pro_price_wrap {
+						&.disconnected {
+							justify-content: space-between;
+							width: 100%;
+
+							.price {
+								opacity: 0.48;
+							}
+						}
+					}
+
 					.type {
 						margin: 0;
 						font-weight: 400;
@@ -112,10 +123,19 @@
 }
 
 .empty {
+	padding: 120px 0;
+	margin-bottom: 30px;
 	color: var(--color_text_light);
 
 	:global {
 		.desc {
+			width: 240px;
+			font-size: 12px;
+		}
+
+		.btn_get_prices {
+			height: 24px;
+			background-color: var(--color_bg_1);
 			font-size: 12px;
 		}
 	}

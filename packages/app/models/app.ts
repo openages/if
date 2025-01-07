@@ -3,8 +3,9 @@ import { injectable } from 'tsyringe'
 
 import { modules } from '@/appdata'
 import Utils from '@/models/utils'
-import { ipc, is_electron_shell, is_mas_id } from '@/utils'
-import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
+import { ipc, is_electron_shell } from '@/utils'
+import { info } from '@/utils/antd'
+import { useInstanceWatch } from '@openages/stk/mobx'
 
 import type { App } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
@@ -57,14 +58,11 @@ export default class Index {
 	}
 
 	init() {
-		this.utils.acts = [
-			// setStorageWhenChange(['app_modules'], this),
-			...useInstanceWatch(this)
-		]
+		this.utils.acts = [...useInstanceWatch(this)]
 
 		this.on()
 
-		if (!is_mas_id && is_electron_shell) {
+		if (is_electron_shell) {
 			this.onAppUpdate()
 			this.checkUpdate(true)
 		}
@@ -142,7 +140,14 @@ export default class Index {
 		ipc.app.checkUpdate.query()
 	}
 
-	download() {
+	async download() {
+		await info({
+			title: $t('common.notice'),
+			content: $t('setting.Update.install_backup')
+		})
+
+		$app.Event.emit('global.setting.backupExport')
+
 		ipc.app.download.query()
 	}
 

@@ -7,7 +7,6 @@ import { createPortal } from 'react-dom'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
-import { auth } from '@/services'
 import { useDeepMemo } from '@openages/stk/react'
 import { List, X } from '@phosphor-icons/react'
 
@@ -81,12 +80,6 @@ const Index = (props: IProps) => {
 	}, [module, simple])
 
 	const setModalOpen = useMemoizedFn(async (v: Model['modal_open'], type?: Model['modal_type']) => {
-		if (v) {
-			const authed = await auth(x.module)
-
-			if (!authed) return
-		}
-
 		x.focusing_index = []
 		x.modal_open = v
 		x.modal_type = type || 'file'

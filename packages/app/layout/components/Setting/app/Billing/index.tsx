@@ -27,6 +27,7 @@ const Index = () => {
 	}, [is_infinity])
 
 	const currency = useMemo(() => (prices['pro'] ? prices['pro'].charAt(0) : '$'), [prices])
+	const disconnected = useMemo(() => Object.keys(prices).length === 0, [prices])
 
 	const btn_status = useMemo(() => {
 		let text: string
@@ -49,23 +50,33 @@ const Index = () => {
 
 	const setType = useMemoizedFn((v: Iap['type']) => (iap.type = v))
 
-	if (Object.keys(prices).length === 0) {
-		return (
-			<div className={$cx('w_100 h_100 flex flex_column align_center justify_center', styles.empty)}>
-				<div className='flex flex_column align_center'>
-					<WifiSlash size={90}></WifiSlash>
-					<span className='desc mt_6'>{t('app.no_data')}</span>
-				</div>
-			</div>
-		)
-	}
-
 	return (
 		<div className={$cx('w_100 flex flex_column', styles._local)}>
+			<If condition={disconnected}>
+				<div className={$cx('w_100 h_100 flex flex_column align_center justify_center', styles.empty)}>
+					<div className='flex flex_column align_center'>
+						<WifiSlash size={90}></WifiSlash>
+						<span className='desc text_center mt_6'>{t('iap.err_get_prices')}</span>
+						<Button
+							className='btn_get_prices mt_12'
+							type='text'
+							loading={iap.utils.loading['getPrices']}
+							onClick={iap.getPrices}
+						>
+							{t('common.retry')}
+						</Button>
+					</div>
+				</div>
+			</If>
 			<div className='price_items w_100 border_box flex flex_column'>
 				<div className='price_item pro border_box flex flex_column'>
 					<div className='header_wrap flex justify_between align_center'>
-						<div className='flex align_center'>
+						<div
+							className={$cx(
+								'pro_price_wrap flex align_center',
+								disconnected && 'disconnected'
+							)}
+						>
 							<Segmented
 								className='mr_18'
 								options={[
@@ -83,7 +94,9 @@ const Index = () => {
 								onChange={setType}
 							></Segmented>
 							<div className='price flex align_center'>
-								<span className='value mr_2'>{prices[type]?.replace('.00', '')}</span>
+								<span className='value mr_2'>
+									{prices[type]?.replace('.00', '') || '--'}
+								</span>
 								{type === 'pro' ? (
 									<span className='unit'> / {t(`setting.Billing.unit`)}</span>
 								) : (
@@ -91,16 +104,18 @@ const Index = () => {
 								)}
 							</div>
 						</div>
-						<Button
-							className={$cx('btn_upgrade clickable', btn_status.billed && 'billed')}
-							type='primary'
-							disabled={btn_status.disabled}
-							loading={iap.loading}
-							icon={btn_status.billed && <CheckCircle size={16} weight='fill' />}
-							onClick={iap.upgrade}
-						>
-							{btn_status.text}
-						</Button>
+						<If condition={!disconnected}>
+							<Button
+								className={$cx('btn_upgrade clickable', btn_status.billed && 'billed')}
+								type='primary'
+								disabled={btn_status.disabled}
+								loading={iap.loading}
+								icon={btn_status.billed && <CheckCircle size={16} weight='fill' />}
+								onClick={iap.upgrade}
+							>
+								{btn_status.text}
+							</Button>
+						</If>
 					</div>
 					<div className='features border_box flex flex_column'>
 						{Array.from({ length: 4 }).map((_, index) => (

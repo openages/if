@@ -159,10 +159,12 @@ export default class Index {
 
 	on() {
 		$app.Event.on('global.setting.toggleVisible', this.toggleVisible)
+		$app.Event.on('global.setting.backupExport', this.backupExport)
 	}
 
 	off() {
 		$app.Event.off('global.setting.toggleVisible', this.toggleVisible)
+		$app.Event.off('global.setting.backupExport', this.backupExport)
 
 		this.utils.off()
 	}

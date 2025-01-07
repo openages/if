@@ -1,3 +1,5 @@
+import { is_sandbox } from '@/utils'
+
 export const plan_level = new Map([
 	['free', 0],
 	['pro', 1],
@@ -16,8 +18,19 @@ export const paddle = {
 	},
 	production: {
 		price_id: {
-			pro: '',
-			infinity: ''
+			pro: 'pri_01jh0jpnppydd7g8gvxp1sda2r',
+			infinity: 'pri_01jh0jmdcp7afgcbxyknbwxb5x'
 		}
 	}
+}
+
+export const getPaddleConfig = () => (is_sandbox ? paddle.sandbox : paddle.production)
+
+export const getPaddlePriceItems = () => {
+	const paddle_config = getPaddleConfig()
+
+	return [
+		{ priceId: paddle_config.price_id.pro, quantity: 1 },
+		{ priceId: paddle_config.price_id.infinity, quantity: 1 }
+	]
 }

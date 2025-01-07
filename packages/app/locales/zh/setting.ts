@@ -192,6 +192,7 @@ export default {
 		has_update: '检测到新版本',
 		downloading: '正在下载新版本',
 		downloaded: '已下载更新内容，重启安装更新',
-		btn_install: '安装更新'
+		btn_install: '安装更新',
+		install_backup: '更新前请进行备份'
 	}
 }

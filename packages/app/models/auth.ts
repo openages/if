@@ -245,10 +245,15 @@ export default class Index {
 		return RecognizedBrowser.os.name as 'macos' | 'windows'
 	}
 
+	setTestStatus(v: Index['test_status']) {
+		this.test_status = v
+	}
+
 	on() {
 		$app.Event.on('global.auth.getStatus', this.getStatus)
 		$app.Event.on('global.auth.saveUser', this.saveUser)
 		$app.Event.on('global.auth.resetUser', this.resetUser)
+		$app.Event.on('global.auth.setTestStatus', this.setTestStatus)
 	}
 
 	off() {
@@ -257,5 +262,6 @@ export default class Index {
 		$app.Event.off('global.auth.getStatus', this.getStatus)
 		$app.Event.off('global.auth.saveUser', this.saveUser)
 		$app.Event.off('global.auth.resetUser', this.resetUser)
+		$app.Event.off('global.auth.setTestStatus', this.setTestStatus)
 	}
 }

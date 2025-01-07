@@ -192,6 +192,7 @@ export default {
 		has_update: 'New version detected',
 		downloading: 'Downloading new version',
 		downloaded: 'Content has been downloaded, restart to install',
-		btn_install: 'Install'
+		btn_install: 'Install',
+		install_backup: 'Please back up before updating'
 	}
 }

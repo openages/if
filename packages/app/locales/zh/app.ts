@@ -1,6 +1,5 @@
 export default {
 	not_login: '未登录，请登录后操作',
-	no_data: '未请求到数据',
 	migrating: '版本更新，数据迁移中，切勿关闭应用',
 	too_many_req: '短时间请求过多，请稍后再试',
 	paying: '支付中...',

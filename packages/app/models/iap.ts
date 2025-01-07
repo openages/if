@@ -4,9 +4,10 @@ import { makeAutoObservable } from 'mobx'
 import { local } from 'stk/dist/storage'
 import { injectable } from 'tsyringe'
 
-import { paddle } from '@/appdata/pay'
+import { getPaddleConfig, getPaddlePriceItems } from '@/appdata/pay'
 import Utils from '@/models/utils'
-import { getUserData, hono, is_mas_id, is_sandbox, paddle_client_token } from '@/utils'
+import { getUserData, hono, is_sandbox, paddle_client_token } from '@/utils'
+import { loading } from '@/utils/decorators'
 import { initializePaddle } from '@paddle/paddle-js'
 
 import type { Iap } from '@/types'
@@ -43,29 +44,28 @@ export default class Index {
 		this.getPrices()
 	}
 
+	@loading
 	async getPrices() {
-		const { data } = await this.paddle.PricePreview({
-			items: [
-				{ priceId: paddle.sandbox.price_id.pro, quantity: 1 },
-				{ priceId: paddle.sandbox.price_id.infinity, quantity: 1 }
-			]
-		})
+		const [err, res] = await to(
+			this.paddle.PricePreview({
+				items: getPaddlePriceItems()
+			})
+		)
+
+		if (err) {
+			$app.Event.emit('global.auth.setTestStatus', 'error')
+
+			return $message.error($t('iap.err_get_prices'))
+		}
 
 		this.prices = {
-			pro: data.details.lineItems[0].formattedTotals.subtotal,
-			infinity: data.details.lineItems[1].formattedTotals.subtotal
+			pro: res.data.details.lineItems[0].formattedTotals.subtotal,
+			infinity: res.data.details.lineItems[1].formattedTotals.subtotal
 		}
 	}
 
 	async upgrade() {
 		this.loading = true
-
-		$app.Event.emit('app/setLoading', {
-			visible: true,
-			desc: $t('app.paying'),
-			close_text: $t('app.done'),
-			close: () => $app.Event.emit('global.auth.getStatus')
-		} as GlobalLoadingState)
 
 		const user = getUserData()
 
@@ -77,11 +77,18 @@ export default class Index {
 			return $message.info($t('app.not_login'))
 		}
 
+		$app.Event.emit('app/setLoading', {
+			visible: true,
+			desc: $t('app.paying'),
+			close_text: $t('app.done'),
+			close: () => $app.Event.emit('global.auth.getStatus')
+		} as GlobalLoadingState)
+
 		this.paddle.Spinner.show()
 
 		this.paddle.Checkout.open({
 			settings: { theme: local.theme },
-			items: [{ priceId: paddle.sandbox.price_id[this.type], quantity: 1 }],
+			items: [{ priceId: getPaddleConfig().price_id[this.type], quantity: 1 }],
 			customData: { type: this.type, user_id: user.id }
 		})
 
@@ -107,8 +114,6 @@ export default class Index {
 	on() {}
 
 	off() {
-		if (!is_mas_id) return
-
 		this.utils.off()
 	}
 }

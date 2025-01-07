@@ -1,20 +1,9 @@
 import { omit } from 'lodash-es'
 
 import { updateSetting as updateSettingAction } from '@/actions/global'
-import { session } from '@openages/stk/storage'
 
 import type { File } from '@/models'
 import type { App } from '@/types'
-
-export const auth = async () => {
-	if (session.frozen === true) {
-		$message.warning($t('iap.frozen'))
-
-		return false
-	}
-
-	return true
-}
 
 export const getQuerySetting = (file_id: string) => {
 	return $db.module_setting.findOne({ selector: { file_id } })
