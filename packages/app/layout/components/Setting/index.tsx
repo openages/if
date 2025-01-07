@@ -42,7 +42,7 @@ const Index = (props: IPropsSetting) => {
 
 	const getRef = useMemoizedFn(v => (x.ref = v))
 	const onToggleMenu = useMemoizedFn(() => (x.visible_menu = !x.visible_menu))
-	const goBilling = useMemoizedFn(() => (x.active = 'paid'))
+	const goBilling = useMemoizedFn(() => (x.active = 'billing'))
 
 	const Menu = (
 		<div className={$cx('h_100 border_box flex flex_column', styles.menu)}>
