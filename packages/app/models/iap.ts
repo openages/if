@@ -12,8 +12,19 @@ import { initializePaddle } from '@paddle/paddle-js'
 
 import type { Iap } from '@/types'
 
-import type { Paddle } from '@paddle/paddle-js'
+import type { Paddle, PricePreviewParams } from '@paddle/paddle-js'
 import type { GlobalLoadingState } from '@/components/GlobalLoading'
+
+interface PayParams {
+	is_sandbox: string
+	paddle_client_token: string
+	price_id: string
+	email: string
+	type: string
+	user_id: string
+	theme: string
+	countryCode?: string
+}
 
 @injectable()
 export default class Index {
@@ -22,6 +33,8 @@ export default class Index {
 	paddle = null as unknown as Paddle
 	prices = {} as Record<Iap.Plan, string>
 	loading = false
+	pay_params = {} as PayParams
+	pay_visible = false
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { utils: false, paddle: false }, { autoBind: true })
@@ -46,11 +59,13 @@ export default class Index {
 
 	@loading
 	async getPrices() {
-		const [err, res] = await to(
-			this.paddle.PricePreview({
-				items: getPaddlePriceItems()
-			})
-		)
+		const args = { items: getPaddlePriceItems() } as PricePreviewParams
+
+		const address = this.getAddress()
+
+		if (address) args['address'] = address
+
+		const [err, res] = await to(this.paddle.PricePreview(args))
 
 		if (err) {
 			$app.Event.emit('global.auth.setTestStatus', 'error')
@@ -58,10 +73,15 @@ export default class Index {
 			return $message.error($t('iap.err_get_prices'))
 		}
 
-		this.prices = {
-			pro: res.data.details.lineItems[0].formattedTotals.subtotal,
-			infinity: res.data.details.lineItems[1].formattedTotals.subtotal
+		let pro = res.data.details.lineItems[0].formattedTotals.subtotal
+		let infinity = res.data.details.lineItems[1].formattedTotals.subtotal
+
+		if (address) {
+			pro = `¥${pro.replace(' 元', '')}`
+			infinity = `¥${infinity.replace(' 元', '')}`
 		}
+
+		this.prices = { pro, infinity }
 	}
 
 	async upgrade() {
@@ -84,13 +104,22 @@ export default class Index {
 			close: () => $app.Event.emit('global.auth.getStatus')
 		} as GlobalLoadingState)
 
-		this.paddle.Spinner.show()
+		const address = this.getAddress()
 
-		this.paddle.Checkout.open({
-			settings: { theme: local.theme },
-			items: [{ priceId: getPaddleConfig().price_id[this.type], quantity: 1 }],
-			customData: { type: this.type, user_id: user.id }
-		})
+		const pay_params = {
+			is_sandbox: is_sandbox ? '1' : '0',
+			paddle_client_token,
+			price_id: getPaddleConfig().price_id[this.type],
+			email: user.email,
+			type: this.type,
+			user_id: user.id,
+			theme: local.theme
+		} as PayParams
+
+		if (address) pay_params['countryCode'] = address.countryCode
+
+		this.pay_params = pay_params
+		this.pay_visible = true
 
 		setTimeout(() => {
 			this.loading = false
@@ -109,6 +138,14 @@ export default class Index {
 		if (err_raw) return $message.error($t('app.auth.test_failed'), 24)
 
 		return true
+	}
+
+	getAddress() {
+		const is_cn = local.lang === 'zh'
+
+		if (!is_cn) return
+
+		return { countryCode: 'CN' }
 	}
 
 	on() {}

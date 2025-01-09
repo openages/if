@@ -32,6 +32,8 @@ export default {
 		感恩节: 'Thanksgiving',
 		圣诞节: 'Christmas'
 	},
+	refund: 'Refund',
+	unsubscribe: 'Unsubscribe',
 	retry: 'Retry',
 	press: 'Press',
 	cancel: 'Cancel',

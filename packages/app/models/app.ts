@@ -143,7 +143,8 @@ export default class Index {
 	async download() {
 		await info({
 			title: $t('common.notice'),
-			content: $t('setting.Update.install_backup')
+			content: $t('setting.Update.install_backup'),
+			zIndex: 3000
 		})
 
 		$app.Event.emit('global.setting.backupExport')

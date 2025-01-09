@@ -119,6 +119,51 @@
 				}
 			}
 		}
+
+		.cancel_wrap {
+			padding: 18px;
+			margin-top: 36px;
+			border: var(--border_light);
+			border-radius: var(--radius);
+			color: var(--color_text_light);
+
+			.cancel_item {
+				&:first-child {
+					padding-bottom: 12px;
+					margin-bottom: 12px;
+					border-bottom: var(--border_light);
+				}
+
+				.title {
+					margin-bottom: 4px;
+					font-size: 14px;
+					font-weight: 500;
+				}
+
+				.content {
+				}
+			}
+		}
+	}
+}
+
+.iframe_wrap {
+	:global {
+		.btn_close {
+			width: 30px;
+			height: 30px;
+			border: var(--border);
+			border-bottom-left-radius: var(--radius);
+			color: var(--color_bg);
+			background-color: var(--color_text);
+		}
+
+		iframe {
+			width: 81%;
+			height: 81%;
+			border: none;
+			border-radius: var(--radius);
+		}
 	}
 }
 

@@ -2,10 +2,12 @@ import { useMemoizedFn } from 'ahooks'
 import { Button, Segmented } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 
 import { useGlobal } from '@/context/app'
-import { CalendarCheck, Check, CheckCircle, MarkdownLogo, Timer, WifiSlash } from '@phosphor-icons/react'
+import { is_dev } from '@/utils'
+import { CalendarCheck, Check, CheckCircle, MarkdownLogo, Timer, WifiSlash, X } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -49,9 +51,34 @@ const Index = () => {
 	}, [type, is_infinity, paid_plan])
 
 	const setType = useMemoizedFn((v: Iap['type']) => (iap.type = v))
+	const closePay = useMemoizedFn(() => (iap.pay_visible = false))
+
+	const iframe_params = useMemo(() => new URLSearchParams(iap.pay_params as any).toString(), [iap.pay_params])
 
 	return (
 		<div className={$cx('w_100 flex flex_column', styles._local)}>
+			<If condition={iap.pay_visible}>
+				{createPortal(
+					<div
+						className={$cx(
+							'w_100vw h_100vh fixed top_0 left_0 flex justify_center align_center',
+							styles.iframe_wrap
+						)}
+						style={{ zIndex: 1000000 }}
+					>
+						<button
+							className='btn_close flex justify_center align_center absolute top_0 right_0 clickable'
+							onClick={closePay}
+						>
+							<X weight='bold'></X>
+						</button>
+						<iframe
+							src={`${is_dev ? 'http://localhost:3000' : 'https://if.openages.com'}/pay?${iframe_params}`}
+						></iframe>
+					</div>,
+					document.body
+				)}
+			</If>
 			<If condition={disconnected}>
 				<div className={$cx('w_100 h_100 flex flex_column align_center justify_center', styles.empty)}>
 					<div className='flex flex_column align_center'>
@@ -177,6 +204,16 @@ const Index = () => {
 							</div>
 						))}
 					</div>
+				</div>
+			</div>
+			<div className='cancel_wrap w_100 border_box flex flex_column'>
+				<div className='cancel_item flex flex_column'>
+					<span className='title'>{t('common.refund')}</span>
+					<span className='content'>{t('iap.refund')}</span>
+				</div>
+				<div className='cancel_item flex flex_column'>
+					<span className='title'>{t('common.unsubscribe')}</span>
+					<span className='content'>{t('iap.unsubscribe')}</span>
 				</div>
 			</div>
 		</div>
