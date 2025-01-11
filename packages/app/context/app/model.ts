@@ -53,7 +53,6 @@ export default class GlobalModel {
 		if (this.screenlock.screenlock_open) return this.lock()
 
 		this.auth.init()
-		this.iap.init()
 		this.layout.init()
 		this.app.init()
 		this.shortcuts.init()
@@ -88,7 +87,6 @@ export default class GlobalModel {
 		this.db.off()
 		this.screenlock.off()
 		this.auth.off()
-		this.iap.off()
 		this.layout.off()
 		this.app.off()
 		this.shortcuts.off()

@@ -5,6 +5,7 @@ import { useEffect, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 
+import { LoadingCircle } from '@/components'
 import { useGlobal } from '@/context/app'
 import { is_dev } from '@/utils'
 import { CalendarCheck, Check, CheckCircle, MarkdownLogo, Timer, WifiSlash, X } from '@phosphor-icons/react'
@@ -23,6 +24,12 @@ const Index = () => {
 	const is_infinity = auth?.user?.is_infinity
 	const paid_plan = auth?.user?.paid_plan
 	const prices = $copy(iap.prices)
+
+	useEffect(() => {
+		iap.init()
+
+		return () => iap.off()
+	}, [])
 
 	useEffect(() => {
 		if (is_infinity) iap.type = 'infinity'
@@ -54,6 +61,14 @@ const Index = () => {
 	const closePay = useMemoizedFn(() => (iap.pay_visible = false))
 
 	const iframe_params = useMemo(() => new URLSearchParams(iap.pay_params as any).toString(), [iap.pay_params])
+
+	if (iap.utils.loading['initPaddle']) {
+		return (
+			<div className={$cx('w_100 h_100 flex justify_center align_center', styles.loading)}>
+				<LoadingCircle></LoadingCircle>
+			</div>
+		)
+	}
 
 	return (
 		<div className={$cx('w_100 flex flex_column', styles._local)}>

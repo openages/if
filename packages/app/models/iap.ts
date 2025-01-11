@@ -6,7 +6,7 @@ import { injectable } from 'tsyringe'
 
 import { getPaddleConfig, getPaddlePriceItems } from '@/appdata/pay'
 import Utils from '@/models/utils'
-import { getUserData, hono, is_sandbox, paddle_client_token } from '@/utils'
+import { getUserData, hono, is_sandbox, paddle_client_token, trpc } from '@/utils'
 import { loading } from '@/utils/decorators'
 import { initializePaddle } from '@paddle/paddle-js'
 
@@ -33,6 +33,7 @@ export default class Index {
 	paddle = null as unknown as Paddle
 	prices = {} as Record<Iap.Plan, string>
 	loading = false
+	country = ''
 	pay_params = {} as PayParams
 	pay_visible = false
 
@@ -41,9 +42,12 @@ export default class Index {
 	}
 
 	init() {
+		if (this.paddle) return
+
 		this.initPaddle()
 	}
 
+	@loading
 	async initPaddle() {
 		const res = await initializePaddle({
 			environment: is_sandbox ? 'sandbox' : 'production',
@@ -54,16 +58,15 @@ export default class Index {
 
 		this.paddle = res
 
-		this.getPrices()
+		await this.getCountry()
+		await this.getPrices()
 	}
 
 	@loading
 	async getPrices() {
 		const args = { items: getPaddlePriceItems() } as PricePreviewParams
 
-		const address = this.getAddress()
-
-		if (address) args['address'] = address
+		if (this.country) args['address'] = { countryCode: this.country }
 
 		const [err, res] = await to(this.paddle.PricePreview(args))
 
@@ -76,7 +79,7 @@ export default class Index {
 		let pro = res.data.details.lineItems[0].formattedTotals.subtotal
 		let infinity = res.data.details.lineItems[1].formattedTotals.subtotal
 
-		if (address) {
+		if (this.country) {
 			pro = `¥${pro.replace(' 元', '')}`
 			infinity = `¥${infinity.replace(' 元', '')}`
 		}
@@ -104,7 +107,7 @@ export default class Index {
 			close: () => $app.Event.emit('global.auth.getStatus')
 		} as GlobalLoadingState)
 
-		const address = this.getAddress()
+		const address = await this.getCountry()
 
 		const pay_params = {
 			is_sandbox: is_sandbox ? '1' : '0',
@@ -116,7 +119,7 @@ export default class Index {
 			theme: local.theme
 		} as PayParams
 
-		if (address) pay_params['countryCode'] = address.countryCode
+		if (this.country) pay_params['countryCode'] = this.country
 
 		this.pay_params = pay_params
 		this.pay_visible = true
@@ -140,15 +143,13 @@ export default class Index {
 		return true
 	}
 
-	getAddress() {
-		const is_cn = local.lang === 'zh'
+	async getCountry() {
+		const [err, res] = await to(trpc.auth.getCountry.query())
 
-		if (!is_cn) return
+		if (err || res !== 'CN') return
 
-		return { countryCode: 'CN' }
+		this.country = res
 	}
-
-	on() {}
 
 	off() {
 		this.utils.off()

@@ -125,22 +125,15 @@ const Index = (props: IPropsUser) => {
 							<AndroidLogo className='icon'></AndroidLogo>
 							<span className='text'>{t('app.auth.passport')}</span>
 						</div>
-						{/* <div
+						<div
 							className={$cx(
 								'action_item flex flex_column align_center justify_center clickable',
 								visible_activate && 'active'
 							)}
-							onClick={toggle}
+							onClick={toggleActivate}
 						>
 							<CaretDoubleUp className='icon'></CaretDoubleUp>
 							<span className='text'>{t('app.auth.activate')}</span>
-						</div> */}
-						<div
-							className='action_item flex flex_column align_center justify_center clickable'
-							onClick={onShutdown}
-						>
-							<UserCircleMinus className='icon'></UserCircleMinus>
-							<span className='text'>{t('app.auth.shutdown.title')}</span>
 						</div>
 					</div>
 				</div>

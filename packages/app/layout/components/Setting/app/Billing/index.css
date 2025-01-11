@@ -14,6 +14,10 @@
 	}
 }
 
+.loading {
+	padding-top: 24px;
+}
+
 ._local {
 	:global {
 		.if-segmented {

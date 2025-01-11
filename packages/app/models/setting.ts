@@ -10,7 +10,6 @@ import {
 	downloadFile,
 	is_electron_shell,
 	markJsonUndefined,
-	now,
 	setFavicon,
 	setGlobalAnimation,
 	sleep,

@@ -5,7 +5,7 @@ import { initReactI18next } from 'react-i18next'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
-import { getLang, relaunch } from '@/utils'
+import { conf, getLang, is_electron_shell, relaunch } from '@/utils'
 import { resourcesToBackend } from '@/utils/i18n'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 import { local } from '@openages/stk/storage'
@@ -39,6 +39,8 @@ export default class Index {
 				returnObjects: true,
 				interpolation: { escapeValue: false }
 			})
+
+		if (is_electron_shell) conf.set('lang', this.lang)
 	}
 
 	async getLocale(lang: Lang) {
@@ -54,6 +56,8 @@ export default class Index {
 		local.lang = lang
 
 		await this.getLocale(lang)
+
+		if (is_electron_shell) await conf.set('lang', this.lang)
 
 		relaunch()
 	}
