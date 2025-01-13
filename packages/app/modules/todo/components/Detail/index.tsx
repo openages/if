@@ -392,7 +392,7 @@ const Index = (props: IPropsDetail) => {
 						</If>
 					</div>
 				</div>
-				<div className='footer_wrap w_100 border_box flex justify_between align_center absolute bottom_0'>
+				<div className='footer_wrap w_100 border_box flex justify_between align_center absolute'>
 					<span className='create_at flex align_center'>
 						<MapPinPlus className='mr_4' size={13}></MapPinPlus>
 						{dayjs(create_at).format('YYYY-MM-DD HH:mm')}

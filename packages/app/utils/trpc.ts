@@ -16,7 +16,7 @@ import trpcRefreshTokenLink from './trpcRefreshTokenLink'
 
 import type { Router } from '@server/rpcs'
 
-const ignore_paths = ['auth.sendVerifyCode', 'auth.signup', 'auth.signin', 'auth.getStatus']
+const ignore_paths = ['auth.sendVerifyCode', 'auth.signup', 'auth.signin']
 
 const trpc = createTRPCProxyClient<Router>({
 	links: [

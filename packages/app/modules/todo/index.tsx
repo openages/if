@@ -74,7 +74,6 @@ const Index = ({ id }: IProps) => {
 		toggleKanbanMode: useMemoizedFn(() => (x.kanban_mode = x.kanban_mode === 'angle' ? 'tag' : 'angle')),
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true)),
 		showArchiveModal: useMemoizedFn(() => (x.visible_archive_modal = true)),
-		showHelpModal: useMemoizedFn(() => (x.visible_help_modal = true)),
 		setItemsSortParam: useMemoizedFn(v => (x.items_sort_param = v)),
 		setItemsFilterTags: useMemoizedFn(v => (x.items_filter_tags = v)),
 		toggleTableFilter: useMemoizedFn(() => (x.visible_table_filter = !x.visible_table_filter)),

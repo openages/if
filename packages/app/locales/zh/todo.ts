@@ -28,10 +28,7 @@ export default {
 	},
 	default_angles: ['此刻', '计划', '想法', '等待', '循环', '垃圾箱'],
 	Header: {
-		visible_mode: {
-			zen: '禅意模式',
-			normal: '常规模式'
-		},
+		zen: '禅模式',
 		kanban_mode: {
 			angle: '分类模式',
 			tag: '标签模式'
@@ -44,7 +41,9 @@ export default {
 			list: '列表',
 			kanban: '看板',
 			table: '表格',
-			mindmap: '脑图'
+			mindmap: '脑图',
+			flat: '平铺',
+			quad: '四象限'
 		},
 		options: {
 			archive: '归档',

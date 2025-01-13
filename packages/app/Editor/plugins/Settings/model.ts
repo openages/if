@@ -26,6 +26,16 @@ export default class Index {
 		})
 	}
 
+	setUseContentHeading(v: boolean) {
+		const title_el = this.container.querySelector('.article_title') as HTMLElement
+
+		if (v) {
+			title_el.classList.add('none')
+		} else {
+			title_el.classList.remove('none')
+		}
+	}
+
 	setShowHeadingLevel(v: boolean) {
 		const container = this.getContainer()!
 

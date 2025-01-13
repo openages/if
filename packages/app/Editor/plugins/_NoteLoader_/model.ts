@@ -233,9 +233,10 @@ export default class Index {
 					break
 				case 'remove':
 					this.ids_array = this.ids_array.filter(v => v !== id)
-					this.ids_map.delete(id)
 
-					await $db.note_items.findOne(id).remove()
+					if (this.ids_map.has(id)) this.ids_map.delete(id)
+
+					await $db.note_items.findOne(id)?.remove?.()
 
 					break
 				case 'update':

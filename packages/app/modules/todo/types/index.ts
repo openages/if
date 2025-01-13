@@ -20,6 +20,7 @@ export interface IPropsTagSelect {
 	className?: SelectProps['className']
 	placement?: SelectProps['placement']
 	unlimit?: boolean
+	show_suffix?: boolean
 	onChange?: (v: Array<string>) => void
 	onFocus?: (v: boolean) => void
 }
@@ -37,7 +38,6 @@ export interface IPropsHeader
 	toggleKanbanMode: () => void
 	showSettingsModal: () => void
 	showArchiveModal: () => void
-	showHelpModal: () => void
 	setItemsSortParam: (v: Model['items_sort_param']) => void
 	setItemsFilterTags: (v: Model['items_filter_tags']) => void
 	toggleTableFilter: () => void
@@ -144,7 +144,7 @@ export interface IPropsTodoItem {
 	useByMindmap?: boolean
 	data?: Omit<IPropsTodoItem, 'data'>
 	makeLinkLine?: (args: { active_id: string; y: number } | null) => void
-	renderLines?: (id: string) => void
+	renderLines?: () => void
 	check: Model['check']
 	updateRelations?: Model['updateRelations']
 	insert: Model['insert']

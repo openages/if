@@ -17,7 +17,7 @@ export default (args: HookArgs) => {
 	const { item, zen_mode, open, open_items, renderLines, setOpen } = args
 	const { id } = item
 
-	useUpdateEffect(() => renderLines!(id), [open, zen_mode])
+	useUpdateEffect(() => renderLines!(), [open, zen_mode])
 
 	useDeepEffect(() => {
 		if (!open_items) return

@@ -1,6 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { xxHash32 } from 'js-xxhash'
 import { useMemo } from 'react'
+import { local } from 'stk/dist/storage'
 import genColor from 'uniqolor'
 
 import { CheckCircle, CheckSquare, Circle, Square } from '@phosphor-icons/react'
@@ -21,7 +22,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['status']>) => {
 		return {
 			'--color_relation_group': genColor(xxHash32(linked).toString(3), {
 				saturation: 72,
-				lightness: [30, 72]
+				lightness: local.theme === 'light' ? [30, 72] : 72
 			}).color
 		}
 	}, [linked])
@@ -52,5 +53,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['status']>) => {
 		</div>
 	)
 }
+
+// export default new $app.handle(Index).by(observer).by($app.memo).get()
 
 export default $app.memo(Index)

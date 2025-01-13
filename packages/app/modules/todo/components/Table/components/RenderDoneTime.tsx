@@ -10,6 +10,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['done_time']>) => {
 	const { value, editing, onFocus } = props
 
 	const text = dayjs().to(dayjs(value))
+	const date = dayjs(value).format('YYYY-MM-DD HH:mm')
 
 	return (
 		<div className={$cx('flex justify_center', styles.RenderCreateAt)}>
@@ -17,15 +18,15 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['done_time']>) => {
 				<When condition={Boolean(value)}>
 					{editing ? (
 						<Tooltip
-							title={dayjs(value).format('YYYY-MM-DD HH:mm:ss')}
+							title={text}
 							getTooltipContainer={() => document.body}
 							destroyTooltipOnHide
 							onOpenChange={onFocus}
 						>
-							{text}
+							{date}
 						</Tooltip>
 					) : (
-						text
+						date
 					)}
 				</When>
 				<Otherwise>-</Otherwise>

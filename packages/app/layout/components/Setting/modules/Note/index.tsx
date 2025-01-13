@@ -6,7 +6,15 @@ import { useTranslation } from 'react-i18next'
 
 import { updateSetting } from '@/actions/note'
 import { NoteSettings } from '@/models'
-import { ArrowSquareDown, ArticleNyTimes, ListDashes, Pulse, TextHThree, TextT } from '@phosphor-icons/react'
+import {
+	ArrowSquareDown,
+	ArticleNyTimes,
+	ListDashes,
+	Pulse,
+	TextAUnderline,
+	TextHThree,
+	TextT
+} from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -25,6 +33,12 @@ const Index = () => {
 
 		return options.map(item => ({ label: item, value: item }))
 	}, [t])
+
+	const onChangeUseContentHeading = useMemoizedFn((v: boolean) => {
+		x.settings.use_content_heading = v
+
+		updateSetting({ use_content_heading: v })
+	})
 
 	const onChangeShowHeadingLevel = useMemoizedFn((v: boolean) => {
 		x.settings.show_heading_level = v
@@ -75,6 +89,21 @@ const Index = () => {
 							options={toc_options}
 							onSelect={onChangeToc}
 						></Select>
+					</div>
+				</div>
+				<div className='setting_item w_100 border_box flex justify_between align_center'>
+					<div className='title_wrap flex align_center'>
+						<TextAUnderline size={24}></TextAUnderline>
+						<div className='text_wrap flex flex_column'>
+							<span className='title'>{t('setting.Note.use_content_heading.title')}</span>
+							<span className='desc'>{t('setting.Note.use_content_heading.desc')}</span>
+						</div>
+					</div>
+					<div className='value_wrap flex align_center'>
+						<Switch
+							value={x.settings.use_content_heading}
+							onChange={onChangeUseContentHeading}
+						></Switch>
 					</div>
 				</div>
 				<div className='setting_item w_100 border_box flex justify_between align_center'>

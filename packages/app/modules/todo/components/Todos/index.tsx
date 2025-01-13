@@ -135,11 +135,7 @@ const Index = (props: IPropsTodos) => {
 		stoper.current = requestAnimationFrame(frameRenderLines)
 	})
 
-	const renderLines = useMemoizedFn((id: string) => {
-		const exsit_index = relations?.findIndex(item => item.items.includes(id))
-
-		if (exsit_index === -1) return
-
+	const renderLines = useMemoizedFn(() => {
 		stoper.current = requestAnimationFrame(frameRenderLines)
 
 		setTimeout(() => cancelAnimationFrame(stoper.current!), 180)

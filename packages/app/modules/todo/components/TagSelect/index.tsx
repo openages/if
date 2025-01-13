@@ -9,10 +9,22 @@ import getTag from './getTag'
 import styles from './index.css'
 
 import type { IPropsTagSelect } from '../../types'
+import type { SelectProps } from 'antd'
 
 const Index = (props: IPropsTagSelect) => {
-	const { options, value, useByTodo, useByDetail, useByTable, className, placement, unlimit, onChange, onFocus } =
-		props
+	const {
+		options,
+		value,
+		useByTodo,
+		useByDetail,
+		useByTable,
+		className,
+		placement,
+		unlimit,
+		show_suffix,
+		onChange,
+		onFocus
+	} = props
 	const { t } = useTranslation()
 	const global = useGlobal()
 	const theme = global.setting.theme
@@ -22,6 +34,10 @@ const Index = (props: IPropsTagSelect) => {
 
 		return getTag(options, { useByTodo: useByTodo || useByTable, theme })
 	}, [options, useByTodo, useByTable, theme])
+
+	const props_extra = {} as SelectProps
+
+	if (!show_suffix) props_extra['suffixIcon'] = null
 
 	return (
 		<div className={$cx('flex', className)}>
@@ -39,8 +55,8 @@ const Index = (props: IPropsTagSelect) => {
 				placement={placement || 'topLeft'}
 				fieldNames={{ label: 'text', value: 'id' }}
 				variant='borderless'
+				showSearch={false}
 				virtual={false}
-				suffixIcon={null}
 				getPopupContainer={() => document.body}
 				placeholder={t('todo.Input.tag_placeholder')}
 				tagRender={Tag!}
@@ -49,6 +65,7 @@ const Index = (props: IPropsTagSelect) => {
 				value={value}
 				onDropdownVisibleChange={onFocus}
 				onChange={onChange}
+				{...props_extra}
 			></Select>
 		</div>
 	)

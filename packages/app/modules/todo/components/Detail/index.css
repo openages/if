@@ -7,6 +7,11 @@
 				top: 24px;
 				right: 54px;
 			}
+
+			.footer_wrap {
+				bottom: 12px;
+				width: calc(100% - 24px);
+			}
 		}
 	}
 
@@ -214,8 +219,9 @@
 		}
 
 		.footer_wrap {
+			bottom: 0;
 			height: 30px;
-			padding: 0 calc(var(--padding) - 6px);
+			padding: 0 9px;
 			color: var(--color_text_light);
 			font-size: 12px;
 		}

@@ -64,12 +64,6 @@
 				}
 			}
 
-			.select_tags {
-				--height: 18px;
-
-				margin-left: 0;
-			}
-
 			.type_wrap {
 				height: 16px;
 				padding: 0 6px;
@@ -128,6 +122,108 @@
 
 				.icon_lotus {
 					margin-bottom: -2px;
+				}
+			}
+		}
+	}
+}
+
+.setting_wrap {
+	width: 240px;
+
+	:global {
+		.mode_wrap {
+			padding: 12px;
+			padding-bottom: 0;
+			gap: 6px;
+
+			.mode_item_wrap {
+				width: calc((100% - 12px) / 3);
+				padding: 6px 0;
+				border: var(--border_light);
+				border-radius: var(--radius);
+				color: var(--color_text_light);
+
+				&.active {
+					color: var(--color_text);
+					background-color: var(--color_bg_1);
+				}
+
+				svg {
+					margin-bottom: 1.5px;
+					font-size: 18px;
+				}
+
+				.text {
+					font-size: 10px;
+				}
+			}
+		}
+
+		.setting_items {
+			padding: 6px 15px;
+
+			.setting_item {
+				height: 34px;
+
+				&:last-child {
+					border-bottom: none;
+				}
+
+				.label {
+					font-size: 12px;
+				}
+
+				.if-select {
+					.if-select-arrow {
+						inset-inline-end: 0;
+						vertical-align: middle;
+					}
+				}
+
+				.select_sort {
+					height: 24px;
+
+					.if-select-selector {
+						min-width: 90px;
+
+						.if-select-selection-wrap {
+							font-size: 12px;
+
+							.if-select-selection-item {
+								padding-inline-end: 6px;
+							}
+						}
+					}
+				}
+
+				.select_tags {
+					height: 18px;
+					margin-left: 0;
+
+					.if-select {
+						--height: 18px;
+						min-width: unset;
+
+						.if-select-selector {
+							min-width: 42px;
+							padding-right: 12px;
+
+							.btn_close {
+								padding: 0 1px;
+							}
+						}
+
+						.if-select-selection-placeholder {
+							display: none;
+						}
+
+						.if-select-arrow {
+							top: 22%;
+							right: -2px;
+							margin-top: 0;
+						}
+					}
 				}
 			}
 		}

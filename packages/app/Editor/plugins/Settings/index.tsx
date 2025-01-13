@@ -22,6 +22,10 @@ const Index = () => {
 	}, [id, editor])
 
 	useEffect(() => {
+		editor.update(() => x.setUseContentHeading(settings.use_content_heading))
+	}, [settings.use_content_heading])
+
+	useEffect(() => {
 		editor.update(() => x.setShowHeadingLevel(settings.show_heading_level))
 	}, [settings.show_heading_level])
 

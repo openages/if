@@ -1,29 +1,34 @@
 import { useMemoizedFn } from 'ahooks'
-import { ConfigProvider, Dropdown, Input, Tooltip } from 'antd'
+import { ConfigProvider, Input, Popover, Select, Switch, Tooltip } from 'antd'
 import { Shapes } from 'lucide-react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Emoji } from '@/components'
 import { useText, useTextChange, Text } from '@/Editor'
 import {
+	AlignLeft,
+	ArchiveBox,
 	CaretDown,
 	CaretUp,
 	DotsThreeCircleVertical,
-	Eye,
-	Faders,
-	FlowerLotus,
 	Funnel,
+	GitFork,
+	GridFour,
+	Kanban,
+	ListChecks,
 	MagnifyingGlass,
+	SlidersHorizontal,
+	Table,
 	Tag,
 	X
 } from '@phosphor-icons/react'
 
 import TagSelect from '../TagSelect'
-import { useContextMenu } from './hooks'
 import styles from './index.css'
 
 import type { IPropsHeader } from '../../types'
-import type { FocusEvent } from 'react'
+import type { FocusEvent, MouseEvent } from 'react'
 
 const Index = (props: IPropsHeader) => {
 	const {
@@ -43,7 +48,6 @@ const Index = (props: IPropsHeader) => {
 		toggleKanbanMode,
 		showSettingsModal,
 		showArchiveModal,
-		showHelpModal,
 		setItemsSortParam,
 		setItemsFilterTags,
 		toggleTableFilter,
@@ -53,24 +57,14 @@ const Index = (props: IPropsHeader) => {
 
 	const { t } = useTranslation()
 
+	const [open_panel, setOpenPanel] = useState(false)
+
 	const { ref_editor, onChange, setEditor, setRef } = useText({
 		text: desc!,
 		update: v => updateSetting({ desc: v })
 	})
 
 	const { editor_size } = useTextChange({ ref_editor, text: desc! })
-
-	const { options_mode, options_menu, onModeContextMenu, onOptionsContextMenu } = useContextMenu({
-		tags,
-		mode,
-		items_filter_tags,
-		setMode,
-		showSettingsModal,
-		showArchiveModal,
-		showHelpModal,
-		setItemsSortParam,
-		setItemsFilterTags
-	})
 
 	const onChangeName = useMemoizedFn((e: FocusEvent<HTMLInputElement, Element>) => {
 		const v = e.target.value
@@ -88,9 +82,145 @@ const Index = (props: IPropsHeader) => {
 		setItemsSortParam(null!)
 	})
 
-	const resetFilterTags = useMemoizedFn(() => {
-		setItemsFilterTags([])
+	const onChangeMode = useMemoizedFn((e: MouseEvent<HTMLDivElement>) => {
+		let target = e.target as HTMLDivElement
+
+		while (!target?.classList?.contains('mode_item_wrap')) {
+			if (!target?.parentElement) break
+
+			target = target.parentElement as HTMLDivElement
+		}
+
+		const key = target?.getAttribute('data-key') as IPropsHeader['mode']
+
+		if (!key) return
+
+		setOpenPanel(false)
+		setMode(key)
 	})
+
+	const onSelectSort = useMemoizedFn(key => {
+		switch (key) {
+			case 'importance':
+				setItemsSortParam({ type: 'importance', order: 'desc' })
+				break
+			case 'alphabetical':
+				setItemsSortParam({ type: 'alphabetical', order: 'asc' })
+				break
+			case 'create_at':
+				setItemsSortParam({ type: 'create_at', order: 'desc' })
+		}
+	})
+
+	const Setting = (
+		<div className={$cx('flex flex_column w_100 border_box', styles.setting_wrap)}>
+			<div className='mode_wrap w_100 border_box flex flex_wrap' onClick={onChangeMode}>
+				<div
+					className={$cx(
+						'mode_item_wrap border_box flex flex_column align_center clickable',
+						mode === 'list' && 'active'
+					)}
+					data-key='list'
+				>
+					<ListChecks></ListChecks>
+					<span className='text'>{t('todo.Header.mode.list')}</span>
+				</div>
+				<div
+					className={$cx(
+						'mode_item_wrap border_box flex flex_column align_center clickable',
+						mode === 'kanban' && 'active'
+					)}
+					data-key='kanban'
+				>
+					<Kanban></Kanban>
+					<span className='text'>{t('todo.Header.mode.kanban')}</span>
+				</div>
+				<div
+					className={$cx(
+						'mode_item_wrap border_box flex flex_column align_center clickable',
+						mode === 'table' && 'active'
+					)}
+					data-key='table'
+				>
+					<Table></Table>
+					<span className='text'>{t('todo.Header.mode.table')}</span>
+				</div>
+				<div
+					className={$cx(
+						'mode_item_wrap border_box flex flex_column align_center clickable',
+						mode === 'mindmap' && 'active'
+					)}
+					data-key='mindmap'
+				>
+					<GitFork></GitFork>
+					<span className='text'>{t('todo.Header.mode.mindmap')}</span>
+				</div>
+				<div
+					className={$cx(
+						'mode_item_wrap border_box flex flex_column align_center clickable',
+						mode === 'flat' && 'active'
+					)}
+					data-key='flat'
+				>
+					<AlignLeft></AlignLeft>
+					<span className='text'>{t('todo.Header.mode.flat')}</span>
+				</div>
+				<div
+					className={$cx(
+						'mode_item_wrap border_box flex flex_column align_center clickable',
+						mode === 'quad' && 'active'
+					)}
+					data-key='quad'
+				>
+					<GridFour></GridFour>
+					<span className='text'>{t('todo.Header.mode.quad')}</span>
+				</div>
+			</div>
+			<div className='setting_items w_100 border_box flex flex_column'>
+				<div className='setting_item flex justify_between align_center' onClick={toggleZenMode}>
+					<span className='label'>{t('todo.Header.zen')}</span>
+					<Switch checked={zen_mode} size='small'></Switch>
+				</div>
+				<div className='setting_item flex justify_between align_center'>
+					<span className='label'>{t('todo.Header.options.sort.text')}</span>
+					<Select
+						className='select_sort'
+						variant='borderless'
+						popupClassName='borderless'
+						disabled={mode !== 'list'}
+						options={[
+							{
+								value: 'importance',
+								label: t('todo.Header.options.sort.importance')
+							},
+							{
+								value: 'alphabetical',
+								label: t('todo.Header.options.sort.alphabetical')
+							},
+							{
+								value: 'create_at',
+								label: t('todo.Header.options.sort.create_at')
+							}
+						]}
+						value={items_sort_param?.type}
+						onChange={onSelectSort}
+					></Select>
+				</div>
+				<div className='setting_item flex justify_between align_center'>
+					<span className='label'>{t('todo.Header.options.tags')}</span>
+					<TagSelect
+						className='select_tags'
+						unlimit
+						show_suffix
+						placement='bottomRight'
+						options={tags}
+						value={items_filter_tags}
+						onChange={v => setItemsFilterTags(v)}
+					></TagSelect>
+				</div>
+			</div>
+		</div>
+	)
 
 	return (
 		<div
@@ -104,24 +234,6 @@ const Index = (props: IPropsHeader) => {
 		>
 			{(items_filter_tags.length > 0 || items_sort_param) && (
 				<div className='filter_wrap flex absolute top_0'>
-					{items_filter_tags.length > 0 && (
-						<div className='filter_item filter_tags border_box flex align_center'>
-							<TagSelect
-								className='select_tags'
-								unlimit
-								options={tags}
-								value={items_filter_tags}
-								placement='bottomRight'
-								onChange={v => setItemsFilterTags(v)}
-							></TagSelect>
-							<span
-								className='btn_remove btn flex justify_center align_center clickable'
-								onClick={resetFilterTags}
-							>
-								<X size={12} weight='bold'></X>
-							</span>
-						</div>
-					)}
 					{items_sort_param && (
 						<div className='filter_item border_box flex align_center ml_4'>
 							<div
@@ -213,54 +325,33 @@ const Index = (props: IPropsHeader) => {
 						</div>
 					</Tooltip>
 				)}
-				{mode !== 'table' && !kanban_mode && (
-					<Tooltip title={t(`todo.Header.visible_mode.${zen_mode ? 'normal' : 'zen'}`)}>
-						<div className='mr_8'>
-							<div
-								className='icon_wrap border_box flex justify_center align_center cursor_point clickable'
-								onClick={toggleZenMode}
-							>
-								{zen_mode ? (
-									<Eye size={18}></Eye>
-								) : (
-									<FlowerLotus
-										className='icon_lotus'
-										size={19}
-										weight='light'
-									></FlowerLotus>
-								)}
-							</div>
-						</div>
-					</Tooltip>
-				)}
 				<ConfigProvider getPopupContainer={() => document.body}>
-					<Dropdown
-						destroyPopupOnHide
+					<Popover
 						trigger={['click']}
 						placement='bottom'
-						mouseEnterDelay={0}
-						menu={{ items: options_mode, onClick: onModeContextMenu }}
-					>
-						<div>
-							<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'>
-								<Faders size={18}></Faders>
-							</div>
-						</div>
-					</Dropdown>
-					<Dropdown
-						destroyPopupOnHide
-						trigger={['click']}
-						placement='bottom'
-						overlayStyle={{ width: 90 }}
-						menu={{ items: options_menu, onClick: onOptionsContextMenu }}
+						content={Setting}
+						open={open_panel}
+						onOpenChange={setOpenPanel}
 					>
 						<div>
 							<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable'>
-								<DotsThreeCircleVertical size={19}></DotsThreeCircleVertical>
+								<SlidersHorizontal size={18}></SlidersHorizontal>
 							</div>
 						</div>
-					</Dropdown>
+					</Popover>
 				</ConfigProvider>
+				<div
+					className='icon_wrap border_box flex justify_center align_center cursor_point clickable ml_8'
+					onClick={showArchiveModal}
+				>
+					<ArchiveBox size={18}></ArchiveBox>
+				</div>
+				<div
+					className='icon_wrap border_box flex justify_center align_center cursor_point clickable ml_8'
+					onClick={showSettingsModal}
+				>
+					<DotsThreeCircleVertical size={18}></DotsThreeCircleVertical>
+				</div>
 			</div>
 		</div>
 	)

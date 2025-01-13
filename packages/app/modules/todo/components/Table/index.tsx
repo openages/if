@@ -181,7 +181,7 @@ const Index = (props: IPropsTable) => {
 				{
 					title: t('todo.Header.options.sort.create_at'),
 					dataIndex: 'create_at',
-					width: 102,
+					width: 132,
 					align: 'center',
 					ignoreArchive: true,
 					sort: true,
@@ -190,7 +190,7 @@ const Index = (props: IPropsTable) => {
 				{
 					title: t('todo.common.done_time'),
 					dataIndex: 'done_time',
-					width: 102,
+					width: 132,
 					align: 'center',
 					ignoreArchive: true,
 					sort: true,

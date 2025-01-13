@@ -91,7 +91,6 @@ export default class Index {
 	visible_settings_modal = false
 	visible_archive_modal = false
 	visible_detail_modal = false
-	visible_help_modal = false
 	visible_table_filter = false
 
 	current_angle_id = ''
@@ -100,6 +99,7 @@ export default class Index {
 	table_pagination = { current: 1, pageSize: 15, total: 0 }
 	table_selector = {} as MangoQuerySelector<Todo.TodoItem>
 	table_sort = {} as MangoQuerySortPart<Todo.TodoItem>
+	table_fields = {}
 
 	search_id = ''
 
@@ -254,18 +254,23 @@ export default class Index {
 		)
 	}
 
-	init(args: { id: string }) {
+	async init(args: { id: string }) {
 		const { id } = args
 
 		this.utils.acts = [...useInstanceWatch(this)]
 		this.id = id
 
-		const disposer = setStorageWhenChange([{ [`${id}_open_items`]: 'open_items' }], this, { useSession: true })
+		const disposer_local = setStorageWhenChange([{ [`${id}_mode`]: 'mode' }], this)
+
+		const disposer_session = setStorageWhenChange([{ [`${id}_open_items`]: 'open_items' }], this, {
+			useSession: true
+		})
 
 		this.file.init(this.id)
 
 		this.on()
-		this.watchSetting()
+
+		await this.watchSetting()
 
 		if (this.mode === 'list' || this.mode === 'table') {
 			if (this.items_watcher) return
@@ -278,7 +283,7 @@ export default class Index {
 			this.watchKanbanItems()
 		}
 
-		this.utils.acts.push(disposer)
+		this.utils.acts.push(disposer_local, disposer_session)
 	}
 
 	async queryArchives(reset?: boolean) {
@@ -390,6 +395,8 @@ export default class Index {
 		const { type, value, index, children_index, dimension_id } = args
 
 		const { item } = this.getItem({ index, dimension_id })
+
+		if (!item) return
 
 		let data = type === 'parent' ? { id: item!.id, ...value } : { id: item!.id, children: value }
 
@@ -964,15 +971,21 @@ export default class Index {
 	}
 
 	watchSetting() {
+		const { promise, resolve } = Promise.withResolvers()
+
 		this.setting_watcher = getQuerySetting(this.id).$.subscribe(setting => {
 			const todo_setting = getDocItem(setting!)!
 
 			this.setting = { ...omit(todo_setting, 'setting'), setting: JSON.parse(todo_setting.setting) }
 
+			resolve()
+
 			if (this.current_angle_id) return
 
 			this.current_angle_id = this.setting.setting.angles[0].id
 		})
+
+		return promise
 	}
 
 	watchItems() {
@@ -1020,6 +1033,8 @@ export default class Index {
 		this.stopWatchKanbanItems()
 
 		if (this.kanban_mode === 'angle') {
+			if (!this.setting.setting) return
+
 			this.kanban_items_watcher = this.setting.setting.angles.map(item => {
 				this.kanban_items[item.id] = {
 					dimension: { type: 'angle', value: item },

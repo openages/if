@@ -27,7 +27,6 @@ interface HookArgs {
 	setMode: IPropsHeader['setMode']
 	showSettingsModal: IPropsHeader['showSettingsModal']
 	showArchiveModal: IPropsHeader['showArchiveModal']
-	showHelpModal: IPropsHeader['showHelpModal']
 	setItemsSortParam: IPropsHeader['setItemsSortParam']
 	setItemsFilterTags: IPropsHeader['setItemsFilterTags']
 }
@@ -40,7 +39,6 @@ export default (args: HookArgs) => {
 		setMode,
 		showSettingsModal,
 		showArchiveModal,
-		showHelpModal,
 		setItemsSortParam,
 		setItemsFilterTags
 	} = args
@@ -204,9 +202,6 @@ export default (args: HookArgs) => {
 					break
 				case 'archive':
 					showArchiveModal()
-					break
-				case 'help':
-					showHelpModal()
 					break
 			}
 		}

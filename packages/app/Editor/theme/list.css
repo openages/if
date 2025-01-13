@@ -80,7 +80,7 @@
 		.__editor_list_checklist {
 			padding-inline-start: 0;
 
-			.__editor_list_item {
+			& > .__editor_list_item {
 				position: relative;
 				padding-left: 18px;
 				margin-block-start: 0;

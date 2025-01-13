@@ -106,6 +106,15 @@ export default {
 		}
 	},
 	Note: {
+		toc: {
+			title: '大纲模式',
+			desc: '大纲用于总览文章结构',
+			options: ['默认', '常亮', '最小化', '隐藏']
+		},
+		use_content_heading: {
+			title: '内容标题',
+			desc: '使用内容标题作为笔记标题'
+		},
 		show_heading_text: {
 			title: '展示标题级别',
 			desc: '在标题的左侧展示标题的级别'
@@ -117,11 +126,6 @@ export default {
 		small_text: {
 			title: '小字号',
 			desc: '更好的字号以展示更多内容'
-		},
-		toc: {
-			title: '大纲模式',
-			desc: '大纲用于总览文章结构',
-			options: ['默认', '常亮', '最小化', '隐藏']
 		},
 		count: {
 			title: '字数统计',

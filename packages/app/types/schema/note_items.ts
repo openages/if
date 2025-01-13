@@ -1,9 +1,10 @@
 export namespace Note {
 	export interface Setting {
+		toc: 'default' | 'visible' | 'minimize' | 'hidden'
+		use_content_heading: boolean
 		show_heading_level: boolean
 		serif: boolean
 		small_text: boolean
-		toc: 'default' | 'visible' | 'minimize' | 'hidden'
 		count: boolean
 	}
 

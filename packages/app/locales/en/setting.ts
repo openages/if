@@ -106,6 +106,15 @@ export default {
 		}
 	},
 	Note: {
+		toc: {
+			title: 'Table of Contents',
+			desc: 'Overview of article structure',
+			options: ['default', 'visible', 'minimize', 'hidden']
+		},
+		use_content_heading: {
+			title: 'Content Heading',
+			desc: 'Use content heading as note title'
+		},
 		show_heading_text: {
 			title: 'Show Heading Level',
 			desc: 'Show heading level on the left side of the heading'
@@ -117,11 +126,6 @@ export default {
 		small_text: {
 			title: 'Small Text',
 			desc: 'Optimal size for more content'
-		},
-		toc: {
-			title: 'Table of Contents',
-			desc: 'Overview of article structure',
-			options: ['default', 'visible', 'minimize', 'hidden']
 		},
 		count: {
 			title: 'Word Count',

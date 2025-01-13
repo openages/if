@@ -51,8 +51,8 @@ const Index = () => {
 					<div className='value_wrap flex align_center'>
 						<Tooltip
 							title={t('setting.Normal.theme.auto_theme')}
-							mouseEnterDelay={0.9}
-							overlayStyle={{ width: 180 }}
+							mouseEnterDelay={0.6}
+							styles={{ root: { width: 180 } }}
 						>
 							<button
 								className={$cx(

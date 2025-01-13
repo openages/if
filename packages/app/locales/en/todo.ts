@@ -28,10 +28,7 @@ export default {
 	},
 	default_angles: ['Now', 'Plan', 'Idea', 'Wait', 'Circle', 'Trashbox'],
 	Header: {
-		visible_mode: {
-			zen: 'Zen',
-			normal: 'Normal'
-		},
+		zen: 'Zen Mode',
 		kanban_mode: {
 			angle: 'Angle',
 			tag: 'Tag'
@@ -44,7 +41,9 @@ export default {
 			list: 'List',
 			kanban: 'Kanban',
 			table: 'Table',
-			mindmap: 'Mindmap'
+			mindmap: 'Mindmap',
+			flat: 'Flat',
+			quad: 'Quad'
 		},
 		options: {
 			archive: 'Archive',
