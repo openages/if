@@ -11,10 +11,9 @@ export default {
 		tag_placeholder: '选择标签'
 	},
 	Header: {
-		view: {
-			calendar: '日程表',
-			timeline: '时间线',
-			fixed: '固定日程'
-		}
+		week: '周视图',
+		month: '月视图',
+		timeline: '时间线视图',
+		fixed: '固定视图'
 	}
 }

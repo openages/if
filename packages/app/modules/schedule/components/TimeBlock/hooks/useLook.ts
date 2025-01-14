@@ -39,7 +39,7 @@ export default (args: Args) => {
 				item.past && styles.past
 			],
 			style: {
-				top: `calc(${item.start * 16}px + 1px)`,
+				top: `calc(${item.start * 16}px + 0.5px)`,
 				left: 1,
 				width: `calc(100% - 2px)`,
 				height: `calc(${item.length * 16}px - 2px)`

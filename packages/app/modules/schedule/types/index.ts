@@ -25,11 +25,7 @@ export interface IPropsHeader {
 	changeFilterTags: (v: Model['filter_tags']) => void
 }
 
-export interface IPropsHeaderLeft
-	extends Pick<
-		IPropsHeader,
-		'view' | 'scale' | 'visible_task_panel' | 'toggleVisibleTaskPanel' | 'changeView' | 'changeScale'
-	> {}
+export interface IPropsHeaderLeft extends Pick<IPropsHeader, 'visible_task_panel' | 'toggleVisibleTaskPanel'> {}
 
 export interface IPropsHeaderCenter {
 	scale: Model['scale']
@@ -38,7 +34,7 @@ export interface IPropsHeaderCenter {
 	changeCurrent: IPropsHeader['changeCurrent']
 }
 
-export interface IPropsHeaderRight {
+export interface IPropsHeaderRight extends Pick<IPropsHeader, 'view' | 'scale' | 'changeView' | 'changeScale'> {
 	tags: Schedule.Setting['tags']
 	filter_tags: Model['filter_tags']
 	showSettingsModal: IPropsHeader['showSettingsModal']

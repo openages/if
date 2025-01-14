@@ -91,7 +91,7 @@ const Index = (props: IPropsTimeBlock) => {
 			open={visible_detail}
 			content={<TimeBlockDetail item={item} tags={tags} updateTimeBlock={updateTimeBlock} />}
 			zIndex={1000}
-			overlayClassName={$cx('border_popover', 'month_mode_timeblock_popover')}
+			classNames={{ root: $cx('border_popover', 'month_mode_timeblock_popover') }}
 			destroyTooltipOnHide
 			placement={at_bottom ? 'bottom' : 'right'}
 			getPopupContainer={() => document.body}

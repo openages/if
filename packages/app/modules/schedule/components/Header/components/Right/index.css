@@ -89,3 +89,36 @@
 		}
 	}
 }
+
+.setting_wrap {
+	width: 240px;
+
+	:global {
+		.mode_wrap {
+			padding: 12px;
+			gap: 6px;
+
+			.mode_item_wrap {
+				width: calc((100% - 6px) / 2);
+				padding: 6px 0;
+				border: var(--border_light);
+				border-radius: var(--radius);
+				color: var(--color_text_light);
+
+				&.active {
+					color: var(--color_text);
+					background-color: var(--color_bg_1);
+				}
+
+				svg {
+					margin-bottom: 1.5px;
+					font-size: 18px;
+				}
+
+				.text {
+					font-size: 10px;
+				}
+			}
+		}
+	}
+}

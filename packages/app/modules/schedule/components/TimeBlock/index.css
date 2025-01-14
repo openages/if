@@ -39,11 +39,7 @@
 			:global {
 				.timeblock_content_wrap {
 					border: var(--border_light) !important;
-					background: linear-gradient(
-						to top,
-						rgba(var(--color_text_rgb), 0.03),
-						rgba(var(--color_text_rgb), 0.06)
-					) !important;
+					background: rgba(var(--color_text_rgb), 0.06) !important;
 				}
 			}
 		}
@@ -295,6 +291,10 @@
 				width: 6px;
 				height: 100%;
 				cursor: col-resize;
+			}
+
+			.btn_detail {
+				color: var(--color_text) !important;
 			}
 
 			.timeblock_content_wrap {

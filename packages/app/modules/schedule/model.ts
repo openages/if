@@ -48,7 +48,7 @@ import type { MangoQuerySelector } from 'rxdb'
 export default class Index {
 	id = ''
 	view = 'calendar' as Schedule.Item['type']
-	scale = 'day' as Schedule.Item['fixed_scale']
+	scale = 'week' as Schedule.Item['fixed_scale']
 	current = dayjs()
 	days = [] as Array<DayDetail>
 	disable_watcher = false

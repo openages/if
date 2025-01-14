@@ -11,10 +11,9 @@ export default {
 		tag_placeholder: 'Select Tag'
 	},
 	Header: {
-		view: {
-			calendar: 'calendar',
-			timeline: 'timeline',
-			fixed: 'fixed'
-		}
+		week: 'Week',
+		month: 'Month',
+		timeline: 'Timeline',
+		fixed: 'Fixed'
 	}
 }

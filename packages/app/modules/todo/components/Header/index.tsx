@@ -1,7 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
-import { ConfigProvider, Input, Popover, Select, Switch, Tooltip } from 'antd'
-import { Shapes } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { Input, Popover, Select, Switch, Tooltip } from 'antd'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Emoji } from '@/components'
@@ -18,6 +17,7 @@ import {
 	Kanban,
 	ListChecks,
 	MagnifyingGlass,
+	Polygon,
 	SlidersHorizontal,
 	Table,
 	Tag,
@@ -291,7 +291,7 @@ const Index = (props: IPropsHeader) => {
 							className='icon_wrap color_main border_box flex justify_center align_center cursor_point clickable'
 							onClick={resetSearchMode}
 						>
-							<MagnifyingGlass size={18}></MagnifyingGlass>
+							<MagnifyingGlass></MagnifyingGlass>
 						</div>
 					</div>
 				)}
@@ -302,7 +302,7 @@ const Index = (props: IPropsHeader) => {
 								className='icon_wrap border_box flex justify_center align_center cursor_point clickable'
 								onClick={toggleTableFilter}
 							>
-								<Funnel size={18}></Funnel>
+								<Funnel></Funnel>
 							</div>
 						</div>
 					</Tooltip>
@@ -316,41 +316,35 @@ const Index = (props: IPropsHeader) => {
 								className='icon_wrap border_box flex justify_center align_center cursor_point clickable'
 								onClick={toggleKanbanMode}
 							>
-								{kanban_mode === 'angle' ? (
-									<Tag size={16}></Tag>
-								) : (
-									<Shapes size={15}></Shapes>
-								)}
+								{kanban_mode === 'angle' ? <Tag></Tag> : <Polygon></Polygon>}
 							</div>
 						</div>
 					</Tooltip>
 				)}
-				<ConfigProvider getPopupContainer={() => document.body}>
-					<Popover
-						trigger={['click']}
-						placement='bottom'
-						content={Setting}
-						open={open_panel}
-						onOpenChange={setOpenPanel}
-					>
-						<div>
-							<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable'>
-								<SlidersHorizontal size={18}></SlidersHorizontal>
-							</div>
+				<Popover
+					trigger={['click']}
+					placement='bottom'
+					content={Setting}
+					open={open_panel}
+					onOpenChange={setOpenPanel}
+				>
+					<div>
+						<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable'>
+							<SlidersHorizontal></SlidersHorizontal>
 						</div>
-					</Popover>
-				</ConfigProvider>
+					</div>
+				</Popover>
 				<div
 					className='icon_wrap border_box flex justify_center align_center cursor_point clickable ml_8'
 					onClick={showArchiveModal}
 				>
-					<ArchiveBox size={18}></ArchiveBox>
+					<ArchiveBox></ArchiveBox>
 				</div>
 				<div
 					className='icon_wrap border_box flex justify_center align_center cursor_point clickable ml_8'
 					onClick={showSettingsModal}
 				>
-					<DotsThreeCircleVertical size={18}></DotsThreeCircleVertical>
+					<DotsThreeCircleVertical></DotsThreeCircleVertical>
 				</div>
 			</div>
 		</div>

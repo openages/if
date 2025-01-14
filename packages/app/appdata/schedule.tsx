@@ -1,50 +1,34 @@
-import { fillTimeText } from '@/modules/pomo/utils'
-import {
-	AlignCenterVertical,
-	CalendarCheck,
-	Compass,
-	GridNine,
-	SquareSplitHorizontal,
-	Sun,
-	Waves
-} from '@phosphor-icons/react'
+import { AlignCenterVertical, CalendarCheck, Compass, GridNine, SquareSplitHorizontal } from '@phosphor-icons/react'
 
-export const views = [
-	{
-		value: 'calendar',
-		icon: <CalendarCheck data-key='calendar' />
+import type Model from '@/modules/schedule/model'
+
+export const views = {
+	week: {
+		key: 'week',
+		icon: <SquareSplitHorizontal data-key='week' />,
+		value: { view: 'calendar', scale: 'week' },
+		getActive: (view: Model['view'], scale: Model['scale']) => view === 'calendar' && scale === 'week'
 	},
-	{
-		value: 'timeline',
-		icon: <AlignCenterVertical data-key='timeline' />
+	month: {
+		key: 'month',
+		icon: <CalendarCheck data-key='month' />,
+		value: { view: 'calendar', scale: 'month' },
+		getActive: (view: Model['view'], scale: Model['scale']) => view === 'calendar' && scale === 'month'
 	},
-	{
-		value: 'fixed',
-		icon: <Compass data-key='fixed' />
+	timeline: {
+		key: 'timeline',
+		icon: <AlignCenterVertical data-key='timeline' />,
+		value: { view: 'timeline', scale: 'week' },
+		getActive: (view: Model['view'], scale: Model['scale']) => view === 'timeline' && scale === 'week'
+	},
+	fixed: {
+		key: 'fixed',
+		icon: <Compass data-key='fixed' />,
+		value: { view: 'fixed', scale: 'week' },
+		getActive: (view: Model['view'], scale: Model['scale']) => view === 'fixed' && scale === 'week'
 	}
-] as const
+} as const
 
-export const scales = [
-	{
-		value: 'day',
-		icon: <Sun data-key='day' />,
-		when: ['calendar']
-	},
-	{
-		value: 'week',
-		icon: <SquareSplitHorizontal data-key='week' />
-	},
-	{
-		value: 'month',
-		icon: <GridNine data-key='month' />
-	}
-]
-
-export const scale_year = {
-	value: 'year',
-	icon: <Waves data-key='year' />
-}
-
-export const hours = Array.from({ length: 24 }, (_, index) => fillTimeText(index))
+export const hours = Array.from({ length: 24 }, (_, index) => index)
 export const week_placeholder = []
 export const day_placeholder = Array.from({ length: 7 }, _ => [])

@@ -1,13 +1,9 @@
 .Day {
 	&.today {
-		background-image: radial-gradient(circle, rgba(var(--color_text_rgb), 0.048) 2px, transparent 2px);
-		background-size: 26px 26px;
-
 		:global {
 			.hours_wrap {
 				.hour_item {
 					border-bottom: none;
-					background-color: rgba(var(--color_text_rgb), 0.012);
 				}
 			}
 		}

@@ -2,7 +2,6 @@ import Color from 'color'
 import { useMemo } from 'react'
 
 import type { Schedule } from '@/types'
-import type { Theme } from '@/appdata'
 
 export default (tags: Schedule.Setting['tags'], tag: Schedule.Item['tag']) => {
 	return useMemo(() => {

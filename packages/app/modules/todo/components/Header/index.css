@@ -4,7 +4,7 @@
 
 	&.other_mode {
 		max-width: 100%;
-		height: 72px;
+		height: 48px;
 		padding: 0 36px;
 
 		&.kanban_mode {
@@ -18,11 +18,21 @@
 
 		:global {
 			.left_wrap {
+				.name {
+					font-size: 18px;
+				}
+
 				.desc {
 					overflow: hidden;
 					margin-top: 6px;
 					text-overflow: ellipsis;
 					white-space: nowrap;
+				}
+			}
+
+			.actions_wrap {
+				.icon_wrap {
+					font-size: 15px;
 				}
 			}
 		}
@@ -115,6 +125,7 @@
 				border-radius: var(--radius);
 				outline: none;
 				box-shadow: none;
+				font-size: 18px;
 
 				&:hover {
 					background-color: var(--color_bg_2);

@@ -2,9 +2,8 @@
 	&.kanban_mode {
 		padding-top: 3px;
 		margin-bottom: 6px;
-		border: var(--border);
-		border-radius: var(--radius_small);
-		box-shadow: var(--shadow_card);
+		border-radius: var(--radius);
+		background-color: var(--color_bg);
 
 		&.is_dragging {
 			opacity: 0;
