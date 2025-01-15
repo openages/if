@@ -81,7 +81,6 @@ const Index = (props: IPropsKanban) => {
 							</div>
 						</div>
 					</div>
-
 					<Todos
 						{...{
 							mode,

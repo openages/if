@@ -11,6 +11,7 @@ import {
 	CaretDown,
 	CaretUp,
 	DotsThreeCircleVertical,
+	Faders,
 	Funnel,
 	GitFork,
 	GridFour,
@@ -18,7 +19,6 @@ import {
 	ListChecks,
 	MagnifyingGlass,
 	Polygon,
-	SlidersHorizontal,
 	Table,
 	Tag,
 	X
@@ -330,7 +330,7 @@ const Index = (props: IPropsHeader) => {
 				>
 					<div>
 						<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable'>
-							<SlidersHorizontal></SlidersHorizontal>
+							<Faders></Faders>
 						</div>
 					</div>
 				</Popover>

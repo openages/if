@@ -1,11 +1,9 @@
 ._local {
 	overflow-x: scroll;
-	height: calc(100% - 48px);
-	padding: 18px 9px;
+	height: calc(100% - 72px);
+	padding: 0 18px;
 	scroll-behavior: smooth;
-	border-top: var(--border_light);
 	outline: none;
-	background-color: var(--color_bg_1);
 
 	&.tag_mode {
 		.kanban_item_wrap {
@@ -28,15 +26,11 @@
 	.kanban_item_wrap {
 		width: 300px;
 		min-width: 300px;
-		border-radius: var(--radius);
 
 		.kanban_item_header {
-			height: 36px;
+			height: 30px;
 			line-height: 1;
-			padding: 0 12px;
-			margin-bottom: 9px;
-			border-radius: var(--radius);
-			background-color: var(--color_bg);
+			padding: 0 9px;
 
 			:global {
 				.left_wrap {
@@ -56,19 +50,13 @@
 				.btn_insert {
 					width: 21px;
 					height: 21px;
-					border-radius: 50%;
+					border-radius: var(--radius_small);
 
 					&:hover {
 						background-color: var(--color_bg_2);
 					}
 				}
 			}
-		}
-	}
-
-	:global {
-		.kanban_item_header_wrap {
-			padding: 0 9px;
 		}
 	}
 }
