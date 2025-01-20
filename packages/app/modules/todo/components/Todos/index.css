@@ -6,7 +6,8 @@
 
 	&.kanban_mode {
 		overflow-y: scroll;
-		height: calc(100% - 45px);
+		height: calc(100% - 30px);
+		min-height: unset;
 		padding: 0 9px;
 		padding-bottom: 60px;
 		outline: none;
@@ -29,6 +30,14 @@
 				left: 0;
 			}
 		}
+	}
+
+	&.quad {
+		overflow-y: scroll;
+		height: calc(100% - 30px);
+		min-height: unset;
+		padding: 0 30px 60px 30px;
+		outline: none;
 	}
 
 	:global {

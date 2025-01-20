@@ -36,7 +36,6 @@ export default {
 		table_mode: {
 			filter: '过滤器'
 		},
-		mindmap_mode: {},
 		mode: {
 			list: '列表',
 			kanban: '看板',
@@ -71,7 +70,8 @@ export default {
 				'3d': '3天',
 				'7d': '一周'
 			}
-		}
+		},
+		quad_angles: '四象限'
 	},
 	Input: {
 		placeholder: '添加待办',

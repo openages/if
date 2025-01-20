@@ -1,4 +1,7 @@
 .todo_item_wrap {
+	&.quad {
+	}
+
 	&.kanban_mode {
 		padding-top: 3px;
 		margin-bottom: 6px;

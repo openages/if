@@ -46,6 +46,7 @@ export default class Index {
 			return
 		}
 
+		if (!root_el) return
 		if (root_el.contains(target)) return
 
 		const pass = this.editor.getEditorState().read(() => {

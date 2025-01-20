@@ -111,6 +111,7 @@ const Index = (props: IPropsTodoItem) => {
 	const { onContextMenu } = useOnContextMenu({
 		item,
 		index,
+		mode,
 		kanban_mode,
 		dimension_id,
 		update,
@@ -205,6 +206,7 @@ const Index = (props: IPropsTodoItem) => {
 				'w_100 border_box flex flex_column',
 				styles.todo_item_wrap,
 				zen_mode && styles.zen_mode,
+				mode === 'quad' && styles.quad,
 				!useByMindmap && kanban_mode && styles.kanban_mode,
 				kanban_mode === 'tag' && styles.tag_mode,
 				!children?.length && styles.no_children,

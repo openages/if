@@ -1,7 +1,3 @@
-import Color from 'color'
-import { xxHash32 } from 'js-xxhash'
-import genColor from 'uniqolor'
-
 import { Plus } from '@phosphor-icons/react'
 
 import Todos from '../Todos'
@@ -32,22 +28,18 @@ const Index = (props: IPropsKanban) => {
 	} = props
 
 	return (
-		<div className={$cx('h_100 border_box flex', styles._local, kanban_mode === 'tag' && styles.tag_mode)}>
+		<div
+			className={$cx(
+				'h_100 border_box flex',
+				styles._local,
+				kanban_mode === 'tag' && styles.tag_mode,
+				mode === 'quad' && styles.quad
+			)}
+		>
 			{Object.values(kanban_items).map((item, index) => (
 				<div
 					className={$cx('border_box flex flex_column', styles.kanban_item_wrap)}
 					key={item.dimension.value.id}
-					style={{
-						'--color_kanban_column': Color(
-							genColor(xxHash32(item.dimension.value.id).toString(3), {
-								saturation: 90,
-								lightness: 72
-							}).color
-						)
-							.rgb()
-							.array()
-							.join(',')
-					}}
 				>
 					<div className='kanban_item_header_wrap w_100 border_box'>
 						<div
@@ -100,7 +92,7 @@ const Index = (props: IPropsKanban) => {
 							handleOpenItem,
 							showDetailModal
 						}}
-						kanban_mode={kanban_mode}
+						kanban_mode={mode === 'kanban' ? kanban_mode : undefined}
 						items={item.items}
 						dimension_id={Object.keys(kanban_items)[index]}
 					></Todos>

@@ -36,7 +36,6 @@ export default {
 		table_mode: {
 			filter: 'Filter'
 		},
-		mindmap_mode: {},
 		mode: {
 			list: 'List',
 			kanban: 'Kanban',
@@ -71,7 +70,8 @@ export default {
 				'3d': '3 day',
 				'7d': '1 week'
 			}
-		}
+		},
+		quad_angles: 'Four quadrants'
 	},
 	Input: {
 		placeholder: 'Add Todo',

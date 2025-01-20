@@ -160,7 +160,7 @@ export default class Index {
 				this.stopWatchItems()
 			}
 
-			if (v !== 'kanban' || old_val !== 'mindmap') {
+			if ((v !== 'kanban' && v !== 'quad') || old_val !== 'mindmap') {
 				this.kanban_items = {}
 
 				this.stopWatchKanbanItems()
@@ -178,13 +178,13 @@ export default class Index {
 				this.table_sort = {}
 			}
 
-			if (v === 'kanban' || v === 'mindmap') {
+			if (v === 'kanban' || v === 'quad' || v === 'mindmap') {
 				this.kanban_mode = 'angle'
 
 				this.watchKanbanItems()
 			}
 
-			if (v !== 'kanban' && v !== 'mindmap') {
+			if (v !== 'kanban' && v !== 'quad' && v !== 'mindmap') {
 				this.kanban_mode = '' as KanbanMode
 			}
 		},
@@ -211,7 +211,7 @@ export default class Index {
 		if (!this.current_detail_index.id) return {} as CurrentDetailItem
 
 		const items =
-			this.mode === 'kanban' || this.mode === 'mindmap'
+			this.mode === 'kanban' || this.mode === 'quad' || this.mode === 'mindmap'
 				? this.kanban_items[this.current_detail_index.dimension_id!]?.items
 				: this.items
 
@@ -226,6 +226,15 @@ export default class Index {
 			prev_id: target_index - 1 >= 0 ? items.at(target_index - 1)?.id : undefined,
 			next_id: items.at(target_index + 1)?.id
 		} as CurrentDetailItem
+	}
+
+	get quad_angles() {
+		const v = this.setting?.setting?.quad_angles || []
+		const angles = this.setting?.setting?.angles || []
+
+		if (!v || !v.length) return angles.slice(0, 4)
+
+		return v.map(item => angles.find(angle => angle.id === item)!)
 	}
 
 	constructor(
@@ -325,6 +334,12 @@ export default class Index {
 				this.setting = setting
 			}
 		})
+
+		if ('quad_angles' in changed_values) {
+			this.kanban_items = {}
+
+			this.watchKanbanItems()
+		}
 	}
 
 	@loading
@@ -538,6 +553,12 @@ export default class Index {
 		}
 
 		await removeAngle(this.id, angle_id)
+
+		const quad_angles = this.setting?.setting?.quad_angles
+
+		if (quad_angles && quad_angles.length) {
+			await this.updateSetting({ quad_angles: quad_angles.filter(item => item !== angle_id) })
+		}
 
 		return true
 	}
@@ -1035,7 +1056,9 @@ export default class Index {
 		if (this.kanban_mode === 'angle') {
 			if (!this.setting.setting) return
 
-			this.kanban_items_watcher = this.setting.setting.angles.map(item => {
+			const angles = this.mode === 'quad' ? this.quad_angles : this.setting.setting.angles
+
+			this.kanban_items_watcher = angles.map(item => {
 				this.kanban_items[item.id] = {
 					dimension: { type: 'angle', value: item },
 					items: [] as Array<Todo.Todo>,

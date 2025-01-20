@@ -6,6 +6,7 @@ import type { IPropsTodoItem } from '../../../types'
 interface HookArgs {
 	item: IPropsTodoItem['item']
 	index: IPropsTodoItem['index']
+	mode: IPropsTodoItem['mode']
 	kanban_mode: IPropsTodoItem['kanban_mode']
 	dimension_id: IPropsTodoItem['dimension_id']
 	update: IPropsTodoItem['update']
@@ -21,6 +22,7 @@ export default (args: HookArgs) => {
 	const {
 		item,
 		index,
+		mode,
 		kanban_mode,
 		dimension_id,
 		update,
@@ -67,7 +69,11 @@ export default (args: HookArgs) => {
 		} else {
 			switch (key) {
 				case 'detail':
-					showDetailModal({ id, index, ...(kanban_mode ? { dimension_id } : {}) })
+					showDetailModal({
+						id,
+						index,
+						...(kanban_mode || mode === 'quad' ? { dimension_id } : {})
+					})
 					break
 				case 'insert':
 					insert({ index, dimension_id })

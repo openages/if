@@ -1,5 +1,5 @@
 import type { DirTree, RxDB, Todo, DndItemProps } from '@/types'
-import type { MenuProps, SelectProps } from 'antd'
+import type { SelectProps } from 'antd'
 import type Model from '../model'
 import type { Icon } from '@phosphor-icons/react'
 

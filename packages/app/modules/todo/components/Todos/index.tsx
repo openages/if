@@ -155,6 +155,7 @@ const Index = (props: IPropsTodos) => {
 				'limited_content_wrap relative',
 				styles._local,
 				kanban_mode && styles.kanban_mode,
+				mode === 'quad' && styles.quad,
 				!items.length && isOver && active?.data?.current?.dimension_id !== dimension_id && styles.isOver
 			)}
 			ref={ref => kanban_mode && setNodeRef(ref)}

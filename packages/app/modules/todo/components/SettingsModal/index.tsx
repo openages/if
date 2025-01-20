@@ -27,6 +27,10 @@ const Index = (props: IPropsSettingsModal) => {
 		}))
 	}, [i18n.language])
 
+	const quad_options = useMemo(() => {
+		return (setting?.angles || []).map(item => ({ label: item.text, value: item.id }))
+	}, [setting?.angles])
+
 	const props_settings_modal = {
 		module: 'todo' as App.ModuleType,
 		className: styles._local,
@@ -58,6 +62,9 @@ const Index = (props: IPropsSettingsModal) => {
 				</Item>
 				<Item name='auto_archiving' label={t('todo.SettingsModal.auto_archiving.label')}>
 					<Select options={archive_options}></Select>
+				</Item>
+				<Item name='quad_angles' label={t('todo.SettingsModal.quad_angles')}>
+					<Select mode='multiple' maxCount={4} options={quad_options}></Select>
 				</Item>
 				<Button className='btn_clean clickable' type='primary' danger onClick={onClean}>
 					{t('common.clean.title_removed')}

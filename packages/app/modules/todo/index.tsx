@@ -43,7 +43,9 @@ const Index = ({ id }: IProps) => {
 	const relations = $copy(x.setting?.setting?.relations || [])
 	const current_detail_item = $copy(x.current_detail_item)
 	const search_mode = Boolean(x.table_selector.id)
-	const table_exclude_fields = $copy(x.setting?.setting?.table_exclude_fields) || []
+	const table_exclude_fields = $copy(x.setting?.setting?.table_exclude_fields || [])
+	const quad_angles = $copy(x.quad_angles)
+	const kanban_items = $copy(x.kanban_items)
 	const updateSetting = useMemoizedFn(x.updateSetting)
 
 	useLayoutEffect(() => {
@@ -124,7 +126,7 @@ const Index = ({ id }: IProps) => {
 
 	const props_kanban: IPropsKanban = {
 		kanban_mode: x.kanban_mode,
-		kanban_items: $copy(x.kanban_items),
+		kanban_items: kanban_items,
 		...omit(props_todos, ['items', 'kanban_mode'])
 	}
 
@@ -207,7 +209,7 @@ const Index = ({ id }: IProps) => {
 				zen_mode: props_todos.zen_mode,
 				open_items: props_todos.open_items,
 				mode: x.mode,
-				kanban_mode: x.kanban_mode,
+				kanban_mode: x.mode === 'kanban' ? x.kanban_mode : undefined,
 				dimension_id: drag_todo_item.dimension_id,
 				drag_overlay: true,
 				makeLinkLine: () => {},
@@ -263,7 +265,7 @@ const Index = ({ id }: IProps) => {
 					<Fragment>
 						<Header {...props_header}></Header>
 						{match(x.mode)
-							.with(P.union('list', 'kanban'), () => (
+							.with(P.union('list', 'kanban', 'quad'), () => (
 								<DndContext
 									collisionDetection={
 										x.mode === 'kanban' ? pointerWithin : rectIntersection
@@ -279,9 +281,13 @@ const Index = ({ id }: IProps) => {
 												<Input {...props_input}></Input>
 											</Fragment>
 										))
-										.with('kanban', () => <Kanban {...props_kanban}></Kanban>)
+										.with(
+											P.when(v => v === 'kanban' || v === 'quad'),
+											() => <Kanban {...props_kanban}></Kanban>
+										)
 										.otherwise(() => null)}
-									{x.mode === 'kanban' && x.kanban_mode === 'angle' && (
+									{((x.mode === 'kanban' && x.kanban_mode === 'angle') ||
+										x.mode === 'quad') && (
 										<DragOverlay dropAnimation={null}>
 											{drag_todo_item && (
 												<SortableWrap
@@ -304,7 +310,6 @@ const Index = ({ id }: IProps) => {
 							.with('table', () => <Table {...props_table}></Table>)
 							.with('mindmap', () => <Mindmap {...props_mindmap}></Mindmap>)
 							.with('flat', () => null)
-							.with('quad', () => null)
 							.exhaustive()}
 						<SettingsModal {...props_settings_modal}></SettingsModal>
 						<Archive {...props_archive}></Archive>

@@ -23,14 +23,81 @@
 		}
 	}
 
+	&.quad {
+		overflow: hidden;
+		flex-wrap: wrap;
+		padding: 12px;
+		padding-top: 0;
+
+		.kanban_item_wrap {
+			position: relative;
+			width: 50%;
+			height: 50%;
+
+			&:nth-of-type(1),
+			&:nth-of-type(2) {
+				&::after {
+					position: absolute;
+					bottom: 0;
+					width: calc(100% - 39px);
+					height: 1px;
+					background-color: var(--color_border_light);
+					content: '';
+				}
+			}
+
+			&:nth-of-type(1) {
+				&::after {
+					right: 0;
+				}
+			}
+
+			&:nth-of-type(2) {
+				&::after {
+					left: 0;
+				}
+			}
+
+			&:nth-of-type(1),
+			&:nth-of-type(3) {
+				&::before {
+					position: absolute;
+					width: 1px;
+					height: calc(100% - 12px);
+					background-color: var(--color_border_light);
+					content: '';
+				}
+			}
+
+			&:nth-of-type(1) {
+				&::before {
+					right: 0;
+					bottom: 0;
+				}
+			}
+
+			&:nth-of-type(3) {
+				&::before {
+					top: 0;
+					right: 0;
+				}
+			}
+
+			.kanban_item_header {
+				font-weight: 500;
+			}
+		}
+	}
+
 	.kanban_item_wrap {
 		width: 300px;
 		min-width: 300px;
+		padding-top: 12px;
 
 		.kanban_item_header {
 			height: 30px;
 			line-height: 1;
-			padding: 0 9px;
+			padding: 0 39px;
 
 			:global {
 				.left_wrap {
