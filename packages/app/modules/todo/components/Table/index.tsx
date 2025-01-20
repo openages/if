@@ -42,6 +42,7 @@ const Index = (props: IPropsTable) => {
 		tags,
 		table_pagination,
 		visible_table_filter,
+		table_exclude_fields,
 		onTableRowChange,
 		onTableSortChange,
 		onTablePageChange,
@@ -164,7 +165,7 @@ const Index = (props: IPropsTable) => {
 				{
 					title: t('todo.common.children'),
 					dataIndex: 'children',
-					width: 60,
+					width: 72,
 					align: 'center',
 					disableEditing: true,
 					component: RenderChildren
@@ -216,8 +217,8 @@ const Index = (props: IPropsTable) => {
 					component: RenderOptions,
 					onAction
 				}
-			] as Array<IPropsFormTableColumn>,
-		[angles, tags]
+			].filter(item => !table_exclude_fields.includes(item.dataIndex)) as Array<IPropsFormTableColumn>,
+		[angles, tags, table_exclude_fields]
 	)
 
 	const pagination = {

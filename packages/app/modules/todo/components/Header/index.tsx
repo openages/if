@@ -1,6 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { Input, Popover, Select, Switch, Tooltip } from 'antd'
-import { useState } from 'react'
+import { useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Emoji } from '@/components'
@@ -19,12 +19,14 @@ import {
 	ListChecks,
 	MagnifyingGlass,
 	Polygon,
+	SlidersHorizontal,
 	Table,
 	Tag,
 	X
 } from '@phosphor-icons/react'
 
 import TagSelect from '../TagSelect'
+import { TableFields } from './components'
 import styles from './index.css'
 
 import type { IPropsHeader } from '../../types'
@@ -43,6 +45,7 @@ const Index = (props: IPropsHeader) => {
 		items_sort_param,
 		items_filter_tags,
 		search_mode,
+		table_exclude_fields,
 		setMode,
 		toggleZenMode,
 		toggleKanbanMode,
@@ -58,6 +61,7 @@ const Index = (props: IPropsHeader) => {
 	const { t } = useTranslation()
 
 	const [open_panel, setOpenPanel] = useState(false)
+	const [open_table_fields, setOpenTableFields] = useState(false)
 
 	const { ref_editor, onChange, setEditor, setRef } = useText({
 		text: desc!,
@@ -296,16 +300,37 @@ const Index = (props: IPropsHeader) => {
 					</div>
 				)}
 				{mode === 'table' && (
-					<Tooltip title={t('todo.Header.table_mode.filter')}>
-						<div className='mr_8'>
-							<div
-								className='icon_wrap border_box flex justify_center align_center cursor_point clickable'
-								onClick={toggleTableFilter}
-							>
-								<Funnel></Funnel>
+					<Fragment>
+						<Popover
+							trigger={['click']}
+							placement='bottom'
+							destroyTooltipOnHide
+							content={
+								<TableFields
+									table_exclude_fields={table_exclude_fields}
+									updateSetting={updateSetting}
+								/>
+							}
+							open={open_table_fields}
+							onOpenChange={setOpenTableFields}
+						>
+							<div>
+								<div className='icon_wrap border_box flex justify_center align_center cursor_point clickable mr_8'>
+									<SlidersHorizontal></SlidersHorizontal>
+								</div>
 							</div>
-						</div>
-					</Tooltip>
+						</Popover>
+						<Tooltip title={t('todo.Header.table_mode.filter')}>
+							<div className='mr_8'>
+								<div
+									className='icon_wrap border_box flex justify_center align_center cursor_point clickable'
+									onClick={toggleTableFilter}
+								>
+									<Funnel></Funnel>
+								</div>
+							</div>
+						</Tooltip>
+					</Fragment>
 				)}
 				{mode === 'kanban' && tags.length > 0 && (
 					<Tooltip
@@ -324,6 +349,7 @@ const Index = (props: IPropsHeader) => {
 				<Popover
 					trigger={['click']}
 					placement='bottom'
+					destroyTooltipOnHide
 					content={Setting}
 					open={open_panel}
 					onOpenChange={setOpenPanel}

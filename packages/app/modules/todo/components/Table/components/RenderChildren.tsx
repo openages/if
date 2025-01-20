@@ -27,19 +27,19 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['children']>) => {
 					P.when(v => !v.length),
 					() => <Minus size={14}></Minus>
 				)
-				.with(
-					P.when(v => v.length <= 6),
-					() => (
-						<Progress
-							className='progress'
-							size='small'
-							showInfo={false}
-							steps={value!.length}
-							percent={(checked_children!.length * 100) / value!.length}
-						></Progress>
-					)
-				)
-				.otherwise(() => `${checked_children?.length}/${value!.length}`)}
+				.otherwise(() => (
+					<Progress
+						className='progress'
+						type='circle'
+						size={16}
+						showInfo={false}
+						strokeColor='var(--color_text_sub)'
+						trailColor='var(--color_bg_2)'
+						strokeWidth={12}
+						steps={{ count: value!.length, gap: 8 }}
+						percent={(checked_children!.length * 100) / value!.length}
+					></Progress>
+				))}
 		</div>
 	)
 }

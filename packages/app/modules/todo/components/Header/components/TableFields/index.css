@@ -1,0 +1,16 @@
+._local {
+	width: 210px;
+	padding: 6px 12px;
+
+	:global {
+		.if-checkbox-group {
+			gap: 0;
+
+			.if-checkbox-wrapper {
+				width: 100%;
+				padding: 2px 0;
+				text-transform: capitalize;
+			}
+		}
+	}
+}

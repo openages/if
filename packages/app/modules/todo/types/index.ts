@@ -33,6 +33,7 @@ export interface IPropsHeader
 	items_sort_param: Model['items_sort_param']
 	items_filter_tags: Model['items_filter_tags']
 	search_mode: boolean
+	table_exclude_fields: Array<string>
 	setMode: Model['setMode']
 	toggleZenMode: () => void
 	toggleKanbanMode: () => void
@@ -44,6 +45,8 @@ export interface IPropsHeader
 	resetSearchMode: Model['resetSearchMode']
 	updateSetting: Model['updateSetting']
 }
+
+export interface IPropsHeaderTableFields extends Pick<IPropsHeader, 'table_exclude_fields' | 'updateSetting'> {}
 
 export interface IPropsTabs {
 	angles: Model['setting']['setting']['angles']
@@ -202,6 +205,7 @@ export interface IPropsTable extends Pick<IPropsTodos, 'relations' | 'showDetail
 	tags: Model['setting']['setting']['tags']
 	table_pagination: Model['table_pagination']
 	visible_table_filter: Model['visible_table_filter']
+	table_exclude_fields: Array<string>
 	clean: Model['clean']
 	onTableRowChange: Model['onTableRowChange']
 	onTablePageChange: Model['onTablePageChange']

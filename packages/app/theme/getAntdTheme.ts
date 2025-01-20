@@ -76,6 +76,11 @@ export default (theme: Theme, color_main: string) => {
 				dotSize: 9,
 				radioSize: 12
 			},
+			Checkbox: {
+				colorPrimary: vars.color_text_sub,
+				colorPrimaryHover: vars.color_text,
+				lineType: 'none'
+			},
 			Tabs: {
 				colorPrimary: vars.color_text
 			},

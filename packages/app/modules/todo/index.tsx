@@ -43,6 +43,7 @@ const Index = ({ id }: IProps) => {
 	const relations = $copy(x.setting?.setting?.relations || [])
 	const current_detail_item = $copy(x.current_detail_item)
 	const search_mode = Boolean(x.table_selector.id)
+	const table_exclude_fields = $copy(x.setting?.setting?.table_exclude_fields) || []
 	const updateSetting = useMemoizedFn(x.updateSetting)
 
 	useLayoutEffect(() => {
@@ -69,6 +70,7 @@ const Index = ({ id }: IProps) => {
 		items_sort_param: $copy(x.items_sort_param),
 		items_filter_tags: $copy(x.items_filter_tags),
 		search_mode,
+		table_exclude_fields,
 		setMode: useMemoizedFn(x.setMode),
 		toggleZenMode: useMemoizedFn(() => (x.zen_mode = !x.zen_mode)),
 		toggleKanbanMode: useMemoizedFn(() => (x.kanban_mode = x.kanban_mode === 'angle' ? 'tag' : 'angle')),
@@ -132,6 +134,7 @@ const Index = ({ id }: IProps) => {
 		tags,
 		table_pagination: $copy(x.table_pagination),
 		visible_table_filter: x.visible_table_filter,
+		table_exclude_fields,
 		clean: useMemoizedFn(x.clean),
 		onTableRowChange: useMemoizedFn(x.onTableRowChange),
 		onTablePageChange: useMemoizedFn(x.onTablePageChange),
@@ -300,6 +303,8 @@ const Index = ({ id }: IProps) => {
 							))
 							.with('table', () => <Table {...props_table}></Table>)
 							.with('mindmap', () => <Mindmap {...props_mindmap}></Mindmap>)
+							.with('flat', () => null)
+							.with('quad', () => null)
 							.exhaustive()}
 						<SettingsModal {...props_settings_modal}></SettingsModal>
 						<Archive {...props_archive}></Archive>

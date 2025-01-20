@@ -1,0 +1,24 @@
+.if-checkbox-group {
+	.if-checkbox-wrapper {
+		.if-checkbox {
+			&:not(.if-checkbox-checked) {
+				.if-checkbox-inner {
+					background-color: var(--color_bg_2);
+				}
+			}
+		}
+
+		.if-checkbox-inner {
+			width: 12px;
+			height: 12px;
+			border-radius: var(--radius_small_1);
+
+			&::after {
+				width: 4px;
+				height: 7px;
+				margin-top: -0.6px;
+				border-width: 1px;
+			}
+		}
+	}
+}
