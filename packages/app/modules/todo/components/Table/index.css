@@ -200,15 +200,12 @@
 	:global {
 		.if-select {
 			--height: 32px;
-
-			.if-select-selector {
-				transform: translateY(-0.5px);
-			}
 		}
 	}
 }
 
 .RenderTagsViewer {
+	height: 16px;
 	line-height: 1;
 
 	:global {

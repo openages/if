@@ -40,7 +40,7 @@ const Index = (props: IPropsTagSelect) => {
 	if (!show_suffix) props_extra['suffixIcon'] = null
 
 	return (
-		<div className={$cx('flex', className)}>
+		<div className={$cx('flex align_center', className)}>
 			<Select
 				className={$cx(
 					'borderless no_suffix',

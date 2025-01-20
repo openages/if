@@ -34,7 +34,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 					onFocus={onFocus}
 				></TagSelect>
 			) : (
-				<div className={$cx(styles.RenderTagsViewer, 'w_100 flex justify_center')}>
+				<div className={$cx(styles.RenderTagsViewer, 'w_100 flex justify_center align_center')}>
 					<Choose>
 						<When condition={items !== undefined && items?.length > 0}>
 							{items?.map(item => {
@@ -55,7 +55,9 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 							})}
 						</When>
 						<Otherwise>
-							<span className='color_text_light'>{t('todo.Input.tag_placeholder')}</span>
+							<span className='color_text_light' style={{ marginLeft: 1 }}>
+								{t('todo.Input.tag_placeholder')}
+							</span>
 						</Otherwise>
 					</Choose>
 				</div>

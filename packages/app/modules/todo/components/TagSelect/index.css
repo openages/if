@@ -62,7 +62,7 @@
 
 		.if-select-selector {
 			flex-wrap: unset !important;
-			width: unset !important;
+			width: unset;
 			border: none !important;
 			background-color: transparent !important;
 

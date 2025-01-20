@@ -14,6 +14,7 @@ export namespace Todo {
 		auto_archiving: '0m' | '3m' | '3h' | '1d' | '3d' | '7d'
 		desc?: string
 		relations?: Relations
+		table_exclude_fields?: Array<string>
 	}
 
 	export interface TodoSetting {
