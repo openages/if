@@ -1,0 +1,41 @@
+._local {
+	width: 16px;
+	margin-right: 8px;
+
+	:global {
+		.level_items {
+			gap: 2px;
+
+			.level_item {
+				width: 3px;
+				border-radius: 1.2px;
+				background-color: rgba(var(--color_text_rgb), 0.24);
+
+				&:nth-of-type(1) {
+					height: 6px;
+				}
+
+				&:nth-of-type(2) {
+					height: 9px;
+				}
+
+				&:nth-of-type(3) {
+					height: 12px;
+				}
+
+				&.active {
+					background-color: rgba(var(--color_text_rgb), 0.66);
+				}
+			}
+		}
+
+		.urgent_wrap {
+			width: 14px;
+			height: 14px;
+			border-radius: 3px;
+			color: white;
+			background-color: var(--color_warning);
+			font-size: 12px;
+		}
+	}
+}

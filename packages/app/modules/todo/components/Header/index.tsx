@@ -142,12 +142,12 @@ const Index = (props: IPropsHeader) => {
 				<div
 					className={$cx(
 						'mode_item_wrap border_box flex flex_column align_center clickable',
-						mode === 'table' && 'active'
+						mode === 'flat' && 'active'
 					)}
-					data-key='table'
+					data-key='flat'
 				>
-					<Table></Table>
-					<span className='text'>{t('todo.Header.mode.table')}</span>
+					<AlignLeft></AlignLeft>
+					<span className='text'>{t('todo.Header.mode.flat')}</span>
 				</div>
 				<div
 					className={$cx(
@@ -162,22 +162,22 @@ const Index = (props: IPropsHeader) => {
 				<div
 					className={$cx(
 						'mode_item_wrap border_box flex flex_column align_center clickable',
-						mode === 'flat' && 'active'
-					)}
-					data-key='flat'
-				>
-					<AlignLeft></AlignLeft>
-					<span className='text'>{t('todo.Header.mode.flat')}</span>
-				</div>
-				<div
-					className={$cx(
-						'mode_item_wrap border_box flex flex_column align_center clickable',
 						mode === 'quad' && 'active'
 					)}
 					data-key='quad'
 				>
 					<GridFour></GridFour>
 					<span className='text'>{t('todo.Header.mode.quad')}</span>
+				</div>
+				<div
+					className={$cx(
+						'mode_item_wrap border_box flex flex_column align_center clickable',
+						mode === 'table' && 'active'
+					)}
+					data-key='table'
+				>
+					<Table></Table>
+					<span className='text'>{t('todo.Header.mode.table')}</span>
 				</div>
 			</div>
 			<div className='setting_items w_100 border_box flex flex_column'>
@@ -233,6 +233,7 @@ const Index = (props: IPropsHeader) => {
 				styles._local,
 				mode !== 'list' && styles.other_mode,
 				(mode === 'kanban' || mode === 'quad') && styles.kanban_mode,
+				mode === 'flat' && styles.flat,
 				editor_size && styles.desc
 			)}
 		>
@@ -271,7 +272,12 @@ const Index = (props: IPropsHeader) => {
 			<div className='left_wrap flex flex_column'>
 				<div className='flex align_center'>
 					<If condition={!!icon}>
-						<Emoji className='icon_emoji' shortcodes={icon!} size={21} hue={icon_hue}></Emoji>
+						<Emoji
+							className='icon_emoji'
+							shortcodes={icon!}
+							size={mode === 'flat' ? 15 : 21}
+							hue={icon_hue}
+						></Emoji>
 					</If>
 					<Input
 						className='name flex justify_between align_center'

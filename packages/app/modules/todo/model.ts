@@ -335,6 +335,12 @@ export default class Index {
 			}
 		})
 
+		if ('angles' in changed_values && this.mode === 'flat') {
+			this.kanban_items = {}
+
+			this.watchKanbanItems()
+		}
+
 		if ('quad_angles' in changed_values) {
 			this.kanban_items = {}
 

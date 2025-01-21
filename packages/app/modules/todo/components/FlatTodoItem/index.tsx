@@ -7,38 +7,33 @@ import { todo } from '@/appdata'
 import { useText, useTextChange, Text } from '@/Editor'
 import { useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
-import { CheckSquare, DotsSixVertical, Square } from '@phosphor-icons/react'
+import { CheckCircle, Circle } from '@phosphor-icons/react'
 
-import Children from '../Children'
 import CycleStatus from '../CycleStatus'
 import DeadlineStatus from '../DeadlineStatus'
+import FlatLevel from '../FlatLevel'
 import LevelStatus from '../LevelStatus'
 import RemindStatus from '../RemindStatus'
 import TagSelect from '../TagSelect'
-import { useContextMenu, useHandlers, useLink, useOnContextMenu, useOpen, useOptions } from './hooks'
+import { useContextMenu, useHandlers, useOnContextMenu, useOptions } from './hooks'
 import styles from './index.css'
 
-import type { IPropsChildren, IPropsTodoItem } from '../../types'
+import type { IPropsFlatTodoItem } from '../../types'
 
-const Index = (props: IPropsTodoItem) => {
+const Index = (props: IPropsFlatTodoItem) => {
 	const {
 		sortable_props,
 		item,
 		index,
 		tags,
 		angles,
-		drag_disabled,
 		zen_mode,
-		open_items,
 		mode,
 		kanban_mode,
 		dimension_id,
 		drag_overlay,
-		useByMindmap,
-		makeLinkLine,
-		renderLines,
+		serial,
 		check,
-		updateRelations,
 		insert,
 		update,
 		tab,
@@ -84,20 +79,17 @@ const Index = (props: IPropsTodoItem) => {
 		disabled: kanban_mode !== 'angle'
 	})
 
-	const { open, onCheck, onDrag, setOpen, toggleChildren, insertChildren, onKeyDown, updateTags } = useHandlers({
+	const { open, onCheck, insertChildren, onKeyDown, updateTags } = useHandlers({
 		item,
 		index,
 		kanban_mode,
 		dimension_id,
-		makeLinkLine,
 		check,
 		insert,
 		update,
 		tab,
 		handleOpenItem
 	})
-
-	const { linker, dragging, hovering } = useLink({ item, dimension_id, makeLinkLine, updateRelations })
 
 	const { ref_editor, ref_input, onChange, setEditor, setRef } = useText({
 		text,
@@ -123,32 +115,7 @@ const Index = (props: IPropsTodoItem) => {
 		insertChildren
 	})
 
-	useOpen({ item, zen_mode, open, open_items, renderLines, setOpen })
 	useOptions({ item, input: ref_input, zen_mode })
-
-	const props_children: IPropsChildren = {
-		mode,
-		kanban_mode: kanban_mode!,
-		items: children,
-		index,
-		open,
-		isDragging,
-		handled: item.status === 'checked' || item.status === 'closed',
-		dimension_id,
-		update,
-		tab
-	}
-
-	const has_options = useMemo(
-		() =>
-			level ||
-			tag_ids?.length ||
-			remind_time ||
-			end_time ||
-			(cycle_enabled && cycle && cycle?.value !== undefined) ||
-			schedule,
-		[level, tag_ids, remind_time, end_time, cycle_enabled, cycle, schedule]
-	)
 
 	const date = useMemo(() => {
 		const target = dayjs(create_at)
@@ -203,19 +170,12 @@ const Index = (props: IPropsTodoItem) => {
 	return (
 		<div
 			className={$cx(
-				'w_100 border_box flex flex_column',
+				'w_100 border_box flex align_center justify_between relative',
 				styles.todo_item_wrap,
-				zen_mode && styles.zen_mode,
-				!useByMindmap && kanban_mode && styles.kanban_mode,
-				kanban_mode === 'tag' && styles.tag_mode,
-				mode === 'quad' && styles.quad,
-				!children?.length && styles.no_children,
 				is_dragging && styles.is_dragging,
 				is_over && styles.is_over,
-				useByMindmap && styles.useByMindmap,
-				useByMindmap && 'nodrag',
-				drag_overlay && 'todo_item_drag_overlay',
-				!useByMindmap && kanban_mode && 'kanban_mode'
+				styles[status],
+				drag_overlay && 'todo_item_drag_overlay'
 			)}
 			ref={
 				setSortRef &&
@@ -229,92 +189,46 @@ const Index = (props: IPropsTodoItem) => {
 			onContextMenu={disableContextMenu}
 		>
 			{is_over && <div className='over_line w_100 absolute left_0 flex align_center'></div>}
-			<div
-				className={$cx(
-					'w_100 border_box flex align_start relative',
-					styles.todo_item,
-					styles[item.status]
-				)}
-			>
-				{!useByMindmap && !drag_disabled && (
-					<div
-						id={id}
-						className={$cx(
-							'dot_wrap border_box flex justify_center align_center absolute transition_normal cursor_point z_index_10',
-							dragging && 'dragging',
-							hovering && 'hovering'
-						)}
-						ref={kanban_mode !== 'tag' ? linker : null}
-						onDrag={onDrag}
-						onClick={toggleChildren}
-					></div>
-				)}
-				{!useByMindmap && !drag_disabled && (
-					<div
-						className={$cx(
-							'drag_wrap todo border_box flex justify_center align_center absolute transition_normal cursor_point z_index_10'
-						)}
-						ref={setActivatorNodeRef}
-						{...attributes}
-						{...listeners}
-					>
-						<DotsSixVertical size={12} weight='bold'></DotsSixVertical>
-					</div>
-				)}
-				<div className='w_100 flex'>
-					<div
-						className='action_wrap flex justify_center align_center cursor_point clickable'
-						onClick={onCheck}
-					>
-						<Choose>
-							<When condition={status === 'unchecked' || status === 'closed'}>
-								<Square size={16} />
-							</When>
-							<When condition={status === 'checked'}>
-								<CheckSquare size={16} />
-							</When>
-						</Choose>
-					</div>
-					<ConfigProvider getPopupContainer={() => document.body}>
-						<Dropdown
-							destroyPopupOnHide
-							trigger={['contextMenu']}
-							overlayStyle={{ width: 132 }}
-							menu={{
-								items: context_menu,
-								onClick: onContextMenu
-							}}
-						>
-							<Text
-								id={`todo_${id}`}
-								className={$cx(
-									'text_wrap',
-									children && !!children?.length && !open && 'has_children',
-									!!outdate && 'outdate'
-								)}
-								max_length={todo.text_max_length}
-								onChange={onChange}
-								setEditor={setEditor}
-								onKeyDown={onKeyDown}
-								setRef={setRef}
-							></Text>
-						</Dropdown>
-					</ConfigProvider>
-				</div>
+			<FlatLevel value={level}></FlatLevel>
+			<div className='serial_number'>
+				<span>{serial}</span>
+				<span className='line'>-</span>
+				<span>{index + 1}</span>
 			</div>
-			{!useByMindmap && <Children {...props_children}></Children>}
-			<If condition={!useByMindmap}>
+			<div
+				className='action_wrap flex justify_center align_center cursor_point clickable'
+				onClick={onCheck}
+			>
 				<Choose>
-					<When condition={!!kanban_mode}>
-						{has_options ? (
-							OptionsWrap
-						) : (
-							<div className='date_wrap w_100 border_box'>{date}</div>
-						)}
+					<When condition={status === 'unchecked' || status === 'closed'}>
+						<Circle weight='bold' />
 					</When>
-					<Otherwise>{!zen_mode && has_options && OptionsWrap}</Otherwise>
+					<When condition={status === 'checked'}>
+						<CheckCircle weight='fill' color='var(--color_text_grey)' />
+					</When>
 				</Choose>
-			</If>
+			</div>
+			<ConfigProvider getPopupContainer={() => document.body}>
+				<Dropdown
+					destroyPopupOnHide
+					trigger={['contextMenu']}
+					overlayStyle={{ width: 132 }}
+					menu={{
+						items: context_menu,
+						onClick: onContextMenu
+					}}
+				>
+					<Text
+						id={`todo_${id}`}
+						className={$cx('text_wrap', !!outdate && 'outdate')}
+						max_length={todo.text_max_length}
+						onChange={onChange}
+						setEditor={setEditor}
+						onKeyDown={onKeyDown}
+						setRef={setRef}
+					></Text>
+				</Dropdown>
+			</ConfigProvider>
 		</div>
 	)
 }

@@ -131,6 +131,10 @@ export interface IPropsTodos {
 	showDetailModal: (args: Model['current_detail_index']) => void
 }
 
+export interface IPropsFlatTodos extends IPropsTodos {
+	angle: Todo.Angle
+}
+
 export interface IPropsTodoItem {
 	mode: Model['mode']
 	sortable_props?: DndItemProps
@@ -157,6 +161,10 @@ export interface IPropsTodoItem {
 	remove: Model['remove']
 	handleOpenItem?: Model['handleOpenItem']
 	showDetailModal: IPropsTodos['showDetailModal']
+}
+
+export interface IPropsFlatTodoItem extends IPropsTodoItem {
+	serial: string
 }
 
 export interface IPropsChildren {

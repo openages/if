@@ -1,0 +1,40 @@
+._local {
+	:global {
+		.kanban_item_header {
+			height: 36px;
+			line-height: 1;
+			padding: 0 24px;
+			background-color: var(--color_bg_1);
+
+			.left_wrap {
+				.progress_wrap {
+					width: 16px;
+					margin-right: 8px;
+				}
+
+				.name {
+					text-transform: capitalize;
+				}
+
+				.count {
+					padding: 2px 0;
+					border-radius: 30px;
+					color: rgba(var(--color_text_rgb), 0.7);
+					background-color: var(--color_bg_1);
+				}
+			}
+
+			.btn_insert {
+				width: 21px;
+				height: 21px;
+				border-radius: var(--radius_small);
+				color: rgba(var(--color_text_rgb), 0.81);
+				font-size: 12px;
+
+				&:hover {
+					background-color: var(--color_bg);
+				}
+			}
+		}
+	}
+}

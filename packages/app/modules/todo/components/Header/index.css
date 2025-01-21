@@ -28,6 +28,30 @@
 		}
 	}
 
+	&.flat {
+		height: 37px;
+		padding: 0 24px;
+		padding-left: 21px;
+		border-bottom: var(--border_light);
+
+		:global {
+			.left_wrap {
+				.name {
+					font-size: 15px;
+					font-weight: 400;
+				}
+			}
+
+			.actions_wrap {
+				.icon_wrap {
+					width: 24px;
+					height: 24px;
+					font-size: 15px;
+				}
+			}
+		}
+	}
+
 	&.desc {
 		padding-top: 24px;
 		padding-bottom: 12px;
