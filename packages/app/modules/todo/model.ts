@@ -160,7 +160,7 @@ export default class Index {
 				this.stopWatchItems()
 			}
 
-			if ((v !== 'kanban' && v !== 'quad') || old_val !== 'mindmap') {
+			if ((v !== 'kanban' && v !== 'quad' && v !== 'flat') || old_val !== 'mindmap') {
 				this.kanban_items = {}
 
 				this.stopWatchKanbanItems()
@@ -178,13 +178,13 @@ export default class Index {
 				this.table_sort = {}
 			}
 
-			if (v === 'kanban' || v === 'quad' || v === 'mindmap') {
+			if (v === 'kanban' || v === 'quad' || v === 'flat' || v === 'mindmap') {
 				this.kanban_mode = 'angle'
 
 				this.watchKanbanItems()
 			}
 
-			if (v !== 'kanban' && v !== 'quad' && v !== 'mindmap') {
+			if (v !== 'kanban' && v !== 'quad' && v !== 'flat' && v !== 'mindmap') {
 				this.kanban_mode = '' as KanbanMode
 			}
 		},
@@ -211,7 +211,7 @@ export default class Index {
 		if (!this.current_detail_index.id) return {} as CurrentDetailItem
 
 		const items =
-			this.mode === 'kanban' || this.mode === 'quad' || this.mode === 'mindmap'
+			this.mode === 'kanban' || this.mode === 'quad' || this.mode === 'flat' || this.mode === 'mindmap'
 				? this.kanban_items[this.current_detail_index.dimension_id!]?.items
 				: this.items
 

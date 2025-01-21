@@ -9,7 +9,7 @@ import { DataEmpty, SortableWrap } from '@/components'
 import { useStackSelector } from '@/context/stack'
 import { pointerWithin, rectIntersection, DndContext, DragOverlay } from '@dnd-kit/core'
 
-import { Archive, Detail, Header, Input, Kanban, Mindmap, SettingsModal, Table, Tabs, Todos } from './components'
+import { Archive, Detail, Flat, Header, Input, Kanban, Mindmap, SettingsModal, Table, Tabs, Todos } from './components'
 import TodoItem from './components/TodoItem'
 import styles from './index.css'
 import Model from './model'
@@ -268,7 +268,9 @@ const Index = ({ id }: IProps) => {
 							.with(P.union('list', 'kanban', 'quad'), () => (
 								<DndContext
 									collisionDetection={
-										x.mode === 'kanban' ? pointerWithin : rectIntersection
+										x.mode === 'kanban' || x.mode === 'quad'
+											? pointerWithin
+											: rectIntersection
 									}
 									onDragStart={onDragStart}
 									onDragEnd={onDragEnd}
@@ -309,7 +311,7 @@ const Index = ({ id }: IProps) => {
 							))
 							.with('table', () => <Table {...props_table}></Table>)
 							.with('mindmap', () => <Mindmap {...props_mindmap}></Mindmap>)
-							.with('flat', () => null)
+							.with('flat', () => <Flat {...props_kanban}></Flat>)
 							.exhaustive()}
 						<SettingsModal {...props_settings_modal}></SettingsModal>
 						<Archive {...props_archive}></Archive>

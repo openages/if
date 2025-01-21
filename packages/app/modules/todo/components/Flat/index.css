@@ -1,0 +1,36 @@
+._local {
+	.kanban_item_wrap {
+		.kanban_item_header {
+			height: 30px;
+			line-height: 1;
+			padding-right: 9px;
+			padding-left: 18px;
+
+			:global {
+				.left_wrap {
+					.name {
+						text-transform: capitalize;
+					}
+
+					.count {
+						padding: 2px 4px;
+						border-radius: 30px;
+						color: var(--color_text_grey);
+						background-color: var(--color_bg_1);
+						font-size: 10px;
+					}
+				}
+
+				.btn_insert {
+					width: 21px;
+					height: 21px;
+					border-radius: var(--radius_small);
+
+					&:hover {
+						background-color: var(--color_bg_2);
+					}
+				}
+			}
+		}
+	}
+}
