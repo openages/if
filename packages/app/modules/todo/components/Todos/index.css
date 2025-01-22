@@ -6,9 +6,9 @@
 
 	&.kanban_mode {
 		overflow-y: scroll;
-		height: calc(100% - 30px);
+		height: calc(100% - 36px);
 		min-height: unset;
-		padding: 0 9px;
+		padding: 0;
 		padding-bottom: 60px;
 		outline: none;
 
@@ -34,9 +34,9 @@
 
 	&.quad {
 		overflow-y: scroll;
-		height: calc(100% - 30px);
+		height: calc(100% - 36px);
 		min-height: unset;
-		padding: 0 9px;
+		padding: 9px;
 		padding-bottom: 36px;
 		outline: none;
 	}

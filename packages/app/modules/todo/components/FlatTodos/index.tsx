@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import { useInView } from 'framer-motion'
 import { useMemo, useRef } from 'react'
 
 import { SimpleEmpty, SortableWrap } from '@/components'
@@ -26,8 +27,8 @@ const Index = (props: IPropsFlatTodos) => {
 		kanban_mode,
 		dimension_id,
 		angle,
+		scroll_container,
 		check,
-		updateRelations,
 		insert,
 		update,
 		tab,
@@ -38,6 +39,7 @@ const Index = (props: IPropsFlatTodos) => {
 	} = props
 	const container = useRef<HTMLDivElement>(null)
 	const stoper = useRef<number>()
+	const visible = useInView(container, { root: scroll_container })
 
 	const { isOver, active, setNodeRef } = useDroppable({
 		id: `kanban_${dimension_id}`,
@@ -72,13 +74,14 @@ const Index = (props: IPropsFlatTodos) => {
 				styles._local,
 				!items.length && isOver && active?.data?.current?.dimension_id !== dimension_id && styles.isOver
 			)}
-			ref={ref => kanban_mode && setNodeRef(ref)}
+			ref={ref => setNodeRef(ref)}
 		>
 			<FlatAngleHeader
 				angle={angle}
 				dimension_id={dimension_id!}
 				counts={items.length}
 				percent={percent}
+				sticky={visible}
 				insert={insert}
 			></FlatAngleHeader>
 			<div className='todo_items_wrap w_100 flex flex_column' ref={container}>

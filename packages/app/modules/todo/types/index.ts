@@ -2,6 +2,7 @@ import type { DirTree, RxDB, Todo, DndItemProps } from '@/types'
 import type { SelectProps } from 'antd'
 import type Model from '../model'
 import type { Icon } from '@phosphor-icons/react'
+import type { RefObject } from 'react'
 
 export type QueryItems = RxDB.ItemsQuery<Todo.TodoItem>
 export type QueryArchives = RxDB.ItemsQuery<Todo.TodoItem>
@@ -135,6 +136,7 @@ export interface IPropsTodos {
 }
 
 export interface IPropsFlatTodos extends IPropsTodos {
+	scroll_container: RefObject<HTMLDivElement>
 	angle: Todo.Angle
 }
 

@@ -13,14 +13,15 @@ interface IProps {
 	dimension_id: string
 	counts: number
 	percent: number
+	sticky?: boolean
 	insert: IPropsFlatTodoItem['insert']
 }
 
 const Index = (props: IProps) => {
-	const { angle, dimension_id, counts, percent, insert } = props
+	const { angle, dimension_id, counts, percent, sticky, insert } = props
 
 	return (
-		<div className={$cx('w_100 border_box', styles._local)}>
+		<div className={$cx('w_100 border_box', styles._local, sticky && styles.sticky)}>
 			<div className='kanban_item_header w_100 border_box flex justify_between align_center'>
 				<div className='left_wrap flex align_center'>
 					<div className='progress_wrap flex align_center'>

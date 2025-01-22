@@ -6,7 +6,9 @@
 --color_text:#a2a5b9;
 --color_text_rgb:162,165,185;
 --color_text_sub:rgba(162,165,185,0.72);
+--color_text_sublight:rgba(247,248,248,0.6);
 --color_text_grey:rgba(162,165,185,0.48);
+--color_text_greylight:rgba(247,248,248,0.4);
 --color_text_light:rgba(162,165,185,0.3);
 --color_text_softlight:rgba(162,165,185,0.24);
 --color_text_line:#888;
@@ -19,6 +21,7 @@
 --color_border:#404046;
 --color_border_light:rgba(255, 255, 255, 0.036);
 --color_border_soft:rgba(255, 255, 255, 0.024);
+--color_border_softlight:rgba(var(--color_text_rgb), 0.024);
 --shadow:0 0 48px rgba(var(--color_std_rgb), 0.36);
 --shadow_left:-6px 6px 30px rgba(var(--color_std_rgb), 0.36);
 --shadow_right:6px 0 30px rgba(var(--color_std_rgb), 0.36);

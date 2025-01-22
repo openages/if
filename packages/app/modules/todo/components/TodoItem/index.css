@@ -4,7 +4,7 @@
 
 		:global {
 			.over_line {
-				bottom: -5px;
+				bottom: 0;
 				left: 0;
 				height: 1px;
 				background-color: var(--color_text);
@@ -17,15 +17,16 @@
 					box-sizing: border-box;
 					border: 1px solid var(--color_text);
 					border-radius: 50%;
+					background-color: var(--color_bg);
 					content: '';
 				}
 
 				&::before {
-					left: -4px;
+					left: 0;
 				}
 
 				&::after {
-					right: -4px;
+					right: 0;
 				}
 			}
 		}
@@ -43,11 +44,10 @@
 	}
 
 	&.kanban_mode {
-		padding-top: 3px;
-		margin-bottom: 6px;
-		border: var(--border);
-		border-radius: var(--radius_small);
-		box-shadow: var(--shadow_card);
+		padding: 0 9px;
+		padding-top: 6px;
+		padding-bottom: 3px;
+		border-bottom: var(--border_soft);
 
 		&.is_dragging {
 			opacity: 0;
@@ -288,7 +288,7 @@
 		.options_wrap {
 			padding-top: 3px;
 			padding-right: 12px;
-			padding-bottom: 9px;
+			padding-bottom: 7.2px;
 			padding-left: 9.6px;
 			transition: padding ease 0.3s;
 
@@ -299,6 +299,8 @@
 
 			.options_content {
 				overflow-x: scroll;
+				overflow-y: hidden;
+				min-height: 16px;
 			}
 
 			.other_wrap {

@@ -1,3 +1,5 @@
+import { useRef } from 'react'
+
 import FlatTodos from '../FlatTodos'
 import styles from './index.css'
 
@@ -24,9 +26,10 @@ const Index = (props: IPropsKanban) => {
 		handleOpenItem,
 		showDetailModal
 	} = props
+	const scroll_container = useRef<HTMLDivElement>(null)
 
 	return (
-		<div className={$cx('border_box flex flex_column', styles._local)}>
+		<div className={$cx('border_box flex flex_column', styles._local)} ref={scroll_container}>
 			{Object.values(kanban_items).map(item => (
 				<div
 					className={$cx('border_box flex flex_column', styles.kanban_item_wrap)}
@@ -34,6 +37,7 @@ const Index = (props: IPropsKanban) => {
 				>
 					<FlatTodos
 						{...{
+							scroll_container,
 							mode,
 							tags,
 							angles,

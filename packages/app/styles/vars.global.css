@@ -20,6 +20,8 @@
 	--border_dashed: 1px dashed var(--color_border_light);
 	--border_light: 1px solid var(--color_border_soft);
 	--border_light_dashed: 1px dashed var(--color_border_soft);
+	--border_soft: 1px solid var(--color_border_softlight);
+	--border_soft_dashed: 1px dashed var(--color_border_softlight);
 	--border_deep: 1px solid var(--color_border);
 	--border_deep_dashed: 1px dashed var(--color_border);
 

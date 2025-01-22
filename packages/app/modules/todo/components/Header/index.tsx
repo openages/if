@@ -232,8 +232,7 @@ const Index = (props: IPropsHeader) => {
 				'limited_content_wrap border_box flex justify_between align_center relative',
 				styles._local,
 				mode !== 'list' && styles.other_mode,
-				(mode === 'kanban' || mode === 'quad') && styles.kanban_mode,
-				mode === 'flat' && styles.flat,
+				(mode === 'kanban' || mode === 'quad' || mode === 'flat') && styles.flat,
 				editor_size && styles.desc
 			)}
 		>

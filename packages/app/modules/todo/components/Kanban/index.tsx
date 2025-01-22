@@ -1,9 +1,9 @@
-import { Plus } from '@phosphor-icons/react'
-
+import FlatAngleHeader from '../FlatAngleHeader'
 import Todos from '../Todos'
 import styles from './index.css'
 
 import type { IPropsKanban } from '../../types'
+import type { Todo } from '@/types'
 
 const Index = (props: IPropsKanban) => {
 	const {
@@ -16,6 +16,7 @@ const Index = (props: IPropsKanban) => {
 		angles,
 		relations,
 		drag_disabled,
+		dimension_id,
 		check,
 		updateRelations,
 		insert,
@@ -36,68 +37,51 @@ const Index = (props: IPropsKanban) => {
 				mode === 'quad' && styles.quad
 			)}
 		>
-			{Object.values(kanban_items).map((item, index) => (
-				<div
-					className={$cx('border_box flex flex_column', styles.kanban_item_wrap)}
-					key={item.dimension.value.id}
-				>
-					<div className='kanban_item_header_wrap w_100 border_box'>
-						<div
-							className={$cx(
-								'w_100 border_box flex justify_between align_center relative',
-								styles.kanban_item_header
-							)}
-							style={
-								item.dimension.type === 'tag'
-									? // @ts-ignore
-										{ '--color_tag': item.dimension.value.color }
-									: {}
-							}
-						>
-							<div className='left_wrap flex align_center'>
-								<span className='name'>{item.dimension.value.text}</span>
-								{item.items.length > 0 && (
-									<span className='count ml_6'>{item.items.length}</span>
-								)}
-							</div>
-							<div
-								className='btn_insert border_box flex justify_center align_center clickable'
-								onClick={() =>
-									insert({
-										index: -1,
-										dimension_id: Object.keys(kanban_items)[index]
-									})
-								}
-							>
-								<Plus size={15}></Plus>
-							</div>
-						</div>
+			{Object.values(kanban_items).map((item, index) => {
+				const items = item.items
+
+				const percent =
+					(items.filter(item => (item as Todo.Todo).status !== 'unchecked').length * 100) /
+					items.length
+
+				return (
+					<div
+						className={$cx('border_box flex flex_column', styles.kanban_item_wrap)}
+						key={item.dimension.value.id}
+					>
+						<FlatAngleHeader
+							angle={item.dimension.value}
+							dimension_id={dimension_id!}
+							counts={items.length}
+							percent={percent}
+							insert={insert}
+						></FlatAngleHeader>
+						<Todos
+							{...{
+								mode,
+								tags,
+								angles,
+								relations,
+								drag_disabled,
+								open_items,
+								zen_mode,
+								check,
+								updateRelations,
+								insert,
+								update,
+								tab,
+								moveTo,
+								remove,
+								handleOpenItem,
+								showDetailModal
+							}}
+							kanban_mode={mode === 'kanban' ? kanban_mode : undefined}
+							items={item.items}
+							dimension_id={Object.keys(kanban_items)[index]}
+						></Todos>
 					</div>
-					<Todos
-						{...{
-							mode,
-							tags,
-							angles,
-							relations,
-							drag_disabled,
-							open_items,
-							zen_mode,
-							check,
-							updateRelations,
-							insert,
-							update,
-							tab,
-							moveTo,
-							remove,
-							handleOpenItem,
-							showDetailModal
-						}}
-						kanban_mode={mode === 'kanban' ? kanban_mode : undefined}
-						items={item.items}
-						dimension_id={Object.keys(kanban_items)[index]}
-					></Todos>
-				</div>
-			))}
+				)
+			})}
 		</div>
 	)
 }

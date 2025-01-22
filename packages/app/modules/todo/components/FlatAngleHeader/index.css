@@ -1,4 +1,10 @@
 ._local {
+	&.sticky {
+		position: sticky;
+		z-index: 100;
+		top: 0;
+	}
+
 	:global {
 		.kanban_item_header {
 			height: 36px;
