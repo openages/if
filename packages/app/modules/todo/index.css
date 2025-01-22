@@ -25,6 +25,13 @@
 				}
 			}
 
+			&.flat {
+				.drag_wrap {
+					top: unset;
+					right: 3px;
+				}
+			}
+
 			.drag_wrap {
 				top: 6px;
 				right: 0px;

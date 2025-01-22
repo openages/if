@@ -8,8 +8,7 @@
 
 			.left_wrap {
 				.progress_wrap {
-					width: 16px;
-					margin-right: 8px;
+					width: 24px;
 				}
 
 				.name {
@@ -19,7 +18,7 @@
 				.count {
 					padding: 2px 0;
 					border-radius: 30px;
-					color: rgba(var(--color_text_rgb), 0.7);
+					color: rgba(var(--color_text_rgb), 0.72);
 					background-color: var(--color_bg_1);
 				}
 			}

@@ -1,7 +1,6 @@
 import { Progress } from 'antd'
-import { useMemo } from 'react'
 
-import { Plus } from '@phosphor-icons/react'
+import { CheckCircle, Plus } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -24,18 +23,22 @@ const Index = (props: IProps) => {
 		<div className={$cx('w_100 border_box', styles._local)}>
 			<div className='kanban_item_header w_100 border_box flex justify_between align_center'>
 				<div className='left_wrap flex align_center'>
-					<div className='progress_wrap'>
-						<Progress
-							className='progress'
-							type='circle'
-							size={15}
-							showInfo={false}
-							strokeColor='rgba(var(--color_text_rgb), 0.66)'
-							trailColor='rgba(var(--color_text_rgb), 0.24)'
-							strokeWidth={12}
-							steps={{ count: counts, gap: 8 }}
-							percent={percent}
-						></Progress>
+					<div className='progress_wrap flex align_center'>
+						{percent === 100 ? (
+							<CheckCircle size={18}></CheckCircle>
+						) : (
+							<Progress
+								className='progress'
+								type='circle'
+								size={15}
+								showInfo={false}
+								strokeColor='rgba(var(--color_text_rgb), 0.66)'
+								trailColor='rgba(var(--color_text_rgb), 0.24)'
+								strokeWidth={12}
+								steps={{ count: counts, gap: 8 }}
+								percent={percent}
+							></Progress>
+						)}
 					</div>
 					<span className='name'>{angle.text}</span>
 					{counts > 0 && <span className='count ml_6'>{counts}</span>}

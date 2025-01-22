@@ -115,6 +115,10 @@ export default class Index {
 				this.watchItems()
 			}
 
+			if (['kanban', 'flat', 'quad'].includes(this.mode)) {
+				this.watchKanbanItems()
+			}
+
 			archive(this.id)
 		},
 		['setting.setting.angles']: v => {
@@ -166,7 +170,7 @@ export default class Index {
 				this.stopWatchKanbanItems()
 			}
 
-			if (v === 'table') {
+			if (v === 'list' || v === 'table') {
 				this.kanban_mode = '' as KanbanMode
 
 				this.watchItems()
@@ -193,6 +197,11 @@ export default class Index {
 
 			if (v) {
 				this.watchKanbanItems()
+			}
+
+			if (v === 'tag') {
+				this.items_sort_param = null
+				this.items_filter_tags = []
 			}
 		}
 	} as Watch<
@@ -970,8 +979,11 @@ export default class Index {
 
 	setMode(v: Index['mode']) {
 		this.mode = v
-		this.items_sort_param = null
-		this.items_filter_tags = []
+
+		if (v === 'mindmap' || v === 'table') {
+			this.items_sort_param = null
+			this.items_filter_tags = []
+		}
 	}
 
 	updateArchiveItems(id: string) {
@@ -1074,7 +1086,9 @@ export default class Index {
 				return getQueryItems({
 					file_id: this.id,
 					selector: { type: 'todo' },
-					angle_id: item.id
+					angle_id: item.id,
+					items_sort_param: this.items_sort_param,
+					items_filter_tags: this.items_filter_tags
 				}).$.subscribe(items => {
 					if (this.disable_watcher) return
 

@@ -7,14 +7,10 @@ import { todo } from '@/appdata'
 import { useText, useTextChange, Text } from '@/Editor'
 import { useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
-import { CheckCircle, Circle } from '@phosphor-icons/react'
+import { CheckCircle, Circle, DotsSixVertical } from '@phosphor-icons/react'
 
-import CycleStatus from '../CycleStatus'
-import DeadlineStatus from '../DeadlineStatus'
 import FlatLevel from '../FlatLevel'
-import LevelStatus from '../LevelStatus'
-import RemindStatus from '../RemindStatus'
-import TagSelect from '../TagSelect'
+import { Children, Deadline, Remind, Repeat, Tags } from './components'
 import { useContextMenu, useHandlers, useOnContextMenu, useOptions } from './hooks'
 import styles from './index.css'
 
@@ -43,21 +39,8 @@ const Index = (props: IPropsFlatTodoItem) => {
 		showDetailModal
 	} = props
 
-	const {
-		id,
-		status,
-		text,
-		tag_ids,
-		level,
-		remind_time,
-		end_time,
-		cycle_enabled,
-		cycle,
-		recycle_time,
-		schedule,
-		children,
-		create_at
-	} = item
+	const { id, status, text, tag_ids, level, remind_time, end_time, cycle_enabled, cycle, recycle_time, children } =
+		item
 
 	const {
 		attributes,
@@ -69,17 +52,9 @@ const Index = (props: IPropsFlatTodoItem) => {
 		setActivatorNodeRef
 	} = sortable_props || {}
 
-	const {
-		isOver,
-		active,
-		setNodeRef: setDropRef
-	} = useDroppable({
-		id,
-		data: { index, dimension_id },
-		disabled: kanban_mode !== 'angle'
-	})
+	const { isOver, active, setNodeRef: setDropRef } = useDroppable({ id, data: { index, dimension_id } })
 
-	const { open, onCheck, insertChildren, onKeyDown, updateTags } = useHandlers({
+	const { onCheck, insertChildren, onKeyDown, updateTags } = useHandlers({
 		item,
 		index,
 		kanban_mode,
@@ -117,47 +92,17 @@ const Index = (props: IPropsFlatTodoItem) => {
 
 	useOptions({ item, input: ref_input, zen_mode })
 
-	const date = useMemo(() => {
-		const target = dayjs(create_at)
+	const children_status = useMemo(() => {
+		if (!children || !children.length) return
 
-		if (target.diff(dayjs(), 'week') >= 1) return target.format('YYYY-MM-DD')
+		const checked = children.filter(item => item.status === 'checked')
 
-		return `${dayjs().to(target)} ${target.format('dddd')}`
-	}, [create_at])
-
-	const OptionsWrap = useMemo(
-		() => (
-			<div className={$cx('options_wrap w_100 border_box flex align_center', open && 'open', status)}>
-				<div className='options_content w_100 flex align_center'>
-					{level! > 0 && <LevelStatus level={level}></LevelStatus>}
-					{tags?.length > 0 && tag_ids?.length! > 0 && (
-						<TagSelect
-							className='tag_select'
-							options={tags}
-							value={tag_ids!}
-							useByTodo
-							onChange={updateTags}
-						></TagSelect>
-					)}
-					{remind_time && <RemindStatus remind_time={remind_time}></RemindStatus>}
-					{status === 'unchecked' && end_time && (
-						<DeadlineStatus end_time={end_time}></DeadlineStatus>
-					)}
-					{cycle_enabled && cycle && cycle.value !== undefined && (
-						<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
-					)}
-					{kanban_mode && <span className='date_wrap in_options'>{date}</span>}
-				</div>
-			</div>
-		),
-		[open, status, tags, tag_ids, remind_time, end_time, cycle_enabled, cycle, level, kanban_mode]
-	)
-
-	const is_dragging = useMemo(() => kanban_mode && isDragging, [kanban_mode, isDragging])
+		return { total: children.length, checked: checked.length }
+	}, [children])
 
 	const is_over = useMemo(
-		() => (mode === 'quad' || kanban_mode) && isOver && active!.data.current!.dimension_id !== dimension_id,
-		[mode, kanban_mode, isOver, active, dimension_id]
+		() => isOver && active!.data.current!.dimension_id !== dimension_id,
+		[isOver, active, dimension_id]
 	)
 
 	const outdate = useMemo(
@@ -172,10 +117,10 @@ const Index = (props: IPropsFlatTodoItem) => {
 			className={$cx(
 				'w_100 border_box flex align_center justify_between relative',
 				styles.todo_item_wrap,
-				is_dragging && styles.is_dragging,
+				isDragging && styles.is_dragging,
 				is_over && styles.is_over,
 				styles[status],
-				drag_overlay && 'todo_item_drag_overlay'
+				drag_overlay && 'todo_item_drag_overlay flat'
 			)}
 			ref={
 				setSortRef &&
@@ -189,12 +134,24 @@ const Index = (props: IPropsFlatTodoItem) => {
 			onContextMenu={disableContextMenu}
 		>
 			{is_over && <div className='over_line w_100 absolute left_0 flex align_center'></div>}
-			<FlatLevel value={level}></FlatLevel>
-			<div className='serial_number'>
-				<span>{serial}</span>
-				<span className='line'>-</span>
-				<span>{index + 1}</span>
+			<div
+				className={$cx(
+					'drag_wrap border_box none justify_center align_center absolute transition_normal cursor_point z_index_10'
+				)}
+				ref={setActivatorNodeRef}
+				{...attributes}
+				{...listeners}
+			>
+				<DotsSixVertical size={14} weight='bold'></DotsSixVertical>
 			</div>
+			<FlatLevel value={level}></FlatLevel>
+			{serial && (
+				<div className='serial_number'>
+					<span>{serial}</span>
+					<span className='line'>-</span>
+					<span>{index + 1}</span>
+				</div>
+			)}
 			<div
 				className='action_wrap flex justify_center align_center cursor_point clickable'
 				onClick={onCheck}
@@ -229,6 +186,17 @@ const Index = (props: IPropsFlatTodoItem) => {
 					></Text>
 				</Dropdown>
 			</ConfigProvider>
+			<div className='options_wrap flex align_center'>
+				{children_status && <Children {...children_status}></Children>}
+				{tags?.length > 0 && tag_ids?.length! > 0 && (
+					<Tags tags={tags} tag_ids={tag_ids} updateTags={updateTags}></Tags>
+				)}
+				{remind_time && <Remind remind_time={remind_time}></Remind>}
+				{status === 'unchecked' && end_time && <Deadline end_time={end_time}></Deadline>}
+				{cycle_enabled && cycle && cycle.value !== undefined && (
+					<Repeat cycle={cycle} recycle_time={recycle_time}></Repeat>
+				)}
+			</div>
 		</div>
 	)
 }

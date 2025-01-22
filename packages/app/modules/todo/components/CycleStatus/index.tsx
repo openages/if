@@ -10,7 +10,7 @@ import styles from './index.css'
 import type { IPropsCircleStatus } from '../../types'
 
 const Index = (props: IPropsCircleStatus) => {
-	const { cycle, recycle_time } = props
+	const { cycle, recycle_time, useByFlat } = props
 	const [percent, setPercent] = useState(0)
 	const { t } = useTranslation()
 	const scale_text = cycle?.type === 'interval' && cycle?.scale ? t(`todo.Input.Cycle.options.${cycle.scale}`) : ''
@@ -44,6 +44,7 @@ const Index = (props: IPropsCircleStatus) => {
 			className={$cx(
 				'other_wrap border_box flex align_center relative',
 				styles._local,
+				useByFlat && styles.useByFlat,
 				percent > 0 && styles.percent
 			)}
 		>
@@ -57,8 +58,8 @@ const Index = (props: IPropsCircleStatus) => {
 				></div>
 			)}
 			<div className='repeat_content h_100 flex align_center relative'>
-				<Repeat className='icon' size={10}></Repeat>
-				<span className='text ml_2'>{desc}</span>
+				<Repeat className='icon' size={useByFlat ? 12 : 10}></Repeat>
+				<span className={$cx('text', useByFlat ? 'ml_4' : 'ml_2')}>{desc}</span>
 			</div>
 		</div>
 	)

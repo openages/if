@@ -191,7 +191,7 @@ const Index = (props: IPropsHeader) => {
 						className='select_sort'
 						variant='borderless'
 						popupClassName='borderless'
-						disabled={mode !== 'list'}
+						disabled={mode === 'mindmap' || mode === 'table'}
 						options={[
 							{
 								value: 'importance',
@@ -237,38 +237,6 @@ const Index = (props: IPropsHeader) => {
 				editor_size && styles.desc
 			)}
 		>
-			{(items_filter_tags.length > 0 || items_sort_param) && (
-				<div className='filter_wrap flex absolute top_0'>
-					{items_sort_param && (
-						<div className='filter_item border_box flex align_center ml_4'>
-							<div
-								className='type_wrap flex align_center clickable'
-								onClick={toggleSortOrder}
-							>
-								<span className='text'>
-									{t(`todo.Header.options.sort.${items_sort_param.type}`)}
-								</span>
-								<span className='btn_order ml_2 flex justify_center align_center'>
-									<Choose>
-										<When condition={items_sort_param.order === 'desc'}>
-											<CaretUp size={12} weight='bold'></CaretUp>
-										</When>
-										<Otherwise>
-											<CaretDown size={12} weight='bold'></CaretDown>
-										</Otherwise>
-									</Choose>
-								</span>
-							</div>
-							<span
-								className='btn_remove flex justify_center align_center clickable'
-								onClick={resetSortParam}
-							>
-								<X size={12} weight='bold'></X>
-							</span>
-						</div>
-					)}
-				</div>
-			)}
 			<div className='left_wrap flex flex_column'>
 				<div className='flex align_center'>
 					<If condition={!!icon}>
@@ -295,6 +263,49 @@ const Index = (props: IPropsHeader) => {
 				></Text>
 			</div>
 			<div className='actions_wrap flex justify_end align_center'>
+				{(items_filter_tags.length > 0 || items_sort_param) && (
+					<div className='filter_wrap flex align_center'>
+						{items_filter_tags.length > 0 && (
+							<TagSelect
+								className='select_tags on_header mr_6'
+								unlimit
+								show_suffix
+								placement='bottomRight'
+								options={tags}
+								value={items_filter_tags}
+								onChange={v => setItemsFilterTags(v)}
+							></TagSelect>
+						)}
+						{items_sort_param && (
+							<div className='filter_item border_box flex align_center'>
+								<div
+									className='type_wrap flex align_center clickable'
+									onClick={toggleSortOrder}
+								>
+									<span className='text'>
+										{t(`todo.Header.options.sort.${items_sort_param.type}`)}
+									</span>
+									<span className='btn_order ml_2 flex justify_center align_center'>
+										<Choose>
+											<When condition={items_sort_param.order === 'desc'}>
+												<CaretUp size={12} weight='bold'></CaretUp>
+											</When>
+											<Otherwise>
+												<CaretDown size={12} weight='bold'></CaretDown>
+											</Otherwise>
+										</Choose>
+									</span>
+								</div>
+								<span
+									className='btn_remove flex justify_center align_center clickable'
+									onClick={resetSortParam}
+								>
+									<X size={12} weight='bold'></X>
+								</span>
+							</div>
+						)}
+					</div>
+				)}
 				{search_mode && (
 					<div className='mr_8'>
 						<div

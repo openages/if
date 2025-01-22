@@ -10,6 +10,7 @@ import { useStackSelector } from '@/context/stack'
 import { pointerWithin, rectIntersection, DndContext, DragOverlay } from '@dnd-kit/core'
 
 import { Archive, Detail, Flat, Header, Input, Kanban, Mindmap, SettingsModal, Table, Tabs, Todos } from './components'
+import FlatTodoItem from './components/FlatTodoItem'
 import TodoItem from './components/TodoItem'
 import styles from './index.css'
 import Model from './model'
@@ -265,7 +266,7 @@ const Index = ({ id }: IProps) => {
 					<Fragment>
 						<Header {...props_header}></Header>
 						{match(x.mode)
-							.with(P.union('list', 'kanban', 'quad'), () => (
+							.with(P.union('list', 'kanban', 'flat', 'quad'), () => (
 								<DndContext
 									collisionDetection={
 										x.mode === 'kanban' || x.mode === 'quad'
@@ -287,8 +288,10 @@ const Index = ({ id }: IProps) => {
 											P.when(v => v === 'kanban' || v === 'quad'),
 											() => <Kanban {...props_kanban}></Kanban>
 										)
+										.with('flat', () => <Flat {...props_kanban}></Flat>)
 										.otherwise(() => null)}
 									{((x.mode === 'kanban' && x.kanban_mode === 'angle') ||
+										x.mode === 'flat' ||
 										x.mode === 'quad') && (
 										<DragOverlay dropAnimation={null}>
 											{drag_todo_item && (
@@ -300,9 +303,15 @@ const Index = ({ id }: IProps) => {
 															drag_todo_item.dimension_id
 													}}
 												>
-													<TodoItem
-														{...props_drag_todo_item}
-													></TodoItem>
+													{x.mode === 'flat' ? (
+														<FlatTodoItem
+															{...props_drag_todo_item}
+														></FlatTodoItem>
+													) : (
+														<TodoItem
+															{...props_drag_todo_item}
+														></TodoItem>
+													)}
 												</SortableWrap>
 											)}
 										</DragOverlay>
@@ -311,7 +320,6 @@ const Index = ({ id }: IProps) => {
 							))
 							.with('table', () => <Table {...props_table}></Table>)
 							.with('mindmap', () => <Mindmap {...props_mindmap}></Mindmap>)
-							.with('flat', () => <Flat {...props_kanban}></Flat>)
 							.exhaustive()}
 						<SettingsModal {...props_settings_modal}></SettingsModal>
 						<Archive {...props_archive}></Archive>

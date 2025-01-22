@@ -88,10 +88,12 @@ export interface IPropsDateTime {
 
 export interface IPropsRemindStatus {
 	remind_time: Todo.Todo['remind_time']
+	useByFlat?: boolean
 }
 
 export interface IPropsDeadlineStatus {
 	end_time: Todo.Todo['end_time']
+	useByFlat?: boolean
 }
 
 export interface IPropsCircle {
@@ -107,6 +109,7 @@ export interface IPropsCircle {
 export interface IPropsCircleStatus {
 	cycle: Todo.Todo['cycle']
 	recycle_time: Todo.Todo['recycle_time']
+	useByFlat?: boolean
 }
 
 export interface IPropsTodos {
@@ -164,7 +167,7 @@ export interface IPropsTodoItem {
 }
 
 export interface IPropsFlatTodoItem extends IPropsTodoItem {
-	serial: string
+	serial?: string
 }
 
 export interface IPropsChildren {

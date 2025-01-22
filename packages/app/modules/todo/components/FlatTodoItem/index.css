@@ -3,12 +3,25 @@
 	padding: 0 24px;
 	border-bottom: 1px solid rgba(var(--color_text_rgb), 0.03);
 
+	&:hover {
+		:global {
+			.drag_wrap {
+				display: flex;
+			}
+		}
+	}
+
+	&.is_dragging {
+		opacity: 0;
+		backdrop-filter: var(--blur);
+	}
+
 	&.is_over {
 		position: relative;
 
 		:global {
 			.over_line {
-				bottom: -5px;
+				bottom: 0;
 				left: 0;
 				height: 1px;
 				background-color: var(--color_text);
@@ -21,15 +34,16 @@
 					box-sizing: border-box;
 					border: 1px solid var(--color_text);
 					border-radius: 50%;
+					background-color: var(--color_bg);
 					content: '';
 				}
 
 				&::before {
-					left: -4px;
+					left: 0;
 				}
 
 				&::after {
-					right: -4px;
+					right: 0;
 				}
 			}
 		}
@@ -77,6 +91,18 @@
 	}
 
 	:global {
+		.drag_wrap {
+			right: 3px;
+			width: 18px;
+			height: 18px;
+			border-radius: var(--radius_small_1);
+			color: rgba(var(--color_text_rgb), 0.42);
+
+			&:hover {
+				background-color: var(--color_bg_2);
+			}
+		}
+
 		.action_wrap {
 			width: 21px;
 			height: 21px;
@@ -103,81 +129,36 @@
 		}
 
 		.text_wrap {
+			overflow: hidden;
 			flex: 1;
 			min-height: unset;
-			padding: 0;
+			margin-right: 12px;
 			outline: none;
-
-			&.has_children {
-				&::before {
-					position: absolute;
-					top: 4px;
-					left: 0;
-					height: 14px;
-					line-height: 12px;
-					box-sizing: border-box;
-					padding: 0 3px;
-					border: var(--border);
-					border-radius: 8px;
-					background-color: var(--color_bg_1);
-					content: attr(data-children);
-					text-indent: unset;
-					font-size: 10px;
-				}
-
-				.__editor_root {
-					p {
-						text-indent: 30px;
-
-						> * {
-							text-indent: 0;
-						}
-					}
-				}
-			}
+			text-overflow: ellipsis;
+			white-space: nowrap;
 
 			&.outdate {
 				color: var(--color_danger);
 			}
 
 			.__editor_root {
+				white-space: nowrap !important;
+
 				p {
-					transition: text-indent ease 0.18s;
+					overflow: hidden;
+					text-overflow: ellipsis;
 				}
 			}
 		}
-	}
-}
 
-:global {
-	.options_wrap {
-		padding-top: 3px;
-		padding-right: 12px;
-		padding-bottom: 9px;
-		padding-left: 9.6px;
-		transition: padding ease 0.3s;
+		.options_wrap {
+			gap: 3px;
 
-		&.checked,
-		&.closed {
-			opacity: 0.6;
-		}
-
-		.options_content {
-			overflow-x: scroll;
-		}
-
-		.other_wrap {
-			z-index: 1;
-			line-height: 1;
-			margin-right: 9px;
-			margin-bottom: -1px;
-			border-radius: 7px;
-			color: var(--color_text_grey);
-			white-space: nowrap;
-			font-size: 10px;
-
-			&:last-child {
-				margin-right: 0;
+			.option_item {
+				height: 26px;
+				padding: 0 8px;
+				border: var(--border);
+				border-radius: 13px;
 			}
 		}
 	}

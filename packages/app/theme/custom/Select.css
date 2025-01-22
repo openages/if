@@ -104,7 +104,7 @@
 .if-select-dropdown {
 	&.borderless {
 		width: unset !important;
-		min-width: 81px !important;
+		min-width: 90px !important;
 
 		.if-select-item {
 			min-height: unset;

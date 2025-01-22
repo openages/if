@@ -9,7 +9,7 @@ import styles from './index.css'
 import type { IPropsRemindStatus } from '../../types'
 
 const Index = (props: IPropsRemindStatus) => {
-	const { remind_time } = props
+	const { remind_time, useByFlat } = props
 	const [timeout, setTimeout] = useState(false)
 
 	useEffect(() => {
@@ -37,15 +37,16 @@ const Index = (props: IPropsRemindStatus) => {
 			className={$cx(
 				'other_wrap remind_wrap flex justify_center align_center',
 				styles._local,
+				useByFlat && styles.useByFlat,
 				(status === 'timeout' || status === 'close') && styles.notify
 			)}
 		>
 			<Bell
 				className={$cx('icon', timeout && 'timeout')}
-				size={10}
+				size={useByFlat ? 12 : 10}
 				weight={timeout ? 'fill' : 'regular'}
 			></Bell>
-			<span className='text ml_2'>{format(dayjs(remind_time), true)}</span>
+			<span className={$cx('text', useByFlat ? 'ml_4' : 'ml_2')}>{format(dayjs(remind_time), true)}</span>
 		</div>
 	)
 }

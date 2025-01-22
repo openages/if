@@ -59,16 +59,14 @@
 
 	:global {
 		.filter_wrap {
-			right: var(--limited_padding);
+			margin-right: 12px;
 
 			.filter_item {
-				height: 25px;
+				height: 24px;
 				line-height: 1;
-				padding: 3px;
+				padding: 3px 4px;
 				border: var(--border);
-				border-top: none;
-				border-bottom-right-radius: var(--radius_small);
-				border-bottom-left-radius: var(--radius_small);
+				border-radius: var(--radius);
 				user-select: none;
 				font-size: 12px;
 
@@ -91,6 +89,7 @@
 			.type_wrap {
 				height: 16px;
 				padding: 0 6px;
+				padding-right: 4px;
 				border-radius: var(--radius_small_1);
 
 				&:hover {
@@ -104,8 +103,6 @@
 		}
 
 		.left_wrap {
-			width: calc(100% - 180px);
-
 			em-emoji {
 				margin-right: 8px;
 
@@ -132,8 +129,6 @@
 		}
 
 		.actions_wrap {
-			width: 180px;
-
 			.icon_wrap {
 				width: 30px;
 				height: 30px;
@@ -149,6 +144,23 @@
 
 				.icon_lotus {
 					margin-bottom: -2px;
+				}
+			}
+
+			.select_tags {
+				&.on_header {
+					.if-select {
+						.if-select-selector {
+							padding-right: 0;
+						}
+
+						.if-select-selection-placeholder {
+						}
+
+						.if-select-arrow {
+							display: none;
+						}
+					}
 				}
 			}
 		}

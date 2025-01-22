@@ -11,6 +11,11 @@
 		}
 	}
 
+	&.useByFlat {
+		color: rgba(var(--color_text_rgb), 0.72);
+		font-size: 12px;
+	}
+
 	:global {
 		.bg_progress {
 			border-radius: 7px;

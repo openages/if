@@ -1,0 +1,10 @@
+._local {
+	color: rgba(var(--color_text_rgb), 0.72);
+	font-size: 12px;
+
+	:global {
+		.progress {
+			font-size: 12px;
+		}
+	}
+}

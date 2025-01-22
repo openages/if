@@ -1,0 +1,62 @@
+._local {
+	color: rgba(var(--color_text_rgb), 0.72);
+	font-size: 12px;
+
+	:global {
+		.if-select-selector {
+			padding-left: 0 !important;
+
+			.if-select-selection-wrap {
+				height: 26px;
+
+				.if-select-selection-overflow {
+					flex-wrap: nowrap;
+					height: 26px;
+					gap: 3px;
+
+					.if-select-selection-overflow-item-suffix {
+						display: none;
+					}
+				}
+			}
+		}
+
+		.color {
+			width: 8px;
+			height: 8px;
+			margin-right: 4px;
+			border-radius: 50%;
+		}
+
+		.tag {
+			height: 26px;
+			line-height: 1;
+			padding: 0 8px;
+			border: var(--border);
+			border-radius: 13px;
+		}
+	}
+}
+
+.popup {
+	width: 150px !important;
+
+	:global {
+		.if-select-item {
+			min-height: unset;
+			padding: 4px 6px;
+			font-size: 12px;
+		}
+
+		.select_item {
+			font-size: 12px;
+
+			.color {
+				width: 8px;
+				height: 8px;
+				margin-right: 6px;
+				border-radius: 50%;
+			}
+		}
+	}
+}
