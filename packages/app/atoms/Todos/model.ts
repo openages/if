@@ -111,14 +111,6 @@ export default class Index {
 				await todo_item.updateCRDT({ ifMatch: { $unset: { recycle_time: '' } } })
 			}
 		}
-
-		$db.activity_items.insert({
-			id: GenId(),
-			module: 'setting',
-			file_id,
-			name: file.name,
-			action: 'check'
-		})
 	}
 
 	checkExsit(keys: Array<string>) {

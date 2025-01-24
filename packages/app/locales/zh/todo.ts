@@ -52,7 +52,8 @@ export default {
 				alphabetical: '字母顺序',
 				create_at: '创建时间'
 			},
-			tags: '标签'
+			tags: '标签',
+			analysis: '分析'
 		}
 	},
 	SettingsModal: {
@@ -160,5 +161,8 @@ export default {
 			placeholder: '添加备注'
 		},
 		add_to_shcedule: '添加到日程'
+	},
+	Analysis: {
+		title: '分析'
 	}
 }

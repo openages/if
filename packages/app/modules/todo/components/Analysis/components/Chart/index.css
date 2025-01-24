@@ -1,0 +1,20 @@
+._local {
+	:global {
+		.charts_wrap {
+			.chart_ref {
+				height: 180px;
+				margin-bottom: 12px;
+				border-radius: var(--radius);
+				background-color: var(--color_bg_1);
+
+				&.trending {
+					width: calc(100% - 180px - 12px);
+				}
+
+				&.ratio {
+					width: 180px;
+				}
+			}
+		}
+	}
+}

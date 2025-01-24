@@ -5,9 +5,10 @@ import { match } from 'ts-pattern'
 import { updateSetting } from '@/actions/global'
 import { getArchiveTime, getCleanTime, getDocItem, getDocItemsData } from '@/utils'
 import { confirm, info } from '@/utils/antd'
+import { getEditorText } from '@/utils/editor'
 
 import type { MangoQueryOperators, MangoQuerySelector, MangoQuerySortPart, RxDocument } from 'rxdb'
-import type { ArchiveQueryParams } from './types/model'
+import type { ArchiveQueryParams, AnalysisTrending } from './types/model'
 import type {
 	ArgsCheck,
 	ArgsQueryArchives,
@@ -15,11 +16,12 @@ import type {
 	ArgsUpdate,
 	ArgsUpdateRelations,
 	ArgsUpdateStatus,
-	ArgsUpdateTodoData
+	ArgsUpdateTodoData,
+	ArgsGetAnalysisData
 } from './types/services'
 
 import type { RxDB, Todo, CleanTime } from '@/types'
-import type { ManipulateType } from 'dayjs'
+import type { ManipulateType, Dayjs, OpUnitType, QUnitType } from 'dayjs'
 
 export const getMaxMinSort = async (angle_id: string, min?: boolean) => {
 	const [sort_item] = await $db.todo_items
@@ -109,6 +111,166 @@ export const getQueryItems = (args: ArgsQueryItems) => {
 			.skip((table_page! - 1) * table_pagesize!)
 			.limit(table_pagesize!)
 			.sort(sort) as RxDB.ItemsQuery<Todo.TodoItem>
+	}
+}
+
+const getTrendingDate = (now: Dayjs, index: number, unit: OpUnitType | QUnitType, formatter: string) => {
+	const date = now.subtract(index, unit as QUnitType)
+
+	return {
+		unit,
+		date,
+		formatter,
+		duration: {
+			$gte: date.startOf(unit).valueOf(),
+			$lte: date.endOf(unit).valueOf()
+		}
+	}
+}
+
+export const getAnalysisData = async (args: ArgsGetAnalysisData) => {
+	const { file_id, analysis_duration, analysis_sort_params, analysis_filter_angles, analysis_filter_tags } = args
+
+	const sort_common: MangoQuerySortPart<Todo.Todo> = {}
+	const selector_common: MangoQuerySelector<Todo.Todo> = { file_id, type: 'todo' }
+	const selector_trending: MangoQuerySelector<Todo.Todo> = {}
+	const selector_items: MangoQuerySelector<Todo.Todo> = {}
+	const now = dayjs()
+	const periods = Array.from({ length: 6 }, (_, index) => index)
+
+	let trending_dates = [] as Array<{
+		unit: OpUnitType | QUnitType
+		date: Dayjs
+		formatter: string
+		duration: { $gte: number; $lte: number }
+	}>
+
+	if (analysis_sort_params.length) {
+		analysis_sort_params.forEach(item => {
+			if (item.type === 'importance') sort_common['level'] = item.order
+			if (item.type === 'create_at') sort_common['create_at'] = item.order
+			if (item.type === 'done_time') sort_common['done_time'] = item.order
+		})
+	}
+
+	if (analysis_filter_angles.length) {
+		selector_common['$or'] = []
+
+		analysis_filter_angles.forEach(item => {
+			selector_common['$or']!.push({ angle_id: item })
+		})
+	}
+
+	if (analysis_filter_tags.length) {
+		selector_common['tag_ids'] = {
+			$elemMatch: {
+				$in: analysis_filter_tags
+			}
+		}
+	}
+
+	switch (analysis_duration) {
+		case 'daily':
+			trending_dates = periods.map(index => getTrendingDate(now, index, 'day', 'MM-DD'))
+
+			selector_items['done_time'] = {
+				$gte: now.startOf('day').valueOf(),
+				$lte: now.endOf('day').valueOf()
+			}
+			break
+		case 'weekly':
+			trending_dates = periods.map(index => getTrendingDate(now, index, 'week', 'YYYY-WW'))
+
+			selector_items['done_time'] = {
+				$gte: now.startOf('week').valueOf(),
+				$lte: now.endOf('week').valueOf()
+			}
+			break
+		case 'monthly':
+			trending_dates = periods.map(index => getTrendingDate(now, index, 'month', 'YYYY-MM'))
+
+			selector_items['done_time'] = {
+				$gte: now.startOf('month').valueOf(),
+				$lte: now.endOf('month').valueOf()
+			}
+			break
+		case 'quarterly':
+			trending_dates = periods.map(index => getTrendingDate(now, index, 'quarter', 'YYYY-QQ'))
+
+			selector_items['done_time'] = {
+				$gte: now.startOf('quarter').valueOf(),
+				$lte: now.endOf('quarter').valueOf()
+			}
+			break
+		case 'yearly':
+			trending_dates = periods.map(index => getTrendingDate(now, index, 'year', 'YYYY'))
+
+			selector_items['done_time'] = {
+				$gte: now.startOf('year').valueOf(),
+				$lte: now.endOf('year').valueOf()
+			}
+			break
+	}
+
+	const trending = {
+		dates: [],
+		create: [],
+		done: [],
+		close: []
+	} as AnalysisTrending
+
+	for (const item of trending_dates.reverse()) {
+		const create = await $db.todo_items
+			.count({ selector: { ...selector_common, ...selector_trending, create_at: item.duration } })
+			.exec()
+		const done = await $db.todo_items
+			.count({
+				selector: {
+					...selector_common,
+					...selector_trending,
+					done_time: item.duration,
+					status: 'checked'
+				}
+			})
+			.exec()
+		const close = await $db.todo_items
+			.count({
+				selector: {
+					...selector_common,
+					...selector_trending,
+					done_time: item.duration,
+					status: 'closed'
+				}
+			})
+			.exec()
+
+		trending.dates.push(dayjs(item.date).format(item.formatter))
+		trending.create.push(create)
+		trending.done.push(done)
+		trending.close.push(close)
+	}
+
+	const items = await $db.todo_items
+		.find({ selector: { ...selector_common, ...selector_items, status: 'checked' } })
+		.sort(sort_common)
+		.limit(99999)
+		.exec()
+
+	return {
+		trending,
+		items: getDocItemsData(items).map(item => {
+			item['text'] = getEditorText(item.text)
+
+			if (item.children && item.children.length) {
+				item.children = item.children.map(child => {
+					child['text'] = getEditorText(child.text)
+
+					return child
+				})
+			}
+
+			return item
+		}) as Array<Todo.Todo>
 	}
 }
 

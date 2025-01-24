@@ -9,7 +9,20 @@ import { DataEmpty, SortableWrap } from '@/components'
 import { useStackSelector } from '@/context/stack'
 import { pointerWithin, rectIntersection, DndContext, DragOverlay } from '@dnd-kit/core'
 
-import { Archive, Detail, Flat, Header, Input, Kanban, Mindmap, SettingsModal, Table, Tabs, Todos } from './components'
+import {
+	Analysis,
+	Archive,
+	Detail,
+	Flat,
+	Header,
+	Input,
+	Kanban,
+	Mindmap,
+	SettingsModal,
+	Table,
+	Tabs,
+	Todos
+} from './components'
 import FlatTodoItem from './components/FlatTodoItem'
 import TodoItem from './components/TodoItem'
 import styles from './index.css'
@@ -30,7 +43,8 @@ import type {
 	IPropsTabs,
 	IPropsTodoItem,
 	IPropsTodos,
-	IPropsMindmap
+	IPropsMindmap,
+	IPropsAnalysis
 } from './types'
 
 const Index = ({ id }: IProps) => {
@@ -45,7 +59,6 @@ const Index = ({ id }: IProps) => {
 	const current_detail_item = $copy(x.current_detail_item)
 	const search_mode = Boolean(x.table_selector.id)
 	const table_exclude_fields = $copy(x.setting?.setting?.table_exclude_fields || [])
-	const quad_angles = $copy(x.quad_angles)
 	const kanban_items = $copy(x.kanban_items)
 	const updateSetting = useMemoizedFn(x.updateSetting)
 
@@ -79,6 +92,11 @@ const Index = ({ id }: IProps) => {
 		toggleKanbanMode: useMemoizedFn(() => (x.kanban_mode = x.kanban_mode === 'angle' ? 'tag' : 'angle')),
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true)),
 		showArchiveModal: useMemoizedFn(() => (x.visible_archive_modal = true)),
+		showAnalysisModal: useMemoizedFn(() => {
+			x.getAnalysisData()
+
+			x.visible_analysis_modal = true
+		}),
 		setItemsSortParam: useMemoizedFn(v => (x.items_sort_param = v)),
 		setItemsFilterTags: useMemoizedFn(v => (x.items_filter_tags = v)),
 		toggleTableFilter: useMemoizedFn(() => (x.visible_table_filter = !x.visible_table_filter)),
@@ -198,6 +216,25 @@ const Index = ({ id }: IProps) => {
 
 			x.current_detail_index = {} as Model['current_detail_index']
 		})
+	}
+
+	const props_analysis: IPropsAnalysis = {
+		visible_analysis_modal: x.visible_analysis_modal,
+		angles,
+		tags,
+		trending: $copy(x.analysis_trending),
+		items: $copy(x.analysis_items),
+		analysis_duration: x.analysis_duration,
+		analysis_sort_params: $copy(x.analysis_sort_params),
+		analysis_filter_angles: $copy(x.analysis_filter_angles),
+		analysis_filter_tags: $copy(x.analysis_filter_tags),
+		analysis_custom_prefix: x.analysis_custom_prefix,
+		setDuration: useMemoizedFn(v => (x.analysis_duration = v)),
+		setSortParams: useMemoizedFn(v => (x.analysis_sort_params = v)),
+		setFilterAngles: useMemoizedFn(v => (x.analysis_filter_angles = v)),
+		setFilterTags: useMemoizedFn(v => (x.analysis_filter_tags = v)),
+		setCustomPrefix: useMemoizedFn(v => (x.analysis_custom_prefix = v)),
+		onClose: useMemoizedFn(() => (x.visible_analysis_modal = false))
 	}
 
 	const props_drag_todo_item: IPropsTodoItem = drag_todo_item
@@ -324,6 +361,7 @@ const Index = ({ id }: IProps) => {
 						<SettingsModal {...props_settings_modal}></SettingsModal>
 						<Archive {...props_archive}></Archive>
 						<Detail {...props_detail}></Detail>
+						<Analysis {...props_analysis}></Analysis>
 					</Fragment>
 				))
 				.otherwise(() => null)}

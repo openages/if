@@ -40,6 +40,7 @@ export interface IPropsHeader
 	toggleKanbanMode: () => void
 	showSettingsModal: () => void
 	showArchiveModal: () => void
+	showAnalysisModal: () => void
 	setItemsSortParam: (v: Model['items_sort_param']) => void
 	setItemsFilterTags: (v: Model['items_filter_tags']) => void
 	toggleTableFilter: () => void
@@ -301,4 +302,53 @@ export interface IPropsDetailRemark {
 	remark: Todo.Todo['remark']
 	in_modal?: boolean
 	updateRemark: (v: Todo.Todo['remark']) => void
+}
+
+export interface IPropsAnalysis {
+	visible_analysis_modal: Model['visible_analysis_modal']
+	angles: Model['setting']['setting']['angles']
+	tags: Model['setting']['setting']['tags']
+	trending: Model['analysis_trending']
+	items: Model['analysis_items']
+	analysis_duration: Model['analysis_duration']
+	analysis_sort_params: Model['analysis_sort_params']
+	analysis_filter_angles: Model['analysis_filter_angles']
+	analysis_filter_tags: Model['analysis_filter_tags']
+	analysis_custom_prefix: Model['analysis_custom_prefix']
+	setDuration: (v: Model['analysis_duration']) => void
+	setSortParams: (v: Model['analysis_sort_params']) => void
+	setFilterAngles: (v: Model['analysis_filter_angles']) => void
+	setFilterTags: (v: Model['analysis_filter_tags']) => void
+	setCustomPrefix: (v: Model['analysis_custom_prefix']) => void
+	onClose: () => void
+}
+
+export interface IPropsAnalysisDuration {
+	analysis_duration: Model['analysis_duration']
+	setDuration: (v: Model['analysis_duration']) => void
+}
+
+export interface IPropsAnalysisChart {
+	trending: Model['analysis_trending']
+}
+
+export interface IPropsAnalysisListHeader {
+	angles: Model['setting']['setting']['angles']
+	tags: Model['setting']['setting']['tags']
+	analysis_sort_params: Model['analysis_sort_params']
+	analysis_filter_angles: Model['analysis_filter_angles']
+	analysis_filter_tags: Model['analysis_filter_tags']
+	setSortParams: (v: Model['analysis_sort_params']) => void
+	setFilterAngles: (v: Model['analysis_filter_angles']) => void
+	setFilterTags: (v: Model['analysis_filter_tags']) => void
+}
+
+export interface IPropsAnalysisList {
+	data: string
+}
+
+export interface IPropsAnalysisExport {
+	data: string
+	analysis_custom_prefix: Model['analysis_custom_prefix']
+	setCustomPrefix: (v: Model['analysis_custom_prefix']) => void
 }

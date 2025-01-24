@@ -1,0 +1,19 @@
+._local {
+	margin-bottom: 12px;
+
+	:global {
+		.if-segmented-group {
+			font-size: 12px;
+
+			.if-segmented-item {
+				flex: 1;
+
+				.if-segmented-item-label {
+					justify-content: center;
+					min-height: 28px;
+					line-height: 28px;
+				}
+			}
+		}
+	}
+}

@@ -21,6 +21,7 @@ import {
 	check,
 	cleanTodoItem,
 	create,
+	getAnalysisData,
 	getAngleTodoCounts,
 	getMaxMinSort,
 	getQueryItems,
@@ -58,7 +59,10 @@ import type {
 	ItemsSortParams,
 	KanbanItems,
 	KanbanMode,
-	Mode
+	Mode,
+	AnalysisDuration,
+	Ratio,
+	AnalysisTrending
 } from './types/model'
 import type { ArgsUpdateTodoData } from './types/services'
 import type { CleanTime } from '@/types'
@@ -92,6 +96,7 @@ export default class Index {
 	visible_archive_modal = false
 	visible_detail_modal = false
 	visible_table_filter = false
+	visible_analysis_modal = false
 
 	current_angle_id = ''
 	current_detail_index = {} as CurrentDetailIndex
@@ -100,6 +105,14 @@ export default class Index {
 	table_selector = {} as MangoQuerySelector<Todo.TodoItem>
 	table_sort = {} as MangoQuerySortPart<Todo.TodoItem>
 	table_fields = {}
+
+	analysis_duration = 'daily' as AnalysisDuration
+	analysis_sort_params = [] as Array<ItemsSortParams>
+	analysis_filter_angles = [] as Array<string>
+	analysis_filter_tags = [] as Array<string>
+	analysis_custom_prefix = ''
+	analysis_trending = null as AnalysisTrending | null
+	analysis_items = [] as Array<Todo.Todo>
 
 	search_id = ''
 
@@ -359,8 +372,6 @@ export default class Index {
 
 	@loading
 	async create(item: Todo.TodoItem, options?: { quick?: boolean; dimension_id?: string; top?: boolean }) {
-		await this.setActivity('insert')
-
 		const data = {} as Todo.TodoItem
 
 		if (!this.kanban_mode) {
@@ -417,8 +428,6 @@ export default class Index {
 				await todo_item.updateCRDT({ ifMatch: { $unset: { recycle_time: '', archive_time: '' } } })
 			}
 		}
-
-		await this.setActivity(status)
 	}
 
 	async update(args: ArgsUpdate) {
@@ -771,16 +780,6 @@ export default class Index {
 		await cycle(this.id)
 	}
 
-	async setActivity(action: string) {
-		return $db.activity_items.insert({
-			id: id(),
-			module: 'setting',
-			file_id: this.id,
-			name: this.file.data.name,
-			action
-		})
-	}
-
 	async redirect(id: string) {
 		const target = (await $db.todo_items.findOne(id).exec())!
 
@@ -804,6 +803,19 @@ export default class Index {
 				}, 1200)
 			}, 300)
 		}
+	}
+
+	async getAnalysisData() {
+		const { trending, items } = await getAnalysisData({
+			file_id: this.id,
+			analysis_duration: this.analysis_duration,
+			analysis_sort_params: this.analysis_sort_params,
+			analysis_filter_angles: this.analysis_filter_angles,
+			analysis_filter_tags: this.analysis_filter_tags
+		})
+
+		this.analysis_trending = trending
+		this.analysis_items = items
 	}
 
 	handleOpenItem(id: string, v: boolean) {

@@ -15,6 +15,14 @@ export type ArgsQueryItems = {
 	table_pagesize?: number
 }
 
+export type ArgsGetAnalysisData = {
+	file_id: string
+	analysis_duration: Model['analysis_duration']
+	analysis_sort_params: Model['analysis_sort_params']
+	analysis_filter_angles: Model['analysis_filter_angles']
+	analysis_filter_tags: Model['analysis_filter_tags']
+}
+
 export type ArgsQueryArchives = {
 	file_id: string
 	page: number

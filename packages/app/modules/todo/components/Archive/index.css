@@ -1,5 +1,9 @@
 ._local {
 	:global {
+		.if-drawer-content-wrapper .if-drawer-content .if-drawer-body {
+			padding: 0;
+		}
+
 		.if-drawer-extra {
 			position: absolute;
 			right: 39px;
@@ -23,7 +27,8 @@
 
 		.archive_items {
 			.archive_item {
-				margin-bottom: 18px;
+				padding: 6px 18px;
+				border-bottom: var(--border_dashed);
 
 				&:hover {
 					.bottom_wrap {
@@ -221,7 +226,7 @@
 			display: flex;
 			flex-direction: row;
 			flex-wrap: wrap;
-			width: 300px;
+			width: 420px;
 			padding: 18px 15px;
 
 			.if-form-item {

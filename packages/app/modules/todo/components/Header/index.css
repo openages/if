@@ -154,9 +154,6 @@
 							padding-right: 0;
 						}
 
-						.if-select-selection-placeholder {
-						}
-
 						.if-select-arrow {
 							display: none;
 						}
@@ -264,6 +261,19 @@
 						}
 					}
 				}
+			}
+		}
+
+		.analysis_wrap {
+			height: 34px;
+			padding: 0 15px;
+			border-top: var(--border_light);
+			border-bottom-right-radius: var(--radius);
+			border-bottom-left-radius: var(--radius);
+			font-size: 12px;
+
+			&:hover {
+				background-color: var(--color_bg_2);
 			}
 		}
 	}

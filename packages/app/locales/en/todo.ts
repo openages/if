@@ -52,7 +52,8 @@ export default {
 				alphabetical: 'Alphabetical',
 				create_at: 'Create Time'
 			},
-			tags: 'Tags'
+			tags: 'Tags',
+			analysis: 'Analysis'
 		}
 	},
 	SettingsModal: {
@@ -160,5 +161,8 @@ export default {
 			placeholder: 'Add Remark'
 		},
 		add_to_shcedule: 'Add To Schedule'
+	},
+	Analysis: {
+		title: 'Analysis'
 	}
 }

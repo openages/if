@@ -11,7 +11,6 @@ import { insertDefault as insertDefaultSchedule } from '@/actions/schedule'
 import { keyCompression } from '@/config'
 import { migration_todo_items } from '@/migrations'
 import {
-	schema_activity_items,
 	schema_dirtree_items,
 	schema_kv,
 	schema_module_setting,
@@ -60,10 +59,6 @@ export default class Index {
 			module_setting: {
 				autoMigrate: false,
 				schema: schema_module_setting
-			},
-			activity_items: {
-				autoMigrate: false,
-				schema: schema_activity_items
 			},
 			dirtree_items: {
 				autoMigrate: false,

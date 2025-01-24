@@ -1,6 +1,5 @@
 import type {
 	DBKV,
-	DBActivityItems,
 	DBDirtreeItems,
 	DBModuleSetting,
 	DBTodoItems,
@@ -29,7 +28,6 @@ export namespace RxDB {
 	export type DBContent = RxDatabase<{
 		kv: DBKV
 		module_setting: DBModuleSetting
-		activity_items: DBActivityItems
 		dirtree_items: DBDirtreeItems
 		todo_items: DBTodoItems
 		note_items: DBNoteItems

@@ -10,6 +10,7 @@ import {
 	ArchiveBox,
 	CaretDown,
 	CaretUp,
+	ChartBar,
 	DotsThreeCircleVertical,
 	Faders,
 	Funnel,
@@ -51,6 +52,7 @@ const Index = (props: IPropsHeader) => {
 		toggleKanbanMode,
 		showSettingsModal,
 		showArchiveModal,
+		showAnalysisModal,
 		setItemsSortParam,
 		setItemsFilterTags,
 		toggleTableFilter,
@@ -114,6 +116,11 @@ const Index = (props: IPropsHeader) => {
 			case 'create_at':
 				setItemsSortParam({ type: 'create_at', order: 'desc' })
 		}
+	})
+
+	const showAnalysis = useMemoizedFn(() => {
+		showAnalysisModal()
+		setOpenPanel(false)
 	})
 
 	const Setting = (
@@ -223,6 +230,10 @@ const Index = (props: IPropsHeader) => {
 					></TagSelect>
 				</div>
 			</div>
+			<div className='analysis_wrap flex align_center cursor_point' onClick={showAnalysis}>
+				<ChartBar className='mr_6' size={14}></ChartBar>
+				<span className='label'>{t('todo.Header.options.analysis')}</span>
+			</div>
 		</div>
 	)
 
@@ -242,7 +253,7 @@ const Index = (props: IPropsHeader) => {
 						<Emoji
 							className='icon_emoji'
 							shortcodes={icon!}
-							size={mode === 'flat' ? 15 : 21}
+							size={mode === 'kanban' || mode === 'quad' || mode === 'flat' ? 15 : 21}
 							hue={icon_hue}
 						></Emoji>
 					</If>

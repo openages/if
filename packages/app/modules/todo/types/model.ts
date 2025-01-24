@@ -3,6 +3,20 @@ import type { Dayjs } from 'dayjs'
 
 export type Mode = 'list' | 'kanban' | 'table' | 'mindmap' | 'flat' | 'quad'
 export type KanbanMode = 'angle' | 'tag'
+export type AnalysisDuration = 'daily' | 'weekly' | 'monthly' | 'quarterly' | 'yearly'
+
+export interface Ratio {
+	create: number
+	done: number
+	close: number
+}
+
+export interface AnalysisTrending {
+	dates: Array<string>
+	create: Array<number>
+	done: Array<number>
+	close: Array<number>
+}
 
 export interface KanbanItems {
 	[key: string]: {
@@ -25,7 +39,7 @@ export interface CurrentDetailItem {
 }
 
 export type ItemsSortParams = {
-	type: 'importance' | 'alphabetical' | 'create_at'
+	type: 'importance' | 'alphabetical' | 'create_at' | 'done_time'
 	order: 'asc' | 'desc'
 }
 

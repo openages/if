@@ -152,8 +152,6 @@ export default class Index {
 		if (this.data.going) this.stopRecord()
 
 		if (session.flow_mode) {
-			this.setActivity('work', getGoingTime(this.data.work_in))
-
 			reset()
 			goNextSession()
 
@@ -165,29 +163,14 @@ export default class Index {
 				goNextSession()
 			})
 			.with('work', () => {
-				this.setActivity('work', getGoingTime(this.data.work_in))
-
 				reset('break')
 			})
 			.with('break', () => {
-				this.setActivity('break', getGoingTime(this.data.break_in))
-
 				reset()
 				goNextSession()
 			})
 
 		this.updatePomo()
-	}
-
-	async setActivity(action: 'work' | 'break', time: number | string) {
-		return $db.activity_items.insert({
-			id: id(),
-			module: 'pomo',
-			file_id: this.id,
-			name: this.file.data.name,
-			action,
-			context: String(time)
-		})
 	}
 
 	changeViewIndex(v: number | 'left' | 'right') {
@@ -245,7 +228,6 @@ export default class Index {
 			this.data.current = 'break'
 
 			this.stopRecord(true)
-			this.setActivity('work', session.work_time)
 		}
 
 		if (this.data.current === 'break' && getGoingTime(this.data.break_in) >= session.break_time) {
@@ -254,7 +236,6 @@ export default class Index {
 			this.data.break_in = 0
 
 			this.stopRecord(true)
-			this.setActivity('break', session.break_time)
 
 			if (this.data.continuous_mode) {
 				const next_index = this.data.index + 1
