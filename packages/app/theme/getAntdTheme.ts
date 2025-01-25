@@ -7,11 +7,15 @@ import light from './light'
 import type { Theme } from '@/appdata'
 import type { ThemeConfig } from 'antd'
 
-export default (theme: Theme, color_main: string) => {
-	const vars = match(theme)
+export const getVars = (theme: Theme) => {
+	return match(theme)
 		.with('light', () => light)
 		.with('dark', () => dark)
 		.exhaustive()
+}
+
+export default (theme: Theme, color_main: string) => {
+	const vars = getVars(theme)
 
 	return {
 		token: {
@@ -23,6 +27,7 @@ export default (theme: Theme, color_main: string) => {
 			colorBgContainer: vars.color_bg,
 			colorBgElevated: vars.color_bg,
 			colorBgLayout: vars.color_bg_1,
+			colorFillTertiary: vars.color_bg_1,
 			colorBorder: theme === 'dark' ? vars.color_border : vars.color_border_light,
 			colorBorderSecondary: vars.color_border_light,
 			controlItemBgActive: vars.color_bg_2,
@@ -33,6 +38,12 @@ export default (theme: Theme, color_main: string) => {
 			borderRadius: 6
 		},
 		components: {
+			Select: {
+				colorPrimary: vars.color_text,
+				optionActiveBg: vars.color_bg_2,
+				optionPadding: '4px 8px',
+				colorBorder: 'transparent'
+			},
 			Switch: {
 				colorPrimary: vars.color_text,
 				controlHeight: 24,
@@ -56,10 +67,6 @@ export default (theme: Theme, color_main: string) => {
 			Input: {
 				colorPrimary: vars.color_text,
 				colorPrimaryHover: vars.color_text_grey
-			},
-			Select: {
-				colorPrimary: vars.color_text,
-				optionActiveBg: vars.color_bg_2
 			},
 			Segmented: {
 				borderRadiusSM: 6,

@@ -2,7 +2,9 @@ import { BarChart, LineChart, PieChart } from 'echarts/charts'
 import { DatasetComponent, GridComponent, LegendComponent, TitleComponent, TooltipComponent } from 'echarts/components'
 import { init, use } from 'echarts/core'
 import { SVGRenderer } from 'echarts/renderers'
+import { sum } from 'lodash-es'
 import { useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import styles from './index.css'
 
@@ -40,16 +42,13 @@ use([
 	PieChart
 ])
 
-const bar_common_series: BarSeriesOption = {
-	type: 'bar',
-	barWidth: 12,
-	barGap: 0,
-	barMinHeight: 6,
-	itemStyle: { borderRadius: [3, 3, 0, 0] }
+const common_series: LineSeriesOption = {
+	type: 'line',
+	smooth: true
 }
 
 const legend = {
-	bottom: 8,
+	top: 9,
 	textStyle: {
 		fontSize: 10,
 		color: 'var(--color_text_grey)'
@@ -57,7 +56,7 @@ const legend = {
 	icon: 'circle',
 	itemWidth: 6,
 	itemHeight: 6,
-	itemGap: 12,
+	itemGap: 30,
 	itemStyle: {
 		borderWidth: 0
 	}
@@ -69,8 +68,9 @@ const tooltip = {
 
 const Index = (props: IPropsAnalysisChart) => {
 	const { trending } = props
-	const ref_trending = useRef(null)
-	const ref_ratio = useRef(null)
+	const ref_trending = useRef<HTMLDivElement>(null)
+	const ref_ratio = useRef<HTMLDivElement>(null)
+	const { t } = useTranslation()
 
 	useEffect(() => {
 		if (!trending) return
@@ -80,21 +80,30 @@ const Index = (props: IPropsAnalysisChart) => {
 
 		chart_trending.setOption({
 			grid: {
-				top: 24,
-				bottom: 54,
-				right: 24
+				top: 42,
+				bottom: 30,
+				left: 30,
+				right: 30
 			},
-			legend,
-			tooltip,
+			legend: {
+				...legend,
+				formatter: name =>
+					`${t(`todo.Analysis.${name as keyof Omit<typeof trending, 'dates'>}`)} ${sum(trending[name as keyof typeof trending])}`
+			},
+			tooltip: {
+				...tooltip,
+				trigger: 'axis'
+			},
 			xAxis: {
 				type: 'category',
 				data: trending.dates,
+				boundaryGap: false,
 				axisLine: {
 					lineStyle: { color: 'var(--color_bg_2)' }
 				},
 				axisLabel: {
 					fontSize: 10,
-					color: 'var(--color_text)'
+					color: 'var(--color_text_light)'
 				},
 				axisTick: {
 					show: false
@@ -103,10 +112,13 @@ const Index = (props: IPropsAnalysisChart) => {
 			yAxis: {
 				type: 'value',
 				axisLabel: {
-					fontSize: 10
+					show: false,
+					fontSize: 10,
+					color: 'var(--color_text_light)'
 				},
 				splitLine: {
 					lineStyle: {
+						type: 'dashed',
 						color: 'var(--color_bg_2)'
 					}
 				}
@@ -115,48 +127,58 @@ const Index = (props: IPropsAnalysisChart) => {
 				{
 					name: 'create',
 					data: trending.create,
-					...bar_common_series
+					...common_series
 				},
 				{
 					name: 'done',
 					data: trending.done,
-					...bar_common_series
+					...common_series,
+					type: 'bar',
+					barWidth: 12,
+					barMinHeight: 6,
+					itemStyle: {
+						borderRadius: [6, 6, 0, 0]
+					}
+				},
+				{
+					name: 'uncheck',
+					data: trending.uncheck,
+					...common_series
 				},
 				{
 					name: 'close',
 					data: trending.close,
-					...bar_common_series
-				},
-				{
-					type: 'line',
-					name: 'done',
-					data: trending.done.map(item => (item + 0.5) * 1.2),
-					symbol: 'circle',
-					symbolSize: 3,
-					lineStyle: { width: 1 },
-					tooltip: { show: false }
+					color: 'var(--color_border)',
+					...common_series
 				}
 			]
 		} as Option)
 
+		const total =
+			trending.create.at(-1)! + trending.done.at(-1)! + trending.uncheck.at(-1)! + trending.close.at(-1)!
+
 		chart_ratio.setOption({
-			legend,
-			tooltip,
+			legend: {
+				...legend,
+				orient: 'vertical',
+				top: 'center',
+				right: 12,
+				itemGap: 12,
+				formatter: name => {
+					const v = trending[name as keyof typeof trending].at(-1)! as number
+					const percent = ((v * 100) / (total || 1)).toFixed(0)
+
+					return `${t(`todo.Analysis.${name as keyof Omit<typeof trending, 'dates'>}`)} ${v} (${percent}%)`
+				}
+			},
 			series: [
 				{
 					name: 'ratio',
 					type: 'pie',
-					radius: ['30%', '60%'],
-					center: ['50%', '48%'],
+					radius: ['24%', '54%'],
+					center: ['27%', '50%'],
 					label: {
-						show: true,
-						position: 'inside',
-						formatter: '{c}',
-						fontSize: 10,
-						backgroundColor: 'var(--color_bg)',
-						color: 'var(--color_text)',
-						borderRadius: 6,
-						padding: 3
+						show: false
 					},
 					itemStyle: {
 						borderRadius: 6,
@@ -166,7 +188,15 @@ const Index = (props: IPropsAnalysisChart) => {
 					data: [
 						{ name: 'create', value: trending.create.at(-1) },
 						{ name: 'done', value: trending.done.at(-1) },
-						{ name: 'close', value: trending.close.at(-1) }
+						{ name: 'uncheck', value: trending.uncheck.at(-1) },
+						{
+							name: 'close',
+							value: trending.close.at(-1),
+							itemStyle: { color: 'var(--color_border)' },
+							emphasis: {
+								itemStyle: { color: 'var(--color_text_light)' }
+							}
+						}
 					]
 				}
 			]

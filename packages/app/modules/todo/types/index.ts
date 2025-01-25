@@ -314,17 +314,16 @@ export interface IPropsAnalysis {
 	analysis_sort_params: Model['analysis_sort_params']
 	analysis_filter_angles: Model['analysis_filter_angles']
 	analysis_filter_tags: Model['analysis_filter_tags']
-	analysis_custom_prefix: Model['analysis_custom_prefix']
 	setDuration: (v: Model['analysis_duration']) => void
 	setSortParams: (v: Model['analysis_sort_params']) => void
 	setFilterAngles: (v: Model['analysis_filter_angles']) => void
 	setFilterTags: (v: Model['analysis_filter_tags']) => void
-	setCustomPrefix: (v: Model['analysis_custom_prefix']) => void
 	onClose: () => void
 }
 
 export interface IPropsAnalysisDuration {
 	analysis_duration: Model['analysis_duration']
+	total: number
 	setDuration: (v: Model['analysis_duration']) => void
 }
 
@@ -338,9 +337,11 @@ export interface IPropsAnalysisListHeader {
 	analysis_sort_params: Model['analysis_sort_params']
 	analysis_filter_angles: Model['analysis_filter_angles']
 	analysis_filter_tags: Model['analysis_filter_tags']
+	group_by: 'angle' | 'tag' | null
 	setSortParams: (v: Model['analysis_sort_params']) => void
 	setFilterAngles: (v: Model['analysis_filter_angles']) => void
 	setFilterTags: (v: Model['analysis_filter_tags']) => void
+	setGroupBy: (v: 'angle' | 'tag' | null) => void
 }
 
 export interface IPropsAnalysisList {
@@ -348,7 +349,8 @@ export interface IPropsAnalysisList {
 }
 
 export interface IPropsAnalysisExport {
-	data: string
-	analysis_custom_prefix: Model['analysis_custom_prefix']
-	setCustomPrefix: (v: Model['analysis_custom_prefix']) => void
+	prefix: string
+	disabled: boolean
+	setPrefix: (v: string) => void
+	exportTodos: (type: 'text' | 'json') => void
 }

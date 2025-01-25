@@ -163,6 +163,11 @@ export default {
 		add_to_shcedule: 'Add To Schedule'
 	},
 	Analysis: {
-		title: 'Analysis'
+		title: 'Analysis',
+		durations: ['daily', 'weekly', 'monthly', 'quarterly', 'yearly'],
+		create: 'Create',
+		done: 'Done',
+		uncheck: 'Uncheck',
+		close: 'Close'
 	}
 }

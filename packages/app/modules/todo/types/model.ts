@@ -15,6 +15,7 @@ export interface AnalysisTrending {
 	dates: Array<string>
 	create: Array<number>
 	done: Array<number>
+	uncheck: Array<number>
 	close: Array<number>
 }
 

@@ -179,7 +179,7 @@ export const getAnalysisData = async (args: ArgsGetAnalysisData) => {
 			}
 			break
 		case 'weekly':
-			trending_dates = periods.map(index => getTrendingDate(now, index, 'week', 'YYYY-WW'))
+			trending_dates = periods.map(index => getTrendingDate(now, index, 'week', `[W]W`))
 
 			selector_items['done_time'] = {
 				$gte: now.startOf('week').valueOf(),
@@ -187,7 +187,7 @@ export const getAnalysisData = async (args: ArgsGetAnalysisData) => {
 			}
 			break
 		case 'monthly':
-			trending_dates = periods.map(index => getTrendingDate(now, index, 'month', 'YYYY-MM'))
+			trending_dates = periods.map(index => getTrendingDate(now, index, 'month', '[M]M'))
 
 			selector_items['done_time'] = {
 				$gte: now.startOf('month').valueOf(),
@@ -195,7 +195,7 @@ export const getAnalysisData = async (args: ArgsGetAnalysisData) => {
 			}
 			break
 		case 'quarterly':
-			trending_dates = periods.map(index => getTrendingDate(now, index, 'quarter', 'YYYY-QQ'))
+			trending_dates = periods.map(index => getTrendingDate(now, index, 'quarter', '[Q]Q'))
 
 			selector_items['done_time'] = {
 				$gte: now.startOf('quarter').valueOf(),
@@ -216,6 +216,7 @@ export const getAnalysisData = async (args: ArgsGetAnalysisData) => {
 		dates: [],
 		create: [],
 		done: [],
+		uncheck: [],
 		close: []
 	} as AnalysisTrending
 
@@ -243,10 +244,21 @@ export const getAnalysisData = async (args: ArgsGetAnalysisData) => {
 				}
 			})
 			.exec()
+		const uncheck = await $db.todo_items
+			.count({
+				selector: {
+					...selector_common,
+					...selector_trending,
+					done_time: item.duration,
+					status: 'unchecked'
+				}
+			})
+			.exec()
 
 		trending.dates.push(dayjs(item.date).format(item.formatter))
 		trending.create.push(create)
 		trending.done.push(done)
+		trending.uncheck.push(uncheck)
 		trending.close.push(close)
 	}
 

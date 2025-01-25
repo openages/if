@@ -1,10 +1,10 @@
 ._local {
-	--icon_size: 38px;
+	--icon_size: 32px;
 
 	width: var(--icon_size);
 	height: var(--icon_size);
-	border: 1px dashed var(--color_border);
 	border-radius: var(--radius);
+	background-color: var(--color_bg_1);
 
 	&:hover {
 		border-color: var(--color_text_grey);

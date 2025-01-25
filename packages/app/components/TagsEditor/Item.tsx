@@ -40,7 +40,7 @@ const Index = (props: IProps) => {
 			style={{ transform: CSS.Transform.toString(transform), transition }}
 		>
 			<ColorPicker
-				className='color_picker mr_6'
+				className='color_picker'
 				disabledAlpha
 				placement='topLeft'
 				getPopupContainer={getPopupContainer}
@@ -54,7 +54,7 @@ const Index = (props: IProps) => {
 				value={item.text}
 				onChange={({ target: { value } }) => onUpdate('text', index, value)}
 			></Input>
-			<div className='preview_wrap border_box flex justify_center align_center ml_6 transition_normal cursor_point'>
+			<div className='preview_wrap border_box flex justify_center align_center ml_6 transition_normal cursor_point mr_6'>
 				<span
 					className='tag w_100 h_100 flex justify_center align_center transition_normal'
 					style={{
@@ -67,26 +67,26 @@ const Index = (props: IProps) => {
 			</div>
 			<div
 				className={$cx(
-					'btn btn_add border_box flex justify_center align_center clickable ml_6',
+					'btn btn_add border_box flex justify_center align_center clickable',
 					limitMax && 'disabled'
 				)}
 				onClick={() => onAdd(index)}
 			>
-				<Plus size={18}></Plus>
+				<Plus></Plus>
 			</div>
 			<div
-				className='btn btn_remove border_box flex justify_center align_center clickable ml_6'
+				className='btn btn_remove border_box flex justify_center align_center clickable'
 				onClick={() => onRemove(index)}
 			>
-				<Trash size={18}></Trash>
+				<Trash></Trash>
 			</div>
 			<div
-				className='btn btn_move border_box flex justify_center align_center clickable ml_6'
+				className='btn btn_move border_box flex justify_center align_center clickable'
 				ref={setActivatorNodeRef}
 				{...attributes}
 				{...listeners}
 			>
-				<DotsSixVertical size={18} weight='bold'></DotsSixVertical>
+				<DotsSixVertical weight='bold'></DotsSixVertical>
 			</div>
 		</div>
 	)

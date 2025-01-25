@@ -163,6 +163,11 @@ export default {
 		add_to_shcedule: '添加到日程'
 	},
 	Analysis: {
-		title: '分析'
+		title: '分析',
+		durations: ['每日', '每周', '每月', '每季度', '每年'],
+		create: '创建',
+		done: '完成',
+		uncheck: '未完成',
+		close: '关闭'
 	}
 }

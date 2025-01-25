@@ -48,7 +48,7 @@
 	.header {
 		line-height: 1;
 		padding: 9px 18px;
-		border-bottom: 1px dashed var(--color_border_light);
+		border-bottom: var(--border);
 
 		:global {
 			.title {

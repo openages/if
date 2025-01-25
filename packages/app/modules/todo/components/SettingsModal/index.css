@@ -5,12 +5,14 @@
 			max-height: 150px;
 			line-height: var(--line_height);
 			padding: 9px 12px;
-			border: var(--border_dashed);
+			border: 1px solid transparent;
 			border-radius: var(--radius);
+			background-color: var(--color_bg_1);
 			transition: border ease 0.18s;
 
 			&:focus-within {
 				border-color: var(--color_text);
+				background-color: var(--color_bg);
 			}
 		}
 

@@ -2,18 +2,32 @@
 	margin-bottom: 12px;
 
 	:global {
-		.if-segmented-group {
-			font-size: 12px;
+		.if-segmented {
+			width: calc(100% - 72px);
 
-			.if-segmented-item {
-				flex: 1;
+			.if-segmented-group {
+				font-size: 12px;
 
-				.if-segmented-item-label {
-					justify-content: center;
-					min-height: 28px;
-					line-height: 28px;
+				.if-segmented-item {
+					flex: 1;
+
+					.if-segmented-item-label {
+						justify-content: center;
+						min-height: 28px;
+						line-height: 28px;
+						text-transform: capitalize;
+					}
 				}
 			}
+		}
+
+		.total_wrap {
+			width: 60px;
+			height: 32px;
+			border-radius: var(--radius);
+			color: var(--color_text_sublight);
+			background-color: var(--color_bg_1);
+			font-size: 12px;
 		}
 	}
 }

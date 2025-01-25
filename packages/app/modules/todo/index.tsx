@@ -228,12 +228,26 @@ const Index = ({ id }: IProps) => {
 		analysis_sort_params: $copy(x.analysis_sort_params),
 		analysis_filter_angles: $copy(x.analysis_filter_angles),
 		analysis_filter_tags: $copy(x.analysis_filter_tags),
-		analysis_custom_prefix: x.analysis_custom_prefix,
-		setDuration: useMemoizedFn(v => (x.analysis_duration = v)),
-		setSortParams: useMemoizedFn(v => (x.analysis_sort_params = v)),
-		setFilterAngles: useMemoizedFn(v => (x.analysis_filter_angles = v)),
-		setFilterTags: useMemoizedFn(v => (x.analysis_filter_tags = v)),
-		setCustomPrefix: useMemoizedFn(v => (x.analysis_custom_prefix = v)),
+		setDuration: useMemoizedFn(v => {
+			x.analysis_duration = v
+
+			x.getAnalysisData()
+		}),
+		setSortParams: useMemoizedFn(v => {
+			x.analysis_sort_params = v
+
+			x.getAnalysisData()
+		}),
+		setFilterAngles: useMemoizedFn(v => {
+			x.analysis_filter_angles = v
+
+			x.getAnalysisData()
+		}),
+		setFilterTags: useMemoizedFn(v => {
+			x.analysis_filter_tags = v
+
+			x.getAnalysisData()
+		}),
 		onClose: useMemoizedFn(() => (x.visible_analysis_modal = false))
 	}
 

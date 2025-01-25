@@ -110,7 +110,6 @@ export default class Index {
 	analysis_sort_params = [] as Array<ItemsSortParams>
 	analysis_filter_angles = [] as Array<string>
 	analysis_filter_tags = [] as Array<string>
-	analysis_custom_prefix = ''
 	analysis_trending = null as AnalysisTrending | null
 	analysis_items = [] as Array<Todo.Todo>
 

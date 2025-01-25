@@ -1,25 +1,31 @@
 ._local {
+	border-radius: var(--radius);
+	background-color: var(--color_bg_1);
+
 	:global {
 		.angle_item_wrap {
-			margin-top: 6px;
+			padding: 3px;
+			border-top: var(--border_soft);
 
 			&:first-child {
-				margin-top: 0;
+				border-top: none;
 			}
 
 			.input {
-				width: calc(100% - 42px * 3);
-				height: 36px;
+				width: calc(100% - 32px * 3 - 3px);
+				margin-right: 3px;
 			}
 
 			.btn {
-				width: 36px;
-				height: 36px;
-				border: 1px dashed var(--color_border);
+				width: 32px;
+				height: 32px;
+				border: 1px solid transparent;
 				border-radius: var(--radius);
+				font-size: 16px;
 
 				&:hover {
-                              border-color: var(--color_text_grey);
+					border-color: var(--color_text);
+					background-color: var(--color_bg);
 				}
 
 				&.disabled {

@@ -1,4 +1,66 @@
 ._local {
+	margin-bottom: 12px;
+
 	:global {
+		.if-select {
+			input {
+				font-size: 12px;
+			}
+
+			.if-select-selector {
+				font-size: 12px;
+
+				.if-select-selection-wrap {
+					.if-select-selection-overflow {
+						overflow: scroll;
+						align-items: center;
+						flex-wrap: nowrap;
+
+						.if-select-selection-overflow-item {
+							&:first-child {
+								margin-left: 4px;
+							}
+
+							&:nth-last-of-type(2) {
+								.if-select-selection-item {
+									&::after {
+										display: none;
+									}
+								}
+							}
+
+							.if-select-selection-item {
+								align-items: center;
+								height: 100%;
+								padding: 0;
+								margin-top: 0;
+								margin-right: 0;
+								margin-bottom: 0;
+								border: none;
+								border-radius: var(--radius_small);
+								background-color: unset;
+
+								&::after {
+									margin: 0 4px;
+									content: '·';
+								}
+
+								.if-select-selection-item-content {
+									margin-right: 0;
+								}
+
+								.if-select-selection-item-remove {
+									display: none;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.if-select-selection-placeholder {
+				font-size: 12px;
+			}
+		}
 	}
 }

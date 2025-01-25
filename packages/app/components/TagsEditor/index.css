@@ -1,43 +1,50 @@
 ._local {
+	border-radius: var(--radius);
+	background-color: var(--color_bg_1);
+
 	:global {
 		.list_item_wrap {
-			margin-top: 6px;
+			padding: 3px;
+			border-top: var(--border_soft);
 
 			&:first-child {
-				margin-top: 0;
+				border-top: none;
 			}
 
 			.color_picker {
-				width: 36px;
-				height: 36px;
-				padding: 8px !important;
-				border: 1px dashed var(--color_border);
+				align-items: center;
+				justify-content: center;
+				width: 32px;
+				height: 32px;
+				border: 1px solid transparent;
+				background-color: var(--color_bg_1);
 
 				&:hover {
-					border-color: var(--color_text_grey);
+					border-color: var(--color_text);
+					background-color: var(--color_bg);
 				}
 
 				.if-color-picker-color-block {
-					width: 100%;
-					height: 20px;
+					width: 18px;
+					height: 18px;
 					border-radius: 50%;
 				}
 			}
 
 			.input {
-				width: calc(100% - 42px * 4 - 96px);
-				height: 36px;
+				width: calc(100% - 32px * 4 - 96px);
 			}
 
 			.preview_wrap {
 				width: 90px;
-				height: 36px;
+				height: 32px;
 				padding: 6px;
-				border: 1px dashed var(--color_border);
+				border: 1px solid transparent;
 				border-radius: var(--radius);
 
 				&:hover {
-					border-color: var(--color_text_grey);
+					border-color: var(--color_text);
+					background-color: var(--color_bg);
 				}
 
 				.tag {
@@ -49,13 +56,15 @@
 			}
 
 			.btn {
-				width: 36px;
-				height: 36px;
-				border: 1px dashed var(--color_border);
+				width: 32px;
+				height: 32px;
+				border: 1px solid transparent;
 				border-radius: var(--radius);
+				font-size: 15px;
 
 				&:hover {
-					border-color: var(--color_text_grey);
+					border-color: var(--color_text);
+					background-color: var(--color_bg);
 				}
 			}
 		}

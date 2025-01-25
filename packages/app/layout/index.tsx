@@ -86,6 +86,7 @@ const Index = () => {
 		theme,
 		locale,
 		virtual: false,
+		variant: 'filled',
 		getPopupContainer: n => n?.parentElement!
 	}
 

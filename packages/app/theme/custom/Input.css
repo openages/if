@@ -1,3 +1,4 @@
 .if-input {
+	min-height: 32px;
 	font-family: var(--font_family);
 }
