@@ -162,14 +162,7 @@ const Index = (props: IPropsSetting) => {
 			) : (
 				Menu
 			)}
-			<ConfigProvider
-				theme={{
-					token: {
-						controlHeight: 38
-					}
-				}}
-				variant='outlined'
-			>
+			<ConfigProvider theme={{ token: { controlHeight: 38 } }} variant='outlined'>
 				<div className={$cx('h_100 border_box flex flex_column', styles._local)}>
 					<Tabs
 						items={module_items!.concat(setting_items as any)}
