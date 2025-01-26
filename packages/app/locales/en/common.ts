@@ -32,6 +32,11 @@ export default {
 		感恩节: 'Thanksgiving',
 		圣诞节: 'Christmas'
 	},
+	asc: 'Asc',
+	desc: 'Desc',
+	prefix: 'Prefix',
+	suffix: 'Suffix',
+	select: 'Select',
 	refund: 'Refund',
 	unsubscribe: 'Unsubscribe',
 	retry: 'Retry',
@@ -103,6 +108,7 @@ export default {
 	use: 'Use',
 	has: 'has',
 	copied: `$t(common.has) copied to $t(common.clipboard)`,
+	copy_to: `Copy to $t(common.clipboard)`,
 	not_found: {
 		confirm: 'No relevant records found. Please verify the existence of related records before proceeding.'
 	},
@@ -125,6 +131,7 @@ export default {
 		confirm: 'Confirm permanent erase this record? It can`t be recovered after erased.'
 	},
 	angles: {
+		single_label: 'Angle',
 		label: 'Angles',
 		placeholder: 'Input angles',
 		remove_confirm: 'This will remove {{counts}} items under this angle. Please confirm.'

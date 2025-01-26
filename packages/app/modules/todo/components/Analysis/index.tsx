@@ -6,6 +6,8 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { match } from 'ts-pattern'
 
+import { downloadFile } from '@/utils'
+
 import { Chart, Duration, Export, List, ListHeader } from './components'
 import styles from './index.css'
 
@@ -172,7 +174,29 @@ const Index = (props: IPropsAnalysis) => {
 		prefix,
 		disabled: useMemo(() => !items.length, [items]),
 		setPrefix,
-		exportTodos: useMemoizedFn(type => {})
+		exportTodos: useMemoizedFn(type => {
+			match(type)
+				.with('json', () => {
+					downloadFile(
+						`if_todo_analysis_${analysis_duration}_${trending?.dates.at(-1)}`,
+						JSON.stringify(items),
+						'json'
+					)
+				})
+				.with('text', () => {
+					downloadFile(
+						`if_todo_analysis_${analysis_duration}_${trending?.dates.at(-1)}`,
+						data,
+						'txt'
+					)
+				})
+				.exhaustive()
+		}),
+		copyToClipboard: useMemoizedFn(async () => {
+			await navigator.clipboard.writeText(data)
+
+			$message.success(t('common.copied'))
+		})
 	}
 
 	return (

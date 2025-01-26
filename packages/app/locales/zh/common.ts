@@ -32,6 +32,11 @@ export default {
 		感恩节: '感恩节',
 		圣诞节: '圣诞节'
 	},
+	asc: '升序',
+	desc: '降序',
+	prefix: '前缀',
+	suffix: '后缀',
+	select: '选择',
 	refund: '退款',
 	unsubscribe: '退订',
 	retry: '重试',
@@ -103,6 +108,7 @@ export default {
 	use: '使用',
 	has: '已',
 	copied: `$t(common.has)复制到$t(common.clipboard)`,
+	copy_to: `复制到$t(common.clipboard)`,
 	not_found: {
 		confirm: '未查找到相关记录，请确认存在相关记录，再进行操作'
 	},
@@ -125,6 +131,7 @@ export default {
 		confirm: '确认彻底删除该记录，彻底删除后将无法恢复？'
 	},
 	angles: {
+		single_label: '分类',
 		label: '分类',
 		placeholder: '输入分类',
 		remove_confirm: '你将删除该分类下的{{counts}}个记录，请确认是否执行删除？'

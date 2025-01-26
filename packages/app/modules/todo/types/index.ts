@@ -353,4 +353,5 @@ export interface IPropsAnalysisExport {
 	disabled: boolean
 	setPrefix: (v: string) => void
 	exportTodos: (type: 'text' | 'json') => void
+	copyToClipboard: () => void
 }

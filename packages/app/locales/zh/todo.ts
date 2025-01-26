@@ -168,6 +168,13 @@ export default {
 		create: '创建',
 		done: '完成',
 		uncheck: '未完成',
-		close: '关闭'
+		close: '关闭',
+		group_by: '分组方式',
+		sort_by: '排序方式',
+		options_sort: {
+			importance: '重要性',
+			create_at: '创建时间',
+			done_time: '完成时间'
+		}
 	}
 }

@@ -20,7 +20,7 @@ export default (theme: Theme, color_main: string) => {
 	return {
 		token: {
 			...common_antd.token,
-			colorPrimary: `rgb(${color_main})`,
+			colorPrimary: vars.color_text,
 			colorText: vars.color_text,
 			colorTextBase: vars.color_text,
 			colorBgBase: vars.color_bg,
@@ -39,19 +39,16 @@ export default (theme: Theme, color_main: string) => {
 		},
 		components: {
 			Select: {
-				colorPrimary: vars.color_text,
 				optionActiveBg: vars.color_bg_2,
 				optionPadding: '4px 8px',
 				colorBorder: 'transparent'
 			},
 			Switch: {
-				colorPrimary: vars.color_text,
 				controlHeight: 24,
 				controlHeightSM: 22,
 				controlHeightXS: 20
 			},
 			DatePicker: {
-				colorPrimary: vars.color_text,
 				controlHeight: 24,
 				cellHeight: 24,
 				cellWidth: 24,
@@ -65,7 +62,6 @@ export default (theme: Theme, color_main: string) => {
 				controlItemBgHover: vars.color_bg_2
 			},
 			Input: {
-				colorPrimary: vars.color_text,
 				colorPrimaryHover: vars.color_text_grey
 			},
 			Segmented: {
@@ -79,7 +75,6 @@ export default (theme: Theme, color_main: string) => {
 				handleSizeHover: 10
 			},
 			Radio: {
-				colorPrimary: vars.color_text,
 				dotSize: 9,
 				radioSize: 12
 			},
@@ -87,9 +82,6 @@ export default (theme: Theme, color_main: string) => {
 				colorPrimary: vars.color_text_sub,
 				colorPrimaryHover: vars.color_text,
 				lineType: 'none'
-			},
-			Tabs: {
-				colorPrimary: vars.color_text
 			},
 			Pagination: {
 				controlHeight: 24

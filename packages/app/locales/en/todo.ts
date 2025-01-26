@@ -168,6 +168,13 @@ export default {
 		create: 'Create',
 		done: 'Done',
 		uncheck: 'Uncheck',
-		close: 'Close'
+		close: 'Close',
+		group_by: 'Group By',
+		sort_by: 'Sort By',
+		options_sort: {
+			importance: 'Importance',
+			create_at: 'Create Time',
+			done_time: 'Done Time'
+		}
 	}
 }

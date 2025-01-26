@@ -1,6 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { Col, Row, Select } from 'antd'
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import styles from './index.css'
 
@@ -9,17 +10,35 @@ import type { SelectProps } from 'antd'
 import type { DefaultOptionType } from 'antd/es/select'
 
 const options_sort_raw = [
-	{ value: 'importance (asc)', data: { type: 'importance', order: 'asc' } },
-	{ value: 'importance (desc)', data: { type: 'importance', order: 'desc' } },
-	{ value: 'create_at (asc)', data: { type: 'create_at', order: 'asc' } },
-	{ value: 'create_at (desc)', data: { type: 'create_at', order: 'desc' } },
-	{ value: 'done_time (asc)', data: { type: 'done_time', order: 'asc' } },
-	{ value: 'done_time (desc)', data: { type: 'done_time', order: 'desc' } }
+	{
+		value: `${$t('todo.Analysis.options_sort.importance')} (${$t('common.asc')})`,
+		data: { type: 'importance', order: 'asc' }
+	},
+	{
+		value: `${$t('todo.Analysis.options_sort.importance')} (${$t('common.desc')})`,
+		data: { type: 'importance', order: 'desc' }
+	},
+	{
+		value: `${$t('todo.Analysis.options_sort.create_at')} (${$t('common.asc')})`,
+		data: { type: 'create_at', order: 'asc' }
+	},
+	{
+		value: `${$t('todo.Analysis.options_sort.create_at')} (${$t('common.desc')})`,
+		data: { type: 'create_at', order: 'desc' }
+	},
+	{
+		value: `${$t('todo.Analysis.options_sort.done_time')} (${$t('common.asc')})`,
+		data: { type: 'done_time', order: 'asc' }
+	},
+	{
+		value: `${$t('todo.Analysis.options_sort.done_time')} (${$t('common.desc')})`,
+		data: { type: 'done_time', order: 'desc' }
+	}
 ] as Array<DefaultOptionType>
 
 const options_group = [
-	{ label: 'angle', value: 'angle' },
-	{ label: 'tag', value: 'tag' }
+	{ label: $t('common.angles.single_label'), value: 'angle' },
+	{ label: $t('common.tags.single_label'), value: 'tag' }
 ]
 
 const Index = (props: IPropsAnalysisListHeader) => {
@@ -35,6 +54,7 @@ const Index = (props: IPropsAnalysisListHeader) => {
 		setFilterTags,
 		setGroupBy
 	} = props
+	const { t } = useTranslation()
 
 	const options_sort = useMemo(() => {
 		return options_sort_raw.map(item => {
@@ -85,7 +105,9 @@ const Index = (props: IPropsAnalysisListHeader) => {
 						variant='filled'
 						showSearch={false}
 						allowClear
-						placeholder='选择分类'
+						placeholder={
+							t('common.select') + t('common.letter_space') + t('common.angles.label')
+						}
 						options={angles}
 						fieldNames={{ label: 'text', value: 'id' }}
 						value={analysis_filter_angles}
@@ -100,7 +122,7 @@ const Index = (props: IPropsAnalysisListHeader) => {
 						variant='filled'
 						showSearch={false}
 						allowClear
-						placeholder='选择标签'
+						placeholder={t('common.select') + t('common.letter_space') + t('common.tags.label')}
 						options={tags}
 						fieldNames={{ label: 'text', value: 'id' }}
 						value={analysis_filter_tags}
@@ -115,7 +137,7 @@ const Index = (props: IPropsAnalysisListHeader) => {
 						variant='filled'
 						showSearch={false}
 						allowClear
-						placeholder='选择排序方式'
+						placeholder={t('common.letter_space') + t('todo.Analysis.sort_by')}
 						options={options_sort}
 						fieldNames={{ label: 'value' }}
 						value={(analysis_sort_params || []).map(item => `${item.type} (${item.order})`)}
@@ -128,7 +150,7 @@ const Index = (props: IPropsAnalysisListHeader) => {
 						popupClassName='borderless'
 						variant='filled'
 						allowClear
-						placeholder='选择分组方式'
+						placeholder={t('common.letter_space') + t('todo.Analysis.group_by')}
 						options={options_group}
 						value={group_by}
 						onChange={setGroupBy}

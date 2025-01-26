@@ -7,7 +7,7 @@ const Index = (props: IPropsAnalysisList) => {
 
 	return (
 		<div className={$cx('flex', styles._local)}>
-			<textarea className='w_100 border_box' value={data + data + data} disabled></textarea>
+			<textarea className='w_100 h_100 border_box' value={data} disabled></textarea>
 		</div>
 	)
 }

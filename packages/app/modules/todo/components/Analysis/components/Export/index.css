@@ -5,32 +5,13 @@
 			font-size: 12px;
 		}
 
+		.if-btn {
+			font-size: 12px;
+		}
+
 		.label {
 			color: var(--color_text_light);
 			font-size: 12px;
-		}
-
-		.btn_json {
-			font-size: 12px;
-
-			&:disabled {
-				border-color: transparent;
-				pointer-events: none;
-			}
-		}
-
-		.btn_export {
-			color: var(--color_bg);
-			background-color: var(--color_text);
-			font-size: 12px;
-
-			&:hover {
-				background-color: var(--color_text_sub) !important;
-			}
-
-			&:disabled {
-				opacity: 0.6;
-			}
 		}
 	}
 }

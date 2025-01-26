@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { Button, Drawer, Tabs } from 'antd'
+import { theme, Button, ConfigProvider, Drawer, Tabs } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useLayoutEffect, useMemo, useState, Fragment, ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -162,14 +162,23 @@ const Index = (props: IPropsSetting) => {
 			) : (
 				Menu
 			)}
-			<div className={$cx('h_100 border_box flex flex_column', styles._local)}>
-				<Tabs
-					items={module_items!.concat(setting_items as any)}
-					activeKey={x.active}
-					renderTabBar={() => null as unknown as ReactElement}
-					destroyInactiveTabPane
-				></Tabs>
-			</div>
+			<ConfigProvider
+				theme={{
+					token: {
+						controlHeight: 38
+					}
+				}}
+				variant='outlined'
+			>
+				<div className={$cx('h_100 border_box flex flex_column', styles._local)}>
+					<Tabs
+						items={module_items!.concat(setting_items as any)}
+						activeKey={x.active}
+						renderTabBar={() => null as unknown as ReactElement}
+						destroyInactiveTabPane
+					></Tabs>
+				</div>
+			</ConfigProvider>
 		</Modal>
 	)
 }
