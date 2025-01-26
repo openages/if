@@ -1,3 +1,4 @@
+import { useMemoizedFn } from 'ahooks'
 import { Select } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useMemo } from 'react'
@@ -11,7 +12,7 @@ import styles from './index.css'
 import type { IPropsTagSelect } from '../../types'
 
 const Index = (props: IPropsTagSelect) => {
-	const { options, value, className, placement, unlimit, onChange, onFocus } = props
+	const { options, value, className, placement, unlimit, wrap, onChange, onFocus } = props
 	const { t } = useTranslation()
 	const global = useGlobal()
 	const theme = global.setting.theme
@@ -22,10 +23,17 @@ const Index = (props: IPropsTagSelect) => {
 		return getTag(options, { theme })
 	}, [options, theme])
 
+	const optionRender = useMemoizedFn(option => (
+		<div className='select_item flex align_center'>
+			<span className='color' style={{ backgroundColor: option.data.color }}></span>
+			<span className='text'>{option.label}</span>
+		</div>
+	))
+
 	return (
 		<div className={$cx('flex align_center', className)}>
 			<Select
-				className={$cx('no_suffix', styles._local)}
+				className={$cx('no_suffix', styles._local, wrap && styles.wrap)}
 				popupClassName={styles.popup}
 				mode='tags'
 				placement={placement || 'bottomRight'}
@@ -34,19 +42,14 @@ const Index = (props: IPropsTagSelect) => {
 				showSearch={false}
 				virtual={false}
 				getPopupContainer={() => document.body}
-				placeholder={t('todo.Input.tag_placeholder')}
+				placeholder={t('common.add') + t('common.letter_space') + t('todo.Input.tag_placeholder')}
 				tagRender={Tag!}
 				suffixIcon={null}
 				maxCount={unlimit ? 30 : 3}
 				options={options}
-				value={value}
-				optionRender={option => (
-					<div className='select_item flex align_center'>
-						<span className='color' style={{ backgroundColor: option.data.color }}></span>
-						<span className='text'>{option.label}</span>
-					</div>
-				)}
+				optionRender={optionRender}
 				onDropdownVisibleChange={onFocus}
+				value={value}
 				onChange={onChange}
 			></Select>
 		</div>

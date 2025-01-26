@@ -27,8 +27,10 @@ const Index = (props: IProps) => {
 	const scroll_wrap = useRef<HTMLDivElement>(null)
 	const [width, setWidth] = useState(0)
 	const [scroll_position, setScrollPosition] = useState<'start' | 'center' | 'end' | false>(false)
-	const [sort, setSort] = useState<{ field: string; order: 'desc' | 'asc' | null }>(null)
-	const [editing_info, _setEditingInfo] = useState<{ row_index: number; field: string; focus: boolean }>(null)
+	const [sort, setSort] = useState<{ field: string; order: 'desc' | 'asc' | null } | null>(null)
+	const [editing_info, _setEditingInfo] = useState<
+		{ row_index: number; field: string; focus: boolean } | null | undefined
+	>(null)
 
 	const setEditingInfo = useMemoizedFn(_setEditingInfo)
 
@@ -100,10 +102,10 @@ const Index = (props: IProps) => {
 	const { target_columns, exist_fixed_column, left_shadow_index, right_shadow_index } = useDeepMemo(() => {
 		let exist_fixed_column = false
 		let left_shadow_index = null
-		let right_shadow_index = null
+		let right_shadow_index = null as number | null
 
 		const target_columns = columns.map((item, index) => {
-			let sticky_items = null as IProps['columns']
+			let sticky_items = null as IProps['columns'] | null
 
 			if (item.fixed === 'left') {
 				left_shadow_index = index
@@ -121,7 +123,7 @@ const Index = (props: IProps) => {
 
 			if (sticky_items) {
 				item['stickyOffset'] = sticky_items.reduce((total, col) => {
-					total += col.width
+					total += col.width!
 
 					return total
 				}, 0)
@@ -137,7 +139,7 @@ const Index = (props: IProps) => {
 
 	const shadow = useDeepMemo(() => {
 		if (!width || !exist_fixed_column) return false
-		if (width > scrollX) return false
+		if (width > scrollX!) return false
 
 		return scroll_position
 	}, [scrollX, exist_fixed_column, width, scroll_position])
@@ -145,11 +147,11 @@ const Index = (props: IProps) => {
 	const props_header: IPropsHeader = {
 		columns: target_columns,
 		stickyTop,
-		scrollerX: scroll_wrap.current,
-		scrollerY: scroller.current,
+		scrollerX: scroll_wrap.current!,
+		scrollerY: scroller?.current!,
 		left_shadow_index,
 		right_shadow_index,
-		sort,
+		sort: sort!,
 		changeSort
 	}
 
@@ -180,7 +182,7 @@ const Index = (props: IProps) => {
 									index={index}
 									left_shadow_index={left_shadow_index}
 									right_shadow_index={right_shadow_index}
-									sort={sort}
+									sort={sort!}
 									editing_info={
 										editing_info?.row_index === index && editing_info
 											? editing_info

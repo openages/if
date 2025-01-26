@@ -205,29 +205,32 @@
 }
 
 .RenderTagsViewer {
-	height: 16px;
-	line-height: 1;
+	line-height: 14px;
 
 	:global {
-		.tag_item {
-			height: 14px;
-			line-height: 14px;
+		.tag {
 			padding: 0 4px;
 			margin: 0 1px;
-			border-radius: var(--radius_small);
+			border-radius: 15px;
+			background-color: var(--color_bg_1);
 			font-size: 10px;
-			font-weight: 500;
+
+			.color {
+				width: 6px;
+				height: 6px;
+				margin-right: 4px;
+				border-radius: 50%;
+			}
 		}
 	}
 }
 
-.RenderLevelViewer {
+.RenderLevel {
 	:global {
-		.level_item {
-			color: rgba(var(--color_text_rgb), 0.24);
-
-			&.active {
-				color: var(--color_star);
+		.if-select-selector {
+			.option_item {
+				display: flex;
+				justify-content: center;
 			}
 		}
 	}

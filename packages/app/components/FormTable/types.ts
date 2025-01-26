@@ -11,7 +11,7 @@ export interface IProps {
 	scrollX?: number
 	pagination?: PaginationProps | false
 	onChange: (index: number, v: any) => void
-	onChangeSort?: (v: { field: string; order: 'desc' | 'asc' | null }) => void
+	onChangeSort?: (v: { field: string; order: 'desc' | 'asc' | null } | null) => void
 	getRowClassName?: (item: any) => Array<string>
 }
 
@@ -66,7 +66,7 @@ export interface IPropsRow extends Pick<IProps, 'columns' | 'onChange' | 'getRow
 	right_shadow_index: number | null
 	sort: IPropsHeader['sort']
 	editing_info: { row_index: number; field: string; focus: boolean } | undefined
-	setEditingInfo: (v: IPropsRow['editing_info'] | null) => void
+	setEditingInfo: (v: IPropsRow['editing_info'] | null | undefined) => void
 }
 
 export interface IPropsColumn {

@@ -35,7 +35,7 @@ const Index = (props: IProps) => {
 
 	return (
 		<div
-			className='list_item_wrap flex'
+			className='list_item_wrap flex align_center'
 			ref={setNodeRef}
 			style={{ transform: CSS.Transform.toString(transform), transition }}
 		>
@@ -54,16 +54,9 @@ const Index = (props: IProps) => {
 				value={item.text}
 				onChange={({ target: { value } }) => onUpdate('text', index, value)}
 			></Input>
-			<div className='preview_wrap border_box flex justify_center align_center ml_6 transition_normal cursor_point mr_6'>
-				<span
-					className='tag w_100 h_100 flex justify_center align_center transition_normal'
-					style={{
-						backgroundColor: pureColor ? item.color : bg_color,
-						color: pureColor ? 'rgba(255,255,255,0.9)' : text_color
-					}}
-				>
-					{item.text || t('common.tags.placeholder')}
-				</span>
+			<div className='preview_wrap border_box flex align_center transition_normal cursor_point'>
+				<span className='color mr_6' style={{ backgroundColor: item.color }}></span>
+				<span>{item.text || t('common.tags.placeholder')}</span>
 			</div>
 			<div
 				className={$cx(

@@ -141,5 +141,12 @@ export default {
 		label: 'Tags',
 		placeholder: 'Tag name',
 		remove_confirm: 'This will remove {{counts}} items under this tag. Please confirm.'
+	},
+	prority: {
+		no: 'No priority',
+		low: 'Low',
+		medium: 'Medium',
+		high: 'High',
+		urgent: 'Urgent'
 	}
 }

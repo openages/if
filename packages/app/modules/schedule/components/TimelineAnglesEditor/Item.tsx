@@ -36,7 +36,7 @@ const Index = (props: IProps) => {
 			ref={setNodeRef}
 			style={{ transform: CSS.Transform.toString(transform), transition }}
 		>
-			<div className='w_100 flex mb_6'>
+			<div className='timeline_angle w_100 flex mb_6'>
 				<Input
 					className='input'
 					placeholder={t('common.angles.placeholder')}
@@ -46,38 +46,38 @@ const Index = (props: IProps) => {
 				></Input>
 				<div
 					className={$cx(
-						'btn btn_add border_box flex justify_center align_center clickable ml_6',
+						'btn btn_add border_box flex justify_center align_center clickable',
 						limitMax && 'disabled'
 					)}
 					onClick={() => onAdd(index)}
 				>
-					<Plus size={18}></Plus>
+					<Plus></Plus>
 				</div>
 				<div
 					className={$cx(
-						'btn btn_add border_box flex justify_center align_center clickable ml_6',
+						'btn btn_add border_box flex justify_center align_center clickable',
 						(item.rows.length >= 6 || item.rows.length === 1) && 'disabled'
 					)}
 					onClick={() => onAddRow(index)}
 				>
-					<ListPlus size={18}></ListPlus>
+					<ListPlus></ListPlus>
 				</div>
 				<div
 					className={$cx(
-						'btn btn_remove border_box flex justify_center align_center clickable ml_6',
+						'btn btn_remove border_box flex justify_center align_center clickable',
 						limitMin && 'disabled'
 					)}
 					onClick={() => onRemove(index)}
 				>
-					<Trash size={18}></Trash>
+					<Trash></Trash>
 				</div>
 				<div
-					className='btn btn_move border_box flex justify_center align_center clickable ml_6'
+					className='btn btn_move border_box flex justify_center align_center clickable'
 					ref={setActivatorNodeRef}
 					{...attributes}
 					{...listeners}
 				>
-					<DotsSixVertical size={18} weight='bold'></DotsSixVertical>
+					<DotsSixVertical weight='bold'></DotsSixVertical>
 				</div>
 			</div>
 			<div className='rows_wrap w_100 flex'>

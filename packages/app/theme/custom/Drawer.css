@@ -36,7 +36,7 @@
 					min-height: unset;
 					padding-top: calc(var(--padding) - 3px);
 					padding-right: var(--padding);
-					padding-bottom: 15px;
+					padding-bottom: 12px;
 					padding-left: var(--padding);
 					border-bottom: none;
 

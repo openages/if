@@ -72,6 +72,10 @@
 			right: 8px;
 		}
 
+		.if-picker-suffix {
+			margin-left: 0;
+		}
+
 		.btn_clock {
 			width: 24px;
 			height: 24px;

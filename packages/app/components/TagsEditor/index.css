@@ -1,14 +1,11 @@
 ._local {
-	border-radius: var(--radius);
-	background-color: var(--color_bg_1);
-
 	:global {
 		.list_item_wrap {
-			padding: 3px;
-			border-top: var(--border_soft);
+			margin-top: 6px;
+			gap: 6px;
 
 			&:first-child {
-				border-top: none;
+				margin-top: none;
 			}
 
 			.color_picker {
@@ -20,8 +17,7 @@
 				background-color: var(--color_bg_1);
 
 				&:hover {
-					border-color: var(--color_text);
-					background-color: var(--color_bg);
+					background-color: var(--color_bg_2);
 				}
 
 				.if-color-picker-color-block {
@@ -32,26 +28,21 @@
 			}
 
 			.input {
-				width: calc(100% - 32px * 4 - 96px);
+				flex: 1;
 			}
 
 			.preview_wrap {
-				width: 90px;
+				min-width: 90px;
 				height: 32px;
-				padding: 6px;
-				border: 1px solid transparent;
+				padding: 0 8px;
 				border-radius: var(--radius);
+				background-color: var(--color_bg_1);
+				font-size: 12px;
 
-				&:hover {
-					border-color: var(--color_text);
-					background-color: var(--color_bg);
-				}
-
-				.tag {
-					overflow: hidden;
-					border-radius: var(--radius_small);
-					font-size: 12px;
-					font-weight: 500;
+				.color {
+					width: 8px;
+					height: 8px;
+					border-radius: 50%;
 				}
 			}
 
@@ -60,11 +51,11 @@
 				height: 32px;
 				border: 1px solid transparent;
 				border-radius: var(--radius);
+				background-color: var(--color_bg_1);
 				font-size: 15px;
 
 				&:hover {
-					border-color: var(--color_text);
-					background-color: var(--color_bg);
+					background-color: var(--color_bg_2);
 				}
 			}
 		}

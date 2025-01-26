@@ -32,6 +32,7 @@ import styles from './index.css'
 
 import type { IPropsHeader } from '../../types'
 import type { FocusEvent, MouseEvent } from 'react'
+import type { ItemsSortType } from '@/modules/todo/types/model'
 
 const Index = (props: IPropsHeader) => {
 	const {
@@ -293,7 +294,9 @@ const Index = (props: IPropsHeader) => {
 									onClick={toggleSortOrder}
 								>
 									<span className='text'>
-										{t(`todo.Header.options.sort.${items_sort_param.type}`)}
+										{t(
+											`todo.Header.options.sort.${items_sort_param.type as ItemsSortType}`
+										)}
 									</span>
 									<span className='btn_order ml_2 flex justify_center align_center'>
 										<Choose>

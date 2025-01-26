@@ -6,7 +6,7 @@ export default {
 			checked: 'Checked',
 			closed: 'Closed'
 		},
-		level: 'Level',
+		priority: 'Priority',
 		text: 'Text',
 		children: 'Children',
 		options: 'Options',

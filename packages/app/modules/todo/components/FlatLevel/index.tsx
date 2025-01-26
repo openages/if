@@ -4,13 +4,22 @@ import styles from './index.css'
 
 interface IProps {
 	value?: number
+	no_padding?: boolean
+	as_label?: boolean
 }
 
 const Index = (props: IProps) => {
-	const { value } = props
+	const { value, no_padding, as_label } = props
 
 	return (
-		<div className={$cx('flex', styles._local)}>
+		<div
+			className={$cx(
+				'level flex',
+				styles._local,
+				no_padding && styles.no_padding,
+				as_label && styles.as_label
+			)}
+		>
 			<Choose>
 				<When condition={value === undefined}>
 					<div className='level_items flex align_end'>

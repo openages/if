@@ -848,7 +848,7 @@ export default class Index {
 		this.update({ type: 'parent', index, value: values })
 	}
 
-	onTableSortChange(v: { field: string; order: 'asc' | 'desc' | null }) {
+	onTableSortChange(v: { field: string; order: 'asc' | 'desc' | null } | null) {
 		this.table_sort = v?.order ? { [v.field]: v.order } : {}
 		this.table_pagination = { ...this.table_pagination, current: 1 }
 

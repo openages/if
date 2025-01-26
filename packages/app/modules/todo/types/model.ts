@@ -39,8 +39,10 @@ export interface CurrentDetailItem {
 	next_id?: string
 }
 
+export type ItemsSortType = 'importance' | 'alphabetical' | 'create_at'
+
 export type ItemsSortParams = {
-	type: 'importance' | 'alphabetical' | 'create_at' | 'done_time'
+	type: ItemsSortType | 'done_time'
 	order: 'asc' | 'desc'
 }
 

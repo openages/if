@@ -1,5 +1,6 @@
 ._local {
 	padding: 1px !important;
+	white-space: nowrap;
 
 	&.percent {
 		background-color: var(--color_bg_2);

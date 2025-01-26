@@ -1,4 +1,5 @@
 .todo_item_wrap {
+	overflow-x: scroll;
 	height: 42px;
 	padding: 0 24px;
 	border-bottom: var(--border_soft);
@@ -104,7 +105,7 @@
 		}
 
 		.action_wrap {
-			width: 21px;
+			min-width: 21px;
 			height: 21px;
 			margin-right: 4px;
 			border-radius: 50%;
@@ -117,8 +118,8 @@
 		}
 
 		.serial_number {
-			width: 48px;
-			margin-right: 6px;
+			min-width: 48px;
+			padding-right: 6px;
 			color: rgba(var(--color_text_rgb), 0.66);
 			text-transform: uppercase;
 			white-space: nowrap;

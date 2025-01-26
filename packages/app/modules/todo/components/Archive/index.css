@@ -26,8 +26,10 @@
 		}
 
 		.archive_items {
+			padding: 0 12px;
+
 			.archive_item {
-				padding: 6px 18px;
+				padding: 6px 0;
 				border-bottom: var(--border_dashed);
 
 				&:hover {
@@ -227,7 +229,7 @@
 			flex-direction: row;
 			flex-wrap: wrap;
 			width: 420px;
-			padding: 18px 15px;
+			padding: 12px 9px;
 
 			.if-form-item {
 				width: 50%;
@@ -251,9 +253,9 @@
 					width: 100%;
 
 					.if-form-item-control-input {
-						padding: 0 7px;
-						border: 1px dashed var(--color_border);
+						padding: 4.8px 7px;
 						border-radius: var(--radius);
+						background-color: var(--color_bg_1);
 					}
 				}
 

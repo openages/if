@@ -2,31 +2,45 @@
 	min-width: 48px;
 	margin-right: 2px;
 
-	&.useByDetail {
-		--height: 18px;
+	&.useByTodo {
+		--height: 14px;
+
+		min-width: unset;
 
 		:global {
 			.tag {
-				.btn_close {
-					padding: 0px 1px;
+				margin-right: 6px;
+				border-radius: 7px;
+				font-size: 10px;
+
+				.color {
+					width: 6px;
+					height: 6px;
+					margin-right: 4px;
 				}
 			}
 		}
 	}
 
-	&.useByTodo {
-		--height: 14px;
+	&.useByInput {
+		--height: 24px;
 
-		min-width: unset;
+		min-width: 60px;
 		margin-right: 4px;
 		margin-left: 0;
 
 		:global {
 			.tag {
-				padding: 0 4px;
-				margin: 0 1px;
-				border-radius: 7px;
-				font-size: 10px;
+				padding: 0 8px;
+				margin: 0 2px;
+				border-radius: 12px;
+				background-color: var(--color_bg_1);
+				font-size: 12px;
+
+				.color {
+					width: 8px;
+					height: 8px;
+				}
 			}
 		}
 	}
@@ -46,6 +60,8 @@
 			.tag {
 				padding: 0 4px;
 				margin: 0 1px;
+				border-radius: 15px;
+				background-color: var(--color_bg_1);
 				font-size: 10px;
 			}
 		}
@@ -87,13 +103,16 @@
 			z-index: 0;
 			height: var(--height);
 			line-height: 1;
-			padding: 3px 6px;
-			padding-right: 4px;
-			margin: 0 2px;
 			border-radius: var(--radius_small);
 			background-color: var(--color_bg);
 			font-size: 12px;
-			font-weight: 500;
+
+			.color {
+				width: 6px;
+				height: 6px;
+				margin-right: 4px;
+				border-radius: 50%;
+			}
 
 			.btn_close {
 				padding: 0px 3px;
@@ -103,6 +122,27 @@
 				&:hover {
 					outline: 1px dashed;
 				}
+			}
+		}
+	}
+}
+
+.popup {
+	:global {
+		.if-select-item {
+			min-height: unset;
+			padding: 4px 6px;
+			font-size: 12px;
+		}
+
+		.select_item {
+			font-size: 12px;
+
+			.color {
+				width: 8px;
+				height: 8px;
+				margin-right: 6px;
+				border-radius: 50%;
 			}
 		}
 	}

@@ -122,7 +122,7 @@ const Index = (props: IPropsTable) => {
 					component: RenderTags
 				},
 				{
-					title: t('todo.common.level'),
+					title: t('todo.common.priority'),
 					dataIndex: 'level',
 					width: 96,
 					align: 'center',

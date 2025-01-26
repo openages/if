@@ -6,7 +6,7 @@ export default {
 			checked: '已完成',
 			closed: '已关闭'
 		},
-		level: '优先级',
+		priority: '优先级',
 		text: '文本',
 		children: '子任务',
 		options: '操作',

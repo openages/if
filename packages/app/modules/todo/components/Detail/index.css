@@ -78,10 +78,16 @@
 				padding-bottom: 12px;
 
 				.option_item {
-					min-height: 30px;
+					border-radius: var(--radius);
 
 					&.disabled {
 						opacity: 0.3;
+					}
+
+					&.tags {
+						.name_wrap {
+							padding-top: 6px;
+						}
 					}
 
 					&.schedule_wrap {
@@ -132,7 +138,7 @@
 					}
 
 					.value_wrap {
-						overflow-x: scroll;
+						flex-wrap: wrap;
 						width: calc(100% - 90px);
 						min-height: 30px;
 					}

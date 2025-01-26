@@ -68,15 +68,9 @@
 					}
 				}
 			}
-		}
 
-		.level_wrap {
-			border-radius: var(--radius);
-
-			.if-rate-star {
-				&:not(:last-child) {
-					margin-inline-end: 2px;
-				}
+			.todo_options_wrap {
+				gap: 3px;
 			}
 		}
 

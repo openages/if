@@ -2,9 +2,6 @@ import { observer } from 'mobx-react-lite'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useGlobal } from '@/context/app'
-import { getTagColor } from '@/utils'
-
 import TagSelect from '../../TagSelect'
 import styles from '../index.css'
 
@@ -15,7 +12,6 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 	const { value, extra, editing, onFocus, onChange } = props
 	const { tags } = extra
 	const { t } = useTranslation()
-	const global = useGlobal()
 
 	const items = useMemo(() => {
 		if (!value) return
@@ -24,7 +20,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 	}, [value, tags])
 
 	return (
-		<div className={$cx('flex justify_center', styles.RenderTags)} style={{ overflow: 'scroll' }}>
+		<div className={$cx('flex justify_center flex_wrap', styles.RenderTags)}>
 			{editing ? (
 				<TagSelect
 					useByTable
@@ -38,19 +34,14 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 					<Choose>
 						<When condition={items !== undefined && items?.length > 0}>
 							{items?.map(item => {
-								const tag_color = getTagColor(item!.color, global.setting.theme)
-
 								return (
-									<span
-										className='tag_item'
-										style={{
-											backgroundColor: tag_color.bg_color,
-											color: tag_color.text_color
-										}}
-										key={item!.id}
-									>
-										{item!.text}
-									</span>
+									<div className='tag flex align_center'>
+										<span
+											className='color'
+											style={{ backgroundColor: item!.color }}
+										></span>
+										<span className='text'>{item!.text}</span>
+									</div>
 								)
 							})}
 						</When>
@@ -66,4 +57,4 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 	)
 }
 
-export default new $app.handle(Index).by(observer).by($app.memo).get()
+export default $app.memo(Index)

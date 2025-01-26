@@ -50,7 +50,6 @@ const Index = (props: IPropsArchive) => {
 		<Form
 			className='filter_wrap'
 			layout='vertical'
-			size='small'
 			initialValues={archive_query_params}
 			onValuesChange={onValuesChange}
 		>

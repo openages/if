@@ -1,3 +1,4 @@
+import { useMemoizedFn } from 'ahooks'
 import { Select } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useMemo } from 'react'
@@ -10,13 +11,12 @@ import styles from './index.css'
 
 import type { IPropsTagSelect } from '../../types'
 import type { SelectProps } from 'antd'
-
 const Index = (props: IPropsTagSelect) => {
 	const {
 		options,
 		value,
 		useByTodo,
-		useByDetail,
+		useByInput,
 		useByTable,
 		className,
 		placement,
@@ -32,12 +32,19 @@ const Index = (props: IPropsTagSelect) => {
 	const Tag = useMemo(() => {
 		if (!options || !options?.length) return null
 
-		return getTag(options, { useByTodo: useByTodo || useByTable, theme })
-	}, [options, useByTodo, useByTable, theme])
+		return getTag(options)
+	}, [options, theme])
 
 	const props_extra = {} as SelectProps
 
 	if (!show_suffix) props_extra['suffixIcon'] = null
+
+	const optionRender = useMemoizedFn(option => (
+		<div className='select_item flex align_center'>
+			<span className='color' style={{ backgroundColor: option.data.color }}></span>
+			<span className='text'>{option.label}</span>
+		</div>
+	))
 
 	return (
 		<div className={$cx('flex align_center', className)}>
@@ -46,10 +53,10 @@ const Index = (props: IPropsTagSelect) => {
 					'borderless no_suffix',
 					styles._local,
 					useByTodo && styles.useByTodo,
-					(useByDetail || useByTable) && styles.useByDetail,
+					useByInput && styles.useByInput,
 					useByTable && styles.useByTable
 				)}
-				popupClassName='borderless'
+				popupClassName={$cx('borderless', styles.popup)}
 				size='small'
 				mode='tags'
 				placement={placement || 'topLeft'}
@@ -57,13 +64,15 @@ const Index = (props: IPropsTagSelect) => {
 				variant='borderless'
 				showSearch={false}
 				virtual={false}
+				popupMatchSelectWidth={false}
 				getPopupContainer={() => document.body}
 				placeholder={t('todo.Input.tag_placeholder')}
 				tagRender={Tag!}
 				maxCount={unlimit ? 30 : 3}
 				options={options}
-				value={value}
+				optionRender={optionRender}
 				onDropdownVisibleChange={onFocus}
+				value={value}
 				onChange={onChange}
 				{...props_extra}
 			></Select>

@@ -12,7 +12,7 @@ const { Group } = Checkbox
 const fields = [
 	{ label: $t('todo.Archive.filter.angle'), value: 'angle_id' },
 	{ label: $t('todo.Header.options.tags'), value: 'tag_ids' },
-	{ label: $t('todo.common.level'), value: 'level' },
+	{ label: $t('todo.common.priority'), value: 'level' },
 	{ label: $t('todo.Input.Remind.title'), value: 'remind_time' },
 	{ label: $t('todo.Input.Deadline.title'), value: 'end_time' },
 	{ label: $t('todo.Input.Cycle.title'), value: 'cycle' },

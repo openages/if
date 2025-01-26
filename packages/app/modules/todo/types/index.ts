@@ -15,13 +15,14 @@ export interface IProps {
 export interface IPropsTagSelect {
 	options: Model['setting']['setting']['tags']
 	value: Array<string>
-	useByTodo?: boolean
-	useByDetail?: boolean
-	useByTable?: boolean
 	className?: SelectProps['className']
 	placement?: SelectProps['placement']
 	unlimit?: boolean
 	show_suffix?: boolean
+	wrap?: boolean
+	useByTodo?: boolean
+	useByInput?: boolean
+	useByTable?: boolean
 	onChange?: (v: Array<string>) => void
 	onFocus?: (v: boolean) => void
 }
@@ -70,6 +71,7 @@ export interface IPropsInput {
 
 export interface IPropsLevel {
 	value: Todo.Todo['level']
+	useByInput?: boolean
 	onChangeLevel: (v: Todo.Todo['level']) => void
 	onFocus?: () => void
 	onBlur?: () => void

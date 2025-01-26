@@ -141,5 +141,12 @@ export default {
 		label: '标签',
 		placeholder: '标签名',
 		remove_confirm: '你将删除该标签下的{{counts}}个记录，请确认是否执行删除？'
+	},
+	prority: {
+		no: '无优先级',
+		low: '低优先级',
+		medium: '中优先级',
+		high: '高优先级',
+		urgent: '紧急'
 	}
 }

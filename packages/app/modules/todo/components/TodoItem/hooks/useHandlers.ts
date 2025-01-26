@@ -42,7 +42,7 @@ export default (args: HookArgs) => {
 	})
 
 	const updateLevel = useMemoizedFn(v => {
-		update({ type: 'parent', index, dimension_id, value: { level: v } as Todo.Todo })
+		update({ type: 'parent', index, dimension_id, value: { level: v ? v : undefined } as Todo.Todo })
 	})
 
 	const updateRemind = useMemoizedFn(v => {

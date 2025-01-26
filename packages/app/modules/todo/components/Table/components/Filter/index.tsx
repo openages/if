@@ -87,7 +87,7 @@ const Index = (props: IPropsTableFilter) => {
 									allowClear
 									virtual={false}
 									suffixIcon={null}
-									placeholder={t('todo.common.level')}
+									placeholder={t('todo.common.priority')}
 									options={level_options}
 								></Select>
 							</Item>

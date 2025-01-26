@@ -1,6 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { Select, Tooltip } from 'antd'
-import { $createParagraphNode, $getRoot, FORMAT_ELEMENT_COMMAND } from 'lexical'
+import { $getRoot } from 'lexical'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -115,6 +115,7 @@ const Index = (props: IPropsInput) => {
 						<If condition={Boolean(tags) && !!tags?.length && input.type === 'todo'}>
 							<TagSelect
 								options={tags!}
+								useByInput
 								value={(input as Todo.Todo).tag_ids!}
 								onChange={v => {
 									setInput(input => ({ ...input, tag_ids: v }))
@@ -123,11 +124,14 @@ const Index = (props: IPropsInput) => {
 						</If>
 					</div>
 					<If condition={input.type === 'todo'}>
-						<div className='flex align_center'>
-							<div className='level_wrap flex align_center mr_6 relative'>
+						<div className='todo_options_wrap flex align_center'>
+							<div className='level_wrap flex align_center relative'>
 								<Level
+									useByInput
 									value={(input as Todo.Todo).level}
-									onChangeLevel={v => setInput(input => ({ ...input, level: v }))}
+									onChangeLevel={v =>
+										setInput(input => ({ ...input, level: v ? v : undefined }))
+									}
 								></Level>
 							</div>
 							<Tooltip

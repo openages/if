@@ -2,6 +2,34 @@
 	color: rgba(var(--color_text_rgb), 0.72);
 	font-size: 12px;
 
+	&.wrap {
+		width: 100%;
+
+		:global {
+			.if-select-selector {
+				border: none;
+
+				.if-select-selection-wrap {
+					height: unset;
+
+					.if-select-selection-overflow {
+						flex-wrap: wrap;
+						height: unset;
+
+						.if-select-selection-overflow-item {
+							height: unset;
+
+							.tag {
+								height: 20px;
+								padding: 0 6px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	:global {
 		.if-select-selector {
 			padding-left: 0 !important;
@@ -17,6 +45,10 @@
 					.if-select-selection-overflow-item-suffix {
 						display: none;
 					}
+				}
+
+				.if-select-selection-placeholder {
+					inset-inline-start: 0;
 				}
 			}
 		}

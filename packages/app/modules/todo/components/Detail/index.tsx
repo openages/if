@@ -16,8 +16,8 @@ import {
 	Calendar,
 	CaretDown,
 	CaretUp,
+	CellSignalHigh,
 	ClockCountdown,
-	FireSimple,
 	MapPinPlus,
 	Plus,
 	Repeat,
@@ -31,9 +31,9 @@ import {
 import Children from '../Children'
 import Cycle from '../Cycle'
 import DateTime from '../DateTime'
+import FlatTagSelect from '../FlatTagSelect'
 import Level from '../Level'
 import Remark from '../Remark'
-import TagSelect from '../TagSelect'
 import { useHandlers } from '../TodoItem/hooks'
 import styles from './index.css'
 
@@ -245,25 +245,28 @@ const Index = (props: IPropsDetail) => {
 						setRef={setRef}
 					></Text>
 					<div className='option_items w_100 border_box flex flex_column'>
-						<div className='option_item w_100 border_box flex align_center'>
-							<div className='name_wrap flex align_center'>
-								<Tag size={16}></Tag>
-								<span className='name'>{t('common.tags.label')}</span>
+						<div className='option_item tags w_100 border_box flex'>
+							<div className='name_wrap flex align_start'>
+								<div className='flex align_center'>
+									<Tag size={16}></Tag>
+									<span className='name'>{t('common.tags.label')}</span>
+								</div>
 							</div>
 							<div className='value_wrap flex align_center'>
-								<TagSelect
-									className='tag_select'
+								<FlatTagSelect
+									className='tag_select w_100'
+									placement='bottomLeft'
+									wrap
 									options={tags}
 									value={tag_ids!}
-									useByDetail
 									onChange={updateTags}
-								></TagSelect>
+								></FlatTagSelect>
 							</div>
 						</div>
 						<div className='option_item w_100 border_box flex align_center'>
 							<div className='name_wrap flex align_center'>
-								<FireSimple size={16}></FireSimple>
-								<span className='name'>{t('todo.common.level')}</span>
+								<CellSignalHigh size={16} style={{ translate: '1px' }}></CellSignalHigh>
+								<span className='name'>{t('todo.common.priority')}</span>
 							</div>
 							<div className='value_wrap flex align_center'>
 								<Level value={level} onChangeLevel={updateLevel}></Level>

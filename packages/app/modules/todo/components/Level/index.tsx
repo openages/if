@@ -1,29 +1,50 @@
-import { Rate } from 'antd'
+import { useMemoizedFn } from 'ahooks'
+import { Select } from 'antd'
+import { omit } from 'lodash-es'
+import { useTranslation } from 'react-i18next'
 
-import { getColorByLevel } from '@/appdata'
-import { FireSimple } from '@phosphor-icons/react'
+import { CellSignalHigh } from '@phosphor-icons/react'
 
 import styles from './index.css'
+import Option from './Option'
 
 import type { IPropsLevel } from '../../types'
+const options = [
+	{ label: $t('common.prority.no'), value: 0 },
+	{ label: $t('common.prority.low'), value: 1 },
+	{ label: $t('common.prority.medium'), value: 2 },
+	{ label: $t('common.prority.high'), value: 3 },
+	{ label: $t('common.prority.urgent'), value: 4 }
+]
 
 const Index = (props: IPropsLevel) => {
-	const { value, onChangeLevel, onFocus, onBlur } = props
-	const color = getColorByLevel(value!)
+	const { value, useByInput, onChangeLevel, onFocus, onBlur } = props
+	const { t } = useTranslation()
+
+	const optionRender = useMemoizedFn(item => <Option {...item} selected={item.value === value} key={item.value} />)
+	const labelRender = useMemoizedFn(item => <Option {...omit(item, 'key')} as_label />)
 
 	return (
-		<Rate
-			rootClassName={styles._local}
-			count={4}
-			character={({ index, value }) => (
-				<FireSimple size={15} weight={value! >= index! + 1 ? 'duotone' : 'regular'} />
+		<Select
+			rootClassName={$cx(
+				'w_100',
+				styles._local,
+				useByInput && styles.useByInput,
+				value && styles.has_value
 			)}
-			style={{ '--color_star': color || 'var(--color_text)' }}
+			popupClassName={$cx('small', styles.popup)}
+			placement='topRight'
+			suffixIcon={useByInput && !value ? <CellSignalHigh size={18}></CellSignalHigh> : null}
+			popupMatchSelectWidth={false}
+			placeholder={t('common.set') + t('common.letter_space') + t('todo.common.priority')}
+			optionRender={optionRender}
+			labelRender={labelRender}
+			options={options}
 			value={value}
-			onChange={onChangeLevel}
 			onFocus={onFocus}
 			onBlur={onBlur}
-		></Rate>
+			onChange={onChangeLevel}
+		></Select>
 	)
 }
 
