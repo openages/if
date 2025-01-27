@@ -5,7 +5,8 @@ import { match } from 'ts-pattern'
 import { updateSetting } from '@/actions/global'
 import { getArchiveTime, getCleanTime, getDocItem, getDocItemsData } from '@/utils'
 import { confirm, info } from '@/utils/antd'
-import { getEditorText } from '@/utils/editor'
+
+import getTodoItems from './utils/getTodoItems'
 
 import type { MangoQueryOperators, MangoQuerySelector, MangoQuerySortPart, RxDocument } from 'rxdb'
 import type { ArchiveQueryParams, AnalysisTrending } from './types/model'
@@ -270,19 +271,7 @@ export const getAnalysisData = async (args: ArgsGetAnalysisData) => {
 
 	return {
 		trending,
-		items: getDocItemsData(items).map(item => {
-			item['text'] = getEditorText(item.text)
-
-			if (item.children && item.children.length) {
-				item.children = item.children.map(child => {
-					child['text'] = getEditorText(child.text)
-
-					return child
-				})
-			}
-
-			return item
-		}) as Array<Todo.Todo>
+		items: getTodoItems(items as Array<RxDocument<Todo.Todo>>)
 	}
 }
 
@@ -654,7 +643,7 @@ export const recycle = async (todo_item: RxDocument<Todo.Todo>) => {
 				if (scale === 'weekday') {
 					const _now = now.hour(0).minute(0).second(0)
 
-					return now.day() < value
+					return now.day() - 1 < value
 						? _now.day(value).valueOf()
 						: _now.add(1, 'week').day(value).valueOf()
 				}

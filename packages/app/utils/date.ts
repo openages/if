@@ -4,6 +4,9 @@ import { match } from 'ts-pattern'
 import type { Dayjs } from 'dayjs'
 import type { CleanTime } from '@/types'
 
+export const hour_counts = Array.from({ length: 24 }, (_, index) => index)
+export const month_counts = Array.from({ length: 12 }, (_, index) => index)
+
 export const format = (v: Dayjs, ignoreDetail?: boolean) => {
 	if (!v) return undefined as unknown as string
 
@@ -49,3 +52,73 @@ export const getCleanTime = (v: CleanTime) => {
 		.with('1week', () => now.subtract(1, 'week'))
 		.exhaustive()
 }
+
+export const getDays = (type: 'week' | 'month' | 'year', v: Dayjs) => {
+	const start = v.startOf(type)
+	const end = v.endOf(type)
+	const dates = [] as Array<Dayjs>
+
+	let current = start
+
+	while (current.isSameOrBefore(end)) {
+		dates.push(current)
+
+		current = current.add(1, 'day')
+	}
+
+	return dates
+}
+
+export const getMonthDays = (day: Dayjs) => {
+	const start_of_month = day.startOf('month')
+	const end_of_month = day.endOf('month')
+	const calendar_data = []
+
+	let start_of_week = start_of_month.startOf('week')
+
+	while (start_of_week.isBefore(end_of_month)) {
+		const end_of_week = start_of_week.endOf('week')
+		const week_data = []
+		let current_date = start_of_week
+
+		while (current_date.isBefore(end_of_week) || current_date.isSame(end_of_week)) {
+			const is_current_month = current_date.isSame(start_of_month, 'month')
+
+			week_data.push((!is_current_month ? '~' : '') + current_date.format('YYYY-MM-DD'))
+
+			current_date = current_date.add(1, 'day')
+		}
+
+		calendar_data.push(week_data)
+
+		start_of_week = end_of_week.add(1, 'day')
+	}
+
+	return calendar_data
+}
+
+const transform = (matrix: Array<Array<string>>) => {
+	const rows = matrix.length
+	const cols = matrix[0].length
+	const target = [] as Array<Array<string>>
+
+	for (let j = 0; j < cols; j++) {
+		target[j] = []
+
+		for (let i = 0; i < rows; i++) {
+			target[j][i] = matrix[i][j]
+		}
+	}
+
+	return target.map(col => {
+		const target_col = {} as Record<string, null>
+
+		col.forEach(item => {
+			target_col[item] = null
+		})
+
+		return target_col
+	})
+}
+
+export const getMonthDaysWithWeekCol = (day: Dayjs) => transform(getMonthDays(day))

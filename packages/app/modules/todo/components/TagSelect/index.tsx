@@ -12,19 +12,8 @@ import styles from './index.css'
 import type { IPropsTagSelect } from '../../types'
 import type { SelectProps } from 'antd'
 const Index = (props: IPropsTagSelect) => {
-	const {
-		options,
-		value,
-		useByTodo,
-		useByInput,
-		useByTable,
-		className,
-		placement,
-		unlimit,
-		show_suffix,
-		onChange,
-		onFocus
-	} = props
+	const { options, value, useByTodo, useByInput, useByTable, className, placement, unlimit, onChange, onFocus } =
+		props
 	const { t } = useTranslation()
 	const global = useGlobal()
 	const theme = global.setting.theme
@@ -36,8 +25,6 @@ const Index = (props: IPropsTagSelect) => {
 	}, [options, theme])
 
 	const props_extra = {} as SelectProps
-
-	if (!show_suffix) props_extra['suffixIcon'] = null
 
 	const optionRender = useMemoizedFn(option => (
 		<div className='select_item flex align_center'>

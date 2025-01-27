@@ -103,6 +103,7 @@
 			z-index: 0;
 			height: var(--height);
 			line-height: 1;
+			margin: 0 3px;
 			border-radius: var(--radius_small);
 			background-color: var(--color_bg);
 			font-size: 12px;

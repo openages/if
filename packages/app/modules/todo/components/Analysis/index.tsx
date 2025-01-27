@@ -9,7 +9,6 @@ import { match } from 'ts-pattern'
 import { downloadFile } from '@/utils'
 
 import { Chart, Duration, Export, List, ListHeader } from './components'
-import styles from './index.css'
 
 import type {
 	IPropsAnalysis,
@@ -201,7 +200,6 @@ const Index = (props: IPropsAnalysis) => {
 
 	return (
 		<Drawer
-			rootClassName={styles._local}
 			open={visible_analysis_modal}
 			title={t('todo.Analysis.title')}
 			width='min(624px,calc(100% - 24px))'

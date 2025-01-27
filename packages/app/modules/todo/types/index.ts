@@ -18,7 +18,6 @@ export interface IPropsTagSelect {
 	className?: SelectProps['className']
 	placement?: SelectProps['placement']
 	unlimit?: boolean
-	show_suffix?: boolean
 	wrap?: boolean
 	useByTodo?: boolean
 	useByInput?: boolean
@@ -42,6 +41,7 @@ export interface IPropsHeader
 	showSettingsModal: () => void
 	showArchiveModal: () => void
 	showAnalysisModal: () => void
+	showActivityModal: () => void
 	setItemsSortParam: (v: Model['items_sort_param']) => void
 	setItemsFilterTags: (v: Model['items_filter_tags']) => void
 	toggleTableFilter: () => void
@@ -356,4 +356,10 @@ export interface IPropsAnalysisExport {
 	setPrefix: (v: string) => void
 	exportTodos: (type: 'text' | 'json') => void
 	copyToClipboard: () => void
+}
+
+export interface IPropsActivity {
+	id: Model['id']
+	visible_activity_modal: Model['visible_activity_modal']
+	onClose: () => void
 }

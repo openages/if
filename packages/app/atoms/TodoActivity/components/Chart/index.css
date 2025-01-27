@@ -1,0 +1,58 @@
+._local {
+	padding: 12px;
+	border-radius: var(--radius);
+	background-color: var(--color_bg_1);
+
+	:global {
+		.chart_wrap {
+			gap: 12px;
+
+			.col {
+				flex: 1;
+
+				&.week {
+					gap: 4px;
+				}
+
+				&.month {
+					gap: 9px;
+				}
+
+				&.year {
+					gap: 12px;
+				}
+
+				.block_wrap {
+					overflow: hidden;
+					width: 100%;
+					background-color: var(--color_bg_2);
+
+					&.week {
+						height: 6px;
+						border-radius: 1px;
+					}
+
+					&.month {
+						height: 12px;
+						border-radius: 2px;
+					}
+
+					&.year {
+						width: calc(((100% - 12px * 30) / 31));
+						border-radius: 10px;
+						aspect-ratio: 1;
+					}
+
+					.block {
+						width: 100%;
+						height: 100%;
+
+						&.hide {
+							background-color: var(--color_bg_1);
+						}
+					}
+				}
+			}
+		}
+	}
+}

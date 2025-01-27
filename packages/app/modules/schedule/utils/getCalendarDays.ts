@@ -1,5 +1,6 @@
-import type { Schedule } from '@/types'
 import dayjs from 'dayjs'
+
+import type { Schedule } from '@/types'
 
 const atom = 20
 const base = 60 * 1000 * atom

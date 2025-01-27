@@ -97,6 +97,7 @@ export default class Index {
 	visible_detail_modal = false
 	visible_table_filter = false
 	visible_analysis_modal = false
+	visible_activity_modal = false
 
 	current_angle_id = ''
 	current_detail_index = {} as CurrentDetailIndex

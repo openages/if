@@ -105,10 +105,7 @@ const Index = (props: IPropsFlatTodoItem) => {
 		[isOver, active, dimension_id]
 	)
 
-	const outdate = useMemo(
-		() => zen_mode && end_time && dayjs(end_time).valueOf() < new Date().valueOf(),
-		[zen_mode, end_time]
-	)
+	const outdate = useMemo(() => end_time && dayjs(end_time).valueOf() < new Date().valueOf(), [end_time])
 
 	const disableContextMenu = useMemoizedFn(e => e.preventDefault())
 
@@ -186,17 +183,19 @@ const Index = (props: IPropsFlatTodoItem) => {
 					></Text>
 				</Dropdown>
 			</ConfigProvider>
-			<div className='options_wrap flex align_center'>
-				{children_status && <Children {...children_status}></Children>}
-				{tags?.length > 0 && tag_ids?.length! > 0 && (
-					<Tags tags={tags} tag_ids={tag_ids} updateTags={updateTags}></Tags>
-				)}
-				{remind_time && <Remind remind_time={remind_time}></Remind>}
-				{status === 'unchecked' && end_time && <Deadline end_time={end_time}></Deadline>}
-				{cycle_enabled && cycle && cycle.value !== undefined && (
-					<Repeat cycle={cycle} recycle_time={recycle_time}></Repeat>
-				)}
-			</div>
+			{!zen_mode && (
+				<div className='options_wrap flex align_center'>
+					{children_status && <Children {...children_status}></Children>}
+					{tags?.length > 0 && tag_ids?.length! > 0 && (
+						<Tags tags={tags} tag_ids={tag_ids} updateTags={updateTags}></Tags>
+					)}
+					{remind_time && <Remind remind_time={remind_time}></Remind>}
+					{status === 'unchecked' && end_time && <Deadline end_time={end_time}></Deadline>}
+					{cycle_enabled && cycle && cycle.value !== undefined && (
+						<Repeat cycle={cycle} recycle_time={recycle_time}></Repeat>
+					)}
+				</div>
+			)}
 		</div>
 	)
 }

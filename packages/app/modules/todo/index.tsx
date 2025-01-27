@@ -10,6 +10,7 @@ import { useStackSelector } from '@/context/stack'
 import { pointerWithin, rectIntersection, DndContext, DragOverlay } from '@dnd-kit/core'
 
 import {
+	Activity,
 	Analysis,
 	Archive,
 	Detail,
@@ -44,7 +45,8 @@ import type {
 	IPropsTodoItem,
 	IPropsTodos,
 	IPropsMindmap,
-	IPropsAnalysis
+	IPropsAnalysis,
+	IPropsActivity
 } from './types'
 
 const Index = ({ id }: IProps) => {
@@ -97,6 +99,7 @@ const Index = ({ id }: IProps) => {
 
 			x.visible_analysis_modal = true
 		}),
+		showActivityModal: useMemoizedFn(() => (x.visible_activity_modal = true)),
 		setItemsSortParam: useMemoizedFn(v => (x.items_sort_param = v)),
 		setItemsFilterTags: useMemoizedFn(v => (x.items_filter_tags = v)),
 		toggleTableFilter: useMemoizedFn(() => (x.visible_table_filter = !x.visible_table_filter)),
@@ -251,6 +254,12 @@ const Index = ({ id }: IProps) => {
 		onClose: useMemoizedFn(() => (x.visible_analysis_modal = false))
 	}
 
+	const props_activity: IPropsActivity = {
+		id: x.id,
+		visible_activity_modal: x.visible_activity_modal,
+		onClose: useMemoizedFn(() => (x.visible_activity_modal = false))
+	}
+
 	const props_drag_todo_item: IPropsTodoItem = drag_todo_item
 		? {
 				item: drag_todo_item.item as Todo.Todo,
@@ -376,6 +385,7 @@ const Index = ({ id }: IProps) => {
 						<Archive {...props_archive}></Archive>
 						<Detail {...props_detail}></Detail>
 						<Analysis {...props_analysis}></Analysis>
+						<Activity {...props_activity}></Activity>
 					</Fragment>
 				))
 				.otherwise(() => null)}

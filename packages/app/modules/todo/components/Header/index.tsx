@@ -8,6 +8,7 @@ import { useText, useTextChange, Text } from '@/Editor'
 import {
 	AlignLeft,
 	ArchiveBox,
+	CalendarDots,
 	CaretDown,
 	CaretUp,
 	ChartBar,
@@ -54,6 +55,7 @@ const Index = (props: IPropsHeader) => {
 		showSettingsModal,
 		showArchiveModal,
 		showAnalysisModal,
+		showActivityModal,
 		setItemsSortParam,
 		setItemsFilterTags,
 		toggleTableFilter,
@@ -121,6 +123,11 @@ const Index = (props: IPropsHeader) => {
 
 	const showAnalysis = useMemoizedFn(() => {
 		showAnalysisModal()
+		setOpenPanel(false)
+	})
+
+	const showActivity = useMemoizedFn(() => {
+		showActivityModal()
 		setOpenPanel(false)
 	})
 
@@ -222,18 +229,23 @@ const Index = (props: IPropsHeader) => {
 					<span className='label'>{t('todo.Header.options.tags')}</span>
 					<TagSelect
 						className='select_tags'
-						unlimit
-						show_suffix
 						placement='bottomRight'
+						unlimit
 						options={tags}
 						value={items_filter_tags}
 						onChange={v => setItemsFilterTags(v)}
 					></TagSelect>
 				</div>
 			</div>
-			<div className='analysis_wrap flex align_center cursor_point' onClick={showAnalysis}>
-				<ChartBar className='mr_6' size={14}></ChartBar>
-				<span className='label'>{t('todo.Header.options.analysis')}</span>
+			<div className='options_wrap w_100 border_box flex flex_column'>
+				<div className='option_wrap flex align_center cursor_point' onClick={showAnalysis}>
+					<ChartBar className='mr_6' size={14}></ChartBar>
+					<span className='label'>{t('todo.Header.options.analysis')}</span>
+				</div>
+				<div className='option_wrap flex align_center cursor_point' onClick={showActivity}>
+					<CalendarDots className='mr_6' size={14}></CalendarDots>
+					<span className='label'>{t('atoms.TodoActivity.title')}</span>
+				</div>
 			</div>
 		</div>
 	)
@@ -278,10 +290,10 @@ const Index = (props: IPropsHeader) => {
 					<div className='filter_wrap flex align_center'>
 						{items_filter_tags.length > 0 && (
 							<TagSelect
-								className='select_tags on_header mr_6'
-								unlimit
-								show_suffix
+								className='select_tags on_header'
 								placement='bottomRight'
+								unlimit
+								useByInput
 								options={tags}
 								value={items_filter_tags}
 								onChange={v => setItemsFilterTags(v)}

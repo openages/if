@@ -59,14 +59,14 @@
 
 	:global {
 		.filter_wrap {
-			margin-right: 12px;
+			margin-right: 8px;
 
 			.filter_item {
 				height: 24px;
 				line-height: 1;
 				padding: 3px 4px;
-				border: var(--border);
-				border-radius: var(--radius);
+				border-radius: 12px;
+				background-color: var(--color_bg_1);
 				user-select: none;
 				font-size: 12px;
 
@@ -76,9 +76,9 @@
 				}
 
 				.btn_remove {
-					width: 16px;
-					height: 16px;
-					border-radius: var(--radius_small_1);
+					width: 18px;
+					height: 18px;
+					border-radius: 50%;
 
 					&:hover {
 						background-color: var(--color_bg_2);
@@ -87,10 +87,10 @@
 			}
 
 			.type_wrap {
-				height: 16px;
+				height: 18px;
 				padding: 0 6px;
 				padding-right: 4px;
-				border-radius: var(--radius_small_1);
+				border-radius: 12px;
 
 				&:hover {
 					background-color: var(--color_bg_2);
@@ -197,10 +197,11 @@
 		}
 
 		.setting_items {
-			padding: 6px 15px;
+			padding: 3px 15px;
+			border-bottom: var(--border_light);
 
 			.setting_item {
-				height: 34px;
+				height: 32px;
 
 				&:last-child {
 					border-bottom: none;
@@ -211,6 +212,8 @@
 				}
 
 				.if-select {
+					min-width: 120px;
+
 					.if-select-arrow {
 						inset-inline-end: 0;
 						vertical-align: middle;
@@ -221,7 +224,7 @@
 					height: 24px;
 
 					.if-select-selector {
-						min-width: 90px;
+						text-align: right;
 
 						.if-select-selection-wrap {
 							font-size: 12px;
@@ -264,16 +267,18 @@
 			}
 		}
 
-		.analysis_wrap {
-			height: 34px;
-			padding: 0 15px;
-			border-top: var(--border_light);
-			border-bottom-right-radius: var(--radius);
-			border-bottom-left-radius: var(--radius);
-			font-size: 12px;
+		.options_wrap {
+			padding: 6px;
 
-			&:hover {
-				background-color: var(--color_bg_2);
+			.option_wrap {
+				height: 32px;
+				padding: 0 9px;
+				border-radius: var(--radius);
+				font-size: 12px;
+
+				&:hover {
+					background-color: var(--color_bg_2);
+				}
 			}
 		}
 	}
