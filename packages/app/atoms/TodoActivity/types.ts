@@ -12,13 +12,13 @@ export interface IPropsHeader {
 export interface IPropsChart {
 	type: Model['type']
 	index: Model['index']
-	chart_items: Model['chart_items']
+	chart_data: Model['chart_data']
 	setIndex: (v: Model['index']) => void
 }
 
 export interface IPropsTypeChart {
 	index: Model['index']
-	chart_items: Model['chart_items']
+	chart_data: Model['chart_data']
 	setIndex: (v: Model['index']) => void
 }
 

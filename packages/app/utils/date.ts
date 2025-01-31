@@ -1,9 +1,12 @@
 import dayjs from 'dayjs'
 import { match } from 'ts-pattern'
 
+import { getRelativeTime } from '@/atoms/TodoActivity/utils'
+
 import type { Dayjs } from 'dayjs'
 import type { CleanTime } from '@/types'
 
+export const minute_pieces = Array.from({ length: 6 }, (_, index) => index)
 export const hour_counts = Array.from({ length: 24 }, (_, index) => index)
 export const month_counts = Array.from({ length: 12 }, (_, index) => index)
 
@@ -102,6 +105,10 @@ const transform = (matrix: Array<Array<string>>) => {
 	const cols = matrix[0].length
 	const target = [] as Array<Array<string>>
 
+	let all = 0
+	let pass = 0
+	let left = 0
+
 	for (let j = 0; j < cols; j++) {
 		target[j] = []
 
@@ -110,15 +117,29 @@ const transform = (matrix: Array<Array<string>>) => {
 		}
 	}
 
-	return target.map(col => {
-		const target_col = {} as Record<string, null>
+	const days = target.map(col => {
+		const target_col = {} as Record<string, 'pass' | 'now' | 'future'>
 
 		col.forEach(item => {
-			target_col[item] = null
+			const relative_date = getRelativeTime('YYYY-MM-DD', dayjs(item.replace('~', '')))
+
+			target_col[item] = relative_date
+
+			if (item.indexOf('~') === -1) {
+				all += 1
+
+				if (relative_date === 'pass') {
+					pass += 1
+				} else {
+					left += 1
+				}
+			}
 		})
 
 		return target_col
 	})
+
+	return { days, all, pass, left }
 }
 
 export const getMonthDaysWithWeekCol = (day: Dayjs) => transform(getMonthDays(day))

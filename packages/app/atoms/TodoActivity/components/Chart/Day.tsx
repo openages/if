@@ -13,32 +13,30 @@ const Index = (props: IPropsTypeChart) => {
 	return (
 		<div className='chart_wrap w_100 border_box flex flex_column'>
 			<div className='chart_items w_100 flex'>
-				<div className='cols border_box day flex flex_column'>
+				<div className='cols w_100 border_box day flex justify_between'>
 					{items.map((day, index) => (
-						<div className='col year flex justify_between' key={index}>
+						<div className='col day flex flex_column' key={index}>
 							{Object.keys(day).map(item => (
-								<div className='block_wrap year flex justify_center' key={item}>
-									<div className='block' style={getBlockStyle(day[item], 30)}></div>
+								<div className='block_wrap day flex justify_center' key={item}>
+									<div className='block' style={getBlockStyle(day[item], 4)}></div>
 								</div>
 							))}
 						</div>
 					))}
 				</div>
-			</div>
-			<div className='progress_wrap flex'>
-				<div className='detail_wrap w_100 border_box flex'>
-					{t('atoms.TodoActivity.detail', {
-						type: t('common.l_this') + t('common.letter_space') + t('common.l_year'),
-						unit: t('common.time.days'),
-						left,
-						total: total_todos,
-						max_time: max.time,
-						max_count: max.count
-					})}
-				</div>
 				<div className='progress flex justify_center align_center'>
 					<Progress type='circle' percent={percent} size={80} />
 				</div>
+			</div>
+			<div className='detail_wrap w_100 border_box flex'>
+				{t('atoms.TodoActivity.detail', {
+					type: t('common.l_today'),
+					unit: t('common.time.hours'),
+					left,
+					total: total_todos,
+					max_time: max.time,
+					max_count: max.count
+				})}
 			</div>
 		</div>
 	)

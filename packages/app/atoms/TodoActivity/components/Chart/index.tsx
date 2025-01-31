@@ -1,3 +1,4 @@
+import Day from './Day'
 import styles from './index.css'
 import Month from './Month'
 import Week from './Week'
@@ -6,18 +7,21 @@ import Year from './Year'
 import type { IPropsChart, IPropsTypeChart } from '../../types'
 
 const Index = (props: IPropsChart) => {
-	const { type, index, chart_items, setIndex } = props
+	const { type, index, chart_data, setIndex } = props
 
 	const props_type_chart: IPropsTypeChart = {
 		index,
-		chart_items,
+		chart_data,
 		setIndex
 	}
 
 	return (
 		<div className={$cx(styles._local)}>
-			{chart_items && (
+			{chart_data && chart_data.items && (
 				<Choose>
+					<When condition={type === 'day'}>
+						<Day {...props_type_chart}></Day>
+					</When>
 					<When condition={type === 'week'}>
 						<Week {...props_type_chart}></Week>
 					</When>

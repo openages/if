@@ -33,7 +33,7 @@ const Index = (props: IProps) => {
 	const props_chart: IPropsChart = {
 		type: x.type,
 		index: $copy(x.index),
-		chart_items: $copy(x.chart_items),
+		chart_data: $copy(x.chart_data),
 		setIndex: useMemoizedFn(v => (x.index = v))
 	}
 

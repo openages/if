@@ -15,6 +15,7 @@ const Index = (props: IPropsHeader) => {
 		<div className={$cx('w_100 flex justify_between', styles._local)}>
 			<Segmented
 				options={[
+					{ label: t('common.today'), value: 'day' },
 					{ label: t('common.time.week'), value: 'week' },
 					{ label: t('common.time.month'), value: 'month' },
 					{ label: t('common.time.year'), value: 'year' }
