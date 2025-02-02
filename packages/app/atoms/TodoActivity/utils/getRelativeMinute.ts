@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 
 import type { Dayjs } from 'dayjs'
 
-export default (format: string, time: Dayjs, minute: number) => {
+export default (format: string, time: Dayjs, minute: number | string) => {
 	const now = dayjs()
 	const current = now.format(format) + Math.floor(now.minute() / 10) * 10
 	const key = time.format(format) + minute

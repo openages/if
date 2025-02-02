@@ -46,6 +46,20 @@ export const downloadFile = (filename: string, text: string, ext: string, mime_t
 	URL.revokeObjectURL(url)
 }
 
+export const downloadImage = (filename: string, data_url: string, ext: string) => {
+	const link = document.createElement('a')
+
+	link.style.display = 'none'
+	link.href = data_url
+	link.download = `${filename}.${ext}`
+
+	document.body.appendChild(link)
+
+	link.click()
+
+	document.body.removeChild(link)
+}
+
 export const uploadFile = (args?: { max_count?: number; accept?: string }) => {
 	const { max_count, accept } = args || {}
 	const input = document.createElement('input') as HTMLInputElement

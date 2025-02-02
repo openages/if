@@ -41,6 +41,13 @@
 				}
 			}
 
+			&.current {
+				&:hover {
+					color: var(--color_text);
+					background-color: var(--color_bg_2);
+				}
+			}
+
 			&.total {
 				width: 60px;
 				padding: 0;

@@ -10,6 +10,7 @@
 		outline: none !important;
 
 		&-active {
+			font-weight: normal;
 			pointer-events: none;
 
 			a {

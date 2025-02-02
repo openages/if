@@ -1,25 +1,39 @@
-import { Progress } from 'antd'
+import { Progress, Tooltip } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-import { getBlockStyle } from '../../utils'
+import { getBlockStyle, getBlockWrapStyle } from '../../utils'
 
 import type { IPropsTypeChart } from '../../types'
 
 const Index = (props: IPropsTypeChart) => {
-	const { index, chart_data, setIndex } = props
+	const { index, chart_data, setIndex, setChartDom } = props
 	const { items, percent, left, total_todos, max } = chart_data!
 	const { t } = useTranslation()
 
 	return (
 		<div className='chart_wrap w_100 border_box flex flex_column'>
 			<div className='chart_items w_100 flex'>
-				<div className='cols w_100 border_box day flex flex_column'>
-					{items.map((day, index) => (
-						<div className='col year w_100 flex' key={index}>
+				<div className='cols w_100 border_box day flex flex_column' ref={setChartDom}>
+					{items.map((day, idx) => (
+						<div className='col year w_100 flex' key={idx}>
 							{Object.keys(day).map(item => (
-								<div className='block_wrap year flex justify_center' key={item}>
-									<div className='block' style={getBlockStyle(day[item], 30)}></div>
-								</div>
+								<Tooltip destroyTooltipOnHide title={item} key={item}>
+									<div
+										className={$cx(
+											'block_wrap year flex justify_center cursor_point',
+											index?.index === idx &&
+												index?.key === item &&
+												'active'
+										)}
+										style={getBlockWrapStyle(day[item])}
+										onClick={() => setIndex({ index: idx, key: item })}
+									>
+										<div
+											className='block'
+											style={getBlockStyle(day[item], 30)}
+										></div>
+									</div>
+								</Tooltip>
 							))}
 						</div>
 					))}

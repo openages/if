@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import dayjs from 'dayjs'
 import { observer } from 'mobx-react-lite'
 import { useLayoutEffect, useState } from 'react'
 import { container } from 'tsyringe'
@@ -25,16 +26,23 @@ const Index = (props: IProps) => {
 		type: x.type,
 		current: x.current,
 		total: x.total,
-		setType: useMemoizedFn(x.query),
+		setType: useMemoizedFn(v => {
+			x.current_date = dayjs()
+
+			x.query(v)
+		}),
+		reset: useMemoizedFn(x.reset),
 		prev: useMemoizedFn(x.prev),
-		next: useMemoizedFn(x.next)
+		next: useMemoizedFn(x.next),
+		share: useMemoizedFn(x.share)
 	}
 
 	const props_chart: IPropsChart = {
 		type: x.type,
 		index: $copy(x.index),
 		chart_data: $copy(x.chart_data),
-		setIndex: useMemoizedFn(v => (x.index = v))
+		setIndex: useMemoizedFn(x.setIndex),
+		setChartDom: useMemoizedFn(v => (x.chart_dom = v))
 	}
 
 	const props_list: IPropsList = {

@@ -1,5 +1,6 @@
 .clickable {
 	cursor: pointer;
+	user-select: none;
 	transition: scale ease 0.12s;
 
 	&:hover {

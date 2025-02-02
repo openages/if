@@ -80,6 +80,7 @@
 		"minimatch": "^9.0.5",
 		"mobx": "^6.13.5",
 		"mobx-react-lite": "^4.1.0",
+		"modern-screenshot": "^4.5.5",
 		"mustache": "^4.2.0",
 		"nanoid": "^5.0.9",
 		"nice-try": "^3.0.1",
