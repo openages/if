@@ -9,11 +9,11 @@ export default (todos: Todos, limit: number) => {
 
 	if (relative_date) {
 		switch (relative_date) {
-			case 'pass':
-				border = 'var(--color_border_light)'
-				break
 			case 'now':
 				border = 'rgba(var(--color_text_rgb),0.24)'
+				break
+			case 'future':
+				border = 'var(--color_text_sub)'
 				break
 		}
 

@@ -1,4 +1,50 @@
 ._local {
+	margin-top: 10px;
+
 	:global {
+		.title {
+			margin-bottom: 6px;
+		}
+
+		.if-table-thead {
+			display: none;
+		}
+
+		.if-table-wrapper {
+			.if-table {
+				table {
+					border-spacing: 0 1px;
+					border-collapse: separate;
+
+					tbody {
+						tr {
+							td {
+								height: 27px;
+								padding: 0 12px !important;
+								border: none !important;
+								background-color: var(--color_bg_1);
+
+								&:first-child {
+									border-top-left-radius: var(--radius);
+									border-bottom-left-radius: var(--radius);
+								}
+
+								&:last-child {
+									border-top-right-radius: var(--radius);
+									border-bottom-right-radius: var(--radius);
+									color: var(--color_text_light);
+									text-align: right;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.if-table-pagination.if-pagination {
+				margin: 12px 0;
+				font-size: 12px;
+			}
+		}
 	}
 }

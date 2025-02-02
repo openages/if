@@ -34,7 +34,7 @@ export default class Index {
 	id = ''
 	type = 'week' as 'day' | 'week' | 'month' | 'year'
 	current = dayjs().format('YYYY-MM-DD HH:mm:ss') as string
-	index = { x: 0, y: 0 }
+	index = null as { index: number; key: string } | null
 	data_items = [] as Array<TodoItem>
 	chart_data = null as ChartData
 
@@ -175,7 +175,7 @@ export default class Index {
 			data_items.forEach(item => {
 				const time = dayjs(item.done_time)
 
-				const week = time.day()
+				const week = time.dayOfWeek()
 
 				const day_items = cols[week - 1]
 				const key = time.format('YYYY-MM-DD HH')
@@ -209,7 +209,7 @@ export default class Index {
 
 			data_items.forEach(item => {
 				const time = dayjs(item.done_time)
-				const week = time.day()
+				const week = time.dayOfWeek()
 
 				const week_items = cols[week - 1]
 				const key = time.format('YYYY-MM-DD')

@@ -26,7 +26,14 @@ const Index = (props: IPropsTypeChart) => {
 										)}
 										style={getBlockStyle(day[item], 24)}
 									>
-										<span className='text absolute w_100 h_100 flex justify_center align_center'>
+										<span
+											className={$cx(
+												'text absolute w_100 h_100 flex justify_center align_center',
+												typeof day[item] === 'string'
+													? day[item]
+													: day[item].relative_date
+											)}
+										>
 											{item.indexOf('~') === -1 && dayjs(item).date()}
 										</span>
 									</div>
@@ -36,7 +43,12 @@ const Index = (props: IPropsTypeChart) => {
 					))}
 				</div>
 				<div className='progress month flex justify_center align_center'>
-					<Progress type='circle' percent={percent} size={108} />
+					<Progress
+						type='circle'
+						strokeColor='var(--color_text_sub)'
+						percent={percent}
+						size={108}
+					/>
 				</div>
 			</div>
 			<div className='detail_wrap w_100 border_box flex'>

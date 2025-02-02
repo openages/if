@@ -643,7 +643,7 @@ export const recycle = async (todo_item: RxDocument<Todo.Todo>) => {
 				if (scale === 'weekday') {
 					const _now = now.hour(0).minute(0).second(0)
 
-					return now.day() - 1 < value
+					return now.dayOfWeek() - 1 < value
 						? _now.day(value).valueOf()
 						: _now.add(1, 'week').day(value).valueOf()
 				}

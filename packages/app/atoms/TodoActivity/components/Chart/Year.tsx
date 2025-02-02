@@ -13,9 +13,9 @@ const Index = (props: IPropsTypeChart) => {
 	return (
 		<div className='chart_wrap w_100 border_box flex flex_column'>
 			<div className='chart_items w_100 flex'>
-				<div className='cols border_box day flex flex_column'>
+				<div className='cols w_100 border_box day flex flex_column'>
 					{items.map((day, index) => (
-						<div className='col year flex justify_between' key={index}>
+						<div className='col year w_100 flex' key={index}>
 							{Object.keys(day).map(item => (
 								<div className='block_wrap year flex justify_center' key={item}>
 									<div className='block' style={getBlockStyle(day[item], 30)}></div>
@@ -37,7 +37,7 @@ const Index = (props: IPropsTypeChart) => {
 					})}
 				</div>
 				<div className='progress flex justify_center align_center'>
-					<Progress type='circle' percent={percent} size={80} />
+					<Progress type='circle' strokeColor='var(--color_text_sub)' percent={percent} size={80} />
 				</div>
 			</div>
 		</div>

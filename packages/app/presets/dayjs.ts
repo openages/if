@@ -17,6 +17,16 @@ import toObject from 'dayjs/plugin/toObject'
 import updateLocale from 'dayjs/plugin/updateLocale'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 
+import type { PluginFunc } from 'dayjs'
+
+const dayOfWeek: PluginFunc = (_, dayjs_instance) => {
+	dayjs_instance.prototype.dayOfWeek = function () {
+		const day = this.day()
+
+		return day === 0 ? 7 : day
+	}
+}
+
 dayjs.extend(duration)
 dayjs.extend(isToday)
 dayjs.extend(calendar)
@@ -35,6 +45,7 @@ dayjs.extend(weekOfYear)
 dayjs.extend(updateLocale)
 dayjs.extend(relativeTime)
 dayjs.extend(isLeapYear)
+dayjs.extend(dayOfWeek)
 
 dayjs.updateLocale('en', {
 	relativeTime: {
@@ -53,3 +64,9 @@ dayjs.updateLocale('en', {
 		yy: '%d years'
 	}
 })
+
+declare module 'dayjs' {
+	interface Dayjs {
+		dayOfWeek(): number
+	}
+}

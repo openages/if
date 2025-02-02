@@ -14,10 +14,17 @@ const Index = (props: IPropsTypeChart) => {
 		<div className='chart_wrap w_100 border_box flex flex_column'>
 			<div className='chart_items w_100 flex'>
 				<div className='cols w_100 border_box day flex justify_between'>
-					{items.map((day, index) => (
-						<div className='col day flex flex_column' key={index}>
+					{items.map((day, idx) => (
+						<div className='col day flex flex_column' key={idx}>
 							{Object.keys(day).map(item => (
-								<div className='block_wrap day flex justify_center' key={item}>
+								<div
+									className={$cx(
+										'block_wrap day flex justify_center cursor_point',
+										index?.index === idx && index?.key === item && 'active'
+									)}
+									onClick={() => setIndex({ index: idx, key: item })}
+									key={item}
+								>
 									<div className='block' style={getBlockStyle(day[item], 4)}></div>
 								</div>
 							))}
@@ -25,7 +32,7 @@ const Index = (props: IPropsTypeChart) => {
 					))}
 				</div>
 				<div className='progress flex justify_center align_center'>
-					<Progress type='circle' percent={percent} size={80} />
+					<Progress type='circle' strokeColor='var(--color_text_sub)' percent={percent} size={80} />
 				</div>
 			</div>
 			<div className='detail_wrap w_100 border_box flex'>

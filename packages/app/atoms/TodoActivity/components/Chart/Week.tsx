@@ -25,7 +25,7 @@ const Index = (props: IPropsTypeChart) => {
 					))}
 				</div>
 				<div className='progress flex justify_center align_center'>
-					<Progress type='circle' percent={percent} size={80} />
+					<Progress type='circle' strokeColor='var(--color_text_sub)' percent={percent} size={80} />
 				</div>
 			</div>
 			<div className='detail_wrap w_100 border_box flex'>
