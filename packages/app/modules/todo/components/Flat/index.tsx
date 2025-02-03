@@ -10,7 +10,6 @@ const Index = (props: IPropsKanban) => {
 		mode,
 		open_items,
 		zen_mode,
-		kanban_mode,
 		kanban_items,
 		tags,
 		angles,
@@ -55,7 +54,6 @@ const Index = (props: IPropsKanban) => {
 							handleOpenItem,
 							showDetailModal
 						}}
-						kanban_mode={mode === 'kanban' ? kanban_mode : undefined}
 						items={item.items}
 						dimension_id={item.dimension.value.id}
 						angle={item.dimension.value}

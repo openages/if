@@ -4,11 +4,12 @@ import { Layer, Line, Stage } from 'react-konva'
 
 import { SortableWrap } from '@/components'
 import { useCssVariable, useSize } from '@/hooks'
-import { points } from '@/utils'
+import { getSerialNumber, points } from '@/utils'
 import { useDndMonitor, useDroppable } from '@dnd-kit/core'
 import { verticalListSortingStrategy, SortableContext } from '@dnd-kit/sortable'
 
 import GroupTitle from '../GroupTitle'
+import KanbanTodoItem from '../KanbanTodoItem'
 import TodoItem from '../TodoItem'
 import styles from './index.css'
 import { getLinkedItems, getRelativePostion } from './utils'
@@ -26,7 +27,6 @@ const Index = (props: IPropsTodos) => {
 		drag_disabled,
 		zen_mode,
 		open_items,
-		kanban_mode,
 		dimension_id,
 		check,
 		updateRelations,
@@ -69,17 +69,10 @@ const Index = (props: IPropsTodos) => {
 	})
 
 	const relations_lines = useMemo(() => {
-		if (kanban_mode === 'tag') return []
-
 		const target: Array<{ point: [string, string]; checked: boolean }> = []
 
 		relations!.map(item => {
 			let links = item.items
-
-			if (kanban_mode) {
-				links = item.items.filter(id => items.find(i => i.id === id))
-			}
-
 			const lines = getLinkedItems(links)
 
 			lines.map(point => {
@@ -88,7 +81,7 @@ const Index = (props: IPropsTodos) => {
 		})
 
 		return target
-	}, [items, relations, kanban_mode])
+	}, [items, relations])
 
 	const getPoints = useMemoizedFn((ids: [string, string]) => {
 		const active = document.getElementById(ids[0]) as HTMLDivElement
@@ -154,13 +147,13 @@ const Index = (props: IPropsTodos) => {
 			className={$cx(
 				'limited_content_wrap relative',
 				styles._local,
-				kanban_mode && styles.kanban_mode,
+				mode === 'kanban' && styles.kanban,
 				mode === 'quad' && styles.quad,
 				!items.length && isOver && active?.data?.current?.dimension_id !== dimension_id && styles.isOver
 			)}
-			ref={ref => kanban_mode && setNodeRef(ref)}
+			ref={ref => mode === 'kanban' && setNodeRef(ref)}
 		>
-			{height > 0 && !drag_disabled && kanban_mode !== 'tag' && (
+			{height > 0 && !drag_disabled && mode === 'list' && (
 				<Stage className='stage_wrap absolute' width={9} height={height}>
 					<Layer>
 						{lines}
@@ -179,37 +172,54 @@ const Index = (props: IPropsTodos) => {
 				<SortableContext items={items} strategy={verticalListSortingStrategy}>
 					{items.map((item, index) =>
 						item.type === 'todo' ? (
-							<SortableWrap
-								id={item.id}
-								data={{ index, dimension_id }}
-								disabled={kanban_mode === 'tag'}
-								key={item.id}
-							>
-								<TodoItem
-									{...{
-										mode,
-										item,
-										index,
-										tags,
-										angles,
-										drag_disabled,
-										zen_mode,
-										open_items,
-										kanban_mode,
-										dimension_id,
-										makeLinkLine,
-										renderLines,
-										check,
-										updateRelations,
-										insert,
-										update,
-										tab,
-										moveTo,
-										remove,
-										handleOpenItem,
-										showDetailModal
-									}}
-								></TodoItem>
+							<SortableWrap id={item.id} data={{ index, dimension_id }} key={item.id}>
+								{mode === 'kanban' ? (
+									<KanbanTodoItem
+										{...{
+											mode,
+											item,
+											index,
+											tags,
+											angles,
+											zen_mode,
+											dimension_id,
+											check,
+											insert,
+											update,
+											tab,
+											moveTo,
+											remove,
+											handleOpenItem,
+											showDetailModal
+										}}
+										serial={getSerialNumber(dimension_id!)}
+									></KanbanTodoItem>
+								) : (
+									<TodoItem
+										{...{
+											mode,
+											item,
+											index,
+											tags,
+											angles,
+											drag_disabled,
+											zen_mode,
+											open_items,
+											dimension_id,
+											makeLinkLine,
+											renderLines,
+											check,
+											updateRelations,
+											insert,
+											update,
+											tab,
+											moveTo,
+											remove,
+											handleOpenItem,
+											showDetailModal
+										}}
+									></TodoItem>
+								)}
 							</SortableWrap>
 						) : (
 							<SortableWrap id={item.id} data={{ index }} key={item.id}>

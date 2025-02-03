@@ -31,7 +31,6 @@ const Index = (props: IPropsTodoItem) => {
 		zen_mode,
 		open_items,
 		mode,
-		kanban_mode,
 		dimension_id,
 		drag_overlay,
 		useByMindmap,
@@ -80,14 +79,12 @@ const Index = (props: IPropsTodoItem) => {
 		setNodeRef: setDropRef
 	} = useDroppable({
 		id,
-		data: { index, dimension_id },
-		disabled: kanban_mode !== 'angle'
+		data: { index, dimension_id }
 	})
 
 	const { open, onCheck, onDrag, setOpen, toggleChildren, insertChildren, onKeyDown, updateTags } = useHandlers({
 		item,
 		index,
-		kanban_mode,
 		dimension_id,
 		makeLinkLine,
 		check,
@@ -106,13 +103,12 @@ const Index = (props: IPropsTodoItem) => {
 
 	useTextChange({ ref_editor, text })
 
-	const context_menu = useContextMenu({ kanban_mode, angles, tags, tag_ids })
+	const context_menu = useContextMenu({ angles, tags, tag_ids })
 
 	const { onContextMenu } = useOnContextMenu({
 		item,
 		index,
 		mode,
-		kanban_mode,
 		dimension_id,
 		update,
 		moveTo,
@@ -128,7 +124,6 @@ const Index = (props: IPropsTodoItem) => {
 
 	const props_children: IPropsChildren = {
 		mode,
-		kanban_mode: kanban_mode!,
 		items: children,
 		index,
 		open,
@@ -179,18 +174,15 @@ const Index = (props: IPropsTodoItem) => {
 					{cycle_enabled && cycle && cycle.value !== undefined && (
 						<CycleStatus cycle={cycle} recycle_time={recycle_time}></CycleStatus>
 					)}
-					{kanban_mode && <span className='date_wrap in_options'>{date}</span>}
 				</div>
 			</div>
 		),
-		[open, status, tags, tag_ids, remind_time, end_time, cycle_enabled, cycle, level, kanban_mode]
+		[open, status, tags, tag_ids, remind_time, end_time, cycle_enabled, cycle, level]
 	)
 
-	const is_dragging = useMemo(() => kanban_mode && isDragging, [kanban_mode, isDragging])
-
 	const is_over = useMemo(
-		() => (mode === 'quad' || kanban_mode) && isOver && active!.data.current!.dimension_id !== dimension_id,
-		[mode, kanban_mode, isOver, active, dimension_id]
+		() => mode === 'quad' && isOver && active!.data.current!.dimension_id !== dimension_id,
+		[mode, isOver, active, dimension_id]
 	)
 
 	const outdate = useMemo(
@@ -200,22 +192,23 @@ const Index = (props: IPropsTodoItem) => {
 
 	const disableContextMenu = useMemoizedFn(e => e.preventDefault())
 
+	console.log(mode)
+
 	return (
 		<div
 			className={$cx(
 				'w_100 border_box flex flex_column',
 				styles.todo_item_wrap,
 				zen_mode && styles.zen_mode,
-				!useByMindmap && kanban_mode && styles.kanban_mode,
-				kanban_mode === 'tag' && styles.tag_mode,
+				mode === 'kanban' && styles.kanban,
 				mode === 'quad' && styles.quad,
 				!children?.length && styles.no_children,
-				is_dragging && styles.is_dragging,
+				isDragging && styles.is_dragging,
 				is_over && styles.is_over,
 				useByMindmap && styles.useByMindmap,
 				useByMindmap && 'nodrag',
 				drag_overlay && 'todo_item_drag_overlay',
-				!useByMindmap && kanban_mode && 'kanban_mode'
+				mode === 'kanban' && 'kanban'
 			)}
 			ref={
 				setSortRef &&
@@ -244,7 +237,7 @@ const Index = (props: IPropsTodoItem) => {
 							dragging && 'dragging',
 							hovering && 'hovering'
 						)}
-						ref={kanban_mode !== 'tag' ? linker : null}
+						ref={linker}
 						onDrag={onDrag}
 						onClick={toggleChildren}
 					></div>
@@ -303,18 +296,7 @@ const Index = (props: IPropsTodoItem) => {
 				</div>
 			</div>
 			{!useByMindmap && <Children {...props_children}></Children>}
-			<If condition={!useByMindmap}>
-				<Choose>
-					<When condition={!!kanban_mode}>
-						{has_options ? (
-							OptionsWrap
-						) : (
-							<div className='date_wrap w_100 border_box'>{date}</div>
-						)}
-					</When>
-					<Otherwise>{!zen_mode && has_options && OptionsWrap}</Otherwise>
-				</Choose>
-			</If>
+			{!useByMindmap && !zen_mode && has_options && OptionsWrap}
 		</div>
 	)
 }

@@ -10,13 +10,11 @@ const Index = (props: IPropsKanban) => {
 		mode,
 		open_items,
 		zen_mode,
-		kanban_mode,
 		kanban_items,
 		tags,
 		angles,
 		relations,
 		drag_disabled,
-		dimension_id,
 		check,
 		updateRelations,
 		insert,
@@ -29,14 +27,7 @@ const Index = (props: IPropsKanban) => {
 	} = props
 
 	return (
-		<div
-			className={$cx(
-				'h_100 border_box flex',
-				styles._local,
-				kanban_mode === 'tag' && styles.tag_mode,
-				mode === 'quad' && styles.quad
-			)}
-		>
+		<div className={$cx('h_100 border_box flex', styles._local, mode === 'quad' && styles.quad)}>
 			{Object.values(kanban_items).map((item, index) => {
 				const items = item.items
 
@@ -50,8 +41,9 @@ const Index = (props: IPropsKanban) => {
 						key={item.dimension.value.id}
 					>
 						<FlatAngleHeader
+							useByKanban
 							angle={item.dimension.value}
-							dimension_id={dimension_id!}
+							dimension_id={item.dimension.value.id}
 							counts={items.length}
 							percent={percent}
 							insert={insert}
@@ -75,7 +67,6 @@ const Index = (props: IPropsKanban) => {
 								handleOpenItem,
 								showDetailModal
 							}}
-							kanban_mode={mode === 'kanban' ? kanban_mode : undefined}
 							items={item.items}
 							dimension_id={Object.keys(kanban_items)[index]}
 						></Todos>

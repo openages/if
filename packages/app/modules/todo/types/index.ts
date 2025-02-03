@@ -22,6 +22,7 @@ export interface IPropsTagSelect {
 	useByTodo?: boolean
 	useByInput?: boolean
 	useByTable?: boolean
+	useByKanban?: boolean
 	onChange?: (v: Array<string>) => void
 	onFocus?: (v: boolean) => void
 }
@@ -30,14 +31,12 @@ export interface IPropsHeader
 	extends Pick<Todo.Setting & DirTree.Item, 'name' | 'icon' | 'icon_hue' | 'desc' | 'tags'> {
 	mode: Model['mode']
 	zen_mode: Model['zen_mode']
-	kanban_mode: Model['kanban_mode']
 	items_sort_param: Model['items_sort_param']
 	items_filter_tags: Model['items_filter_tags']
 	search_mode: boolean
 	table_exclude_fields: Array<string>
 	setMode: Model['setMode']
 	toggleZenMode: () => void
-	toggleKanbanMode: () => void
 	showSettingsModal: () => void
 	showArchiveModal: () => void
 	showAnalysisModal: () => void
@@ -125,7 +124,6 @@ export interface IPropsTodos {
 	drag_disabled: boolean
 	zen_mode: Model['zen_mode']
 	open_items: Model['open_items']
-	kanban_mode?: Model['kanban_mode']
 	dimension_id?: string
 	check: Model['check']
 	updateRelations: Model['updateRelations']
@@ -153,7 +151,6 @@ export interface IPropsTodoItem {
 	drag_disabled?: boolean
 	zen_mode?: Model['zen_mode']
 	open_items?: Model['open_items']
-	kanban_mode?: Model['kanban_mode']
 	dimension_id?: string
 	drag_overlay?: boolean
 	useByMindmap?: boolean
@@ -177,7 +174,6 @@ export interface IPropsFlatTodoItem extends IPropsTodoItem {
 
 export interface IPropsChildren {
 	mode: Model['mode']
-	kanban_mode: Model['kanban_mode']
 	items: Todo.Todo['children']
 	index: number
 	open: boolean
@@ -196,7 +192,6 @@ export interface IPropsChildrenItem {
 	children_index: number
 	dimension_id?: string
 	mode?: Model['mode']
-	kanban_mode?: Model['kanban_mode']
 	useByDetail: IPropsChildren['useByDetail']
 	useByMindmap?: boolean
 	update: Model['update']
@@ -239,14 +234,7 @@ export interface IPropsTableFilter {
 export interface IPropsMindmap
 	extends Omit<
 		IPropsTodos,
-		| 'items'
-		| 'zen_mode'
-		| 'kanban_mode'
-		| 'drag_disabled'
-		| 'open_items'
-		| 'relations'
-		| 'updateRelations'
-		| 'handleOpenItem'
+		'items' | 'zen_mode' | 'drag_disabled' | 'open_items' | 'relations' | 'updateRelations' | 'handleOpenItem'
 	> {
 	file_id: Model['id']
 	name: Model['file']['data']['name']
@@ -286,7 +274,7 @@ export interface IPropsArchiveItem extends Pick<IPropsArchive, 'restoreArchiveIt
 export interface IPropsDetail {
 	breakpoint?: number
 	mode: Model['mode']
-	kanban_mode: Model['kanban_mode']
+	zen_mode: Model['zen_mode']
 	visible_detail_modal: Model['visible_detail_modal']
 	current_detail_index: Model['current_detail_index']
 	current_detail_item: Model['current_detail_item']

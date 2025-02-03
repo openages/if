@@ -5,6 +5,20 @@
 		top: 0;
 	}
 
+	&.useByKanban {
+		:global {
+			.kanban_item_header {
+				.btn_insert {
+					background-color: var(--color_bg_1);
+
+					&:hover {
+						background-color: var(--color_bg_2);
+					}
+				}
+			}
+		}
+	}
+
 	:global {
 		.kanban_item_header {
 			height: 36px;

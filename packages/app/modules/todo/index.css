@@ -17,7 +17,7 @@
 			background-color: transparent;
 			backdrop-filter: var(--blur);
 
-			&.kanban_mode {
+			&.kanban {
 				border-radius: var(--radius_small);
 
 				.drag_wrap {

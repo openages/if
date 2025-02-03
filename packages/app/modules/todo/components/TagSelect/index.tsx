@@ -33,6 +33,8 @@ const Index = (props: IPropsTagSelect) => {
 		</div>
 	))
 
+	console.log(123)
+
 	return (
 		<div className={$cx('flex align_center', className)}>
 			<Select

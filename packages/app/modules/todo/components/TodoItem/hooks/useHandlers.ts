@@ -7,7 +7,6 @@ import type { IPropsTodoItem } from '../../../types'
 interface HookArgs {
 	item: IPropsTodoItem['item']
 	index: IPropsTodoItem['index']
-	kanban_mode: IPropsTodoItem['kanban_mode']
 	dimension_id?: IPropsTodoItem['dimension_id']
 	makeLinkLine?: IPropsTodoItem['makeLinkLine']
 	check?: IPropsTodoItem['check']
@@ -18,7 +17,7 @@ interface HookArgs {
 }
 
 export default (args: HookArgs) => {
-	const { item, index, kanban_mode, dimension_id, makeLinkLine, check, insert, update, tab, handleOpenItem } = args
+	const { item, index, dimension_id, makeLinkLine, check, insert, update, tab, handleOpenItem } = args
 	const { id, status, schedule, children } = item
 	const [open, _setOpen] = useState(false)
 
@@ -67,7 +66,6 @@ export default (args: HookArgs) => {
 
 	const onDrag = useMemoizedFn(({ clientY }) => {
 		if (status !== 'unchecked') return
-		if (kanban_mode === 'tag') return
 
 		makeLinkLine!({ active_id: id, y: clientY })
 	})
@@ -88,8 +86,6 @@ export default (args: HookArgs) => {
 
 			insert!({ index, dimension_id })
 		}
-
-		if (kanban_mode === 'tag') return
 
 		if (e.key === 'Tab') {
 			e.preventDefault()

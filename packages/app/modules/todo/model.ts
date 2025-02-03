@@ -58,10 +58,8 @@ import type {
 	Indexes,
 	ItemsSortParams,
 	KanbanItems,
-	KanbanMode,
 	Mode,
 	AnalysisDuration,
-	Ratio,
 	AnalysisTrending
 } from './types/model'
 import type { ArgsUpdateTodoData } from './types/services'
@@ -72,7 +70,6 @@ export default class Index {
 	id = ''
 	mode = 'list' as Mode
 	zen_mode = true
-	kanban_mode = '' as KanbanMode
 	timer_cycle: NodeJS.Timer | null = null
 	timer_archive: NodeJS.Timer | null = null
 	disable_watcher = false
@@ -184,8 +181,6 @@ export default class Index {
 			}
 
 			if (v === 'list' || v === 'table') {
-				this.kanban_mode = '' as KanbanMode
-
 				this.watchItems()
 			}
 
@@ -196,25 +191,7 @@ export default class Index {
 			}
 
 			if (v === 'kanban' || v === 'quad' || v === 'flat' || v === 'mindmap') {
-				this.kanban_mode = 'angle'
-
 				this.watchKanbanItems()
-			}
-
-			if (v !== 'kanban' && v !== 'quad' && v !== 'flat' && v !== 'mindmap') {
-				this.kanban_mode = '' as KanbanMode
-			}
-		},
-		['kanban_mode']: v => {
-			this.kanban_items = {}
-
-			if (v) {
-				this.watchKanbanItems()
-			}
-
-			if (v === 'tag') {
-				this.items_sort_param = null
-				this.items_filter_tags = []
 			}
 		}
 	} as Watch<
@@ -374,17 +351,10 @@ export default class Index {
 	async create(item: Todo.TodoItem, options?: { quick?: boolean; dimension_id?: string; top?: boolean }) {
 		const data = {} as Todo.TodoItem
 
-		if (!this.kanban_mode) {
-			data['angle_id'] = this.current_angle_id
-		}
-
-		if (this.kanban_mode === 'angle') {
+		if (this.mode === 'kanban') {
 			data['angle_id'] = options?.dimension_id!
-		}
-
-		if (this.kanban_mode === 'tag') {
+		} else {
 			data['angle_id'] = this.current_angle_id
-			;(data as Todo.Todo)['tag_ids'] = [options?.dimension_id!]
 		}
 
 		const res = await create({ ...item, ...data, file_id: this.id } as Todo.TodoItem, {
@@ -612,9 +582,8 @@ export default class Index {
 
 		const { index, dimension_id, data, callback } = args
 		const setting = data ?? (getTodo() as Todo.TodoItem)
-		const is_tag_mode = this.mode === 'kanban' && this.kanban_mode === 'tag'
 
-		const item = await this.create(setting, { quick: true, dimension_id, top: is_tag_mode })
+		const item = await this.create(setting, { quick: true, dimension_id })
 
 		const { items } = this.getItem({ index, dimension_id })
 
@@ -655,7 +624,6 @@ export default class Index {
 	@disableWatcher
 	async tab(args: ArgsTab) {
 		if (this.is_filtered) return
-		if (this.kanban_mode === 'tag') return
 
 		const { type, index, dimension_id } = args
 		const { items, item } = this.getItem({ index, dimension_id })
@@ -974,9 +942,8 @@ export default class Index {
 
 	getItem(args: Indexes) {
 		const { index, dimension_id } = args
-		const kanban_mode = dimension_id !== undefined
 
-		const items = match(kanban_mode)
+		const items = match(dimension_id !== undefined)
 			.with(true, () => this.kanban_items[dimension_id!].items)
 			.otherwise(() => this.items)
 
@@ -1083,54 +1050,30 @@ export default class Index {
 	watchKanbanItems() {
 		this.stopWatchKanbanItems()
 
-		if (this.kanban_mode === 'angle') {
-			if (!this.setting.setting) return
+		if (!this.setting.setting) return
 
-			const angles = this.mode === 'quad' ? this.quad_angles : this.setting.setting.angles
+		const angles = this.mode === 'quad' ? this.quad_angles : this.setting.setting.angles
 
-			this.kanban_items_watcher = angles.map(item => {
-				this.kanban_items[item.id] = {
-					dimension: { type: 'angle', value: item },
-					items: [] as Array<Todo.Todo>,
-					loaded: false
-				}
-
-				return getQueryItems({
-					file_id: this.id,
-					selector: { type: 'todo' },
-					angle_id: item.id,
-					items_sort_param: this.items_sort_param,
-					items_filter_tags: this.items_filter_tags
-				}).$.subscribe(items => {
-					if (this.disable_watcher) return
-
-					this.kanban_items[item.id].items = getDocItemsData(items) as Array<Todo.Todo>
-					this.kanban_items[item.id].loaded = true
-				})
-			})
-		} else {
-			if (!this.setting.setting.tags.length) {
-				this.kanban_items = {}
-				this.kanban_items_watcher = []
+		this.kanban_items_watcher = angles.map(item => {
+			this.kanban_items[item.id] = {
+				dimension: { type: 'angle', value: item },
+				items: [] as Array<Todo.Todo>,
+				loaded: false
 			}
 
-			this.kanban_items_watcher = this.setting.setting.tags.map(item => {
-				this.kanban_items[item.id] = {
-					dimension: { type: 'tag', value: item },
-					items: [] as Array<Todo.Todo>
-				}
+			return getQueryItems({
+				file_id: this.id,
+				selector: { type: 'todo' },
+				angle_id: item.id,
+				items_sort_param: this.items_sort_param,
+				items_filter_tags: this.items_filter_tags
+			}).$.subscribe(items => {
+				if (this.disable_watcher) return
 
-				return getQueryItems({
-					file_id: this.id,
-					selector: { type: 'todo' },
-					items_filter_tags: [item.id]
-				}).$.subscribe(items => {
-					if (this.disable_watcher) return
-
-					this.kanban_items[item.id].items = getDocItemsData(items) as Array<Todo.Todo>
-				})
+				this.kanban_items[item.id].items = getDocItemsData(items) as Array<Todo.Todo>
+				this.kanban_items[item.id].loaded = true
 			})
-		}
+		})
 	}
 
 	stopWatchItems() {

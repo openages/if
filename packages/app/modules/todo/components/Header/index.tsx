@@ -39,7 +39,6 @@ const Index = (props: IPropsHeader) => {
 	const {
 		mode,
 		zen_mode,
-		kanban_mode,
 		name,
 		icon,
 		icon_hue,
@@ -51,7 +50,6 @@ const Index = (props: IPropsHeader) => {
 		table_exclude_fields,
 		setMode,
 		toggleZenMode,
-		toggleKanbanMode,
 		showSettingsModal,
 		showArchiveModal,
 		showAnalysisModal,
@@ -256,6 +254,7 @@ const Index = (props: IPropsHeader) => {
 				'limited_content_wrap border_box flex justify_between align_center relative',
 				styles._local,
 				mode !== 'list' && styles.other_mode,
+				(mode === 'kanban' || mode === 'quad') && styles.no_border,
 				(mode === 'kanban' || mode === 'quad' || mode === 'flat') && styles.flat,
 				editor_size && styles.desc
 			)}
@@ -373,20 +372,6 @@ const Index = (props: IPropsHeader) => {
 							</div>
 						</Tooltip>
 					</Fragment>
-				)}
-				{mode === 'kanban' && tags.length > 0 && (
-					<Tooltip
-						title={t(`todo.Header.kanban_mode.${kanban_mode === 'angle' ? 'tag' : 'angle'}`)}
-					>
-						<div className='mr_8'>
-							<div
-								className='icon_wrap border_box flex justify_center align_center cursor_point clickable'
-								onClick={toggleKanbanMode}
-							>
-								{kanban_mode === 'angle' ? <Tag></Tag> : <Polygon></Polygon>}
-							</div>
-						</div>
-					</Tooltip>
 				)}
 				<Popover
 					trigger={['click']}

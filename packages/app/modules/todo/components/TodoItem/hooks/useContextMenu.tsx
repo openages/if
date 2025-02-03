@@ -16,14 +16,13 @@ import type { MenuProps } from 'antd'
 import type { IPropsTodoItem } from '../../../types'
 
 type HookArgs = {
-	kanban_mode?: IPropsTodoItem['kanban_mode']
 	angles?: IPropsTodoItem['angles']
 	tags?: IPropsTodoItem['tags']
 	tag_ids?: IPropsTodoItem['item']['tag_ids']
 }
 
 export default (args: HookArgs) => {
-	const { kanban_mode, angles, tags, tag_ids } = args
+	const { angles, tags, tag_ids } = args
 	const { t, i18n } = useTranslation()
 
 	return useMemo(
@@ -87,7 +86,6 @@ export default (args: HookArgs) => {
 				},
 				{
 					key: 'move_into',
-					disabled: kanban_mode === 'tag',
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<TextIndent size={16}></TextIndent>
@@ -97,7 +95,6 @@ export default (args: HookArgs) => {
 				},
 				{
 					key: 'move',
-					disabled: kanban_mode === 'tag',
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<ArrowsOutCardinal size={16}></ArrowsOutCardinal>
@@ -126,6 +123,6 @@ export default (args: HookArgs) => {
 					)
 				}
 			] as MenuProps['items'],
-		[i18n.language, angles, tags, tag_ids, kanban_mode]
+		[i18n.language, angles, tags, tag_ids]
 	)
 }

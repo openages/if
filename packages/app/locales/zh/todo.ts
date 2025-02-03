@@ -29,10 +29,6 @@ export default {
 	default_angles: ['此刻', '计划', '想法', '等待', '循环', '垃圾箱'],
 	Header: {
 		zen: '禅模式',
-		kanban_mode: {
-			angle: '分类模式',
-			tag: '标签模式'
-		},
 		table_mode: {
 			filter: '过滤器'
 		},

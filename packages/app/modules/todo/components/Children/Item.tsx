@@ -17,7 +17,6 @@ const Index = (props: IPropsChildrenItem) => {
 	const {
 		sortable_props,
 		mode,
-		kanban_mode,
 		item,
 		index,
 		children_index,
@@ -28,7 +27,7 @@ const Index = (props: IPropsChildrenItem) => {
 		tab
 	} = props
 	const { id, status, text } = item
-	const context_menu = useChildrenContextMenu({ mode, kanban_mode })
+	const context_menu = useChildrenContextMenu({ mode })
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = sortable_props || {}
 
 	const updateChildren = useMemoizedFn(

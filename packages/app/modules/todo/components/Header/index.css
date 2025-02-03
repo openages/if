@@ -7,8 +7,9 @@
 		height: 72px;
 		padding: 0 36px;
 
-		&.kanban_mode {
-			padding: 0 24px;
+		&.no_border {
+			padding-top: 3px;
+			border-bottom: none;
 		}
 
 		&.desc {

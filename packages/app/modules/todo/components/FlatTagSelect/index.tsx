@@ -12,7 +12,7 @@ import styles from './index.css'
 import type { IPropsTagSelect } from '../../types'
 
 const Index = (props: IPropsTagSelect) => {
-	const { options, value, className, placement, unlimit, wrap, onChange, onFocus } = props
+	const { options, value, className, placement, unlimit, wrap, useByKanban, onChange, onFocus } = props
 	const { t } = useTranslation()
 	const global = useGlobal()
 	const theme = global.setting.theme
@@ -33,10 +33,15 @@ const Index = (props: IPropsTagSelect) => {
 	return (
 		<div className={$cx('flex align_center', className)}>
 			<Select
-				className={$cx('no_suffix', styles._local, wrap && styles.wrap)}
+				className={$cx(
+					'no_suffix',
+					styles._local,
+					wrap && styles.wrap,
+					useByKanban && styles.useByKanban
+				)}
 				popupClassName={styles.popup}
 				mode='tags'
-				placement={placement || 'bottomRight'}
+				placement={placement || (useByKanban ? 'bottomLeft' : 'bottomRight')}
 				fieldNames={{ label: 'text', value: 'id' }}
 				variant='borderless'
 				showSearch={false}

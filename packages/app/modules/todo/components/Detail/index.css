@@ -238,3 +238,7 @@
 	padding-top: 0 !important;
 	padding-bottom: 0 !important;
 }
+
+.mask {
+	backdrop-filter: var(--blur);
+}

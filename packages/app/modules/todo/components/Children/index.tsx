@@ -13,7 +13,7 @@ import type { DragEndEvent } from '@dnd-kit/core'
 import type { IPropsChildren } from '../../types'
 
 const Index = (props: IPropsChildren) => {
-	const { mode, kanban_mode, items, index, open, handled, dimension_id, useByDetail, update, tab } = props
+	const { mode, items, index, open, handled, dimension_id, useByDetail, update, tab } = props
 	const mounted = useMounted(300)
 
 	const onDragEnd = useMemoizedFn(({ active, over }: DragEndEvent) => {
@@ -61,7 +61,6 @@ const Index = (props: IPropsChildren) => {
 											<Item
 												{...{
 													mode,
-													kanban_mode,
 													item,
 													index,
 													children_index,

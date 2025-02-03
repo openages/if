@@ -7,7 +7,6 @@ interface HookArgs {
 	item: IPropsTodoItem['item']
 	index: IPropsTodoItem['index']
 	mode: IPropsTodoItem['mode']
-	kanban_mode: IPropsTodoItem['kanban_mode']
 	dimension_id: IPropsTodoItem['dimension_id']
 	update: IPropsTodoItem['update']
 	moveTo: IPropsTodoItem['moveTo']
@@ -19,20 +18,8 @@ interface HookArgs {
 }
 
 export default (args: HookArgs) => {
-	const {
-		item,
-		index,
-		mode,
-		kanban_mode,
-		dimension_id,
-		update,
-		moveTo,
-		insert,
-		tab,
-		remove,
-		showDetailModal,
-		insertChildren
-	} = args
+	const { item, index, mode, dimension_id, update, moveTo, insert, tab, remove, showDetailModal, insertChildren } =
+		args
 	const { id, tag_ids } = item
 
 	const onContextMenu = useMemoizedFn(({ key, keyPath }) => {
@@ -72,7 +59,7 @@ export default (args: HookArgs) => {
 					showDetailModal({
 						id,
 						index,
-						...(kanban_mode || mode === 'quad' ? { dimension_id } : {})
+						...(mode === 'kanban' || mode === 'quad' ? { dimension_id } : {})
 					})
 					break
 				case 'insert':

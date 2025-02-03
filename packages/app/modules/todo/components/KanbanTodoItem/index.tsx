@@ -23,7 +23,6 @@ const Index = (props: IPropsFlatTodoItem) => {
 		index,
 		tags,
 		angles,
-		zen_mode,
 		mode,
 		dimension_id,
 		drag_overlay,
@@ -87,7 +86,7 @@ const Index = (props: IPropsFlatTodoItem) => {
 		insertChildren
 	})
 
-	useOptions({ item, input: ref_input, zen_mode })
+	useOptions({ item, input: ref_input })
 
 	const children_status = useMemo(() => {
 		if (!children || !children.length) return
@@ -109,7 +108,7 @@ const Index = (props: IPropsFlatTodoItem) => {
 	return (
 		<div
 			className={$cx(
-				'w_100 border_box flex align_center justify_between relative',
+				'w_100 border_box flex flex_column relative',
 				styles.todo_item_wrap,
 				isDragging && styles.is_dragging,
 				is_over && styles.is_over,
@@ -128,36 +127,38 @@ const Index = (props: IPropsFlatTodoItem) => {
 			onContextMenu={disableContextMenu}
 		>
 			{is_over && <div className='over_line w_100 absolute left_0 flex align_center'></div>}
-			<div
-				className={$cx(
-					'drag_wrap border_box none justify_center align_center absolute transition_normal cursor_point z_index_10'
-				)}
-				ref={setActivatorNodeRef}
-				{...attributes}
-				{...listeners}
-			>
-				<DotsSixVertical size={14} weight='bold'></DotsSixVertical>
-			</div>
-			<FlatLevel value={level}></FlatLevel>
-			{serial && (
-				<div className='serial_number'>
-					<span>{serial}</span>
-					<span className='line'>-</span>
-					<span>{index + 1}</span>
+
+			<div className='header_wrap w_100 flex justify_between align_center'>
+				<div className='flex align_center'>
+					<div
+						className='actions_wrap fix_width flex justify_center align_center cursor_point clickable mr_6'
+						onClick={onCheck}
+					>
+						<Choose>
+							<When condition={status === 'unchecked' || status === 'closed'}>
+								<Circle weight='bold' />
+							</When>
+							<When condition={status === 'checked'}>
+								<CheckCircle weight='fill' color='var(--color_text_grey)' />
+							</When>
+						</Choose>
+					</div>
+					<div className='serial_number'>
+						<span>{serial ?? 'DAG'}</span>
+						<span className='line'>-</span>
+						<span>{index + 1}</span>
+					</div>
 				</div>
-			)}
-			<div
-				className='action_wrap flex justify_center align_center cursor_point clickable'
-				onClick={onCheck}
-			>
-				<Choose>
-					<When condition={status === 'unchecked' || status === 'closed'}>
-						<Circle weight='bold' />
-					</When>
-					<When condition={status === 'checked'}>
-						<CheckCircle weight='fill' color='var(--color_text_grey)' />
-					</When>
-				</Choose>
+				<div
+					className={$cx(
+						'drag_wrap border_box flex justify_center align_center transition_normal cursor_point'
+					)}
+					ref={setActivatorNodeRef}
+					{...attributes}
+					{...listeners}
+				>
+					<DotsSixVertical size={12} weight='bold'></DotsSixVertical>
+				</div>
 			</div>
 			<ConfigProvider getPopupContainer={() => document.body}>
 				<Dropdown
@@ -180,19 +181,20 @@ const Index = (props: IPropsFlatTodoItem) => {
 					></Text>
 				</Dropdown>
 			</ConfigProvider>
-			{!zen_mode && (
-				<div className='options_wrap flex align_center'>
-					{children_status && <Children {...children_status}></Children>}
-					{tags?.length > 0 && tag_ids?.length! > 0 && (
-						<Tags tags={tags} tag_ids={tag_ids} updateTags={updateTags}></Tags>
-					)}
-					{remind_time && <Remind remind_time={remind_time}></Remind>}
-					{status === 'unchecked' && end_time && <Deadline end_time={end_time}></Deadline>}
-					{cycle_enabled && cycle && cycle.value !== undefined && (
-						<Repeat cycle={cycle} recycle_time={recycle_time}></Repeat>
-					)}
+			<div className='options_wrap flex flex_wrap align_center'>
+				<div className='option_item fix_width flex justify_center align_center'>
+					<FlatLevel no_padding value={level}></FlatLevel>
 				</div>
-			)}
+				{children_status && <Children {...children_status}></Children>}
+				{tags?.length > 0 && tag_ids?.length! > 0 && (
+					<Tags useByKanban tags={tags} tag_ids={tag_ids} updateTags={updateTags}></Tags>
+				)}
+				{remind_time && <Remind remind_time={remind_time}></Remind>}
+				{status === 'unchecked' && end_time && <Deadline end_time={end_time}></Deadline>}
+				{cycle_enabled && cycle && cycle.value !== undefined && (
+					<Repeat cycle={cycle} recycle_time={recycle_time}></Repeat>
+				)}
+			</div>
 		</div>
 	)
 }

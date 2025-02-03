@@ -43,7 +43,7 @@
 		}
 	}
 
-	&.kanban_mode {
+	&.kanban {
 		padding: 0 9px;
 		padding-top: 6px;
 		padding-bottom: 3px;
@@ -79,26 +79,6 @@
 				&.in_options {
 					padding: 0;
 					margin-bottom: -1px;
-				}
-			}
-		}
-	}
-
-	&.tag_mode {
-		&.no_children {
-			.todo_item {
-				:global {
-					.dot_wrap {
-						display: none;
-					}
-				}
-			}
-		}
-
-		.todo_item {
-			:global {
-				.drag_wrap {
-					display: none;
 				}
 			}
 		}

@@ -4,11 +4,12 @@
 	padding-top: 24px;
 	padding-bottom: 150px;
 
-	&.kanban_mode {
+	&.kanban {
 		overflow-y: scroll;
 		height: calc(100% - 36px);
 		min-height: unset;
 		padding: 0;
+		padding-top: 3px;
 		padding-bottom: 60px;
 		outline: none;
 
@@ -28,6 +29,13 @@
 			.stage_wrap {
 				top: 0;
 				left: 0;
+			}
+
+			.drag_wrap {
+				width: unset;
+				height: unset;
+				opacity: 1;
+				background-color: unset;
 			}
 		}
 	}

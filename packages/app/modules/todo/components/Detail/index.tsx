@@ -44,7 +44,7 @@ const Index = (props: IPropsDetail) => {
 	const {
 		breakpoint,
 		mode,
-		kanban_mode,
+		zen_mode,
 		visible_detail_modal,
 		current_detail_index,
 		current_detail_item,
@@ -99,7 +99,6 @@ const Index = (props: IPropsDetail) => {
 	} = useHandlers({
 		item,
 		index,
-		kanban_mode,
 		dimension_id,
 		update
 	})
@@ -144,7 +143,6 @@ const Index = (props: IPropsDetail) => {
 
 	const props_children: IPropsChildren = {
 		mode,
-		kanban_mode,
 		items: children,
 		index,
 		open: true,
@@ -171,14 +169,15 @@ const Index = (props: IPropsDetail) => {
 			rootClassName={$cx(
 				'useInPage',
 				styles._local,
-				breakpoint && styles.breakpoint,
+				(breakpoint || zen_mode) && styles.breakpoint,
 				breakpoint === 390 && styles.narrow,
-				!!breakpoint && 'breakpoint'
+				(!!breakpoint || zen_mode) && 'breakpoint'
 			)}
+			maskClassName={$cx(zen_mode && styles.mask)}
 			open={visible_detail_modal}
-			mask={Boolean(breakpoint)}
+			mask={Boolean(breakpoint) || zen_mode}
 			title={t('todo.Detail.title')}
-			width={300}
+			width={zen_mode ? 'min(420px,calc(100% - 24px))' : 300}
 			zIndex={100}
 			destroyOnClose
 			getContainer={false}

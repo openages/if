@@ -7,6 +7,7 @@ import type { ReactElement } from 'react'
 
 const Index = (props: NodeProps) => {
 	const context = useContext(v => ({
+		mode: 'mindmap',
 		tag: v.tags,
 		angles: v.angles,
 		check: v.check,
@@ -21,7 +22,6 @@ const Index = (props: NodeProps) => {
 	const data = {
 		...props.data,
 		...context,
-		kanban_mode: 'angle',
 		useByMindmap: true
 	}
 

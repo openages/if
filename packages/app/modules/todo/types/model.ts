@@ -2,14 +2,7 @@ import type { Todo, Tag } from '@/types'
 import type { Dayjs } from 'dayjs'
 
 export type Mode = 'list' | 'kanban' | 'table' | 'mindmap' | 'flat' | 'quad'
-export type KanbanMode = 'angle' | 'tag'
 export type AnalysisDuration = 'daily' | 'weekly' | 'monthly' | 'quarterly' | 'yearly'
-
-export interface Ratio {
-	create: number
-	done: number
-	close: number
-}
 
 export interface AnalysisTrending {
 	dates: Array<string>

@@ -1,4 +1,5 @@
 ._local {
+	--tag_height: 26px;
 	color: rgba(var(--color_text_rgb), 0.72);
 	font-size: 12px;
 
@@ -30,16 +31,28 @@
 		}
 	}
 
+	&.useByKanban {
+		--tag_height: 24px;
+
+		:global {
+			.tag {
+				border-radius: var(--radius_small);
+			}
+		}
+	}
+
 	:global {
 		.if-select-selector {
+			padding: 0;
 			padding-left: 0 !important;
+			border: none;
 
 			.if-select-selection-wrap {
-				height: 26px;
+				height: var(--tag_height);
 
 				.if-select-selection-overflow {
 					flex-wrap: nowrap;
-					height: 26px;
+					height: var(--tag_height);
 					gap: 3px;
 
 					.if-select-selection-overflow-item-suffix {
@@ -61,7 +74,7 @@
 		}
 
 		.tag {
-			height: 26px;
+			height: var(--tag_height);
 			line-height: 1;
 			padding: 0 8px;
 			border: var(--border);

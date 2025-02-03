@@ -29,10 +29,6 @@ export default {
 	default_angles: ['Now', 'Plan', 'Idea', 'Wait', 'Circle', 'Trashbox'],
 	Header: {
 		zen: 'Zen Mode',
-		kanban_mode: {
-			angle: 'Angle',
-			tag: 'Tag'
-		},
 		table_mode: {
 			filter: 'Filter'
 		},

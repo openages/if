@@ -25,6 +25,7 @@ import {
 	Todos
 } from './components'
 import FlatTodoItem from './components/FlatTodoItem'
+import KanbanTodoItem from './components/KanbanTodoItem'
 import TodoItem from './components/TodoItem'
 import styles from './index.css'
 import Model from './model'
@@ -79,7 +80,6 @@ const Index = ({ id }: IProps) => {
 	const props_header: IPropsHeader = {
 		mode: x.mode,
 		zen_mode: x.zen_mode,
-		kanban_mode: x.kanban_mode,
 		name: x.file.data.name,
 		icon: x.file.data.icon,
 		icon_hue: x.file.data.icon_hue,
@@ -91,7 +91,6 @@ const Index = ({ id }: IProps) => {
 		table_exclude_fields,
 		setMode: useMemoizedFn(x.setMode),
 		toggleZenMode: useMemoizedFn(() => (x.zen_mode = !x.zen_mode)),
-		toggleKanbanMode: useMemoizedFn(() => (x.kanban_mode = x.kanban_mode === 'angle' ? 'tag' : 'angle')),
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true)),
 		showArchiveModal: useMemoizedFn(() => (x.visible_archive_modal = true)),
 		showAnalysisModal: useMemoizedFn(() => {
@@ -120,8 +119,8 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const move_to_angles = useMemo(() => {
-		return x.kanban_mode ? angles : angles.filter(item => item.id !== x.current_angle_id)
-	}, [angles, x.kanban_mode, x.current_angle_id])
+		return x.mode === 'list' ? angles.filter(item => item.id !== x.current_angle_id) : angles
+	}, [angles, x.mode, x.current_angle_id])
 
 	const props_todos: IPropsTodos = {
 		mode: x.mode,
@@ -147,9 +146,8 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_kanban: IPropsKanban = {
-		kanban_mode: x.kanban_mode,
 		kanban_items: kanban_items,
-		...omit(props_todos, ['items', 'kanban_mode'])
+		...omit(props_todos, ['items'])
 	}
 
 	const props_table: IPropsTable = {
@@ -171,7 +169,7 @@ const Index = ({ id }: IProps) => {
 		file_id: x.id,
 		name: x.file.data?.name,
 		kanban_items: $copy(x.kanban_items),
-		...omit(props_todos, ['items', 'zen_mode', 'kanban_mode', 'drag_disabled', 'open_items'])
+		...omit(props_todos, ['items', 'zen_mode', 'drag_disabled', 'open_items'])
 	}
 
 	const props_settings_modal: IPropsSettingsModal = {
@@ -203,7 +201,7 @@ const Index = ({ id }: IProps) => {
 	const props_detail: IPropsDetail = {
 		breakpoint,
 		mode: x.mode,
-		kanban_mode: x.kanban_mode,
+		zen_mode: x.zen_mode,
 		visible_detail_modal: x.visible_detail_modal,
 		current_detail_index: $copy(x.current_detail_index),
 		current_detail_item,
@@ -270,7 +268,6 @@ const Index = ({ id }: IProps) => {
 				zen_mode: props_todos.zen_mode,
 				open_items: props_todos.open_items,
 				mode: x.mode,
-				kanban_mode: x.mode === 'kanban' ? x.kanban_mode : undefined,
 				dimension_id: drag_todo_item.dimension_id,
 				drag_overlay: true,
 				makeLinkLine: () => {},
@@ -317,7 +314,7 @@ const Index = ({ id }: IProps) => {
 				'w_100 border_box flex flex_column',
 				styles._local,
 				x.mode !== 'list' && styles.other_mode,
-				!breakpoint && x.visible_detail_modal && styles.visible_detail_modal
+				!breakpoint && !x.zen_mode && x.visible_detail_modal && styles.visible_detail_modal
 			)}
 		>
 			<DataEmpty></DataEmpty>
@@ -350,7 +347,7 @@ const Index = ({ id }: IProps) => {
 										)
 										.with('flat', () => <Flat {...props_kanban}></Flat>)
 										.otherwise(() => null)}
-									{((x.mode === 'kanban' && x.kanban_mode === 'angle') ||
+									{(x.mode === 'kanban' ||
 										x.mode === 'flat' ||
 										x.mode === 'quad') && (
 										<DragOverlay dropAnimation={null}>
@@ -363,15 +360,27 @@ const Index = ({ id }: IProps) => {
 															drag_todo_item.dimension_id
 													}}
 												>
-													{x.mode === 'flat' ? (
-														<FlatTodoItem
-															{...props_drag_todo_item}
-														></FlatTodoItem>
-													) : (
-														<TodoItem
-															{...props_drag_todo_item}
-														></TodoItem>
-													)}
+													<Choose>
+														<When condition={x.mode === 'flat'}>
+															<FlatTodoItem
+																{...props_drag_todo_item}
+															></FlatTodoItem>
+														</When>
+														<When
+															condition={
+																x.mode === 'kanban'
+															}
+														>
+															<KanbanTodoItem
+																{...props_drag_todo_item}
+															></KanbanTodoItem>
+														</When>
+														<Otherwise>
+															<TodoItem
+																{...props_drag_todo_item}
+															></TodoItem>
+														</Otherwise>
+													</Choose>
 												</SortableWrap>
 											)}
 										</DragOverlay>

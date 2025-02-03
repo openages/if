@@ -1,0 +1,153 @@
+.todo_item_wrap {
+	overflow-x: scroll;
+	padding: 12px;
+	margin-bottom: 12px;
+	border-radius: var(--radius);
+	background-color: var(--color_bg_1);
+
+	&:hover {
+		:global {
+			.drag_wrap {
+				display: flex;
+			}
+		}
+	}
+
+	&.is_dragging {
+		opacity: 0;
+		backdrop-filter: var(--blur);
+	}
+
+	&.is_over {
+		position: relative;
+
+		:global {
+			.over_line {
+				bottom: 0;
+				left: 0;
+				height: 1px;
+				background-color: var(--color_text);
+
+				&::before,
+				&::after {
+					position: absolute;
+					width: 4px;
+					height: 4px;
+					box-sizing: border-box;
+					border: 1px solid var(--color_text);
+					border-radius: 50%;
+					background-color: var(--color_bg);
+					content: '';
+				}
+
+				&::before {
+					left: 0;
+				}
+
+				&::after {
+					right: 0;
+				}
+			}
+		}
+	}
+
+	&.checked,
+	&.closed {
+		:global {
+			.dot_wrap {
+				user-select: none;
+			}
+
+			.action_wrap {
+				opacity: 0.3;
+			}
+
+			.text_wrap {
+				opacity: 0.3;
+			}
+
+			.children_wrap {
+				.action_wrap {
+					opacity: 0.3 !important;
+				}
+
+				.text_wrap {
+					opacity: 0.3;
+				}
+			}
+		}
+	}
+
+	&.closed {
+		:global {
+			.dot_wrap {
+				user-select: none;
+			}
+
+			.action_wrap {
+				&:hover {
+					background-color: unset;
+				}
+			}
+		}
+	}
+
+	:global {
+		.header_wrap {
+			line-height: 1;
+			margin-bottom: 8px;
+			font-size: 12px;
+
+			.actions_wrap {
+				color: var(--color_text_grey);
+				font-size: 12px;
+			}
+
+			.serial_number {
+				min-width: 48px;
+				padding-right: 6px;
+				color: var(--color_text_grey);
+				text-transform: uppercase;
+				white-space: nowrap;
+
+				.line {
+					margin: 0 1.2px;
+				}
+			}
+
+			.drag_wrap {
+				color: var(--color_text_sublight);
+
+				&:hover {
+					background-color: var(--color_bg);
+				}
+			}
+		}
+
+		.text_wrap {
+			outline: none;
+
+			&.outdate {
+				color: var(--color_danger);
+			}
+		}
+
+		.option_item {
+			height: 24px;
+			box-sizing: border-box;
+			padding: 0 8px;
+			border: var(--border);
+			border-radius: var(--radius_small);
+
+			&.fix_width {
+				width: 24px;
+				padding: 0;
+			}
+		}
+
+		.options_wrap {
+			margin-top: 8px;
+			gap: 4px;
+		}
+	}
+}

@@ -1,6 +1,7 @@
 ._local {
 	overflow-x: scroll;
 	height: calc(100% - 37px);
+	padding: 0 9px;
 	scroll-behavior: smooth;
 	outline: none;
 
@@ -35,9 +36,10 @@
 	}
 
 	.kanban_item_wrap {
-		width: 300px;
-		min-width: 300px;
-		border-right: var(--border);
+		width: 330px;
+		min-width: 330px;
+		padding: 0 9px;
+		padding-top: 3px;
 
 		&:last-child {
 			border-right: none;
@@ -45,7 +47,8 @@
 
 		:global {
 			.kanban_item_header {
-				padding: 0 18px;
+				padding: 0 3px;
+				background-color: unset;
 			}
 		}
 	}

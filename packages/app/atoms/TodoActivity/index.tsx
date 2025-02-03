@@ -27,6 +27,7 @@ const Index = (props: IProps) => {
 		current: x.current,
 		total: x.total,
 		setType: useMemoizedFn(v => {
+			x.chart_data = null
 			x.current_date = dayjs()
 
 			x.query(v)

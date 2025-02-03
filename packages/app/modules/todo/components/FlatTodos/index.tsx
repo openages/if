@@ -24,7 +24,6 @@ const Index = (props: IPropsFlatTodos) => {
 		tags,
 		relations,
 		zen_mode,
-		kanban_mode,
 		dimension_id,
 		angle,
 		scroll_container,
@@ -89,12 +88,7 @@ const Index = (props: IPropsFlatTodos) => {
 					<SortableContext items={items} strategy={verticalListSortingStrategy}>
 						{items.map((item, index) =>
 							item.type === 'todo' ? (
-								<SortableWrap
-									id={item.id}
-									data={{ index, dimension_id }}
-									disabled={kanban_mode === 'tag'}
-									key={item.id}
-								>
+								<SortableWrap id={item.id} data={{ index, dimension_id }} key={item.id}>
 									<FlatTodoItem
 										{...{
 											mode,
@@ -103,7 +97,6 @@ const Index = (props: IPropsFlatTodos) => {
 											tags,
 											angles,
 											zen_mode,
-											kanban_mode,
 											dimension_id,
 											check,
 											insert,

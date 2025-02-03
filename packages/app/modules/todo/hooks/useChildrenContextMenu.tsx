@@ -8,11 +8,10 @@ import type { IPropsTodoItem, IPropsDetail } from '../types'
 
 type HookArgs = {
 	mode?: IPropsDetail['mode']
-	kanban_mode?: IPropsTodoItem['kanban_mode']
 }
 
 export default (args: HookArgs) => {
-	const { mode, kanban_mode } = args
+	const { mode } = args
 	const { t, i18n } = useTranslation()
 
 	return useMemo(
@@ -29,7 +28,7 @@ export default (args: HookArgs) => {
 				},
 				{
 					key: 'move_out',
-					disabled: mode === 'table' || kanban_mode === 'tag',
+					disabled: mode === 'table',
 					label: (
 						<div className='menu_item_wrap flex align_center'>
 							<TextOutdent size={16}></TextOutdent>
@@ -50,6 +49,6 @@ export default (args: HookArgs) => {
 					)
 				}
 			] as MenuProps['items'],
-		[i18n.language, mode, kanban_mode]
+		[i18n.language, mode]
 	)
 }
