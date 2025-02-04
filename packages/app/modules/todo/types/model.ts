@@ -20,6 +20,10 @@ export interface KanbanItems {
 	}
 }
 
+export interface QuadItems {
+	[level: string]: Array<Todo.Todo>
+}
+
 export interface CurrentDetailIndex {
 	id: string
 	index: number

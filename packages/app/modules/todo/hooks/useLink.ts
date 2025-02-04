@@ -1,7 +1,7 @@
 import { useDrag, useDrop } from 'ahooks'
 import { useRef, useState } from 'react'
 
-import type { IPropsTodoItem } from '../../../types'
+import type { IPropsTodoItem } from '../types'
 
 interface HookArgs {
 	item: IPropsTodoItem['item']

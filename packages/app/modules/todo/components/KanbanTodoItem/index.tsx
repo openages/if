@@ -5,13 +5,13 @@ import { useMemo } from 'react'
 
 import { todo } from '@/appdata'
 import { useText, useTextChange, Text } from '@/Editor'
+import { useContextMenu, useHandlers, useOnContextMenu, useOptions } from '@/modules/todo/hooks'
 import { useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { CheckCircle, Circle, DotsSixVertical } from '@phosphor-icons/react'
 
 import FlatLevel from '../FlatLevel'
 import { Children, Deadline, Remind, Repeat, Tags } from './components'
-import { useContextMenu, useHandlers, useOnContextMenu, useOptions } from './hooks'
 import styles from './index.css'
 
 import type { IPropsFlatTodoItem } from '../../types'

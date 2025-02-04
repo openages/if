@@ -8,6 +8,7 @@
 		border: none;
 		border-radius: 50%;
 		outline: none !important;
+		font-size: 12px;
 
 		&-active {
 			font-weight: normal;
@@ -57,7 +58,12 @@
 			.if-select-selector {
 				height: 24px;
 				border: none;
+				background-color: unset;
 				font-size: 12px;
+
+				&:hover {
+					background-color: unset !important;
+				}
 
 				&::after {
 					display: none;

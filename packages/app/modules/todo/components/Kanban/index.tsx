@@ -27,7 +27,7 @@ const Index = (props: IPropsKanban) => {
 	} = props
 
 	return (
-		<div className={$cx('h_100 border_box flex', styles._local, mode === 'quad' && styles.quad)}>
+		<div className={$cx('h_100 border_box flex relative', styles._local)}>
 			{Object.values(kanban_items).map((item, index) => {
 				const items = item.items
 

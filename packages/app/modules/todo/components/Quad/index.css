@@ -1,0 +1,111 @@
+.wrap {
+	height: calc(100% - 37px);
+	padding: 24px;
+	padding-top: 6px;
+}
+
+._local {
+	flex-wrap: wrap;
+	scroll-behavior: smooth;
+	gap: 20px;
+
+	.kanban_item_wrap {
+		position: relative;
+		width: calc(50% - 10px);
+		height: calc(50% - 10px);
+
+		&.level_4 {
+			:global {
+				.action_wrap {
+					color: rgba(var(--color_danger_rgb), 0.48);
+				}
+			}
+		}
+
+		&.level_3 {
+			:global {
+				.action_wrap {
+					color: rgba(var(--color_warning_rgb), 0.6);
+				}
+			}
+		}
+
+		&.level_2 {
+			:global {
+				.action_wrap {
+					color: rgba(var(--color_purple_rgb), 0.6);
+				}
+			}
+		}
+
+		&.level_1 {
+			opacity: 0.6;
+
+			:global {
+				.action_wrap {
+					color: var(--color_text_sublight);
+				}
+			}
+		}
+	}
+
+	:global {
+		.label_wrap {
+			.icon {
+				font-size: 12px;
+			}
+
+			.label {
+				font-size: 10px;
+			}
+		}
+
+		.x_line_wrap {
+			top: calc(50% - 10px);
+			width: 100%;
+			height: 20px;
+			opacity: 0.36;
+			color: var(--color_warning);
+
+			.label_wrap {
+				padding-right: 6px;
+
+				.icon {
+					margin-right: 3px;
+				}
+			}
+
+			.x_line {
+				flex: 1;
+				height: 1px;
+				border-bottom: 1px dashed var(--color_warning);
+			}
+		}
+
+		.y_line_wrap {
+			left: calc(50% - 10px);
+			width: 20px;
+			height: 100%;
+			opacity: 0.36;
+			color: var(--color_danger);
+
+			.label_wrap {
+				padding-bottom: 6px;
+
+				.icon {
+					margin-bottom: 3px;
+				}
+
+				.label {
+					writing-mode: vertical-lr;
+				}
+			}
+
+			.y_line {
+				flex: 1;
+				width: 1px;
+				border-right: 1px dashed var(--color_danger);
+			}
+		}
+	}
+}

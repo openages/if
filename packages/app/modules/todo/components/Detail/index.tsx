@@ -1,4 +1,4 @@
-import { useMemoizedFn } from 'ahooks'
+import { useMemoizedFn, useToggle } from 'ahooks'
 import { Drawer, Tooltip } from 'antd'
 import dayjs from 'dayjs'
 import { useMemo, useState } from 'react'
@@ -8,6 +8,7 @@ import { todo } from '@/appdata'
 import { Modal } from '@/components'
 import { useStackSelector } from '@/context/stack'
 import { useText, useTextChange, Text } from '@/Editor'
+import { useHandlers } from '@/modules/todo/hooks'
 import { getItemStatus } from '@/utils/modules/todo'
 import {
 	ArrowsOutSimple,
@@ -18,6 +19,8 @@ import {
 	CaretUp,
 	CellSignalHigh,
 	ClockCountdown,
+	Eye,
+	EyeClosed,
 	MapPinPlus,
 	Plus,
 	Repeat,
@@ -34,7 +37,6 @@ import DateTime from '../DateTime'
 import FlatTagSelect from '../FlatTagSelect'
 import Level from '../Level'
 import Remark from '../Remark'
-import { useHandlers } from '../TodoItem/hooks'
 import styles from './index.css'
 
 import type { Todo } from '@/types'
@@ -58,6 +60,7 @@ const Index = (props: IPropsDetail) => {
 	} = props
 	const { t } = useTranslation()
 	const [visible_remark_modal, setVisibleRemarkModal] = useState(false)
+	const [visible_options, { toggle: toggleOptions }] = useToggle(true)
 	const container_id = useStackSelector(v => v.id)
 	const { item = {} as Todo.Todo, prev_id, next_id } = current_detail_item
 	const { index, dimension_id } = current_detail_index
@@ -216,6 +219,12 @@ const Index = (props: IPropsDetail) => {
 					</If>
 				</Tooltip>
 				<div
+					className='btn_action flex justify_center align_center clickable mr_6'
+					onClick={toggleOptions}
+				>
+					{visible_options ? <EyeClosed size={15}></EyeClosed> : <Eye size={15}></Eye>}
+				</div>
+				<div
 					className={$cx(
 						'btn_action flex justify_center align_center clickable mr_6',
 						!prev_id && 'disabled'
@@ -237,127 +246,137 @@ const Index = (props: IPropsDetail) => {
 			<If condition={Boolean(item.id)}>
 				<div className='detail_item_wrap w_100 border_box flex flex_column'>
 					<Text
-						className='todo_text_wrap w_100 border_box'
+						className={$cx(
+							'todo_text_wrap w_100 border_box',
+							!visible_options && 'hide_options'
+						)}
 						max_length={todo.text_max_length}
 						onChange={onChange}
 						setEditor={setEditor}
 						setRef={setRef}
 					></Text>
-					<div className='option_items w_100 border_box flex flex_column'>
-						<div className='option_item tags w_100 border_box flex'>
-							<div className='name_wrap flex align_start'>
-								<div className='flex align_center'>
-									<Tag size={16}></Tag>
-									<span className='name'>{t('common.tags.label')}</span>
+					<If condition={visible_options}>
+						<div className='option_items w_100 border_box flex flex_column'>
+							<div className='option_item tags w_100 border_box flex'>
+								<div className='name_wrap flex align_start'>
+									<div className='flex align_center'>
+										<Tag size={16}></Tag>
+										<span className='name'>{t('common.tags.label')}</span>
+									</div>
+								</div>
+								<div className='value_wrap flex align_center'>
+									<FlatTagSelect
+										className='tag_select w_100'
+										placement='bottomLeft'
+										wrap
+										options={tags}
+										value={tag_ids!}
+										onChange={updateTags}
+									></FlatTagSelect>
 								</div>
 							</div>
-							<div className='value_wrap flex align_center'>
-								<FlatTagSelect
-									className='tag_select w_100'
-									placement='bottomLeft'
-									wrap
-									options={tags}
-									value={tag_ids!}
-									onChange={updateTags}
-								></FlatTagSelect>
+							<div className='option_item w_100 border_box flex align_center'>
+								<div className='name_wrap flex align_center'>
+									<CellSignalHigh
+										size={16}
+										style={{ translate: '1px' }}
+									></CellSignalHigh>
+									<span className='name'>{t('todo.common.priority')}</span>
+								</div>
+								<div className='value_wrap flex align_center'>
+									<Level value={level} onChangeLevel={updateLevel}></Level>
+								</div>
 							</div>
-						</div>
-						<div className='option_item w_100 border_box flex align_center'>
-							<div className='name_wrap flex align_center'>
-								<CellSignalHigh size={16} style={{ translate: '1px' }}></CellSignalHigh>
-								<span className='name'>{t('todo.common.priority')}</span>
+							<div
+								className={$cx(
+									'option_item w_100 border_box flex align_center',
+									item_status && 'disabled'
+								)}
+							>
+								<div className='name_wrap flex align_center'>
+									<Bell size={16}></Bell>
+									<span className='name'>{t('todo.Input.Remind.title')}</span>
+								</div>
+								<div className='value_wrap flex align_center'>
+									<DateTime
+										useByDetail
+										value={remind_time!}
+										onChange={updateRemind}
+									></DateTime>
+								</div>
 							</div>
-							<div className='value_wrap flex align_center'>
-								<Level value={level} onChangeLevel={updateLevel}></Level>
+							<div
+								className={$cx(
+									'option_item w_100 border_box flex align_center',
+									item_status && 'disabled'
+								)}
+							>
+								<div className='name_wrap flex align_center'>
+									<Calendar size={16}></Calendar>
+									<span className='name'>{t('todo.Input.Deadline.title')}</span>
+								</div>
+								<div className='value_wrap flex align_center'>
+									<DateTime
+										useByDetail
+										value={end_time!}
+										onChange={updateDeadline}
+									></DateTime>
+								</div>
 							</div>
-						</div>
-						<div
-							className={$cx(
-								'option_item w_100 border_box flex align_center',
-								item_status && 'disabled'
-							)}
-						>
-							<div className='name_wrap flex align_center'>
-								<Bell size={16}></Bell>
-								<span className='name'>{t('todo.Input.Remind.title')}</span>
+							<div
+								className={$cx(
+									'option_item w_100 border_box flex align_center',
+									item_status && 'disabled'
+								)}
+							>
+								<div className='name_wrap flex align_center'>
+									<Repeat size={16}></Repeat>
+									<span className='name'>{t('todo.Input.Cycle.title')}</span>
+								</div>
+								<div className='value_wrap flex align_center'>
+									<Cycle
+										cycle_enabled={cycle_enabled}
+										cycle={cycle}
+										useByDetail
+										onChange={updateCycle}
+										onChangeItem={updateValues}
+									></Cycle>
+								</div>
 							</div>
-							<div className='value_wrap flex align_center'>
-								<DateTime
-									useByDetail
-									value={remind_time!}
-									onChange={updateRemind}
-								></DateTime>
-							</div>
-						</div>
-						<div
-							className={$cx(
-								'option_item w_100 border_box flex align_center',
-								item_status && 'disabled'
-							)}
-						>
-							<div className='name_wrap flex align_center'>
-								<Calendar size={16}></Calendar>
-								<span className='name'>{t('todo.Input.Deadline.title')}</span>
-							</div>
-							<div className='value_wrap flex align_center'>
-								<DateTime
-									useByDetail
-									value={end_time!}
-									onChange={updateDeadline}
-								></DateTime>
-							</div>
-						</div>
-						<div
-							className={$cx(
-								'option_item w_100 border_box flex align_center',
-								item_status && 'disabled'
-							)}
-						>
-							<div className='name_wrap flex align_center'>
-								<Repeat size={16}></Repeat>
-								<span className='name'>{t('todo.Input.Cycle.title')}</span>
-							</div>
-							<div className='value_wrap flex align_center'>
-								<Cycle
-									cycle_enabled={cycle_enabled}
-									cycle={cycle}
-									useByDetail
-									onChange={updateCycle}
-									onChangeItem={updateValues}
-								></Cycle>
-							</div>
-						</div>
-						<div
-							className={$cx(
-								'option_item schedule_wrap w_100 border_box flex align_center',
-								item_status && 'disabled'
-							)}
-						>
-							<div className='name_wrap flex align_center'>
-								<Sun size={16}></Sun>
-								<span className='name'>{t('modules.schedule')}</span>
-							</div>
-							<div className='value_wrap border_box flex align_center'>
-								<span
-									className={$cx(
-										'text cursor_point clickable',
-										schedule && 'active'
-									)}
-									onClick={updateSchedule}
-								>
-									{schedule ? t('common.added') : t('todo.Detail.add_to_shcedule')}
-								</span>
-								{schedule && (
+							<div
+								className={$cx(
+									'option_item schedule_wrap w_100 border_box flex align_center',
+									item_status && 'disabled'
+								)}
+							>
+								<div className='name_wrap flex align_center'>
+									<Sun size={16}></Sun>
+									<span className='name'>{t('modules.schedule')}</span>
+								</div>
+								<div className='value_wrap border_box flex align_center'>
 									<span
-										className='btn_remove none justify_center align_center clickable ml_12'
+										className={$cx(
+											'text cursor_point clickable',
+											schedule && 'active'
+										)}
 										onClick={updateSchedule}
 									>
-										<X size={7}></X>
+										{schedule
+											? t('common.added')
+											: t('todo.Detail.add_to_shcedule')}
 									</span>
-								)}
+									{schedule && (
+										<span
+											className='btn_remove none justify_center align_center clickable ml_12'
+											onClick={updateSchedule}
+										>
+											<X size={7}></X>
+										</span>
+									)}
+								</div>
 							</div>
 						</div>
-					</div>
+					</If>
 					<div
 						className={$cx(
 							'detail_children_wrap w_100 border_box flex flex_column relative',

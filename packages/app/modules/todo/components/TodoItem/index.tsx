@@ -5,6 +5,7 @@ import { useMemo } from 'react'
 
 import { todo } from '@/appdata'
 import { useText, useTextChange, Text } from '@/Editor'
+import { useContextMenu, useHandlers, useLink, useOnContextMenu, useOpen, useOptions } from '@/modules/todo/hooks'
 import { useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { CheckSquare, DotsSixVertical, Square } from '@phosphor-icons/react'
@@ -15,7 +16,6 @@ import DeadlineStatus from '../DeadlineStatus'
 import LevelStatus from '../LevelStatus'
 import RemindStatus from '../RemindStatus'
 import TagSelect from '../TagSelect'
-import { useContextMenu, useHandlers, useLink, useOnContextMenu, useOpen, useOptions } from './hooks'
 import styles from './index.css'
 
 import type { IPropsChildren, IPropsTodoItem } from '../../types'
@@ -120,7 +120,7 @@ const Index = (props: IPropsTodoItem) => {
 	})
 
 	useOpen({ item, zen_mode, open, open_items, renderLines, setOpen })
-	useOptions({ item, input: ref_input, zen_mode })
+	useOptions({ item, input: ref_input })
 
 	const props_children: IPropsChildren = {
 		mode,
@@ -144,14 +144,6 @@ const Index = (props: IPropsTodoItem) => {
 			schedule,
 		[level, tag_ids, remind_time, end_time, cycle_enabled, cycle, schedule]
 	)
-
-	const date = useMemo(() => {
-		const target = dayjs(create_at)
-
-		if (target.diff(dayjs(), 'week') >= 1) return target.format('YYYY-MM-DD')
-
-		return `${dayjs().to(target)} ${target.format('dddd')}`
-	}, [create_at])
 
 	const OptionsWrap = useMemo(
 		() => (
@@ -191,8 +183,6 @@ const Index = (props: IPropsTodoItem) => {
 	)
 
 	const disableContextMenu = useMemoizedFn(e => e.preventDefault())
-
-	console.log(mode)
 
 	return (
 		<div

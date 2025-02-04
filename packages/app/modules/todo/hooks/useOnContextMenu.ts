@@ -1,7 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 
 import type { Todo } from '@/types'
-import type { IPropsTodoItem } from '../../../types'
+import type { IPropsTodoItem } from '../types'
 
 interface HookArgs {
 	item: IPropsTodoItem['item']

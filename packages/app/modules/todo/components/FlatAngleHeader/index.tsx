@@ -39,7 +39,7 @@ const Index = (props: IProps) => {
 							<Progress
 								className='progress'
 								type='circle'
-								size={15}
+								size={14}
 								showInfo={false}
 								strokeColor='rgba(var(--color_text_rgb), 0.66)'
 								trailColor='rgba(var(--color_text_rgb), 0.24)'

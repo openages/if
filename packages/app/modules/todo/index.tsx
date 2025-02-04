@@ -19,6 +19,7 @@ import {
 	Input,
 	Kanban,
 	Mindmap,
+	Quad,
 	SettingsModal,
 	Table,
 	Tabs,
@@ -47,7 +48,8 @@ import type {
 	IPropsTodos,
 	IPropsMindmap,
 	IPropsAnalysis,
-	IPropsActivity
+	IPropsActivity,
+	IPropsQuad
 } from './types'
 
 const Index = ({ id }: IProps) => {
@@ -62,7 +64,7 @@ const Index = ({ id }: IProps) => {
 	const current_detail_item = $copy(x.current_detail_item)
 	const search_mode = Boolean(x.table_selector.id)
 	const table_exclude_fields = $copy(x.setting?.setting?.table_exclude_fields || [])
-	const kanban_items = $copy(x.kanban_items)
+
 	const updateSetting = useMemoizedFn(x.updateSetting)
 
 	useLayoutEffect(() => {
@@ -146,7 +148,12 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_kanban: IPropsKanban = {
-		kanban_items: kanban_items,
+		kanban_items: $copy(x.kanban_items),
+		...omit(props_todos, ['items'])
+	}
+
+	const props_quad: IPropsQuad = {
+		quad_items: $copy(x.quad_items),
 		...omit(props_todos, ['items'])
 	}
 
@@ -341,10 +348,8 @@ const Index = ({ id }: IProps) => {
 												<Input {...props_input}></Input>
 											</Fragment>
 										))
-										.with(
-											P.when(v => v === 'kanban' || v === 'quad'),
-											() => <Kanban {...props_kanban}></Kanban>
-										)
+										.with('kanban', () => <Kanban {...props_kanban}></Kanban>)
+										.with('quad', () => <Quad {...props_quad}></Quad>)
 										.with('flat', () => <Flat {...props_kanban}></Flat>)
 										.otherwise(() => null)}
 									{(x.mode === 'kanban' ||

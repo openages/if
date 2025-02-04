@@ -35,7 +35,7 @@ const Index = (props: IPropsFormTableComponent<Todo.Todo['tag_ids'], { tags: Arr
 						<When condition={items !== undefined && items?.length > 0}>
 							{items?.map(item => {
 								return (
-									<div className='tag flex align_center'>
+									<div className='tag flex align_center' key={item!.id}>
 										<span
 											className='color'
 											style={{ backgroundColor: item!.color }}

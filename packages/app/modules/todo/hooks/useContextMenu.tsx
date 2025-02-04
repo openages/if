@@ -13,7 +13,7 @@ import {
 } from '@phosphor-icons/react'
 
 import type { MenuProps } from 'antd'
-import type { IPropsTodoItem } from '../../../types'
+import type { IPropsTodoItem } from '../types'
 
 type HookArgs = {
 	angles?: IPropsTodoItem['angles']

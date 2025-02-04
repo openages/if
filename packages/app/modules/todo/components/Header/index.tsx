@@ -165,22 +165,22 @@ const Index = (props: IPropsHeader) => {
 				<div
 					className={$cx(
 						'mode_item_wrap border_box flex flex_column align_center clickable',
-						mode === 'mindmap' && 'active'
-					)}
-					data-key='mindmap'
-				>
-					<GitFork></GitFork>
-					<span className='text'>{t('todo.Header.mode.mindmap')}</span>
-				</div>
-				<div
-					className={$cx(
-						'mode_item_wrap border_box flex flex_column align_center clickable',
 						mode === 'quad' && 'active'
 					)}
 					data-key='quad'
 				>
 					<GridFour></GridFour>
 					<span className='text'>{t('todo.Header.mode.quad')}</span>
+				</div>
+				<div
+					className={$cx(
+						'mode_item_wrap border_box flex flex_column align_center clickable',
+						mode === 'mindmap' && 'active'
+					)}
+					data-key='mindmap'
+				>
+					<GitFork></GitFork>
+					<span className='text'>{t('todo.Header.mode.mindmap')}</span>
 				</div>
 				<div
 					className={$cx(
@@ -253,9 +253,9 @@ const Index = (props: IPropsHeader) => {
 			className={$cx(
 				'limited_content_wrap border_box flex justify_between align_center relative',
 				styles._local,
-				mode !== 'list' && styles.other_mode,
-				(mode === 'kanban' || mode === 'quad') && styles.no_border,
-				(mode === 'kanban' || mode === 'quad' || mode === 'flat') && styles.flat,
+				mode !== 'list' && styles.not_list,
+				(mode === 'kanban' || mode === 'quad' || mode === 'flat' || mode === 'table') && styles.mini,
+				styles[mode],
 				editor_size && styles.desc
 			)}
 		>

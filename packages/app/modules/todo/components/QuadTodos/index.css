@@ -1,0 +1,45 @@
+._local {
+	overflow-y: scroll;
+	height: 100%;
+	min-height: unset;
+	padding: 12px;
+	outline: none;
+
+	:global {
+		.stage_wrap {
+			z-index: 0;
+			top: 24px;
+			left: 40px;
+		}
+
+		.drag_wrap {
+			width: 14px;
+			height: 14px;
+			border-radius: var(--radius_small_1);
+			outline: none;
+			opacity: 0;
+			background-color: var(--color_bg_2);
+
+			&:hover {
+				background-color: rgba(var(--color_text_rgb), 0.12);
+			}
+
+			&.todo {
+				top: 7px;
+				left: -30px;
+			}
+
+			&.group {
+				top: -1px;
+				left: -9px;
+			}
+
+			&.children {
+				top: 7.8px;
+				left: -10px;
+				width: 12px;
+				height: 12px;
+			}
+		}
+	}
+}

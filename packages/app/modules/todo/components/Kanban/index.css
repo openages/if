@@ -5,36 +5,6 @@
 	scroll-behavior: smooth;
 	outline: none;
 
-	&.tag_mode {
-		.kanban_item_wrap {
-			.kanban_item_header {
-				padding-left: 24px;
-
-				&::before {
-					position: absolute;
-					left: 9px;
-					width: 9px;
-					height: 9px;
-					border-radius: 50%;
-					background-color: var(--color_tag);
-					content: '';
-				}
-			}
-		}
-	}
-
-	&.quad {
-		overflow: hidden;
-		flex-wrap: wrap;
-		padding: 0;
-
-		.kanban_item_wrap {
-			position: relative;
-			width: 50%;
-			height: 50%;
-		}
-	}
-
 	.kanban_item_wrap {
 		width: 330px;
 		min-width: 330px;

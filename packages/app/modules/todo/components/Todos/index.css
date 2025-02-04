@@ -42,10 +42,9 @@
 
 	&.quad {
 		overflow-y: scroll;
-		height: calc(100% - 36px);
+		height: 100%;
 		min-height: unset;
-		padding: 9px;
-		padding-bottom: 36px;
+		padding: 6px;
 		outline: none;
 	}
 

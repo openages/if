@@ -1,7 +1,7 @@
 import { omit, pick } from 'lodash-es'
 import { makeAutoObservable, runInAction } from 'mobx'
 import scrollIntoView from 'smooth-scroll-into-view-if-needed'
-import { match } from 'ts-pattern'
+import { match, P } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
 import { archive, cycle } from '@/actions/todo'
@@ -58,6 +58,7 @@ import type {
 	Indexes,
 	ItemsSortParams,
 	KanbanItems,
+	QuadItems,
 	Mode,
 	AnalysisDuration,
 	AnalysisTrending
@@ -81,6 +82,8 @@ export default class Index {
 	items_watcher = null as Subscription | null
 	kanban_items = {} as KanbanItems
 	kanban_items_watcher = [] as Array<Subscription>
+	quad_items = {} as QuadItems
+	quad_items_watcher = [] as Array<Subscription>
 
 	archives = [] as Array<Todo.Todo>
 	archive_counts = 0
@@ -174,9 +177,7 @@ export default class Index {
 				this.stopWatchItems()
 			}
 
-			if ((v !== 'kanban' && v !== 'quad' && v !== 'flat') || old_val !== 'mindmap') {
-				this.kanban_items = {}
-
+			if ((v !== 'kanban' && v !== 'flat') || old_val !== 'mindmap') {
 				this.stopWatchKanbanItems()
 			}
 
@@ -190,8 +191,14 @@ export default class Index {
 				this.table_sort = {}
 			}
 
-			if (v === 'kanban' || v === 'quad' || v === 'flat' || v === 'mindmap') {
+			if (v === 'kanban' || v === 'flat' || v === 'mindmap') {
 				this.watchKanbanItems()
+			}
+
+			if (v === 'quad') {
+				this.watchQuadItems()
+			} else {
+				this.stopWatchQuadItems()
 			}
 		}
 	} as Watch<
@@ -227,15 +234,6 @@ export default class Index {
 		} as CurrentDetailItem
 	}
 
-	get quad_angles() {
-		const v = this.setting?.setting?.quad_angles || []
-		const angles = this.setting?.setting?.angles || []
-
-		if (!v || !v.length) return angles.slice(0, 4)
-
-		return v.map(item => angles.find(angle => angle.id === item)!)
-	}
-
 	constructor(
 		public global: GlobalModel,
 		public utils: Utils,
@@ -256,6 +254,7 @@ export default class Index {
 				setting_watcher: false,
 				items_watcher: false,
 				kanban_items_watcher: false,
+				quad_items_watcher: false,
 				watch: false
 			},
 			{ autoBind: true }
@@ -339,12 +338,6 @@ export default class Index {
 
 			this.watchKanbanItems()
 		}
-
-		if ('quad_angles' in changed_values) {
-			this.kanban_items = {}
-
-			this.watchKanbanItems()
-		}
 	}
 
 	@loading
@@ -353,6 +346,9 @@ export default class Index {
 
 		if (this.mode === 'kanban') {
 			data['angle_id'] = options?.dimension_id!
+		} else if (this.mode === 'quad') {
+			data['angle_id'] = this.current_angle_id || this.setting.setting.angles[0].id
+			;(data as Todo.Todo)['level'] = Number(options?.dimension_id!.replace('level_', ''))
 		} else {
 			data['angle_id'] = this.current_angle_id
 		}
@@ -547,12 +543,6 @@ export default class Index {
 		}
 
 		await removeAngle(this.id, angle_id)
-
-		const quad_angles = this.setting?.setting?.quad_angles
-
-		if (quad_angles && quad_angles.length) {
-			await this.updateSetting({ quad_angles: quad_angles.filter(item => item !== angle_id) })
-		}
 
 		return true
 	}
@@ -943,8 +933,15 @@ export default class Index {
 	getItem(args: Indexes) {
 		const { index, dimension_id } = args
 
-		const items = match(dimension_id !== undefined)
-			.with(true, () => this.kanban_items[dimension_id!].items)
+		const items = match(dimension_id)
+			.with(
+				P.when(v => v?.indexOf('level_') !== -1),
+				() => this.quad_items[dimension_id!]
+			)
+			.with(
+				P.when(v => v !== undefined),
+				() => this.kanban_items[dimension_id!].items
+			)
 			.otherwise(() => this.items)
 
 		return { items, item: index === undefined ? null : (items[index] as Todo.Todo) }
@@ -1052,7 +1049,7 @@ export default class Index {
 
 		if (!this.setting.setting) return
 
-		const angles = this.mode === 'quad' ? this.quad_angles : this.setting.setting.angles
+		const angles = this.setting.setting.angles
 
 		this.kanban_items_watcher = angles.map(item => {
 			this.kanban_items[item.id] = {
@@ -1076,16 +1073,51 @@ export default class Index {
 		})
 	}
 
+	watchQuadItems() {
+		this.stopWatchQuadItems()
+
+		const levels = [4, 3, 2, 1]
+
+		this.quad_items_watcher = levels.map(level => {
+			const key = `level_${level}`
+
+			this.quad_items[key] = [] as Array<Todo.Todo>
+
+			return getQueryItems({
+				file_id: this.id,
+				selector: { type: 'todo', level },
+				items_sort_param: this.items_sort_param,
+				items_filter_tags: this.items_filter_tags
+			}).$.subscribe(items => {
+				if (this.disable_watcher) return
+
+				this.quad_items[key] = getDocItemsData(items) as Array<Todo.Todo>
+			})
+		})
+	}
+
 	stopWatchItems() {
 		if (this.items_watcher) this.items_watcher.unsubscribe()
 	}
 
 	stopWatchKanbanItems() {
+		this.kanban_items = {}
+
 		if (!this.kanban_items_watcher.length) return
 
 		this.kanban_items_watcher.forEach(item => item.unsubscribe())
 
 		this.kanban_items_watcher = []
+	}
+
+	stopWatchQuadItems() {
+		this.quad_items = {}
+
+		if (!this.quad_items_watcher.length) return
+
+		this.quad_items_watcher.forEach(item => item.unsubscribe())
+
+		this.quad_items_watcher = []
 	}
 
 	on() {

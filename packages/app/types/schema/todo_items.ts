@@ -15,7 +15,6 @@ export namespace Todo {
 		desc?: string
 		relations?: Relations
 		table_exclude_fields?: Array<string>
-		quad_angles?: Array<string>
 	}
 
 	export interface TodoSetting {

@@ -1,7 +1,7 @@
 import { useLayoutEffect } from 'react'
 
 import type { RefObject } from 'react'
-import type { IPropsTodoItem } from '../../../types'
+import type { IPropsTodoItem } from '../types'
 
 interface HookArgs {
 	item: IPropsTodoItem['item']

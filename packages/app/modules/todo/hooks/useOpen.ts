@@ -2,7 +2,7 @@ import { useUpdateEffect } from 'ahooks'
 
 import { useDeepEffect } from '@/hooks'
 
-import type { IPropsTodoItem } from '../../../types'
+import type { IPropsTodoItem } from '../types'
 
 interface HookArgs {
 	item: IPropsTodoItem['item']

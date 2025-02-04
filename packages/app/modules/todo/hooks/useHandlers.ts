@@ -2,7 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import { useState } from 'react'
 
 import type { Todo } from '@/types'
-import type { IPropsTodoItem } from '../../../types'
+import type { IPropsTodoItem } from '../types'
 
 interface HookArgs {
 	item: IPropsTodoItem['item']
@@ -41,7 +41,7 @@ export default (args: HookArgs) => {
 	})
 
 	const updateLevel = useMemoizedFn(v => {
-		update({ type: 'parent', index, dimension_id, value: { level: v ? v : undefined } as Todo.Todo })
+		update({ type: 'parent', index, dimension_id, value: { level: v } as Todo.Todo })
 	})
 
 	const updateRemind = useMemoizedFn(v => {

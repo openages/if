@@ -54,9 +54,14 @@
 		.detail_item_wrap {
 			.todo_text_wrap {
 				padding: 0 var(--padding);
+				margin-bottom: 9px;
 				outline: none;
 				font-size: 16px;
 				font-weight: 500;
+
+				&.hide_options {
+					margin-bottom: 0;
+				}
 			}
 
 			.drag_wrap {
@@ -74,8 +79,7 @@
 			}
 
 			.option_items {
-				padding: 9px var(--padding);
-				padding-bottom: 12px;
+				padding: 0 var(--padding);
 
 				.option_item {
 					border-radius: var(--radius);
@@ -147,6 +151,7 @@
 
 			.detail_children_wrap {
 				padding: 0 var(--padding);
+				margin-top: 12px;
 
 				&.has_children {
 					padding: 0 calc(var(--padding) - 2px);

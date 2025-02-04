@@ -172,6 +172,8 @@ export interface IPropsFlatTodoItem extends IPropsTodoItem {
 	serial?: string
 }
 
+export interface IPropsQuadTodoItem extends IPropsTodoItem {}
+
 export interface IPropsChildren {
 	mode: Model['mode']
 	items: Todo.Todo['children']
@@ -208,6 +210,10 @@ export interface IPropsGroupTitle {
 
 export interface IPropsKanban extends Omit<IPropsTodos, 'items'> {
 	kanban_items: Model['kanban_items']
+}
+
+export interface IPropsQuad extends Omit<IPropsTodos, 'items'> {
+	quad_items: Model['quad_items']
 }
 
 export interface IPropsTable extends Pick<IPropsTodos, 'relations' | 'showDetailModal' | 'remove'> {
