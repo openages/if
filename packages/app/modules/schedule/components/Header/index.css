@@ -2,4 +2,13 @@
 	height: 36px;
 	border-bottom: var(--border_light);
 	background-color: var(--color_bg);
+
+	:global {
+		.d_line {
+			width: 1px;
+			height: 15px;
+			margin: 0 6px;
+			background-color: var(--color_border_light);
+		}
+	}
 }

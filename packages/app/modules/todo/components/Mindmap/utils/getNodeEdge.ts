@@ -11,21 +11,21 @@ export default (args: Pick<IPropsMindmap, 'file_id' | 'name' | 'kanban_items'>) 
 	const edges = [] as Array<Edge>
 
 	Object.keys(kanban_items).forEach(angle_id => {
-		nodes.push({
-			id: angle_id,
-			data: { label: kanban_items[angle_id].dimension.value.text },
-			position,
-			className: 'angle_node'
-		})
-
-		edges.push({
-			id: `${file_id}|${angle_id}`,
-			source: file_id,
-			target: angle_id,
-			type: edge_type
-		})
-
 		if (kanban_items[angle_id].items.length) {
+			nodes.push({
+				id: angle_id,
+				data: { label: kanban_items[angle_id].dimension.value.text },
+				position,
+				className: 'angle_node'
+			})
+
+			edges.push({
+				id: `${file_id}|${angle_id}`,
+				source: file_id,
+				target: angle_id,
+				type: edge_type
+			})
+
 			kanban_items[angle_id].items.forEach((item, index) => {
 				nodes.push({
 					type: 'TodoItem',

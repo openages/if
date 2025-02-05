@@ -20,6 +20,7 @@ export default {
 		detail: 'Detail',
 		insert: 'Insert',
 		add_tags: 'Add Tags',
+		change_level: 'Priority',
 		insert_children: 'Add Child',
 		move: 'Move To',
 		remove: 'Remove',

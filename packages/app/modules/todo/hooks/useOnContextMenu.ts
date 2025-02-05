@@ -28,6 +28,14 @@ export default (args: HookArgs) => {
 			const target_key = keyPath.at(0)
 
 			switch (parent_key) {
+				case 'change_level':
+					update({
+						type: 'parent',
+						index,
+						dimension_id,
+						value: { level: target_key === '0' ? undefined : Number(target_key) } as Todo.Todo
+					})
+					break
 				case 'add_tags':
 					let target = [] as Array<string>
 

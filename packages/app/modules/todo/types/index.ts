@@ -19,6 +19,7 @@ export interface IPropsTagSelect {
 	placement?: SelectProps['placement']
 	unlimit?: boolean
 	wrap?: boolean
+	show_suffix?: boolean
 	useByTodo?: boolean
 	useByInput?: boolean
 	useByTable?: boolean

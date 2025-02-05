@@ -189,13 +189,13 @@
 			.mode_item_wrap {
 				width: calc((100% - 12px) / 3);
 				padding: 6px 0;
-				border: var(--border_light);
 				border-radius: var(--radius);
 				color: var(--color_text_light);
+				background-color: var(--color_bg_1);
 
 				&.active {
 					color: var(--color_text);
-					background-color: var(--color_bg_1);
+					background-color: var(--color_bg_2);
 				}
 
 				svg {
@@ -210,7 +210,7 @@
 		}
 
 		.setting_items {
-			padding: 3px 15px;
+			padding: 6px 15px;
 			border-bottom: var(--border_light);
 
 			.setting_item {

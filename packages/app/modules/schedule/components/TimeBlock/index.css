@@ -223,11 +223,13 @@
 			}
 
 			.btn_detail {
-				top: 0;
-				width: 18px;
-				height: 18px;
+				top: 2px;
+				width: 16px;
+				height: 16px;
 				border: none;
+				border-radius: 50%;
 				background-color: unset;
+				backdrop-filter: var(--blur);
 			}
 
 			.timeblock_content_wrap {

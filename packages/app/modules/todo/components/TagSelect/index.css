@@ -67,6 +67,18 @@
 		}
 	}
 
+	&.no_suffix {
+		:global {
+			.if-select-selector {
+				padding-inline-end: 0 !important;
+			}
+
+			.if-select-arrow {
+				display: none;
+			}
+		}
+	}
+
 	:global {
 		.if-empty-image {
 			margin: 0;
@@ -79,7 +91,6 @@
 		.if-select-selector {
 			flex-wrap: unset !important;
 			width: unset;
-			padding-inline-end: 0 !important;
 			border: none !important;
 			background-color: transparent !important;
 
@@ -98,10 +109,6 @@
 				padding-left: 1px;
 				inset-inline: 0 !important;
 			}
-		}
-
-		.if-select-arrow {
-			display: none;
 		}
 
 		.tag {

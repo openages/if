@@ -216,10 +216,20 @@ export default class Index {
 	get current_detail_item() {
 		if (!this.current_detail_index.id) return {} as CurrentDetailItem
 
-		const items =
-			this.mode === 'kanban' || this.mode === 'quad' || this.mode === 'flat' || this.mode === 'mindmap'
-				? this.kanban_items[this.current_detail_index.dimension_id!]?.items
-				: this.items
+		let items
+
+		if (this.mode === 'kanban' || this.mode === 'flat' || this.mode === 'mindmap') {
+			this.kanban_items[this.current_detail_index.dimension_id!]?.items
+		} else if (this.mode === 'quad') {
+			const target = this.getItem({
+				index: this.current_detail_index.index,
+				dimension_id: this.current_detail_index.dimension_id!
+			})
+
+			items = target.items
+		} else {
+			items = this.items
+		}
 
 		if (!items) return {} as CurrentDetailItem
 
@@ -935,7 +945,7 @@ export default class Index {
 
 		const items = match(dimension_id)
 			.with(
-				P.when(v => v?.indexOf('level_') !== -1),
+				P.when(v => v && v?.indexOf('level_') !== -1),
 				() => this.quad_items[dimension_id!]
 			)
 			.with(

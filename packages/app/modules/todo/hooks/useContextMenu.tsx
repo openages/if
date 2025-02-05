@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import {
 	AlignCenterHorizontal,
 	ArrowsOutCardinal,
+	CellSignalHigh,
 	Check,
 	Notepad,
 	Plus,
@@ -12,18 +13,33 @@ import {
 	Trash
 } from '@phosphor-icons/react'
 
+import Option from '../components/Level/Option'
+
 import type { MenuProps } from 'antd'
 import type { IPropsTodoItem } from '../types'
 
 type HookArgs = {
+	item: IPropsTodoItem['item']
 	angles?: IPropsTodoItem['angles']
 	tags?: IPropsTodoItem['tags']
 	tag_ids?: IPropsTodoItem['item']['tag_ids']
 }
 
 export default (args: HookArgs) => {
-	const { angles, tags, tag_ids } = args
+	const { item, angles, tags, tag_ids } = args
+	const { level } = item
 	const { t, i18n } = useTranslation()
+
+	const options_level = useMemo(
+		() => [
+			{ label: t('common.prority.no'), value: 0 },
+			{ label: t('common.prority.low'), value: 1 },
+			{ label: t('common.prority.medium'), value: 2 },
+			{ label: t('common.prority.high'), value: 3 },
+			{ label: t('common.prority.urgent'), value: 4 }
+		],
+		[t]
+	)
 
 	return useMemo(
 		() =>
@@ -48,6 +64,25 @@ export default (args: HookArgs) => {
 							<span className='text ml_6'>{t('todo.context_menu.insert')}</span>
 						</div>
 					)
+				},
+				{
+					key: 'change_level',
+					label: (
+						<div className='menu_item_wrap flex align_center'>
+							<CellSignalHigh size={16} style={{ translate: '1px' }}></CellSignalHigh>
+							<span className='text ml_6'>{t('todo.context_menu.change_level')}</span>
+						</div>
+					),
+					children: options_level.map(item => ({
+						key: item.value,
+						label: (
+							<Option
+								label={item.label}
+								value={item.value}
+								selected={item.value === level}
+							></Option>
+						)
+					}))
 				},
 				{
 					key: 'add_tags',

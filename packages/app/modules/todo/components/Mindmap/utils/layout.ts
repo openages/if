@@ -24,24 +24,26 @@ export default (args: Pick<IPropsMindmap, 'file_id' | 'kanban_items'>, nodes: Ar
 		{} as Record<string, { width: number; height: number; position: { x: number; y: number } }>
 	)
 
-	raw_tree['children'] = Object.keys(kanban_items).map(angle_id => {
-		const angle_item = {} as any
+	Object.keys(kanban_items).forEach(angle_id => {
+		if (kanban_items[angle_id].items.length) {
+			const angle_item = {} as any
 
-		angle_item['type'] = 'angle'
-		angle_item['id'] = angle_id
+			angle_item['type'] = 'angle'
+			angle_item['id'] = angle_id
 
-		angle_item['children'] = kanban_items[angle_id].items.map(item => {
-			const todo_item = {} as any
+			angle_item['children'] = kanban_items[angle_id].items.map(item => {
+				const todo_item = {} as any
 
-			todo_item['type'] = 'todo_item'
-			todo_item['id'] = item.id
+				todo_item['type'] = 'todo_item'
+				todo_item['id'] = item.id
 
-			if (item.children && item.children.length) todo_item['children'] = item.children
+				if (item.children && item.children.length) todo_item['children'] = item.children
 
-			return todo_item
-		})
+				return todo_item
+			})
 
-		return angle_item
+			raw_tree['children'].push(angle_item)
+		}
 	})
 
 	const target_tree = layoutByMindmap(raw_tree, {

@@ -49,7 +49,7 @@ const Index = (props: IPropsHeaderCenter) => {
 	}, [scale])
 
 	return (
-		<div className={$cx('flex', styles._local)}>
+		<div className={$cx('flex absolute', styles._local)}>
 			<div className='btn_std btn_prev flex justify_center align_center clickable' onClick={prev}>
 				<CaretLeft></CaretLeft>
 			</div>

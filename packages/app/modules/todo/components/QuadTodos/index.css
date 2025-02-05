@@ -2,7 +2,7 @@
 	overflow-y: scroll;
 	height: 100%;
 	min-height: unset;
-	padding: 12px;
+	padding: 9px;
 	outline: none;
 
 	:global {

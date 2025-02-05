@@ -21,7 +21,11 @@ const Index = (props: IPropsHeader) => {
 	} = props
 
 	const props_left: IPropsHeaderLeft = {
+		view,
+		scale,
 		visible_task_panel,
+		changeView,
+		changeScale,
 		toggleVisibleTaskPanel
 	}
 
@@ -33,12 +37,8 @@ const Index = (props: IPropsHeader) => {
 	}
 
 	const props_right: IPropsHeaderRight = {
-		view,
-		scale,
 		tags,
 		filter_tags,
-		changeView,
-		changeScale,
 		showSettingsModal,
 		changeFilterTags
 	}

@@ -18,8 +18,8 @@ export const views = {
 	timeline: {
 		key: 'timeline',
 		icon: <AlignCenterVertical data-key='timeline' />,
-		value: { view: 'timeline', scale: 'week' },
-		getActive: (view: Model['view'], scale: Model['scale']) => view === 'timeline' && scale === 'week'
+		value: { view: 'timeline', scale: 'month' },
+		getActive: (view: Model['view'], scale: Model['scale']) => view === 'timeline' && scale === 'month'
 	},
 	fixed: {
 		key: 'fixed',

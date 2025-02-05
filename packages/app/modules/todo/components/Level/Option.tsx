@@ -15,7 +15,7 @@ const Index = (props: DefaultOptionType & { selected?: boolean; as_label?: boole
 			</div>
 			{!as_label && (
 				<div className='flex align_center'>
-					{selected && <Check className='mr_12' size={14} weight='bold'></Check>}
+					{selected && <Check className='ml_12 mr_8' size={14} weight='bold'></Check>}
 					<span className='value'>{value}</span>
 				</div>
 			)}

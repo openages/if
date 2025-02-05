@@ -4,7 +4,15 @@ import { makeAutoObservable } from 'mobx'
 import { domToPng } from 'modern-screenshot'
 
 import getTodoItems from '@/modules/todo/utils/getTodoItems'
-import { downloadImage, getDays, getMonthDaysWithWeekCol, hour_counts, minute_pieces, month_counts } from '@/utils'
+import {
+	downloadImage,
+	getDays,
+	getMonthDaysWithWeekCol,
+	getPercent,
+	hour_counts,
+	minute_pieces,
+	month_counts
+} from '@/utils'
 
 import { getRelativeMinute, getRelativeTime } from './utils'
 
@@ -156,7 +164,7 @@ export default class Index {
 
 			this.chart_data = {
 				items: cols,
-				percent: parseFloat((pass / all).toFixed(2)) * 100,
+				percent: getPercent(pass / all),
 				left,
 				total_todos,
 				max
@@ -215,7 +223,7 @@ export default class Index {
 
 			this.chart_data = {
 				items: cols,
-				percent: parseFloat((pass / all).toFixed(2)) * 100,
+				percent: getPercent(pass / all),
 				left,
 				total_todos,
 				max
@@ -248,7 +256,7 @@ export default class Index {
 
 			this.chart_data = {
 				items: cols,
-				percent: parseFloat((pass / all).toFixed(2)) * 100,
+				percent: getPercent(pass / all),
 				left,
 				total_todos,
 				max
@@ -300,7 +308,7 @@ export default class Index {
 
 			this.chart_data = {
 				items: rows,
-				percent: parseFloat((pass / all).toFixed(2)) * 100,
+				percent: getPercent(pass / all),
 				left,
 				total_todos,
 				max

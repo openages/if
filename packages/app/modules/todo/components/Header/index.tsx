@@ -229,6 +229,7 @@ const Index = (props: IPropsHeader) => {
 						className='select_tags'
 						placement='bottomRight'
 						unlimit
+						show_suffix
 						options={tags}
 						value={items_filter_tags}
 						onChange={v => setItemsFilterTags(v)}

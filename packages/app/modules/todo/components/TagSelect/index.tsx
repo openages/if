@@ -11,9 +11,21 @@ import styles from './index.css'
 
 import type { IPropsTagSelect } from '../../types'
 import type { SelectProps } from 'antd'
+
 const Index = (props: IPropsTagSelect) => {
-	const { options, value, useByTodo, useByInput, useByTable, className, placement, unlimit, onChange, onFocus } =
-		props
+	const {
+		options,
+		value,
+		useByTodo,
+		useByInput,
+		useByTable,
+		className,
+		placement,
+		unlimit,
+		show_suffix,
+		onChange,
+		onFocus
+	} = props
 	const { t } = useTranslation()
 	const global = useGlobal()
 	const theme = global.setting.theme
@@ -41,7 +53,8 @@ const Index = (props: IPropsTagSelect) => {
 					styles._local,
 					useByTodo && styles.useByTodo,
 					useByInput && styles.useByInput,
-					useByTable && styles.useByTable
+					useByTable && styles.useByTable,
+					!show_suffix && styles.no_suffix
 				)}
 				popupClassName={$cx('borderless', styles.popup)}
 				size='small'

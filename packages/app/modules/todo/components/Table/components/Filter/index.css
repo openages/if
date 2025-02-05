@@ -1,8 +1,8 @@
 ._local {
 	:global {
 		.if-form-item {
-			margin-right: 12px;
-			margin-bottom: 12px;
+			margin-right: 6px;
+			margin-bottom: 6px;
 			font-size: 12px;
 		}
 
@@ -10,7 +10,6 @@
 		.select,
 		.datepicker {
 			width: 90px;
-			font-size: 12px;
 		}
 
 		.btn_action {

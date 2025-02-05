@@ -9,6 +9,7 @@ import styles from './index.css'
 import Option from './Option'
 
 import type { IPropsLevel } from '../../types'
+
 const options = [
 	{ label: $t('common.prority.no'), value: 0 },
 	{ label: $t('common.prority.low'), value: 1 },

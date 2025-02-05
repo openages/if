@@ -53,7 +53,7 @@ const Index = (props: IPropsQuadTodoItem) => {
 
 	useTextChange({ ref_editor, text })
 
-	const context_menu = useContextMenu({ angles, tags, tag_ids })
+	const context_menu = useContextMenu({ item, angles, tags, tag_ids })
 
 	const { onContextMenu } = useOnContextMenu({
 		item,

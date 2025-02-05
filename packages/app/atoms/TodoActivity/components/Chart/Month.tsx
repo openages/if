@@ -21,19 +21,15 @@ const Index = (props: IPropsTypeChart) => {
 								<div
 									className={$cx(
 										'block_wrap month flex',
-										item.indexOf('~') !== -1 && 'hide'
+										item.indexOf('~') !== -1 && 'hide',
+										index?.index === idx && index?.key === item && 'active'
 									)}
 									style={getBlockWrapStyle(day[item])}
+									onClick={() => setIndex({ index: idx, key: item })}
 									key={item}
 								>
 									<div
-										className={$cx(
-											'block flex justify_center align_center',
-											index?.index === idx &&
-												index?.key === item &&
-												'active'
-										)}
-										onClick={() => setIndex({ index: idx, key: item })}
+										className='block flex justify_center align_center'
 										style={getBlockStyle(day[item], 24)}
 									>
 										<span

@@ -1,9 +1,3 @@
 ._local {
 	left: 9px;
-
-	:global {
-		.toggle_wrap {
-			height: 24px;
-		}
-	}
 }
