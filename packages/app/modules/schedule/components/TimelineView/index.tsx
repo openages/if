@@ -44,7 +44,7 @@ const Index = (props: IPropsTimelineView) => {
 							)}
 							key={angle.id}
 						>
-							<div className='angle_header h_100 border_box flex justify_center align_center absolute top_0 left_0'>
+							<div className='angle_header h_100 border_box flex align_center absolute top_0 left_0'>
 								{angle.text}
 							</div>
 							<div className='angle_rows w_100 border_box flex flex_column relative'>

@@ -40,7 +40,7 @@ const Index = (props: IProps) => {
 				<Input
 					className='input'
 					placeholder={t('common.angles.placeholder')}
-					maxLength={12}
+					maxLength={24}
 					value={item.text}
 					onChange={({ target: { value } }) => onUpdate(index, value)}
 				></Input>
@@ -56,7 +56,7 @@ const Index = (props: IProps) => {
 				<div
 					className={$cx(
 						'btn btn_add border_box flex justify_center align_center clickable',
-						(item.rows.length >= 6 || item.rows.length === 1) && 'disabled'
+						item.rows.length >= 6 && 'disabled'
 					)}
 					onClick={() => onAddRow(index)}
 				>

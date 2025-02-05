@@ -14,7 +14,7 @@ export default (args: Args) => {
 	return useMemo(() => {
 		if (timeline) {
 			return {
-				class: ['absolute', styles.timeline],
+				class: ['absolute', styles.timeline, item.past && styles.past],
 				style: {
 					left: `calc(${item.start * step!}px + 1px)`,
 					width: `calc(${item.length * step!}px - 2px)`
