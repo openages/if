@@ -1,4 +1,12 @@
 ._local {
+	&:hover {
+		:global {
+			.btn_fold {
+				opacity: 1;
+			}
+		}
+	}
+
 	&.sticky {
 		position: sticky;
 		z-index: 100;
@@ -20,6 +28,28 @@
 	}
 
 	:global {
+		.btn_fold {
+			left: 4px;
+			width: 16px;
+			height: 16px;
+			border-radius: 50%;
+			opacity: 0;
+			color: rgba(var(--color_text_rgb), 0.72);
+			font-size: 12px;
+
+			&:hover {
+				background-color: var(--color_bg);
+			}
+
+			&.fold {
+				opacity: 1;
+
+				svg {
+					rotate: -90deg;
+				}
+			}
+		}
+
 		.kanban_item_header {
 			height: 36px;
 			line-height: 1;
@@ -39,7 +69,6 @@
 					padding: 2px 0;
 					border-radius: 30px;
 					color: rgba(var(--color_text_rgb), 0.72);
-					background-color: var(--color_bg_1);
 				}
 			}
 

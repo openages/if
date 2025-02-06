@@ -45,7 +45,7 @@ export default {
 			archive: '归档',
 			sort: {
 				text: '排序',
-				importance: '重要性',
+				importance: '优先级',
 				alphabetical: '字母顺序',
 				create_at: '创建时间'
 			},
@@ -161,7 +161,13 @@ export default {
 	},
 	Analysis: {
 		title: '分析',
-		durations: ['每日', '每周', '每月', '每季度', '每年'],
+		durations: [
+			{ label: '每日', value: 'daily' },
+			{ label: '每周', value: 'weekly' },
+			{ label: '每月', value: 'monthly' },
+			{ label: '每季度', value: 'quarterly' },
+			{ label: '每年', value: 'yearly' }
+		],
 		create: '创建',
 		done: '完成',
 		uncheck: '未完成',
@@ -169,7 +175,7 @@ export default {
 		group_by: '分组方式',
 		sort_by: '排序方式',
 		options_sort: {
-			importance: '重要性',
+			importance: '优先级',
 			create_at: '创建时间',
 			done_time: '完成时间'
 		}

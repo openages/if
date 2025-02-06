@@ -67,7 +67,7 @@ const tooltip = {
 } as TooltipComponentOption
 
 const Index = (props: IPropsAnalysisChart) => {
-	const { trending } = props
+	const { unpaid, trending } = props
 	const ref_trending = useRef<HTMLDivElement>(null)
 	const ref_ratio = useRef<HTMLDivElement>(null)
 	const { t } = useTranslation()
@@ -210,7 +210,7 @@ const Index = (props: IPropsAnalysisChart) => {
 
 	return (
 		<div className={$cx(styles._local)}>
-			<div className='charts_wrap w_100 flex justify_between'>
+			<div className={$cx('charts_wrap w_100 flex justify_between', unpaid && 'unpaid relative')}>
 				<div className='trending chart_ref' ref={ref_trending}></div>
 				<div className='ratio chart_ref' ref={ref_ratio}></div>
 			</div>

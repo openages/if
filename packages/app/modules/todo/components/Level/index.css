@@ -89,4 +89,11 @@
 
 .popup {
 	width: 160px;
+	min-width: unset !important;
+
+	:global {
+		.if-select-item-option-content {
+			width: 100%;
+		}
+	}
 }

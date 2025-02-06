@@ -1,4 +1,12 @@
 ._local {
 	overflow-y: scroll;
 	height: calc(100% - 37px);
+
+	&.unpaid {
+		opacity: 0.3;
+
+		& > * {
+			pointer-events: none;
+		}
+	}
 }

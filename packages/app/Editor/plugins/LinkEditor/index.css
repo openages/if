@@ -5,7 +5,7 @@
 			padding: 0;
 			border: none;
 			outline: none;
-			color: var(--color_bg);
+			color: rgba(255, 255, 255, 0.9);
 			background-color: transparent;
 		}
 
@@ -14,7 +14,7 @@
 			height: 24px;
 			margin-right: -6px;
 			border-radius: var(--radius_small);
-			color: var(--color_bg);
+			color: rgba(255, 255, 255, 0.9);
 			font-size: 14px;
 
 			&:hover {

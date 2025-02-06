@@ -17,6 +17,7 @@ import type { IPropsTimeBlock } from '../../types'
 
 const Index = (props: IPropsTimeBlock) => {
 	const {
+		unpaid,
 		item,
 		tags,
 		day_index,
@@ -110,6 +111,7 @@ const Index = (props: IPropsTimeBlock) => {
 					className={$cx(
 						'timeblock_item_wrap w_100 border_box flex flex_column',
 						styles._local,
+						unpaid && styles.unpaid,
 						tag_styles['--tag_color'] ? styles.has_tag : styles.no_tag,
 						isDragging && styles.isDragging,
 						month_mode && visible_detail && styles.visible_detail,

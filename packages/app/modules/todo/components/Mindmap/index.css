@@ -2,6 +2,22 @@
 	height: calc(100% - 72px);
 	padding-top: 0;
 
+	&.unpaid {
+		opacity: 0.3;
+
+		:global {
+			.react-flow {
+				pointer-events: none !important;
+			}
+
+			.react-flow__nodes {
+				.react-flow__node {
+					pointer-events: none !important;
+				}
+			}
+		}
+	}
+
 	:global {
 		.signal_wrap {
 			display: none;

@@ -34,7 +34,7 @@ const Index = (props: IPropsLevel) => {
 				value && styles.has_value
 			)}
 			popupClassName={$cx('small', styles.popup)}
-			placement='topRight'
+			placement='bottomLeft'
 			suffixIcon={useByInput && !value ? <CellSignalHigh size={18}></CellSignalHigh> : null}
 			popupMatchSelectWidth={false}
 			placeholder={t('common.set') + t('common.letter_space') + t('todo.common.priority')}

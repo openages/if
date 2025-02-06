@@ -43,6 +43,7 @@ const options_group = [
 
 const Index = (props: IPropsAnalysisListHeader) => {
 	const {
+		unpaid,
 		angles,
 		tags,
 		analysis_sort_params,
@@ -108,8 +109,9 @@ const Index = (props: IPropsAnalysisListHeader) => {
 						placeholder={
 							t('common.select') + t('common.letter_space') + t('common.angles.label')
 						}
-						options={angles}
 						fieldNames={{ label: 'text', value: 'id' }}
+						disabled={unpaid}
+						options={angles}
 						value={analysis_filter_angles}
 						onChange={onChangeAngles}
 					></Select>
@@ -123,8 +125,9 @@ const Index = (props: IPropsAnalysisListHeader) => {
 						showSearch={false}
 						allowClear
 						placeholder={t('common.select') + t('common.letter_space') + t('common.tags.label')}
-						options={tags}
 						fieldNames={{ label: 'text', value: 'id' }}
+						disabled={unpaid}
+						options={tags}
 						value={analysis_filter_tags}
 						onChange={onChangetags}
 					></Select>
@@ -140,6 +143,7 @@ const Index = (props: IPropsAnalysisListHeader) => {
 						placeholder={t('common.letter_space') + t('todo.Analysis.sort_by')}
 						options={options_sort}
 						fieldNames={{ label: 'value' }}
+						disabled={unpaid}
 						value={(analysis_sort_params || []).map(item => `${item.type} (${item.order})`)}
 						onChange={onChangeSort}
 					></Select>
@@ -151,6 +155,7 @@ const Index = (props: IPropsAnalysisListHeader) => {
 						variant='filled'
 						allowClear
 						placeholder={t('common.letter_space') + t('todo.Analysis.group_by')}
+						disabled={unpaid}
 						options={options_group}
 						value={group_by}
 						onChange={setGroupBy}

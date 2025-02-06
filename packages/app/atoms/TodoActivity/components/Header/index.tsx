@@ -1,6 +1,7 @@
 import { Segmented } from 'antd'
 import { useTranslation } from 'react-i18next'
 
+import { Crown } from '@/components'
 import { CaretLeft, CaretRight, ShareFat, SquaresFour } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -8,7 +9,7 @@ import styles from './index.css'
 import type { IPropsHeader } from '../../types'
 
 const Index = (props: IPropsHeader) => {
-	const { type, current, total, setType, reset, prev, next, share } = props
+	const { unpaid, type, current, total, setType, reset, prev, next, share } = props
 	const { t } = useTranslation()
 
 	return (
@@ -17,8 +18,28 @@ const Index = (props: IPropsHeader) => {
 				options={[
 					{ label: t('common.today'), value: 'day' },
 					{ label: t('common.time.week'), value: 'week' },
-					{ label: t('common.time.month'), value: 'month' },
-					{ label: t('common.time.year'), value: 'year' }
+					{
+						label: unpaid ? (
+							<div>
+								<Crown type='card' no_bg></Crown>
+								{t('common.time.month')}
+							</div>
+						) : (
+							t('common.time.month')
+						),
+						value: 'month'
+					},
+					{
+						label: unpaid ? (
+							<div>
+								<Crown type='card' no_bg></Crown>
+								{t('common.time.year')}
+							</div>
+						) : (
+							t('common.time.year')
+						),
+						value: 'year'
+					}
 				]}
 				value={type}
 				onChange={setType}

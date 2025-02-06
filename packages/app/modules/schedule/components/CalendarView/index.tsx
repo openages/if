@@ -4,6 +4,7 @@ import type { IPropsCalendarView } from '../../types'
 
 const Index = (props: IPropsCalendarView) => {
 	const {
+		unpaid,
 		container,
 		days,
 		calendar_days,
@@ -19,6 +20,7 @@ const Index = (props: IPropsCalendarView) => {
 		<div className={$cx('w_100 h_100 flex')}>
 			{calendar_days.map((day, index) => (
 				<Day
+					unpaid={unpaid}
 					container={container}
 					day_info={days[index]}
 					day={day}

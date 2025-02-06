@@ -45,7 +45,7 @@ export default {
 			archive: 'Archive',
 			sort: {
 				text: 'Sort',
-				importance: 'Importance',
+				importance: 'Priority',
 				alphabetical: 'Alphabetical',
 				create_at: 'Create Time'
 			},
@@ -161,7 +161,13 @@ export default {
 	},
 	Analysis: {
 		title: 'Analysis',
-		durations: ['daily', 'weekly', 'monthly', 'quarterly', 'yearly'],
+		durations: [
+			{ label: 'daily', value: 'daily' },
+			{ label: 'weekly', value: 'weekly' },
+			{ label: 'monthly', value: 'monthly' },
+			{ label: 'quarterly', value: 'quarterly' },
+			{ label: 'yearly', value: 'yearly' }
+		],
 		create: 'Create',
 		done: 'Done',
 		uncheck: 'Uncheck',
@@ -169,7 +175,7 @@ export default {
 		group_by: 'Group By',
 		sort_by: 'Sort By',
 		options_sort: {
-			importance: 'Importance',
+			importance: 'Priority',
 			create_at: 'Create Time',
 			done_time: 'Done Time'
 		}

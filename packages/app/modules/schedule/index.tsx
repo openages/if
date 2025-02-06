@@ -5,6 +5,7 @@ import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { match, P } from 'ts-pattern'
 import { container as model_container } from 'tsyringe'
 
+import { useGlobal } from '@/context/app'
 import { useSensor, useSensors, DndContext, PointerSensor } from '@dnd-kit/core'
 import { restrictToFirstScrollableAncestor } from '@dnd-kit/modifiers'
 
@@ -36,6 +37,7 @@ import type {
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => model_container.resolve(Model))
+	const global = useGlobal()
 	const container = useRef<HTMLDivElement>(null)
 	const scanline = useRef<HTMLDivElement>(null)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 12 } }))
@@ -46,6 +48,7 @@ const Index = ({ id }: IProps) => {
 	const tags = $copy(x.setting?.setting?.tags || [])
 	const timeblock_copied = $copy(x.timeblock_copied)
 	const move_item = $copy(x.move_item)
+	const unpaid = !global.auth.is_paid_user && ['timeline', 'fixed'].includes(x.view)
 
 	useLayoutEffect(() => {
 		x.init({ id })
@@ -92,6 +95,7 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_calendar_view: IPropsCalendarView = {
+		unpaid,
 		container,
 		days,
 		calendar_days,
@@ -115,6 +119,7 @@ const Index = ({ id }: IProps) => {
 	}
 
 	const props_timeline_view: IPropsTimelineView = {
+		unpaid,
 		container,
 		scale: x.scale,
 		days,

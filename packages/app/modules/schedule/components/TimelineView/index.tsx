@@ -10,6 +10,7 @@ import type { IPropsTimelineView } from '../../types'
 
 const Index = (props: IPropsTimelineView) => {
 	const {
+		unpaid,
 		container,
 		scale,
 		days,
@@ -50,6 +51,7 @@ const Index = (props: IPropsTimelineView) => {
 							<div className='angle_rows w_100 border_box flex flex_column relative'>
 								{angle.rows.map((row_id, row_index) => (
 									<Row
+										unpaid={unpaid}
 										container={container}
 										scale={scale}
 										tags={tags}

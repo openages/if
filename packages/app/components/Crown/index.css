@@ -1,0 +1,27 @@
+._local {
+	&.card {
+		position: absolute;
+		top: 0;
+		right: 0;
+		padding: 2px 3px;
+		border-top-right-radius: var(--radius);
+		border-bottom-left-radius: var(--radius_small);
+		background-color: var(--color_bg_2);
+		font-size: 8px;
+	}
+
+	&.btn {
+		position: absolute;
+		top: 0;
+		right: 0;
+		font-size: 8px;
+	}
+
+	&.no_bg {
+		background-color: unset;
+	}
+
+	:global {
+		color: var(--color_gold);
+	}
+}

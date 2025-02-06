@@ -15,6 +15,7 @@ import type { MouseEvent } from 'react'
 
 const Index = (props: IPropsCalendarViewDay) => {
 	const {
+		unpaid,
 		container,
 		day_info,
 		day,
@@ -90,6 +91,7 @@ const Index = (props: IPropsCalendarViewDay) => {
 			{signal && <Signal item={signal}></Signal>}
 			{day.map((item, timeblock_index) => (
 				<TimeBlock
+					unpaid={unpaid}
 					item={item}
 					tags={tags}
 					day_index={index}

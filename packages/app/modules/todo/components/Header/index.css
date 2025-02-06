@@ -59,6 +59,7 @@
 				.icon_wrap {
 					width: 24px;
 					height: 24px;
+					border-radius: var(--radius_small);
 					font-size: 15px;
 				}
 			}
@@ -146,17 +147,13 @@
 				width: 30px;
 				height: 30px;
 				border: none;
-				border-radius: var(--radius_small);
+				border-radius: var(--radius);
 				outline: none;
 				box-shadow: none;
 				font-size: 18px;
 
 				&:hover {
 					background-color: var(--color_bg_2);
-				}
-
-				.icon_lotus {
-					margin-bottom: -2px;
 				}
 			}
 
@@ -198,7 +195,7 @@
 					background-color: var(--color_bg_2);
 				}
 
-				svg {
+				.icon {
 					margin-bottom: 1.5px;
 					font-size: 18px;
 				}

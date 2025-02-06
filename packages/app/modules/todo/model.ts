@@ -219,7 +219,7 @@ export default class Index {
 		let items
 
 		if (this.mode === 'kanban' || this.mode === 'flat' || this.mode === 'mindmap') {
-			this.kanban_items[this.current_detail_index.dimension_id!]?.items
+			items = this.kanban_items[this.current_detail_index.dimension_id!]?.items
 		} else if (this.mode === 'quad') {
 			const target = this.getItem({
 				index: this.current_detail_index.index,

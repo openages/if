@@ -6,7 +6,7 @@ import { useMemo } from 'react'
 import { todo } from '@/appdata'
 import { useText, useTextChange, Text } from '@/Editor'
 import { useContextMenu, useHandlers, useOnContextMenu, useOptions } from '@/modules/todo/hooks'
-import { CheckCircle, CheckSquare, Circle, Square } from '@phosphor-icons/react'
+import { CheckCircle, Circle } from '@phosphor-icons/react'
 
 import styles from './index.css'
 

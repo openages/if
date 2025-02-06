@@ -5,9 +5,9 @@
 
 			:global {
 				.timeblock_content_wrap {
-					border: 1px solid rgba(var(--tag_color), 0.18);
+					border: 1px solid rgba(var(--tag_color), 0.3);
 					color: rgba(var(--color_text_rgb), 1);
-					background: rgba(var(--tag_color), 0.18);
+					background: rgba(var(--tag_color), 0.09);
 
 					.text_wrap {
 						&:empty::after {
@@ -34,14 +34,6 @@
 				}
 			}
 		}
-
-		&.timeline {
-			:global {
-				.timeblock_content_wrap {
-					background: rgba(var(--color_text_rgb), 0.06) !important;
-				}
-			}
-		}
 	}
 }
 
@@ -56,6 +48,20 @@
 			.btn_detail {
 				display: flex;
 			}
+		}
+	}
+
+	&.unpaid {
+		pointer-events: none;
+
+		&::before {
+			position: absolute;
+			z-index: 1;
+			width: 100%;
+			height: 100%;
+			border-radius: var(--radius);
+			content: '';
+			backdrop-filter: var(--blur);
 		}
 	}
 

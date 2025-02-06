@@ -1,11 +1,13 @@
 import { useMemoizedFn } from 'ahooks'
 import { Drawer } from 'antd'
 import { groupBy } from 'lodash-es'
+import { observer } from 'mobx-react-lite'
 import mustache from 'mustache'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { match } from 'ts-pattern'
 
+import { useGlobal } from '@/context/app'
 import { downloadFile } from '@/utils'
 
 import { Chart, Duration, Export, List, ListHeader } from './components'
@@ -58,10 +60,14 @@ const Index = (props: IPropsAnalysis) => {
 		onClose
 	} = props
 	const { t } = useTranslation()
+	const global = useGlobal()
 	const [group_by, setGroupBy] = useState<'angle' | 'tag' | null>(null)
 	const [prefix, setPrefix] = useState('')
 
+	const unpaid = !global.auth.is_paid_user && ['monthly', 'quarterly', 'yearly'].includes(analysis_duration)
+
 	const props_duration: IPropsAnalysisDuration = {
+		unpaid: !global.auth.is_paid_user,
 		analysis_duration,
 		total: useMemo(
 			() =>
@@ -75,10 +81,12 @@ const Index = (props: IPropsAnalysis) => {
 	}
 
 	const props_chart: IPropsAnalysisChart = {
+		unpaid,
 		trending
 	}
 
 	const props_list_header: IPropsAnalysisListHeader = {
+		unpaid,
 		angles,
 		tags,
 		analysis_sort_params,
@@ -166,10 +174,12 @@ const Index = (props: IPropsAnalysis) => {
 	}, [items, angles, tags, group_by, prefix])
 
 	const props_list: IPropsAnalysisList = {
+		unpaid,
 		data
 	}
 
 	const props_export: IPropsAnalysisExport = {
+		unpaid,
 		prefix,
 		disabled: useMemo(() => !items.length, [items]),
 		setPrefix,
@@ -216,4 +226,4 @@ const Index = (props: IPropsAnalysis) => {
 	)
 }
 
-export default $app.memo(Index)
+export default new $app.handle(Index).by(observer).by($app.memo).get()

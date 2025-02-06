@@ -1,6 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 
 import { views } from '@/appdata/schedule'
+import { Crown } from '@/components'
 import { ListChecks } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -43,15 +44,18 @@ const Index = (props: IPropsHeaderLeft) => {
 			</button>
 			<div className='d_line'></div>
 			<div className='mode_wrap border_box flex align_center' onClick={onChangeType}>
-				{Object.values(views).map(({ key, icon, getActive }) => (
+				{Object.values(views).map(({ key, icon, paid, getActive }) => (
 					<div
 						className={$cx(
-							'btn_std border_box flex justify_center align_center clickable',
+							'btn_std border_box flex justify_center align_center clickable relative',
 							getActive(view, scale) && 'active'
 						)}
 						data-key={key}
 						key={key}
 					>
+						<If condition={paid}>
+							<Crown type='btn'></Crown>
+						</If>
 						{icon}
 					</div>
 				))}

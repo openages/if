@@ -3,7 +3,7 @@ import { Input, Popover, Select, Switch, Tooltip } from 'antd'
 import { useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Emoji } from '@/components'
+import { Crown, Emoji } from '@/components'
 import { useText, useTextChange, Text } from '@/Editor'
 import {
 	AlignLeft,
@@ -20,10 +20,8 @@ import {
 	Kanban,
 	ListChecks,
 	MagnifyingGlass,
-	Polygon,
 	SlidersHorizontal,
 	Table,
-	Tag,
 	X
 } from '@phosphor-icons/react'
 
@@ -139,7 +137,7 @@ const Index = (props: IPropsHeader) => {
 					)}
 					data-key='list'
 				>
-					<ListChecks></ListChecks>
+					<ListChecks className='icon'></ListChecks>
 					<span className='text'>{t('todo.Header.mode.list')}</span>
 				</div>
 				<div
@@ -149,38 +147,8 @@ const Index = (props: IPropsHeader) => {
 					)}
 					data-key='kanban'
 				>
-					<Kanban></Kanban>
+					<Kanban className='icon'></Kanban>
 					<span className='text'>{t('todo.Header.mode.kanban')}</span>
-				</div>
-				<div
-					className={$cx(
-						'mode_item_wrap border_box flex flex_column align_center clickable',
-						mode === 'flat' && 'active'
-					)}
-					data-key='flat'
-				>
-					<AlignLeft></AlignLeft>
-					<span className='text'>{t('todo.Header.mode.flat')}</span>
-				</div>
-				<div
-					className={$cx(
-						'mode_item_wrap border_box flex flex_column align_center clickable',
-						mode === 'quad' && 'active'
-					)}
-					data-key='quad'
-				>
-					<GridFour></GridFour>
-					<span className='text'>{t('todo.Header.mode.quad')}</span>
-				</div>
-				<div
-					className={$cx(
-						'mode_item_wrap border_box flex flex_column align_center clickable',
-						mode === 'mindmap' && 'active'
-					)}
-					data-key='mindmap'
-				>
-					<GitFork></GitFork>
-					<span className='text'>{t('todo.Header.mode.mindmap')}</span>
 				</div>
 				<div
 					className={$cx(
@@ -189,8 +157,41 @@ const Index = (props: IPropsHeader) => {
 					)}
 					data-key='table'
 				>
-					<Table></Table>
+					<Table className='icon'></Table>
 					<span className='text'>{t('todo.Header.mode.table')}</span>
+				</div>
+				<div
+					className={$cx(
+						'mode_item_wrap border_box flex flex_column align_center clickable relative',
+						mode === 'flat' && 'active'
+					)}
+					data-key='flat'
+				>
+					<Crown type='card'></Crown>
+					<AlignLeft className='icon'></AlignLeft>
+					<span className='text'>{t('todo.Header.mode.flat')}</span>
+				</div>
+				<div
+					className={$cx(
+						'mode_item_wrap border_box flex flex_column align_center clickable relative',
+						mode === 'quad' && 'active'
+					)}
+					data-key='quad'
+				>
+					<Crown type='card'></Crown>
+					<GridFour className='icon'></GridFour>
+					<span className='text'>{t('todo.Header.mode.quad')}</span>
+				</div>
+				<div
+					className={$cx(
+						'mode_item_wrap border_box flex flex_column align_center clickable relative',
+						mode === 'mindmap' && 'active'
+					)}
+					data-key='mindmap'
+				>
+					<Crown type='card'></Crown>
+					<GitFork className='icon'></GitFork>
+					<span className='text'>{t('todo.Header.mode.mindmap')}</span>
 				</div>
 			</div>
 			<div className='setting_items w_100 border_box flex flex_column'>
@@ -237,13 +238,25 @@ const Index = (props: IPropsHeader) => {
 				</div>
 			</div>
 			<div className='options_wrap w_100 border_box flex flex_column'>
-				<div className='option_wrap flex align_center cursor_point' onClick={showAnalysis}>
-					<ChartBar className='mr_6' size={14}></ChartBar>
-					<span className='label'>{t('todo.Header.options.analysis')}</span>
+				<div
+					className='option_wrap flex justify_between align_center cursor_point'
+					onClick={showAnalysis}
+				>
+					<div className='flex align_center'>
+						<ChartBar className='mr_6' size={14}></ChartBar>
+						<span className='label'>{t('todo.Header.options.analysis')}</span>
+					</div>
+					<Crown type='element'></Crown>
 				</div>
-				<div className='option_wrap flex align_center cursor_point' onClick={showActivity}>
-					<CalendarDots className='mr_6' size={14}></CalendarDots>
-					<span className='label'>{t('atoms.TodoActivity.title')}</span>
+				<div
+					className='option_wrap flex justify_between align_center cursor_point'
+					onClick={showActivity}
+				>
+					<div className='flex align_center'>
+						<CalendarDots className='mr_6' size={14}></CalendarDots>
+						<span className='label'>{t('atoms.TodoActivity.title')}</span>
+					</div>
+					<Crown type='element'></Crown>
 				</div>
 			</div>
 		</div>

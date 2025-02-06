@@ -319,16 +319,19 @@ export interface IPropsAnalysis {
 }
 
 export interface IPropsAnalysisDuration {
+	unpaid: boolean
 	analysis_duration: Model['analysis_duration']
 	total: number
 	setDuration: (v: Model['analysis_duration']) => void
 }
 
 export interface IPropsAnalysisChart {
+	unpaid: boolean
 	trending: Model['analysis_trending']
 }
 
 export interface IPropsAnalysisListHeader {
+	unpaid: boolean
 	angles: Model['setting']['setting']['angles']
 	tags: Model['setting']['setting']['tags']
 	analysis_sort_params: Model['analysis_sort_params']
@@ -342,10 +345,12 @@ export interface IPropsAnalysisListHeader {
 }
 
 export interface IPropsAnalysisList {
+	unpaid: boolean
 	data: string
 }
 
 export interface IPropsAnalysisExport {
+	unpaid: boolean
 	prefix: string
 	disabled: boolean
 	setPrefix: (v: string) => void

@@ -9,6 +9,11 @@
 	scroll-behavior: smooth;
 	gap: 20px;
 
+	&.unpaid {
+		opacity: 0.3;
+		pointer-events: none;
+	}
+
 	.kanban_item_wrap {
 		position: relative;
 		width: calc(50% - 10px);

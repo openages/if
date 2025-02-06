@@ -25,6 +25,10 @@ export default class Index {
 	edit_mode = false
 	test_status = 'untest' as 'untest' | 'testing' | 'ok' | 'error'
 
+	get is_paid_user() {
+		return this.user.paid_plan !== 'free' || this.user.is_infinity
+	}
+
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { utils: false }, { autoBind: true })
 	}

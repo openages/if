@@ -10,7 +10,7 @@ import type { IPropsAnalysisExport } from '@/modules/todo/types'
 import type { ChangeEvent } from 'react'
 
 const Index = (props: IPropsAnalysisExport) => {
-	const { prefix, disabled, setPrefix, exportTodos, copyToClipboard } = props
+	const { unpaid, prefix, disabled, setPrefix, exportTodos, copyToClipboard } = props
 	const { t } = useTranslation()
 
 	const onChangePrefix = useMemoizedFn((e: ChangeEvent<HTMLInputElement>) => setPrefix(e.target.value))
@@ -23,6 +23,7 @@ const Index = (props: IPropsAnalysisExport) => {
 				<Input
 					variant='filled'
 					placeholder={t('common.prefix')}
+					disabled={unpaid}
 					defaultValue={prefix}
 					onBlur={onChangePrefix}
 				></Input>
@@ -37,7 +38,7 @@ const Index = (props: IPropsAnalysisExport) => {
 					color='default'
 					variant='filled'
 					icon={<DownloadSimple></DownloadSimple>}
-					disabled={disabled}
+					disabled={disabled || unpaid}
 					onClick={exportJson}
 				>
 					JSON
@@ -47,7 +48,7 @@ const Index = (props: IPropsAnalysisExport) => {
 					color='default'
 					variant='filled'
 					icon={<DownloadSimple></DownloadSimple>}
-					disabled={disabled}
+					disabled={disabled || unpaid}
 					onClick={exportText}
 				>
 					Txt
@@ -56,7 +57,7 @@ const Index = (props: IPropsAnalysisExport) => {
 					className='btn_export clickable'
 					type='primary'
 					icon={<Copy></Copy>}
-					disabled={disabled}
+					disabled={disabled || unpaid}
 					onClick={copyToClipboard}
 				>
 					{t('common.copy_to')}

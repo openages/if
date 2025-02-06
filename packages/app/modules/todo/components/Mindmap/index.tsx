@@ -22,6 +22,7 @@ const Index = (props: IPropsMindmap) => {
 	const [x] = useState(() => container.resolve(Model))
 	const { file_id, kanban_items, tags, angles, check, insert, update, tab, moveTo, remove, showDetailModal } = props
 	const global = useGlobal()
+	const unpaid = !global.auth.is_paid_user
 
 	useHiddenReactflowROLoop()
 
@@ -60,7 +61,7 @@ const Index = (props: IPropsMindmap) => {
 	}
 
 	return (
-		<div className={$cx('flex relative', styles._local)}>
+		<div className={$cx('flex relative', styles._local, unpaid && styles.unpaid)}>
 			<span className='signal_wrap absolute top_0 left_0'>{x.signal}</span>
 			<If condition={x.pure_nodes.length > 0}>
 				{createPortal(

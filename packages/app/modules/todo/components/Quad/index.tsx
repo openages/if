@@ -1,3 +1,6 @@
+import { observer } from 'mobx-react-lite'
+
+import { useGlobal } from '@/context/app'
 import { FireSimple, Lightning } from '@phosphor-icons/react'
 
 import QuadTodos from '../QuadTodos'
@@ -25,10 +28,18 @@ const Index = (props: IPropsQuad) => {
 		handleOpenItem,
 		showDetailModal
 	} = props
+	const global = useGlobal()
+	const unpaid = !global.auth.is_paid_user
 
 	return (
 		<div className={$cx('w_100 border_box', styles.wrap)}>
-			<div className={$cx('h_100 border_box flex juctify_center align_center relative', styles._local)}>
+			<div
+				className={$cx(
+					'h_100 border_box flex juctify_center align_center relative',
+					styles._local,
+					unpaid && styles.unpaid
+				)}
+			>
 				<div className='x_line_wrap flex align_center absolute'>
 					<div className='label_wrap flex align_center'>
 						<Lightning className='icon' weight='fill'></Lightning>
@@ -85,4 +96,4 @@ const Index = (props: IPropsQuad) => {
 	)
 }
 
-export default $app.memo(Index)
+export default new $app.handle(Index).by(observer).by($app.memo).get()

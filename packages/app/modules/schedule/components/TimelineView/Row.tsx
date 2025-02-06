@@ -13,6 +13,7 @@ import type { MouseEvent } from 'react'
 
 const Index = (props: IPropsTimelineViewRow) => {
 	const {
+		unpaid,
 		container,
 		scale,
 		tags,
@@ -80,6 +81,7 @@ const Index = (props: IPropsTimelineViewRow) => {
 			{signal && <Signal item={signal} step={step} timeline></Signal>}
 			{timeblocks.map((item, timeblock_index) => (
 				<TimeBlock
+					unpaid={unpaid}
 					item={item}
 					tags={tags}
 					angle_row_id={row_id}

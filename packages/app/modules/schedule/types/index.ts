@@ -59,6 +59,7 @@ export interface IPropsDayExtra {
 }
 
 export interface IPropsCalendarView {
+	unpaid: boolean
 	container: RefObject<HTMLDivElement>
 	days: Model['days']
 	calendar_days: Model['calendar_days']
@@ -71,6 +72,7 @@ export interface IPropsCalendarView {
 }
 
 export interface IPropsCalendarViewDay {
+	unpaid: boolean
 	container: RefObject<HTMLDivElement>
 	day_info: DayDetail
 	day: Schedule.CalendarDay
@@ -119,6 +121,7 @@ export interface IPropsMonthViewDay {
 }
 
 export interface IPropsTimelineView {
+	unpaid: boolean
 	container: RefObject<HTMLDivElement>
 	scale: Model['scale']
 	days: Model['days']
@@ -138,6 +141,7 @@ export interface IPropsTimelineViewDay {
 }
 
 export interface IPropsTimelineViewRow {
+	unpaid: boolean
 	container: RefObject<HTMLDivElement>
 	scale: Model['scale']
 	tags: Schedule.Setting['tags']
@@ -157,6 +161,7 @@ export interface IPropsTimelineViewRow {
 }
 
 export interface IPropsTimeBlock {
+	unpaid: boolean | undefined
 	item: Schedule.CalendarItem
 	tags: Schedule.Setting['tags']
 	timeblock_index: number

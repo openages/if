@@ -1,4 +1,7 @@
+import { observer } from 'mobx-react-lite'
 import { useRef } from 'react'
+
+import { useGlobal } from '@/context/app'
 
 import FlatTodos from '../FlatTodos'
 import styles from './index.css'
@@ -26,9 +29,14 @@ const Index = (props: IPropsKanban) => {
 		showDetailModal
 	} = props
 	const scroll_container = useRef<HTMLDivElement>(null)
+	const global = useGlobal()
+	const unpaid = !global.auth.is_paid_user
 
 	return (
-		<div className={$cx('border_box flex flex_column', styles._local)} ref={scroll_container}>
+		<div
+			className={$cx('border_box flex flex_column', styles._local, unpaid && styles.unpaid)}
+			ref={scroll_container}
+		>
 			{Object.values(kanban_items).map(item => (
 				<div
 					className={$cx('border_box flex flex_column', styles.kanban_item_wrap)}
@@ -64,4 +72,4 @@ const Index = (props: IPropsKanban) => {
 	)
 }
 
-export default $app.memo(Index)
+export default new $app.handle(Index).by(observer).by($app.memo).get()

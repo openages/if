@@ -7,7 +7,7 @@ import Year from './Year'
 import type { IPropsChart, IPropsTypeChart } from '../../types'
 
 const Index = (props: IPropsChart) => {
-	const { type, index, chart_data, setIndex, setChartDom } = props
+	const { unpaid, type, index, chart_data, setIndex, setChartDom } = props
 
 	const props_type_chart: IPropsTypeChart = {
 		index,
@@ -17,7 +17,7 @@ const Index = (props: IPropsChart) => {
 	}
 
 	return (
-		<div className={$cx(styles._local)}>
+		<div className={$cx(styles._local, unpaid && styles.unpaid)}>
 			{chart_data && chart_data.items && chart_data.items.length && (
 				<Choose>
 					<When condition={type === 'day'}>

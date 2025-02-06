@@ -1,6 +1,7 @@
 import type Model from './model'
 
 export interface IPropsHeader {
+	unpaid: boolean
 	type: Model['type']
 	current: Model['current']
 	total: number
@@ -12,6 +13,7 @@ export interface IPropsHeader {
 }
 
 export interface IPropsChart {
+	unpaid: boolean
 	type: Model['type']
 	index: Model['index']
 	chart_data: Model['chart_data']
@@ -27,5 +29,6 @@ export interface IPropsTypeChart {
 }
 
 export interface IPropsList {
+	unpaid: boolean
 	data_items: Model['data_items']
 }
