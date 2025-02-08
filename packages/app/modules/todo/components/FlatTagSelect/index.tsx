@@ -1,10 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { Select } from 'antd'
-import { observer } from 'mobx-react-lite'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { useGlobal } from '@/context/app'
 
 import getTag from './getTag'
 import styles from './index.css'
@@ -14,14 +11,12 @@ import type { IPropsTagSelect } from '../../types'
 const Index = (props: IPropsTagSelect) => {
 	const { options, value, className, placement, unlimit, wrap, useByKanban, onChange, onFocus } = props
 	const { t } = useTranslation()
-	const global = useGlobal()
-	const theme = global.setting.theme
 
 	const Tag = useMemo(() => {
 		if (!options || !options?.length) return null
 
-		return getTag(options, { theme })
-	}, [options, theme])
+		return getTag(options)
+	}, [options])
 
 	const optionRender = useMemoizedFn(option => (
 		<div className='select_item flex align_center'>
@@ -61,4 +56,4 @@ const Index = (props: IPropsTagSelect) => {
 	)
 }
 
-export default new $app.handle(Index).by(observer).by($app.memo).get()
+export default $app.memo(Index)

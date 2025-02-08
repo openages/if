@@ -1,5 +1,3 @@
-import { useMemoizedFn } from 'ahooks'
-
 import type { IPropsInput } from '../../types'
 import type { ReactNode } from 'react'
 
@@ -14,9 +12,7 @@ const Index = (tags: Required<IPropsInput['tags']>) => (props: CustomTagProps) =
 	const { value } = props
 	const { text, color } = tags!.find(item => item.id === value) || {}
 
-	const onPreventMouseDown = useMemoizedFn((e: React.MouseEvent<HTMLSpanElement>) => {
-		e.preventDefault()
-	})
+	const onPreventMouseDown = (e: React.MouseEvent<HTMLSpanElement>) => e.preventDefault()
 
 	return (
 		<div className='tag border_box flex justify_center align_center' onMouseDown={onPreventMouseDown}>

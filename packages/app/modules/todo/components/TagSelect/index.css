@@ -146,6 +146,10 @@
 			min-height: unset;
 			padding: 4px 6px;
 			font-size: 12px;
+
+			.if-select-item-option-state {
+				margin-left: 12px;
+			}
 		}
 
 		.select_item {

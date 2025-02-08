@@ -80,4 +80,4 @@ const Index = (props: IPropsTagSelect) => {
 	)
 }
 
-export default new $app.handle(Index).by(observer).by($app.memo).get()
+export default $app.memo(Index)
