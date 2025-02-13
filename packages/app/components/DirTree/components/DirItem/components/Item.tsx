@@ -22,6 +22,7 @@ const Index = (props: IPropsDirItem_Item) => {
 	const { id, name, type } = item
 
 	const onItem = useMemoizedFn(() => onClick(item as DirTree.Item))
+	const onContextMenu = useMemoizedFn(e => showDirTreeOptions(e, parent_index))
 
 	return (
 		<Wave>
@@ -35,7 +36,7 @@ const Index = (props: IPropsDirItem_Item) => {
 				autoInsertSpace={false}
 				style={{ paddingLeft: 18 * parent_index.length }}
 				onClick={onItem}
-				onContextMenu={e => showDirTreeOptions(e, parent_index)}
+				onContextMenu={onContextMenu}
 			>
 				<div className='left_icon_wrap flex justify_center align_center'>
 					<Choose>

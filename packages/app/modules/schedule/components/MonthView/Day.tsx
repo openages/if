@@ -72,6 +72,7 @@ const Index = (props: IPropsMonthViewDay) => {
 								day_index={index}
 								timeblock_index={timeblock_index}
 								month_mode
+								unpaid={false}
 								updateTimeBlock={updateTimeBlock}
 								removeTimeBlock={removeTimeBlock}
 								copyTimeBlock={copyTimeBlock}

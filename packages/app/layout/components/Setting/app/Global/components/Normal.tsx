@@ -1,4 +1,4 @@
-import { Radio, Select, Tooltip } from 'antd'
+import { Radio, Select, Switch, Tooltip } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { clearStorage } from '@/actions/global'
 import { locale_options, themes } from '@/appdata'
 import { useGlobal } from '@/context/app'
-import { Circuitry, Layout, Moon, Palette, Sun, TextAa, Translate } from '@phosphor-icons/react'
+import { Browser, Circuitry, Layout, Moon, Palette, Sun, TextAa, Translate } from '@phosphor-icons/react'
 
 const { Group: RadioGroup } = Radio
 
@@ -77,6 +77,21 @@ const Index = () => {
 							}))}
 							onSelect={v => global.setting.setTheme(v)}
 						></Select>
+					</div>
+				</div>
+				<div className='setting_item w_100 border_box flex justify_between align_center'>
+					<div className='title_wrap flex align_center'>
+						<Browser size={24}></Browser>
+						<div className='text_wrap flex flex_column'>
+							<span className='title'>{t('setting.Note.use_content_heading.title')}</span>
+							<span className='desc'>{t('setting.Note.use_content_heading.desc')}</span>
+						</div>
+					</div>
+					<div className='value_wrap flex align_center'>
+						<Switch
+							value={global.setting.browser_mode}
+							onChange={v => (global.setting.browser_mode = v)}
+						></Switch>
 					</div>
 				</div>
 				<div className='setting_item w_100 border_box flex justify_between align_center'>

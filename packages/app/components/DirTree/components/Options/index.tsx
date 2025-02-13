@@ -1,6 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { useState } from 'react'
-import { Menu } from 'react-contexify'
+import { Item, Menu } from 'react-contexify'
 import { useTranslation } from 'react-i18next'
 
 import { ContextMenuItem } from '@/components'
@@ -40,7 +40,7 @@ const Index = (props: IPropsOptions) => {
 	})
 
 	return (
-		<Menu id='dirtree_options' animation='scale' onVisibilityChange={onVisibilityChange}>
+		<Menu id='dirtree_options' onVisibilityChange={onVisibilityChange}>
 			<ContextMenuItem
 				itemProps={{ onClick: onRename }}
 				Icon={Pencil}
