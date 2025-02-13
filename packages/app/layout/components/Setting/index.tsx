@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { theme, Button, ConfigProvider, Drawer, Tabs } from 'antd'
+import { Button, ConfigProvider, Drawer, Tabs } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useLayoutEffect, useMemo, useState, Fragment, ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -7,7 +7,7 @@ import { container } from 'tsyringe'
 
 import { version_name } from '@/appdata'
 import { Modal, ModuleIcon, Wave } from '@/components'
-import { useSize } from '@/hooks'
+import { useAntdApp, useSize } from '@/hooks'
 import { Infinity, List } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -23,6 +23,8 @@ const Index = (props: IPropsSetting) => {
 	const auth = x.global.auth
 	const { t } = useTranslation()
 	const body_width = useSize(() => document.body, 'width') as number
+
+	useAntdApp()
 
 	useLayoutEffect(() => {
 		x.on()

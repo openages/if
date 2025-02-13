@@ -83,8 +83,8 @@ const Index = () => {
 					<div className='title_wrap flex align_center'>
 						<Browser size={24}></Browser>
 						<div className='text_wrap flex flex_column'>
-							<span className='title'>{t('setting.Note.use_content_heading.title')}</span>
-							<span className='desc'>{t('setting.Note.use_content_heading.desc')}</span>
+							<span className='title'>{t('setting.Normal.browser_mode.title')}</span>
+							<span className='desc'>{t('setting.Normal.browser_mode.desc')}</span>
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
@@ -103,47 +103,25 @@ const Index = () => {
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
-						<RadioGroup
-							className='radio_wrap flex align_center justify_end'
+						<Switch
 							value={global.setting.show_bar_title}
-							options={[
-								{
-									label: t('setting.Normal.show_bar_title.options.hide'),
-									value: false
-								},
-								{
-									label: t('setting.Normal.show_bar_title.options.show'),
-									value: true
-								}
-							]}
-							onChange={({ target: { value } }) => (global.setting.show_bar_title = value)}
-						></RadioGroup>
+							onChange={v => (global.setting.show_bar_title = v)}
+						></Switch>
 					</div>
 				</div>
 				<div className='setting_item w_100 border_box flex justify_between align_center'>
 					<div className='title_wrap flex align_center'>
 						<Layout size={24}></Layout>
 						<div className='text_wrap flex flex_column'>
-							<span className='title'>{t('setting.Normal.page_width.title')}</span>
-							<span className='desc'>{t('setting.Normal.page_width.desc')}</span>
+							<span className='title'>{t('setting.Normal.full_page_width.title')}</span>
+							<span className='desc'>{t('setting.Normal.full_page_width.desc')}</span>
 						</div>
 					</div>
 					<div className='value_wrap flex align_center'>
-						<RadioGroup
-							className='radio_wrap flex align_center justify_end'
-							value={global.setting.page_width}
-							options={[
-								{
-									label: t('setting.Normal.page_width.options.unlimited'),
-									value: '100%'
-								},
-								{
-									label: t('setting.Normal.page_width.options.limited'),
-									value: '780px'
-								}
-							]}
-							onChange={({ target: { value } }) => global.setting.setPageWidth(value)}
-						></RadioGroup>
+						<Switch
+							value={global.setting.page_width === '100%'}
+							onChange={v => global.setting.setPageWidth(v ? '100%' : '780px')}
+						></Switch>
 					</div>
 				</div>
 				<div className='setting_item w_100 border_box flex justify_between align_center'>

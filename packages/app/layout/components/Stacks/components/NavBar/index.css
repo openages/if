@@ -25,16 +25,55 @@
 		background-color: var(--color_bg_1);
 	}
 
+	&.mac_with_homepage {
+		padding-left: 72px;
+
+		&::before {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 72px;
+			height: 1px;
+			background-color: var(--color_border_light);
+			content: '';
+		}
+	}
+
 	:global {
 		.drag_wrap {
 			outline: none;
 		}
 
-            .scroll_wrap{
-                  &.column_is_last{
-                        width: calc(100% - 36px * 3);
-                  }
-            }
+		.btn_homepage {
+			width: 36px;
+			font-size: 15px;
+
+			&:hover {
+				background-color: var(--color_bg_1);
+			}
+		}
+
+		.scroll_wrap {
+			--width_mac_light: 0px;
+			--width_homepage_btn: 0px;
+			--width_win_actions: 0px;
+
+			width: calc(100% - var(--width_mac_light) - var(--width_homepage_btn) - var(--width_win_actions));
+
+			&.show_homepage_btn {
+				--width_homepage_btn: 36px;
+
+				border-left: var(--border);
+
+				&.is_mac_electron {
+					--width_mac_light: 72px;
+				}
+			}
+
+			&.column_is_last {
+				--width_win_actions: 108px;
+			}
+		}
 
 		.nav_bar_item_wrap {
 			position: relative;

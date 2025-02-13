@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
-import { modules } from '@/appdata'
+import { modules_no_setting } from '@/appdata'
 import Utils from '@/models/utils'
 import { ipc, is_electron_shell } from '@/utils'
 import { info } from '@/utils/antd'
@@ -24,10 +24,11 @@ type UpdateState = null | HasUpdate | Downloading | { type: 'downloaded' }
 
 @injectable()
 export default class Index {
-	app_modules = modules as App.Modules
+	app_modules = modules_no_setting as App.Modules
 	actives = [] as Array<{ app: App.ModuleType; pathname: string; key: string }>
 	visible_app_menu = false
 	visible_app_switch = false
+	visible_homepage = false
 	switch_index = 0
 	update_silence = true
 	update_status = null as UpdateState
@@ -78,6 +79,10 @@ export default class Index {
 
 	toggleAppMenu() {
 		this.visible_app_menu = !this.visible_app_menu
+	}
+
+	toggleHomepage() {
+		this.visible_homepage = !this.visible_homepage
 	}
 
 	appSwitch() {
@@ -158,6 +163,7 @@ export default class Index {
 
 	on() {
 		$app.Event.on('global.app.toggleAppMenu', this.toggleAppMenu)
+		$app.Event.on('global.app.toggleHomepage', this.toggleHomepage)
 		$app.Event.on('global.app.appSwitch', this.appSwitch)
 		$app.Event.on('global.app.handleAppSwitch', this.handleAppSwitch)
 
@@ -168,6 +174,7 @@ export default class Index {
 		this.utils.off()
 
 		$app.Event.off('global.app.toggleAppMenu', this.toggleAppMenu)
+		$app.Event.off('global.app.toggleHomepage', this.toggleHomepage)
 		$app.Event.off('global.app.appSwitch', this.appSwitch)
 		$app.Event.off('global.app.handleAppSwitch', this.handleAppSwitch)
 

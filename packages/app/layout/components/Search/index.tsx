@@ -113,6 +113,7 @@ const Index = (props: IPropsSearch) => {
 			maskClosable
 			disableOverflow
 			width={420}
+			zIndex={2000}
 			open={open}
 			onCancel={onClose}
 		>

@@ -108,6 +108,8 @@ const typed_nav_items = [
 
 export default typed_nav_items.map(item => item)
 
+export const modules_no_setting = typed_nav_items.slice(0, -1)
+
 export const module_default_icon = {
 	note: ':book-open-text-light:',
 	pomo: ':watch:',

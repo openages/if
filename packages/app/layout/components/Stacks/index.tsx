@@ -19,6 +19,7 @@ const Index = (props: IPropsStacks) => {
 		focus,
 		container_width,
 		resizing,
+		browser_mode,
 		click,
 		remove,
 		update,
@@ -26,7 +27,8 @@ const Index = (props: IPropsStacks) => {
 		resize,
 		setResizing,
 		observe,
-		unobserve
+		unobserve,
+		showHomepage
 	} = props
 	const [drag_view, setDragView] = useState<{ column_index: number; view_index: number; view: Stack.View }>(null!)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
@@ -54,9 +56,11 @@ const Index = (props: IPropsStacks) => {
 		columns,
 		focus,
 		resizing,
+		browser_mode,
 		click,
 		remove,
-		update
+		update,
+		showHomepage
 	}
 
 	const props_content: IPropsStacksContent = {

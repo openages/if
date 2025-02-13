@@ -9,7 +9,7 @@ import type { MouseEvent } from 'react'
 import type { IPropsSidebarItem } from '../../../../types'
 
 const Index = (props: IPropsSidebarItem) => {
-	const { current_module, show_bar_title, item, active } = props
+	const { current_module, show_bar_title, item, active, browser_mode } = props
 	const { t } = useTranslation()
 	const current = current_module === item.title
 	const title = t(`modules.${item.title}`) as string
@@ -34,8 +34,9 @@ const Index = (props: IPropsSidebarItem) => {
 	const LinkItem = (
 		<NavLink
 			className={$cx(
-				'sidebar_item clickable flex flex_column justify_center align_center transition_normal',
+				'sidebar_item border_box clickable flex flex_column justify_center align_center transition_normal',
 				show_bar_title && 'show_bar_title',
+				browser_mode && 'browser_mode',
 				active && 'active',
 				current && 'current'
 			)}
@@ -47,11 +48,11 @@ const Index = (props: IPropsSidebarItem) => {
 				className='icon_bar'
 				type={item.title}
 				size={27}
-				weight={active ? 'duotone' : 'regular'}
+				weight={active && !browser_mode ? 'duotone' : 'regular'}
 			></ModuleIcon>
 			<If condition={show_bar_title}>
 				<span className='sidebar_item_title'>
-					{current && item.short ? title.slice(0, item.short) : title}
+					{current && item.short && !browser_mode ? title.slice(0, item.short) : title}
 				</span>
 			</If>
 		</NavLink>

@@ -4,22 +4,22 @@ import { useSize } from '@/hooks'
 
 import type { Timer } from '@/models'
 
-export default (padding: boolean, timer: Timer['timer']) => {
+export default (padding: boolean, browser_mode: boolean) => {
 	const ref_sidebar = useRef<HTMLDivElement>(null)
 	const ref_items_wrap = useRef<HTMLDivElement>(null)
 	const sidebar_height = useSize(() => ref_sidebar.current!, 'height') as number
 	const items_height = useSize(() => ref_items_wrap.current!, 'height') as number
 
 	const overflow = useMemo(() => {
+		if (browser_mode) return false
 		if (!sidebar_height || !items_height) return false
 
 		const padding_top = padding ? 36 : 15
-		const bottom_height = timer ? 64 + 36 : 64
 
-		if (sidebar_height - 42 - padding_top - 12 - bottom_height >= items_height) return false
+		if (sidebar_height - 42 - padding_top - 12 - 64 >= items_height) return false
 
 		return true
-	}, [sidebar_height, items_height, padding])
+	}, [browser_mode, sidebar_height, items_height, padding])
 
 	return { ref_sidebar, ref_items_wrap, overflow }
 }

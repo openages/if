@@ -3,6 +3,7 @@
 	line-height: 1;
 	font-family: 'Avenir';
 	font-size: 12px;
+	font-weight: 500;
 
 	:global {
 		.hours_wrap {

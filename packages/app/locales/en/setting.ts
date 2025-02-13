@@ -24,21 +24,17 @@ export default {
 			},
 			auto_theme: 'Auto theme, light theme from 6AM to 6PM, dark theme the rest of time'
 		},
-		show_bar_title: {
-			title: 'Bar Title',
-			desc: 'Display title below navigation icon',
-			options: {
-				hide: 'Hide',
-				show: 'Show'
-			}
+		browser_mode: {
+			title: 'Browser Mode',
+			desc: 'Hide the navbar and dirtree'
 		},
-		page_width: {
-			title: 'Page Width',
-			desc: 'Width rules of content page',
-			options: {
-				unlimited: 'Full',
-				limited: 'Limited'
-			}
+		show_bar_title: {
+			title: 'Show Bar Title',
+			desc: 'Display title below navigation icon'
+		},
+		full_page_width: {
+			title: 'Full Page Width',
+			desc: 'Width rules of content page'
 		}
 	},
 	NavItems: {

@@ -35,7 +35,8 @@ const Content = $app.memo((props: IPropsContent) => {
 		props_dir_items,
 		props_actions,
 		props_modal,
-		props_options
+		props_options,
+		browser_mode
 	} = props
 
 	return (
@@ -44,14 +45,15 @@ const Content = $app.memo((props: IPropsContent) => {
 				'border_box relative',
 				styles._local,
 				!simple && dirtree_width === 0 && styles.hide,
-				simple && styles.simple
+				simple && styles.simple,
+				browser_mode && styles.browser_mode
 			)}
 			style={!simple ? { width: dirtree_width, height } : {}}
 		>
 			<If condition={!simple && dirtree_width !== 0}>
 				<Search {...props_search}></Search>
 			</If>
-			<If condition={!simple}>
+			<If condition={!simple && !browser_mode}>
 				<DragLine></DragLine>
 			</If>
 			<DirItems {...props_dir_items}></DirItems>
@@ -108,7 +110,11 @@ const Index = (props: IProps) => {
 		current_item: $copy(x.current_item),
 		focusing_item: $copy(x.focusing_item),
 		open_folder: $copy(x.open_folder),
-		onClick: useMemoizedFn(x.onClick),
+		onClick: useMemoizedFn(v => {
+			if (global.setting.browser_mode) $app.Event.emit('global.app.toggleHomepage')
+
+			x.onClick(v)
+		}),
 		showDirTreeOptions
 	}
 
@@ -150,7 +156,8 @@ const Index = (props: IProps) => {
 		props_dir_items,
 		props_actions,
 		props_modal,
-		props_options
+		props_options,
+		browser_mode: global.setting.browser_mode
 	}
 
 	const Target = useDeepMemo(() => {

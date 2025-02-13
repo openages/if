@@ -21,7 +21,7 @@ const Index = (props: IPropsOffscreenOutlet) => {
 	const [cache_pages, setCachePages] = useState<
 		Array<App['actives'][number] & { is_app: boolean; outlet: ReactElement }>
 	>([])
-	const outlet = useOutlet()
+	const outlet = useOutlet()!
 
 	const exitApp = useMemoizedFn((title: string) => {
 		cache_pages.splice(
@@ -42,7 +42,7 @@ const Index = (props: IPropsOffscreenOutlet) => {
 		if (!apps.length) return
 
 		if (result) {
-			const outdates = []
+			const outdates = [] as Array<number>
 
 			cache_pages.map((item, index) => {
 				if (item.pathname !== pathname && !item.is_app) outdates.push(index)

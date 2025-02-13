@@ -24,21 +24,17 @@ export default {
 			},
 			auto_theme: '自动切换主题，6点到18点浅色主题，其余时间深色主题'
 		},
-		show_bar_title: {
-			title: '导航栏标题',
-			desc: '显示导航图标下方的标题',
-			options: {
-				hide: '隐藏',
-				show: '显示'
-			}
+		browser_mode: {
+			title: '浏览器模式',
+			desc: '隐藏导航栏和目录，开启浏览器模式'
 		},
-		page_width: {
-			title: '页面宽度',
-			desc: '内容页面的宽度规则',
-			options: {
-				unlimited: '全部',
-				limited: '固定'
-			}
+		show_bar_title: {
+			title: '展示导航栏标题',
+			desc: '显示导航图标下方的标题'
+		},
+		full_page_width: {
+			title: '完整页面宽度',
+			desc: '内容页面的宽度规则'
 		}
 	},
 	NavItems: {

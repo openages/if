@@ -11,7 +11,7 @@ import { useLocation } from 'react-router-dom'
 import { container } from 'tsyringe'
 
 import { exclude_paths } from '@/appdata'
-import { GlobalLoading, LazyElement, OffscreenOutlet } from '@/components'
+import { GlobalLoading, LazyElement, Modal, OffscreenOutlet } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
 import { is_prod, is_sandbox } from '@/utils'
@@ -36,6 +36,7 @@ const Index = () => {
 	const actives = $copy(global.app.actives)
 	const columns = $copy(global.stack.columns)
 	const focus = $copy(global.stack.focus)
+	const browser_mode = global.setting.browser_mode
 
 	useGlobalNavigate()
 	useGlobalTranslate()
@@ -74,10 +75,10 @@ const Index = () => {
 		blur: global.layout.blur,
 		theme: global.setting.theme,
 		show_bar_title: global.setting.show_bar_title,
+		browser_mode,
 		apps,
 		actives,
-		timer: $copy(global.timer.timer),
-		showAppMenu: useMemoizedFn(() => (global.app.visible_app_menu = true))
+		showSetting: useMemoizedFn(() => (global.setting.visible = true))
 	}
 
 	const props_config_provider: ConfigProviderProps = {
@@ -105,6 +106,7 @@ const Index = () => {
 		focus: $copy(global.stack.focus),
 		container_width: global.stack.container_width,
 		resizing: global.stack.resizing,
+		browser_mode,
 		remove: useMemoizedFn(global.stack.remove),
 		click: useMemoizedFn(global.stack.click),
 		update: useMemoizedFn(global.stack.update),
@@ -112,7 +114,8 @@ const Index = () => {
 		resize: useMemoizedFn(global.stack.resize),
 		setResizing: useMemoizedFn((v: boolean) => (global.stack.resizing = v)),
 		observe: useMemoizedFn(global.stack.observe),
-		unobserve: useMemoizedFn(global.stack.unobserve)
+		unobserve: useMemoizedFn(global.stack.unobserve),
+		showHomepage: useMemoizedFn(() => (global.app.visible_homepage = true))
 	}
 
 	const props_app_menu: IPropsAppMenu = {
@@ -151,6 +154,15 @@ const Index = () => {
 		onClose: useMemoizedFn(() => (global.setting.visible = false))
 	}
 
+	const props_modal_homepage = {
+		bodyClassName: styles.modal_homepage,
+		open: global.app.visible_homepage,
+		maskClosable: true,
+		width: 'min(840px,81vw)',
+		zIndex: 1999,
+		onCancel: useMemoizedFn(() => (global.app.visible_homepage = false))
+	}
+
 	if (global.screenlock.screenlock_open) {
 		return (
 			<GlobalContext.Provider value={global}>
@@ -167,10 +179,20 @@ const Index = () => {
 				<App {...props_app}>
 					<IconContext.Provider value={{ className: 'ricon', style: { verticalAlign: 'middle' } }}>
 						<GlobalLoading></GlobalLoading>
-						<Sidebar {...props_sidebar} />
-						<div className={$cx('w_100vw border_box', styles.container)}>
+						<If condition={!browser_mode}>
+							<Sidebar {...props_sidebar} />
+						</If>
+						<div
+							className={$cx(
+								'w_100vw border_box',
+								styles.container,
+								browser_mode && styles.browser_mode
+							)}
+						>
 							<div className='w_100 border_box'>
-								<OffscreenOutlet {...props_offscreen_pages_outlet} />
+								<If condition={!browser_mode}>
+									<OffscreenOutlet {...props_offscreen_pages_outlet} />
+								</If>
 								<Activity mode={is_exclude_router ? 'hidden' : 'visible'}>
 									<Stacks {...props_stacks}></Stacks>
 								</Activity>
@@ -180,6 +202,12 @@ const Index = () => {
 						<AppSwitch {...props_app_switch}></AppSwitch>
 						<Search {...props_search}></Search>
 						<Setting {...props_setting}></Setting>
+						<If condition={browser_mode}>
+							<Modal {...props_modal_homepage}>
+								<Sidebar {...props_sidebar} />
+								<OffscreenOutlet {...props_offscreen_pages_outlet} />
+							</Modal>
+						</If>
 						{/* {process.env.NODE_ENV === 'development' && (
                                    <LazyElement type='dev' path=''></LazyElement>
                              )} */}

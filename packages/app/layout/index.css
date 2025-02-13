@@ -4,4 +4,14 @@
 	&.no_dirtree {
 		padding-left: var(--sidebar_width);
 	}
+
+	&.browser_mode {
+		padding-left: 0;
+	}
+}
+
+.modal_homepage {
+	flex-direction: row;
+	height: min(600px, 81vh);
+	padding: 0 !important;
 }

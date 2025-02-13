@@ -4,6 +4,7 @@ import type { DirTree } from '@/types'
 
 import type { MouseEvent, ReactNode } from 'react'
 import type Model from '../model'
+import type { GlobalModel } from '@/context/app'
 
 export interface IProps {
 	module: Model['module']
@@ -24,6 +25,7 @@ export interface IPropsContent {
 	props_actions: IPropsActions
 	props_modal: IPropsModal
 	props_options: IPropsOptions
+	browser_mode: GlobalModel['setting']['browser_mode']
 }
 
 export interface IPropsSearch {

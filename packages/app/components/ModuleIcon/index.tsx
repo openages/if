@@ -53,7 +53,6 @@ const Index = (props: IProps) => {
 		.with('api', () => <WebhooksLogo {...target_props} />)
 		.with('dataflow', () => <TreeStructure {...target_props} />)
 		.with('database', () => <Database {...target_props} />)
-		.with('setting', () => <GearSix {...target_props} />)
 		.exhaustive()
 }
 

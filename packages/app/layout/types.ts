@@ -8,14 +8,15 @@ export interface IPropsSidebar {
 	show_bar_title: GlobalModel['setting']['show_bar_title']
 	apps: GlobalModel['app']['apps']
 	actives: GlobalModel['app']['actives']
-	timer: GlobalModel['timer']['timer']
-	showAppMenu: () => void
+	browser_mode: GlobalModel['setting']['browser_mode']
+	showSetting: () => void
 }
 
 export interface IPropsSidebarItem {
 	current_module: App.ModuleType
 	theme: GlobalModel['setting']['theme']
 	show_bar_title: GlobalModel['setting']['show_bar_title']
+	browser_mode: GlobalModel['setting']['browser_mode']
 	item: App.Module
 	active: boolean
 }
@@ -25,6 +26,7 @@ export interface IPropsStacks {
 	focus: GlobalModel['stack']['focus']
 	container_width: GlobalModel['stack']['container_width']
 	resizing: GlobalModel['stack']['resizing']
+	browser_mode: GlobalModel['setting']['browser_mode']
 	click: GlobalModel['stack']['click']
 	remove: GlobalModel['stack']['remove']
 	update: GlobalModel['stack']['update']
@@ -33,6 +35,7 @@ export interface IPropsStacks {
 	setResizing: (v: boolean) => boolean
 	observe: GlobalModel['stack']['observe']
 	unobserve: GlobalModel['stack']['unobserve']
+	showHomepage: () => void
 }
 
 export interface IPropsStacksNavBar
@@ -50,13 +53,15 @@ export interface IPropsStacksNavBar
 	resizing: boolean
 }
 
-export interface IPropsStacksNavBarColumn extends Omit<IPropsStacksNavBar, 'columns' | 'move'> {
+export interface IPropsStacksNavBarColumn extends Omit<IPropsStacksNavBar, 'columns' | 'browser_mode' | 'move'> {
 	column_index: number
+	show_homepage_btn?: boolean
 	column_is_last?: boolean
 	column: IPropsStacksNavBar['columns'][number]
 }
 
-export interface IPropsStacksNavBarView extends Omit<IPropsStacksNavBarColumn, 'column' | 'move' | 'resizing'> {
+export interface IPropsStacksNavBarView
+	extends Omit<IPropsStacksNavBarColumn, 'column' | 'move' | 'resizing' | 'showHomepage'> {
 	view_index: number
 	view: IPropsStacksNavBar['columns'][number]['views'][number]
 	drag_overlay?: boolean
