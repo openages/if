@@ -7,7 +7,7 @@ import { ipc, is_electron_shell } from '@/utils'
 import { info } from '@/utils/antd'
 import { useInstanceWatch } from '@openages/stk/mobx'
 
-import type { App } from '@/types'
+import type { App, DirTree } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
 
 export interface HasUpdate {
@@ -32,6 +32,8 @@ export default class Index {
 	switch_index = 0
 	update_silence = true
 	update_status = null as UpdateState
+	latest_files = [] as DirTree.Items
+	star_files = [] as DirTree.Items
 
 	get visibles() {
 		return [this.visible_app_menu, this.visible_app_switch]

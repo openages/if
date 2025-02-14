@@ -26,10 +26,7 @@
 	}
 
 	&.mac_with_homepage {
-		padding-left: 72px;
-
 		&::before {
-			position: absolute;
 			bottom: 0;
 			left: 0;
 			width: 72px;

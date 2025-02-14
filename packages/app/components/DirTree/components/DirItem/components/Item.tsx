@@ -16,6 +16,7 @@ const Index = (props: IPropsDirItem_Item) => {
 		parent_index = [],
 		dragging,
 		open,
+		browser_mode,
 		showDirTreeOptions,
 		onClick
 	} = props
@@ -34,7 +35,7 @@ const Index = (props: IPropsDirItem_Item) => {
 					dragging && 'dragging'
 				)}
 				autoInsertSpace={false}
-				style={{ paddingLeft: 18 * parent_index.length }}
+				style={{ paddingLeft: (browser_mode ? 9 : 18) * parent_index.length }}
 				onClick={onItem}
 				onContextMenu={onContextMenu}
 			>

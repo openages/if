@@ -13,78 +13,6 @@
 		--logo_padding_top: 36px;
 	}
 
-	&.browser_mode {
-		--logo_padding_top: 0;
-		position: unset;
-		width: 180px;
-		height: unset;
-		padding: 12px;
-		border-right: var(--border);
-		box-shadow: unset;
-
-		:global {
-			.logo_wrap {
-				justify-content: flex-start;
-			}
-
-			.sidebar_items {
-				height: 100%;
-
-				.sidebar_item {
-					&.show_bar_title {
-						display: flex;
-						flex-direction: row;
-						justify-content: flex-start;
-						width: unset;
-						width: 100%;
-						height: 36px;
-						padding: 0 12px;
-						margin: 0;
-						opacity: 1;
-					}
-
-					svg {
-						width: 16px;
-						height: 16px;
-					}
-
-					.sidebar_item_title {
-						margin-left: 6px;
-						font-size: 12px;
-					}
-				}
-
-				.sidebar_bottom_wrap {
-					align-items: flex-start;
-					flex-direction: row;
-
-					.btn_apps_wrap {
-						width: 100%;
-						height: unset;
-
-						.btn_apps {
-							justify-content: flex-start;
-							width: 100%;
-							height: 36px;
-							padding: 0 12px;
-							background-color: var(--color_bg_1);
-
-							svg {
-								width: 16px;
-								height: 16px;
-							}
-
-							.sidebar_item_title {
-								margin-left: 6px;
-								font-size: 12px;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
 	:global {
 		.logo_wrap {
 			width: 100%;
@@ -145,12 +73,10 @@
 					opacity: 1;
 				}
 
-				&:not(.browser_mode) {
-					&.active {
-						svg {
-							path:first-child {
-								fill: var(--color_main);
-							}
+				&.active {
+					svg {
+						path:first-child {
+							fill: var(--color_main);
 						}
 					}
 				}

@@ -9,46 +9,46 @@
 		border: none;
 	}
 
-	&.simple {
+	&.browser_mode {
 		position: unset;
-		left: unset;
-		border-right: none;
-		border-radius: var(--radius);
+		border-right: unset;
 
 		:global {
 			.dir_tree_wrap {
-				width: 150px;
-				height: 180px;
-				padding: 6px;
+				height: calc(100% - 32px);
 			}
 
 			.item_wrap {
-				height: 30px;
-				padding-right: 6px !important;
-				padding-left: 6px !important;
+				height: 32px;
 				border-radius: var(--radius);
 			}
 
 			.actions_wrap {
-				height: 31px;
+				height: 32px;
+				border-top: unset;
+				gap: 12px;
 
 				.add_list_wrap {
-					width: 100%;
-					background-color: transparent;
+					border-radius: var(--radius);
+					background-color: var(--color_bg_1);
+
+					&:hover {
+						background-color: var(--color_bg_2);
+					}
 				}
 
-				.add_group_wrap {
-					display: none;
+				.other_action {
+					width: 32px;
+					border-left: unset;
+					border-radius: var(--radius);
+					background-color: var(--color_bg_1);
+
+					&:hover {
+						background-color: var(--color_bg_2);
+					}
 				}
 			}
 		}
-	}
-
-	&.browser_mode {
-		position: unset;
-		width: calc(100% - 180px) !important;
-		height: unset !important;
-		border-right: unset;
 	}
 
 	:global {
@@ -60,22 +60,6 @@
 			&.empty {
 				padding-bottom: 0;
 			}
-		}
-	}
-}
-
-.btn_dirtree {
-	z-index: 1000;
-	bottom: 12px;
-	left: calc(var(--sidebar_width) + 12px);
-
-	:global {
-		.btn_dirtree {
-			width: 30px;
-			height: 30px;
-			border-radius: var(--radius);
-			background-color: var(--color_bg);
-			box-shadow: var(--shadow);
 		}
 	}
 }

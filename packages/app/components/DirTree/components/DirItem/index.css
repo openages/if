@@ -52,6 +52,12 @@
 	}
 
 	:global {
+		.file_wrap {
+			&.isDragging {
+				z-index: 100000;
+			}
+		}
+
 		.item_wrap {
 			justify-content: flex-start;
 			height: 36px;

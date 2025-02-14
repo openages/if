@@ -9,9 +9,3 @@
 		padding-left: 0;
 	}
 }
-
-.modal_homepage {
-	flex-direction: row;
-	height: min(600px, 81vh);
-	padding: 0 !important;
-}

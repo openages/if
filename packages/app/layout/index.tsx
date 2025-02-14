@@ -11,20 +11,28 @@ import { useLocation } from 'react-router-dom'
 import { container } from 'tsyringe'
 
 import { exclude_paths } from '@/appdata'
-import { GlobalLoading, LazyElement, Modal, OffscreenOutlet } from '@/components'
+import { GlobalLoading, LazyElement, OffscreenOutlet } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
 import { is_prod, is_sandbox } from '@/utils'
 import { useDeepMemo } from '@openages/stk/react'
 
-import { AppMenu, AppSwitch, Screenlock, Search, Setting, Sidebar, Stacks } from './components'
+import { AppMenu, AppSwitch, Homepage, Screenlock, Search, Setting, Sidebar, Stacks } from './components'
 import { useGlobalNavigate, useGlobalTranslate, usePathChange } from './hooks'
 import styles from './index.css'
 
 import type { IPropsOffscreenOutlet } from '@/components/OffscreenOutlet'
 import type { AppProps } from 'antd'
 import type { ConfigProviderProps } from 'antd/es/config-provider'
-import type { IPropsAppMenu, IPropsAppSwitch, IPropsSidebar, IPropsStacks, IPropsSearch, IPropsSetting } from './types'
+import type {
+	IPropsAppMenu,
+	IPropsAppSwitch,
+	IPropsSidebar,
+	IPropsStacks,
+	IPropsSearch,
+	IPropsSetting,
+	IPropsHomepage
+} from './types'
 
 const Index = () => {
 	const { pathname } = useLocation()
@@ -70,15 +78,16 @@ const Index = () => {
 
 	const is_exclude_router = useMemo(() => exclude_paths.some(item => minimatch(pathname, item)), [pathname])
 
+	const showSetting = useMemoizedFn(() => (global.setting.visible = true))
+
 	const props_sidebar: IPropsSidebar = {
 		current_module,
 		blur: global.layout.blur,
 		theme: global.setting.theme,
 		show_bar_title: global.setting.show_bar_title,
-		browser_mode,
 		apps,
 		actives,
-		showSetting: useMemoizedFn(() => (global.setting.visible = true))
+		showSetting
 	}
 
 	const props_config_provider: ConfigProviderProps = {
@@ -97,7 +106,7 @@ const Index = () => {
 
 	const props_offscreen_pages_outlet: IPropsOffscreenOutlet = {
 		current_module,
-		apps: $copy(global.app.app_modules),
+		apps,
 		setActives: useMemoizedFn(global.app.setActives)
 	}
 
@@ -154,13 +163,13 @@ const Index = () => {
 		onClose: useMemoizedFn(() => (global.setting.visible = false))
 	}
 
-	const props_modal_homepage = {
-		bodyClassName: styles.modal_homepage,
-		open: global.app.visible_homepage,
-		maskClosable: true,
-		width: 'min(840px,81vw)',
-		zIndex: 1999,
-		onCancel: useMemoizedFn(() => (global.app.visible_homepage = false))
+	const props_homepage: IPropsHomepage = {
+		visible_homepage: global.app.visible_homepage,
+		apps,
+		latest_files: $copy(global.app.latest_files),
+		star_files: $copy(global.app.star_files),
+		showSetting,
+		closeHomepage: useMemoizedFn(() => (global.app.visible_homepage = false))
 	}
 
 	if (global.screenlock.screenlock_open) {
@@ -203,10 +212,7 @@ const Index = () => {
 						<Search {...props_search}></Search>
 						<Setting {...props_setting}></Setting>
 						<If condition={browser_mode}>
-							<Modal {...props_modal_homepage}>
-								<Sidebar {...props_sidebar} />
-								<OffscreenOutlet {...props_offscreen_pages_outlet} />
-							</Modal>
+							<Homepage {...props_homepage}></Homepage>
 						</If>
 						{/* {process.env.NODE_ENV === 'development' && (
                                    <LazyElement type='dev' path=''></LazyElement>

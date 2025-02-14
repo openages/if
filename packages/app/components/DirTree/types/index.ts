@@ -4,7 +4,6 @@ import type { DirTree } from '@/types'
 
 import type { MouseEvent, ReactNode } from 'react'
 import type Model from '../model'
-import type { GlobalModel } from '@/context/app'
 
 export interface IProps {
 	module: Model['module']
@@ -13,19 +12,6 @@ export interface IProps {
 		remove: (focusing_item: DirTree.Item) => Promise<any>
 	}
 	height?: CSSProperties['height']
-	simple?: boolean
-}
-
-export interface IPropsContent {
-	dirtree_width: number
-	simple: boolean
-	height: string | number
-	props_search: IPropsSearch
-	props_dir_items: IPropsDirItems
-	props_actions: IPropsActions
-	props_modal: IPropsModal
-	props_options: IPropsOptions
-	browser_mode: GlobalModel['setting']['browser_mode']
 }
 
 export interface IPropsSearch {
@@ -39,6 +25,7 @@ export interface IPropsDirItems {
 	current_item: DirTree.Item
 	focusing_item: Model['focusing_item']
 	open_folder: Model['open_folder']
+	browser_mode: boolean
 	onClick: (v: DirTree.Item) => void
 	showDirTreeOptions: (e: MouseEvent<HTMLElement>, v: Model['focusing_index']) => void
 }
@@ -51,6 +38,7 @@ export interface IPropsDirItem {
 	open_folder?: Model['open_folder']
 	parent_index?: Array<number>
 	dragging?: boolean
+	browser_mode?: boolean
 	onClick: IPropsDirItems['onClick']
 	showDirTreeOptions: IPropsDirItems['showDirTreeOptions']
 }

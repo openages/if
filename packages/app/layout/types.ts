@@ -8,7 +8,6 @@ export interface IPropsSidebar {
 	show_bar_title: GlobalModel['setting']['show_bar_title']
 	apps: GlobalModel['app']['apps']
 	actives: GlobalModel['app']['actives']
-	browser_mode: GlobalModel['setting']['browser_mode']
 	showSetting: () => void
 }
 
@@ -16,7 +15,6 @@ export interface IPropsSidebarItem {
 	current_module: App.ModuleType
 	theme: GlobalModel['setting']['theme']
 	show_bar_title: GlobalModel['setting']['show_bar_title']
-	browser_mode: GlobalModel['setting']['browser_mode']
 	item: App.Module
 	active: boolean
 }
@@ -141,4 +139,22 @@ export interface IPropsSearch {
 export interface IPropsSetting {
 	visible: GlobalModel['setting']['visible']
 	onClose: () => void
+}
+
+export interface IPropsHomepage {
+	visible_homepage: GlobalModel['app']['visible_homepage']
+	apps: GlobalModel['app']['apps']
+	latest_files: GlobalModel['app']['latest_files']
+	star_files: GlobalModel['app']['star_files']
+	showSetting: () => void
+	closeHomepage: () => void
+}
+
+export interface IPropsHomepageHeader extends Pick<IPropsHomepage, 'apps' | 'showSetting' | 'closeHomepage'> {
+	active: 'latest' | 'star' | App.ModuleType
+	setActive: (v: IPropsHomepageHeader['active']) => void
+}
+
+export interface IPropsHomepageDirtree {
+	active: App.ModuleType
 }

@@ -13,6 +13,7 @@ const Index = (props: IPropsDirItem_File) => {
 		focusing_item,
 		parent_index = [],
 		dragging,
+		browser_mode,
 		onClick,
 		showDirTreeOptions
 	} = props
@@ -28,6 +29,7 @@ const Index = (props: IPropsDirItem_File) => {
 		focusing_item,
 		parent_index,
 		dragging,
+		browser_mode,
 		showDirTreeOptions,
 		onClick
 	}

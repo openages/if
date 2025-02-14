@@ -21,7 +21,6 @@ import type { MoveData } from './types/model'
 export default class Index {
 	module = '' as App.ModuleType
 	actions = {} as IProps['actions']
-	simple = false
 
 	focusing_index = [] as Array<number>
 	current_item = {} as DirTree.Item
@@ -53,12 +52,11 @@ export default class Index {
 		)
 	}
 
-	async init(args: { module: App.ModuleType; actions: IProps['actions']; simple: IProps['simple'] }) {
-		const { module, actions, simple } = args
+	async init(args: { module: App.ModuleType; actions: IProps['actions'] }) {
+		const { module, actions } = args
 
 		this.module = module
 		this.actions = actions
-		this.simple = simple!
 
 		const disposer = setStorageWhenChange(
 			[
@@ -81,7 +79,11 @@ export default class Index {
 	async query() {
 		const items = await query(this.module)
 
-		this.node_tree.init(getDocItemsData(items))
+		const lost_tree = this.node_tree.init(getDocItemsData(items))
+
+		if (lost_tree.length) {
+			await updateItems(lost_tree as DirTree.Items)
+		}
 	}
 
 	@disableWatcher
@@ -209,7 +211,11 @@ export default class Index {
 		this.items_watcher = getQuery(this.module).$.subscribe(items => {
 			if (this.disable_watcher) return
 
-			this.node_tree.init(getDocItemsData(items))
+			const lost_tree = this.node_tree.init(getDocItemsData(items))
+
+			if (lost_tree.length) {
+				updateItems(lost_tree as DirTree.Items)
+			}
 		})
 	}
 

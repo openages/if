@@ -52,6 +52,8 @@ export const update = async (args: ArgsUpdate) => {
 
 	const doc = await $db.dirtree_items.findOne(target_id).exec()
 
+	if (!doc) return
+
 	await doc.updateCRDT({ ifMatch: { $set: item } })
 
 	if (doc.type === 'dir') return
@@ -67,6 +69,8 @@ export const updateItems = async (effect_items: DirTree.Items) => {
 		await Promise.all(
 			effect_items.map(async item => {
 				const doc = await $db.dirtree_items.findOne(item.id).exec()
+
+				if (!doc) return
 
 				return doc.updateCRDT({
 					ifMatch: {

@@ -1,0 +1,8 @@
+.modal_homepage {
+	flex-direction: row;
+	height: min(450px, 78vh);
+}
+
+._local {
+	gap: 12px;
+}
