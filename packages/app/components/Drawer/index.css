@@ -23,7 +23,6 @@
 	top: 0;
 	left: 0;
 	overflow-y: scroll;
-	padding: 0 60px;
 
 	&.on_body {
 		position: fixed;
@@ -39,11 +38,7 @@
 }
 
 .content {
-	overflow: hidden;
-	max-height: 100%;
-	margin: 0 auto;
-	border-top-left-radius: var(--radius_large);
-	border-top-right-radius: var(--radius_large);
+	height: 100%;
 	background-color: var(--color_bg);
 
 	.header {
@@ -72,6 +67,7 @@
 
 	.body {
 		overflow-y: scroll;
+		height: 100%;
 		padding: 18px;
 
 		&.disableOverflow {

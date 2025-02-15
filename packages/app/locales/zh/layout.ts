@@ -4,6 +4,7 @@ export default {
 	},
 	Homepage: {
 		latest: '最近',
-		star: '收藏'
+		star: '收藏',
+		apps: '应用'
 	}
 }

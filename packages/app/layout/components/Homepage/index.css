@@ -1,6 +1,5 @@
-.modal_homepage {
-	flex-direction: row;
-	height: min(450px, 78vh);
+.modal {
+	padding: 0 10px 10px 10px !important;
 }
 
 ._local {

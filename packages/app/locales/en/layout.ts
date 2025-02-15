@@ -4,6 +4,7 @@ export default {
 	},
 	Homepage: {
 		latest: 'Latest',
-		star: 'Star'
+		star: 'Star',
+		apps: 'Apps'
 	}
 }

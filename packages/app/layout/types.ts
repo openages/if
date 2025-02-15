@@ -150,9 +150,14 @@ export interface IPropsHomepage {
 	closeHomepage: () => void
 }
 
-export interface IPropsHomepageHeader extends Pick<IPropsHomepage, 'apps' | 'showSetting' | 'closeHomepage'> {
-	active: 'latest' | 'star' | App.ModuleType
-	setActive: (v: IPropsHomepageHeader['active']) => void
+export interface IPropsHomepageHeader extends Pick<IPropsHomepage, 'showSetting' | 'closeHomepage'> {
+	tab: 'latest' | 'star' | 'apps'
+	setTab: (v: IPropsHomepageHeader['tab']) => void
+}
+
+export interface IPropsHomepageApps extends Pick<IPropsHomepage, 'apps'> {
+	active: App.ModuleType
+	setActive: (v: IPropsHomepageApps['active']) => void
 }
 
 export interface IPropsHomepageDirtree {

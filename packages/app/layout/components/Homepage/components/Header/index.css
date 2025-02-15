@@ -1,13 +1,15 @@
 ._local {
-	gap: 12px;
-
 	:global {
+		.top_row {
+			height: 36px;
+			gap: 6px;
+		}
+
 		.btn {
-			width: 32px;
-			height: 32px;
+			width: 24px;
+			height: 24px;
 			border-radius: var(--radius);
-			background-color: var(--color_bg_1);
-			font-size: 16px;
+			font-size: 14px;
 
 			&:hover {
 				background-color: var(--color_bg_2);
@@ -15,8 +17,6 @@
 		}
 
 		.segment {
-			flex: 1;
-
 			.if-segmented-item {
 				flex: 1;
 
@@ -26,7 +26,11 @@
 					font-size: 12px;
 
 					.if-segmented-item-icon {
-						font-size: 13px;
+						font-size: 14px;
+					}
+
+					.if-segmented-item-icon + * {
+						margin-inline-start: 4px;
 					}
 				}
 			}

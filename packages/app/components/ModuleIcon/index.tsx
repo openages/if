@@ -27,12 +27,13 @@ import type { App } from '@/types'
 
 interface IProps extends IconProps {
 	type: App.ModuleType
+	with_color?: boolean
 }
 
 const Index = (props: IProps) => {
-	const { type, className, ...icon_props } = props
+	const { type, with_color, className, ...icon_props } = props
 
-	const target_class = $cx(icon_props?.weight === 'duotone' && styles._local, className)
+	const target_class = $cx(icon_props?.weight === 'duotone' && styles._local, with_color && styles[type], className)
 	const target_props = { ...omit(icon_props, 'ref'), className: target_class }
 
 	return match(type)

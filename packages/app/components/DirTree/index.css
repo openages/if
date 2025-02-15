@@ -26,7 +26,7 @@
 			.actions_wrap {
 				height: 32px;
 				border-top: unset;
-				gap: 12px;
+				gap: 10px;
 
 				.add_list_wrap {
 					border-radius: var(--radius);

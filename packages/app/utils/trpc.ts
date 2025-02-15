@@ -55,7 +55,7 @@ const trpc = createTRPCProxyClient<Router>({
 					})
 				)
 
-				if (err_raw) return goLogin()
+				if (err_raw) return
 
 				const res = await getJson(res_raw)
 

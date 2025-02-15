@@ -23,6 +23,7 @@ const Index = (props: IPropsActions) => {
 			<Tooltip
 				title={t('dirtree.add') + t('dirtree.dir')}
 				placement='top'
+				zIndex={100000}
 				getPopupContainer={() => document.body}
 			>
 				<div

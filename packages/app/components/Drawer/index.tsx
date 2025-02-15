@@ -1,6 +1,6 @@
 import { useClickAway } from 'ahooks'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useEffect, useRef, useState, Fragment } from 'react'
+import { useEffect, useMemo, useRef, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
 
 import { X } from '@phosphor-icons/react'
@@ -12,11 +12,11 @@ import type { MouseEvent, ReactNode } from 'react'
 interface IProps {
 	children: ReactNode
 	open: boolean
+	placement?: 'left' | 'right' | 'top' | 'bottom'
 	className?: HTMLDivElement['className']
 	bodyClassName?: HTMLDivElement['className']
 	title?: string | number
 	width?: string | number
-	minHeight?: string | number
 	maskClosable?: boolean
 	disableOverflow?: boolean
 	disablePadding?: boolean
@@ -31,11 +31,11 @@ const Index = (props: IProps) => {
 	const {
 		children,
 		open,
+		placement = 'left',
 		className,
 		bodyClassName,
 		title,
 		width,
-		minHeight,
 		maskClosable,
 		disableOverflow,
 		disablePadding,
@@ -74,6 +74,19 @@ const Index = (props: IProps) => {
 		setOnbody(container === document.body)
 	}, [container])
 
+	const transform = useMemo(() => {
+		switch (placement) {
+			case 'left':
+				return 'translate3d(-100%, 0px, 0px)'
+			case 'right':
+				return 'translate3d(100%, 0px, 0px)'
+			case 'top':
+				return 'translate3d(0px, -100%, 0px)'
+			case 'bottom':
+				return 'translate3d(0px, 100%, 0px)'
+		}
+	}, [placement])
+
 	if (!exsit) return null
 
 	const Content = (
@@ -92,7 +105,7 @@ const Index = (props: IProps) => {
 			</AnimatePresence>
 			<AnimatePresence>
 				{open && (
-					<motion.div
+					<div
 						className={$cx(
 							styles.content_wrap,
 							on_body && styles.on_body,
@@ -101,19 +114,19 @@ const Index = (props: IProps) => {
 							'if_modal_wrap w_100 h_100 border_box flex align_end'
 						)}
 						ref={ref_content_wrap}
-						initial={{ transform: 'translate3d(0px, 100%, 0px)' }}
-						animate={{ transform: 'translate3d(0px, 0px, 0px)' }}
-						exit={{ transform: 'translate3d(0px, 100%, 0px)' }}
-						transition={{ duration: 0.18, ease: 'easeInOut' }}
 						style={{ zIndex: zIndex ? zIndex + 1 : 1002 }}
 					>
-						<div
+						<motion.div
 							className={$cx(
 								styles.content,
 								className,
 								'if_modal_content border_box flex flex_column'
 							)}
-							style={{ width: width ?? 360, minHeight }}
+							initial={{ transform }}
+							animate={{ transform: 'translate3d(0px, 0px, 0px)' }}
+							exit={{ transform }}
+							transition={{ duration: 0.18, ease: 'easeInOut' }}
+							style={{ width: width ?? 300 }}
 							ref={ref_content}
 						>
 							{title && (
@@ -145,8 +158,8 @@ const Index = (props: IProps) => {
 							>
 								{children}
 							</div>
-						</div>
-					</motion.div>
+						</motion.div>
+					</div>
 				)}
 			</AnimatePresence>
 		</Fragment>

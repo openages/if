@@ -1,0 +1,23 @@
+._local {
+	gap: 10px;
+
+	:global {
+		.app_item {
+			width: calc((100% - 10px * 3) / 4);
+			border-radius: var(--radius_large);
+			background-color: var(--color_bg_1);
+			font-size: 21px;
+			aspect-ratio: 1;
+
+			&:hover {
+				background-color: var(--color_bg_2);
+			}
+
+			&:not(.active) {
+				svg {
+					color: rgba(var(--color_text_rgb), 0.48);
+				}
+			}
+		}
+	}
+}
