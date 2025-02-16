@@ -67,7 +67,9 @@ export default (args: HookArgs) => {
 					showDetailModal({
 						id,
 						index,
-						...(mode === 'kanban' || mode === 'quad' || mode === 'flat' ? { dimension_id } : {})
+						...(mode === 'kanban' || mode === 'quad' || mode === 'flat' || mode === 'mindmap'
+							? { dimension_id }
+							: {})
 					})
 					break
 				case 'insert':

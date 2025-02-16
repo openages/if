@@ -27,8 +27,11 @@ const Index = (props: IPropsMindmap) => {
 	useHiddenReactflowROLoop()
 
 	useLayoutEffect(() => {
+		const keys = Object.keys(kanban_items)
+
 		if (!angles.length) return
-		if (Object.keys(kanban_items).some(angle_id => !kanban_items[angle_id].loaded)) return
+		if (!keys.length) return
+		if (keys.some(angle_id => !kanban_items[angle_id].loaded)) return
 		if (x.nodes.length) return x.getNodeEdge(props.kanban_items)
 
 		x.init(pick(props, ['file_id', 'name', 'kanban_items']))
@@ -59,6 +62,8 @@ const Index = (props: IPropsMindmap) => {
 		remove,
 		showDetailModal
 	}
+
+	// console.log($copy(x.nodes))
 
 	return (
 		<div className={$cx('flex relative', styles._local, unpaid && styles.unpaid)}>

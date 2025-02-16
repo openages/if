@@ -59,8 +59,7 @@ const Index = (props: IPropsTodoItem) => {
 		cycle,
 		recycle_time,
 		schedule,
-		children,
-		create_at
+		children
 	} = item
 
 	const {
