@@ -1,3 +1,4 @@
+import LRUMap from 'mnemonist/lru-map-with-delete'
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
@@ -5,7 +6,7 @@ import { modules_no_setting } from '@/appdata'
 import Utils from '@/models/utils'
 import { ipc, is_electron_shell } from '@/utils'
 import { info } from '@/utils/antd'
-import { useInstanceWatch } from '@openages/stk/mobx'
+import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
 
 import type { App, DirTree } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
@@ -32,6 +33,10 @@ export default class Index {
 	switch_index = 0
 	update_silence = true
 	update_status = null as UpdateState
+	homepage_tab = 'apps' as 'latest' | 'star' | 'apps'
+	homepage_active = 'todo' as App.ModuleType
+	latest_ids = new LRUMap(12)
+	star_ids = new LRUMap(12)
 	latest_files = [] as DirTree.Items
 	star_files = [] as DirTree.Items
 
@@ -47,7 +52,11 @@ export default class Index {
 	} as Watch<Index & { 'visible_app_menu|visible_app_switch': any }>
 
 	constructor(public utils: Utils) {
-		makeAutoObservable(this, { utils: false, watch: false }, { autoBind: true })
+		makeAutoObservable(
+			this,
+			{ utils: false, watch: false, latest_ids: false, star_ids: false },
+			{ autoBind: true }
+		)
 	}
 
 	get apps() {
@@ -61,7 +70,10 @@ export default class Index {
 	}
 
 	init() {
-		this.utils.acts = [...useInstanceWatch(this)]
+		this.utils.acts = [
+			setStorageWhenChange(['homepage_tab', 'homepage_active', 'latest_files', 'star_files'], this),
+			...useInstanceWatch(this)
+		]
 
 		this.on()
 
@@ -147,20 +159,28 @@ export default class Index {
 		ipc.app.checkUpdate.query()
 	}
 
+	install() {
+		ipc.app.install.query()
+	}
+
+	setLatest(id: string) {
+		this.latest_ids.set(id, null)
+	}
+
+	setStar(id: string) {
+		this.star_ids.set(id, null)
+	}
+
 	async download() {
 		await info({
 			title: $t('common.notice'),
 			content: $t('setting.Update.install_backup'),
-			zIndex: 3000
+			zIndex: 300000
 		})
 
 		$app.Event.emit('global.setting.backupExport')
 
 		ipc.app.download.query()
-	}
-
-	install() {
-		ipc.app.install.query()
 	}
 
 	on() {

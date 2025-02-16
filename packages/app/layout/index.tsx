@@ -165,10 +165,14 @@ const Index = () => {
 
 	const props_homepage: IPropsHomepage = {
 		visible_homepage: global.app.visible_homepage,
+		tab: global.app.homepage_tab,
+		active: global.app.homepage_active,
 		apps,
 		latest_files: $copy(global.app.latest_files),
 		star_files: $copy(global.app.star_files),
 		showSetting,
+		setTab: useMemoizedFn(v => (global.app.homepage_tab = v)),
+		setActive: useMemoizedFn(v => (global.app.homepage_active = v)),
 		closeHomepage: useMemoizedFn(() => (global.app.visible_homepage = false))
 	}
 

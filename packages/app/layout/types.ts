@@ -143,9 +143,13 @@ export interface IPropsSetting {
 
 export interface IPropsHomepage {
 	visible_homepage: GlobalModel['app']['visible_homepage']
+	tab: GlobalModel['app']['homepage_tab']
+	active: GlobalModel['app']['homepage_active']
 	apps: GlobalModel['app']['apps']
 	latest_files: GlobalModel['app']['latest_files']
 	star_files: GlobalModel['app']['star_files']
+	setTab: (v: IPropsHomepage['tab']) => void
+	setActive: (v: IPropsHomepage['active']) => void
 	showSetting: () => void
 	closeHomepage: () => void
 }

@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { Drawer } from '@/components'
 
 import { Apps, Dirtree, Files, Header } from './components'
@@ -9,9 +7,18 @@ import type { IPropsHomepage, IPropsHomepageHeader, IPropsHomepageApps } from '@
 import type { App } from '@/types'
 
 const Index = (props: IPropsHomepage) => {
-	const { visible_homepage, apps, latest_files, star_files, showSetting, closeHomepage } = props
-	const [tab, setTab] = useState<'latest' | 'star' | 'apps'>('apps')
-	const [active, setActive] = useState<App.ModuleType>('todo')
+	const {
+		visible_homepage,
+		tab,
+		active,
+		apps,
+		latest_files,
+		star_files,
+		setTab,
+		setActive,
+		showSetting,
+		closeHomepage
+	} = props
 
 	const props_modal_homepage = {
 		bodyClassName: styles.modal,

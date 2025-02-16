@@ -78,6 +78,7 @@
 		"lz-string": "^1.5.0",
 		"mermaid": "^10.9.3",
 		"minimatch": "^9.0.5",
+		"mnemonist": "^0.40.2",
 		"mobx": "^6.13.5",
 		"mobx-react-lite": "^4.1.0",
 		"modern-screenshot": "^4.5.5",
