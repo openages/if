@@ -14,8 +14,10 @@ const Index = (props: IPropsDirItem_File) => {
 		parent_index = [],
 		dragging,
 		browser_mode,
+		star,
 		onClick,
-		showDirTreeOptions
+		showDirTreeOptions,
+		onStar
 	} = props
 	const { attributes, listeners, transform, isDragging, setNodeRef } = useDraggable({
 		id: item.id,
@@ -30,8 +32,10 @@ const Index = (props: IPropsDirItem_File) => {
 		parent_index,
 		dragging,
 		browser_mode,
+		star,
 		showDirTreeOptions,
-		onClick
+		onClick,
+		onStar
 	}
 
 	return (

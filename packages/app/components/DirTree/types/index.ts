@@ -4,6 +4,7 @@ import type { DirTree } from '@/types'
 
 import type { MouseEvent, ReactNode } from 'react'
 import type Model from '../model'
+import type { GlobalModel } from '@/context/app'
 
 export interface IProps {
 	module: Model['module']
@@ -26,8 +27,10 @@ export interface IPropsDirItems {
 	focusing_item: Model['focusing_item']
 	open_folder: Model['open_folder']
 	browser_mode: boolean
+	star_ids: Array<string>
 	onClick: (v: DirTree.Item) => void
 	showDirTreeOptions: (e: MouseEvent<HTMLElement>, v: Model['focusing_index']) => void
+	onStar: GlobalModel['app']['setStar']
 }
 
 export interface IPropsDirItem {
@@ -39,8 +42,10 @@ export interface IPropsDirItem {
 	parent_index?: Array<number>
 	dragging?: boolean
 	browser_mode?: boolean
+	star: boolean
 	onClick: IPropsDirItems['onClick']
 	showDirTreeOptions: IPropsDirItems['showDirTreeOptions']
+	onStar: GlobalModel['app']['setStar']
 }
 
 export interface IPropsDirItem_File extends IPropsDirItem {}

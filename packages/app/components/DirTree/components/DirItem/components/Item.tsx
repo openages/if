@@ -2,10 +2,11 @@ import { useMemoizedFn } from 'ahooks'
 import { Button } from 'antd'
 
 import { Emoji, LeftIcon, Wave } from '@/components'
-import { CaretRight } from '@phosphor-icons/react'
+import { CaretRight, Star } from '@phosphor-icons/react'
 
 import type { IPropsDirItem_Item } from '../../../types'
 import type { DirTree, Extend } from '@/types'
+import type { MouseEvent } from 'react'
 
 const Index = (props: IPropsDirItem_Item) => {
 	const {
@@ -17,13 +18,20 @@ const Index = (props: IPropsDirItem_Item) => {
 		dragging,
 		open,
 		browser_mode,
+		star,
 		showDirTreeOptions,
-		onClick
+		onClick,
+		onStar
 	} = props
 	const { id, name, type } = item
 
 	const onItem = useMemoizedFn(() => onClick(item as DirTree.Item))
 	const onContextMenu = useMemoizedFn(e => showDirTreeOptions(e, parent_index))
+	const starFile = useMemoizedFn((e: MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation()
+
+		onStar(item.id)
+	})
 
 	return (
 		<Wave>
@@ -49,18 +57,22 @@ const Index = (props: IPropsDirItem_Item) => {
 						</Otherwise>
 					</Choose>
 				</div>
-				<div
-					className={$cx(
-						'title_wrap flex align_center h_100 text_left',
-						type === 'file' && 'is_file'
-					)}
-				>
-					{name}
-				</div>
+				<div className='title_wrap flex align_center h_100 text_left'>{name}</div>
+				{type === 'file' && (
+					<div
+						className={$cx(
+							'star_icon_wrap align_center clickable',
+							star ? 'star flex' : 'none'
+						)}
+						onClick={starFile}
+					>
+						<Star size={12} weight={star ? 'fill' : 'regular'} />
+					</div>
+				)}
 				{type === 'dir' && (
 					<div
 						className={$cx(
-							'right_icon_wrap flex align_center justify_end',
+							'right_icon_wrap flex align_center',
 							type === 'dir' &&
 								!(item as Extend.DirTree.TransformedItem)?.children?.length &&
 								'no_children'

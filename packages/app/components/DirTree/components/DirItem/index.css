@@ -60,7 +60,7 @@
 
 		.item_wrap {
 			justify-content: flex-start;
-			height: 36px;
+			min-height: 36px;
 			line-height: 1;
 			padding: 0;
 			padding-right: 18px;
@@ -73,6 +73,10 @@
 
 			&:hover {
 				background-color: var(--color_bg_2) !important;
+
+				.star_icon_wrap {
+					display: flex;
+				}
 			}
 
 			&.active {
@@ -99,26 +103,33 @@
 
 			.title_wrap {
 				overflow: hidden;
-				width: calc(100% - 24px - 48px);
+				flex: 1;
 				user-select: none;
 				text-align: left;
 				text-overflow: ellipsis;
 				vertical-align: middle;
 				white-space: nowrap;
+			}
 
-				&.is_file {
-					width: calc(100% - 24px);
+			.star_icon_wrap {
+				padding: 3px;
+				margin-right: -3px;
+				border-radius: var(--radius_small);
+
+				&:hover {
+					background-color: var(--color_bg);
+				}
+
+				&.star {
+					color: var(--color_text_sublight);
 				}
 			}
 
 			.right_icon_wrap {
 				overflow: hidden;
-				width: 48px;
+				padding-left: 12px;
 				color: var(--color_text_grey);
 				user-select: none;
-				text-align: right;
-				text-overflow: ellipsis;
-				white-space: nowrap;
 				font-size: 12px;
 
 				&.no_children {

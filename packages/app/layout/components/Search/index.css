@@ -3,6 +3,26 @@
 	border-radius: var(--radius_large);
 
 	:global {
+		.apps_wrap {
+			line-height: 1;
+			padding: 9px 12px;
+			background-color: var(--color_bg_1);
+			font-size: 10px;
+			gap: 6px;
+
+			.app_item {
+				padding: 4px 6px;
+				border-radius: var(--radius_small);
+				color: var(--color_text_light);
+				background-color: var(--color_bg_2);
+
+				&.active {
+					color: var(--color_bg);
+					background-color: var(--color_text);
+				}
+			}
+		}
+
 		.input_wrap {
 			.icon_search {
 				left: 12px;
@@ -55,7 +75,6 @@
 				}
 
 				&.active {
-					padding-right: 18px;
 					border-bottom-style: solid;
 					border-bottom-color: var(--color_text);
 
@@ -66,8 +85,13 @@
 				}
 
 				.icon_go {
+					padding: 3px;
+					border-radius: var(--radius_small);
 					opacity: 0;
+					color: var(--color_bg);
+					background-color: var(--color_text);
 					transition: opacity ease 0.3s;
+					font-size: 12px;
 				}
 			}
 		}

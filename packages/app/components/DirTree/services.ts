@@ -31,6 +31,8 @@ export const remove = async (args: ArgsRemove) => {
 		if (item.type === 'file') {
 			await $app.Event.emit('global.stack.removeFile', item.id)
 
+			$app.Event.emit('global.app.removeFile', item.id)
+
 			await actions.remove(item)
 		}
 

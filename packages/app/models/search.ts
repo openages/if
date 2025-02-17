@@ -11,7 +11,7 @@ import type { App, DirTree } from '@/types'
 @injectable()
 export default class Index {
 	open = false
-	module = '' as App.ModuleType
+	module = 'todo' as App.ModuleType
 	items = [] as Array<{ item: any; file: DirTree.Item; setting?: any }>
 	index = 0
 	search_history = {} as Record<App.ModuleType, Array<string>>
@@ -174,8 +174,6 @@ export default class Index {
 	}
 
 	showSearch() {
-		if (this.module === 'setting' || !this.module) return
-
 		this.open = true
 	}
 

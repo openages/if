@@ -22,7 +22,9 @@ const Index = (props: IPropsDirItem_Dir) => {
 		parent_index = [],
 		dragging,
 		browser_mode,
-		showDirTreeOptions
+		star,
+		showDirTreeOptions,
+		onStar
 	} = props
 	const { type, children = [] } = item as Extend.DirTree.TransformedItem
 	const [open, setOpen] = useState(false)
@@ -62,6 +64,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 		dragging,
 		open,
 		browser_mode,
+		star,
 		showDirTreeOptions,
 		onClick: useMemoizedFn(() => {
 			setOpen(!open)
@@ -73,7 +76,8 @@ const Index = (props: IPropsDirItem_Dir) => {
 					$app.Event.emit(`${module}/dirtree/removeOpenFolder`, item.id)
 				}
 			}
-		})
+		}),
+		onStar
 	}
 
 	return (

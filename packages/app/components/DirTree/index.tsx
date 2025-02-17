@@ -59,11 +59,13 @@ const Index = (props: IProps) => {
 		focusing_item: $copy(x.focusing_item),
 		open_folder: $copy(x.open_folder),
 		browser_mode,
+		star_ids: global.app.star_files.map(item => item.id),
 		onClick: useMemoizedFn(v => {
 			if (browser_mode) $app.Event.emit('global.app.toggleHomepage')
 
 			x.onClick(v)
 		}),
+		onStar: useMemoizedFn(global.app.setStar),
 		showDirTreeOptions
 	}
 

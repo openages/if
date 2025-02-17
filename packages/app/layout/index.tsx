@@ -33,6 +33,7 @@ import type {
 	IPropsSetting,
 	IPropsHomepage
 } from './types'
+import type { Stack } from '@/types'
 
 const Index = () => {
 	const { pathname } = useLocation()
@@ -146,11 +147,13 @@ const Index = () => {
 
 	const props_search: IPropsSearch = {
 		current_module,
+		apps: apps.map(item => item.title),
 		open: $copy(global.search.open),
 		module: $copy(global.search.module),
 		items: $copy(global.search.items),
 		index: $copy(global.search.index),
 		history: $copy(global.search.history),
+		setModule: useMemoizedFn(v => (global.search.module = v)),
 		searchByInput: useMemoizedFn(global.search.searchByInput),
 		onClose: useMemoizedFn(global.search.closeSearch),
 		onCheck: useMemoizedFn(global.search.onCheck),
@@ -173,7 +176,20 @@ const Index = () => {
 		showSetting,
 		setTab: useMemoizedFn(v => (global.app.homepage_tab = v)),
 		setActive: useMemoizedFn(v => (global.app.homepage_active = v)),
-		closeHomepage: useMemoizedFn(() => (global.app.visible_homepage = false))
+		closeHomepage: useMemoizedFn(() => (global.app.visible_homepage = false)),
+		setStar: useMemoizedFn(global.app.setStar),
+		onFile: useMemoizedFn(v => {
+			$app.Event.emit('global.stack.add', {
+				id: v.id,
+				module: v.module,
+				file: $copy(v),
+				active: true,
+				fixed: false,
+				outlet: null
+			} as Stack.View)
+
+			global.app.visible_homepage = false
+		})
 	}
 
 	if (global.screenlock.screenlock_open) {

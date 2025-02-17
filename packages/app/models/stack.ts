@@ -58,6 +58,8 @@ export default class Index {
 	}
 
 	add(view: Stack.View) {
+		$app.Event.emit('global.app.setLatest', view.id)
+
 		const exsit_view = this.find(view.id)
 
 		if (exsit_view?.view) {

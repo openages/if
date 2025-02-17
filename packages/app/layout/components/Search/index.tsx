@@ -14,10 +14,12 @@ import type { KeyboardEvent, MouseEvent } from 'react'
 const Index = (props: IPropsSearch) => {
 	const {
 		open,
+		apps,
 		module,
 		items,
 		index,
 		history,
+		setModule,
 		searchByInput,
 		onClose,
 		onCheck,
@@ -118,6 +120,17 @@ const Index = (props: IPropsSearch) => {
 			onCancel={onClose}
 		>
 			<div className='flex flex_column'>
+				<div className='apps_wrap flex'>
+					{apps.map(item => (
+						<span
+							className={$cx('app_item clickable', module === item && 'active')}
+							onClick={() => setModule(item)}
+							key={item}
+						>
+							{t(`modules.${item}`)}
+						</span>
+					))}
+				</div>
 				<div className='input_wrap w_100 relative flex align_center'>
 					<MagnifyingGlass
 						className={$cx('icon_search absolute transition_normal', focusing && 'focusing')}

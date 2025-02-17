@@ -20,8 +20,10 @@ const Index = (props: IPropsDirItems) => {
 		focusing_item,
 		open_folder,
 		browser_mode,
+		star_ids,
 		onClick,
-		showDirTreeOptions
+		showDirTreeOptions,
+		onStar
 	} = props
 	const [active_item, setActiveItem] = useState<{ item: DirTree.Item; open: boolean } | null>(null)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }))
@@ -56,8 +58,10 @@ const Index = (props: IPropsDirItems) => {
 									sensors,
 									browser_mode,
 									onClick,
-									showDirTreeOptions
+									showDirTreeOptions,
+									onStar
 								}}
+								star={star_ids.includes(item.id)}
 								parent_index={[index]}
 								key={item.id}
 							></DirItem>
@@ -74,8 +78,10 @@ const Index = (props: IPropsDirItems) => {
 											sensors,
 											browser_mode,
 											onClick,
-											showDirTreeOptions
+											showDirTreeOptions,
+											onStar
 										}}
+										star={star_ids.includes(active_item.item.id)}
 										dragging={true}
 										item={active_item.item}
 									></DirItem>

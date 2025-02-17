@@ -1,5 +1,5 @@
 import type { GlobalModel } from '@/context/app'
-import type { App } from '@/types'
+import type { App, DirTree } from '@/types'
 
 export interface IPropsSidebar {
 	current_module: App.ModuleType
@@ -124,11 +124,13 @@ export interface IPropsAppSwitch {
 
 export interface IPropsSearch {
 	current_module: App.ModuleType
+	apps: Array<App.ModuleType>
 	open: GlobalModel['search']['open']
 	module: GlobalModel['search']['module']
 	items: GlobalModel['search']['items']
 	index: GlobalModel['search']['index']
 	history: GlobalModel['search']['history']
+	setModule: (v: IPropsSearch['module']) => void
 	searchByInput: GlobalModel['search']['searchByInput']
 	onClose: GlobalModel['search']['closeSearch']
 	onCheck: GlobalModel['search']['onCheck']
@@ -152,11 +154,15 @@ export interface IPropsHomepage {
 	setActive: (v: IPropsHomepage['active']) => void
 	showSetting: () => void
 	closeHomepage: () => void
+	setStar: GlobalModel['app']['setStar']
+	onFile: (file: DirTree.Item) => void
 }
 
-export interface IPropsHomepageHeader extends Pick<IPropsHomepage, 'showSetting' | 'closeHomepage'> {
-	tab: 'latest' | 'star' | 'apps'
-	setTab: (v: IPropsHomepageHeader['tab']) => void
+export interface IPropsHomepageHeader
+	extends Pick<IPropsHomepage, 'tab' | 'setTab' | 'showSetting' | 'closeHomepage'> {}
+
+export interface IPropsHomepageFiles extends Pick<IPropsHomepage, 'tab' | 'setStar' | 'onFile'> {
+	files: DirTree.Items
 }
 
 export interface IPropsHomepageApps extends Pick<IPropsHomepage, 'apps'> {

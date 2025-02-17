@@ -1,11 +1,10 @@
-import { Drawer } from '@/components'
+import { Drawer, SimpleEmpty } from '@/components'
 
 import { Apps, Dirtree, Files, Header } from './components'
 import styles from './index.css'
 
-import type { IPropsHomepage, IPropsHomepageHeader, IPropsHomepageApps } from '@/layout/types'
+import type { IPropsHomepage, IPropsHomepageHeader, IPropsHomepageFiles, IPropsHomepageApps } from '@/layout/types'
 import type { App } from '@/types'
-
 const Index = (props: IPropsHomepage) => {
 	const {
 		visible_homepage,
@@ -17,7 +16,9 @@ const Index = (props: IPropsHomepage) => {
 		setTab,
 		setActive,
 		showSetting,
-		closeHomepage
+		closeHomepage,
+		setStar,
+		onFile
 	} = props
 
 	const props_modal_homepage = {
@@ -36,6 +37,13 @@ const Index = (props: IPropsHomepage) => {
 		closeHomepage
 	}
 
+	const props_files: IPropsHomepageFiles = {
+		tab,
+		files: tab === 'latest' ? latest_files : star_files,
+		setStar,
+		onFile
+	}
+
 	const props_apps: IPropsHomepageApps = {
 		apps,
 		active,
@@ -48,7 +56,16 @@ const Index = (props: IPropsHomepage) => {
 				<Header {...props_header}></Header>
 				<Choose>
 					<When condition={tab === 'latest' || tab === 'star'}>
-						<Files></Files>
+						<Choose>
+							<When condition={props_files.files.length === 0}>
+								<div className='files_empty flex justify_center align_center'>
+									<SimpleEmpty></SimpleEmpty>
+								</div>
+							</When>
+							<Otherwise>
+								<Files {...props_files}></Files>
+							</Otherwise>
+						</Choose>
 					</When>
 					<Otherwise>
 						<Apps {...props_apps}></Apps>
