@@ -176,6 +176,7 @@
 		}
 
 		.end {
+			padding-top: 12px;
 			padding-bottom: 24px;
 			color: var(--color_text_grey);
 			font-size: 12px;

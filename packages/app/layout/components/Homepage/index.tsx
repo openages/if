@@ -5,6 +5,7 @@ import styles from './index.css'
 
 import type { IPropsHomepage, IPropsHomepageHeader, IPropsHomepageFiles, IPropsHomepageApps } from '@/layout/types'
 import type { App } from '@/types'
+
 const Index = (props: IPropsHomepage) => {
 	const {
 		visible_homepage,

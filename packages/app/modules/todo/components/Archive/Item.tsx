@@ -70,11 +70,11 @@ const TextItem = $app.memo((props: IPropsTextItem) => {
 
 const Index = (props: IPropsArchiveItem) => {
 	const { item, restoreArchiveItem, removeArchiveItem } = props
-	const { id, text, status, cycle_enabled, cycle, recycle_time, create_at } = item
+	const { id, text, status, cycle_enabled, cycle, recycle_time, done_time } = item
 	const { t } = useTranslation()
 	const [open, setOpen] = useState(false)
 
-	const relative_time = useMemo(() => dayjs().to(create_at), [create_at])
+	const relative_time = useMemo(() => dayjs().to(done_time), [done_time])
 	const recycle = cycle_enabled && cycle && recycle_time
 
 	const restore = useMemoizedFn(() => restoreArchiveItem(id))

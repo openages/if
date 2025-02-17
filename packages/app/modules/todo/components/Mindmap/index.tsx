@@ -63,8 +63,6 @@ const Index = (props: IPropsMindmap) => {
 		showDetailModal
 	}
 
-	// console.log($copy(x.nodes))
-
 	return (
 		<div className={$cx('flex relative', styles._local, unpaid && styles.unpaid)}>
 			<span className='signal_wrap absolute top_0 left_0'>{x.signal}</span>

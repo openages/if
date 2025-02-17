@@ -1,7 +1,9 @@
+import { diff } from 'deep-object-diff'
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { setElements } from '@/utils'
+import { deepEqual } from '@openages/stk/react'
 
 import { getNodeEdge, layout } from './utils'
 
@@ -12,6 +14,7 @@ import type { IPropsMindmap } from '@/modules/todo/types'
 export default class Index {
 	args = {} as Pick<IPropsMindmap, 'file_id' | 'name' | 'kanban_items'>
 	pure_nodes = [] as Array<Node>
+	prev_layout_nodes = [] as Array<Node>
 	nodes = [] as Array<Node>
 	edges = [] as Array<Edge>
 	signal = false
@@ -32,6 +35,7 @@ export default class Index {
 			{
 				args: false,
 				pure_nodes: false,
+				prev_layout_nodes: false,
 				nodes: false,
 				edges: false,
 				shadow_handlers: false,
@@ -48,6 +52,8 @@ export default class Index {
 	}
 
 	getNodeEdge(kanban_items?: IPropsMindmap['kanban_items']) {
+		if (deepEqual(kanban_items, this.args.kanban_items)) return
+
 		if (kanban_items) this.args = { ...this.args, kanban_items }
 
 		const { nodes, edges } = getNodeEdge(this.args)
@@ -59,11 +65,12 @@ export default class Index {
 
 		this.pure_nodes = nodes
 		this.edges = edges
-
-		if (!this.nodes.length) this.signal = !this.signal
+		this.signal = !this.signal
 	}
 
 	layout(v: Array<Node>) {
+		if (deepEqual(this.prev_layout_nodes, v)) return
+
 		const new_nodes = $copy(v)
 		const nodes = layout(this.args, new_nodes)
 
@@ -73,8 +80,10 @@ export default class Index {
 			this.nodes = nodes
 		} else {
 			this.nodes = nodes
-			this.signal = !this.signal
 		}
+
+		this.prev_layout_nodes = v
+		this.signal = !this.signal
 	}
 
 	setNodes(new_nodes: Array<Node>, shadow?: boolean) {

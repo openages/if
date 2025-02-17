@@ -1,18 +1,30 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
-import { useReactFlow, ReactFlow } from '@xyflow/react'
+import { useOnViewportChange, useReactFlow, ReactFlow } from '@xyflow/react'
 
 import { node_types } from './'
 
 import type { IPropsGraph } from '../types'
+import type { Viewport } from '@xyflow/react'
 
 const Index = (props: IPropsGraph) => {
 	const { theme, nodes, edges, setHandlers } = props
-	const { fitView, setNodes, setEdges } = useReactFlow()
+	const { fitView, setNodes, setEdges, setViewport } = useReactFlow()
+	const mounted = useRef(false)
+	const viewport = useRef<Viewport | null>(null)
+
+	useOnViewportChange({
+		onEnd: v => (viewport.current = v)
+	})
 
 	useEffect(() => {
+		if (viewport.current) setViewport(viewport.current)
+		if (mounted.current) return
+
 		fitView({ minZoom: 0.6 })
 		setHandlers({ fitView, setNodes, setEdges })
+
+		mounted.current = true
 	}, [])
 
 	return (

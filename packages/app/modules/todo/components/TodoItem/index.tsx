@@ -271,7 +271,11 @@ const Index = (props: IPropsTodoItem) => {
 								id={`todo_${id}`}
 								className={$cx(
 									'text_wrap',
-									children && !!children?.length && !open && 'has_children',
+									mode !== 'mindmap' &&
+										children &&
+										!!children?.length &&
+										!open &&
+										'has_children',
 									!!outdate && 'outdate'
 								)}
 								max_length={todo.text_max_length}
