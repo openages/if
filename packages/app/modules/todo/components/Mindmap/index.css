@@ -1,5 +1,5 @@
 ._local {
-	height: calc(100% - 72px);
+	height: calc(100% - 37px);
 	padding-top: 0;
 
 	&.unpaid {
@@ -35,6 +35,16 @@
 		.react-flow__pane {
 			&.draggable {
 				cursor: unset;
+			}
+		}
+
+		.react-flow__minimap {
+			.react-flow__minimap-svg {
+				border-radius: var(--radius);
+
+				#react-flow__minimap-desc-1 {
+					display: none;
+				}
 			}
 		}
 

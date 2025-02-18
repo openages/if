@@ -156,13 +156,18 @@ export interface IPropsHomepage {
 	closeHomepage: () => void
 	setStar: GlobalModel['app']['setStar']
 	onFile: (file: DirTree.Item) => void
+	onStarFilesDragEnd: GlobalModel['app']['onStarFilesDragEnd']
 }
 
 export interface IPropsHomepageHeader
 	extends Pick<IPropsHomepage, 'tab' | 'setTab' | 'showSetting' | 'closeHomepage'> {}
 
-export interface IPropsHomepageFiles extends Pick<IPropsHomepage, 'tab' | 'setStar' | 'onFile'> {
+export interface IPropsHomepageFiles extends Pick<IPropsHomepage, 'tab' | 'setStar' | 'onFile' | 'onStarFilesDragEnd'> {
 	files: DirTree.Items
+}
+
+export interface IPropsHomepageFilesItem extends Pick<IPropsHomepageFiles, 'tab' | 'setStar' | 'onFile'> {
+	item: DirTree.Item
 }
 
 export interface IPropsHomepageApps extends Pick<IPropsHomepage, 'apps'> {

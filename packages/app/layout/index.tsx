@@ -189,7 +189,8 @@ const Index = () => {
 			} as Stack.View)
 
 			global.app.visible_homepage = false
-		})
+		}),
+		onStarFilesDragEnd: useMemoizedFn(global.app.onStarFilesDragEnd)
 	}
 
 	if (global.screenlock.screenlock_open) {

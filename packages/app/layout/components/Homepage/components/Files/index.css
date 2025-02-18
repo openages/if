@@ -11,14 +11,28 @@
 
 				&:hover {
 					background-color: var(--color_bg_1);
-
-					.star_icon_wrap {
-						display: flex;
-					}
 				}
 
 				&:active {
 					background-color: var(--color_bg_2);
+				}
+
+				&.star_item {
+					&:hover {
+						.icon_module_wrap {
+							display: none;
+						}
+
+						.star_icon_wrap {
+							display: flex;
+						}
+					}
+				}
+
+				&.dragging {
+					z-index: 10;
+					background-color: transparent;
+					backdrop-filter: var(--blur);
 				}
 
 				.left_icon_wrap {
@@ -35,6 +49,10 @@
 					text-overflow: ellipsis;
 					vertical-align: middle;
 					white-space: nowrap;
+				}
+
+				.icon_module_wrap {
+					color: var(--color_text_light);
 				}
 
 				.star_icon_wrap {

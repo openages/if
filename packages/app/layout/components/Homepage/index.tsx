@@ -19,7 +19,8 @@ const Index = (props: IPropsHomepage) => {
 		showSetting,
 		closeHomepage,
 		setStar,
-		onFile
+		onFile,
+		onStarFilesDragEnd
 	} = props
 
 	const props_modal_homepage = {
@@ -42,7 +43,8 @@ const Index = (props: IPropsHomepage) => {
 		tab,
 		files: tab === 'latest' ? latest_files : star_files,
 		setStar,
-		onFile
+		onFile,
+		onStarFilesDragEnd
 	}
 
 	const props_apps: IPropsHomepageApps = {

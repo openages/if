@@ -7,11 +7,14 @@ import { modules_no_setting } from '@/appdata'
 import Utils from '@/models/utils'
 import { getDocItemsData, ipc, is_electron_shell } from '@/utils'
 import { info } from '@/utils/antd'
+import { arrayMove } from '@dnd-kit/sortable'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
 
 import type { App, DirTree } from '@/types'
 import type { Watch } from '@openages/stk/mobx'
 import type { Subscription } from 'rxjs'
+import type { DragEndEvent } from '@dnd-kit/core'
+
 export interface HasUpdate {
 	type: 'has_update'
 	version: string
@@ -86,13 +89,29 @@ export default class Index {
 					{
 						latest_ids: {
 							toStorage: (v: Index['latest_ids']) => Object.fromEntries(v.entries()),
-							fromStorage: (v: Record<string, null>) => LRUMapWithDelete.from(v, 18)
+							fromStorage: (v: Record<string, null>) =>
+								LRUMapWithDelete.from(
+									Object.fromEntries(
+										Object.keys(v)
+											.reverse()
+											.map(item => [item, null])
+									),
+									18
+								)
 						}
 					},
 					{
 						star_ids: {
 							toStorage: (v: Index['star_ids']) => Object.fromEntries(v.entries()),
-							fromStorage: (v: Record<string, null>) => LRUMapWithDelete.from(v, 18)
+							fromStorage: (v: Record<string, null>) =>
+								LRUMapWithDelete.from(
+									Object.fromEntries(
+										Object.keys(v)
+											.reverse()
+											.map(item => [item, null])
+									),
+									18
+								)
 						}
 					}
 				],
@@ -233,6 +252,24 @@ export default class Index {
 		this.star_watcher = $db.dirtree_items.findByIds(Array.from(this.star_ids.keys())).$.subscribe(doc => {
 			this.star_files = getDocItemsData(Array.from(doc.values())) as DirTree.Items
 		})
+	}
+
+	onStarFilesDragEnd({ active, over }: DragEndEvent) {
+		if (!over?.id) return false
+		if (active.id === over.id) return
+
+		const ids = $copy(this.star_files).map(item => item.id)
+
+		const active_index = ids.findIndex(item => item === active.id)
+		const over_index = ids.findIndex(item => item === over.id)
+		const target = arrayMove(ids, active_index, over_index)
+
+		this.star_ids = LRUMapWithDelete.from(
+			Object.fromEntries(target.map(item => [item, null]).reverse()),
+			18
+		) as LRUMapWithDelete<string, null>
+
+		this.watchStar()
 	}
 
 	async download() {

@@ -268,7 +268,12 @@ const Index = (props: IPropsHeader) => {
 				'limited_content_wrap border_box flex justify_between align_center relative',
 				styles._local,
 				mode !== 'list' && styles.not_list,
-				(mode === 'kanban' || mode === 'quad' || mode === 'flat' || mode === 'table') && styles.mini,
+				(mode === 'kanban' ||
+					mode === 'quad' ||
+					mode === 'flat' ||
+					mode === 'table' ||
+					mode === 'mindmap') &&
+					styles.mini,
 				styles[mode],
 				editor_size && styles.desc
 			)}
@@ -279,7 +284,14 @@ const Index = (props: IPropsHeader) => {
 						<Emoji
 							className='icon_emoji'
 							shortcodes={icon!}
-							size={mode === 'kanban' || mode === 'quad' || mode === 'flat' ? 15 : 21}
+							size={
+								mode === 'kanban' ||
+								mode === 'quad' ||
+								mode === 'flat' ||
+								mode === 'mindmap'
+									? 15
+									: 21
+							}
 							hue={icon_hue}
 						></Emoji>
 					</If>

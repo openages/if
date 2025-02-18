@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-import { useOnViewportChange, useReactFlow, ReactFlow } from '@xyflow/react'
+import { useOnViewportChange, useReactFlow, Controls, MiniMap, ReactFlow } from '@xyflow/react'
 
 import { node_types } from './'
 
@@ -35,7 +35,10 @@ const Index = (props: IPropsGraph) => {
 				nodeTypes={node_types}
 				defaultNodes={nodes}
 				defaultEdges={edges}
-			></ReactFlow>
+			>
+				<Controls />
+				<MiniMap nodeStrokeWidth={3} pannable zoomable />
+			</ReactFlow>
 		</div>
 	)
 }
