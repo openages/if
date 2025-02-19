@@ -3,10 +3,11 @@ import { Button, Form, Select } from 'antd'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { AnglesEditor, SettingsModal, TagsEditor } from '@/components'
+import { SettingsModal, TagsEditor } from '@/components'
 import { TextEditor } from '@/Editor/components'
 import { cleanTodoItems } from '@/modules/todo/services'
 
+import AnglesEditor from '../AnglesEditor'
 import styles from './index.css'
 
 import type { IPropsSettingsModal } from '../../types'
@@ -17,6 +18,7 @@ const { Item } = Form
 const Index = (props: IPropsSettingsModal) => {
 	const { id, visible_settings_modal, setting, closeSettingsModal, updateSetting, removeAngle, removeTag } = props
 	const { t, i18n } = useTranslation()
+	const exclude_angles = setting.exclude_angles || []
 
 	const archive_options = useMemo(() => {
 		const locale_options = t('todo.SettingsModal.auto_archiving.options') as Record<string, string>
@@ -37,6 +39,7 @@ const Index = (props: IPropsSettingsModal) => {
 		onValuesChange: updateSetting
 	}
 
+	const setExcludeAngles = useMemoizedFn(v => updateSetting({ exclude_angles: v }))
 	const onClean = useMemoizedFn(() => cleanTodoItems(id))
 
 	return (
@@ -51,7 +54,11 @@ const Index = (props: IPropsSettingsModal) => {
 					></TextEditor>
 				</Item>
 				<Item name='angles' label={t('common.angles.label')}>
-					<AnglesEditor remove={removeAngle}></AnglesEditor>
+					<AnglesEditor
+						exclude_angles={exclude_angles}
+						remove={removeAngle}
+						setExcludeAngles={setExcludeAngles}
+					></AnglesEditor>
 				</Item>
 				<Item name='tags' label={t('common.tags.label')}>
 					<TagsEditor remove={removeTag}></TagsEditor>

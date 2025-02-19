@@ -22,5 +22,27 @@
 		.drag_handler {
 			height: 36px;
 		}
+
+		.btn_homepage {
+			bottom: 18px;
+			color: var(--color_text_light);
+
+			&:hover,
+			&.active {
+				color: var(--color_text);
+			}
+
+			.icon {
+				display: flex;
+				margin-bottom: 3px;
+				font-size: 18px;
+			}
+
+			.text {
+				line-height: 1;
+				user-select: none;
+				font-size: 10px;
+			}
+		}
 	}
 }

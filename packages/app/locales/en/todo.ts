@@ -31,6 +31,7 @@ export default {
 	Header: {
 		zen: 'Zen Mode',
 		table_mode: {
+			export_xls: 'Export to excel',
 			filter: 'Filter'
 		},
 		mode: {

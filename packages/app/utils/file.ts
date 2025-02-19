@@ -1,3 +1,5 @@
+import type { Buffer } from 'exceljs'
+
 export const convertFile = (file: Blob, type?: 'base64' | 'array_buffer') => {
 	const { promise, resolve, reject } = Promise.withResolvers<string>()
 
@@ -36,6 +38,25 @@ export const downloadFile = (filename: string, text: string, ext: string, mime_t
 	link.style.display = 'none'
 	link.href = url
 	link.download = `${filename}.${ext}`
+
+	document.body.appendChild(link)
+
+	link.click()
+
+	document.body.removeChild(link)
+
+	URL.revokeObjectURL(url)
+}
+
+export const downloadExcel = (filename: string, buffer: Buffer) => {
+	const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+	const url = URL.createObjectURL(blob)
+
+	const link = document.createElement('a')
+
+	link.style.display = 'none'
+	link.href = url
+	link.download = `${filename}.xlsx`
 
 	document.body.appendChild(link)
 

@@ -210,3 +210,16 @@ export interface IPropsTaskPanel {
 	toggleTaskPanelClearMode: () => void
 	updateTodoSchedule: Model['updateTodoSchedule']
 }
+
+export interface IPropsList {
+	visible_list_modal: Model['visible_list_modal']
+	list_duration: Model['list_duration']
+	list_current_text: Model['list_current_text']
+	list_current_date: Model['list_current_date']
+	list_custom_duration: Model['list_custom_duration']
+	setListDuration: (v: Model['list_duration']) => void
+	prev: () => void
+	next: () => void
+	setListCustomDuration: (v: Model['list_custom_duration']) => void
+	onClose: () => void
+}

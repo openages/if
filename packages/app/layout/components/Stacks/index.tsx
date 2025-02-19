@@ -1,9 +1,11 @@
 import { useMemoizedFn } from 'ahooks'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { Logo } from '@/components'
 import { is_win_electron } from '@/utils'
 import { useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
+import { House } from '@phosphor-icons/react'
 
 import { WinActions } from '../'
 import { Content, NavBar, View } from './components'
@@ -32,6 +34,7 @@ const Index = (props: IPropsStacks) => {
 	} = props
 	const [drag_view, setDragView] = useState<{ column_index: number; view_index: number; view: Stack.View }>(null!)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
+	const { t } = useTranslation()
 
 	useEffect(() => {
 		observe()
@@ -105,6 +108,16 @@ const Index = (props: IPropsStacks) => {
 							</If>
 						</div>
 						<Logo size={96}></Logo>
+
+						<If condition={browser_mode}>
+							<div
+								className='btn_homepage flex flex_column align_center absolute clickable'
+								onClick={showHomepage}
+							>
+								<House className='icon' />
+								<span className='text'>{t('layout.Homepage.title')}</span>
+							</div>
+						</If>
 					</div>
 				</Otherwise>
 			</Choose>

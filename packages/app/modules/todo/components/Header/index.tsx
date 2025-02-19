@@ -14,6 +14,7 @@ import {
 	ChartBar,
 	DotsThreeCircleVertical,
 	Faders,
+	FileXls,
 	Funnel,
 	GitFork,
 	GridFour,
@@ -56,7 +57,8 @@ const Index = (props: IPropsHeader) => {
 		setItemsFilterTags,
 		toggleTableFilter,
 		resetSearchMode,
-		updateSetting
+		updateSetting,
+		exportToExcel
 	} = props
 
 	const { t } = useTranslation()
@@ -368,6 +370,16 @@ const Index = (props: IPropsHeader) => {
 				)}
 				{mode === 'table' && (
 					<Fragment>
+						<Tooltip title={t('todo.Header.table_mode.export_xls')}>
+							<div className='mr_8'>
+								<div
+									className='icon_wrap border_box flex justify_center align_center cursor_point clickable'
+									onClick={exportToExcel}
+								>
+									<FileXls></FileXls>
+								</div>
+							</div>
+						</Tooltip>
 						<Popover
 							trigger={['click']}
 							placement='bottom'

@@ -31,6 +31,7 @@ export default {
 	Header: {
 		zen: '禅模式',
 		table_mode: {
+			export_xls: '导出为 Excel',
 			filter: '过滤器'
 		},
 		mode: {

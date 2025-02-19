@@ -67,6 +67,12 @@ export default class Index {
 
 	visible_task_panel = false
 	visible_settings_modal = false
+	visible_list_modal = false
+
+	list_duration = 'today' as 'today' | 'week' | 'month' | 'year' | 'custom'
+	list_current_text = dayjs().format('YYYY-MM-DD') as string
+	list_current_date = dayjs()
+	list_custom_duration = null as [string, string] | null
 
 	task_panel_clear_mode = true
 

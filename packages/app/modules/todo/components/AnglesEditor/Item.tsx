@@ -3,20 +3,22 @@ import { useTranslation } from 'react-i18next'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { DotsSixVertical, Plus, Trash } from '@phosphor-icons/react'
+import { DotsSixVertical, Eye, EyeSlash, Plus, Trash } from '@phosphor-icons/react'
 
 interface IProps {
 	item: { id: string; text: string }
 	index: number
 	limitMin: boolean
 	limitMax: boolean
+	exclude: boolean
+	onExclude: (index: number) => void
 	onAdd: (index: number) => void
 	onRemove: (index: number) => void
 	onUpdate: (index: number, v: string) => void
 }
 
 const Index = (props: IProps) => {
-	const { item, index, limitMin, limitMax, onAdd, onRemove, onUpdate } = props
+	const { item, index, limitMin, limitMax, exclude, onExclude, onAdd, onRemove, onUpdate } = props
 	const { attributes, listeners, transform, transition, setNodeRef, setActivatorNodeRef } = useSortable({
 		id: item.id,
 		data: { index }
@@ -38,7 +40,16 @@ const Index = (props: IProps) => {
 			></Input>
 			<div
 				className={$cx(
-					'btn btn_add border_box flex justify_center align_center clickable',
+					'btn border_box flex justify_center align_center clickable',
+					limitMax && 'disabled'
+				)}
+				onClick={() => onExclude(index)}
+			>
+				{exclude ? <EyeSlash></EyeSlash> : <Eye></Eye>}
+			</div>
+			<div
+				className={$cx(
+					'btn border_box flex justify_center align_center clickable',
 					limitMax && 'disabled'
 				)}
 				onClick={() => onAdd(index)}
@@ -47,7 +58,7 @@ const Index = (props: IProps) => {
 			</div>
 			<div
 				className={$cx(
-					'btn btn_remove border_box flex justify_center align_center clickable',
+					'btn border_box flex justify_center align_center clickable',
 					limitMin && 'disabled'
 				)}
 				onClick={() => onRemove(index)}
@@ -55,7 +66,7 @@ const Index = (props: IProps) => {
 				<Trash></Trash>
 			</div>
 			<div
-				className='btn btn_move border_box flex justify_center align_center clickable'
+				className='btn border_box flex justify_center align_center clickable'
 				ref={setActivatorNodeRef}
 				{...attributes}
 				{...listeners}

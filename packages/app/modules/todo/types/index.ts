@@ -47,6 +47,7 @@ export interface IPropsHeader
 	toggleTableFilter: () => void
 	resetSearchMode: Model['resetSearchMode']
 	updateSetting: Model['updateSetting']
+	exportToExcel: Model['exportToExcel']
 }
 
 export interface IPropsHeaderTableFields extends Pick<IPropsHeader, 'table_exclude_fields' | 'updateSetting'> {}

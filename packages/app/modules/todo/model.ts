@@ -1,5 +1,8 @@
+import dayjs from 'dayjs'
+import { Workbook } from 'exceljs'
 import { omit, pick } from 'lodash-es'
 import { makeAutoObservable, runInAction } from 'mobx'
+import { it } from 'node:test'
 import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { match, P } from 'ts-pattern'
 import { injectable } from 'tsyringe'
@@ -8,9 +11,10 @@ import { archive, cycle } from '@/actions/todo'
 import { GlobalModel } from '@/context/app'
 import { File, Loadmore, Utils } from '@/models'
 import { getQuerySetting } from '@/services'
-import { getDocItem, getDocItemsData, id, sleep } from '@/utils'
+import { downloadExcel, getDocItem, getDocItemsData, id, sleep } from '@/utils'
 import { confirm } from '@/utils/antd'
 import { disableWatcher, loading } from '@/utils/decorators'
+import getEditorText from '@/utils/getEditorText'
 import { arrayMove } from '@dnd-kit/sortable'
 import { updateSort } from '@openages/stk/dnd'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
@@ -65,7 +69,6 @@ import type {
 } from './types/model'
 import type { ArgsUpdateTodoData } from './types/services'
 import type { CleanTime } from '@/types'
-
 @injectable()
 export default class Index {
 	id = ''
@@ -167,39 +170,10 @@ export default class Index {
 
 			this.queryArchives(true)
 		},
-		['mode']: (v, old_val) => {
+		['mode']: v => {
 			this.visible_detail_modal = false
-			this.items = []
 
-			if (v !== 'list' || old_val !== 'table') {
-				this.kanban_items = {}
-
-				this.stopWatchItems()
-			}
-
-			if ((v !== 'kanban' && v !== 'flat') || old_val !== 'mindmap') {
-				this.stopWatchKanbanItems()
-			}
-
-			if (v === 'list' || v === 'table') {
-				this.watchItems()
-			}
-
-			if (v !== 'table') {
-				this.table_pagination = { current: 1, pageSize: 15, total: 0 }
-				this.table_selector = {}
-				this.table_sort = {}
-			}
-
-			if (v === 'kanban' || v === 'flat' || v === 'mindmap') {
-				this.watchKanbanItems()
-			}
-
-			if (v === 'quad') {
-				this.watchQuadItems()
-			} else {
-				this.stopWatchQuadItems()
-			}
+			this.onModeChange(v!)
 		}
 	} as Watch<
 		Index & {
@@ -211,6 +185,13 @@ export default class Index {
 
 	get is_filtered() {
 		return Boolean(this.items_sort_param) || this.items_filter_tags.length > 0
+	}
+
+	get visible_angles() {
+		const angles = this.setting?.setting?.angles || []
+		const exclude_angles = this.setting?.setting?.exclude_angles || []
+
+		return angles.filter(item => !exclude_angles.includes(item.id))
 	}
 
 	get current_detail_item() {
@@ -269,6 +250,40 @@ export default class Index {
 			},
 			{ autoBind: true }
 		)
+	}
+
+	onModeChange(v: Mode) {
+		match(v)
+			.with(P.union('list', 'table'), () => {
+				this.watchItems()
+			})
+			.with(P.union('kanban', 'flat', 'mindmap'), () => {
+				this.watchKanbanItems()
+			})
+			.with('quad', () => {
+				this.watchQuadItems()
+			})
+			.exhaustive()
+
+		if (!['list', 'table'].includes(v)) {
+			this.items = []
+			this.stopWatchItems()
+		}
+
+		if (!['kanban', 'flat', 'mindmap'].includes(v)) {
+			this.kanban_items = {}
+			this.stopWatchKanbanItems()
+		}
+
+		if (v !== 'quad') {
+			this.stopWatchQuadItems()
+		}
+
+		if (v !== 'table') {
+			this.table_pagination = { current: 1, pageSize: 15, total: 0 }
+			this.table_selector = {}
+			this.table_sort = {}
+		}
 	}
 
 	async init(args: { id: string }) {
@@ -348,6 +363,14 @@ export default class Index {
 
 			this.watchKanbanItems()
 		}
+
+		if ('exclude_angles' in changed_values) {
+			if (this.mode === 'list' && changed_values['exclude_angles']?.includes(this.current_angle_id)) {
+				this.current_angle_id = this.visible_angles[0].id
+			}
+
+			this.onModeChange(this.mode)
+		}
 	}
 
 	@loading
@@ -357,7 +380,7 @@ export default class Index {
 		if (this.mode === 'kanban') {
 			data['angle_id'] = options?.dimension_id!
 		} else if (this.mode === 'quad') {
-			data['angle_id'] = this.current_angle_id || this.setting.setting.angles[0].id
+			data['angle_id'] = this.current_angle_id || this.visible_angles[0].id
 			;(data as Todo.Todo)['level'] = Number(options?.dimension_id!.replace('level_', ''))
 		} else {
 			data['angle_id'] = this.current_angle_id
@@ -786,6 +809,67 @@ export default class Index {
 		this.analysis_items = items
 	}
 
+	async exportToExcel() {
+		if (!this.items.length) return
+
+		const angles = this.setting?.setting?.angles || []
+		const tags = this.setting?.setting?.tags || []
+
+		const target_items = (
+			$copy(this.items) as Array<
+				Todo.Todo & { status_text: string; angle: string; tags: string; create: string; done: string }
+			>
+		).map(item => {
+			const target_angle = angles.find(it => it.id === item.angle_id)!
+			const target_tags = tags.filter(it => (item.tag_ids || []).includes(it.id))
+
+			item.status_text = $t(`todo.common.status.${item.status}`)
+			item.angle = target_angle?.text || ''
+			item.text = item.text ? getEditorText(item.text) : ''
+			item.tags = target_tags.map(it => it.text).join(' ')
+			item.create = dayjs(item.create_at).format('YYYY-MM-DD HH:mm')
+			item.done = item.done_time ? dayjs(item.done_time).format('YYYY-MM-DD HH:mm') : ''
+
+			return pick(item, 'status_text', 'angle', 'text', 'tags', 'create', 'done')
+		})
+
+		const workbook = new Workbook()
+		const worksheet = workbook.addWorksheet($t('modules.todo'))
+
+		const headers = Object.keys(target_items[0]).map(item => {
+			if (item === 'status_text') return $t('todo.common.status.label')
+			if (item === 'angle') return $t('todo.Archive.filter.angle')
+			if (item === 'text') return $t('todo.common.text')
+			if (item === 'tags') return $t('todo.Header.options.tags')
+			if (item === 'create') return $t('todo.Header.options.sort.create_at')
+			if (item === 'done') return $t('todo.common.done_time')
+		})
+
+		worksheet.addRow(headers)
+
+		worksheet.addRows(
+			target_items.map(item => {
+				return Object.values(item)
+			})
+		)
+
+		headers.forEach((_, index) => {
+			const column = index + 1
+
+			let width = 12
+
+			if (column === 3) width = 45
+			if (column === 4) width = 15
+			if (column === 5 || column === 6) width = 15
+
+			worksheet.getColumn(column).width = width
+		})
+
+		const buffer = await workbook.xlsx.writeBuffer()
+
+		downloadExcel(this.file.data.name, buffer)
+	}
+
 	handleOpenItem(id: string, v: boolean) {
 		if (v) {
 			if (this.open_items.includes(id)) return
@@ -1007,7 +1091,7 @@ export default class Index {
 
 			if (this.current_angle_id) return
 
-			this.current_angle_id = this.setting.setting.angles[0].id
+			this.current_angle_id = this.visible_angles[0].id
 		})
 
 		return promise
@@ -1059,7 +1143,7 @@ export default class Index {
 
 		if (!this.setting.setting) return
 
-		const angles = this.setting.setting.angles
+		const angles = this.visible_angles
 
 		this.kanban_items_watcher = angles.map(item => {
 			this.kanban_items[item.id] = {

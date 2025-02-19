@@ -15,5 +15,8 @@ export default {
 		month: '月视图',
 		timeline: '时间线视图',
 		fixed: '固定视图'
+	},
+	List: {
+		title: '事项列表'
 	}
 }

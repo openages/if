@@ -15,5 +15,8 @@ export default {
 		month: 'Month',
 		timeline: 'Timeline',
 		fixed: 'Fixed'
+	},
+	List: {
+		title: 'Timeblock List'
 	}
 }

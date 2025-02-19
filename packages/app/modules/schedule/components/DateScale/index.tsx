@@ -39,12 +39,14 @@ const Index = (props: IPropsDateScale) => {
 		>
 			{(show_time_scale || view === 'timeline') && (
 				<div className='btn_now_wrap h_100 border_box flex justify_center align_center'>
-					<div
-						className='btn_std flex justify_center align_center clickable'
-						onClick={scrollToScanline}
-					>
-						{view !== 'timeline' && <ArrowLineDown></ArrowLineDown>}
-					</div>
+					{view !== 'timeline' && (
+						<div
+							className='btn_std flex justify_center align_center clickable'
+							onClick={scrollToScanline}
+						>
+							<ArrowLineDown></ArrowLineDown>
+						</div>
+					)}
 				</div>
 			)}
 			<div className='weekday_items flex'>

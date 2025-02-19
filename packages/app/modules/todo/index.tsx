@@ -59,6 +59,7 @@ const Index = ({ id }: IProps) => {
 
 	const items = $copy(x.items)
 	const angles = $copy(x.setting?.setting?.angles || [])
+	const visible_angles = $copy(x.visible_angles)
 	const tags = $copy(x.setting?.setting?.tags || [])
 	const relations = $copy(x.setting?.setting?.relations || [])
 	const current_detail_item = $copy(x.current_detail_item)
@@ -105,11 +106,12 @@ const Index = ({ id }: IProps) => {
 		setItemsFilterTags: useMemoizedFn(v => (x.items_filter_tags = v)),
 		toggleTableFilter: useMemoizedFn(() => (x.visible_table_filter = !x.visible_table_filter)),
 		resetSearchMode: useMemoizedFn(x.resetSearchMode),
-		updateSetting
+		updateSetting,
+		exportToExcel: useMemoizedFn(x.exportToExcel)
 	}
 
 	const props_tabs: IPropsTabs = {
-		angles,
+		angles: visible_angles,
 		current_angle_id: x.current_angle_id,
 		setCurrentAngleId: useMemoizedFn(v => (x.current_angle_id = v))
 	}
