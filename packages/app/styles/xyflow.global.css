@@ -12,7 +12,7 @@
 	overflow: hidden;
 	padding: 2px;
 	border: var(--border_light);
-	border-radius: var(--radius_small_1);
+	border-radius: var(--radius);
 	box-shadow: none;
 	gap: 3px;
 
@@ -21,7 +21,7 @@
 		height: 21px;
 		padding: 0;
 		border-bottom: none;
-		border-radius: var(--radius_small_1);
+		border-radius: var(--radius_small);
 		background-color: transparent;
 
 		&:hover {

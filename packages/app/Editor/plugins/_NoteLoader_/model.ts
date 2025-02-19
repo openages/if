@@ -85,13 +85,24 @@ export default class Index {
 
 			return placeholer.classList.remove('__editor_hidden')
 		} else {
-			const state = getStateJson(items, key => {
+			const res = getStateJson(items, key => {
 				this.ids_array.push(key)
 				this.ids_map.set(key, undefined)
-			})!
+			})
+
+			if (!res) return
+
+			const { state, effect_items } = res
 
 			this.editor.setEditorState(parseEditorState(state, this.editor))
 			this.editor.focus(undefined, { defaultSelection: 'rootStart' })
+
+			if (effect_items.length) {
+				this.dispatch(
+					effect_items.map(({ id }) => ({ type: 'update', id })),
+					'update'
+				)
+			}
 		}
 	}
 
@@ -196,7 +207,7 @@ export default class Index {
 	}
 
 	@disableWatcher
-	async dispatch(changes?: Array<Change>, bulk_type?: 'add' | 'remove') {
+	async dispatch(changes?: Array<Change>, bulk_type?: 'add' | 'remove' | 'update') {
 		const target = changes || Array.from(this.changes.values())
 
 		if (changes && bulk_type) this.removeUpdateListner()

@@ -58,7 +58,7 @@ const Index = (props: IPropsDirItem_Item) => {
 					</Choose>
 				</div>
 				<div className='title_wrap flex align_center h_100 text_left'>{name}</div>
-				{type === 'file' && (
+				{browser_mode && type === 'file' && (
 					<div
 						className={$cx(
 							'star_icon_wrap align_center clickable',
