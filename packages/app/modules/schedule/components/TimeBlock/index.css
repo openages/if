@@ -275,7 +275,7 @@
 		&.no_tag {
 			:global {
 				.timeblock_content_wrap {
-					background-color: rgba(var(--color_text_rgb), 0.03);
+					background: var(--color_bg_1) !important;
 
 					&::before {
 						background: rgba(var(--color_text_rgb), 0.18);
@@ -297,22 +297,25 @@
 			}
 
 			.btn_detail {
+				top: 11.1px;
+				right: 3px;
 				color: var(--color_text) !important;
 			}
 
 			.timeblock_content_wrap {
 				padding: 1px 4px;
-				padding-left: 18px;
+				padding-left: 24px;
 				border: none !important;
+				border-radius: 19px;
 				color: rgba(var(--color_text_rgb), 1);
-				background: var(--color_bg_1) !important;
+				background: rgba(var(--tag_color), 0.12) !important;
 
 				&::before {
 					position: absolute;
-					top: 8.4px;
-					left: 7.2px;
-					width: 6px;
-					height: 6px;
+					top: 15px;
+					left: 9px;
+					width: 8px;
+					height: 8px;
 					border-radius: 50%;
 					background: rgba(var(--tag_color), 1);
 					content: '';

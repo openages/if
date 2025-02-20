@@ -2,7 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import { Select } from 'antd'
 import { useMemo } from 'react'
 
-import { Funnel, GearSix } from '@phosphor-icons/react'
+import { Funnel, GearSix, SortAscending } from '@phosphor-icons/react'
 
 import TagOptionRender from '../../../TagOptionRender'
 import TagSelectRender from '../../../TagSelectRender'
@@ -12,7 +12,7 @@ import type { IPropsHeaderRight } from '../../../../types'
 import type { Tag } from '@/types'
 
 const Index = (props: IPropsHeaderRight) => {
-	const { tags, filter_tags, showSettingsModal, changeFilterTags } = props
+	const { tags, filter_tags, showSettingsModal, showListModal, changeFilterTags } = props
 
 	const color_tags = useMemo(() => tags.map(item => ({ ...item, text: `${item.text}|${item.color}` })), [tags])
 
@@ -39,6 +39,9 @@ const Index = (props: IPropsHeaderRight) => {
 				optionRender={TagOptionRender}
 				onChange={onChangeFilterTags}
 			></Select>
+			<button className='btn_std active flex justify_center align_center clickable' onClick={showListModal}>
+				<SortAscending size={15}></SortAscending>
+			</button>
 			<button
 				className='btn_std active flex justify_center align_center clickable'
 				onClick={showSettingsModal}

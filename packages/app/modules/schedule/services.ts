@@ -34,7 +34,7 @@ export const addTimeBlock = (file_id: string, args: Partial<Schedule.Item>) => {
 export const updateTimeBlock = async (id: string, v: Partial<Schedule.Item>) => {
 	const doc = await getTimeBlock(id)
 
-	return doc.updateCRDT({ ifMatch: { $set: v } })
+	return doc!.updateCRDT({ ifMatch: { $set: v } })
 }
 
 export const removeTimeBlock = async (id: string) => {
@@ -56,20 +56,6 @@ export const hangleTimeBlock = async (
 	} else {
 		return $db.schedule_items.find({ selector }).remove()
 	}
-}
-
-export const removeTimeblock = async (file_id: string, params: { tag?: string; angle_id?: string; row?: number }) => {
-	if (params.angle_id) {
-		const selector = {} as MangoQuerySelector<Schedule.Item>
-
-		if (params.row) selector['timeline_angle_row'] = params.row
-
-		return $db.schedule_items
-			.find({ selector: { file_id, timeline_angle_id: params.angle_id, ...selector } })
-			.remove()
-	}
-
-	return $db.schedule_items.find({ selector: { file_id, tag: params.tag } }).remove()
 }
 
 export const cleanByTime = async (file_id: string, v: CleanTime) => {

@@ -1,0 +1,57 @@
+._local {
+	margin-bottom: 12px;
+	gap: 12px;
+
+	:global {
+		.if-segmented {
+			flex: 1;
+
+			.if-segmented-group {
+				font-size: 12px;
+
+				.if-segmented-item {
+					flex: 1;
+
+					.if-segmented-item-label {
+						justify-content: center;
+						min-height: 28px;
+						line-height: 28px;
+						text-transform: capitalize;
+					}
+				}
+			}
+		}
+
+		.option_wrap {
+			height: 32px;
+			padding: 0 12px;
+			border-radius: var(--radius);
+			color: var(--color_text_sublight);
+			background-color: var(--color_bg_1);
+			font-size: 12px;
+
+			&.btn {
+				width: 32px;
+				padding: 0;
+				font-size: 15px;
+
+				&:hover {
+					color: var(--color_text);
+					background-color: var(--color_bg_2);
+				}
+			}
+
+			&.current {
+				&:hover {
+					color: var(--color_text);
+					background-color: var(--color_bg_2);
+				}
+			}
+
+			&.total {
+				width: 60px;
+				padding: 0;
+			}
+		}
+	}
+}

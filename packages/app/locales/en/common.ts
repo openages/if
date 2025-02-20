@@ -32,6 +32,7 @@ export default {
 		感恩节: 'Thanksgiving',
 		圣诞节: 'Christmas'
 	},
+	custom: 'Custom',
 	l_this: 'this',
 	l_today: 'today',
 	l_week: 'week',

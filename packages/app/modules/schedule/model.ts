@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs'
 import { omit } from 'lodash-es'
-import { makeAutoObservable, runInAction } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
@@ -11,8 +11,9 @@ import { getQuerySetting, updateSetting } from '@/services'
 import { getDocItem, getDocItemsData } from '@/utils'
 import { confirm } from '@/utils/antd'
 import { disableWatcher } from '@/utils/decorators'
+import getEditorText from '@/utils/getEditorText'
 import { findParent } from '@openages/stk/dom'
-import { useInstanceWatch } from '@openages/stk/mobx'
+import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
 import { deepEqual } from '@openages/stk/react'
 
 import {
@@ -69,10 +70,11 @@ export default class Index {
 	visible_settings_modal = false
 	visible_list_modal = false
 
-	list_duration = 'today' as 'today' | 'week' | 'month' | 'year' | 'custom'
+	list_duration = 'day' as 'day' | 'week' | 'month' | 'year' | 'custom'
 	list_current_text = dayjs().format('YYYY-MM-DD') as string
 	list_current_date = dayjs()
 	list_custom_duration = null as [string, string] | null
+	list_items = [] as Array<Schedule.Item>
 
 	task_panel_clear_mode = true
 
@@ -106,7 +108,8 @@ export default class Index {
 				setting_watcher: false,
 				schedule_ids_watcher: false,
 				calendar_days_watcher: false,
-				timeline_rows_watcher: false
+				timeline_rows_watcher: false,
+				list_current_date: false
 			},
 			{ autoBind: true }
 		)
@@ -127,7 +130,11 @@ export default class Index {
 	init(args: { id: string }) {
 		const { id } = args
 
-		this.utils.acts = [...useInstanceWatch(this)]
+		this.utils.acts = [
+			setStorageWhenChange([{ [`${id}_view`]: 'view' }, { [`${id}_scale`]: 'scale' }], this),
+			...useInstanceWatch(this)
+		]
+
 		this.id = id
 		this.file.init(id)
 
@@ -250,10 +257,94 @@ export default class Index {
 	}
 
 	jump(v: Dayjs) {
-		this.current = v
-		this.scale = 'day'
+		this.scale = 'week'
 
-		this.getDays()
+		this.changeCurrent(v)
+	}
+
+	listJump(v: Dayjs, timeline?: boolean) {
+		this.visible_list_modal = false
+
+		if (timeline) {
+			this.changeView('timeline')
+			this.changeScale('month')
+		} else {
+			this.changeView('calendar')
+			this.changeScale('week')
+		}
+
+		this.changeCurrent(v)
+	}
+
+	setListDuration(v?: Index['list_duration']) {
+		if (v) {
+			this.list_duration = v
+		} else {
+			v = this.list_duration
+		}
+
+		if (v === 'custom') {
+			this.list_items = []
+
+			return
+		}
+
+		this.list_custom_duration = null
+
+		const start = this.list_current_date.startOf(v).valueOf()
+		const end = this.list_current_date.endOf(v).valueOf()
+
+		this.getListItems([start, end])
+	}
+
+	listStep(type: 'prev' | 'next') {
+		this.list_current_date = this.list_current_date[type === 'prev' ? 'subtract' : 'add'](
+			1,
+			this.list_duration as Exclude<Index['list_duration'], 'custom'>
+		)
+
+		this.setListDuration(this.list_duration)
+	}
+
+	setListCustomDuration(v: Index['list_custom_duration']) {
+		this.list_custom_duration = v
+
+		if (v) {
+			const start = dayjs(v[0]).startOf('day').valueOf()
+			const end = dayjs(v[1]).endOf('day').valueOf()
+
+			this.getListItems([start, end])
+		} else {
+			this.list_items = []
+		}
+	}
+
+	async getListItems(v: [number, number]) {
+		const [start, end] = v
+		const selector: MangoQuerySelector<Schedule.Item> = {}
+
+		selector['$or'] = [
+			{
+				start_time: { $gte: start },
+				end_time: { $lte: end + 1 }
+			},
+			{
+				start_time: { $lt: start },
+				end_time: { $gt: start }
+			},
+			{
+				start_time: { $lt: end + 1 },
+				end_time: { $gt: end + 1 }
+			}
+		]
+
+		const items = await getTimeBlocks(this.id, selector, []).sort({ start_time: 'desc' }).exec()
+
+		this.list_items = getDocItemsData(items).map(item => {
+			item.text = getEditorText(item.text)
+
+			return item
+		})
 	}
 
 	async addTimeBlock(args: {

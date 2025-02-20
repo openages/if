@@ -17,6 +17,7 @@ const Index = (props: IPropsHeader) => {
 		changeScale,
 		changeCurrent,
 		showSettingsModal,
+		showListModal,
 		changeFilterTags
 	} = props
 
@@ -40,6 +41,7 @@ const Index = (props: IPropsHeader) => {
 		tags,
 		filter_tags,
 		showSettingsModal,
+		showListModal,
 		changeFilterTags
 	}
 

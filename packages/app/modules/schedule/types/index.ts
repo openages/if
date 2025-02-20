@@ -22,6 +22,7 @@ export interface IPropsHeader {
 	changeScale: Model['changeScale']
 	changeCurrent: Model['changeCurrent']
 	showSettingsModal: () => void
+	showListModal: () => void
 	changeFilterTags: (v: Model['filter_tags']) => void
 }
 
@@ -42,6 +43,7 @@ export interface IPropsHeaderRight {
 	tags: Schedule.Setting['tags']
 	filter_tags: Model['filter_tags']
 	showSettingsModal: IPropsHeader['showSettingsModal']
+	showListModal: IPropsHeader['showListModal']
 	changeFilterTags: IPropsHeader['changeFilterTags']
 }
 
@@ -215,11 +217,35 @@ export interface IPropsList {
 	visible_list_modal: Model['visible_list_modal']
 	list_duration: Model['list_duration']
 	list_current_text: Model['list_current_text']
-	list_current_date: Model['list_current_date']
 	list_custom_duration: Model['list_custom_duration']
-	setListDuration: (v: Model['list_duration']) => void
+	list_items: Model['list_items']
+	tags: Schedule.Setting['tags']
+	setListDuration: Model['setListDuration']
 	prev: () => void
 	next: () => void
-	setListCustomDuration: (v: Model['list_custom_duration']) => void
+	setListCustomDuration: Model['setListCustomDuration']
+	jump: Model['listJump']
 	onClose: () => void
+}
+
+export interface IPropsListHeader
+	extends Pick<
+		IPropsList,
+		| 'list_duration'
+		| 'list_current_text'
+		| 'list_custom_duration'
+		| 'setListDuration'
+		| 'prev'
+		| 'next'
+		| 'setListCustomDuration'
+	> {
+	total: number
+}
+
+export interface IPropsListItems extends Pick<IPropsList, 'list_items' | 'tags' | 'jump'> {}
+
+export interface IPropsListItem {
+	item: Schedule.Item
+	tags: Schedule.Setting['tags']
+	jump: Model['listJump']
 }

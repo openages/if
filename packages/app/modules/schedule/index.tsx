@@ -14,6 +14,7 @@ import {
 	ContextMenu,
 	DateScale,
 	Header,
+	List,
 	MonthView,
 	Scanline,
 	SettingsModal,
@@ -32,7 +33,8 @@ import type {
 	IPropsMonthView,
 	IPropsTimelineView,
 	IPropsSettingsModal,
-	IPropsScanline
+	IPropsScanline,
+	IPropsList
 } from './types'
 
 const Index = ({ id }: IProps) => {
@@ -82,6 +84,11 @@ const Index = ({ id }: IProps) => {
 		changeScale: useMemoizedFn(x.changeScale),
 		changeCurrent: useMemoizedFn(x.changeCurrent),
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true)),
+		showListModal: useMemoizedFn(() => {
+			x.visible_list_modal = true
+
+			x.setListDuration()
+		}),
 		changeFilterTags: useMemoizedFn(v => (x.filter_tags = v))
 	}
 
@@ -143,6 +150,21 @@ const Index = ({ id }: IProps) => {
 		removeTimelineAngle: useMemoizedFn(x.removeTimelineAngle),
 		removeTimelineRow: useMemoizedFn(x.removeTimelineRow),
 		cleanByTime: useMemoizedFn(x.cleanByTime)
+	}
+
+	const props_list: IPropsList = {
+		visible_list_modal: x.visible_list_modal,
+		list_duration: x.list_duration,
+		list_current_text: x.list_current_text,
+		list_custom_duration: $copy(x.list_custom_duration),
+		list_items: $copy(x.list_items),
+		tags,
+		setListDuration: useMemoizedFn(x.setListDuration),
+		prev: useMemoizedFn(() => x.listStep('prev')),
+		next: useMemoizedFn(() => x.listStep('next')),
+		setListCustomDuration: useMemoizedFn(x.setListCustomDuration),
+		jump: useMemoizedFn(x.listJump),
+		onClose: useMemoizedFn(() => (x.visible_list_modal = false))
 	}
 
 	const props_scanline: IPropsScanline = {
@@ -220,6 +242,7 @@ const Index = ({ id }: IProps) => {
 				</DndContext>
 			</div>
 			<ContextMenu timeblock_copied={timeblock_copied} addTimeBlock={addTimeBlock}></ContextMenu>
+			<List {...props_list}></List>
 			<SettingsModal {...props_settings_modal}></SettingsModal>
 		</div>
 	)
