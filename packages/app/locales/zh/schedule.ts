@@ -18,5 +18,12 @@ export default {
 	},
 	List: {
 		title: '事项列表'
+	},
+	exportListToExcel: {
+		text: '描述',
+		tag: '标签',
+		duration: '时间范围',
+		cross_time: '用时',
+		angle: '所属'
 	}
 }

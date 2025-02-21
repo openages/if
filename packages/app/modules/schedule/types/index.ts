@@ -225,6 +225,7 @@ export interface IPropsList {
 	next: () => void
 	setListCustomDuration: Model['setListCustomDuration']
 	jump: Model['listJump']
+	exportListToExcel: Model['exportListToExcel']
 	onClose: () => void
 }
 
@@ -238,6 +239,7 @@ export interface IPropsListHeader
 		| 'prev'
 		| 'next'
 		| 'setListCustomDuration'
+		| 'exportListToExcel'
 	> {
 	total: number
 }

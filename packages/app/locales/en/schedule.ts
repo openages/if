@@ -18,5 +18,12 @@ export default {
 	},
 	List: {
 		title: 'Timeblock List'
+	},
+	exportListToExcel: {
+		text: 'Text',
+		tag: 'Tag',
+		duration: 'Duration',
+		cross_time: 'Cross time',
+		belong: 'Belong'
 	}
 }

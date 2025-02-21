@@ -18,6 +18,7 @@ const Index = (props: IPropsList) => {
 		next,
 		setListCustomDuration,
 		jump,
+		exportListToExcel,
 		onClose
 	} = props
 	const { t } = useTranslation()
@@ -30,7 +31,8 @@ const Index = (props: IPropsList) => {
 		setListDuration,
 		prev,
 		next,
-		setListCustomDuration
+		setListCustomDuration,
+		exportListToExcel
 	}
 
 	const props_items: IPropsListItems = {

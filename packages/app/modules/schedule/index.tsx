@@ -164,6 +164,7 @@ const Index = ({ id }: IProps) => {
 		next: useMemoizedFn(() => x.listStep('next')),
 		setListCustomDuration: useMemoizedFn(x.setListCustomDuration),
 		jump: useMemoizedFn(x.listJump),
+		exportListToExcel: useMemoizedFn(x.exportListToExcel),
 		onClose: useMemoizedFn(() => (x.visible_list_modal = false))
 	}
 

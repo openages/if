@@ -2,7 +2,6 @@ import { useMemoizedFn } from 'ahooks'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
-import { getCrossTime } from '@/modules/schedule/utils'
 import { ArrowRight } from '@phosphor-icons/react'
 
 import { useTagStyles } from '../../../TimeBlock/hooks'
@@ -15,13 +14,16 @@ const Index = (props: IPropsListItem) => {
 	const { start_time, end_time } = item
 	const tag_styles = useTagStyles(tags, item.tag)
 
-	const duration = useMemo(() => {
+	const { days, cross_time, duration } = useMemo(() => {
 		const start = dayjs(start_time)
 		const end = dayjs(end_time)
+		const days = end.diff(start, 'hours') / 24
 
-		const cross_time = getCrossTime(start, end, true)
-
-		return `（${cross_time}）${start.format('MM.DD')} - ${end.format('MM.DD')}`
+		return {
+			days,
+			cross_time: `${days}${$t('common.time.d')}`,
+			duration: `${start.format('MM.DD')} - ${end.format('MM.DD')}`
+		}
 	}, [start_time, end_time])
 
 	const onJump = useMemoizedFn(() => jump(dayjs(start_time), true))
@@ -37,6 +39,8 @@ const Index = (props: IPropsListItem) => {
 		>
 			<span className='dot'></span>
 			<span className='text line_clamp_1'>{item.text ?? '---'}</span>
+			<span className='days_wrap' style={{ '--percent': days / 12 }}></span>
+			<span className='cross_time'>{cross_time}</span>
 			<span className='duration'>{duration}</span>
 			<div className='btn_jump none justify_center align_center absolute clickable' onClick={onJump}>
 				<ArrowRight></ArrowRight>

@@ -2,6 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
+import { getCrossTime } from '@/modules/schedule/utils'
 import { ArrowRight } from '@phosphor-icons/react'
 
 import { useTagStyles } from '../../../TimeBlock/hooks'
@@ -15,7 +16,11 @@ const Index = (props: IPropsListItem) => {
 	const tag_styles = useTagStyles(tags, item.tag)
 
 	const duration = useMemo(() => {
-		return `${dayjs(start_time).format('YYYY-MM-DD HH:mm')} - ${dayjs(end_time).format('HH:mm')}`
+		const start = dayjs(start_time)
+		const end = dayjs(end_time)
+		const cross_time = getCrossTime(start, end)
+
+		return `${cross_time} ${start.format('YYYY-MM-DD HH:mm')} - ${end.format('HH:mm')}`
 	}, [start_time, end_time])
 
 	const onJump = useMemoizedFn(() => jump(dayjs(start_time)))

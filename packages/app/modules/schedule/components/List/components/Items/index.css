@@ -9,10 +9,14 @@
 			flex: 1;
 		}
 
-		.calendar_items {
-			padding: 12px;
+		.timeline_items {
+			padding: 0 6px;
 			border-radius: var(--radius);
-			background-color: var(--color_bg_1);
+		}
+
+		.calendar_items {
+			padding: 12px 6px;
+			border-radius: var(--radius);
 			gap: 12px;
 		}
 
@@ -24,7 +28,7 @@
 			}
 
 			.btn_jump {
-				right: 3px;
+				right: 0;
 				width: 15px;
 				height: 15px;
 				border: 1px solid var(--color_text);
@@ -41,8 +45,9 @@
 }
 
 .timeline {
-	padding: 2px 12px;
-	background-color: rgba(var(--tag_color), 0.09);
+	padding: 6px 0;
+	border-bottom: var(--border_soft);
+	gap: 8px;
 
 	&:first-child {
 		border-top-left-radius: var(--radius);
@@ -55,8 +60,6 @@
 	}
 
 	&.no_tag {
-		background-color: var(--color_bg_1);
-
 		:global {
 			.dot {
 				background-color: var(--color_border);
@@ -68,7 +71,6 @@
 		.dot {
 			width: 6px;
 			height: 6px;
-			margin-right: 6px;
 			border-radius: 50%;
 			background-color: rgba(var(--tag_color), 1);
 		}
@@ -77,8 +79,20 @@
 			flex: 1;
 		}
 
+		.days_wrap {
+			width: calc(var(--percent) * 60px);
+			height: 3px;
+			border-radius: 1.5px;
+			background-color: var(--color_border);
+		}
+
+		.cross_time {
+			width: 30px;
+			border-right: var(--border);
+		}
+
+		.cross_time,
 		.duration {
-			padding-left: 6px;
 			color: var(--color_text_light);
 			font-size: 10px;
 		}
@@ -96,10 +110,10 @@
 
 	:global {
 		.tag_mark {
-			width: 4px;
+			width: 3px;
 			height: 30px;
-			margin-right: 6px;
-			border-radius: 2px;
+			margin-right: 8px;
+			border-radius: 1.5px;
 			background-color: rgba(var(--tag_color), 1);
 		}
 

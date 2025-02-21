@@ -1,4 +1,4 @@
-import { useMemoizedFn } from 'ahooks'
+import { useMemoizedFn, useUpdateEffect } from 'ahooks'
 import { debounce } from 'lodash-es'
 import { useEffect, useRef, useState } from 'react'
 
@@ -60,7 +60,7 @@ const Index = (props: IProps) => {
 
 	const debounceScroll = useMemoizedFn(debounce(scroll, 450))
 
-	useEffect(() => {
+	useUpdateEffect(() => {
 		if (onChangeSort) onChangeSort(sort)
 	}, [sort])
 

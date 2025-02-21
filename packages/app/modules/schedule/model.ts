@@ -1,5 +1,6 @@
-import dayjs, { Dayjs } from 'dayjs'
-import { omit } from 'lodash-es'
+import dayjs from 'dayjs'
+import { Workbook } from 'exceljs'
+import { groupBy, omit, pick } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { match } from 'ts-pattern'
@@ -8,7 +9,7 @@ import { injectable } from 'tsyringe'
 import { File } from '@/models'
 import Utils from '@/models/utils'
 import { getQuerySetting, updateSetting } from '@/services'
-import { getDocItem, getDocItemsData } from '@/utils'
+import { downloadExcel, getDocItem, getDocItemsData } from '@/utils'
 import { confirm } from '@/utils/antd'
 import { disableWatcher } from '@/utils/decorators'
 import getEditorText from '@/utils/getEditorText'
@@ -27,6 +28,7 @@ import {
 } from './services'
 import {
 	collisionDetection,
+	getCrossTime,
 	getDayDetails,
 	getMonthDays,
 	getStartByX,
@@ -44,6 +46,7 @@ import type { DayDetail } from './utils'
 import type { Subscription } from 'rxjs'
 import type { DragMoveEvent, DragEndEvent } from '@dnd-kit/core'
 import type { MangoQuerySelector } from 'rxdb'
+import type { Dayjs } from 'dayjs'
 
 @injectable()
 export default class Index {
@@ -276,7 +279,9 @@ export default class Index {
 		this.changeCurrent(v)
 	}
 
-	setListDuration(v?: Index['list_duration']) {
+	setListDuration(v?: Index['list_duration'], ignore_date?: boolean) {
+		if (!ignore_date) this.list_current_date = dayjs()
+
 		if (v) {
 			this.list_duration = v
 		} else {
@@ -291,6 +296,13 @@ export default class Index {
 
 		this.list_custom_duration = null
 
+		this.list_current_text = match(v)
+			.with('day', () => this.list_current_date.format('YYYY-MM-DD'))
+			.with('week', () => this.list_current_date.format('YYYY [W]W'))
+			.with('month', () => this.list_current_date.format('YYYY-MM'))
+			.with('year', () => this.list_current_date.format('YYYY'))
+			.exhaustive()
+
 		const start = this.list_current_date.startOf(v).valueOf()
 		const end = this.list_current_date.endOf(v).valueOf()
 
@@ -303,7 +315,7 @@ export default class Index {
 			this.list_duration as Exclude<Index['list_duration'], 'custom'>
 		)
 
-		this.setListDuration(this.list_duration)
+		this.setListDuration(this.list_duration, true)
 	}
 
 	setListCustomDuration(v: Index['list_custom_duration']) {
@@ -317,6 +329,78 @@ export default class Index {
 		} else {
 			this.list_items = []
 		}
+	}
+
+	async exportListToExcel() {
+		if (!this.list_items.length) return
+
+		const tags = this.setting?.setting?.tags || []
+		const timeline_angles = this.setting?.setting?.timeline_angles || []
+
+		const { timeline = [], calendar = [] } = groupBy($copy(this.list_items), 'type')
+
+		const target_items = [] as Array<{
+			text: string
+			tag: string
+			duration: string
+			cross_time: string
+			belong: string
+		}>
+
+		// console.log(timeline, calendar, timeline.concat(calendar))
+
+		timeline.concat(calendar).forEach(item => {
+			const start = dayjs(item.start_time)
+			const end = dayjs(item.end_time)
+			const target_tag = tags.find(it => item.tag === it.id)
+			const target_timeline_angle = timeline_angles.find(it => item.timeline_angle_id === it.id)
+
+			let duration
+			let cross_time
+
+			if (item.type === 'timeline') {
+				const days = end.diff(start, 'hours') / 24
+				duration = `${start.format('MM.DD')} - ${end.format('MM.DD')}`
+				cross_time = `${days}${$t('common.time.d')}`
+			} else {
+				duration = `${start.format('YYYY-MM-DD HH:mm')} - ${end.format('HH:mm')}`
+				cross_time = getCrossTime(start, end)
+			}
+
+			target_items.push({
+				text: item.text,
+				tag: target_tag?.text || '',
+				duration,
+				cross_time,
+				belong: target_timeline_angle?.text || ''
+			})
+		})
+
+		const workbook = new Workbook()
+		const worksheet = workbook.addWorksheet($t('modules.schedule'))
+
+		const headers = (['text', 'tag', 'duration', 'cross_time', 'belong'] as const).map(i =>
+			$t(`schedule.exportListToExcel.${i}`)
+		)
+
+		worksheet.addRow(headers)
+		worksheet.addRows(target_items.map(item => Object.values(item)))
+
+		headers.forEach((_, index) => {
+			const column = index + 1
+
+			let width = 12
+
+			if (column === 1) width = 45
+			if (column === 3) width = 21
+			if (column === 5) width = 18
+
+			worksheet.getColumn(column).width = width
+		})
+
+		const buffer = await workbook.xlsx.writeBuffer()
+
+		downloadExcel(`${this.file.data.name}_${this.list_current_text}`, buffer)
 	}
 
 	async getListItems(v: [number, number]) {

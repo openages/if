@@ -3,7 +3,7 @@ import { DatePicker, Segmented } from 'antd'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 
-import { CaretLeft, CaretRight, SquaresFour } from '@phosphor-icons/react'
+import { CaretLeft, CaretRight, FileXls, SquaresFour } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -20,7 +20,8 @@ const Index = (props: IPropsListHeader) => {
 		setListDuration,
 		prev,
 		next,
-		setListCustomDuration
+		setListCustomDuration,
+		exportListToExcel
 	} = props
 	const { t } = useTranslation()
 
@@ -32,7 +33,7 @@ const Index = (props: IPropsListHeader) => {
 		<div className={$cx('w_100 border_box flex', styles._local)}>
 			<Segmented
 				options={[
-					{ label: t('common.today'), value: 'day' },
+					{ label: t('common.time.day'), value: 'day' },
 					{ label: t('common.time.week'), value: 'week' },
 					{ label: t('common.time.month'), value: 'month' },
 					{ label: t('common.time.year'), value: 'year' },
@@ -69,6 +70,12 @@ const Index = (props: IPropsListHeader) => {
 					</div>
 				</Otherwise>
 			</Choose>
+			<div
+				className='option_wrap btn flex justify_center align_center clickable'
+				onClick={exportListToExcel}
+			>
+				<FileXls></FileXls>
+			</div>
 			<div className='option_wrap total flex justify_center align_center'>
 				<SquaresFour className='mr_6' size={14} weight='fill'></SquaresFour> {total}
 			</div>
