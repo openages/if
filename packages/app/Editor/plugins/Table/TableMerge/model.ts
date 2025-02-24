@@ -18,7 +18,6 @@ import { useInstanceWatch, Watch } from '@openages/stk/mobx'
 import TableSelection from '../TableSelection'
 import {
 	$cellContainsEmptyParagraph,
-	$createTableCellNode,
 	$getTableCellNodeRect,
 	$isTableCellNode,
 	$isTableNode,
