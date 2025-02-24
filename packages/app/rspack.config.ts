@@ -204,7 +204,7 @@ module.exports = defineConfig({
 				]
 			},
 			{
-				test: /\.(png|jpg|svg)$/,
+				test: /\.(png|jpg|svg|mp3)$/,
 				type: 'asset/resource'
 			},
 			{

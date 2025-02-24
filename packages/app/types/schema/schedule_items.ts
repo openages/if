@@ -46,6 +46,7 @@ export namespace Schedule {
 		/** @maxLength 30 */
 		timeline_angle_row_id?: string
 		timeline_year?: boolean
+		remark?: string
 		create_at?: number
 		update_at?: number
 		extends?: string

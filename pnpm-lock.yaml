@@ -176,6 +176,9 @@ importers:
       hotkeys-js:
         specifier: ^3.13.9
         version: 3.13.9
+      howler:
+        specifier: ^2.2.4
+        version: 2.2.4
       i18next:
         specifier: ^23.16.8
         version: 23.16.8
@@ -345,6 +348,9 @@ importers:
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
+      '@types/howler':
+        specifier: ^2.2.12
+        version: 2.2.12
       '@types/katex':
         specifier: ^0.16.7
         version: 0.16.7
@@ -4861,6 +4867,9 @@ packages:
   '@types/hast@3.0.4':
     resolution: {integrity: sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ==}
 
+  '@types/howler@2.2.12':
+    resolution: {integrity: sha512-hy769UICzOSdK0Kn1FBk4gN+lswcj1EKRkmiDtMkUGvFfYJzgaDXmVXkSShS2m89ERAatGIPnTUlp2HhfkVo5g==}
+
   '@types/http-cache-semantics@4.0.4':
     resolution: {integrity: sha512-1m0bIFVc7eJWyve9S0RnuRgcQqF/Xd5QsUZAZeQFr1Q3/p9JWoQQEqmVy+DPTNpGXwhgIetAoYF8JSc33q29QA==}
 
@@ -7632,6 +7641,9 @@ packages:
 
   hotkeys-js@3.13.9:
     resolution: {integrity: sha512-3TRCj9u9KUH6cKo25w4KIdBfdBfNRjfUwrljCLDC2XhmPDG0SjAZFcFZekpUZFmXzfYoGhFDcdx2gX/vUVtztQ==}
+
+  howler@2.2.4:
+    resolution: {integrity: sha512-iARIBPgcQrwtEr+tALF+rapJ8qSc+Set2GJQl7xT1MQzWaVkFebdJhR3alVlSiUf5U7nAANKuj3aWpwerocD5w==}
 
   hpack.js@2.1.6:
     resolution: {integrity: sha512-zJxVehUdMGIKsRaNt7apO2Gqp0BdqW5yaiGHXXmbpvxgBYVZnAql+BJb4RO5ad2MgpbZKn5G6nMnegrH1FcNYQ==}
@@ -15876,6 +15888,8 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
 
+  '@types/howler@2.2.12': {}
+
   '@types/http-cache-semantics@4.0.4': {}
 
   '@types/http-errors@2.0.4': {}
@@ -19161,6 +19175,8 @@ snapshots:
       lru-cache: 6.0.0
 
   hotkeys-js@3.13.9: {}
+
+  howler@2.2.4: {}
 
   hpack.js@2.1.6:
     dependencies:

@@ -2,7 +2,9 @@ import { makeAutoObservable } from 'mobx'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
-import { File } from '@/models'
+import { File, Sound } from '@/models'
+import done from '@/public/sounds/done.mp3'
+import notify from '@/public/sounds/notify.mp3'
 import { getDocItem, id } from '@/utils'
 import { disableWatcher } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
@@ -29,7 +31,11 @@ export default class Index {
 	record_timer = null as unknown as NodeJS.Timer
 	record_numbers = 0
 
-	constructor(public file: File) {
+	constructor(
+		public file: File,
+		public work_end: Sound,
+		public break_end: Sound
+	) {
 		makeAutoObservable(
 			this,
 			{
@@ -49,6 +55,8 @@ export default class Index {
 
 		this.id = id
 		this.file.init(id)
+		this.work_end.init({ src: notify, loop: true, times: 6 })
+		this.break_end.init({ src: done, loop: true, times: 6 })
 
 		this.on()
 	}
@@ -225,12 +233,16 @@ export default class Index {
 		}
 
 		if (this.data.current === 'work' && getGoingTime(this.data.work_in) >= session.work_time) {
+			this.work_end.sound.play()
+
 			this.data.current = 'break'
 
 			this.stopRecord(true)
 		}
 
 		if (this.data.current === 'break' && getGoingTime(this.data.break_in) >= session.break_time) {
+			this.break_end.sound.play()
+
 			this.data.current = null
 			this.data.work_in = 0
 			this.data.break_in = 0
@@ -298,9 +310,13 @@ export default class Index {
 			if (this.disable_watcher) return
 
 			if (!this.data.file_id) {
-				this.data = getDocItem(doc!)!
+				const target = getDocItem(doc!)!
 
-				if (this.data.going) this.toggleGoing(true)
+				if (target) {
+					this.data = target
+
+					if (this.data?.going) this.toggleGoing(true)
+				}
 			}
 
 			if (this.data.index !== this.view_index) {

@@ -13,5 +13,6 @@ export { default as Search } from './search'
 export { default as Timer } from './timer'
 export { default as File } from './file'
 export { default as Loadmore } from './loadmore'
+export { default as Sound } from './sound'
 
 export * from './settings'

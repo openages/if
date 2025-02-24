@@ -50,7 +50,7 @@ const Index = (props: IPropsTimeBlockDetail) => {
 
 	useDeepEffect(() => {
 		const form_item = getFieldsValue()
-		const target = $copy(pick(item, ['text', 'tag']))
+		const target = $copy(pick(item, ['text', 'tag', 'remark']))
 
 		if (!target.tag) target.tag = undefined as unknown as string
 		if (deepEqual(target, form_item)) return
@@ -168,6 +168,15 @@ const Index = (props: IPropsTimeBlockDetail) => {
 					parser={v => getTimeTextValue(v!)}
 					controls={{ upIcon: <Plus></Plus>, downIcon: <Minus></Minus> }}
 				></InputNumber>
+			</Item>
+			<Item label={t('schedule.TimeBlockDetail.remark')} name='remark' noStyle>
+				<TextEditor
+					className='text_wrap remark border_box'
+					placeholder_classname='timeblock_placeholder'
+					placeholder={t('schedule.remark_placeholder')}
+					max_length={999}
+					linebreak
+				></TextEditor>
 			</Item>
 			{x.tab === 'search' ? (
 				<Select

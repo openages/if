@@ -1,5 +1,5 @@
 ._local {
-	width: 180px;
+	width: 240px;
 	padding: 0 9px;
 	padding-bottom: 30px;
 	font-size: 12px;
@@ -11,7 +11,7 @@
 
 		.if-form-item {
 			margin-bottom: 0px;
-			border-bottom: 1px dashed var(--color_border_light);
+			border-bottom: var(--border_dashed);
 
 			&:last-child {
 				margin-bottom: 0;
@@ -49,6 +49,20 @@
 			padding: 6px 0;
 			outline: none;
 			font-size: 12px;
+
+			&.remark {
+				border-bottom: var(--border_dashed);
+
+				p {
+					&:first-child {
+						margin-block-start: 0;
+					}
+
+					&:last-child {
+						margin-block-end: 0;
+					}
+				}
+			}
 		}
 
 		.select {

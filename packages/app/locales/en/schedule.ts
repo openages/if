@@ -6,10 +6,12 @@ export default {
 	clear_mode_tooltip: 'Clear Mode',
 	pending_todos: 'Pending Todos',
 	timeblock_placeholder: 'Input description',
+	remark_placeholder: 'Input remark',
 	TimeBlockDetail: {
 		desc: 'Desc',
 		tag_placeholder: 'Select Tag',
-		time: 'Time'
+		time: 'Time',
+		remark: 'Remark'
 	},
 	Header: {
 		week: 'Week',

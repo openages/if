@@ -43,7 +43,7 @@ const Index = (props: IProps) => {
 	const checkOverflow = useMemoizedFn(() => {
 		if (!ref.current) return
 
-		const { right: right_container } = document.getElementById(id).getBoundingClientRect()
+		const { right: right_container } = document.getElementById(id)!.getBoundingClientRect()
 		const { right: right_ref } = ref.current.getBoundingClientRect()
 
 		setOverflow(right_ref > right_container ? right_ref - right_container : 0)
@@ -61,7 +61,7 @@ const Index = (props: IProps) => {
 
 		checkOverflow()
 
-		const container = document.getElementById(id)
+		const container = document.getElementById(id)!
 
 		container.addEventListener('scroll', updatePosition)
 
@@ -94,8 +94,8 @@ const Index = (props: IProps) => {
 						className
 					)}
 					style={{
-						zIndex: z_index ?? 100,
-						...(style ?? { top: position.y, left: position.x - oveflow })
+						zIndex: z_index ?? 10000,
+						...(style ?? { top: position!.y, left: position!.x - oveflow })
 					}}
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
@@ -109,7 +109,7 @@ const Index = (props: IProps) => {
 		</AnimatePresence>
 	)
 
-	return createPortal(Content, document.getElementById(id))
+	return createPortal(Content, document.getElementById(id)!)
 }
 
 export default $app.memo(Index)

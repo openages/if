@@ -2,15 +2,6 @@ export default {
       "Note.Setting": {
             "type": "object",
             "properties": {
-                  "show_heading_level": {
-                        "type": "boolean"
-                  },
-                  "serif": {
-                        "type": "boolean"
-                  },
-                  "small_text": {
-                        "type": "boolean"
-                  },
                   "toc": {
                         "type": "string",
                         "enum": [
@@ -20,15 +11,28 @@ export default {
                               "hidden"
                         ]
                   },
+                  "use_content_heading": {
+                        "type": "boolean"
+                  },
+                  "show_heading_level": {
+                        "type": "boolean"
+                  },
+                  "serif": {
+                        "type": "boolean"
+                  },
+                  "small_text": {
+                        "type": "boolean"
+                  },
                   "count": {
                         "type": "boolean"
                   }
             },
             "required": [
+                  "toc",
+                  "use_content_heading",
                   "show_heading_level",
                   "serif",
                   "small_text",
-                  "toc",
                   "count"
             ]
       },

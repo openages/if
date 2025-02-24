@@ -91,6 +91,18 @@ export default {
                                     "checked"
                               ]
                         }
+                  },
+                  "table_exclude_fields": {
+                        "type": "array",
+                        "items": {
+                              "type": "string"
+                        }
+                  },
+                  "exclude_angles": {
+                        "type": "array",
+                        "items": {
+                              "type": "string"
+                        }
                   }
             },
             "required": [
@@ -203,6 +215,18 @@ export default {
                                                 "items",
                                                 "checked"
                                           ]
+                                    }
+                              },
+                              "table_exclude_fields": {
+                                    "type": "array",
+                                    "items": {
+                                          "type": "string"
+                                    }
+                              },
+                              "exclude_angles": {
+                                    "type": "array",
+                                    "items": {
+                                          "type": "string"
                                     }
                               }
                         },

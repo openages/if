@@ -7,12 +7,21 @@ interface IProps extends IPropsCustomFormItem<string> {
 	placeholder_classname?: string
 	placeholder?: string
 	max_length?: number
+	linebreak?: boolean
 }
 
 const Index = (props: IProps) => {
-	const { value, className, placeholder, placeholder_classname, max_length, onChange: onChangeValue } = props
+	const {
+		value,
+		className,
+		placeholder,
+		placeholder_classname,
+		max_length,
+		linebreak,
+		onChange: onChangeValue
+	} = props
 
-	const { ref_editor, onChange, setEditor, setRef } = useText({ text: value!, update: v => onChangeValue(v) })
+	const { ref_editor, onChange, setEditor, setRef } = useText({ text: value!, update: v => onChangeValue!(v) })
 
 	useTextChange({ ref_editor, text: value! })
 
@@ -22,6 +31,7 @@ const Index = (props: IProps) => {
 			placeholder_classname={placeholder_classname}
 			placeholder={placeholder}
 			max_length={max_length}
+			linebreak={linebreak}
 			onChange={onChange}
 			setEditor={setEditor}
 			setRef={setRef}

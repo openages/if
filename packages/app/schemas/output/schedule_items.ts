@@ -232,6 +232,9 @@ export default {
                   "timeline_year": {
                         "type": "boolean"
                   },
+                  "remark": {
+                        "type": "string"
+                  },
                   "create_at": {
                         "type": "number"
                   },
@@ -331,6 +334,9 @@ export default {
                   },
                   "timeline_year": {
                         "type": "boolean"
+                  },
+                  "remark": {
+                        "type": "string"
                   },
                   "create_at": {
                         "type": "number"
@@ -436,6 +442,9 @@ export default {
                         },
                         "timeline_year": {
                               "type": "boolean"
+                        },
+                        "remark": {
+                              "type": "string"
                         },
                         "create_at": {
                               "type": "number"
@@ -544,6 +553,9 @@ export default {
                               },
                               "timeline_year": {
                                     "type": "boolean"
+                              },
+                              "remark": {
+                                    "type": "string"
                               },
                               "create_at": {
                                     "type": "number"

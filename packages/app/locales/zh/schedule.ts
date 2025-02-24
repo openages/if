@@ -6,10 +6,12 @@ export default {
 	clear_mode_tooltip: '清理模式',
 	pending_todos: '待分配任务',
 	timeblock_placeholder: '输入描述',
+	remark_placeholder: '输入备注',
 	TimeBlockDetail: {
 		desc: '描述',
 		tag_placeholder: '选择标签',
-		time: '时长'
+		time: '时长',
+		remark: '备注'
 	},
 	Header: {
 		week: '周视图',
