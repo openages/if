@@ -17,7 +17,7 @@
 		.calendar_items {
 			padding: 12px 6px;
 			border-radius: var(--radius);
-			gap: 12px;
+			gap: 15px;
 		}
 
 		.timeblock {
@@ -111,7 +111,7 @@
 	:global {
 		.tag_mark {
 			width: 3px;
-			height: 30px;
+			height: 32px;
 			margin-right: 8px;
 			border-radius: 1.5px;
 			background-color: rgba(var(--tag_color), 1);
@@ -119,11 +119,27 @@
 
 		.text {
 			flex: 1;
+			margin-top: -3.9px;
 		}
 
-		.duration {
+		.cross_wrap {
+			line-height: 1;
+			margin-top: 3.9px;
 			color: var(--color_text_light);
 			font-size: 10px;
+			gap: 8px;
+
+			.duration {
+				padding-right: 8px;
+				border-right: var(--border);
+			}
+
+			.hours_wrap {
+				width: calc(var(--percent) * 20px);
+				height: 3px;
+				border-radius: 1.5px;
+				background-color: var(--color_border);
+			}
 		}
 	}
 }
