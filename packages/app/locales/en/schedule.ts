@@ -8,7 +8,8 @@ export default {
 	timeblock_placeholder: 'Input description',
 	TimeBlockDetail: {
 		desc: 'Desc',
-		tag_placeholder: 'Select Tag'
+		tag_placeholder: 'Select Tag',
+		time: 'Time'
 	},
 	Header: {
 		week: 'Week',

@@ -8,7 +8,8 @@ export default (start: Dayjs, end: Dayjs, timeline?: boolean) => {
 
 		return `${days}${$t('common.time.d')}`
 	} else {
-		const duration = dayjs.duration(end.diff(start, 'minutes'), 'minutes')
+		const value = end.diff(start, 'minutes')
+		const duration = dayjs.duration(value, 'minutes')
 		const hours = duration.hours()
 		const minutes = duration.minutes()
 

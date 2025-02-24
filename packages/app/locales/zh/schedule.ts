@@ -8,7 +8,8 @@ export default {
 	timeblock_placeholder: '输入描述',
 	TimeBlockDetail: {
 		desc: '描述',
-		tag_placeholder: '选择标签'
+		tag_placeholder: '选择标签',
+		time: '时长'
 	},
 	Header: {
 		week: '周视图',

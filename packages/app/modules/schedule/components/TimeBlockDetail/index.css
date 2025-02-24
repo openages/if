@@ -92,6 +92,31 @@
 			}
 		}
 
+		.if-input-number {
+			height: 30px;
+			border: unset !important;
+			background: unset !important;
+
+			.if-input-number-handler-wrap {
+				display: flex;
+				width: 30px;
+				opacity: 1;
+				background: unset;
+			}
+
+			.if-input-number-input-wrap {
+				height: 100%;
+			}
+
+			input {
+				height: 100%;
+				padding: 0;
+				cursor: none;
+				font-size: 12px;
+				pointer-events: none;
+			}
+		}
+
 		.tab_wrap {
 			height: 30px;
 			margin-top: 6px;

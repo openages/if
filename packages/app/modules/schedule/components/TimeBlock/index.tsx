@@ -1,4 +1,5 @@
 import { Dropdown, Popover } from 'antd'
+import dayjs from 'dayjs'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -9,6 +10,7 @@ import { CSS } from '@dnd-kit/utilities'
 import { Check, Info, X } from '@phosphor-icons/react'
 
 import { useDragLength } from '../../hooks'
+import { getTimeText } from '../../utils'
 import TimeBlockDetail from '../TimeBlockDetail'
 import { useContextMenuItems, useHandlers, useLook, useTagStyles, useTime, useTodos, useVisibleDetail } from './hooks'
 import styles from './index.css'
@@ -41,6 +43,7 @@ const Index = (props: IPropsTimeBlock) => {
 	const timeline = useMemo(() => angle_row_id !== undefined, [angle_row_id])
 	const look = useLook({ item, month_mode, step, timeline })
 	const time = useTime({ year_scale, item, timeline })
+	const { start_time, end_time } = item
 
 	const [focus, setFocus] = useState(false)
 
@@ -80,10 +83,16 @@ const Index = (props: IPropsTimeBlock) => {
 		timeblock_index,
 		changeTimeBlockLength: changeTimeBlockLength!
 	})
+
 	const { ref_editor, onChange, setEditor, setRef } = useText({
 		text: item.text,
 		update: v => updateTimeBlock(item.id, { text: v })
 	})
+
+	const { value: time_value } = useMemo(
+		() => getTimeText(dayjs(item.start_time), dayjs(item.end_time)),
+		[start_time, end_time]
+	)
 
 	useTextChange({ ref_editor, text: item.text })
 
@@ -165,7 +174,7 @@ const Index = (props: IPropsTimeBlock) => {
 								setRef={setRef}
 							></Text>
 						</div>
-						{((!month_mode && item.length > 1) || timeline) && (
+						{((!month_mode && time_value >= 45) || timeline) && (
 							<div className='time flex justify_between align_center relative'>
 								<div className={$cx('time_value flex', status && 'has_status')}>
 									<span className='mr_4'>{time.time}</span>

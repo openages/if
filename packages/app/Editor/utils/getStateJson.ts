@@ -35,7 +35,6 @@ export default (nodes: Array<Note.Item>, gather: (key: Note.Item['id']) => void)
 			const target = sortLostTree(nodes, node_map)
 
 			head_id = target.head_id
-
 			effect_items = target.nodes
 		}
 	}

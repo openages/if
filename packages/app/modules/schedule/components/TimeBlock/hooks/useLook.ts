@@ -1,4 +1,7 @@
+import dayjs from 'dayjs'
 import { useMemo } from 'react'
+
+import { getTimeText } from '@/modules/schedule/utils'
 
 import styles from '../index.css'
 
@@ -12,6 +15,8 @@ export default (args: Args) => {
 	const { item, month_mode, step, timeline } = args
 
 	return useMemo(() => {
+		const { value } = getTimeText(dayjs(item.start_time), dayjs(item.end_time))
+
 		if (timeline) {
 			return {
 				class: ['absolute', styles.timeline, item.past && styles.past],
@@ -32,10 +37,11 @@ export default (args: Args) => {
 		return {
 			class: [
 				'absolute',
-				item.length === 1 && styles.small,
-				item.length === 2 && styles.middle,
-				item.length === 3 && styles.large,
-				item.length > 3 && styles.xlarge,
+				value <= 20 && styles.xsmall,
+				value < 45 && value > 20 && styles.small,
+				value >= 45 && value < 60 && styles.middle,
+				value === 60 && styles.large,
+				value > 60 && styles.xlarge,
 				item.past && styles.past
 			],
 			style: {

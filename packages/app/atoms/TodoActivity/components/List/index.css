@@ -13,33 +13,20 @@
 		.if-table-wrapper {
 			.if-table {
 				table {
-					border-radius: var(--radius);
-					background-color: var(--color_bg_1);
-
 					tbody {
 						tr {
-							&:first-child {
-								td {
-									height: 30.3px;
-									padding-top: 3.3px !important;
-								}
-							}
-
-							&:last-child {
-								td {
-									height: 30.3px;
-									padding-bottom: 3.3px !important;
-								}
-							}
-
 							td {
-								height: 27px;
-								padding: 0 12px !important;
-								border: none !important;
+								height: unset;
+								padding: 6px 0 !important;
+								border-bottom: var(--border_soft) !important;
 
 								&:last-child {
 									color: var(--color_text_light);
 									text-align: right;
+								}
+
+								&.if-table-cell-row-hover {
+									background-color: unset;
 								}
 							}
 						}

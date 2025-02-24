@@ -78,7 +78,7 @@
 		background-color: var(--color_bg);
 	}
 
-	&.small {
+	&.xsmall {
 		:global {
 			.btn_detail {
 				top: 0.5px;
@@ -104,10 +104,25 @@
 		}
 	}
 
+	&.small {
+		:global {
+			.timeblock_content_wrap {
+				padding: 2px;
+				border-radius: var(--radius_small_1);
+
+				.text_wrap {
+					height: 12px;
+					line-height: 12px;
+					padding: 0 2px;
+				}
+			}
+		}
+	}
+
 	&.middle {
 		:global {
 			.timeblock_content_wrap {
-				padding: 1px 2px;
+				padding: 2px;
 				border-radius: var(--radius_small);
 
 				.text_wrap {
@@ -117,7 +132,7 @@
 				}
 
 				.time {
-					margin-top: 3px;
+					margin-top: 4px;
 				}
 			}
 		}

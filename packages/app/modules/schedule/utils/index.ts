@@ -10,5 +10,7 @@ export { default as getStartByX } from './getStartByX'
 export { default as getStartEnd } from './getStartEnd'
 export { default as getTimelineRows } from './getTimelineRows'
 export { default as getCrossTime } from './getCrossTime'
+export { default as getTimeText } from './getTimeText'
+export { default as getTimeTextValue } from './getTimeTextValue'
 
 export type { DayDetail } from './getDayDetails'
