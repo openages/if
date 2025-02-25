@@ -3,13 +3,14 @@ import { Form } from 'antd'
 import { pick } from 'lodash-es'
 import { match } from 'ts-pattern'
 
-import { useDeepEffect } from '@/hooks'
+import { useCreateEffect } from '@/hooks'
 import { deepEqual, useDeepMemo } from '@openages/stk/react'
 
 import Column from './Column'
 
 import type { IPropsRow } from '../types'
 import type { FormProps } from 'antd'
+
 const { useForm } = Form
 
 const Index = (props: IPropsRow) => {
@@ -28,11 +29,11 @@ const Index = (props: IPropsRow) => {
 	const [form] = useForm()
 	const { setFieldsValue, getFieldsValue } = form
 
-	const setEditingField = useMemoizedFn((args: { field: string; focus: boolean }) => {
+	const setEditingField = useMemoizedFn((args: { field: string; focus: boolean } | null) => {
 		setEditingInfo(args ? { row_index: index, field: args.field, focus: args.focus } : null)
 	})
 
-	useDeepEffect(() => {
+	useCreateEffect(() => {
 		const form_item = getFieldsValue()
 
 		if (deepEqual(item, form_item)) return
@@ -44,18 +45,18 @@ const Index = (props: IPropsRow) => {
 
 	const onValuesChange: FormProps['onValuesChange'] = useMemoizedFn(v => {
 		const key = Object.keys(v)[0]
-		const column = columns.find(item => item.dataIndex === key)
+		const column = columns.find(item => item.dataIndex === key)!
 
 		onChange(index, v)
 
 		if (column.resetEditing) setEditingField(null)
 	})
 
-	const className = useDeepMemo(() => getRowClassName(item), [item])
+	const className = useDeepMemo(() => getRowClassName?.(item), [item])
 
 	return (
 		<Form form={form} component={false} onValuesChange={onValuesChange}>
-			<tr className={$cx('form_table_tr', ...className)}>
+			<tr className={$cx('form_table_tr', ...(className || []))}>
 				{columns.map((col, idx) => {
 					const focus = match(col.alwaysEditing)
 						.with(true, () => true)
@@ -85,12 +86,12 @@ const Index = (props: IPropsRow) => {
 							sorting={sort?.field === col.dataIndex && sort?.order !== null}
 							alwaysEditing={col.alwaysEditing}
 							disableEditing={col.disableEditing}
-							focus={focus}
+							focus={focus!}
 							useRowChange={col.useRowChange}
-							setEditingField={!col.disableEditing && setEditingField}
+							setEditingField={!col.disableEditing ? setEditingField : undefined}
 							getProps={col.getProps}
 							onAction={col.onAction}
-							onRowChange={col.useRowChange && onRowChange}
+							onRowChange={col.useRowChange ? onRowChange : undefined}
 							key={col.dataIndex || col.title}
 						></Column>
 					)

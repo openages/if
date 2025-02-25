@@ -1,7 +1,8 @@
-import { useDeepCompareEffect, useMemoizedFn } from 'ahooks'
+import { useMemoizedFn } from 'ahooks'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
+import { useCreateEffect } from '@/hooks'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { useDeepUpdateEffect } from '@openages/stk/react'
@@ -33,7 +34,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 		data: { item, parent_index }
 	})
 
-	useDeepCompareEffect(() => {
+	useCreateEffect(() => {
 		setOpen(open_folder!.includes(item.id))
 	}, [open_folder, item.id])
 
@@ -47,7 +48,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 		}
 	}, [module, children, item.id])
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		if (isDragging) {
 			setOpen(false)
 

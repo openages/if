@@ -1,10 +1,11 @@
 import { App } from 'antd'
-import { useLayoutEffect } from 'react'
+
+import { useCreateLayoutEffect } from '@/hooks'
 
 export default () => {
 	const staticFunction = App.useApp()
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		$message = staticFunction.message
 		$modal = staticFunction.modal
 		$notification = staticFunction.notification

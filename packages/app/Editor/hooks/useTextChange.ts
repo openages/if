@@ -1,7 +1,8 @@
 import { parseEditorState } from 'lexical'
+import niceTry from 'nice-try'
 import { useState } from 'react'
 
-import { useDeepEffect } from '@/hooks'
+import { useCreateEffect } from '@/hooks'
 import { deepEqual } from '@openages/stk/react'
 
 import { $getEditorSize } from '../utils'
@@ -18,7 +19,7 @@ export default (args: Args) => {
 	const { ref_editor, text } = args
 	const [editor_size, setEditorSize] = useState(0)
 
-	useDeepEffect(() => {
+	useCreateEffect(() => {
 		const editor = ref_editor.current
 
 		if (!editor || !text) return
@@ -27,7 +28,11 @@ export default (args: Args) => {
 
 		if (deepEqual(text, editor_state)) return
 
-		editor.setEditorState(parseEditorState(JSON.parse(text), editor))
+		const state = niceTry(() => JSON.parse(text))
+
+		if (!state) return
+
+		editor.setEditorState(parseEditorState(state, editor))
 
 		setEditorSize($getEditorSize(editor))
 	}, [text])

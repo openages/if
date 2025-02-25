@@ -1,10 +1,11 @@
 import { useMemoizedFn } from 'ahooks'
 import { AnimatePresence } from 'framer-motion'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState } from 'react'
+import { useState } from 'react'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
+import { useCreateLayoutEffect } from '@/hooks'
 
 import { Actions, Indicators, Session, SessionsEditModal } from './components'
 import styles from './index.css'
@@ -19,7 +20,7 @@ const Index = ({ id }: IProps) => {
 	const sessions = $copy(x.data.sessions) || []
 	const add = useMemoizedFn(x.add)
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		x.init({ id })
 
 		return () => x.off()

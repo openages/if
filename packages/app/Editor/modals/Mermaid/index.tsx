@@ -1,10 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
 import { Button, Form, Input } from 'antd'
 import { $getNodeByKey } from 'lexical'
-import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Render from '@/Editor/plugins/Mermaid/Node/Render'
+import { useCreateEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { TreeStructure } from '@phosphor-icons/react'
 
@@ -25,7 +25,7 @@ const Index = (props: IPropsModal) => {
 	const { t } = useTranslation()
 	const value = useWatch('value', form)
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		if (!node_key) return
 
 		editor.getEditorState().read(() => {

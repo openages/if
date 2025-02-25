@@ -1,11 +1,12 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState } from 'react'
+import { useState } from 'react'
 import { useContextMenu } from 'react-contexify'
 import { createPortal } from 'react-dom'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
+import { useCreateLayoutEffect } from '@/hooks'
 
 import { Actions, DirItems, DragLine, Modal, Options, Search } from './components'
 import styles from './index.css'
@@ -23,7 +24,7 @@ const Index = (props: IProps) => {
 
 	const { show } = useContextMenu({ id: 'dirtree_options' })
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		x.init({ module, actions })
 
 		return () => x.off()

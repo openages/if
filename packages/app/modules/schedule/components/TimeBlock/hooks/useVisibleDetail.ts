@@ -1,5 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+
+import { useCreateEffect } from '@/hooks'
 
 export default () => {
 	const [visible_detail, setVisibleDetail] = useState(false)
@@ -14,7 +16,7 @@ export default () => {
 
 	const toggleVisibleDetail = useMemoizedFn(() => setVisibleDetail(!visible_detail))
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		return () => {
 			closePopover()
 			setVisibleDetail(false)

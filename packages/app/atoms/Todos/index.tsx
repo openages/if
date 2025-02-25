@@ -1,11 +1,12 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState, Fragment } from 'react'
+import { useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { DraggableWrap, SortableWrap } from '@/components'
+import { useCreateLayoutEffect } from '@/hooks'
 import { useDndMonitor, useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
 import { verticalListSortingStrategy, SortableContext } from '@dnd-kit/sortable'
 
@@ -31,7 +32,7 @@ const Index = (props: IProps) => {
 
 	const items = $copy(x.items)
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		x.init({ ids, mode, onChange })
 
 		return () => x.off()

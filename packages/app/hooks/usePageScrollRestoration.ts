@@ -1,8 +1,9 @@
 import { useMemoizedFn } from 'ahooks'
 import { throttle } from 'lodash-es'
-import { useEffect, useLayoutEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 
+import { useCreateEffect, useCreateLayoutEffect } from '@/hooks'
 import { session } from '@openages/stk/storage'
 
 import type { Stack } from '@/types'
@@ -36,7 +37,7 @@ export default (id: string, columns: Stack.Columns) => {
 		}, 900)
 	)
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		window.addEventListener('scroll', scrollHandler)
 
 		return () => {
@@ -44,7 +45,7 @@ export default (id: string, columns: Stack.Columns) => {
 		}
 	}, [id, scroll_key, columns])
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		const position = session.getItem(scroll_key)
 
 		if (!position) return

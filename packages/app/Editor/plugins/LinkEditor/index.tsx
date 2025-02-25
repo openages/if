@@ -1,11 +1,12 @@
 import { useClickAway, useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { container } from 'tsyringe'
 
 import { Popover } from '@/components'
 import { useStackSelector } from '@/context/stack'
 import { stopPropagation } from '@/Editor/utils'
+import { useCreateLayoutEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { ShareFat } from '@phosphor-icons/react'
 
@@ -22,7 +23,7 @@ const Index = (props: IPropsLinkEditor) => {
 	const ref = useRef(null)
 	const position = $copy(x.position)
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		x.init(id, editor, show_on_top!)
 
 		return () => x.off()

@@ -1,10 +1,11 @@
-import { useDeepCompareEffect, useEventTarget, useKeyPress, useMemoizedFn } from 'ahooks'
+import { useEventTarget, useKeyPress, useMemoizedFn } from 'ahooks'
 import { Input, Modal } from 'antd'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { match } from 'ts-pattern'
 
 import { IconEditor } from '@/components'
+import { useCreateEffect } from '@/hooks'
 
 import styles from './index.css'
 
@@ -26,19 +27,19 @@ const Index = (props: IPropsModal) => {
 		setModalOpen,
 		resetFocusingItem
 	} = props
-	const [icon, setIcon] = useState<{icon:string,icon_hue?:number}>({ icon: '', icon_hue: undefined })
+	const [icon, setIcon] = useState<{ icon: string; icon_hue?: number }>({ icon: '', icon_hue: undefined })
 	const input = useRef<InputRef>(null)
 	const [value, { onChange }] = useEventTarget<string>()
 	const { t } = useTranslation()
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		if (modal_open) return input.current?.focus?.()
 
 		setIcon({ icon: '', icon_hue: undefined })
 		onChange({ target: { value: '' } })
 	}, [modal_open])
 
-	useDeepCompareEffect(() => {
+	useCreateEffect(() => {
 		if (focusing_item.icon && current_option === 'rename') {
 			setIcon({ icon: focusing_item.icon, icon_hue: focusing_item.icon_hue })
 		}

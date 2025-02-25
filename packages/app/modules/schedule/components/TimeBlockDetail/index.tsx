@@ -10,7 +10,7 @@ import { container } from 'tsyringe'
 import { schedule } from '@/appdata'
 import { Todos } from '@/atoms'
 import { TextEditor } from '@/Editor/components'
-import { useDeepEffect } from '@/hooks'
+import { useCreateEffect } from '@/hooks'
 import { deepEqual, useDeepMemo } from '@openages/stk/react'
 import { ListChecks, MagnifyingGlass, Minus, Plus } from '@phosphor-icons/react'
 
@@ -48,7 +48,7 @@ const Index = (props: IPropsTimeBlockDetail) => {
 		}
 	}, [start_time, end_time])
 
-	useDeepEffect(() => {
+	useCreateEffect(() => {
 		const form_item = getFieldsValue()
 		const target = $copy(pick(item, ['text', 'tag', 'remark']))
 

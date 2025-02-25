@@ -1,7 +1,9 @@
 import { useMemoizedFn } from 'ahooks'
 import { omit, pullAt } from 'lodash-es'
-import { unstable_Activity as Activity, useEffect, useState, Fragment } from 'react'
+import { unstable_Activity as Activity, useState, Fragment } from 'react'
 import { useLocation, useOutlet } from 'react-router-dom'
+
+import { useCreateEffect } from '@/hooks'
 
 import type { GlobalModel } from '@/context/app'
 
@@ -35,7 +37,7 @@ const Index = (props: IPropsOffscreenOutlet) => {
 		$message.success($t('layout.Sidebar.exit_app_tip', { app: $t(`modules.${title}`) }))
 	})
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		const result = cache_pages.some(item => item.pathname === pathname)
 		const is_app = Boolean(apps.find(item => item.path === pathname))
 
@@ -59,11 +61,11 @@ const Index = (props: IPropsOffscreenOutlet) => {
 		setCachePages([...cache_pages, { app: current_module, is_app, pathname, key, outlet }])
 	}, [current_module, apps, cache_pages, pathname, key, outlet])
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		setActives(cache_pages.map(item => omit(item, 'outlet')).filter(item => item.is_app))
 	}, [cache_pages])
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		$app.Event.on('global.app.exitApp', exitApp)
 
 		return () => {

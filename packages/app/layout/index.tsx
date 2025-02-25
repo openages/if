@@ -4,16 +4,16 @@ import { useDebounceEffect, useMemoizedFn } from 'ahooks'
 import { App, ConfigProvider } from 'antd'
 import { minimatch } from 'minimatch'
 import { observer } from 'mobx-react-lite'
-import { unstable_Activity as Activity, useEffect, useLayoutEffect, useMemo, useState } from 'react'
+import { unstable_Activity as Activity, useMemo, useState } from 'react'
 import { prefetchDNS } from 'react-dom'
 import { IconContext } from 'react-icons'
 import { useLocation } from 'react-router-dom'
 import { container } from 'tsyringe'
 
 import { exclude_paths } from '@/appdata'
-import { GlobalLoading, LazyElement, OffscreenOutlet } from '@/components'
+import { GlobalLoading, OffscreenOutlet } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
-import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
+import { useAntdLocale, useCreateEffect, useCreateLayoutEffect, useCurrentModule, useTheme } from '@/hooks'
 import { is_prod, is_sandbox } from '@/utils'
 import { useDeepMemo } from '@openages/stk/react'
 
@@ -51,7 +51,7 @@ const Index = () => {
 	useGlobalTranslate()
 	usePathChange()
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		if (is_prod) prefetchDNS(`https://if-server${is_sandbox ? '-sandbox' : ''}.openages.com`)
 
 		global.init()
@@ -59,11 +59,11 @@ const Index = () => {
 		return () => global.off()
 	}, [])
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		global.app.switch_index = global.app.actives.findIndex(item => item.app === current_module)
 	}, [current_module, global.app.actives])
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		global.search.module = current_module
 	}, [current_module])
 

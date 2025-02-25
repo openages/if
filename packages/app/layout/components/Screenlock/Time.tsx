@@ -1,10 +1,12 @@
 import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+
+import { useCreateEffect } from '@/hooks'
 
 const Index = () => {
 	const [time, setTime] = useState(() => dayjs())
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		const timer = setInterval(() => setTime(dayjs()), 1000)
 
 		return () => clearInterval(timer)

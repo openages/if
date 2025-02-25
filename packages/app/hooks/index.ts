@@ -1,4 +1,3 @@
-export { default as useDeepEffect } from './useDeepEffect'
 export { default as useElementScrollRestoration } from './useElementScrollRestoration'
 export { default as usePageScrollRestoration } from './usePageScrollRestoration'
 export { default as useTheme } from './useTheme'
@@ -18,5 +17,7 @@ export { default as useArchiveOptions } from './useArchiveOptions'
 export { default as useHiddenReactflowROLoop } from './useHiddenReactflowROLoop'
 export { default as useSize } from './useSize'
 export { default as useCopyMemberEmail } from './useCopyMemberEmail'
+export { default as useCreateLayoutEffect } from './useCreateLayoutEffect'
+export { default as useCreateEffect } from './useCreateEffect'
 
 export * from './useAntdApp'

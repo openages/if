@@ -1,9 +1,9 @@
-import { useDeepCompareEffect, useMemoizedFn } from 'ahooks'
+import { useMemoizedFn } from 'ahooks'
 import { useMemo, useRef, useState } from 'react'
 import { Layer, Line, Stage } from 'react-konva'
 
 import { SortableWrap } from '@/components'
-import { useCssVariable, useSize } from '@/hooks'
+import { useCreateEffect, useCssVariable, useSize } from '@/hooks'
 import { getSerialNumber, points } from '@/utils'
 import { useDndMonitor, useDroppable } from '@dnd-kit/core'
 import { verticalListSortingStrategy, SortableContext } from '@dnd-kit/sortable'
@@ -134,7 +134,7 @@ const Index = (props: IPropsTodos) => {
 		setTimeout(() => cancelAnimationFrame(stoper.current!), 180)
 	})
 
-	useDeepCompareEffect(() => {
+	useCreateEffect(() => {
 		const timer = setTimeout(() => markLines(), 120)
 
 		return () => clearTimeout(timer)

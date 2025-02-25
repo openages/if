@@ -1,6 +1,8 @@
 import { useMemoizedFn } from 'ahooks'
 import { debounce } from 'lodash-es'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+
+import { useCreateEffect } from '@/hooks'
 
 export default (callback: () => void, visible: boolean) => {
 	const [node, setRef] = useState<HTMLDivElement | null>(null)
@@ -15,7 +17,7 @@ export default (callback: () => void, visible: boolean) => {
 		}
 	})
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		if (!visible) return
 		if (!node?.parentElement) return
 

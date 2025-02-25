@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+
+import { useCreateEffect } from '@/hooks'
 
 export default (value: unknown) => {
 	const [changing, setChanging] = useState(false)
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		setChanging(true)
 
 		const timer = setTimeout(() => setChanging(false), 450)

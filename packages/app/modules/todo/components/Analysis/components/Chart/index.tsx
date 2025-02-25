@@ -3,8 +3,10 @@ import { DatasetComponent, GridComponent, LegendComponent, TitleComponent, Toolt
 import { init, use } from 'echarts/core'
 import { SVGRenderer } from 'echarts/renderers'
 import { sum } from 'lodash-es'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { useCreateEffect } from '@/hooks'
 
 import styles from './index.css'
 
@@ -72,7 +74,7 @@ const Index = (props: IPropsAnalysisChart) => {
 	const ref_ratio = useRef<HTMLDivElement>(null)
 	const { t } = useTranslation()
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		if (!trending) return
 
 		const chart_trending = init(ref_trending.current)

@@ -1,7 +1,8 @@
 import { useMemoizedFn } from 'ahooks'
 import { Form } from 'antd'
-import { cloneElement, useEffect, useRef, useState } from 'react'
+import { cloneElement, useRef, useState } from 'react'
 
+import { useCreateEffect } from '@/hooks'
 import { useDeepMemo } from '@openages/stk/react'
 
 import { useStyle } from '../hooks'
@@ -11,7 +12,9 @@ import type { ReactElement } from 'react'
 
 const { Item } = Form
 
-const Field = $app.memo((props: Pick<IPropsColumn, 'component' | 'useRowChange'> & Component<any>) => {
+type Props = Pick<IPropsColumn, 'component' | 'useRowChange'> & Component<any>
+
+const Field = $app.memo((props: Props) => {
 	const {
 		component,
 		value,
@@ -31,7 +34,7 @@ const Field = $app.memo((props: Pick<IPropsColumn, 'component' | 'useRowChange'>
 
 	const change = useMemoizedFn(onChange ? onChange : () => {})
 
-	const props_component = {
+	const props_component: Component<any> = {
 		value,
 		row_index,
 		dataIndex,
@@ -76,10 +79,10 @@ const Index = (props: IPropsColumn) => {
 	const ref = useRef<HTMLTableCellElement>(null)
 	const [hover, setHover] = useState(false)
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		const td = ref.current
 
-		if (alwaysEditing || disableEditing) return
+		if (!td || alwaysEditing || disableEditing) return
 
 		const setHoverTrue = () => setHover(true)
 		const setHoverFalse = () => setHover(false)
@@ -95,15 +98,15 @@ const Index = (props: IPropsColumn) => {
 
 	const onFocus = useMemoizedFn(v => {
 		if (v === undefined || v) {
-			setEditingField({ field: dataIndex, focus: true })
+			setEditingField!({ field: dataIndex, focus: true })
 		} else {
-			setEditingField(null)
+			setEditingField!(null)
 		}
 	})
 
-	const onBlur = useMemoizedFn(() => setEditingField(null))
+	const onBlur = useMemoizedFn(() => setEditingField!(null))
 
-	const props_field = {
+	const props_field: Props = {
 		component,
 		row_index,
 		dataIndex,

@@ -1,11 +1,12 @@
 import { useMemoizedFn } from 'ahooks'
 import { ConfigProvider, Dropdown } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useMemo, useState, Fragment } from 'react'
+import { useMemo, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
 import { container } from 'tsyringe'
 
 import { useStackSelector } from '@/context/stack'
+import { useCreateLayoutEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { CaretDown, DotsSixVertical } from '@phosphor-icons/react'
 
@@ -22,7 +23,7 @@ const Index = (props: IPropsCommon) => {
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		x.init(id, editor, md!)
 
 		return () => x.off()

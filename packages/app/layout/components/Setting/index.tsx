@@ -1,13 +1,13 @@
 import { useMemoizedFn } from 'ahooks'
 import { Button, ConfigProvider, Drawer, Tabs } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useLayoutEffect, useMemo, useState, Fragment, ReactElement } from 'react'
+import { useMemo, useState, Fragment, ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { version_name } from '@/appdata'
 import { Modal, ModuleIcon, Wave } from '@/components'
-import { useAntdApp, useSize } from '@/hooks'
+import { useAntdApp, useCreateEffect, useCreateLayoutEffect, useSize } from '@/hooks'
 import { Infinity, List } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -26,13 +26,13 @@ const Index = (props: IPropsSetting) => {
 
 	useAntdApp()
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		x.on()
 
 		return () => x.off()
 	}, [])
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		if (!body_width) return
 
 		x.mini = body_width <= 840

@@ -1,11 +1,13 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { VisibilityContext } from 'react-horizontal-scrolling-menu'
 import scrollIntoView from 'smooth-scroll-into-view-if-needed'
+
+import { useCreateEffect } from '@/hooks'
 
 export default (id: string, active: boolean, isDragging?: boolean) => {
 	const scroller = useContext(VisibilityContext)
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		if (isDragging) return
 		if (!active) return
 		if (!scroller.getItemElementById) return

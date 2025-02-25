@@ -1,5 +1,7 @@
 import { useInViewport, useMemoizedFn } from 'ahooks'
-import { useEffect, useMemo, useRef, Fragment } from 'react'
+import { useMemo, useRef, Fragment } from 'react'
+
+import { useCreateEffect } from '@/hooks'
 
 import ColGroup from './ColGroup'
 import Th from './Th'
@@ -22,7 +24,7 @@ const Index = (props: IPropsHeader) => {
 		th_wrap.current.scrollLeft = scrollerX.scrollLeft
 	})
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		if (stickyTop === undefined || !scrollerX || visible) return
 
 		scrollerX.addEventListener('scroll', scrollSync)
@@ -30,7 +32,7 @@ const Index = (props: IPropsHeader) => {
 		return () => scrollerX.removeEventListener('scroll', scrollSync)
 	}, [stickyTop, scrollerX, visible])
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		if (!visible) scrollSync()
 	}, [visible])
 
@@ -44,7 +46,7 @@ const Index = (props: IPropsHeader) => {
 							zIndex: 102,
 							overflowX: 'scroll',
 							width: getComputedStyle(scrollerX).width
-					  }
+						}
 					: {}
 			}
 			ref={th_wrap}
@@ -57,8 +59,12 @@ const Index = (props: IPropsHeader) => {
 							<Th
 								title={item.title}
 								dataIndex={item.dataIndex}
-								showSort={item.sort}
-								sort={item.sort && sort?.field === item.dataIndex && sort ? sort : null}
+								showSort={item.sort!}
+								sort={
+									item.sort && sort?.field === item.dataIndex && sort
+										? sort
+										: undefined
+								}
 								align={item.align}
 								fixed={item.fixed}
 								stickyOffset={item.stickyOffset}
@@ -66,7 +72,7 @@ const Index = (props: IPropsHeader) => {
 									(left_shadow_index === index ? 'start' : '') ||
 									(right_shadow_index === index ? 'end' : '')
 								}
-								changeSort={item.sort && changeSort}
+								changeSort={item.sort ? changeSort : undefined}
 								key={item.dataIndex || item.title}
 							></Th>
 						))}

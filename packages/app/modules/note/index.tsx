@@ -1,11 +1,11 @@
 import { useMemoizedFn } from 'ahooks'
 import { Input } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useState } from 'react'
 import { container } from 'tsyringe'
 
 import { Note } from '@/Editor'
-import { useCurrentModule } from '@/hooks'
+import { useCreateEffect, useCreateLayoutEffect, useCurrentModule } from '@/hooks'
 
 import styles from './index.css'
 import Model from './model'
@@ -17,13 +17,13 @@ const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const module = useCurrentModule()
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		x.init({ id })
 
 		return () => x.off()
 	}, [id])
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		x.module = module
 	}, [module])
 

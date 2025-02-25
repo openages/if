@@ -1,8 +1,9 @@
 import { useMemoizedFn, useUpdateEffect } from 'ahooks'
 import { debounce } from 'lodash-es'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { LoadingCircle } from '@/components'
+import { useCreateEffect } from '@/hooks'
 import { useDeepMemo } from '@openages/stk/react'
 
 import { ColGroup, Header, Pagination, Row } from './components'
@@ -64,7 +65,7 @@ const Index = (props: IProps) => {
 		if (onChangeSort) onChangeSort(sort)
 	}, [sort])
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		const scroller_x = scroll_wrap.current
 
 		if (!scroller_x) return

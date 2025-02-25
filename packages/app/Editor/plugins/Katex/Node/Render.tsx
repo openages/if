@@ -1,7 +1,8 @@
 import katex from 'katex'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
+import { useCreateEffect } from '@/hooks'
 import { Warning } from '@phosphor-icons/react'
 
 import type { IPropsRender } from '../types'
@@ -10,7 +11,7 @@ const Index = (props: IPropsRender) => {
 	const { value, inline, onClick } = props
 	const ref = useRef(null)
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		const el = ref.current
 
 		if (!el || !value) return

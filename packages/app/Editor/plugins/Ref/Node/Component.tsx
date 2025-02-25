@@ -1,8 +1,9 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { ModuleIcon } from '@/components'
+import { useCreateLayoutEffect } from '@/hooks'
 import { getEditorText } from '@/utils/editor'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection'
@@ -23,7 +24,7 @@ const Index = (props: IPropsRef) => {
 	const [selected] = useLexicalNodeSelection(node_key!)
 	const item = $copy(x.item) || {}
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		x.init(editor, node_key!, module, id)
 
 		return () => x.off()

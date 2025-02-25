@@ -1,6 +1,7 @@
 import { debounce } from 'lodash-es'
-import { useLayoutEffect, useState } from 'react'
+import { useState } from 'react'
 
+import { useCreateLayoutEffect } from '@/hooks'
 import { getComputedStyleValue } from '@/utils'
 
 export default (getTargetElement: () => HTMLElement, attr?: 'width' | 'height') => {
@@ -16,7 +17,7 @@ export default (getTargetElement: () => HTMLElement, attr?: 'width' | 'height') 
 		}
 	})
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		const el = getTargetElement()
 
 		if (!el) return

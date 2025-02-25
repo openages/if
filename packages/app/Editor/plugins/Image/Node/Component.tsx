@@ -1,10 +1,11 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { stopPropagation } from '@/Editor/utils'
+import { useCreateEffect, useCreateLayoutEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection'
 import {
@@ -34,13 +35,13 @@ const Index = (props: IPropsImage) => {
 	const style_wrap = {} as CSSProperties
 	const style_img = {} as CSSProperties
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		x.block.init(editor, node_key!, setSelected, clearSelection)
 
 		return () => x.block.off()
 	}, [editor, node_key, setSelected, clearSelection])
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		x.block.selected = selected
 	}, [selected])
 

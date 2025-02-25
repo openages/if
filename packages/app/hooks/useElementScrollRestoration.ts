@@ -1,7 +1,8 @@
 import { throttle } from 'lodash-es'
-import { MutableRefObject, useLayoutEffect, useRef } from 'react'
+import { useRef, MutableRefObject } from 'react'
 import { useLocation } from 'react-router-dom'
 
+import { useCreateLayoutEffect } from '@/hooks'
 import { session } from '@openages/stk/storage'
 
 interface IScrollRestorationProps<T extends HTMLDivElement> {
@@ -14,7 +15,7 @@ export default <T extends HTMLDivElement>(id: string): IScrollRestorationProps<T
 	const ref = useRef<T>(null)
 	const scroll_key = `_element_scroll_position_${pathname}${search}${id}`
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		if (ref.current) {
 			const position = session.getItem(scroll_key)
 

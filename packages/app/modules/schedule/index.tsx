@@ -1,11 +1,12 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { match, P } from 'ts-pattern'
 import { container as model_container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
+import { useCreateLayoutEffect } from '@/hooks'
 import { useSensor, useSensors, DndContext, PointerSensor } from '@dnd-kit/core'
 import { restrictToFirstScrollableAncestor } from '@dnd-kit/modifiers'
 
@@ -52,7 +53,7 @@ const Index = ({ id }: IProps) => {
 	const move_item = $copy(x.move_item)
 	const unpaid = !global.auth.is_paid_user && ['timeline', 'fixed'].includes(x.view)
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		x.init({ id })
 
 		return () => x.off()

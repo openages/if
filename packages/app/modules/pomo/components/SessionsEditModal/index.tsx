@@ -2,7 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import { Drawer } from 'antd'
 import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 
-import { useDeepEffect } from '@/hooks'
+import { useCreateEffect } from '@/hooks'
 import { DndContext } from '@dnd-kit/core'
 import { rectSortingStrategy, SortableContext } from '@dnd-kit/sortable'
 
@@ -16,7 +16,7 @@ import type { DragEndEvent } from '@dnd-kit/core'
 const Index = (props: IPropsSessionsEditModal) => {
 	const { visible_edit_modal, data, update, remove, move, close } = props
 
-	useDeepEffect(() => {
+	useCreateEffect(() => {
 		if (!visible_edit_modal) return
 
 		const session = data.sessions[data.index]

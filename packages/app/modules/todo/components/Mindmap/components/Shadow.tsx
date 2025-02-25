@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-
+import { useCreateEffect } from '@/hooks'
 import { useNodes, useReactFlow, ReactFlow } from '@xyflow/react'
 
 import styles from '../index.css'
@@ -12,7 +11,7 @@ const Index = (props: IPropsShadow) => {
 	const nodes = useNodes()
 	const { setNodes } = useReactFlow()
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		if (!nodes.length) return
 		if (nodes.some(item => !item?.measured?.width || !item?.measured?.height)) return
 

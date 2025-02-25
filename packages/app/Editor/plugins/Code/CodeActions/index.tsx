@@ -1,13 +1,14 @@
 import { Select } from 'antd'
 import { motion, AnimatePresence } from 'framer-motion'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState } from 'react'
+import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { SiPrettier } from 'react-icons/si'
 import { bundledLanguagesInfo } from 'shiki'
 import { container } from 'tsyringe'
 
 import { useStackSelector } from '@/context/stack'
+import { useCreateLayoutEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { Check, Copy } from '@phosphor-icons/react'
 
@@ -23,11 +24,11 @@ const Index = () => {
 	const [exist, setExsit] = useState(false)
 	const [copyied, setCopied] = useState(false)
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		x.init(id, editor)
 	}, [id, editor])
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		if (x.visible) return setExsit(true)
 
 		const timer = setTimeout(() => {
@@ -37,7 +38,7 @@ const Index = () => {
 		return () => clearTimeout(timer)
 	}, [x.visible])
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		if (!copyied) return
 
 		const timer = setTimeout(() => {

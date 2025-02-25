@@ -1,5 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+
+import { useCreateEffect } from '@/hooks'
 
 import styles from './index.css'
 
@@ -11,7 +13,7 @@ const Index = (props: IProps) => {
 	const { duration = 0.18 } = props
 	const [visible, setVisible] = useState(true)
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		const timer = setTimeout(() => setVisible(false), duration * 1000)
 
 		return () => clearTimeout(timer)

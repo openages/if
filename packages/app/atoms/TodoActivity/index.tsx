@@ -1,10 +1,11 @@
 import { useMemoizedFn } from 'ahooks'
 import dayjs from 'dayjs'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState } from 'react'
+import { useState } from 'react'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
+import { useCreateLayoutEffect } from '@/hooks'
 
 import { Chart, Header, List } from './components'
 import styles from './index.css'
@@ -22,7 +23,7 @@ const Index = (props: IProps) => {
 	const global = useGlobal()
 	const unpaid = !global.auth.is_paid_user && ['month', 'year'].includes(x.type)
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		x.init({ id, type })
 	}, [id, type])
 

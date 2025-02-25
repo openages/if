@@ -1,6 +1,8 @@
 import { useEventListener, useMemoizedFn } from 'ahooks'
 import { debounce } from 'lodash-es'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
+
+import { useCreateEffect } from '@/hooks'
 
 interface HookArgs {
 	value: string
@@ -14,7 +16,7 @@ export default (args: HookArgs) => {
 	const [compositing, setCompositing] = useState(false)
 	const max_length = args.max_length || 6000
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		const el = input.current
 
 		if (!el) return

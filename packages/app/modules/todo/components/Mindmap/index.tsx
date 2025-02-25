@@ -1,12 +1,12 @@
 import { useMemoizedFn } from 'ahooks'
 import { pick } from 'lodash-es'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useState } from 'react'
+import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
-import { useHiddenReactflowROLoop } from '@/hooks'
+import { useCreateLayoutEffect, useHiddenReactflowROLoop } from '@/hooks'
 import { ReactFlowProvider } from '@xyflow/react'
 
 import { Graph, Shadow } from './components'
@@ -26,7 +26,7 @@ const Index = (props: IPropsMindmap) => {
 
 	useHiddenReactflowROLoop()
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		const keys = Object.keys(kanban_items)
 
 		if (!angles.length) return

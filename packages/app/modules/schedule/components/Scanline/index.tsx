@@ -1,6 +1,8 @@
 import { useMemoizedFn } from 'ahooks'
 import dayjs from 'dayjs'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
+
+import { useCreateEffect } from '@/hooks'
 
 import styles from './index.css'
 
@@ -41,7 +43,7 @@ const Index = (props: IPropsScanline) => {
 		}
 	})
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		getOffset()
 
 		const timer_top = setInterval(() => getOffset(), 12000)

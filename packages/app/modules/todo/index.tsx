@@ -1,12 +1,13 @@
 import { useMemoizedFn } from 'ahooks'
 import { omit, pick } from 'lodash-es'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useLayoutEffect, useMemo, useState, Fragment } from 'react'
+import { useMemo, useState, Fragment } from 'react'
 import { match, P } from 'ts-pattern'
 import { container } from 'tsyringe'
 
 import { DataEmpty, SortableWrap } from '@/components'
 import { useStackSelector } from '@/context/stack'
+import { useCreateEffect, useCreateLayoutEffect } from '@/hooks'
 import { pointerWithin, rectIntersection, DndContext, DragOverlay } from '@dnd-kit/core'
 
 import {
@@ -68,13 +69,13 @@ const Index = ({ id }: IProps) => {
 
 	const updateSetting = useMemoizedFn(x.updateSetting)
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		x.init({ id })
 
 		return () => x.off()
 	}, [id])
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		if (!Object.keys(current_detail_item).length) {
 			x.visible_detail_modal = false
 		}

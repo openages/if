@@ -1100,6 +1100,8 @@ export default class Index {
 	watchItems() {
 		this.stopWatchItems()
 
+		this.items = []
+
 		if (this.mode === 'list') {
 			const current_angle_id = this.current_angle_id
 

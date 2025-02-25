@@ -1,7 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { $getSelection, $isRangeSelection } from 'lexical'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useMemo, useState, Fragment } from 'react'
+import { useMemo, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
@@ -9,7 +9,7 @@ import { container } from 'tsyringe'
 import { LazyElement, LoadingCircle, Modal } from '@/components'
 import { useStackSelector } from '@/context/stack'
 import { $getMatchingParent } from '@/Editor/utils'
-import { getObjectKeys } from '@/utils'
+import { useCreateLayoutEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useBasicTypeaheadTriggerMatch, LexicalTypeaheadMenuPlugin } from '@lexical/react/LexicalTypeaheadMenuPlugin'
 
@@ -34,7 +34,7 @@ const Index = (props: IProps) => {
 	const id = useStackSelector(v => v.id)
 	const { t } = useTranslation()
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		x.init(editor, text_mode!)
 
 		return () => x.off()

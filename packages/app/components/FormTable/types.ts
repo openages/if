@@ -82,7 +82,7 @@ export interface IPropsColumn {
 	alwaysEditing: Column['alwaysEditing']
 	disableEditing: Column['disableEditing']
 	focus: boolean
-	shadow?: 'start' | 'end' | ''
+	shadow?: 'start' | 'end' | '' | false
 	sorting?: boolean
 	useRowChange?: Column['useRowChange']
 	setEditingField: ((v: { field: string; focus: boolean } | null) => void) | undefined

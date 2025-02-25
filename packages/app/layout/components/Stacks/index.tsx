@@ -1,8 +1,9 @@
 import { useMemoizedFn } from 'ahooks'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Logo } from '@/components'
+import { useCreateEffect } from '@/hooks'
 import { is_win_electron } from '@/utils'
 import { useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
 import { House } from '@phosphor-icons/react'
@@ -36,7 +37,7 @@ const Index = (props: IPropsStacks) => {
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
 	const { t } = useTranslation()
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		observe()
 
 		return () => unobserve()

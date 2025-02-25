@@ -1,6 +1,6 @@
 import { useUpdateEffect } from 'ahooks'
 
-import { useDeepEffect } from '@/hooks'
+import { useCreateEffect } from '@/hooks'
 
 import type { IPropsTodoItem } from '../types'
 
@@ -19,7 +19,7 @@ export default (args: HookArgs) => {
 
 	useUpdateEffect(() => renderLines!(), [open, zen_mode])
 
-	useDeepEffect(() => {
+	useCreateEffect(() => {
 		if (!open_items) return
 
 		if (open_items.includes(id)) {

@@ -1,6 +1,8 @@
 import { useLongPress } from 'ahooks'
 import { theme } from 'antd'
-import { cloneElement, useEffect, useRef, useState } from 'react'
+import { cloneElement, useRef, useState } from 'react'
+
+import { useCreateEffect } from '@/hooks'
 
 import styles from './index.css'
 
@@ -35,7 +37,7 @@ const Index = (props: IProps) => {
 		}
 	)
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		if (!press_start) return
 
 		const timer = setInterval(() => setPressTime((Date.now() - press_start) / 1000), 30)
@@ -43,7 +45,7 @@ const Index = (props: IProps) => {
 		return () => clearInterval(timer)
 	}, [press_start])
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		if (press_time > time!) {
 			trigger?.()
 			setPressStart(0)

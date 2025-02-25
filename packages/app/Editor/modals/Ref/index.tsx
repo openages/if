@@ -2,11 +2,12 @@ import { useEventListener, useMemoizedFn } from 'ahooks'
 import { Select } from 'antd'
 import { debounce } from 'lodash-es'
 import { observer } from 'mobx-react-lite'
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { SimpleEmpty } from '@/components'
+import { useCreateLayoutEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { MagnifyingGlass } from '@phosphor-icons/react'
 
@@ -25,7 +26,7 @@ const Index = (props: IPropsModal) => {
 	const { t } = useTranslation()
 	const ref = useRef<HTMLInputElement>(null)
 
-	useLayoutEffect(() => {
+	useCreateLayoutEffect(() => {
 		x.init(editor, node_key!)
 	}, [editor, node_key])
 
