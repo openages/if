@@ -81,9 +81,9 @@ const Index = (props: IPropsSetting) => {
 								}}
 							>
 								<ModuleIcon
-									className='icon_module'
+									className={$cx('icon_module', key)}
 									type={key as App.ModuleType}
-									size={18}
+									ignore_size
 								></ModuleIcon>
 								<span className='menu_name'>{label}</span>
 							</Button>

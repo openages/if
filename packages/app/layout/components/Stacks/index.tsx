@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import { Button } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -6,7 +7,7 @@ import { Logo } from '@/components'
 import { useCreateEffect } from '@/hooks'
 import { is_win_electron } from '@/utils'
 import { useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
-import { House } from '@phosphor-icons/react'
+import { GearSix, House } from '@phosphor-icons/react'
 
 import { WinActions } from '../'
 import { Content, NavBar, View } from './components'
@@ -31,7 +32,8 @@ const Index = (props: IPropsStacks) => {
 		setResizing,
 		observe,
 		unobserve,
-		showHomepage
+		showHomepage,
+		showSetting
 	} = props
 	const [drag_view, setDragView] = useState<{ column_index: number; view_index: number; view: Stack.View }>(null!)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
@@ -99,7 +101,7 @@ const Index = (props: IPropsStacks) => {
 				<Otherwise>
 					<div
 						className={$cx(
-							'w_100 h_100 flex justify_center align_center relative',
+							'w_100 h_100 flex flex_column justify_center align_center relative',
 							styles.placeholder
 						)}
 					>
@@ -109,14 +111,23 @@ const Index = (props: IPropsStacks) => {
 							</If>
 						</div>
 						<Logo size={96}></Logo>
-
 						<If condition={browser_mode}>
-							<div
-								className='btn_homepage flex flex_column align_center absolute clickable'
-								onClick={showHomepage}
-							>
-								<House className='icon' />
-								<span className='text'>{t('layout.Homepage.title')}</span>
+							<div className='bottom_actions flex align_center absolute'>
+								<Button
+									className='btn_homepage flex justify_center align_center clickable'
+									icon={<House className='icon' />}
+									onClick={showHomepage}
+								>
+									<span className='text'>{t('layout.Homepage.title')}</span>
+								</Button>
+								<span className='divider'></span>
+								<Button
+									className='btn_homepage flex justify_center align_center clickable'
+									icon={<GearSix className='icon' />}
+									onClick={showSetting}
+								>
+									<span className='text'>{t('modules.setting')}</span>
+								</Button>
 							</div>
 						</If>
 					</div>

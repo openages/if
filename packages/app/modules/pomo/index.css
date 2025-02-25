@@ -7,6 +7,10 @@
 	}
 
 	:global {
+		.tray_progress_wrap {
+			display: none;
+		}
+
 		.page_content_wrap {
 			max-width: var(--limited_width);
 			padding: 6vh var(--limited_padding);

@@ -1,4 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
+import { Progress } from 'antd'
 import { AnimatePresence } from 'framer-motion'
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
@@ -63,6 +64,23 @@ const Index = ({ id }: IProps) => {
 				x.visible_edit_modal && styles.visible_edit_modal
 			)}
 		>
+			{x.tray && (
+				<div className='tray_progress_wrap'>
+					<Progress
+						className='tray_progress'
+						type='circle'
+						trailColor='#eee'
+						strokeColor={
+							x.tray.status === 'working' ? 'var(--color_warning)' : 'var(--color_success)'
+						}
+						percent={60}
+						strokeWidth={16}
+						size={16}
+						showInfo={false}
+						ref={v => (x.ref_tray = v)}
+					/>
+				</div>
+			)}
 			<div className='page_content_wrap w_100 h_100 border_box flex flex_column'>
 				<div className='sessions_wrap flex flex_column justify_center align_center'>
 					<div className='session_items flex justify_center align_center relative'>

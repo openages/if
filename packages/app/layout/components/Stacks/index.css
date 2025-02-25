@@ -23,25 +23,41 @@
 			height: 36px;
 		}
 
-		.btn_homepage {
+		.bottom_actions {
 			bottom: 18px;
-			color: var(--color_text_light);
+			gap: 3px;
 
-			&:hover,
-			&.active {
-				color: var(--color_text);
+			.divider {
+				width: 2.4px;
+				height: 2.4px;
+				border-radius: 50%;
+				background-color: var(--color_text_greylight);
 			}
 
-			.icon {
-				display: flex;
-				margin-bottom: 3px;
-				font-size: 18px;
-			}
+			.btn_homepage {
+				width: unset;
+				height: 30px;
+				padding: 0 12px;
+				border: none;
+				color: var(--color_text_light);
+				box-shadow: none;
+				font-size: 12px;
+				gap: 4.2px;
 
-			.text {
-				line-height: 1;
-				user-select: none;
-				font-size: 10px;
+				&:hover,
+				&.active {
+					color: var(--color_text);
+				}
+
+				.icon {
+					display: flex;
+					font-size: 13px;
+				}
+
+				.text {
+					line-height: 1;
+					user-select: none;
+				}
 			}
 		}
 	}

@@ -131,6 +131,12 @@ export default {
 			desc: 'Batch import markdown files'
 		}
 	},
+	Pomo: {
+		sound: {
+			title: 'Sound',
+			desc: 'Remind when work and break completed'
+		}
+	},
 	User: {
 		free: {
 			title: 'Free',

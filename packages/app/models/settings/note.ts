@@ -18,7 +18,7 @@ export default class Index {
 	settings_watcher = {} as Subscription
 
 	constructor() {
-		makeAutoObservable(this, { doc: false }, { autoBind: true })
+		makeAutoObservable(this, { doc: false, settings_watcher: false }, { autoBind: true })
 	}
 
 	init() {

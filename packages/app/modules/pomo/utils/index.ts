@@ -13,6 +13,12 @@ export const getTime = (v: number, raw?: boolean) => {
 	}
 }
 
+export const getTimeText = (v: number) => {
+	const { hours, minutes } = getTime(v)
+
+	return `${hours}:${minutes}`
+}
+
 export const getGoingTime = (v: number) => {
 	return parseInt(dayjs.duration(v, 'second').asMinutes().toFixed(2))
 }

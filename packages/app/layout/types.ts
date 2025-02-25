@@ -34,6 +34,7 @@ export interface IPropsStacks {
 	observe: GlobalModel['stack']['observe']
 	unobserve: GlobalModel['stack']['unobserve']
 	showHomepage: () => void
+	showSetting: () => void
 }
 
 export interface IPropsStacksNavBar
@@ -47,6 +48,7 @@ export interface IPropsStacksNavBar
 		| 'setResizing'
 		| 'observe'
 		| 'unobserve'
+		| 'showSetting'
 	> {
 	resizing: boolean
 }

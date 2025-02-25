@@ -125,7 +125,8 @@ const Index = () => {
 		setResizing: useMemoizedFn((v: boolean) => (global.stack.resizing = v)),
 		observe: useMemoizedFn(global.stack.observe),
 		unobserve: useMemoizedFn(global.stack.unobserve),
-		showHomepage: useMemoizedFn(() => (global.app.visible_homepage = true))
+		showHomepage: useMemoizedFn(() => (global.app.visible_homepage = true)),
+		showSetting
 	}
 
 	const props_app_menu: IPropsAppMenu = {

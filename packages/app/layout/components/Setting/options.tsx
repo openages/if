@@ -1,19 +1,9 @@
 import { CircleArrowUp, Info, Settings2, SquareChevronUp, UserRound } from 'lucide-react'
 
-import {
-	Butterfly,
-	Cloud,
-	CurrencyCircleDollar,
-	HandHeart,
-	Heart,
-	Medal,
-	Sliders,
-	User,
-	Users
-} from '@phosphor-icons/react'
+import { Butterfly, Cloud, HandHeart, Heart, Medal, Users } from '@phosphor-icons/react'
 
-import { About, Account, Billing, Global, Menu, Shortcuts } from './app'
-import { Note } from './modules'
+import { About, Account, Billing, Global, Shortcuts } from './app'
+import { Note, Pomo } from './modules'
 
 import type { TFunction } from 'i18next'
 import type { LucideIcon } from 'lucide-react'
@@ -38,12 +28,6 @@ export const getSettingItems = (t: TFunction<'translation', undefined>) => {
 			key: 'billing',
 			children: <Billing></Billing>
 		},
-		// {
-		// 	label: t('setting.nav.titles.Menu'),
-		// 	Icon: Layout,
-		// 	key: 'menu',
-		// 	children: <Menu></Menu>
-		// },
 		{
 			label: t('setting.nav.titles.Shortcuts'),
 			Icon: SquareChevronUp,
@@ -71,6 +55,11 @@ export const getModuleItems = (t: TFunction<'translation', undefined>) => [
 		label: t('modules.note'),
 		key: 'note',
 		children: <Note></Note>
+	},
+	{
+		label: t('modules.pomo'),
+		key: 'pomo',
+		children: <Pomo></Pomo>
 	}
 ]
 

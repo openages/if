@@ -1,4 +1,8 @@
 export namespace Pomo {
+	export interface Setting {
+		sound: boolean
+	}
+
 	export interface Session {
 		id: string
 		title: string

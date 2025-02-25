@@ -10,7 +10,6 @@ import {
 	CheckCircle,
 	Clipboard,
 	Database,
-	GearSix,
 	MarkdownLogo,
 	MicrosoftPowerpointLogo,
 	Table,
@@ -28,10 +27,11 @@ import type { App } from '@/types'
 interface IProps extends IconProps {
 	type: App.ModuleType
 	with_color?: boolean
+	ignore_size?: boolean
 }
 
 const Index = (props: IProps) => {
-	const { type, with_color, className, ...icon_props } = props
+	const { type, with_color, ignore_size, className, ...icon_props } = props
 
 	const target_class = $cx(icon_props?.weight === 'duotone' && styles._local, with_color && styles[type], className)
 	const target_props = { ...omit(icon_props, 'ref'), className: target_class }
@@ -40,7 +40,10 @@ const Index = (props: IProps) => {
 		.with('todo', () => <CheckCircle {...target_props} />)
 		.with('memo', () => <Memo {...target_props} />)
 		.with('note', () => (
-			<MarkdownLogo {...target_props} size={target_props.size ? Number(target_props.size) - 3 : '1em'} />
+			<MarkdownLogo
+				{...target_props}
+				size={ignore_size ? undefined : target_props.size ? Number(target_props.size) - 3 : '1em'}
+			/>
 		))
 		.with('page', () => <AppWindow {...target_props} />)
 		.with('whiteboard', () => <Clipboard {...target_props} />)

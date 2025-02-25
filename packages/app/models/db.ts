@@ -7,6 +7,7 @@ import { migrateStorage } from 'rxdb/plugins/migration-storage'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 
 import { insertDefault as insertDefaultNote } from '@/actions/note'
+import { insertDefault as insertDefaultPomo } from '@/actions/pomo'
 import { insertDefault as insertDefaultSchedule } from '@/actions/schedule'
 import { keyCompression } from '@/config'
 import { migration_schedule_items, migration_todo_items } from '@/migrations'
@@ -93,7 +94,7 @@ export default class Index {
 		await this.migrateSchema()
 		await this.updateDBTimeStamps()
 
-		await Promise.all([await insertDefaultSchedule(), await insertDefaultNote()])
+		await Promise.all([await insertDefaultNote(), await insertDefaultPomo(), await insertDefaultSchedule()])
 
 		this.ready = true
 

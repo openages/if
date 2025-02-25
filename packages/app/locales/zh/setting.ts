@@ -131,6 +131,12 @@ export default {
 			desc: '批量导入Markdown文件'
 		}
 	},
+	Pomo: {
+		sound: {
+			title: '声音提示',
+			desc: '完成后发出提示音'
+		}
+	},
 	User: {
 		free: {
 			title: '免费用户',

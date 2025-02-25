@@ -1,16 +1,17 @@
 import { makeAutoObservable } from 'mobx'
+import { domToPng } from 'modern-screenshot'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
-import { File, Sound } from '@/models'
+import { File, PomoSettings, Sound } from '@/models'
 import done from '@/public/sounds/done.mp3'
 import notify from '@/public/sounds/notify.mp3'
-import { getDocItem, id } from '@/utils'
+import { getDocItem, id, ipc } from '@/utils'
 import { disableWatcher } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
 
 import { getPomo, update } from './services'
-import { fillTimeText, getGoingTime, getTime } from './utils'
+import { fillTimeText, getGoingTime, getTime, getTimeText } from './utils'
 
 import type { Subscription } from 'rxjs'
 import type { Pomo } from '@/types'
@@ -19,6 +20,7 @@ import type { Pomo } from '@/types'
 export default class Index {
 	id = ''
 	data = {} as Pomo.Item
+	ref_tray = null as HTMLDivElement | null
 
 	watcher = null as unknown as Subscription
 	disable_watcher = false
@@ -31,8 +33,15 @@ export default class Index {
 	record_timer = null as unknown as NodeJS.Timer
 	record_numbers = 0
 
+	tray = null as { status: 'working' | 'break'; percent: number; title: string } | null
+
+	get use_sound() {
+		return this.settings.settings?.sound
+	}
+
 	constructor(
 		public file: File,
+		public settings: PomoSettings,
 		public work_end: Sound,
 		public break_end: Sound
 	) {
@@ -41,6 +50,7 @@ export default class Index {
 			{
 				file: false,
 				id: false,
+				ref_tray: false,
 				watcher: false,
 				disable_watcher: false,
 				record_timer: false,
@@ -55,6 +65,8 @@ export default class Index {
 
 		this.id = id
 		this.file.init(id)
+		this.settings.init()
+
 		this.work_end.init({ src: notify, loop: true, times: 6 })
 		this.break_end.init({ src: done, loop: true, times: 6 })
 
@@ -208,10 +220,7 @@ export default class Index {
 			const time = getTime(getGoingTime(this.data.work_in), true) as { hours: number; minutes: number }
 			const percent = parseFloat(((time.minutes * 100) / 60).toFixed(2))
 
-			$app.Event.emit('global.app.updateTimer', {
-				in: { hours: fillTimeText(time.hours), minutes: fillTimeText(time.minutes) },
-				percent
-			})
+			this.updateTray({ status: 'working', percent, title: getTimeText(session.work_time) })
 
 			return
 		}
@@ -221,7 +230,7 @@ export default class Index {
 			const left_time = session.work_time - going_time
 			const percent = parseFloat(((going_time * 100) / session.work_time).toFixed(2))
 
-			$app.Event.emit('global.app.updateTimer', { in: getTime(left_time), percent })
+			this.updateTray({ status: 'working', percent, title: getTimeText(left_time) })
 		}
 
 		if (this.data.current === 'break') {
@@ -229,25 +238,25 @@ export default class Index {
 			const left_time = session.break_time - going_time
 			const percent = parseFloat(((going_time * 100) / session.break_time).toFixed(2))
 
-			$app.Event.emit('global.app.updateTimer', { in: getTime(left_time), percent })
+			this.updateTray({ status: 'break', percent, title: getTimeText(left_time) })
 		}
 
 		if (this.data.current === 'work' && getGoingTime(this.data.work_in) >= session.work_time) {
-			this.work_end.sound.play()
+			if (this.use_sound) this.work_end.sound.play()
 
 			this.data.current = 'break'
 
-			this.stopRecord(true)
+			this.stopRecord()
 		}
 
 		if (this.data.current === 'break' && getGoingTime(this.data.break_in) >= session.break_time) {
-			this.break_end.sound.play()
+			if (this.use_sound) this.break_end.sound.play()
 
 			this.data.current = null
 			this.data.work_in = 0
 			this.data.break_in = 0
 
-			this.stopRecord(true)
+			this.stopRecord()
 
 			if (this.data.continuous_mode) {
 				const next_index = this.data.index + 1
@@ -284,10 +293,22 @@ export default class Index {
 		}, 1000)
 	}
 
-	stopRecord(ignoreTimer?: boolean) {
-		if (!this.record_timer) return
+	async updateTray(v: Index['tray']) {
+		this.tray = v
 
-		if (!ignoreTimer) $app.Event.emit('global.app.updateTimer', null)
+		if (!this.ref_tray) return
+
+		const data_url = await domToPng(this.ref_tray, { quality: 1, scale: 1, width: 16, height: 16 })
+
+		ipc.app.updateTray.query({ data_url, title: this.tray?.title || '' })
+	}
+
+	stopRecord() {
+		ipc.app.updateTray.query()
+
+		this.tray = null
+
+		if (!this.record_timer) return
 
 		clearInterval(this.record_timer)
 
@@ -329,6 +350,7 @@ export default class Index {
 
 	off() {
 		this.file.off()
+		this.settings.off()
 
 		$app.Event.off(`pomo/${this.id}/stopRecord`, this.stopRecord)
 
