@@ -37,6 +37,19 @@ export default {
 			desc: '内容页面的宽度规则'
 		}
 	},
+	Tray: {
+		title: '托盘区',
+		select_file: '选择文件',
+		Todo: {
+			title: '待办',
+			desc: '在托盘查看待办',
+			select_angle: '选择分类'
+		},
+		Schedule: {
+			title: '日程',
+			desc: '在托盘查看日程'
+		}
+	},
 	NavItems: {
 		title: '功能项'
 	},

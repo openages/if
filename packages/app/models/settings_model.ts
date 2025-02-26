@@ -1,24 +1,23 @@
 import { makeAutoObservable } from 'mobx'
 
 import type { Subscription } from 'rxjs'
-import type { Pomo } from '@/types'
 import type { DocKV } from '@/schemas'
 
-export default class Index {
+export default class Index<T> {
 	doc = null as unknown as DocKV
-	settings = {} as Pomo.Setting
+	settings = {} as T
 	settings_watcher = {} as Subscription
 
 	constructor() {
 		makeAutoObservable(this, { doc: false, settings_watcher: false }, { autoBind: true })
 	}
 
-	init() {
-		this.on()
+	init(key: string) {
+		this.on(key)
 	}
 
-	on() {
-		this.settings_watcher = $db.kv.findOne('pomo_settings').$.subscribe(doc => {
+	on(key: string) {
+		this.settings_watcher = $db.kv.findOne(key).$.subscribe(doc => {
 			this.settings = JSON.parse(doc!.value)
 		})
 	}

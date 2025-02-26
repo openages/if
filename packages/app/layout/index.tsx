@@ -7,17 +7,17 @@ import { observer } from 'mobx-react-lite'
 import { unstable_Activity as Activity, useMemo, useState } from 'react'
 import { prefetchDNS } from 'react-dom'
 import { IconContext } from 'react-icons'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useOutlet } from 'react-router-dom'
 import { container } from 'tsyringe'
 
-import { exclude_paths } from '@/appdata'
+import { exclude_paths, window_pages } from '@/appdata'
 import { GlobalLoading, OffscreenOutlet } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import { useAntdLocale, useCreateEffect, useCreateLayoutEffect, useCurrentModule, useTheme } from '@/hooks'
 import { is_prod, is_sandbox } from '@/utils'
 import { useDeepMemo } from '@openages/stk/react'
 
-import { AppMenu, AppSwitch, Homepage, Screenlock, Search, Setting, Sidebar, Stacks } from './components'
+import { AntdApp, AppMenu, AppSwitch, Homepage, Screenlock, Search, Setting, Sidebar, Stacks } from './components'
 import { useGlobalNavigate, useGlobalTranslate, usePathChange } from './hooks'
 import styles from './index.css'
 
@@ -39,6 +39,7 @@ const Index = () => {
 	const { pathname } = useLocation()
 	const [global] = useState(() => container.resolve(GlobalModel))
 	const theme = useTheme(global.setting.theme, global.setting.color_main_rgb)
+	const outlet = useOutlet()!
 	const locale = useAntdLocale(global.locale.lang)
 	const current_module = useCurrentModule()
 	const apps = $copy(global.app.apps)
@@ -209,33 +210,40 @@ const Index = () => {
 			<ConfigProvider {...props_config_provider}>
 				<App {...props_app}>
 					<IconContext.Provider value={{ className: 'ricon', style: { verticalAlign: 'middle' } }}>
-						<GlobalLoading></GlobalLoading>
-						<If condition={!browser_mode}>
-							<Sidebar {...props_sidebar} />
-						</If>
-						<div
-							className={$cx(
-								'w_100vw border_box',
-								styles.container,
-								browser_mode && styles.browser_mode
-							)}
-						>
-							<div className='w_100 border_box'>
+						<AntdApp></AntdApp>
+						<Choose>
+							<When condition={window_pages.includes(pathname)}>{outlet}</When>
+							<Otherwise>
+								<GlobalLoading></GlobalLoading>
 								<If condition={!browser_mode}>
-									<OffscreenOutlet {...props_offscreen_pages_outlet} />
+									<Sidebar {...props_sidebar} />
 								</If>
-								<Activity mode={is_exclude_router ? 'hidden' : 'visible'}>
-									<Stacks {...props_stacks}></Stacks>
-								</Activity>
-							</div>
-						</div>
-						<AppMenu {...props_app_menu}></AppMenu>
-						<AppSwitch {...props_app_switch}></AppSwitch>
-						<Search {...props_search}></Search>
-						<Setting {...props_setting}></Setting>
-						<If condition={browser_mode}>
-							<Homepage {...props_homepage}></Homepage>
-						</If>
+								<div
+									className={$cx(
+										'w_100vw border_box',
+										styles.container,
+										browser_mode && styles.browser_mode
+									)}
+								>
+									<div className='w_100 border_box'>
+										<If condition={!browser_mode}>
+											<OffscreenOutlet {...props_offscreen_pages_outlet} />
+										</If>
+										<Activity mode={is_exclude_router ? 'hidden' : 'visible'}>
+											<Stacks {...props_stacks}></Stacks>
+										</Activity>
+									</div>
+								</div>
+								<AppMenu {...props_app_menu}></AppMenu>
+								<AppSwitch {...props_app_switch}></AppSwitch>
+								<Search {...props_search}></Search>
+								<Setting {...props_setting}></Setting>
+								<If condition={browser_mode}>
+									<Homepage {...props_homepage}></Homepage>
+								</If>
+							</Otherwise>
+						</Choose>
+
 						{/* {process.env.NODE_ENV === 'development' && (
                                    <LazyElement type='dev' path=''></LazyElement>
                              )} */}

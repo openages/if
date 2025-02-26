@@ -3,15 +3,15 @@ import { domToPng } from 'modern-screenshot'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
-import { File, PomoSettings, Sound } from '@/models'
+import { File, SettingsModel, Sound } from '@/models'
 import done from '@/public/sounds/done.mp3'
 import notify from '@/public/sounds/notify.mp3'
-import { getDocItem, id, ipc } from '@/utils'
+import { getDocItem, id, ipc, is_electron } from '@/utils'
 import { disableWatcher } from '@/utils/decorators'
 import { arrayMove } from '@dnd-kit/sortable'
 
 import { getPomo, update } from './services'
-import { fillTimeText, getGoingTime, getTime, getTimeText } from './utils'
+import { getGoingTime, getTime, getTimeText } from './utils'
 
 import type { Subscription } from 'rxjs'
 import type { Pomo } from '@/types'
@@ -41,7 +41,7 @@ export default class Index {
 
 	constructor(
 		public file: File,
-		public settings: PomoSettings,
+		public settings: SettingsModel<Pomo.Setting>,
 		public work_end: Sound,
 		public break_end: Sound
 	) {
@@ -65,7 +65,7 @@ export default class Index {
 
 		this.id = id
 		this.file.init(id)
-		this.settings.init()
+		this.settings.init('pomo_settings')
 
 		this.work_end.init({ src: notify, loop: true, times: 6 })
 		this.break_end.init({ src: done, loop: true, times: 6 })
@@ -294,6 +294,8 @@ export default class Index {
 	}
 
 	async updateTray(v: Index['tray']) {
+		if (!is_electron) return
+
 		this.tray = v
 
 		if (!this.ref_tray) return

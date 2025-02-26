@@ -12,6 +12,7 @@ import styles from './index.css'
 import Model from './model'
 
 import type { IPropsHeader, IPropsChart, IPropsList } from './types'
+
 interface IProps {
 	id?: string
 	type?: Model['type']

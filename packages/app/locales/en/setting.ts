@@ -37,6 +37,19 @@ export default {
 			desc: 'Width rules of content page'
 		}
 	},
+	Tray: {
+		title: 'Tray',
+		select_file: 'Select File',
+		Todo: {
+			title: 'Todo',
+			desc: 'Check todo in the tray',
+			select_angle: 'Select Angle'
+		},
+		Schedule: {
+			title: 'Schedule',
+			desc: 'Check schedule in the tray'
+		}
+	},
 	NavItems: {
 		title: 'Feature'
 	},

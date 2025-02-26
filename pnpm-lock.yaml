@@ -314,6 +314,9 @@ importers:
       string-length:
         specifier: ^6.0.0
         version: 6.0.0
+      ts-deepmerge:
+        specifier: ^7.0.2
+        version: 7.0.2
       ts-pattern:
         specifier: ^5.6.0
         version: 5.6.2
@@ -703,6 +706,9 @@ importers:
       electron-conf:
         specifier: ^1.2.1
         version: 1.2.1(electron@33.3.1)
+      electron-traywindow-positioner:
+        specifier: ^1.2.1
+        version: 1.2.1
       electron-trpc:
         specifier: ^0.7.1
         version: 0.7.1(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(electron@33.3.1)
@@ -6738,6 +6744,9 @@ packages:
   electron-to-chromium@1.5.96:
     resolution: {integrity: sha512-8AJUW6dh75Fm/ny8+kZKJzI1pgoE8bKLZlzDU2W1ENd+DXKJrx7I7l9hb8UWR4ojlnb5OlixMt00QWiYJoVw1w==}
 
+  electron-traywindow-positioner@1.2.1:
+    resolution: {integrity: sha512-186csb2qFtqwlJ0TE7t0wYTT8y8eCCN0b56P4xLfqFUTGmnDSeeLLW9/dM+CQQCK3BLIGajINfUe79EUTxtoXw==}
+
   electron-trpc@0.6.2:
     resolution: {integrity: sha512-Pg146aMnRyJByIOJwmR4Gfzsmdn5igMJ7zoAIvGpJgpxEF/fQ3J+y8/M6BkdpL+JARTTOkB3tCFkuDiqj1xccw==}
     peerDependencies:
@@ -11101,6 +11110,10 @@ packages:
   ts-dedent@2.2.0:
     resolution: {integrity: sha512-q5W7tVM71e2xjHZTlgfTDoPF/SmqKG5hddq9SzR49CH2hayqRKJtQ4mtRlSxKaJlR/+9rEM+mnBHf7I2/BQcpQ==}
     engines: {node: '>=6.10'}
+
+  ts-deepmerge@7.0.2:
+    resolution: {integrity: sha512-akcpDTPuez4xzULo5NwuoKwYRtjQJ9eoNfBACiBMaXwNAx7B1PKfe5wqUFJuW5uKzQ68YjDFwPaWHDG1KnFGsA==}
+    engines: {node: '>=14.13.1'}
 
   ts-essentials@10.0.4:
     resolution: {integrity: sha512-lwYdz28+S4nicm+jFi6V58LaAIpxzhg9rLdgNC1VsdP/xiFBseGhF1M/shwCk6zMmwahBZdXcl34LVHrEang3A==}
@@ -18178,6 +18191,8 @@ snapshots:
 
   electron-to-chromium@1.5.96: {}
 
+  electron-traywindow-positioner@1.2.1: {}
+
   electron-trpc@0.6.2(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(electron@33.3.1):
     dependencies:
       '@trpc/client': 10.45.2(@trpc/server@10.45.2)
@@ -23726,6 +23741,8 @@ snapshots:
       utf8-byte-length: 1.0.5
 
   ts-dedent@2.2.0: {}
+
+  ts-deepmerge@7.0.2: {}
 
   ts-essentials@10.0.4(typescript@5.7.3):
     optionalDependencies:

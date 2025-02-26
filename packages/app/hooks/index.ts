@@ -19,5 +19,6 @@ export { default as useSize } from './useSize'
 export { default as useCopyMemberEmail } from './useCopyMemberEmail'
 export { default as useCreateLayoutEffect } from './useCreateLayoutEffect'
 export { default as useCreateEffect } from './useCreateEffect'
+export { default as useSystemTheme } from './useSystemTheme'
 
 export * from './useAntdApp'

@@ -1,3 +1,4 @@
+export { default as AntdApp } from './AntdApp'
 export { default as Sidebar } from './Sidebar'
 export { default as Stacks } from './Stacks'
 export { default as AppMenu } from './AppMenu'

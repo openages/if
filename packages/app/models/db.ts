@@ -6,8 +6,8 @@ import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
 import { migrateStorage } from 'rxdb/plugins/migration-storage'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 
+import { insertDefaultSettings } from '@/actions/global'
 import { insertDefault as insertDefaultNote } from '@/actions/note'
-import { insertDefault as insertDefaultPomo } from '@/actions/pomo'
 import { insertDefault as insertDefaultSchedule } from '@/actions/schedule'
 import { keyCompression } from '@/config'
 import { migration_schedule_items, migration_todo_items } from '@/migrations'
@@ -23,7 +23,7 @@ import {
 import { statics } from '@/utils/rxdb'
 import { local } from '@openages/stk/storage'
 
-import type { RxDB } from '@/types'
+import type { Pomo, RxDB, Tray } from '@/types'
 import type { RxCollection } from 'rxdb'
 
 export default class Index {
@@ -94,7 +94,15 @@ export default class Index {
 		await this.migrateSchema()
 		await this.updateDBTimeStamps()
 
-		await Promise.all([await insertDefaultNote(), await insertDefaultPomo(), await insertDefaultSchedule()])
+		await Promise.all([
+			await insertDefaultNote(),
+			await insertDefaultSchedule(),
+			await insertDefaultSettings('tray_settings', {
+				todo: { open: false, file_id: '', angle_id: '' },
+				schedule: { open: false, file_id: '' }
+			} as Tray.Setting),
+			await insertDefaultSettings('pomo_settings', { sound: true } as Pomo.Setting)
+		])
 
 		this.ready = true
 

@@ -7,7 +7,7 @@ import { container } from 'tsyringe'
 
 import { version_name } from '@/appdata'
 import { Modal, ModuleIcon, Wave } from '@/components'
-import { useAntdApp, useCreateEffect, useCreateLayoutEffect, useSize } from '@/hooks'
+import { useCreateEffect, useCreateLayoutEffect, useSize } from '@/hooks'
 import { Infinity, List } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -23,8 +23,6 @@ const Index = (props: IPropsSetting) => {
 	const auth = x.global.auth
 	const { t } = useTranslation()
 	const body_width = useSize(() => document.body, 'width') as number
-
-	useAntdApp()
 
 	useCreateLayoutEffect(() => {
 		x.on()

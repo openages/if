@@ -123,6 +123,8 @@ export const module_group = {
 	setting: ['setting']
 }
 
+export const window_pages = ['/tray']
+
 export const getGroupModules = (modules: App.Modules) => {
 	return getObjectKeys(module_group).reduce(
 		(total, group_name: keyof typeof module_group) => {

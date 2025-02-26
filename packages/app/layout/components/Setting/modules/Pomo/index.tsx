@@ -4,19 +4,21 @@ import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { updateModuleSetting } from '@/actions/global'
+import { updateModuleGlobalSetting } from '@/actions/global'
 import { useCreateLayoutEffect } from '@/hooks'
-import { PomoSettings } from '@/models'
+import { SettingsModel } from '@/models'
 import { SpeakerHigh } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
+import type { Pomo } from '@/types'
+
 const Index = () => {
-	const [x] = useState(() => new PomoSettings())
+	const [x] = useState(() => new SettingsModel<Pomo.Setting>())
 	const { t } = useTranslation()
 
 	useCreateLayoutEffect(() => {
-		x.init()
+		x.init('pomo_settings')
 
 		return () => x.off()
 	}, [])
@@ -24,7 +26,7 @@ const Index = () => {
 	const onChangeSound = useMemoizedFn((v: boolean) => {
 		x.settings.sound = v
 
-		updateModuleSetting('pomo_settings', { sound: v })
+		updateModuleGlobalSetting('pomo_settings', { sound: v })
 	})
 
 	return (
