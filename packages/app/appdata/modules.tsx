@@ -1,3 +1,5 @@
+import { matchPath } from 'react-router-dom'
+
 import { getObjectKeys } from '@/utils'
 
 import type { App } from '@/types'
@@ -123,7 +125,11 @@ export const module_group = {
 	setting: ['setting']
 }
 
-export const window_pages = ['/tray']
+export const isWidget = (pathname: string) => {
+	const match = matchPath('/widgets/:type', pathname)
+
+	return Boolean(match)
+}
 
 export const getGroupModules = (modules: App.Modules) => {
 	return getObjectKeys(module_group).reduce(

@@ -38,7 +38,7 @@ export default {
 		}
 	},
 	Tray: {
-		title: 'Tray',
+		title: 'Tray Window',
 		select_file: 'Select File',
 		Todo: {
 			title: 'Todo',

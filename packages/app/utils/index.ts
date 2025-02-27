@@ -12,6 +12,7 @@ export { default as isShowEmpty } from './isShowEmpty'
 export { default as highlighter } from './highlighter'
 export { default as getJson } from './getJson'
 export { default as getSerialNumber } from './getSerialNumber'
+export { default as scrollAndNotice } from './scrollAndNotice'
 
 export * from './is'
 export * from './env'

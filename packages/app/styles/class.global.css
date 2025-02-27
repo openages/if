@@ -74,8 +74,35 @@
 	}
 }
 
+@keyframes shake {
+	0%,
+	100% {
+		transform: translateX(0);
+	}
+
+	10%,
+	30%,
+	50%,
+	70%,
+	90% {
+		transform: translateX(-9px);
+	}
+
+	20%,
+	40%,
+	60%,
+	80% {
+		transform: translateX(9px);
+	}
+}
+
 .notice_text {
 	color: var(--color_danger) !important;
+	animation: shake 1.2s ease-in-out;
+
+	* {
+		color: var(--color_danger) !important;
+	}
 }
 
 .transparent {

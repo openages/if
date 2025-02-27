@@ -38,7 +38,7 @@ export default {
 		}
 	},
 	Tray: {
-		title: '托盘区',
+		title: '托盘区窗口',
 		select_file: '选择文件',
 		Todo: {
 			title: '待办',

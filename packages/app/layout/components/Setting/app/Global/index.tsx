@@ -1,4 +1,4 @@
-import { Backup, ColorSelector, Normal, Screenlock, Update } from './components'
+import { Backup, ColorSelector, Normal, Screenlock, Tray, Update } from './components'
 import styles from './index.css'
 
 const Index = () => {
@@ -6,6 +6,7 @@ const Index = () => {
 		<div className={$cx('w_100 flex flex_column', styles._local)}>
 			<Normal></Normal>
 			<ColorSelector></ColorSelector>
+			<Tray></Tray>
 			<Screenlock></Screenlock>
 			<Backup></Backup>
 			<Update></Update>

@@ -239,6 +239,25 @@
 					padding-bottom: 14px;
 				}
 
+				.setting_main {
+					min-height: 66px;
+					user-select: none;
+				}
+
+				.extra_wrap {
+					border-top: var(--border_light);
+
+					.extra {
+						padding: 15px 0;
+
+						.select {
+							.if-select-selector {
+								border-radius: var(--radius);
+							}
+						}
+					}
+				}
+
 				.title_wrap {
 					line-height: 1;
 
@@ -296,6 +315,13 @@
 						svg {
 							opacity: 0.3;
 						}
+					}
+
+					.options_line {
+						width: 1px;
+						height: 18px;
+						margin: 0 18px;
+						background-color: var(--color_border_light);
 					}
 				}
 

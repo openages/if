@@ -26,7 +26,7 @@ const Index = (props: IPropsListItem) => {
 		}
 	}, [start_time, end_time])
 
-	const onJump = useMemoizedFn(() => jump(dayjs(start_time), true))
+	const onJump = useMemoizedFn(() => jump(item.id, dayjs(start_time), true))
 
 	return (
 		<div

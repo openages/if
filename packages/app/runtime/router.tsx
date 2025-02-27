@@ -27,8 +27,8 @@ const routes: Array<RouteObject> = [
 		element: <LazyElement type='modules' path='schedule/page' />
 	},
 	{
-		path: '/tray',
-		element: <LazyElement type='windows' path='tray' />
+		path: '/widgets/:type',
+		element: <LazyElement type='widgets' path='index' />
 	}
 ]
 

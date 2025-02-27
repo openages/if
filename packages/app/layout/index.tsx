@@ -10,7 +10,7 @@ import { IconContext } from 'react-icons'
 import { useLocation, useOutlet } from 'react-router-dom'
 import { container } from 'tsyringe'
 
-import { exclude_paths, window_pages } from '@/appdata'
+import { exclude_paths, isWidget } from '@/appdata'
 import { GlobalLoading, OffscreenOutlet } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import { useAntdLocale, useCreateEffect, useCreateLayoutEffect, useCurrentModule, useTheme } from '@/hooks'
@@ -195,7 +195,9 @@ const Index = () => {
 		onStarFilesDragEnd: useMemoizedFn(global.app.onStarFilesDragEnd)
 	}
 
-	if (global.screenlock.screenlock_open) {
+	const is_widget = useMemo(() => isWidget(pathname), [pathname])
+
+	if (!is_widget && global.screenlock.screenlock_open) {
 		return (
 			<GlobalContext.Provider value={global}>
 				<Screenlock></Screenlock>
@@ -212,7 +214,7 @@ const Index = () => {
 					<IconContext.Provider value={{ className: 'ricon', style: { verticalAlign: 'middle' } }}>
 						<AntdApp></AntdApp>
 						<Choose>
-							<When condition={window_pages.includes(pathname)}>{outlet}</When>
+							<When condition={is_widget}>{outlet}</When>
 							<Otherwise>
 								<GlobalLoading></GlobalLoading>
 								<If condition={!browser_mode}>

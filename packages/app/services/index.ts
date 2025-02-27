@@ -5,7 +5,7 @@ import { updateSetting as updateSettingAction } from '@/actions/global'
 import type { File } from '@/models'
 import type { App } from '@/types'
 
-export const getQuerySetting = (file_id: string) => {
+export const getFileSetting = (file_id: string) => {
 	return $db.module_setting.findOne({ selector: { file_id } })
 }
 

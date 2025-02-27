@@ -8,8 +8,8 @@ import { injectable } from 'tsyringe'
 
 import { File } from '@/models'
 import Utils from '@/models/utils'
-import { getQuerySetting, updateSetting } from '@/services'
-import { downloadExcel, getDocItem, getDocItemsData } from '@/utils'
+import { getFileSetting, updateSetting } from '@/services'
+import { downloadExcel, getDocItem, getDocItemsData, scrollAndNotice } from '@/utils'
 import { confirm } from '@/utils/antd'
 import { disableWatcher } from '@/utils/decorators'
 import getEditorText from '@/utils/getEditorText'
@@ -265,7 +265,9 @@ export default class Index {
 		this.changeCurrent(v)
 	}
 
-	listJump(v: Dayjs, timeline?: boolean) {
+	listJump(id: string, v: Dayjs, timeline?: boolean) {
+		const container = document.getElementById(this.id)!
+
 		this.visible_list_modal = false
 
 		if (timeline) {
@@ -277,6 +279,8 @@ export default class Index {
 		}
 
 		this.changeCurrent(v)
+
+		scrollAndNotice(container, `#${id}`)
 	}
 
 	setListDuration(v?: Index['list_duration'], ignore_date?: boolean) {
@@ -711,23 +715,11 @@ export default class Index {
 		this.changeView(target.type)
 		this.changeCurrent(dayjs(target.start_time))
 
-		setTimeout(() => {
-			const target_dom = container.querySelector(`#${id}`)
-
-			if (!target_dom) return
-
-			scrollIntoView(target_dom, { block: 'center', behavior: 'smooth', boundary: container })
-
-			target_dom.classList.add('notice_text')
-
-			setTimeout(() => {
-				target_dom.classList.remove('notice_text')
-			}, 1200)
-		}, 300)
+		scrollAndNotice(container, `#${id}`)
 	}
 
 	watchSetting() {
-		this.setting_watcher = getQuerySetting(this.id).$.subscribe(setting => {
+		this.setting_watcher = getFileSetting(this.id).$.subscribe(setting => {
 			const doc_setting = getDocItem(setting!)!
 			const current_setting = JSON.parse(doc_setting.setting)
 			const prev_setting = $copy(this.setting)

@@ -10,7 +10,7 @@ import { injectable } from 'tsyringe'
 import { archive, cycle } from '@/actions/todo'
 import { GlobalModel } from '@/context/app'
 import { File, Loadmore, Utils } from '@/models'
-import { getQuerySetting } from '@/services'
+import { getFileSetting } from '@/services'
 import { downloadExcel, getDocItem, getDocItemsData, id, sleep } from '@/utils'
 import { confirm } from '@/utils/antd'
 import { disableWatcher, loading } from '@/utils/decorators'
@@ -1082,7 +1082,7 @@ export default class Index {
 	watchSetting() {
 		const { promise, resolve } = Promise.withResolvers()
 
-		this.setting_watcher = getQuerySetting(this.id).$.subscribe(setting => {
+		this.setting_watcher = getFileSetting(this.id).$.subscribe(setting => {
 			const todo_setting = getDocItem(setting!)!
 
 			this.setting = { ...omit(todo_setting, 'setting'), setting: JSON.parse(todo_setting.setting) }

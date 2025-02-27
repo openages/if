@@ -1,12 +1,12 @@
 export namespace Tray {
 	export interface Setting {
 		todo: {
-			open: boolean
+			active: boolean
 			file_id: string
 			angle_id: string
 		}
 		schedule: {
-			open: boolean
+			active: boolean
 			file_id: string
 		}
 	}

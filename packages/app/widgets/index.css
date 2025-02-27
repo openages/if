@@ -1,0 +1,7 @@
+._local {
+	&.is_mac_electron {
+	}
+
+	:global {
+	}
+}

@@ -98,8 +98,8 @@ export default class Index {
 			await insertDefaultNote(),
 			await insertDefaultSchedule(),
 			await insertDefaultSettings('tray_settings', {
-				todo: { open: false, file_id: '', angle_id: '' },
-				schedule: { open: false, file_id: '' }
+				todo: { active: false },
+				schedule: { active: false }
 			} as Tray.Setting),
 			await insertDefaultSettings('pomo_settings', { sound: true } as Pomo.Setting)
 		])
