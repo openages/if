@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
-import { useCreateLayoutEffect } from '@/hooks'
+import { useStackEffect } from '@/hooks'
 
 import { Actions, Indicators, Session, SessionsEditModal } from './components'
 import styles from './index.css'
@@ -21,11 +21,11 @@ const Index = ({ id }: IProps) => {
 	const sessions = $copy(x.data.sessions) || []
 	const add = useMemoizedFn(x.add)
 
-	useCreateLayoutEffect(() => {
-		x.init({ id })
-
-		return () => x.off()
-	}, [id])
+	const { setDom } = useStackEffect({
+		mounted: () => x.init({ id }),
+		unmounted: () => x.off(),
+		deps: [id]
+	})
 
 	const props_actions: IPropsActions = {
 		going: x.data.going,
@@ -63,6 +63,7 @@ const Index = ({ id }: IProps) => {
 				styles._local,
 				x.visible_edit_modal && styles.visible_edit_modal
 			)}
+			ref={setDom}
 		>
 			{x.tray && (
 				<div className='tray_progress_wrap'>

@@ -2,9 +2,9 @@ import { useMemoizedFn } from 'ahooks'
 import { Form, Input, Switch, TimePicker } from 'antd'
 import dayjs from 'dayjs'
 import { pick } from 'lodash-es'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useCreateEffect } from '@/hooks'
 import { deepEqual } from '@openages/stk/react'
 
 import { IPropsSessionEditor } from '../../types'
@@ -27,7 +27,7 @@ const Index = (props: IPropsSessionEditor) => {
 	const flow_mode = useWatch('flow_mode', form)
 	const { t } = useTranslation()
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (flow_mode) {
 			setFieldsValue({ work_time: dayjs().hour(0).minute(0), break_time: dayjs().hour(0).minute(0) })
 		}
@@ -67,7 +67,7 @@ const Index = (props: IPropsSessionEditor) => {
 		return target
 	})
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (!item) {
 			return setFieldsValue({
 				work_time: dayjs().hour(0).minute(45),

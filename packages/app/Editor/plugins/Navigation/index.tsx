@@ -1,13 +1,12 @@
 import { useMemoizedFn, useUpdate } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useState, Fragment } from 'react'
+import { useLayoutEffect, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
 import smoothScrollIntoView from 'smooth-scroll-into-view-if-needed'
 
 import { Popover } from '@/components'
 import { useGlobal } from '@/context/app'
 import { useStackSelector } from '@/context/stack'
-import { useCreateLayoutEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { TableOfContentsPlugin } from '@lexical/react/LexicalTableOfContentsPlugin'
 import { GpsFix } from '@phosphor-icons/react'
@@ -86,7 +85,7 @@ const Index = () => {
 	const items = $copy(x.items)
 	const page_width = global.setting.page_width
 
-	useCreateLayoutEffect(() => {
+	useLayoutEffect(() => {
 		x.init(id, editor, page_width)
 
 		return () => x.off()

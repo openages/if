@@ -21,10 +21,9 @@ export default class Index {
 	resizing = false
 
 	watch = {
-		columns(v) {
+		columns: v => {
 			if (v!.length) return
 
-			// @ts-ignore
 			this.focus = { column: -1, view: -1 }
 		}
 	} as Watch<Index>
@@ -108,6 +107,7 @@ export default class Index {
 		const { column, view } = position
 		const target_views = this.columns[column].views
 		const target_view = target_views[view]
+		const target_offs = $stack_offs.get(target_view.id)
 
 		if (local.getItem(`${target_view.module}_active_file`).id === target_view.id) {
 			local.setItem(`${target_view.module}_active_file`, {})
@@ -116,6 +116,8 @@ export default class Index {
 		if (target_view.module === 'pomo') {
 			$app.Event.emit(`pomo/${target_view.file.id}/stopRecord`)
 		}
+
+		if (target_offs) target_offs.forEach(item => item())
 
 		target_views.splice(view, 1)
 

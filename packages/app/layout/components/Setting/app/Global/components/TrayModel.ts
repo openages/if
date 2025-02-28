@@ -87,6 +87,8 @@ export default class Index {
 	changeTodoActive(v: boolean, e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>) {
 		e.stopPropagation()
 
+		if (v && this.visible_todo_fields) this.visible_todo_fields = true
+
 		this.settings.settings.todo.active = v
 
 		if (!this.todo_file_id && this.todo_files.length) {
@@ -98,6 +100,8 @@ export default class Index {
 
 	changeScheduleActive(v: boolean, e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>) {
 		e.stopPropagation()
+
+		if (v && this.visible_schedule_fields) this.visible_schedule_fields = true
 
 		this.settings.settings.schedule.active = v
 

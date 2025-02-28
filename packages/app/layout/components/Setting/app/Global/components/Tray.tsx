@@ -1,12 +1,11 @@
 import { Col, ConfigProvider, Row, Select, Switch } from 'antd'
 import { motion, AnimatePresence } from 'framer-motion'
 import { observer } from 'mobx-react-lite'
-import { useState, Fragment } from 'react'
+import { useEffect, useInsertionEffect, useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { ModuleIcon } from '@/components'
-import { useCreateEffect, useCreateLayoutEffect } from '@/hooks'
 
 import TrayModel from './TrayModel'
 
@@ -17,13 +16,13 @@ const Index = () => {
 	const todo_angles = $copy(x.todo_angles)
 	const schedule_files = $copy(x.schedule_files)
 
-	useCreateLayoutEffect(() => {
+	useInsertionEffect(() => {
 		x.init()
 
 		return () => x.off()
 	}, [])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (x.todo_angle_id) return
 		if (!todo_angles.length) return
 

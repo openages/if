@@ -1,9 +1,11 @@
+import { useMemoizedFn } from 'ahooks'
 import { throttle } from 'lodash-es'
-import { useRef, MutableRefObject } from 'react'
+import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { useCreateLayoutEffect } from '@/hooks'
 import { session } from '@openages/stk/storage'
+
+import type { MutableRefObject } from 'react'
 
 interface IScrollRestorationProps<T extends HTMLDivElement> {
 	ref: MutableRefObject<T | null>
@@ -15,7 +17,7 @@ export default <T extends HTMLDivElement>(id: string): IScrollRestorationProps<T
 	const ref = useRef<T>(null)
 	const scroll_key = `_element_scroll_position_${pathname}${search}${id}`
 
-	useCreateLayoutEffect(() => {
+	useEffect(() => {
 		if (ref.current) {
 			const position = session.getItem(scroll_key)
 
@@ -23,9 +25,8 @@ export default <T extends HTMLDivElement>(id: string): IScrollRestorationProps<T
 		}
 	}, [key, scroll_key])
 
-	return {
-		ref,
-		onScroll: throttle(() => {
+	const onScroll = useMemoizedFn(
+		throttle(() => {
 			if (ref.current) {
 				session.setItem(scroll_key, {
 					scroll_top: ref.current.scrollTop,
@@ -33,5 +34,10 @@ export default <T extends HTMLDivElement>(id: string): IScrollRestorationProps<T
 				})
 			}
 		}, 900)
+	)
+
+	return {
+		ref,
+		onScroll
 	}
 }

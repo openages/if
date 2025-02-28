@@ -26,6 +26,7 @@ declare global {
 			stopLoading: () => void
 		}
 
+		$stack_offs: Map<string, Set<() => void>>
 		$is_dev: boolean
 
 		$t: TFunction<'translation', undefined>
@@ -42,6 +43,7 @@ declare global {
 		__key__: () => string
 	}
 
+	let $stack_offs: Map<string, Set<() => void>>
 	let $is_dev: boolean
 
 	let $t: TFunction<'translation', undefined>

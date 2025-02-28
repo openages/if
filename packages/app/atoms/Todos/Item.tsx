@@ -1,11 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
 import { Dropdown } from 'antd'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useText, useTextChange, Text } from '@/Editor'
-import { useCreateEffect } from '@/hooks'
 import { CSS } from '@dnd-kit/utilities'
 import { CheckSquare, ListMagnifyingGlass, Square, Trash } from '@phosphor-icons/react'
 
@@ -49,7 +48,7 @@ const Index = (props: IProps) => {
 	const { attributes, listeners, transform, transition, isDragging, setNodeRef, setActivatorNodeRef } =
 		(sortable_props || draggable_props)!
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (isDragging) setOpen(false)
 	}, [isDragging])
 

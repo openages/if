@@ -1,11 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { container } from 'tsyringe'
 
 import { useStackSelector } from '@/context/stack'
-import { useCreateLayoutEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { ArrowsInLineHorizontal, ArrowsOutLineHorizontal } from '@phosphor-icons/react'
 
@@ -17,8 +16,10 @@ const Index = () => {
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
 
-	useCreateLayoutEffect(() => {
+	useLayoutEffect(() => {
 		x.init(id, editor)
+
+		return () => x.off()
 	}, [id, editor])
 
 	const onClick = useMemoizedFn(() => {

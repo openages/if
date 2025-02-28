@@ -1,12 +1,11 @@
 import { useMemoizedFn } from 'ahooks'
 import { Select, Tooltip } from 'antd'
 import { $getRoot } from 'lexical'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { todo } from '@/appdata'
 import { useText, Text } from '@/Editor'
-import { useCreateEffect } from '@/hooks'
 import { id } from '@/utils'
 import { Calendar, Sun } from '@phosphor-icons/react'
 
@@ -31,7 +30,7 @@ const Index = (props: IPropsInput) => {
 		update: v => setInput(input => ({ ...input, text: v }))
 	})
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (input.type === 'todo') {
 			setInput(getTodo())
 		} else {
@@ -39,7 +38,7 @@ const Index = (props: IPropsInput) => {
 		}
 	}, [input.type])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (loading) return
 
 		setInput({ ...input, id: id(), text: '' } as Todo.Todo)

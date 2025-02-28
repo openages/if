@@ -1,13 +1,13 @@
 import { useMemoizedFn } from 'ahooks'
 import { omit, pick } from 'lodash-es'
 import { observer } from 'mobx-react-lite'
-import { useMemo, useState, Fragment } from 'react'
+import { useEffect, useMemo, useState, Fragment } from 'react'
 import { match, P } from 'ts-pattern'
 import { container } from 'tsyringe'
 
 import { DataEmpty, SortableWrap } from '@/components'
 import { useStackSelector } from '@/context/stack'
-import { useCreateEffect, useCreateLayoutEffect } from '@/hooks'
+import { useStackEffect } from '@/hooks'
 import { pointerWithin, rectIntersection, DndContext, DragOverlay } from '@dnd-kit/core'
 
 import {
@@ -69,13 +69,13 @@ const Index = ({ id }: IProps) => {
 
 	const updateSetting = useMemoizedFn(x.updateSetting)
 
-	useCreateLayoutEffect(() => {
-		x.init({ id })
+	const { setDom } = useStackEffect({
+		mounted: () => x.init({ id }),
+		unmounted: () => x.off(),
+		deps: [id]
+	})
 
-		return () => x.off()
-	}, [id])
-
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (!Object.keys(current_detail_item).length) {
 			x.visible_detail_modal = false
 		}
@@ -326,6 +326,7 @@ const Index = ({ id }: IProps) => {
 				x.mode !== 'list' && styles.other_mode,
 				!breakpoint && !x.zen_mode && x.visible_detail_modal && styles.visible_detail_modal
 			)}
+			ref={setDom}
 		>
 			<DataEmpty></DataEmpty>
 			{match(id && x.file.data.name && Boolean(angles))

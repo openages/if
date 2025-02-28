@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next'
 
-import { useCreateLayoutEffect } from '@/hooks'
+import { useMountEffect } from '@/hooks'
 
 export default () => {
 	const { t, i18n } = useTranslation()
 
-	useCreateLayoutEffect(() => {
+	useMountEffect(() => {
 		$t = t
 	}, [t, i18n.language])
 }

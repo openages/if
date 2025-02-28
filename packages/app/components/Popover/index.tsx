@@ -1,11 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
 import { motion, AnimatePresence } from 'framer-motion'
 import { debounce } from 'lodash-es'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { useStackSelector } from '@/context/stack'
-import { useCreateEffect, useCreateLayoutEffect } from '@/hooks'
 
 import styles from './index.css'
 
@@ -30,7 +29,7 @@ const Index = (props: IProps) => {
 	const id = useStackSelector(v => v.id)
 	const ref = useRef<HTMLDivElement>(null)
 
-	useCreateLayoutEffect(() => {
+	useEffect(() => {
 		if (open) return setExsit(true)
 
 		const timer = setTimeout(() => {
@@ -57,7 +56,7 @@ const Index = (props: IProps) => {
 		}, 450)
 	)
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (!exist || style || !updatePosition) return setOverflow(0)
 
 		checkOverflow()

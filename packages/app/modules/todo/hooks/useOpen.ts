@@ -1,6 +1,5 @@
 import { useUpdateEffect } from 'ahooks'
-
-import { useCreateEffect } from '@/hooks'
+import { useEffect } from 'react'
 
 import type { IPropsTodoItem } from '../types'
 
@@ -19,7 +18,7 @@ export default (args: HookArgs) => {
 
 	useUpdateEffect(() => renderLines!(), [open, zen_mode])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (!open_items) return
 
 		if (open_items.includes(id)) {

@@ -1,6 +1,4 @@
-import { useState } from 'react'
-
-import { useCreateEffect } from '@/hooks'
+import { useEffect, useState } from 'react'
 
 const match_media = window.matchMedia('(prefers-color-scheme: dark)')
 
@@ -18,7 +16,7 @@ export default (set_body_attr?: boolean) => {
 		return v
 	})
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		const onThemeChange: MediaQueryList['onchange'] = event => {
 			const v = event.matches ? 'dark' : 'light'
 

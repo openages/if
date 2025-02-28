@@ -3,14 +3,13 @@ import { Form, InputNumber, Select } from 'antd'
 import dayjs from 'dayjs'
 import { debounce, pick } from 'lodash-es'
 import { observer } from 'mobx-react-lite'
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { schedule } from '@/appdata'
 import { Todos } from '@/atoms'
 import { TextEditor } from '@/Editor/components'
-import { useCreateEffect } from '@/hooks'
 import { deepEqual, useDeepMemo } from '@openages/stk/react'
 import { ListChecks, MagnifyingGlass, Minus, Plus } from '@phosphor-icons/react'
 
@@ -48,7 +47,7 @@ const Index = (props: IPropsTimeBlockDetail) => {
 		}
 	}, [start_time, end_time])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		const form_item = getFieldsValue()
 		const target = $copy(pick(item, ['text', 'tag', 'remark']))
 

@@ -1,13 +1,12 @@
 import { useMemoizedFn } from 'ahooks'
 import { Form, Input } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 
 import { Logo, Show } from '@/components'
 import { useGlobal } from '@/context/app'
-import { useCreateEffect } from '@/hooks'
 import { ArrowRight, Copy, PlayCircle, Power, XCircle } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -24,7 +23,7 @@ const Index = () => {
 	const secret = useWatch('secret', form)
 	const click_times = global.screenlock.click_times
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (!click_times) return
 
 		if (click_times === 12) {

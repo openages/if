@@ -1,10 +1,9 @@
 import { useMemoizedFn } from 'ahooks'
 import { Button } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Logo } from '@/components'
-import { useCreateEffect } from '@/hooks'
 import { is_win_electron } from '@/utils'
 import { useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
 import { GearSix, House } from '@phosphor-icons/react'
@@ -39,7 +38,17 @@ const Index = (props: IPropsStacks) => {
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
 	const { t } = useTranslation()
 
-	useCreateEffect(() => {
+	useEffect(() => {
+		columns.forEach(column => {
+			column.views.forEach(view => {
+				if (view.active) {
+					$stack_offs.delete(view.id)
+				}
+			})
+		})
+	}, columns)
+
+	useEffect(() => {
 		observe()
 
 		return () => unobserve()

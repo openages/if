@@ -1,7 +1,6 @@
 import dayjs from 'dayjs'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
-import { useCreateEffect } from '@/hooks'
 import { format } from '@/utils/date'
 import { Bell } from '@phosphor-icons/react'
 
@@ -13,7 +12,7 @@ const Index = (props: IPropsRemindStatus) => {
 	const { remind_time, useByFlat } = props
 	const [timeout, setTimeout] = useState(false)
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		const timer = setInterval(() => {
 			const now = new Date().valueOf()
 

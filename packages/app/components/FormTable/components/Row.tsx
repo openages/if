@@ -1,9 +1,9 @@
 import { useMemoizedFn } from 'ahooks'
 import { Form } from 'antd'
 import { pick } from 'lodash-es'
+import { useEffect } from 'react'
 import { match } from 'ts-pattern'
 
-import { useCreateEffect } from '@/hooks'
 import { deepEqual, useDeepMemo } from '@openages/stk/react'
 
 import Column from './Column'
@@ -33,7 +33,7 @@ const Index = (props: IPropsRow) => {
 		setEditingInfo(args ? { row_index: index, field: args.field, focus: args.focus } : null)
 	})
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		const form_item = getFieldsValue()
 
 		if (deepEqual(item, form_item)) return

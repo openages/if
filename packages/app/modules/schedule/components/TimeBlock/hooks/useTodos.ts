@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { useCreateEffect } from '@/hooks'
 import { getDocItemsData } from '@/utils'
 
 import type { Subscription } from 'rxjs'
@@ -9,7 +8,7 @@ import type { Todo, Schedule } from '@/types'
 export default (todos: Schedule.Item['todos']) => {
 	const [status, setStatus] = useState('')
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		let watcher = null as unknown as Subscription
 
 		if (todos?.length) {

@@ -1,8 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useContextMenu } from 'react-contexify'
 
-import { useCreateEffect } from '@/hooks'
 import { useDroppable } from '@dnd-kit/core'
 
 import { collisionDetection, getStartByX } from '../../utils'
@@ -42,13 +41,13 @@ const Index = (props: IPropsTimelineViewRow) => {
 		setSignal(null)
 	})
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (!move_item) return setSignal(null)
 
 		setSignal(move_item)
 	}, [move_item])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		$app.Event.on('schedule/context_menu/hidden', clearSignal)
 
 		return () => $app.Event.off('schedule/context_menu/hidden', clearSignal)

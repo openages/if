@@ -1,12 +1,11 @@
 import { useMemoizedFn } from 'ahooks'
 import { Popover as AntdPopover } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { container } from 'tsyringe'
 
 import { Popover } from '@/components'
 import { useStackSelector } from '@/context/stack'
-import { useCreateLayoutEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { DotsThreeCircle } from '@phosphor-icons/react'
 
@@ -22,7 +21,7 @@ const Index = () => {
 	const id = useStackSelector(v => v.id)
 	const style = $copy(x.style)
 
-	useCreateLayoutEffect(() => {
+	useLayoutEffect(() => {
 		x.init(id, editor)
 
 		return () => x.off()

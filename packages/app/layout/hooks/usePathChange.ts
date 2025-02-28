@@ -1,12 +1,11 @@
+import { useEffect } from 'react'
 import { contextMenu } from 'react-contexify'
 import { useLocation } from 'react-router-dom'
-
-import { useCreateLayoutEffect } from '@/hooks'
 
 export default () => {
 	const { pathname } = useLocation()
 
-	useCreateLayoutEffect(() => {
+	useEffect(() => {
 		contextMenu.hideAll()
 	}, [pathname])
 }

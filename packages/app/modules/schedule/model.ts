@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import { Workbook } from 'exceljs'
-import { groupBy, omit, pick } from 'lodash-es'
+import { groupBy, omit } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { match } from 'ts-pattern'
@@ -350,8 +350,6 @@ export default class Index {
 			cross_time: string
 			belong: string
 		}>
-
-		// console.log(timeline, calendar, timeline.concat(calendar))
 
 		timeline.concat(calendar).forEach(item => {
 			const start = dayjs(item.start_time)

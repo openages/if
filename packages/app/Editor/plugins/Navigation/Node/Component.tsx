@@ -1,12 +1,11 @@
 import { useMemoizedFn } from 'ahooks'
 import { $getNodeByKey } from 'lexical'
 import { observer } from 'mobx-react-lite'
-import { useMemo, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import smoothScrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { container } from 'tsyringe'
 
-import { useCreateEffect, useCreateLayoutEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection'
 import { GpsSlash } from '@phosphor-icons/react'
@@ -25,17 +24,17 @@ const Index = (props: { items: Array<TableOfContentsEntry>; node_key: string }) 
 	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(node_key)
 	const { t } = useTranslation()
 
-	useCreateLayoutEffect(() => {
+	useLayoutEffect(() => {
 		x.block.init(editor, node_key, setSelected, clearSelection)
 
 		return () => x.block.off()
 	}, [editor, node_key, setSelected, clearSelection])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		x.block.selected = selected
 	}, [selected])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		editor.update(() => {
 			const node = $getNodeByKey(node_key) as NavigationNode
 			const target = node.getWritable()

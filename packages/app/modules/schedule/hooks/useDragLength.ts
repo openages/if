@@ -1,7 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { useRef, useState } from 'react'
-
-import { useCreateEffect } from '@/hooks'
+import { useEffect, useRef, useState } from 'react'
 
 import type Model from '../model'
 
@@ -20,7 +18,7 @@ export default (args: Args) => {
 	const [changing, setChanging] = useState(false)
 	const timeline = angle_row_id !== undefined
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		changed.current = 0
 	}, [changing])
 
@@ -65,7 +63,7 @@ export default (args: Args) => {
 		})
 	})
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (!changeTimeBlockLength) return
 
 		const drag_ref = ref.current!
@@ -79,7 +77,7 @@ export default (args: Args) => {
 		}
 	}, [changeTimeBlockLength])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (changing) document.addEventListener('mousemove', setWidth)
 
 		return () => document.removeEventListener('mousemove', setWidth)

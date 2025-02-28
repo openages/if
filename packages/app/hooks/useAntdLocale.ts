@@ -1,14 +1,12 @@
 import en from 'antd/locale/en_US'
-import { useState } from 'react'
-
-import { useCreateEffect } from '@/hooks'
+import { useEffect, useState } from 'react'
 
 import type { Lang } from '@/appdata'
 
 export default (lang: Lang) => {
 	const [locale, setLocale] = useState(en)
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		import(`@/locales/antd/${lang}`).then(l => setLocale(l.default))
 	}, [lang])
 

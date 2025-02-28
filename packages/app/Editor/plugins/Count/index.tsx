@@ -1,13 +1,12 @@
 import { useMemoizedFn } from 'ahooks'
 import { Popover as AntdPopover } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useMemo, useState } from 'react'
+import { useLayoutEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { Popover } from '@/components'
 import { useStackSelector } from '@/context/stack'
-import { useCreateLayoutEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { Pulse } from '@phosphor-icons/react'
 
@@ -21,7 +20,7 @@ const Index = () => {
 	const style = $copy(x.style)
 	const { t } = useTranslation()
 
-	useCreateLayoutEffect(() => {
+	useLayoutEffect(() => {
 		x.init(id, editor)
 
 		return () => x.off()

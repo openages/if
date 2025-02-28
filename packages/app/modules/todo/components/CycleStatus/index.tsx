@@ -1,8 +1,7 @@
 import dayjs from 'dayjs'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useCreateEffect } from '@/hooks'
 import { getCycleSpecificDesc } from '@/utils/modules/todo'
 import { Repeat } from '@phosphor-icons/react'
 
@@ -16,7 +15,7 @@ const Index = (props: IPropsCircleStatus) => {
 	const { t } = useTranslation()
 	const scale_text = cycle?.type === 'interval' && cycle?.scale ? t(`todo.Input.Cycle.options.${cycle.scale}`) : ''
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (cycle?.type === 'specific') return setPercent(0)
 		if (!recycle_time) return setPercent(0)
 

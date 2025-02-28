@@ -1,8 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { useCreateEffect } from '@/hooks'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { useDeepUpdateEffect } from '@openages/stk/react'
@@ -34,7 +33,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 		data: { item, parent_index }
 	})
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		setOpen(open_folder!.includes(item.id))
 	}, [open_folder, item.id])
 
@@ -48,7 +47,7 @@ const Index = (props: IPropsDirItem_Dir) => {
 		}
 	}, [module, children, item.id])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (isDragging) {
 			setOpen(false)
 

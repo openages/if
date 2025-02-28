@@ -1,11 +1,11 @@
 import { App } from 'antd'
 
-import { useCreateLayoutEffect } from '@/hooks'
+import { useMountEffect } from '@/hooks'
 
 export default () => {
 	const staticFunction = App.useApp()
 
-	useCreateLayoutEffect(() => {
+	useMountEffect(() => {
 		$message = staticFunction.message
 		$modal = staticFunction.modal
 		$notification = staticFunction.notification

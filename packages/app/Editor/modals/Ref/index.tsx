@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { SimpleEmpty } from '@/components'
-import { useCreateLayoutEffect } from '@/hooks'
+import { useStackEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { MagnifyingGlass } from '@phosphor-icons/react'
 
@@ -26,9 +26,11 @@ const Index = (props: IPropsModal) => {
 	const { t } = useTranslation()
 	const ref = useRef<HTMLInputElement>(null)
 
-	useCreateLayoutEffect(() => {
-		x.init(editor, node_key!)
-	}, [editor, node_key])
+	const { setDom } = useStackEffect({
+		mounted: () => x.init(editor, node_key!),
+		unmounted: () => x.off(),
+		deps: [editor, node_key]
+	})
 
 	useEventListener('compositionstart', () => (x.compositing = true), { target: ref })
 
@@ -86,7 +88,7 @@ const Index = (props: IPropsModal) => {
 	})
 
 	return (
-		<div className={$cx('w_100 flex flex_column', styles._local)}>
+		<div className={$cx('w_100 flex flex_column', styles._local)} ref={setDom}>
 			<ModuleTab {...props_module_tab}></ModuleTab>
 			<div className='input_search_wrap w_100 flex align_center relative'>
 				<input

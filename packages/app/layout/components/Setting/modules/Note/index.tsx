@@ -1,11 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
 import { Select, Switch } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useMemo, useState } from 'react'
+import { useInsertionEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { updateSetting } from '@/actions/note'
-import { useCreateLayoutEffect } from '@/hooks'
 import { NoteSettings } from '@/models'
 import {
 	ArrowSquareDown,
@@ -23,7 +22,7 @@ const Index = () => {
 	const [x] = useState(() => new NoteSettings())
 	const { t } = useTranslation()
 
-	useCreateLayoutEffect(() => {
+	useInsertionEffect(() => {
 		x.init()
 
 		return () => x.off()

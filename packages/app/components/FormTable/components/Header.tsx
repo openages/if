@@ -1,7 +1,5 @@
 import { useInViewport, useMemoizedFn } from 'ahooks'
-import { useMemo, useRef, Fragment } from 'react'
-
-import { useCreateEffect } from '@/hooks'
+import { useEffect, useMemo, useRef, Fragment } from 'react'
 
 import ColGroup from './ColGroup'
 import Th from './Th'
@@ -24,7 +22,7 @@ const Index = (props: IPropsHeader) => {
 		th_wrap.current.scrollLeft = scrollerX.scrollLeft
 	})
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (stickyTop === undefined || !scrollerX || visible) return
 
 		scrollerX.addEventListener('scroll', scrollSync)
@@ -32,7 +30,7 @@ const Index = (props: IPropsHeader) => {
 		return () => scrollerX.removeEventListener('scroll', scrollSync)
 	}, [stickyTop, scrollerX, visible])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (!visible) scrollSync()
 	}, [visible])
 

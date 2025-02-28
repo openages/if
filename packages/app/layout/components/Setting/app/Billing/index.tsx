@@ -1,13 +1,12 @@
 import { useMemoizedFn } from 'ahooks'
 import { Button, Segmented } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 
 import { LoadingCircle } from '@/components'
 import { useGlobal } from '@/context/app'
-import { useCreateEffect } from '@/hooks'
 import { is_dev } from '@/utils'
 import { CalendarCheck, Check, CheckCircle, MarkdownLogo, Timer, WifiSlash, X } from '@phosphor-icons/react'
 
@@ -26,13 +25,13 @@ const Index = () => {
 	const paid_plan = auth?.user?.paid_plan
 	const prices = $copy(iap.prices)
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		iap.init()
 
 		return () => iap.off()
 	}, [])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (is_infinity) iap.type = 'infinity'
 	}, [is_infinity])
 

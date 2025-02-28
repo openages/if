@@ -1,13 +1,13 @@
 import { useMemoizedFn } from 'ahooks'
 import { Button, ConfigProvider, Drawer, Tabs } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useMemo, useState, Fragment, ReactElement } from 'react'
+import { useEffect, useInsertionEffect, useMemo, useState, Fragment, ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { version_name } from '@/appdata'
 import { Modal, ModuleIcon, Wave } from '@/components'
-import { useCreateEffect, useCreateLayoutEffect, useSize } from '@/hooks'
+import { useSize } from '@/hooks'
 import { Infinity, List } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -24,13 +24,13 @@ const Index = (props: IPropsSetting) => {
 	const { t } = useTranslation()
 	const body_width = useSize(() => document.body, 'width') as number
 
-	useCreateLayoutEffect(() => {
+	useInsertionEffect(() => {
 		x.on()
 
 		return () => x.off()
 	}, [])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (!body_width) return
 
 		x.mini = body_width <= 840

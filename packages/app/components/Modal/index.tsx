@@ -1,9 +1,8 @@
 import { useClickAway } from 'ahooks'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useRef, useState, Fragment } from 'react'
+import { useEffect, useRef, useState, Fragment } from 'react'
 import { createPortal } from 'react-dom'
 
-import { useCreateEffect } from '@/hooks'
 import { X } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -52,7 +51,7 @@ const Index = (props: IProps) => {
 	const [exsit, setExsit] = useState(false)
 	const container = getContainer?.() || document.body
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (open) {
 			setExsit(true)
 		} else {
@@ -71,7 +70,7 @@ const Index = (props: IProps) => {
 		onCancel?.(e as unknown as MouseEvent<HTMLDivElement>)
 	}, ref_content)
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		setOnbody(container === document.body)
 	}, [container])
 

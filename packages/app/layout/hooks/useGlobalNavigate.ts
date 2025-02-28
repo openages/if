@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 
-import { useCreateLayoutEffect } from '@/hooks'
+import { useMountEffect } from '@/hooks'
 
 export default () => {
 	const navigate = useNavigate()
 
-	useCreateLayoutEffect(() => {
+	useMountEffect(() => {
 		$navigate = navigate
 	}, [navigate])
 }

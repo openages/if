@@ -1,9 +1,8 @@
 import { useHover, useMemoizedFn } from 'ahooks'
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Emoji, LeftIcon } from '@/components'
-import { useCreateEffect } from '@/hooks'
 import { getEditorText } from '@/utils/editor'
 import { ArrowBendDownLeft } from '@phosphor-icons/react'
 
@@ -28,7 +27,7 @@ const Index = (props: IProps) => {
 	const ref = useRef(null)
 	const hover = useHover(ref)
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		hover && changeSearchIndex(index)
 	}, [hover])
 

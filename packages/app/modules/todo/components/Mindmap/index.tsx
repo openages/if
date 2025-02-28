@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
-import { useCreateLayoutEffect, useHiddenReactflowROLoop } from '@/hooks'
+import { useHiddenReactflowROLoop, useMountEffect } from '@/hooks'
 import { ReactFlowProvider } from '@xyflow/react'
 
 import { Graph, Shadow } from './components'
@@ -26,7 +26,7 @@ const Index = (props: IPropsMindmap) => {
 
 	useHiddenReactflowROLoop()
 
-	useCreateLayoutEffect(() => {
+	useMountEffect(() => {
 		const keys = Object.keys(kanban_items)
 
 		if (!angles.length) return

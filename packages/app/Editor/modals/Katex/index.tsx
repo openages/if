@@ -1,10 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
 import { Button, Form, Input, Switch } from 'antd'
 import { $getNodeByKey } from 'lexical'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Render from '@/Editor/plugins/Katex/Node/Render'
-import { useCreateEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { Function } from '@phosphor-icons/react'
 
@@ -26,7 +26,7 @@ const Index = (props: IPropsModal) => {
 	const value = useWatch('value', form)
 	const inline = useWatch('inline', form)
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (!node_key) return
 
 		editor.getEditorState().read(() => {

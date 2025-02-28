@@ -1,9 +1,9 @@
 import { Form, Input } from 'antd'
 import { debounce } from 'lodash-es'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { IconEditor } from '@/components'
-import { useCreateEffect } from '@/hooks'
 import { isFormValuesEqual } from '@/utils'
 
 const { Item, useForm } = Form
@@ -18,7 +18,7 @@ const Index = (
 	const { t } = useTranslation()
 	const { getFieldsValue, setFieldsValue } = form
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		const target = { ...info, icon_info: { icon: info.icon, icon_hue: info.icon_hue } }
 
 		if (isFormValuesEqual(getFieldsValue(), target)) return

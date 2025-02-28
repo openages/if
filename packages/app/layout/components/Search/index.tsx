@@ -1,10 +1,9 @@
 import { useEventListener, useFocusWithin, useMemoizedFn } from 'ahooks'
 import { debounce } from 'lodash-es'
-import { useRef, useState, Fragment } from 'react'
+import { useEffect, useRef, useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { LazyElement, Modal, SimpleEmpty } from '@/components'
-import { useCreateEffect } from '@/hooks'
 import { ArrowBendDownLeft, ArrowDown, ArrowUp, MagnifyingGlass, Trash, X } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -74,7 +73,7 @@ const Index = (props: IPropsSearch) => {
 		}
 	})
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (!open) return
 
 		document.addEventListener('keydown', handleChangeIndex)

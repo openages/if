@@ -1,7 +1,6 @@
 import { useHover, useMemoizedFn } from 'ahooks'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
-import { useCreateEffect } from '@/hooks'
 import { ArrowBendDownLeft } from '@phosphor-icons/react'
 
 import type { App, DirTree, Pomo } from '@/types'
@@ -23,7 +22,7 @@ const Index = (props: IProps) => {
 	const ref = useRef(null)
 	const hover = useHover(ref)
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		hover && changeSearchIndex(index)
 	}, [hover])
 

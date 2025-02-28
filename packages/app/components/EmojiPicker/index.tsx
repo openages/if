@@ -1,9 +1,8 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { useGlobal } from '@/context/app'
-import { useCreateEffect } from '@/hooks'
 import data from '@emoji-mart/data'
 import en from '@emoji-mart/data/i18n/en.json'
 import zh from '@emoji-mart/data/i18n/zh.json'
@@ -44,7 +43,7 @@ const Index = (props: IProps) => {
 
 	const delaymakeImgColor = useMemoizedFn(() => setTimeout(makeImgColor, 30))
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (global.setting.theme === 'light') return
 
 		const picker = document.querySelector('em-emoji-picker')!

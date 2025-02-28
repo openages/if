@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
 import { DraggableWrap, SortableWrap } from '@/components'
-import { useCreateLayoutEffect } from '@/hooks'
+import { useStackEffect } from '@/hooks'
 import { useDndMonitor, useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
 import { verticalListSortingStrategy, SortableContext } from '@dnd-kit/sortable'
 
@@ -32,11 +32,11 @@ const Index = (props: IProps) => {
 
 	const items = $copy(x.items)
 
-	useCreateLayoutEffect(() => {
-		x.init({ ids, mode, onChange })
-
-		return () => x.off()
-	}, [ids, mode, onChange])
+	const { setDom } = useStackEffect({
+		mounted: () => x.init({ ids, mode, onChange }),
+		unmounted: () => x.off(),
+		deps: [ids, mode, onChange]
+	})
 
 	const updateTodoItem = useMemoizedFn(x.updateTodoItem)
 	const changeStatus = useMemoizedFn(x.changeStatus)
@@ -117,7 +117,7 @@ const Index = (props: IProps) => {
 	}
 
 	return (
-		<div className={$cx('w_100 flex flex_column', styles._local)}>
+		<div className={$cx('w_100 flex flex_column', styles._local)} ref={setDom}>
 			{mode === 'sortable' || mode === 'draggable' ? (
 				mode === 'sortable' ? (
 					<DndContext onDragEnd={onDragEnd} sensors={sensors}>

@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react-lite'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { useGlobal } from '@/context/app'
 import { mermaidRender } from '@/Editor/utils'
-import { useCreateEffect, useSize } from '@/hooks'
+import { useSize } from '@/hooks'
 import { Warning } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -18,7 +18,7 @@ const Index = (props: IPropsRender) => {
 	const theme = global.setting.theme
 	const width = useSize(() => ref.current!, 'width') as number
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		const el = ref.current
 
 		if (!el || !value || !width) return
@@ -26,7 +26,7 @@ const Index = (props: IPropsRender) => {
 		mermaidRender(value, el, width)
 	}, [value, width])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		const el = ref.current
 
 		if (!el || !value || !width) return

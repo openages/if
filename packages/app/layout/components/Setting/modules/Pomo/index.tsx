@@ -1,11 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
 import { Switch } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useState } from 'react'
+import { useInsertionEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { updateModuleGlobalSetting } from '@/actions/global'
-import { useCreateLayoutEffect } from '@/hooks'
 import { SettingsModel } from '@/models'
 import { SpeakerHigh } from '@phosphor-icons/react'
 
@@ -17,7 +16,7 @@ const Index = () => {
 	const [x] = useState(() => new SettingsModel<Pomo.Setting>())
 	const { t } = useTranslation()
 
-	useCreateLayoutEffect(() => {
+	useInsertionEffect(() => {
 		x.init('pomo_settings')
 
 		return () => x.off()

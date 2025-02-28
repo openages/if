@@ -22,6 +22,8 @@ window.$copy = rfdc({ proto: true })
 window.$cx = cx
 window.$navigate = (() => {}) as any
 
+window.$stack_offs = new Map()
+
 window.$message = {} as MessageInstance
 window.$notification = {} as NotificationInstance
 window.$modal = {} as Omit<ModalStaticFunctions, 'warn'>

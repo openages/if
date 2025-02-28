@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
-import { useCreateLayoutEffect } from '@/hooks'
+import { useStackEffect } from '@/hooks'
 
 import { Chart, Header, List } from './components'
 import styles from './index.css'
@@ -24,9 +24,10 @@ const Index = (props: IProps) => {
 	const global = useGlobal()
 	const unpaid = !global.auth.is_paid_user && ['month', 'year'].includes(x.type)
 
-	useCreateLayoutEffect(() => {
-		x.init({ id, type })
-	}, [id, type])
+	const { setDom } = useStackEffect({
+		mounted: () => x.init({ id, type }),
+		deps: [id, type]
+	})
 
 	const props_header: IPropsHeader = {
 		unpaid: !global.auth.is_paid_user,
@@ -60,7 +61,7 @@ const Index = (props: IProps) => {
 	}
 
 	return (
-		<div className={$cx(styles._local)}>
+		<div className={$cx(styles._local)} ref={setDom}>
 			<Header {...props_header}></Header>
 			<Chart {...props_chart}></Chart>
 			<List {...props_list}></List>

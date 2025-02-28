@@ -1,10 +1,9 @@
 import { useMemoizedFn } from 'ahooks'
 import { observer } from 'mobx-react-lite'
-import { useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
 import { Popover } from '@/components'
 import { useStackSelector } from '@/context/stack'
-import { useCreateEffect, useCreateLayoutEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 
 import Formats from './Formats'
@@ -19,13 +18,13 @@ const Index = (props: IPropsTextBar) => {
 	const id = useStackSelector(v => v.id)
 	const position = $copy(x.position)
 
-	useCreateLayoutEffect(() => {
+	useLayoutEffect(() => {
 		x.init(id, editor, md!)
 
 		return () => x.off()
 	}, [id, editor, md])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (x.visible) {
 			x.addClickListener()
 			x.addBlurListener()

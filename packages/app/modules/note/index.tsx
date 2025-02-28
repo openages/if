@@ -1,29 +1,30 @@
 import { useMemoizedFn } from 'ahooks'
 import { Input } from 'antd'
 import { observer } from 'mobx-react-lite'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { container } from 'tsyringe'
 
 import { Note } from '@/Editor'
-import { useCreateEffect, useCreateLayoutEffect, useCurrentModule } from '@/hooks'
+import { useCurrentModule, useStackEffect } from '@/hooks'
 
 import styles from './index.css'
 import Model from './model'
 
 import type { IProps } from './types'
+
 const { TextArea } = Input
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => container.resolve(Model))
 	const module = useCurrentModule()
 
-	useCreateLayoutEffect(() => {
-		x.init({ id })
+	const { setDom } = useStackEffect({
+		mounted: () => x.init({ id }),
+		unmounted: () => x.off(),
+		deps: [id]
+	})
 
-		return () => x.off()
-	}, [id])
-
-	useCreateEffect(() => {
+	useEffect(() => {
 		x.module = module
 	}, [module])
 
@@ -32,7 +33,7 @@ const Index = ({ id }: IProps) => {
 	if (!x?.file?.id) return null
 
 	return (
-		<div className={$cx('w_100 border_box flex flex_column limited_content_wrap', styles._local)}>
+		<div className={$cx('w_100 border_box flex flex_column limited_content_wrap', styles._local)} ref={setDom}>
 			<TextArea
 				className={$cx('article_title', styles.title)}
 				value={x.file.data.name}

@@ -6,7 +6,7 @@ import { match, P } from 'ts-pattern'
 import { container as model_container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
-import { useCreateLayoutEffect } from '@/hooks'
+import { useStackEffect } from '@/hooks'
 import { useSensor, useSensors, DndContext, PointerSensor } from '@dnd-kit/core'
 import { restrictToFirstScrollableAncestor } from '@dnd-kit/modifiers'
 
@@ -53,11 +53,11 @@ const Index = ({ id }: IProps) => {
 	const move_item = $copy(x.move_item)
 	const unpaid = !global.auth.is_paid_user && ['timeline', 'fixed'].includes(x.view)
 
-	useCreateLayoutEffect(() => {
-		x.init({ id })
-
-		return () => x.off()
-	}, [id])
+	const { setDom } = useStackEffect({
+		mounted: () => x.init({ id }),
+		unmounted: () => x.off(),
+		deps: [id]
+	})
 
 	const scrollToScanline = useMemoizedFn(() => {
 		if (!scanline.current) return
@@ -181,7 +181,7 @@ const Index = ({ id }: IProps) => {
 	const updateTodoSchedule = useMemoizedFn(x.updateTodoSchedule)
 
 	return (
-		<div className={$cx('w_100 h_100 border_box flex flex_column', styles._local)}>
+		<div className={$cx('w_100 h_100 border_box flex flex_column', styles._local)} ref={setDom}>
 			<Header {...props_header}></Header>
 			<div className={$cx('flex', styles.content)}>
 				<DndContext

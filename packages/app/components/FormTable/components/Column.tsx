@@ -1,8 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { Form } from 'antd'
-import { cloneElement, useRef, useState } from 'react'
+import { cloneElement, useEffect, useRef, useState } from 'react'
 
-import { useCreateEffect } from '@/hooks'
 import { useDeepMemo } from '@openages/stk/react'
 
 import { useStyle } from '../hooks'
@@ -79,7 +78,7 @@ const Index = (props: IPropsColumn) => {
 	const ref = useRef<HTMLTableCellElement>(null)
 	const [hover, setHover] = useState(false)
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		const td = ref.current
 
 		if (!td || alwaysEditing || disableEditing) return

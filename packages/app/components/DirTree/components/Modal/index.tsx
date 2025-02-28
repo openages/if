@@ -1,11 +1,10 @@
 import { useEventTarget, useKeyPress, useMemoizedFn } from 'ahooks'
 import { Input, Modal } from 'antd'
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { match } from 'ts-pattern'
 
 import { IconEditor } from '@/components'
-import { useCreateEffect } from '@/hooks'
 
 import styles from './index.css'
 
@@ -32,14 +31,14 @@ const Index = (props: IPropsModal) => {
 	const [value, { onChange }] = useEventTarget<string>()
 	const { t } = useTranslation()
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (modal_open) return input.current?.focus?.()
 
 		setIcon({ icon: '', icon_hue: undefined })
 		onChange({ target: { value: '' } })
 	}, [modal_open])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (focusing_item.icon && current_option === 'rename') {
 			setIcon({ icon: focusing_item.icon, icon_hue: focusing_item.icon_hue })
 		}

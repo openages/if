@@ -1,11 +1,9 @@
-import { useState } from 'react'
-
-import { useCreateLayoutEffect } from '@/hooks'
+import { useEffect, useState } from 'react'
 
 export default (timeout?: number) => {
 	const [mounted, setMounted] = useState(false)
 
-	useCreateLayoutEffect(() => {
+	useEffect(() => {
 		if (timeout) {
 			const timer = setTimeout(() => setMounted(true), timeout)
 

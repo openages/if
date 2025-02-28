@@ -1,9 +1,7 @@
 import { useLongPress } from 'ahooks'
 import { theme } from 'antd'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { contextMenu, Item } from 'react-contexify'
-
-import { useCreateEffect } from '@/hooks'
 
 import styles from './index.css'
 
@@ -44,7 +42,7 @@ const PressItem = $app.memo((props: IProps) => {
 		}
 	)
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (!press_start) return
 
 		const timer = setInterval(() => setPressTime((Date.now() - press_start) / 1000), 30)
@@ -52,7 +50,7 @@ const PressItem = $app.memo((props: IProps) => {
 		return () => clearInterval(timer)
 	}, [press_start])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (press_time > danger!) {
 			trigger?.()
 			setPressStart(0)

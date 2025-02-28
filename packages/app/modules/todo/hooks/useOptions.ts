@@ -1,4 +1,4 @@
-import { useCreateLayoutEffect } from '@/hooks'
+import { useLayoutEffect } from 'react'
 
 import type { RefObject } from 'react'
 import type { IPropsTodoItem } from '../types'
@@ -12,7 +12,7 @@ export default (args: HookArgs) => {
 	const { item, input } = args
 	const { children } = item
 
-	useCreateLayoutEffect(() => {
+	useLayoutEffect(() => {
 		const el = input.current!
 
 		if (!el || !children || !children?.length) {

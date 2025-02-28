@@ -1,7 +1,5 @@
 import { useEventListener, useMemoizedFn } from 'ahooks'
-import { useState } from 'react'
-
-import { useCreateEffect } from '@/hooks'
+import { useEffect, useState } from 'react'
 
 import type { RefObject } from 'react'
 
@@ -58,7 +56,7 @@ export default (args: Args) => {
 
 	useEventListener('mousedown', start, { target: ref })
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (!draging) return
 
 		document.addEventListener('mousemove', setDirTreeWidth)

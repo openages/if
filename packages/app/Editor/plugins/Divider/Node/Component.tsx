@@ -1,8 +1,7 @@
 import { observer } from 'mobx-react-lite'
-import { useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { container } from 'tsyringe'
 
-import { useCreateEffect, useCreateLayoutEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection'
 
@@ -16,7 +15,7 @@ const Index = (props: IPropsComponent) => {
 	const [editor] = useLexicalComposerContext()
 	const [selected, setSelected, clearSelection] = useLexicalNodeSelection(node_key!)
 
-	useCreateLayoutEffect(() => {
+	useLayoutEffect(() => {
 		x.block.init(editor, node_key!, setSelected, clearSelection)
 
 		x.block.ref.className = styles._local
@@ -24,7 +23,7 @@ const Index = (props: IPropsComponent) => {
 		return () => x.block.off()
 	}, [editor, node_key, setSelected, clearSelection])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		x.block.selected = selected
 
 		if (selected) {

@@ -1,6 +1,5 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
-import { useCreateEffect } from '@/hooks'
 import { useOnViewportChange, useReactFlow, Controls, MiniMap, ReactFlow } from '@xyflow/react'
 
 import { node_types } from './'
@@ -18,7 +17,7 @@ const Index = (props: IPropsGraph) => {
 		onEnd: v => (viewport.current = v)
 	})
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (viewport.current) setViewport(viewport.current)
 		if (mounted.current) return
 

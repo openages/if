@@ -1,10 +1,9 @@
 import { observer } from 'mobx-react-lite'
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { container } from 'tsyringe'
 
 import { useStackSelector } from '@/context/stack'
-import { useCreateLayoutEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 
 import styles from './index.css'
@@ -15,8 +14,10 @@ const Index = () => {
 	const [editor] = useLexicalComposerContext()
 	const id = useStackSelector(v => v.id)
 
-	useCreateLayoutEffect(() => {
+	useLayoutEffect(() => {
 		x.init(id, editor)
+
+		return () => x.off()
 	}, [id, editor])
 
 	if (!x.visible) return null

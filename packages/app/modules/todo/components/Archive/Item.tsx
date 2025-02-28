@@ -1,11 +1,10 @@
 import { useMemoizedFn } from 'ahooks'
 import dayjs from 'dayjs'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useText, useTextChange, Text } from '@/Editor'
-import { useCreateLayoutEffect } from '@/hooks'
 import { ArrowCounterClockwise, CheckSquare, Square, Trash } from '@phosphor-icons/react'
 
 import CycleStatus from '../CycleStatus'
@@ -29,7 +28,7 @@ const TextItem = $app.memo((props: IPropsTextItem) => {
 
 	const { ref_editor, ref_input, onChange, setEditor, setRef } = useText({ text })
 
-	useCreateLayoutEffect(() => {
+	useEffect(() => {
 		const el = ref_input.current
 
 		if (!el) return

@@ -1,7 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { useState } from 'react'
-
-import { useCreateEffect } from '@/hooks'
+import { useEffect, useState } from 'react'
 
 import Loading from './Loading'
 
@@ -33,7 +31,7 @@ const Index = (props: IProps) => {
 		setLoading({ visible: false })
 	})
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		if (!state?.showClose) return
 
 		const timer = setTimeout(() => {
@@ -43,7 +41,7 @@ const Index = (props: IProps) => {
 		return () => clearTimeout(timer)
 	}, [state?.showClose])
 
-	useCreateEffect(() => {
+	useEffect(() => {
 		window.$app.Event.on('app/setLoading', setLoading)
 
 		return () => window.$app.Event.off('app/setLoading', setLoading)
