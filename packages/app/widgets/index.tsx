@@ -30,7 +30,7 @@ const Index = () => {
 			</If>
 			<div
 				className={$cx(
-					'w_100 h_100 flex flex_column',
+					'w_100 h_100vh flex flex_column',
 					styles._local,
 					is_mac_electron && styles.is_mac_electron
 				)}

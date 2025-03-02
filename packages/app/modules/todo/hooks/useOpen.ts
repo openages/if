@@ -1,5 +1,6 @@
 import { useUpdateEffect } from 'ahooks'
-import { useEffect } from 'react'
+
+import { useCreateLayoutEffect } from '@/hooks'
 
 import type { IPropsTodoItem } from '../types'
 
@@ -18,7 +19,7 @@ export default (args: HookArgs) => {
 
 	useUpdateEffect(() => renderLines!(), [open, zen_mode])
 
-	useEffect(() => {
+	useCreateLayoutEffect(() => {
 		if (!open_items) return
 
 		if (open_items.includes(id)) {
