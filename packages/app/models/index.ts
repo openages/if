@@ -13,6 +13,7 @@ export { default as Search } from './search'
 export { default as File } from './file'
 export { default as Loadmore } from './loadmore'
 export { default as Sound } from './sound'
-export { default as SettingsModel } from './settings_model'
+export { default as KVSettingsModel } from './kv_settings_model'
+export { default as ModuleSettingsModel } from './module_settings_model'
 
 export * from './settings'

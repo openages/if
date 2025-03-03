@@ -4,22 +4,25 @@ import type { Subscription } from 'rxjs'
 import type { DocKV } from '@/schemas'
 
 export default class Index<T> {
-	doc = null as unknown as DocKV
 	settings = {} as T
 	settings_watcher = {} as Subscription
 
 	constructor() {
-		makeAutoObservable(this, { doc: false, settings_watcher: false }, { autoBind: true })
+		makeAutoObservable(this, { settings_watcher: false }, { autoBind: true })
 	}
 
 	init(key: string) {
-		this.on(key)
-	}
+		const { promise, resolve } = Promise.withResolvers()
 
-	on(key: string) {
 		this.settings_watcher = $db.kv.findOne(key).$.subscribe(doc => {
-			this.settings = JSON.parse(doc!.value)
+			if (!doc) return resolve()
+
+			this.settings = JSON.parse(doc.value)
+
+			resolve()
 		})
+
+		return promise
 	}
 
 	off() {

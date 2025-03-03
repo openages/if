@@ -6,19 +6,20 @@ interface IProps {
 	children: ReactNode
 	visible: boolean
 	className?: HTMLDivElement['className']
+	height?: boolean
 }
 
 const Index = (props: IProps) => {
-	const { children, visible, className } = props
+	const { children, visible, className, height } = props
 
 	return (
-		<AnimatePresence>
+		<AnimatePresence initial={false}>
 			{visible && (
 				<motion.div
 					className={$cx(className)}
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
+					initial={{ opacity: 0, ...(height ? { height: 0 } : {}) }}
+					animate={{ opacity: 1, ...(height ? { height: 'auto' } : {}) }}
+					exit={{ opacity: 0, ...(height ? { height: 0 } : {}) }}
 					transition={{ duration: 0.18, ease: 'easeInOut' }}
 				>
 					{children}

@@ -1,0 +1,5 @@
+._local {
+	&.use_by_tray {
+		margin-top: 12px;
+	}
+}

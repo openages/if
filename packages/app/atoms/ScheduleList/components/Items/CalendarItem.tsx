@@ -3,15 +3,15 @@ import { Progress } from 'antd'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
+import { useTagStyles } from '@/modules/schedule/components/TimeBlock/hooks'
 import { getCrossTime } from '@/modules/schedule/utils'
 import { ArrowRight } from '@phosphor-icons/react'
 
-import { useTagStyles } from '../../../TimeBlock/hooks'
 import styles from './index.css'
 
-import type { IPropsListItem } from '../../../../types'
+import type { IPropsItem } from '../../types'
 
-const Index = (props: IPropsListItem) => {
+const Index = (props: IPropsItem) => {
 	const { item, tags, jump } = props
 	const { start_time, end_time } = item
 	const tag_styles = useTagStyles(tags, item.tag)
@@ -27,7 +27,7 @@ const Index = (props: IPropsListItem) => {
 		}
 	}, [start_time, end_time])
 
-	const onJump = useMemoizedFn(() => jump(item.id, dayjs(start_time)))
+	const onJump = useMemoizedFn(() => jump?.(item.id, dayjs(start_time)))
 
 	return (
 		<div
@@ -50,9 +50,11 @@ const Index = (props: IPropsListItem) => {
 					></span>
 				</div>
 			</div>
-			<div className='btn_jump none justify_center align_center absolute clickable' onClick={onJump}>
-				<ArrowRight></ArrowRight>
-			</div>
+			<If condition={Boolean(jump)}>
+				<div className='btn_jump none justify_center align_center absolute clickable' onClick={onJump}>
+					<ArrowRight></ArrowRight>
+				</div>
+			</If>
 		</div>
 	)
 }

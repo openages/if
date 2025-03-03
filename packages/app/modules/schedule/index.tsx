@@ -1,10 +1,13 @@
 import { useMemoizedFn } from 'ahooks'
+import { Drawer } from 'antd'
 import { observer } from 'mobx-react-lite'
 import { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { match, P } from 'ts-pattern'
 import { container as model_container } from 'tsyringe'
 
+import { ScheduleList } from '@/atoms'
 import { useGlobal } from '@/context/app'
 import { useStackEffect } from '@/hooks'
 import { useSensor, useSensors, DndContext, PointerSensor } from '@dnd-kit/core'
@@ -15,7 +18,6 @@ import {
 	ContextMenu,
 	DateScale,
 	Header,
-	List,
 	MonthView,
 	Scanline,
 	SettingsModal,
@@ -34,9 +36,10 @@ import type {
 	IPropsMonthView,
 	IPropsTimelineView,
 	IPropsSettingsModal,
-	IPropsScanline,
-	IPropsList
+	IPropsScanline
 } from './types'
+
+import type { IPropsScheduleList } from '@/atoms'
 
 const Index = ({ id }: IProps) => {
 	const [x] = useState(() => model_container.resolve(Model))
@@ -44,6 +47,8 @@ const Index = ({ id }: IProps) => {
 	const container = useRef<HTMLDivElement>(null)
 	const scanline = useRef<HTMLDivElement>(null)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 12 } }))
+	const { t } = useTranslation()
+
 	const days = $copy(x.days)
 	const calendar_days = $copy(x.calendar_days)
 	const timeline_rows = $copy(x.timeline_rows)
@@ -85,11 +90,7 @@ const Index = ({ id }: IProps) => {
 		changeScale: useMemoizedFn(x.changeScale),
 		changeCurrent: useMemoizedFn(x.changeCurrent),
 		showSettingsModal: useMemoizedFn(() => (x.visible_settings_modal = true)),
-		showListModal: useMemoizedFn(() => {
-			x.visible_list_modal = true
-
-			x.setListDuration()
-		}),
+		showListModal: useMemoizedFn(() => (x.visible_list_modal = true)),
 		changeFilterTags: useMemoizedFn(v => (x.filter_tags = v))
 	}
 
@@ -153,20 +154,9 @@ const Index = ({ id }: IProps) => {
 		cleanByTime: useMemoizedFn(x.cleanByTime)
 	}
 
-	const props_list: IPropsList = {
-		visible_list_modal: x.visible_list_modal,
-		list_duration: x.list_duration,
-		list_current_text: x.list_current_text,
-		list_custom_duration: $copy(x.list_custom_duration),
-		list_items: $copy(x.list_items),
-		tags,
-		setListDuration: useMemoizedFn(x.setListDuration),
-		prev: useMemoizedFn(() => x.listStep('prev')),
-		next: useMemoizedFn(() => x.listStep('next')),
-		setListCustomDuration: useMemoizedFn(x.setListCustomDuration),
-		jump: useMemoizedFn(x.listJump),
-		exportListToExcel: useMemoizedFn(x.exportListToExcel),
-		onClose: useMemoizedFn(() => (x.visible_list_modal = false))
+	const props_list: IPropsScheduleList = {
+		id: x.id,
+		jump: useMemoizedFn(x.listJump)
 	}
 
 	const props_scanline: IPropsScanline = {
@@ -174,6 +164,7 @@ const Index = ({ id }: IProps) => {
 		scrollToScanline
 	}
 
+	const onCloseListModal = useMemoizedFn(() => (x.visible_list_modal = false))
 	const onDragMove = useMemoizedFn(args => x.onDragMove(container.current!, args))
 	const onDragEnd = useMemoizedFn(x.onDragEnd)
 	const onDragCancel = useMemoizedFn(x.onDragCancel)
@@ -244,7 +235,18 @@ const Index = ({ id }: IProps) => {
 				</DndContext>
 			</div>
 			<ContextMenu timeblock_copied={timeblock_copied} addTimeBlock={addTimeBlock}></ContextMenu>
-			<List {...props_list}></List>
+			<Drawer
+				open={x.visible_list_modal}
+				title={t('schedule.List.title')}
+				width='min(624px,calc(100% - 24px))'
+				destroyOnClose
+				getContainer={false}
+				footer={null}
+				onClose={onCloseListModal}
+			>
+				<ScheduleList {...props_list}></ScheduleList>
+			</Drawer>
+
 			<SettingsModal {...props_settings_modal}></SettingsModal>
 		</div>
 	)

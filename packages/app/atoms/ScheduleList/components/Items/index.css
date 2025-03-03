@@ -4,6 +4,12 @@
 	font-size: 12px;
 	gap: 12px;
 
+	&.use_by_tray {
+		overflow-y: unset;
+		flex: 1;
+		height: auto;
+	}
+
 	:global {
 		.empty_wrap {
 			flex: 1;

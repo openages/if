@@ -5,7 +5,7 @@ import { useInsertionEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { updateModuleGlobalSetting } from '@/actions/global'
-import { SettingsModel } from '@/models'
+import { KVSettingsModel } from '@/models'
 import { SpeakerHigh } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -13,7 +13,7 @@ import styles from './index.css'
 import type { Pomo } from '@/types'
 
 const Index = () => {
-	const [x] = useState(() => new SettingsModel<Pomo.Setting>())
+	const [x] = useState(() => new KVSettingsModel<Pomo.Setting>())
 	const { t } = useTranslation()
 
 	useInsertionEffect(() => {

@@ -33,6 +33,7 @@ export default (args: Args) => {
 
 	useLayoutEffect(() => {
 		if (!unmounted) return
+		if (!id) return unmounted
 
 		return () => {
 			setTimeout(() => {

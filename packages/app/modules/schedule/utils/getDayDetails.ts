@@ -42,7 +42,6 @@ const Index = (day: Dayjs) => {
 			}) ||
 			(festival && {
 				holiday: festival,
-				work: false,
 				target: true
 			}),
 		global_festival

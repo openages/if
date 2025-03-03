@@ -3,7 +3,7 @@ import { useInstanceWatch, Watch } from 'stk/dist/mobx'
 import { injectable } from 'tsyringe'
 
 import { updateModuleGlobalSetting } from '@/actions/global'
-import { SettingsModel } from '@/models'
+import { KVSettingsModel } from '@/models'
 import Utils from '@/models/utils'
 import { getFileSetting } from '@/services'
 import { getDocItem, getDocItemsData } from '@/utils'
@@ -32,15 +32,15 @@ export default class Index {
 	}
 
 	get todo_file_id() {
-		return this.settings?.settings?.todo?.file_id ? this.settings.settings.todo.file_id : undefined
+		return this.settings?.settings?.todo?.file_id
 	}
 
 	get todo_angle_id() {
-		return this.settings?.settings?.todo?.angle_id ? this.settings.settings.todo.angle_id : undefined
+		return this.settings?.settings?.todo?.angle_id
 	}
 
 	get schedule_file_id() {
-		return this.settings?.settings?.schedule?.file_id ? this.settings.settings.schedule.file_id : undefined
+		return this.settings?.settings?.schedule?.file_id
 	}
 
 	watch = {
@@ -64,7 +64,7 @@ export default class Index {
 
 	constructor(
 		public utils: Utils,
-		public settings: SettingsModel<Tray.Setting>
+		public settings: KVSettingsModel<Tray.Setting>
 	) {
 		makeAutoObservable(
 			this,

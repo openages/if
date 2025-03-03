@@ -1,4 +1,60 @@
 ._local {
+	padding: 12px;
+
+	.header {
+		line-height: 1;
+
+		:global {
+			.btn_action {
+				width: 21px;
+				height: 21px;
+				border-radius: 50%;
+
+				&:hover {
+					background-color: var(--color_bg_2);
+				}
+			}
+
+			.view_wrap {
+				font-size: 15px;
+				gap: 9px;
+
+				.divider {
+					width: 1px;
+					height: 12px;
+					background-color: var(--color_border);
+				}
+
+				.btn_action {
+					opacity: 0.48;
+
+					&.active {
+						opacity: 1;
+					}
+				}
+			}
+
+			.actions_wrap {
+				font-size: 15px;
+				gap: 9px;
+			}
+		}
+	}
+
 	:global {
+		.if-tabs {
+			.if-tabs-content-holder {
+				display: flex;
+
+				.if-tabs-content {
+					display: flex;
+					flex: 1;
+
+					.if-tabs-tabpane {
+						flex: 1;
+					}
+				}
+			}
+		}
 	}
 }

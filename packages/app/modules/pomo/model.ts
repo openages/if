@@ -3,7 +3,7 @@ import { domToPng } from 'modern-screenshot'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
-import { File, SettingsModel, Sound } from '@/models'
+import { File, KVSettingsModel, Sound } from '@/models'
 import done from '@/public/sounds/done.mp3'
 import notify from '@/public/sounds/notify.mp3'
 import { getDocItem, id, ipc, is_electron } from '@/utils'
@@ -41,7 +41,7 @@ export default class Index {
 
 	constructor(
 		public file: File,
-		public settings: SettingsModel<Pomo.Setting>,
+		public settings: KVSettingsModel<Pomo.Setting>,
 		public work_end: Sound,
 		public break_end: Sound
 	) {

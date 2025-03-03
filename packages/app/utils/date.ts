@@ -79,7 +79,7 @@ export const getMonthDays = (day: Dayjs) => {
 
 	let start_of_week = start_of_month.startOf('week')
 
-	while (start_of_week.isBefore(end_of_month)) {
+	while (start_of_week.isSameOrBefore(end_of_month)) {
 		const end_of_week = start_of_week.endOf('week')
 		const week_data = []
 		let current_date = start_of_week

@@ -7,11 +7,11 @@ import { CaretLeft, CaretRight, FileXls, SquaresFour } from '@phosphor-icons/rea
 
 import styles from './index.css'
 
-import type { IPropsListHeader } from '../../../../types'
+import type { IPropsHeader } from '../../types'
 
 const { RangePicker } = DatePicker
 
-const Index = (props: IPropsListHeader) => {
+const Index = (props: IPropsHeader) => {
 	const {
 		list_duration,
 		list_current_text,

@@ -1,0 +1,143 @@
+._local {
+	line-height: 1;
+	margin-bottom: 9px;
+	color: var(--color_text_sub);
+
+	:global {
+		.weekdays {
+			width: calc(100% + 16px);
+			margin-bottom: 6px;
+			margin-left: -8px;
+			user-select: none;
+			font-size: 10px;
+
+			.weekday {
+				width: calc(100% / 7);
+			}
+		}
+
+		.days_wrap {
+			width: calc(100% + 16px);
+			margin-bottom: 12px;
+			margin-left: -8px;
+
+			.day_wrap {
+				position: relative;
+				width: calc(100% / 7);
+				padding: 6px 0;
+				user-select: none;
+				font-size: 10px;
+
+				&.not_current_month {
+					opacity: 0.48;
+				}
+
+				&.today {
+					opacity: 1;
+					color: rgba(var(--color_contrast_rgb), 0.81);
+
+					.extra,
+					.holiday {
+						color: rgba(var(--color_contrast_rgb), 0.6);
+					}
+				}
+
+				&.current {
+					opacity: 1;
+					color: rgba(var(--color_contrast_rgb), 0.81);
+
+					&::after {
+						position: absolute;
+						top: 0;
+						height: 100%;
+						border-radius: 50%;
+						background-color: rgba(var(--color_blue_rgb), 0.48);
+						content: '';
+						aspect-ratio: 1;
+					}
+
+					.extra,
+					.holiday {
+						color: rgba(var(--color_contrast_rgb), 0.6);
+					}
+				}
+
+				.date {
+					z-index: 1;
+					margin-bottom: 4px;
+					font-weight: 500;
+				}
+
+				.extra {
+					z-index: 1;
+					color: var(--color_text_grey);
+					font-size: 9px;
+				}
+
+				.holiday {
+					z-index: 1;
+					font-size: 9px;
+				}
+
+				.status {
+					z-index: 1;
+					top: 2.1px;
+					right: 9px;
+					font-size: 7.2px;
+
+					&.work {
+						color: var(--color_warning);
+					}
+
+					&.relax {
+						color: var(--color_success);
+					}
+				}
+			}
+		}
+
+		.detail_wrap {
+			padding-bottom: 9px;
+			border-bottom: var(--border);
+			user-select: none;
+			font-size: 10px;
+
+			.left_wrap {
+				.extra {
+					margin-top: 6px;
+				}
+			}
+
+			.right_wrap {
+				gap: 9px;
+
+				.month {
+					margin-right: 3px;
+				}
+
+				.divider {
+					width: 1px;
+					height: 12px;
+					background-color: var(--color_border);
+				}
+
+				.actions_wrap {
+					.btn_action {
+						width: 18px;
+						height: 18px;
+						border-radius: 50%;
+						font-size: 15px;
+
+						&:hover {
+							background-color: var(--color_bg_2);
+						}
+
+						&.current {
+							font-size: 4px;
+						}
+					}
+				}
+			}
+		}
+	}
+}

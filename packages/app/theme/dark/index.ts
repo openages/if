@@ -7,7 +7,7 @@ export default {
 	color_text: '#a2a5b9',
 	color_text_rgb: '162,165,185',
 	color_text_sub: 'rgba(162,165,185,0.72)',
-	color_text_sublight: 'rgba(247,248,248,0.6)',
+	color_text_sublight: 'rgba(162,165,185,0.6)',
 	color_text_grey: 'rgba(162,165,185,0.48)',
 	color_text_greylight: 'rgba(247,248,248,0.4)',
 	color_text_light: 'rgba(162,165,185,0.3)',

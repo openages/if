@@ -7,17 +7,17 @@ import CalendarItem from './CalendarItem'
 import styles from './index.css'
 import TimelineItem from './TimelineItem'
 
-import type { IPropsListItems } from '../../../../types'
+import type { IPropsItems } from '../../types'
 
-const Index = (props: IPropsListItems) => {
-	const { list_items, tags, jump } = props
+const Index = (props: IPropsItems) => {
+	const { use_by_tray, list_items, tags, jump } = props
 
 	const { timeline, calendar } = useMemo(() => {
 		return groupBy(list_items, 'type')
 	}, [list_items])
 
 	return (
-		<div className={$cx('w_100 flex flex_column', styles._local)}>
+		<div className={$cx('w_100 flex flex_column', styles._local, use_by_tray && styles.use_by_tray)}>
 			<Choose>
 				<When condition={list_items.length === 0}>
 					<div className='empty_wrap flex justify_center align_center'>
