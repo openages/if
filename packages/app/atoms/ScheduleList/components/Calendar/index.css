@@ -1,7 +1,7 @@
 ._local {
 	line-height: 1;
 	margin-bottom: 9px;
-	color: var(--color_text_sub);
+	color: var(--color_text);
 
 	:global {
 		.weekdays {
@@ -70,7 +70,7 @@
 
 				.extra {
 					z-index: 1;
-					color: var(--color_text_grey);
+					color: rgba(var(--color_contrast_rgb), 0.36);
 					font-size: 9px;
 				}
 
@@ -118,7 +118,7 @@
 				.divider {
 					width: 1px;
 					height: 12px;
-					background-color: var(--color_border);
+					background-color: rgba(var(--color_text_rgb), 0.15);
 				}
 
 				.actions_wrap {

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { Logo } from '@/components'
 import { is_win_electron } from '@/utils'
 import { useSensor, useSensors, DndContext, DragOverlay, PointerSensor } from '@dnd-kit/core'
-import { GearSix, House } from '@phosphor-icons/react'
+import { House } from '@phosphor-icons/react'
 
 import { WinActions } from '../'
 import { Content, NavBar, View } from './components'
@@ -31,22 +31,11 @@ const Index = (props: IPropsStacks) => {
 		setResizing,
 		observe,
 		unobserve,
-		showHomepage,
-		showSetting
+		showHomepage
 	} = props
 	const [drag_view, setDragView] = useState<{ column_index: number; view_index: number; view: Stack.View }>(null!)
 	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
 	const { t } = useTranslation()
-
-	useEffect(() => {
-		columns.forEach(column => {
-			column.views.forEach(view => {
-				if (view.active) {
-					$stack_offs.delete(view.id)
-				}
-			})
-		})
-	}, columns)
 
 	useEffect(() => {
 		observe()
@@ -128,14 +117,6 @@ const Index = (props: IPropsStacks) => {
 									onClick={showHomepage}
 								>
 									<span className='text'>{t('layout.Homepage.title')}</span>
-								</Button>
-								<span className='divider'></span>
-								<Button
-									className='btn_homepage flex justify_center align_center clickable'
-									icon={<GearSix className='icon' />}
-									onClick={showSetting}
-								>
-									<span className='text'>{t('modules.setting')}</span>
 								</Button>
 							</div>
 						</If>

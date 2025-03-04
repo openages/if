@@ -1,6 +1,5 @@
 import { resolve } from 'path'
 
-import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
 import { defineConfig } from '@rspack/cli'
 import { CopyRspackPlugin, DefinePlugin, HtmlRspackPlugin, LightningCssMinimizerRspackPlugin } from '@rspack/core'
 import ReactRefreshPlugin from '@rspack/plugin-react-refresh'
@@ -9,7 +8,6 @@ const is_dev = process.env.NODE_ENV === 'development'
 const is_prod = process.env.NODE_ENV === 'production'
 const is_sandbox = process.env.SANDBOX === '1'
 const is_release = process.env.RELEASE === '1'
-const is_doctor = process.env.DOCTOR === 'true'
 const is_module = false
 const targets = 'chrome >= 120'
 
@@ -32,14 +30,15 @@ const plugins_dev = [
 ]
 
 const plugins_prod = [
-	is_doctor && new RsdoctorRspackPlugin(),
 	new CopyRspackPlugin({
 		patterns: [{ from: './public', to: './', globOptions: { ignore: ['**/index.html'] } }]
 	})
 ]
 
+const config = is_prod ? defineConfig({ devtool: false }) : {}
+
 module.exports = defineConfig({
-	devtool: is_dev ? 'source-map' : false,
+	...config,
 	entry: {
 		main: './runtime/index.tsx'
 	},
@@ -54,7 +53,6 @@ module.exports = defineConfig({
 		tsConfig: resolve(__dirname, 'tsconfig.json')
 	},
 	devServer: {
-		compress: false,
 		proxy: [
 			{
 				context: '/trpc',
@@ -71,7 +69,8 @@ module.exports = defineConfig({
 	experiments: {
 		css: true,
 		outputModule: is_module,
-		lazyCompilation: false
+		lazyCompilation: false,
+		incremental: is_dev
 	},
 	optimization: {
 		minimizer: [

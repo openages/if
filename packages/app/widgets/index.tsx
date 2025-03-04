@@ -5,6 +5,7 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import { container } from 'tsyringe'
 
 import { GlobalModel } from '@/context/app'
+import { StackContext } from '@/context/stack'
 import { useSystemTheme, useTheme } from '@/hooks'
 import { is_mac_electron } from '@/utils'
 
@@ -24,22 +25,25 @@ const Index = () => {
 	const props = useMemo(() => Object.fromEntries(params), [params])
 
 	return (
-		<ConfigProvider theme={theme}>
-			<If condition={is_mac_electron}>
-				<style>{`html,body{background:transparent;}`}</style>
-			</If>
-			<div
-				className={$cx(
-					'w_100 h_100vh flex flex_column',
-					styles._local,
-					is_mac_electron && styles.is_mac_electron
-				)}
-			>
-				<Suspense fallback={null}>
-					<Component {...props} />
-				</Suspense>
-			</div>
-		</ConfigProvider>
+		<StackContext.Provider value={{ id: 'tray_window' } as any}>
+			<ConfigProvider theme={theme}>
+				<If condition={is_mac_electron}>
+					<style>{`html,body{background:transparent;}`}</style>
+				</If>
+				<div
+					id='tray_window'
+					className={$cx(
+						'w_100 h_100vh flex flex_column',
+						styles._local,
+						is_mac_electron && styles.is_mac_electron
+					)}
+				>
+					<Suspense fallback={null}>
+						<Component {...props} />
+					</Suspense>
+				</div>
+			</ConfigProvider>
+		</StackContext.Provider>
 	)
 }
 

@@ -6,7 +6,7 @@ import { updateModuleGlobalSetting } from '@/actions/global'
 import { KVSettingsModel } from '@/models'
 import Utils from '@/models/utils'
 import { getFileSetting } from '@/services'
-import { getDocItem, getDocItemsData } from '@/utils'
+import { conf, getDocItem, getDocItemsData, is_electron } from '@/utils'
 
 import type { DirTree, Todo, Tray } from '@/types'
 import type { Subscription } from 'rxjs'
@@ -78,16 +78,18 @@ export default class Index {
 		)
 	}
 
-	init() {
+	async init() {
 		this.utils.acts = useInstanceWatch(this)
 
-		this.settings.init('tray_settings')
+		await this.settings.init('tray_settings')
+
+		this.updateTrayWindowStatus()
 	}
 
 	changeTodoActive(v: boolean, e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>) {
 		e.stopPropagation()
 
-		if (v && this.visible_todo_fields) this.visible_todo_fields = true
+		if (v && !this.visible_todo_fields) this.visible_todo_fields = true
 
 		this.settings.settings.todo.active = v
 
@@ -96,12 +98,13 @@ export default class Index {
 		}
 
 		this.update()
+		this.updateTrayWindowStatus()
 	}
 
 	changeScheduleActive(v: boolean, e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>) {
 		e.stopPropagation()
 
-		if (v && this.visible_schedule_fields) this.visible_schedule_fields = true
+		if (v && !this.visible_schedule_fields) this.visible_schedule_fields = true
 
 		this.settings.settings.schedule.active = v
 
@@ -110,6 +113,7 @@ export default class Index {
 		}
 
 		this.update()
+		this.updateTrayWindowStatus()
 	}
 
 	onSelectTodoFile(v: string) {
@@ -136,6 +140,14 @@ export default class Index {
 
 	toggleVisibleScheduleFields() {
 		this.visible_schedule_fields = !this.visible_schedule_fields
+	}
+
+	updateTrayWindowStatus() {
+		if (!is_electron) return
+
+		const active = this.todo_active || this.schedule_active
+
+		conf.set('tray_window', active)
 	}
 
 	update() {

@@ -11,7 +11,7 @@ import { useLocation, useOutlet } from 'react-router-dom'
 import { container } from 'tsyringe'
 
 import { exclude_paths, isWidget } from '@/appdata'
-import { GlobalLoading, OffscreenOutlet } from '@/components'
+import { GlobalLoading, LazyElement, OffscreenOutlet } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
 import { is_prod, is_sandbox } from '@/utils'
@@ -126,8 +126,7 @@ const Index = () => {
 		setResizing: useMemoizedFn((v: boolean) => (global.stack.resizing = v)),
 		observe: useMemoizedFn(global.stack.observe),
 		unobserve: useMemoizedFn(global.stack.unobserve),
-		showHomepage: useMemoizedFn(() => (global.app.visible_homepage = true)),
-		showSetting
+		showHomepage: useMemoizedFn(() => (global.app.visible_homepage = true))
 	}
 
 	const props_app_menu: IPropsAppMenu = {
@@ -247,8 +246,8 @@ const Index = () => {
 						</Choose>
 
 						{/* {process.env.NODE_ENV === 'development' && (
-                                   <LazyElement type='dev' path=''></LazyElement>
-                             )} */}
+							<LazyElement type='dev' path=''></LazyElement>
+						)} */}
 					</IconContext.Provider>
 				</App>
 			</ConfigProvider>

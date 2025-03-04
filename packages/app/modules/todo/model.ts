@@ -1083,7 +1083,9 @@ export default class Index {
 		const { promise, resolve } = Promise.withResolvers()
 
 		this.setting_watcher = getFileSetting(this.id).$.subscribe(setting => {
-			const todo_setting = getDocItem(setting!)!
+			if (!setting) return
+
+			const todo_setting = getDocItem(setting)!
 
 			this.setting = { ...omit(todo_setting, 'setting'), setting: JSON.parse(todo_setting.setting) }
 
@@ -1110,11 +1112,11 @@ export default class Index {
 				angle_id: this.current_angle_id,
 				items_sort_param: this.items_sort_param,
 				items_filter_tags: this.items_filter_tags
-			}).$.subscribe(items => {
+			}).$.subscribe(docs => {
 				if (this.disable_watcher) return
 				if (!current_angle_id) return
 
-				this.items = getDocItemsData(items)
+				this.items = getDocItemsData(docs)
 
 				this.checkCurrentDetailIndex()
 			})
@@ -1132,8 +1134,8 @@ export default class Index {
 				table_mode: true,
 				table_page: this.table_pagination.current,
 				table_pagesize: this.table_pagination.pageSize
-			}).$.subscribe(items => {
-				this.items = getDocItemsData(items)
+			}).$.subscribe(docs => {
+				this.items = getDocItemsData(docs)
 
 				this.checkCurrentDetailIndex()
 			})

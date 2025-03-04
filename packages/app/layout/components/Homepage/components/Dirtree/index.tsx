@@ -54,7 +54,7 @@ const Index = (props: IPropsHomepageDirtree) => {
 
 	return (
 		<div className={$cx(styles._local)}>
-			<DirTree module={active} actions={actions}></DirTree>
+			{Object.keys(actions).length && <DirTree module={active} actions={actions}></DirTree>}
 		</div>
 	)
 }

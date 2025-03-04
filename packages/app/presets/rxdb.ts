@@ -1,7 +1,6 @@
 import { addRxPlugin } from 'rxdb'
 import { RxDBCleanupPlugin } from 'rxdb/plugins/cleanup'
 import { RxDBJsonDumpPlugin } from 'rxdb/plugins/json-dump'
-import { RxDBLeaderElectionPlugin } from 'rxdb/plugins/leader-election'
 import { RxDBMigrationPlugin } from 'rxdb/plugins/migration-schema'
 import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder'
 import { RxDBUpdatePlugin } from 'rxdb/plugins/update'
@@ -11,7 +10,6 @@ import { RxDBcrdtPlugin } from '@/utils/rxdb/plugins/crdt'
 const plugins = [
 	RxDBCleanupPlugin,
 	RxDBcrdtPlugin,
-	RxDBLeaderElectionPlugin,
 	RxDBMigrationPlugin,
 	RxDBQueryBuilderPlugin,
 	RxDBUpdatePlugin,

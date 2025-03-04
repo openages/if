@@ -39,7 +39,7 @@ export default class Index {
 			name: 'if_v1',
 			eventReduce: true,
 			allowSlowCount: true,
-			multiInstance: false,
+			multiInstance: true,
 			password: window.__key__(),
 			cleanupPolicy: { waitForLeadership: false },
 			ignoreDuplicate: window.$is_dev,

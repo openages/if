@@ -22,6 +22,14 @@ export default class Index {
 
 	watch = {
 		columns: v => {
+			v?.forEach(column => {
+				column.views.forEach(view => {
+					if (view.active) {
+						$stack_offs.delete(view.id)
+					}
+				})
+			})
+
 			if (v!.length) return
 
 			this.focus = { column: -1, view: -1 }

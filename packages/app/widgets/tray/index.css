@@ -1,8 +1,10 @@
 ._local {
+	overflow-y: hidden;
 	padding: 12px;
 
 	.header {
 		line-height: 1;
+		padding-bottom: 6px;
 
 		:global {
 			.btn_action {
@@ -22,7 +24,7 @@
 				.divider {
 					width: 1px;
 					height: 12px;
-					background-color: var(--color_border);
+					background-color: rgba(var(--color_text_rgb), 0.15);
 				}
 
 				.btn_action {
@@ -51,7 +53,9 @@
 					flex: 1;
 
 					.if-tabs-tabpane {
+						overflow-y: scroll;
 						flex: 1;
+						padding-bottom: 30px;
 					}
 				}
 			}

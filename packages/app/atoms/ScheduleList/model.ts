@@ -5,11 +5,12 @@ import { makeAutoObservable } from 'mobx'
 import { match } from 'ts-pattern'
 import { injectable } from 'tsyringe'
 
-import { KVSettingsModel, ModuleSettingsModel } from '@/models'
+import { KVSettingsModel, ModuleSettingsModel, Utils } from '@/models'
 import { getTimeBlocks } from '@/modules/schedule/services'
 import { getCrossTime, getMonthDays } from '@/modules/schedule/utils'
 import { downloadExcel, getDocItemsData } from '@/utils'
 import getEditorText from '@/utils/getEditorText'
+import { setStorageWhenChange } from '@openages/stk/mobx'
 
 import type { MangoQuerySelector } from 'rxdb'
 import type { Schedule, Tray } from '@/types'
@@ -49,10 +50,14 @@ export default class Index {
 		return this.tray_settings?.settings?.schedule?.file_id
 	}
 
-	constructor(public settings: ModuleSettingsModel<Schedule.Setting>) {
+	constructor(
+		public utils: Utils,
+		public settings: ModuleSettingsModel<Schedule.Setting>
+	) {
 		makeAutoObservable(
 			this,
 			{
+				utils: false,
 				settings: false,
 				tray_settings: false,
 				id: false,
@@ -66,6 +71,10 @@ export default class Index {
 
 	async init(args: Pick<IPropsList, 'id' | 'use_by_tray' | 'setToggleCalendarHandler'>) {
 		const { id, use_by_tray, setToggleCalendarHandler } = args
+
+		this.utils.acts.push(
+			setStorageWhenChange([{ [`ScheduleList_visible_calendar`]: 'visible_calendar' }], this)
+		)
 
 		this.id = id
 
@@ -256,6 +265,7 @@ export default class Index {
 	}
 
 	off() {
+		this.utils.off()
 		this.settings.off()
 	}
 }

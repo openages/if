@@ -2,68 +2,45 @@ import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
 import { check, queryItem, recycle } from '@/modules/todo/services'
-import { getDocItem } from '@/utils'
-import { arrayMove } from '@dnd-kit/sortable'
+import { getDocItem, getDocItemsData } from '@/utils'
+import { deepEqual } from '@openages/stk/react'
 
-import { getTodoItems, updateTodoItem } from './services'
+import { getTodoItems, removeTodoItem, updateTodoItem } from './services'
 
 import type { Todo } from '@/types'
 import type { Subscription } from 'rxjs'
 import type { RxDocument } from 'rxdb'
-import type { DragEndEvent } from '@dnd-kit/core'
 import type { IProps } from './index'
 
 @injectable()
 export default class Index {
-	ids = [] as Array<string>
-	mode = 'view' as IProps['mode']
+	file_id = ''
+	angle_id = ''
 	items = [] as Array<Todo.Todo>
-	active_item = null as unknown as Todo.Todo
 
 	watcher = null as unknown as Subscription
 
-	onChange = null as unknown as (ids: Array<string>) => void
-
 	constructor() {
-		makeAutoObservable(this, { ids: false, mode: false, watcher: false, onChange: false }, { autoBind: true })
+		makeAutoObservable(this, { file_id: false, angle_id: false, watcher: false }, { autoBind: true })
 	}
 
-	init(args: Pick<IProps, 'ids' | 'mode' | 'onChange'>) {
-		const { ids, mode, onChange } = args
+	init(args: Pick<IProps, 'file_id' | 'angle_id'>) {
+		const { file_id, angle_id } = args
 
-		this.ids = ids
-		this.mode = mode
-
-		this.onChange = onChange!
+		this.file_id = file_id
+		this.angle_id = angle_id
 
 		this.watchItems()
 	}
 
-	remove(index: number) {
-		const target = $copy(this.items)
+	async remove(index: number) {
+		const items = $copy(this.items)
 
-		target.splice(index, 1)
+		const [item] = items.splice(index, 1)
 
-		this.items = target
+		this.items = items
 
-		this.onChange(target.map(item => item.id))
-	}
-
-	onDragEnd({ active, over }: DragEndEvent) {
-		this.active_item = null as unknown as Todo.Todo
-
-		if (!over?.id) return
-		if (active.id === over.id) return
-
-		const target = arrayMove(
-			this.items,
-			active.data.current!.index as number,
-			over.data.current!.index as number
-		)
-
-		this.items = target
-
-		this.onChange(target.map(item => item.id))
+		await removeTodoItem(item.id)
 	}
 
 	async check(index: number) {
@@ -86,7 +63,6 @@ export default class Index {
 		this.items[index] = { ...this.items[index], status }
 
 		const settings_string = (await $db.module_setting.findOne(file_id).exec())!
-		const file = (await $db.dirtree_items.findOne(file_id).exec())!
 
 		const todo_setting = getDocItem(settings_string)!
 		const target_setting = JSON.parse(todo_setting.setting)
@@ -113,23 +89,13 @@ export default class Index {
 		}
 	}
 
-	checkExsit(keys: Array<string>) {
-		this.ids.forEach((item, index) => {
-			if (!keys.includes(item)) {
-				this.ids[index] = null as unknown as string
-			}
-		})
-
-		this.ids = this.ids.filter(item => item)
-
-		this.onChange($copy(this.ids))
-	}
-
 	watchItems() {
-		this.watcher = getTodoItems(this.ids).$.subscribe(doc => {
-			if (!this.mode) this.checkExsit(Array.from(doc.keys()))
+		this.watcher = getTodoItems(this.file_id, this.angle_id).$.subscribe(docs => {
+			const items = getDocItemsData(docs)
 
-			this.items = this.ids.map(id => getDocItem(doc.get(id)!)) as Array<Todo.Todo>
+			if (deepEqual(items, $copy(this.items))) return
+
+			this.items = items
 		})
 	}
 

@@ -5,15 +5,16 @@ import type { ReactNode } from 'react'
 interface IProps {
 	children: ReactNode
 	visible: boolean
+	initial?: boolean
 	className?: HTMLDivElement['className']
 	height?: boolean
 }
 
 const Index = (props: IProps) => {
-	const { children, visible, className, height } = props
+	const { children, visible, initial, className, height } = props
 
 	return (
-		<AnimatePresence initial={false}>
+		<AnimatePresence initial={initial}>
 			{visible && (
 				<motion.div
 					className={$cx(className)}
