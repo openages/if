@@ -7,6 +7,8 @@ import styles from './index.css'
 import Item from './Item'
 import Model from './model'
 
+import type { Todo } from '@/types'
+
 export interface IProps {
 	file_id: string
 	angle_id: string
@@ -25,22 +27,30 @@ const Index = (props: IProps) => {
 
 	const updateTodoItem = useMemoizedFn(x.updateTodoItem)
 	const changeStatus = useMemoizedFn(x.changeStatus)
-	const check = useMemoizedFn(x.check)
 	const remove = useMemoizedFn(x.remove)
 
 	return (
 		<div className={$cx('w_100 border_box flex flex_column', styles._local)}>
-			{items.map((item, index) => (
-				<Item
-					item={item}
-					index={index}
-					updateTodoItem={updateTodoItem}
-					changeStatus={changeStatus}
-					check={check}
-					remove={remove}
-					key={item.id}
-				></Item>
-			))}
+			{items.map((item, index) => {
+				if (item.type === 'group') {
+					return (
+						<span className={$cx('group_title', index === 0 && 'first')} key={item.id}>
+							{item.text}
+						</span>
+					)
+				}
+
+				return (
+					<Item
+						item={item as Todo.Todo}
+						index={index}
+						updateTodoItem={updateTodoItem}
+						changeStatus={changeStatus}
+						remove={remove}
+						key={item.id}
+					></Item>
+				)
+			})}
 		</div>
 	)
 }

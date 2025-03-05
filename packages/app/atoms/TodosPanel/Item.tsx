@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useText, useTextChange, Text } from '@/Editor'
-import { CheckCircle, Circle, ListMagnifyingGlass, Trash } from '@phosphor-icons/react'
+import { CheckCircle, Circle, Trash } from '@phosphor-icons/react'
 
 import ChildrenItem from './ChildrenItem'
 import styles from './index.css'
@@ -19,12 +19,11 @@ interface IProps {
 	index: number
 	updateTodoItem: Model['updateTodoItem']
 	changeStatus: Model['changeStatus']
-	check: Model['check']
 	remove: Model['remove']
 }
 
 const Index = (props: IProps) => {
-	const { item, index, updateTodoItem, changeStatus, check, remove } = props
+	const { item, index, updateTodoItem, changeStatus, remove } = props
 	const { id, text, status, children } = item
 	const { t, i18n } = useTranslation()
 	const [open, setOpen] = useState(false)
@@ -46,15 +45,6 @@ const Index = (props: IProps) => {
 	const context_menu_items = useMemo(
 		() =>
 			[
-				{
-					key: 'check',
-					label: (
-						<div className='menu_item_wrap flex align_center'>
-							<ListMagnifyingGlass size={14}></ListMagnifyingGlass>
-							<span className='text ml_6'>{t('common.check')}</span>
-						</div>
-					)
-				},
 				{
 					key: 'remove',
 					label: (
@@ -86,9 +76,6 @@ const Index = (props: IProps) => {
 
 	const onContextMenu = useMemoizedFn(({ key }) => {
 		switch (key) {
-			case 'check':
-				check(index)
-				break
 			case 'remove':
 				remove(index)
 				break

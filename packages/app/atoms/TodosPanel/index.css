@@ -1,5 +1,21 @@
 ._local {
-	padding: 6px 3px;
+	padding: 6px 2px;
+
+	:global {
+		.group_title {
+			min-height: unset;
+			line-height: 1;
+			padding-top: 18px;
+			padding-bottom: 6px;
+			outline: none;
+			color: var(--color_text_grey);
+			font-size: 12px;
+
+			&.first {
+				padding-top: 0;
+			}
+		}
+	}
 }
 
 .empty {
@@ -7,7 +23,7 @@
 }
 
 .Item {
-	font-size: 14px;
+	font-size: 13px;
 
 	&.done {
 		:global {
@@ -38,7 +54,7 @@
 			margin-right: 6px;
 			border-radius: 50%;
 			color: var(--color_text_sub);
-			transform: translateY(6px);
+			transform: translateY(4.5px);
 			font-size: 16px;
 
 			&:hover {
@@ -49,7 +65,7 @@
 		.todo_text {
 			width: calc(100% - (18px + 6px));
 			line-height: 18px;
-			padding: 6px 0;
+			padding: 4.5px 0;
 			user-select: none;
 
 			&.has_children {
@@ -65,7 +81,7 @@
 					padding: 0 3px;
 					border: var(--border);
 					border-radius: 8px;
-					background-color: var(--color_bg_1);
+					background-color: rgba(var(--color_text_rgb), 0.03);
 					content: attr(data-children);
 					vertical-align: 1px;
 					font-size: 10px;

@@ -33,10 +33,10 @@ const Index = (props: IProps) => {
 			>
 				<Choose>
 					<When condition={status === 'unchecked'}>
-						<Square size={16} />
+						<Square size={14} />
 					</When>
 					<When condition={status === 'checked'}>
-						<CheckSquare size={16} />
+						<CheckSquare size={14} />
 					</When>
 				</Choose>
 			</div>

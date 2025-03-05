@@ -16,7 +16,7 @@ import type { IProps } from './index'
 export default class Index {
 	file_id = ''
 	angle_id = ''
-	items = [] as Array<Todo.Todo>
+	items = [] as Array<Todo.TodoItem>
 
 	watcher = null as unknown as Subscription
 
@@ -43,16 +43,8 @@ export default class Index {
 		await removeTodoItem(item.id)
 	}
 
-	async check(index: number) {
-		const { id, file_id } = this.items[index]
-
-		const file = (await $db.dirtree_items.findOne(file_id).exec())!
-
-		await $app.Event.emit('global.app.check', { id, file: getDocItem(file) })
-	}
-
 	async updateTodoItem(index: number, id: string, v: Partial<Todo.Todo>) {
-		this.items[index] = { ...this.items[index], ...v }
+		this.items[index] = { ...this.items[index], ...v } as Todo.Todo
 
 		await updateTodoItem(id, v)
 	}
@@ -60,7 +52,7 @@ export default class Index {
 	async changeStatus(index: number, id: string, status: Todo.Todo['status']) {
 		const { file_id } = this.items[index]
 
-		this.items[index] = { ...this.items[index], status }
+		this.items[index] = { ...this.items[index], status } as Todo.Todo
 
 		const settings_string = (await $db.module_setting.findOne(file_id).exec())!
 

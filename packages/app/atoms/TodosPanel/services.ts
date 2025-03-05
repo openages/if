@@ -8,8 +8,8 @@ export const updateTodoItem = async (id: string, v: Partial<Todo.Todo>) => {
 
 export const getTodoItems = (file_id: string, angle_id: string) => {
 	return $db.todo_items
-		.find({ selector: { type: 'todo', file_id, angle_id } as Todo.Todo })
-		.sort({ sort: 'asc', create_at: 'asc' }) as RxDB.ItemsQuery<Todo.Todo>
+		.find({ selector: { file_id, angle_id } as Todo.TodoItem })
+		.sort({ sort: 'asc', create_at: 'asc' }) as RxDB.ItemsQuery<Todo.TodoItem>
 }
 
 export const removeTodoItem = async (id: string) => {
