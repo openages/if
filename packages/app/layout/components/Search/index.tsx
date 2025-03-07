@@ -3,7 +3,7 @@ import { debounce } from 'lodash-es'
 import { useEffect, useRef, useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { LazyElement, Modal, SimpleEmpty } from '@/components'
+import { LazyElement, Modal, ModuleIcon, SimpleEmpty } from '@/components'
 import { ArrowBendDownLeft, ArrowDown, ArrowUp, MagnifyingGlass, Trash, X } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -120,17 +120,6 @@ const Index = (props: IPropsSearch) => {
 			onCancel={onClose}
 		>
 			<div className='flex flex_column'>
-				<div className='apps_wrap flex'>
-					{apps.map(item => (
-						<span
-							className={$cx('app_item clickable', module === item && 'active')}
-							onClick={() => setModule(item)}
-							key={item}
-						>
-							{t(`modules.${item}`)}
-						</span>
-					))}
-				</div>
 				<div className='input_wrap w_100 relative flex align_center'>
 					<MagnifyingGlass
 						className={$cx('icon_search absolute transition_normal', focusing && 'focusing')}
@@ -153,6 +142,21 @@ const Index = (props: IPropsSearch) => {
 							<X size={15}></X>
 						</div>
 					)}
+				</div>
+				<div className='apps_wrap flex'>
+					{apps.map(item => (
+						<div
+							className={$cx(
+								'app_item flex align_center clickable',
+								module === item && 'active'
+							)}
+							onClick={() => setModule(item)}
+							key={item}
+						>
+							<ModuleIcon className='mr_2' type={item}></ModuleIcon>
+							{t(`modules.${item}`)}
+						</div>
+					))}
 				</div>
 				<div className='search_items_wrap w_100 border_box flex flex_column'>
 					{items.length > 0 ? (

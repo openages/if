@@ -1,4 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
+import { omit } from 'lodash-es'
+
+import { id as genId } from '@/utils'
 
 import type { Todo } from '@/types'
 import type { IPropsTodoItem } from '../types'
@@ -74,6 +77,17 @@ export default (args: HookArgs) => {
 					break
 				case 'insert':
 					insert({ index, dimension_id })
+					break
+				case 'clone':
+					insert({
+						index,
+						dimension_id,
+						data: {
+							...omit(item, ['id', 'create_at', 'done_time']),
+							id: genId(),
+							status: 'unchecked'
+						} as Todo.Todo
+					})
 					break
 				case 'insert_children':
 					insertChildren()

@@ -6,6 +6,7 @@ import {
 	ArrowsOutCardinal,
 	CellSignalHigh,
 	Check,
+	Dna,
 	Notepad,
 	Plus,
 	Tag,
@@ -109,6 +110,15 @@ export default (args: HookArgs) => {
 							</div>
 						)
 					}))
+				},
+				{
+					key: 'clone',
+					label: (
+						<div className='menu_item_wrap flex align_center'>
+							<Dna size={16}></Dna>
+							<span className='text ml_6'>{t('common.clone')}</span>
+						</div>
+					)
 				},
 				{
 					key: 'insert_children',

@@ -604,9 +604,9 @@ export default class Index {
 		if (this.is_filtered) return
 
 		const { index, dimension_id, data, callback } = args
-		const setting = data ?? (getTodo() as Todo.TodoItem)
+		const fields = data ?? (getTodo() as Todo.TodoItem)
 
-		const item = await this.create(setting, { quick: true, dimension_id })
+		const item = await this.create(fields, { quick: true, dimension_id })
 
 		const { items } = this.getItem({ index, dimension_id })
 
