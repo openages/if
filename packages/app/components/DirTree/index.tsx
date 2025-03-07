@@ -27,7 +27,7 @@ const Index = (props: IProps) => {
 		x.init({ module, actions })
 
 		return () => x.off()
-	}, [module])
+	}, [module, actions])
 
 	const setModalOpen = useMemoizedFn(async (v: Model['modal_open'], type?: Model['modal_type']) => {
 		x.focusing_index = []

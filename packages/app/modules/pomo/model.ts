@@ -306,7 +306,7 @@ export default class Index {
 	}
 
 	stopRecord() {
-		ipc.app.updateTray.query()
+		if (is_electron) ipc.app.updateTray.query()
 
 		this.tray = null
 
