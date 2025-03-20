@@ -18,7 +18,14 @@
 	font-size: 15px;
 
 	&.serif {
-		font-family: 'SourceSerif4', Georgia, ui-serif, serif;
+		font-family:
+			'SourceSerif4',
+			Georgia,
+			ui-serif,
+			serif,
+			'宋体',
+			SimSun,
+			Songti SC;
 
 		:global {
 			.__editor_heading {

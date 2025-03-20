@@ -1,4 +1,4 @@
-import { LexicalEditor } from 'lexical'
+import type { LexicalEditor } from 'lexical'
 
 export interface IPropsDataLoader {
 	collection: 'note_items'

@@ -1,5 +1,5 @@
 import { useMemoizedFn } from 'ahooks'
-import { useInsertionEffect, useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 
 import { useStackId } from '@/hooks'
 import { deepEqual } from '@openages/stk/react'
@@ -26,7 +26,7 @@ export default (args: Args) => {
 		ref_dom.current = v
 	})
 
-	useInsertionEffect(() => {
+	useLayoutEffect(() => {
 		if (deepEqual(ref_deps.current, deps)) return
 
 		ref_deps.current = deps

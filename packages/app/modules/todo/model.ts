@@ -377,7 +377,7 @@ export default class Index {
 	async create(item: Todo.TodoItem, options?: { quick?: boolean; dimension_id?: string; top?: boolean }) {
 		const data = {} as Todo.TodoItem
 
-		if (this.mode === 'kanban') {
+		if (this.mode === 'kanban' || this.mode === 'flat' || this.mode === 'mindmap') {
 			data['angle_id'] = options?.dimension_id!
 		} else if (this.mode === 'quad') {
 			data['angle_id'] = this.current_angle_id || this.visible_angles[0].id

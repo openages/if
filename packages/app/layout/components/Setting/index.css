@@ -91,6 +91,16 @@
 					.icon_module {
 						font-size: 15px;
 					}
+
+					.new_version {
+						right: 6px;
+						height: 14px;
+						padding: 0 4px;
+						border-radius: 8px;
+						color: white;
+						background-color: var(--color_danger);
+						font-size: 9px;
+					}
 				}
 			}
 		}

@@ -39,8 +39,7 @@ const Index = (props: IPropsText) => {
 
 	const props_rich_text = {
 		contentEditable: <ContentEditable />,
-		ErrorBoundary: LexicalErrorBoundary,
-		options: { text_mode: !linebreak, getNodesFromText }
+		ErrorBoundary: LexicalErrorBoundary
 	} as any
 
 	if (placeholder) {
@@ -57,6 +56,7 @@ const Index = (props: IPropsText) => {
 		>
 			<LexicalComposer
 				initialConfig={{
+					refs: { id: id!, text_mode: !linebreak, getNodesFromText },
 					namespace: 'editor',
 					nodes: text_nodes,
 					theme: token,
@@ -64,7 +64,7 @@ const Index = (props: IPropsText) => {
 					onError
 				}}
 			>
-				<RichTextPlugin {...props_rich_text} />
+				<RichTextPlugin contentEditable={<ContentEditable />} ErrorBoundary={LexicalErrorBoundary} />
 				<HistoryPlugin />
 				<LinkPlugin />
 				<ListPlugin />

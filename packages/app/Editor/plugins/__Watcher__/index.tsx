@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react'
+import { useInsertionEffect, useState } from 'react'
 import { container } from 'tsyringe'
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
@@ -9,7 +9,7 @@ const Index = () => {
 	const [x] = useState(() => container.resolve(Model))
 	const [editor] = useLexicalComposerContext()
 
-	useLayoutEffect(() => {
+	useInsertionEffect(() => {
 		x.init(editor)
 
 		return () => x.off()

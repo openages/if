@@ -46,16 +46,23 @@ import { onError } from './utils'
 import type { IPropsNote } from './types'
 
 const Index = (props: IPropsNote) => {
-	const { collection, setEditor } = props
+	const { id, collection, setEditor } = props
 
 	return (
 		<div className={$cx('__editor_container w_100 relative', ...note_style)}>
-			<LexicalComposer initialConfig={{ namespace: 'editor', nodes: note_nodes, theme: token, onError }}>
+			<LexicalComposer
+				initialConfig={{
+					refs: { id, getNodesFromText },
+					namespace: 'editor',
+					nodes: note_nodes,
+					theme: token,
+					onError
+				}}
+			>
 				<RichTextPlugin
 					contentEditable={<ContentEditable />}
 					placeholder={<Placeholder />}
 					ErrorBoundary={LexicalErrorBoundary}
-					options={{ getNodesFromText }}
 				/>
 				<HistoryPlugin />
 				<AutoFocusPlugin />

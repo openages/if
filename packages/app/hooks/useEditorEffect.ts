@@ -1,21 +1,21 @@
 import { useMemoizedFn } from 'ahooks'
-import { useInsertionEffect, useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 
 import { useStackId } from '@/hooks'
 import { deepEqual } from '@openages/stk/react'
 
 import type { DependencyList } from 'react'
+import type { LexicalEditor } from 'lexical'
 
 interface Args {
-	mounted: (args: {
-		setDom: (v: HTMLDivElement) => void
-	}) => void
+	mounted: () => void
 	unmounted?: () => void
+	editor: LexicalEditor
 	deps: DependencyList
 }
 
 export default (args: Args) => {
-	const { mounted, unmounted, deps } = args
+	const { mounted, unmounted, editor, deps } = args
 	const ref_dom = useRef<HTMLDivElement | null>(null)
 	const ref_deps = useRef<DependencyList>()
 	const id = useStackId()
@@ -26,12 +26,13 @@ export default (args: Args) => {
 		ref_dom.current = v
 	})
 
-	useInsertionEffect(() => {
+	useLayoutEffect(() => {
 		if (deepEqual(ref_deps.current, deps)) return
 
 		ref_deps.current = deps
 
-		mounted({ setDom })
+		setDom(editor.getRootElement() as HTMLDivElement)
+		mounted()
 	}, deps)
 
 	useLayoutEffect(() => {
@@ -58,6 +59,4 @@ export default (args: Args) => {
 			}, 0)
 		}
 	}, [id])
-
-	return { setDom }
 }

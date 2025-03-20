@@ -5,9 +5,9 @@ import { useEffect, useInsertionEffect, useMemo, useState, Fragment, ReactElemen
 import { useTranslation } from 'react-i18next'
 import { container } from 'tsyringe'
 
-import { version_name } from '@/appdata'
 import { Modal, ModuleIcon, Wave } from '@/components'
 import { useSize } from '@/hooks'
+import { version } from '@/package.json'
 import { Infinity, List } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -16,11 +16,14 @@ import { getModuleItems, getSettingItems, UserTypeIcon } from './options'
 
 import type { IPropsSetting } from '@/layout/types'
 import type { App } from '@/types'
+import type { HasUpdate } from '@/models/app'
 
 const Index = (props: IPropsSetting) => {
 	const { visible, onClose } = props
 	const [x] = useState(() => container.resolve(Model))
 	const auth = x.global.auth
+	const update_status = x.global.app.update_status
+
 	const { t } = useTranslation()
 	const body_width = useSize(() => document.body, 'width') as number
 
@@ -52,7 +55,7 @@ const Index = (props: IPropsSetting) => {
 						<Wave key={key}>
 							<Button
 								className={$cx(
-									'menu_item border_box flex justify_start align_center',
+									'menu_item border_box flex justify_start align_center relative',
 									x.active === key && 'active'
 								)}
 								onMouseDown={() => {
@@ -62,6 +65,15 @@ const Index = (props: IPropsSetting) => {
 							>
 								<Icon className='icon_module' size={15} strokeWidth={1.5}></Icon>
 								<span className='menu_name'>{label}</span>
+								<If
+									condition={
+										key === 'global' && update_status?.type === 'has_update'
+									}
+								>
+									<span className='new_version flex align_center absolute'>
+										New : {(update_status as HasUpdate).version}
+									</span>
+								</If>
 							</Button>
 						</Wave>
 					))}
@@ -92,7 +104,7 @@ const Index = (props: IPropsSetting) => {
 			<div className='user_padding_wrap w_100 border_box'>
 				<div className='user_wrap h_100 border_box flex align_center relative' onClick={goBilling}>
 					<span className='badge flex justify_center align_center absolute top_0 right_0'>
-						{version_name}
+						{version}
 					</span>
 					<span className='icon_wrap flex justify_center align_center'>
 						<Choose>
