@@ -99,8 +99,7 @@ const Index = ({ id }: IProps) => {
 		scale: x.scale,
 		days,
 		show_time_scale: x.show_time_scale,
-		scrollToScanline,
-		jump
+		scrollToScanline
 	}
 
 	const props_calendar_view: IPropsCalendarView = {

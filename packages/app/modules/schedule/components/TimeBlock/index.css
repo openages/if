@@ -78,11 +78,35 @@
 		background-color: var(--color_bg);
 	}
 
-	&.xsmall {
+	&.xxsmall {
 		:global {
 			.btn_detail {
 				top: 0.5px;
-				right: 0;
+				right: -2.5px;
+				height: 90%;
+				aspect-ratio: 1;
+
+				svg {
+					width: 9px;
+					height: 9px;
+				}
+			}
+
+			.timeblock_content_wrap {
+				border: none !important;
+
+				.text_wrap {
+					display: none;
+				}
+			}
+		}
+	}
+
+	&.xsmall {
+		:global {
+			.btn_detail {
+				top: 1px;
+				right: 1px;
 				width: 12px;
 				height: 12px;
 				border: none;
@@ -91,7 +115,7 @@
 			}
 
 			.timeblock_content_wrap {
-				border-radius: var(--radius_small_1);
+				border-radius: var(--radius_small);
 
 				.text_wrap {
 					height: 12px;
@@ -107,12 +131,10 @@
 	&.small {
 		:global {
 			.timeblock_content_wrap {
-				padding: 2px;
-				border-radius: var(--radius_small_1);
+				padding: 1px 2px;
+				border-radius: var(--radius_small);
 
 				.text_wrap {
-					height: 12px;
-					line-height: 12px;
 					padding: 0 2px;
 				}
 			}
@@ -122,11 +144,10 @@
 	&.middle {
 		:global {
 			.timeblock_content_wrap {
-				padding: 2px;
+				padding: 1px 3px;
 				border-radius: var(--radius_small);
 
 				.text_wrap {
-					height: 12px;
 					padding: 0;
 					white-space: nowrap;
 				}
@@ -141,7 +162,7 @@
 	&.large {
 		:global {
 			.timeblock_content_wrap {
-				padding: 6px;
+				padding: 4.5px 6px;
 
 				.text_wrap {
 					line-height: 16px;
@@ -155,7 +176,7 @@
 	&.xlarge {
 		:global {
 			.timeblock_content_wrap {
-				padding: 6px;
+				padding: 4.5px 6px;
 
 				.text_wrap {
 					line-height: 16px;

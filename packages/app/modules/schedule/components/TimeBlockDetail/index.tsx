@@ -157,17 +157,19 @@ const Index = (props: IPropsTimeBlockDetail) => {
 					)}
 				></Select>
 			</Item>
-			<Item label={t('schedule.TimeBlockDetail.time')} name='time'>
-				<InputNumber
-					className='w_100'
-					step={5}
-					min={20 as number}
-					keyboard={false}
-					formatter={_ => cross_time}
-					parser={v => getTimeTextValue(v!)}
-					controls={{ upIcon: <Plus></Plus>, downIcon: <Minus></Minus> }}
-				></InputNumber>
-			</Item>
+			<If condition={item.type !== 'timeline'}>
+				<Item label={t('schedule.TimeBlockDetail.time')} name='time'>
+					<InputNumber
+						className='w_100'
+						step={5}
+						min={10 as number}
+						keyboard={false}
+						formatter={_ => cross_time}
+						parser={v => getTimeTextValue(v!)}
+						controls={{ upIcon: <Plus></Plus>, downIcon: <Minus></Minus> }}
+					></InputNumber>
+				</Item>
+			</If>
 			<Item label={t('schedule.TimeBlockDetail.remark')} name='remark' noStyle>
 				<TextEditor
 					className='text_wrap remark border_box'

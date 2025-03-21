@@ -122,17 +122,105 @@ export function $convertFromMarkdownString(
 	return importMarkdown(markdown, node)
 }
 
+export function $convertFromPasteString(markdown: string, transformers: Array<Transformer>) {
+	const byType = transformersByType(transformers)
+	const textFormatTransformersIndex = createTextFormatTransformersIndex(byType.textFormat)
+	const lines = markdown.split('\n')
+	const linesLength = lines.length
+	const nodes = [] as Array<LexicalNode>
+
+	for (let i = 0; i < linesLength; i++) {
+		const lineText = lines[i]
+
+		const [code_node, code_index] = $importCodeBlock(lines, i)
+
+		if (code_node) {
+			nodes.push(code_node)
+
+			i = code_index
+
+			continue
+		}
+
+		const [mermaid_node, mermaid_index] = $importMermaidBlock(lines, i)
+
+		if (mermaid_node) {
+			nodes.push(mermaid_node)
+
+			i = mermaid_index
+
+			continue
+		}
+
+		const [quote_text, quote_index] = $importQuoteBlock(lines, i)
+
+		if (quote_text) {
+			i = quote_index
+
+			const element = $importBlocks(
+				quote_text,
+				undefined,
+				byType.element,
+				textFormatTransformersIndex,
+				byType.textMatch
+			)
+
+			nodes.push(element)
+
+			continue
+		}
+
+		const [toggle_text, toggle_index] = $importToggleBlock(lines, i)
+
+		if (toggle_text) {
+			i = toggle_index
+
+			const element = $importBlocks(
+				toggle_text,
+				undefined,
+				byType.element,
+				textFormatTransformersIndex,
+				byType.textMatch
+			)
+
+			nodes.push(element)
+
+			continue
+		}
+
+		const element = $importBlocks(
+			lineText,
+			undefined,
+			byType.element,
+			textFormatTransformersIndex,
+			byType.textMatch
+		)
+
+		nodes.push(element)
+	}
+
+	for (const node of nodes) {
+		if ($isEmptyParagraph(node)) {
+			node.remove()
+		}
+	}
+
+	return nodes
+}
+
 function $importBlocks(
 	lineText: string,
-	rootNode: ElementNode,
+	rootNode: ElementNode | undefined,
 	elementTransformers: Array<ElementTransformer>,
 	textFormatTransformersIndex: TextFormatTransformersIndex,
 	textMatchTransformers: Array<TextMatchTransformer>
 ) {
 	const textNode = $createTextNode(lineText)
 	const elementNode = $createParagraphNode()
+
 	elementNode.append(textNode)
-	rootNode.append(elementNode)
+
+	if (rootNode) rootNode.append(elementNode)
 
 	for (const { regExp, replace } of elementTransformers) {
 		const match = lineText.match(regExp)
@@ -172,12 +260,14 @@ function $importBlocks(
 			}
 		}
 	}
+
+	return elementNode
 }
 
 function $importCodeBlock(
 	lines: Array<string>,
 	startLineIndex: number,
-	rootNode: ElementNode
+	rootNode?: ElementNode
 ): [LexicalNode | null, number] {
 	const openMatch = lines[startLineIndex].match(CODE_BLOCK_REG_EXP)
 
@@ -193,7 +283,7 @@ function $importCodeBlock(
 
 				codeBlockNode.appendTextToTokens(lines.slice(startLineIndex + 1, endLineIndex).join('\n'))
 
-				rootNode.append(codeBlockNode)
+				if (rootNode) rootNode.append(codeBlockNode)
 
 				return [codeBlockNode, endLineIndex]
 			}
@@ -206,7 +296,7 @@ function $importCodeBlock(
 function $importMermaidBlock(
 	lines: Array<string>,
 	startLineIndex: number,
-	rootNode: ElementNode
+	rootNode?: ElementNode
 ): [LexicalNode | null, number] {
 	const openMatch = lines[startLineIndex].match(MERMAID_BLOCK_REG_EXP)
 
@@ -222,7 +312,7 @@ function $importMermaidBlock(
 					value: lines.slice(startLineIndex + 1, endLineIndex).join('\n')
 				})
 
-				rootNode.append(mermaid_node)
+				if (rootNode) rootNode.append(mermaid_node)
 
 				return [mermaid_node, endLineIndex]
 			}

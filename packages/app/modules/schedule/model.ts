@@ -30,6 +30,7 @@ import {
 	getStartByX,
 	getStartByY,
 	getStartEnd,
+	getTimelineMonthDays,
 	getTimelineRows,
 	getWeekdays,
 	getYearDays
@@ -159,7 +160,11 @@ export default class Index {
 	}
 
 	step(type: 'prev' | 'next') {
-		this.current = this.current[type === 'prev' ? 'subtract' : 'add'](1, this.scale)
+		if (this.view === 'timeline') {
+			this.current = this.current[type === 'prev' ? 'subtract' : 'add'](1, 'day')
+		} else {
+			this.current = this.current[type === 'prev' ? 'subtract' : 'add'](1, this.scale)
+		}
 
 		this.getDays()
 	}
@@ -172,7 +177,9 @@ export default class Index {
 				getDayDetails(this.current.add(1, 'day'))
 			])
 			.with('week', () => getWeekdays(this.current))
-			.with('month', () => getMonthDays(this.current, this.view === 'fixed' || this.view === 'timeline'))
+			.with('month', () =>
+				this.view === 'timeline' ? getTimelineMonthDays(this.current) : getMonthDays(this.current)
+			)
 			.with('year', () => getYearDays(this.current))
 			.otherwise(() => null) as unknown as Index['days']
 
@@ -471,7 +478,7 @@ export default class Index {
 				item.id
 			)
 
-			if (!target_length) return
+			if (!target_length || target_length < 0) return
 
 			item.length = target_length
 			item.end_time = dayjs(item.start_time)

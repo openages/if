@@ -1,5 +1,6 @@
-import { useLayoutEffect, useState } from 'react'
+import { useState } from 'react'
 
+import { useEditorEffect } from '@/hooks'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 
 import Model from './model'
@@ -11,13 +12,16 @@ const Index = (props: IPropsTextLoader) => {
 	const [x] = useState(() => new Model())
 	const [editor] = useLexicalComposerContext()
 
-	useLayoutEffect(() => {
-		setEditor(editor)
+	useEditorEffect({
+		mounted: () => {
+			setEditor(editor)
 
-		x.init(editor, max_length!, linebreak!, onChange, onKeyDown, onFocus)
-
-		return () => x.off()
-	}, [editor, max_length, linebreak, onChange, setEditor, onKeyDown, onFocus])
+			x.init(editor, max_length!, linebreak!, onChange, onKeyDown, onFocus)
+		},
+		unmounted: () => x.off(),
+		editor,
+		deps: [editor, max_length, linebreak, onChange, setEditor, onKeyDown, onFocus]
+	})
 
 	return null
 }

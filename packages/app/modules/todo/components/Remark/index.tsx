@@ -18,7 +18,7 @@ const Index = (props: IPropsDetailRemark) => {
 			<Text
 				className='textarea w_100 border_box'
 				placeholder_classname='textarea_placeholder'
-				max_length={1500}
+				max_length={6000}
 				linebreak
 				placeholder={t('todo.Detail.remark.placeholder')}
 				onChange={onChange}

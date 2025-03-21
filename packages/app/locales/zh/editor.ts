@@ -1,6 +1,7 @@
 export default {
 	placeholder: `写点什么，按'/'选择块`,
 	insert: '插入',
+	over_limit: '字数超出限制',
 	name: {
 		Image: '图片',
 		Emoji: '表情',

@@ -1,5 +1,6 @@
 import { useMemoizedFn } from 'ahooks'
 import { Button, ConfigProvider, Drawer, Tabs } from 'antd'
+import { RefreshCw } from 'lucide-react'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useInsertionEffect, useMemo, useState, Fragment, ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,7 +9,7 @@ import { container } from 'tsyringe'
 import { Modal, ModuleIcon, Wave } from '@/components'
 import { useSize } from '@/hooks'
 import { version } from '@/package.json'
-import { Infinity, List } from '@phosphor-icons/react'
+import { ArrowsClockwise, BoxArrowUp, Infinity, List } from '@phosphor-icons/react'
 
 import styles from './index.css'
 import Model from './model'
@@ -70,9 +71,14 @@ const Index = (props: IPropsSetting) => {
 										key === 'global' && update_status?.type === 'has_update'
 									}
 								>
-									<span className='new_version flex align_center absolute'>
-										New : {(update_status as HasUpdate).version}
-									</span>
+									<div className='new_version flex align_center absolute'>
+										<RefreshCw
+											className='icon'
+											size={9}
+											strokeWidth={2.4}
+										></RefreshCw>
+										{(update_status as HasUpdate)?.version}
+									</div>
 								</If>
 							</Button>
 						</Wave>

@@ -30,23 +30,27 @@ const Footer = $app.memo(({ scale, changeCurrent }: IPropsFooter) => {
 })
 
 const Index = (props: IPropsHeaderCenter) => {
-	const { scale, current, step, changeCurrent } = props
+	const { view, scale, current, step, changeCurrent } = props
 	const props_datepicker: DatePickerProps = {}
 
 	const prev = useMemoizedFn(() => step('prev'))
 	const next = useMemoizedFn(() => step('next'))
 	const renderExtraFooter = useMemoizedFn(() => <Footer scale={scale} changeCurrent={changeCurrent} />)
 
-	if (scale === 'week' || scale === 'month') props_datepicker['renderExtraFooter'] = renderExtraFooter
+	if (scale === 'week' || (view != 'timeline' && scale === 'month')) {
+		props_datepicker['renderExtraFooter'] = renderExtraFooter
+	}
 
 	const picker = useMemo(() => {
 		return match(scale!)
 			.with('day', () => ({ value: 'date', offset: -51 }))
 			.with('week', () => ({ value: 'week', offset: -66 }))
-			.with('month', () => ({ value: 'month', offset: -40 }))
+			.with('month', () =>
+				view === 'timeline' ? { value: 'date', offset: -51 } : { value: 'month', offset: -40 }
+			)
 			.with('year', () => ({ value: 'year', offset: -40 }))
 			.exhaustive()
-	}, [scale])
+	}, [view, scale])
 
 	return (
 		<div className={$cx('flex absolute', styles._local)}>

@@ -98,8 +98,12 @@
 						padding: 0 4px;
 						border-radius: 8px;
 						color: white;
-						background-color: var(--color_danger);
+						background-color: rgba(var(--color_danger_rgb), 0.72);
 						font-size: 9px;
+
+						.icon {
+							margin-right: 3px;
+						}
 					}
 				}
 			}

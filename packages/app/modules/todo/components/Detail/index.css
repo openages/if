@@ -231,9 +231,13 @@
 
 		.footer_wrap {
 			bottom: 0;
+			overflow: hidden;
 			height: 30px;
 			padding: 0 9px;
+			border-bottom-right-radius: var(--radius);
+			border-bottom-left-radius: var(--radius);
 			color: var(--color_text_light);
+			background-color: var(--color_bg);
 			font-size: 12px;
 		}
 	}

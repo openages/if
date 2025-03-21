@@ -1,6 +1,18 @@
 import type { Note } from '@/types'
 import type { SerializedEditorState } from 'lexical'
 
+const init_state = {
+	root: {
+		children: [],
+		direction: null,
+		format: '',
+		indent: 0,
+		type: 'root',
+		key: 'root',
+		version: 1
+	}
+} as SerializedEditorState
+
 export default (nodes: Array<Note.Item>, gather: (key: Note.Item['id']) => void) => {
 	let head_id: string | undefined
 	let effect_items = [] as Array<Note.Item>
@@ -41,17 +53,7 @@ export default (nodes: Array<Note.Item>, gather: (key: Note.Item['id']) => void)
 
 	if (!head_id) return null
 
-	const state = {
-		root: {
-			children: [],
-			direction: null,
-			format: '',
-			indent: 0,
-			type: 'root',
-			key: 'root',
-			version: 1
-		}
-	} as SerializedEditorState
+	const state = init_state
 
 	let current_node_id = head_id
 
@@ -60,7 +62,32 @@ export default (nodes: Array<Note.Item>, gather: (key: Note.Item['id']) => void)
 
 		state.root.children.push(JSON.parse(node.content))
 
-		current_node_id = node.next!
+		if (!node.next) break
+
+		if (node_map.get(node.next)) {
+			current_node_id = node.next
+		} else {
+			const broken_next = nodes.find(item => item.prev === node.next)
+
+			if (broken_next) {
+				const target_node = { ...node, next: broken_next.id }
+				const target_next = { ...broken_next, prev: current_node_id }
+
+				node_map.set(current_node_id, target_node)
+				node_map.set(broken_next.id, target_next)
+
+				current_node_id = broken_next.id
+
+				effect_items.push(target_node, target_next)
+			} else {
+				const target = sortLostTree(nodes, node_map)
+
+				current_node_id = target.head_id
+				effect_items = target.nodes
+
+				state.root.children = []
+			}
+		}
 	}
 
 	return { state, effect_items }

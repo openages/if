@@ -1,6 +1,7 @@
 export default {
 	placeholder: `Write something, '/' for commands`,
 	insert: 'Insert',
+	over_limit: 'Over text limit',
 	name: {
 		Image: 'Image',
 		Emoji: 'Emoji',

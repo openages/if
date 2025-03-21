@@ -35,7 +35,7 @@ const Index = () => {
 									</When>
 									<When condition={app.update_status?.type === 'has_update'}>
 										<span className='desc'>
-											{t('setting.Update.has_update')} :{' '}
+											{t('setting.Update.has_update')} :
 											{(app.update_status as HasUpdate).version}
 										</span>
 									</When>

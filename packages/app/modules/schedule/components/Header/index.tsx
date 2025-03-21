@@ -31,6 +31,7 @@ const Index = (props: IPropsHeader) => {
 	}
 
 	const props_center: IPropsHeaderCenter = {
+		view,
 		scale,
 		current,
 		step,

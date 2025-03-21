@@ -33,6 +33,7 @@ export interface IPropsHeaderLeft
 	> {}
 
 export interface IPropsHeaderCenter {
+	view: Model['view']
 	scale: Model['scale']
 	current: Model['current']
 	step: Model['step']
@@ -53,7 +54,6 @@ export interface IPropsDateScale {
 	days: Model['days']
 	show_time_scale: boolean
 	scrollToScanline: () => void
-	jump: Model['jump']
 }
 
 export interface IPropsDayExtra {

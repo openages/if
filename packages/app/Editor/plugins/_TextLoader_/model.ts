@@ -59,6 +59,8 @@ export default class Index {
 			const text = editorState.read(() => $getRoot().getTextContent())
 
 			if (text.length > this.max_length) {
+				$message.error(`${$t('editor.over_limit')}: ${text.length}/${this.max_length}`, 3)
+
 				this.editor.dispatchCommand(UNDO_COMMAND, null as unknown as void)
 			}
 		}

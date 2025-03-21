@@ -37,11 +37,12 @@ export default (args: Args) => {
 		return {
 			class: [
 				'absolute',
-				value <= 20 && styles.xsmall,
+				value <= 15 && styles.xxsmall,
+				value <= 20 && value > 15 && styles.xsmall,
 				value < 45 && value > 20 && styles.small,
 				value >= 45 && value < 60 && styles.middle,
 				value === 60 && styles.large,
-				value > 60 && styles.xlarge,
+				value >= 60 && styles.xlarge,
 				item.past && styles.past
 			],
 			style: {

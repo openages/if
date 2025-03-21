@@ -64,7 +64,7 @@ const Index = (props: IPropsText) => {
 					onError
 				}}
 			>
-				<RichTextPlugin contentEditable={<ContentEditable />} ErrorBoundary={LexicalErrorBoundary} />
+				<RichTextPlugin {...props_rich_text} />
 				<HistoryPlugin />
 				<LinkPlugin />
 				<ListPlugin />

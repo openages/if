@@ -34,10 +34,6 @@
 					position: relative;
 					border-right: none;
 
-					&:hover {
-						background-color: var(--color_bg_2) !important;
-					}
-
 					&::after {
 						position: absolute;
 						right: 0;
