@@ -1,18 +1,6 @@
 import type { Note } from '@/types'
 import type { SerializedEditorState } from 'lexical'
 
-const init_state = {
-	root: {
-		children: [],
-		direction: null,
-		format: '',
-		indent: 0,
-		type: 'root',
-		key: 'root',
-		version: 1
-	}
-} as SerializedEditorState
-
 export default (nodes: Array<Note.Item>, gather: (key: Note.Item['id']) => void) => {
 	let head_id: string | undefined
 	let effect_items = [] as Array<Note.Item>
@@ -53,9 +41,26 @@ export default (nodes: Array<Note.Item>, gather: (key: Note.Item['id']) => void)
 
 	if (!head_id) return null
 
-	const state = init_state
+	const state = {
+		root: {
+			children: [],
+			direction: null,
+			format: '',
+			indent: 0,
+			type: 'root',
+			key: 'root',
+			version: 1
+		}
+	} as SerializedEditorState
 
 	let current_node_id = head_id
+
+	if (!node_map.get(head_id)?.next) {
+		const target = sortLostTree(nodes, node_map)
+
+		current_node_id = target.head_id
+		effect_items = target.nodes
+	}
 
 	while (current_node_id) {
 		const node = node_map.get(current_node_id) as Note.Item
@@ -97,12 +102,14 @@ const sortLostTree = (tree: Array<Note.Item>, node_map: Map<string, Note.Item>) 
 	let head_id = ''
 
 	const nodes = tree.map((item, index) => {
-		head_id = item.id
+		if (index === 0) {
+			head_id = item.id
+			item.prev = undefined
+		}
 
-		item.prev = undefined
 		item.next = undefined
 
-		const next = tree.at(index + 1)
+		const next = tree[index + 1]
 
 		if (next) {
 			item.next = next.id

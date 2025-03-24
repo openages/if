@@ -81,21 +81,6 @@ const Index = () => {
 				</div>
 				<div className='setting_item w_100 border_box flex justify_between align_center'>
 					<div className='title_wrap flex align_center'>
-						<Browser size={24}></Browser>
-						<div className='text_wrap flex flex_column'>
-							<span className='title'>{t('setting.Normal.browser_mode.title')}</span>
-							<span className='desc'>{t('setting.Normal.browser_mode.desc')}</span>
-						</div>
-					</div>
-					<div className='value_wrap flex align_center'>
-						<Switch
-							value={global.setting.browser_mode}
-							onChange={v => (global.setting.browser_mode = v)}
-						></Switch>
-					</div>
-				</div>
-				<div className='setting_item w_100 border_box flex justify_between align_center'>
-					<div className='title_wrap flex align_center'>
 						<TextAa size={24}></TextAa>
 						<div className='text_wrap flex flex_column'>
 							<span className='title'>{t('setting.Normal.show_bar_title.title')}</span>

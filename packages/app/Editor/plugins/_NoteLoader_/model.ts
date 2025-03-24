@@ -426,5 +426,7 @@ export default class Index {
 
 			this.dispatch()
 		}
+
+		this.editor = null as unknown as LexicalEditor
 	}
 }

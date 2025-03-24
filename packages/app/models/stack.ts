@@ -22,14 +22,6 @@ export default class Index {
 
 	watch = {
 		columns: v => {
-			v?.forEach(column => {
-				column.views.forEach(view => {
-					if (view.active) {
-						$stack_offs.delete(view.id)
-					}
-				})
-			})
-
 			if (v!.length) return
 
 			this.focus = { column: -1, view: -1 }
@@ -115,7 +107,9 @@ export default class Index {
 		const { column, view } = position
 		const target_views = this.columns[column].views
 		const target_view = target_views[view]
-		const target_offs = $stack_offs.get(target_view.id)
+		const target_view_id = target_view.id
+
+		this.handleStackOffs(target_view_id)
 
 		if (local.getItem(`${target_view.module}_active_file`).id === target_view.id) {
 			local.setItem(`${target_view.module}_active_file`, {})
@@ -124,8 +118,6 @@ export default class Index {
 		if (target_view.module === 'pomo') {
 			$app.Event.emit(`pomo/${target_view.file.id}/stopRecord`)
 		}
-
-		if (target_offs) target_offs.forEach(item => item())
 
 		target_views.splice(view, 1)
 
@@ -319,12 +311,32 @@ export default class Index {
 		this.columns = $copy(this.columns)
 	}
 
-	private updateColumnsFocus() {
-		this.columns = $copy(this.columns)
-		this.focus = $copy(this.focus)
+	handleStackOffs(id: string) {
+		const target_offs = $stack_offs.get(id)
+
+		if (target_offs) target_offs.forEach(item => item())
 	}
 
-	private getObserver() {
+	removeStackOffs() {
+		if (!this.columns.length) return
+
+		this.columns.forEach(column => {
+			column.views.forEach(view => {
+				if (view.active) {
+					$stack_offs.delete(view.id)
+				}
+			})
+		})
+	}
+
+	updateColumnsFocus() {
+		this.columns = $copy(this.columns)
+		this.focus = $copy(this.focus)
+
+		this.removeStackOffs()
+	}
+
+	getObserver() {
 		this.observer = new ResizeObserver(
 			debounce(elements => {
 				if (!elements.length) return
