@@ -26,7 +26,6 @@ export interface IPropsDirItems {
 	current_item: DirTree.Item
 	focusing_item: Model['focusing_item']
 	open_folder: Model['open_folder']
-	browser_mode: boolean
 	star_ids: Array<string>
 	onClick: (v: DirTree.Item) => void
 	showDirTreeOptions: (e: MouseEvent<HTMLElement>, v: Model['focusing_index']) => void
@@ -41,7 +40,6 @@ export interface IPropsDirItem {
 	open_folder?: Model['open_folder']
 	parent_index?: Array<number>
 	dragging?: boolean
-	browser_mode?: boolean
 	star: boolean
 	onClick: IPropsDirItems['onClick']
 	showDirTreeOptions: IPropsDirItems['showDirTreeOptions']

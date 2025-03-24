@@ -21,7 +21,6 @@ const Index = (props: IPropsDirItem_Dir) => {
 		open_folder,
 		parent_index = [],
 		dragging,
-		browser_mode,
 		star,
 		showDirTreeOptions,
 		onStar
@@ -63,7 +62,6 @@ const Index = (props: IPropsDirItem_Dir) => {
 		parent_index,
 		dragging,
 		open,
-		browser_mode,
 		star,
 		showDirTreeOptions,
 		onClick: useMemoizedFn(() => {

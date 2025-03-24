@@ -185,10 +185,6 @@ export default class Index {
 		} as Stack.View)
 	}
 
-	setCurrentItem(v: DirTree.Item) {
-		this.current_item = v
-	}
-
 	removeCurrentItem() {
 		this.current_item = {} as DirTree.Item
 	}
@@ -223,7 +219,6 @@ export default class Index {
 		$app.Event.on(`${this.module}/dirtree/insert`, this.insert)
 		$app.Event.on(`${this.module}/dirtree/move`, this.move)
 		$app.Event.on(`${this.module}/dirtree/removeCurrentItem`, this.removeCurrentItem)
-		$app.Event.on(`${this.module}/dirtree/setCurrentItem`, this.setCurrentItem)
 		$app.Event.on(`${this.module}/dirtree/addOpenFolder`, this.addOpenFolder)
 		$app.Event.on(`${this.module}/dirtree/removeOpenFolder`, this.removeOpenFolder)
 		$app.Event.on(`${this.module}/dirtree/update`, this.update)
@@ -240,7 +235,6 @@ export default class Index {
 		$app.Event.off(`${this.module}/dirtree/insert`, this.insert)
 		$app.Event.off(`${this.module}/dirtree/move`, this.move)
 		$app.Event.off(`${this.module}/dirtree/removeCurrentItem`, this.removeCurrentItem)
-		$app.Event.off(`${this.module}/dirtree/setCurrentItem`, this.setCurrentItem)
 		$app.Event.off(`${this.module}/dirtree/addOpenFolder`, this.addOpenFolder)
 		$app.Event.off(`${this.module}/dirtree/removeOpenFolder`, this.removeOpenFolder)
 		$app.Event.off(`${this.module}/dirtree/update`, this.update)

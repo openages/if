@@ -28,7 +28,6 @@ export default class Index {
 	color_main_rgb = '255,0,0'
 	show_bar_title = false
 	page_width = '780px'
-	browser_mode = false
 
 	constructor(public utils: Utils) {
 		makeAutoObservable(this, { utils: false }, { autoBind: true })
@@ -40,10 +39,7 @@ export default class Index {
 		this.off()
 
 		this.utils.acts = [
-			setStorageWhenChange(
-				['theme', 'auto_theme', 'color_main_rgb', 'show_bar_title', 'page_width', 'browser_mode'],
-				this
-			)
+			setStorageWhenChange(['theme', 'auto_theme', 'color_main_rgb', 'show_bar_title', 'page_width'], this)
 		]
 
 		this.setTheme(this.theme || 'light', true)

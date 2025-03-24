@@ -1,7 +1,7 @@
 import { autolock_map, modules } from '@/appdata'
 
 export namespace App {
-	export type ModuleType = Exclude<(typeof modules)[number]['title'], 'setting'>
+	export type ModuleType = (typeof modules)[number]['title']
 
 	export interface Module {
 		id: App.ModuleType

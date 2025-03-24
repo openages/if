@@ -1,5 +1,4 @@
 export { default as Loading } from './Loading'
-export { default as OffscreenOutlet } from './OffscreenOutlet'
 export { default as LazyElement } from './LazyElement'
 export { default as ErrorBoundary } from './ErrorBoundary'
 export { default as LoadingCircle } from './LoadingCircle'

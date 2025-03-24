@@ -1,6 +1,5 @@
 export { default as Global } from './Global'
 export { default as Account } from './Account'
 export { default as Billing } from './Billing'
-export { default as Menu } from './Menu'
 export { default as Shortcuts } from './Shortcuts'
 export { default as About } from './About'

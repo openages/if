@@ -19,7 +19,6 @@ const Index = (props: IPropsDirItems) => {
 		current_item,
 		focusing_item,
 		open_folder,
-		browser_mode,
 		star_ids,
 		onClick,
 		showDirTreeOptions,
@@ -56,7 +55,6 @@ const Index = (props: IPropsDirItems) => {
 									focusing_item,
 									open_folder,
 									sensors,
-									browser_mode,
 									onClick,
 									showDirTreeOptions,
 									onStar
@@ -76,7 +74,6 @@ const Index = (props: IPropsDirItems) => {
 											focusing_item,
 											open_folder,
 											sensors,
-											browser_mode,
 											onClick,
 											showDirTreeOptions,
 											onStar

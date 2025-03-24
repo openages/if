@@ -1,6 +1,7 @@
 import { matchPath } from 'react-router-dom'
 
 import { getObjectKeys } from '@/utils'
+import { CalendarCheck, CheckCircle, ClockCountdown, GearSix, MarkdownLogo, Star, Timer } from '@phosphor-icons/react'
 
 import type { App } from '@/types'
 
@@ -110,7 +111,50 @@ const typed_nav_items = [
 
 export default typed_nav_items.map(item => item)
 
-export const modules_no_setting = typed_nav_items.slice(0, -1)
+export const apps_home_drawer = ['todo', 'note', 'schedule', 'pomo'] as const
+
+export const apps_home_page = [
+	{
+		id: 'todo',
+		Icon: CheckCircle,
+		color: '#388e3c'
+	},
+	{
+		id: 'note',
+		Icon: MarkdownLogo,
+		color: '#444'
+	},
+	{
+		id: 'schedule',
+		Icon: CalendarCheck,
+		color: '#536dfe'
+	},
+	{
+		id: 'pomo',
+		Icon: Timer,
+		color: '#ffab00'
+	},
+	{
+		id: 'setting',
+		Icon: GearSix,
+		color: '#6D4C41',
+		event: 'global.setting.toggleVisible'
+	},
+	{
+		id: 'star_files',
+		text: 'layout.Home.star',
+		Icon: Star,
+		color: '#512da8',
+		event: 'global.setting.toggleVisible'
+	},
+	{
+		id: 'latest_files',
+		text: 'layout.Home.latest',
+		Icon: ClockCountdown,
+		color: '#607d8b',
+		event: 'global.setting.toggleVisible'
+	}
+]
 
 export const module_default_icon = {
 	note: ':book-open-text-light:',

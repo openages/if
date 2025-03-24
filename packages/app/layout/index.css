@@ -1,11 +1,3 @@
-.container {
-	padding-left: calc(var(--sidebar_width) + var(--dirtree_width));
-
-	&.no_dirtree {
-		padding-left: var(--sidebar_width);
-	}
-
-	&.browser_mode {
-		padding-left: 0;
-	}
+.modal_homepage {
+	padding: 0 10px 10px 10px !important;
 }

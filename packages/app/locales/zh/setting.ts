@@ -24,10 +24,6 @@ export default {
 			},
 			auto_theme: '自动切换主题，6点到18点浅色主题，其余时间深色主题'
 		},
-		browser_mode: {
-			title: '浏览器模式',
-			desc: '隐藏导航栏和目录，开启浏览器模式'
-		},
 		show_bar_title: {
 			title: '展示导航栏标题',
 			desc: '显示导航图标下方的标题'

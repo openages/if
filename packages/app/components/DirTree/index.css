@@ -1,65 +1,50 @@
 ._local {
-	position: fixed;
-	left: var(--sidebar_width);
-	border-right: var(--border);
-
 	&.hide {
 		z-index: 1001;
 		width: 0;
 		border: none;
 	}
 
-	&.browser_mode {
-		position: unset;
-		border-right: unset;
-
-		:global {
-			.dir_tree_wrap {
-				height: calc(100% - 32px);
-			}
-
-			.item_wrap {
-				min-height: 32px;
-				padding-right: 9px;
-				border-radius: var(--radius);
-			}
-
-			.actions_wrap {
-				height: 32px;
-				border-top: unset;
-				gap: 10px;
-
-				.add_list_wrap {
-					border-radius: var(--radius);
-					background-color: var(--color_bg_1);
-
-					&:hover {
-						background-color: var(--color_bg_2);
-					}
-				}
-
-				.other_action {
-					width: 32px;
-					border-left: unset;
-					border-radius: var(--radius);
-					background-color: var(--color_bg_1);
-
-					&:hover {
-						background-color: var(--color_bg_2);
-					}
-				}
-			}
-		}
-	}
-
 	:global {
 		.dir_tree_wrap {
 			overflow-y: scroll;
-			height: calc(100% - 36px - 36px);
+			height: calc(100% - 32px);
 			padding-bottom: 60px;
 
 			&.empty {
 				padding-bottom: 0;
+			}
+		}
+
+		.item_wrap {
+			min-height: 32px;
+			padding-right: 9px;
+			border-radius: var(--radius);
+		}
+
+		.actions_wrap {
+			height: 32px;
+			border-top: unset;
+			gap: 10px;
+
+			.add_list_wrap {
+				border-radius: var(--radius);
+				background-color: var(--color_bg_1);
+
+				&:hover {
+					background-color: var(--color_bg_2);
+				}
+			}
+
+			.other_action {
+				width: 32px;
+				border-left: unset;
+				border-radius: var(--radius);
+				background-color: var(--color_bg_1);
+
+				&:hover {
+					background-color: var(--color_bg_2);
+				}
 			}
 		}
 	}

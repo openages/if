@@ -1,13 +1,99 @@
-.modal {
-	padding: 0 10px 10px 10px !important;
-}
-
 ._local {
-	gap: 12px;
-
 	:global {
-		.files_empty {
-			flex: 1;
+		.logo {
+			top: 12px;
+			left: 12px;
+		}
+
+		.drag_handler {
+			height: 36px;
+		}
+
+		.bg {
+			background-position: 50%;
+			background-size: cover;
+		}
+
+		.mask {
+			background-color: rgba(0, 0, 0, 0.3);
+			backdrop-filter: blur(15px);
+		}
+
+		.content_wrap {
+			padding: 12vh 10vw;
+
+			.search_wrap {
+				padding-bottom: 6vh;
+
+				.input_search_wrap {
+					width: 72%;
+					max-width: 600px;
+					height: max(48px, 6vw);
+					max-height: 60px;
+					padding: 0 48px;
+					border: 1px solid rgba(255, 255, 255, 0.06);
+					border-radius: 30px;
+					color: white;
+					background-color: rgba(0, 0, 0, 0.3);
+					backdrop-filter: var(--blur);
+
+					.icon_search {
+						left: 15px;
+						color: rgba(255, 255, 255, 0.6);
+						font-size: 24px;
+					}
+
+					.input_search {
+						padding: 0;
+						border: none;
+						outline: none;
+						color: white;
+						background-color: transparent;
+						box-shadow: none;
+						font-size: 18px;
+						font-weight: 300;
+
+						&::-webkit-input-placeholder {
+							color: rgba(255, 255, 255, 0.6) !important;
+						}
+					}
+				}
+			}
+
+			.app_items_wrap {
+				--icon_col: 5;
+				--icon_row: 3;
+				flex: 1;
+
+				.app_items {
+					display: grid;
+					grid-template-columns: repeat(var(--icon_col), calc(100% / var(--icon_col)));
+					grid-template-rows: repeat(var(--icon_row), calc(100% / var(--icon_row)));
+					place-items: center;
+
+					.app_item {
+						padding: 6% 9%;
+
+						.icon_wrap {
+							max-width: min(66%, 90px);
+							max-height: 60%;
+							padding: min(15%, 18px);
+							border-radius: 50%;
+							background-color: rgba(255, 255, 255, 1);
+							aspect-ratio: 1;
+							backdrop-filter: var(--blur);
+						}
+
+						.item_name {
+							line-height: 1;
+							margin-top: 9px;
+							color: rgba(255, 255, 255, 0.8);
+							letter-spacing: 0.3px;
+							font-size: 12px;
+						}
+					}
+				}
+			}
 		}
 	}
 }

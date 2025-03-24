@@ -24,10 +24,6 @@ export default {
 			},
 			auto_theme: 'Auto theme, light theme from 6AM to 6PM, dark theme the rest of time'
 		},
-		browser_mode: {
-			title: 'Browser Mode',
-			desc: 'Hide the navbar and dirtree'
-		},
 		show_bar_title: {
 			title: 'Show Bar Title',
 			desc: 'Display title below navigation icon'

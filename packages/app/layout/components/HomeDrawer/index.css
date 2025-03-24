@@ -1,0 +1,9 @@
+._local {
+	gap: 12px;
+
+	:global {
+		.files_empty {
+			flex: 1;
+		}
+	}
+}

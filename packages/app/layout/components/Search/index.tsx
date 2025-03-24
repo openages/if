@@ -3,6 +3,7 @@ import { debounce } from 'lodash-es'
 import { useEffect, useRef, useState, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { apps_home_drawer } from '@/appdata'
 import { LazyElement, Modal, ModuleIcon, SimpleEmpty } from '@/components'
 import { ArrowBendDownLeft, ArrowDown, ArrowUp, MagnifyingGlass, Trash, X } from '@phosphor-icons/react'
 
@@ -14,7 +15,6 @@ import type { KeyboardEvent, MouseEvent } from 'react'
 const Index = (props: IPropsSearch) => {
 	const {
 		open,
-		apps,
 		module,
 		items,
 		index,
@@ -144,7 +144,7 @@ const Index = (props: IPropsSearch) => {
 					)}
 				</div>
 				<div className='apps_wrap flex'>
-					{apps.map(item => (
+					{apps_home_drawer.map(item => (
 						<div
 							className={$cx(
 								'app_item flex align_center clickable',

@@ -18,6 +18,10 @@ interface $App {
 }
 
 declare global {
+	interface Document {
+		startViewTransition: (callback: () => void | Promise<void>) => ViewTransition
+	}
+
 	interface Window {
 		$shell?: {
 			type: 'electron'

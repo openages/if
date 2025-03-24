@@ -17,7 +17,6 @@ const Index = (props: IPropsDirItem_Item) => {
 		parent_index = [],
 		dragging,
 		open,
-		browser_mode,
 		star,
 		showDirTreeOptions,
 		onClick,
@@ -43,7 +42,7 @@ const Index = (props: IPropsDirItem_Item) => {
 					dragging && 'dragging'
 				)}
 				autoInsertSpace={false}
-				style={{ paddingLeft: (browser_mode ? 9 : 18) * parent_index.length }}
+				style={{ paddingLeft: 9 * parent_index.length }}
 				onClick={onItem}
 				onContextMenu={onContextMenu}
 			>
@@ -58,7 +57,7 @@ const Index = (props: IPropsDirItem_Item) => {
 					</Choose>
 				</div>
 				<div className='title_wrap flex align_center h_100 text_left'>{name}</div>
-				{browser_mode && type === 'file' && (
+				{type === 'file' && (
 					<div
 						className={$cx(
 							'star_icon_wrap align_center clickable',
