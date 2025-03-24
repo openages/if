@@ -16,9 +16,10 @@ import { injectable } from 'tsyringe'
 
 import { autolock_value, passphrase } from '@/appdata'
 import Utils from '@/models/utils'
-import { getDocItem, sleep } from '@/utils'
+import { conf, getDocItem, sleep } from '@/utils'
 import { Idle } from '@openages/stk/common'
 import { setStorageWhenChange } from '@openages/stk/mobx'
+import { local } from '@openages/stk/storage'
 
 import type { App } from '@/types'
 
@@ -156,20 +157,8 @@ export default class Index {
 		await this.saveKeyPair()
 	}
 
-	async getFingerprint() {
-		const { code, err } = await (await import('@openages/stk/creep')).getFingerprint()
-
-		if (!code && err) {
-			$message.error($t('setting.Screenlock.getFingerprint.error'))
-
-			return ''
-		}
-
-		return code
-	}
-
 	async unlocking() {
-		const code = await this.getFingerprint()
+		const code = local.mid || window.__key__()
 
 		const { private_key, public_key, password } = (await this.genKeyPair(code, true))!
 
