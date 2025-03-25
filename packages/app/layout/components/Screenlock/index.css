@@ -50,12 +50,6 @@
 			backdrop-filter: blur(300px);
 		}
 
-		.logo {
-			top: 12px;
-			left: 12px;
-			opacity: 0.15;
-		}
-
 		.time_wrap {
 			top: 60px;
 			line-height: 1;
@@ -78,7 +72,6 @@
 		}
 
 		.content_wrap {
-
 			--height: 36px;
 			--padding: 12px;
 			--btn_size: calc(var(--height) - var(--padding) * 2);
@@ -86,7 +79,6 @@
 			width: 210px;
 
 			.input_wrap {
-
 				&.password {
 					.input {
 						height: var(--height);

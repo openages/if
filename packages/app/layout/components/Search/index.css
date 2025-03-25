@@ -1,64 +1,11 @@
+.wrap {
+	border-radius: var(--radius_large);
+}
+
 ._local {
 	padding: 0 !important;
-	border-radius: var(--radius_large);
 
 	:global {
-		.apps_wrap {
-			line-height: 1;
-			padding: 9px 12px;
-			font-size: 10px;
-			gap: 6px;
-
-			.app_item {
-				padding: 3px 4px;
-				border: var(--border_light);
-				border-radius: var(--radius_small);
-				color: var(--color_text_light);
-
-				&.active {
-					color: var(--color_bg);
-					background-color: var(--color_text);
-				}
-
-				svg {
-					font-size: 12px;
-				}
-			}
-		}
-
-		.input_wrap {
-			.icon_search {
-				left: 12px;
-				color: var(--color_text_light);
-
-				&.focusing {
-					color: var(--color_text);
-				}
-			}
-
-			.input_search {
-				height: 46px;
-				padding-right: 39px;
-				padding-left: 39px;
-				border: none;
-				border-bottom: var(--border);
-				outline: none;
-				background-color: transparent;
-				box-shadow: none;
-			}
-
-			.btn_clear {
-				right: 9px;
-				width: 21px;
-				height: 21px;
-				border-radius: 50%;
-
-				&:hover {
-					background-color: var(--color_bg_2);
-				}
-			}
-		}
-
 		.search_items_wrap {
 			overflow-y: scroll;
 			min-height: 300px;
@@ -66,37 +13,6 @@
 			padding: 0 12px;
 			padding-top: 0;
 			color: var(--color_text_sub);
-
-			.search_item {
-				padding: 9px 0;
-				border-bottom: 1px dashed var(--color_border_light);
-
-				&:last-child {
-					&.active {
-						margin-bottom: 12px;
-					}
-				}
-
-				&.active {
-					border-bottom-style: solid;
-					border-bottom-color: var(--color_text);
-
-					.icon_go {
-						right: 0px;
-						opacity: 1;
-					}
-				}
-
-				.icon_go {
-					padding: 3px;
-					border-radius: var(--radius_small);
-					opacity: 0;
-					color: var(--color_bg);
-					background-color: var(--color_text);
-					transition: opacity ease 0.3s;
-					font-size: 12px;
-				}
-			}
 		}
 
 		.search_history {

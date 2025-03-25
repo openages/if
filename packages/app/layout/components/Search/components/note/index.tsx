@@ -28,7 +28,7 @@ const Index = (props: IProps) => {
 		hover && changeSearchIndex(index)
 	}, [hover])
 
-	const array_text = useMemo(() => getEditorText(item.content, true).split(text), [item.content, text])
+	const array_text = useMemo(() => getEditorText(item.content, true)?.split(text)!, [item.content, text])
 
 	const onItem = useMemoizedFn(() => onCheck({ id: item.id, file }))
 
@@ -47,7 +47,7 @@ const Index = (props: IProps) => {
 			<div className='text_wrap'>
 				{array_text.map((it, idx) => (
 					<span className='text_item' key={idx}>
-						<span>{it.slice(0, 30)}</span>
+						<span>{it}</span>
 						{idx !== array_text.length - 1 && <span className='color_main'>{text}</span>}
 					</span>
 				))}

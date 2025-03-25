@@ -2,9 +2,9 @@ import { conf, id } from '@/utils'
 import { local } from '@openages/stk/storage'
 
 if (window.$shell?.type === 'electron') {
-	local.mid = await conf.get('mid')
+	setTimeout(() => window.$shell?.stopLoading(), 0)
 
-	setTimeout(() => window.$shell?.stopLoading(), 120)
+	local.mid = await conf.get('mid')
 } else {
 	if (!local.mid) local.mid = id()
 }

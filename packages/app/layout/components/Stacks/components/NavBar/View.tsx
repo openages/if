@@ -2,6 +2,7 @@ import { useMemoizedFn } from 'ahooks'
 import { Button } from 'antd'
 import { useMemo } from 'react'
 
+import { pages } from '@/appdata'
 import { Emoji, LeftIcon, ModuleIcon, Wave } from '@/components'
 import { useScrollToItem } from '@/hooks'
 import { useSortable } from '@dnd-kit/sortable'
@@ -59,7 +60,7 @@ const Index = (props: IPropsStacksNavBarView) => {
 							<Choose>
 								<When condition={!!view.file.icon}>
 									<Emoji
-										shortcodes={view.file.icon}
+										shortcodes={view.file.icon!}
 										size={12}
 										hue={view.file.icon_hue}
 									></Emoji>
@@ -75,8 +76,11 @@ const Index = (props: IPropsStacksNavBarView) => {
 						</div>
 						<span className='name_wrap ml_2'>{view.file.name}</span>
 						<div className='icon_module_wrap flex justify_center align_center ml_2'>
-							<ModuleIcon type={view.module}></ModuleIcon>
+							<If condition={!pages.includes(view.id)}>
+								<ModuleIcon type={view.module}></ModuleIcon>
+							</If>
 						</div>
+
 						<div
 							className='btn_remove flex justify_center align_center clickable ml_2'
 							onMouseDown={e => e.stopPropagation()}

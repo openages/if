@@ -1,0 +1,34 @@
+._local {
+	:global {
+		.search_item {
+			padding: 9px 0;
+			border-bottom: 1px dashed var(--color_border_light);
+
+			&:last-child {
+				&.active {
+					margin-bottom: 12px;
+				}
+			}
+
+			&.active {
+				border-bottom-style: solid;
+				border-bottom-color: var(--color_text);
+
+				.icon_go {
+					right: 0px;
+					opacity: 1;
+				}
+			}
+
+			.icon_go {
+				padding: 3px;
+				border-radius: var(--radius_small);
+				opacity: 0;
+				color: var(--color_bg);
+				background-color: var(--color_text);
+				transition: opacity ease 0.3s;
+				font-size: 12px;
+			}
+		}
+	}
+}

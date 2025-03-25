@@ -1,7 +1,8 @@
 import { autolock_map, modules } from '@/appdata'
 
 export namespace App {
-	export type ModuleType = (typeof modules)[number]['title']
+	export type PageType = 'homepage'
+	export type ModuleType = (typeof modules)[number]['title'] | PageType
 
 	export interface Module {
 		id: App.ModuleType

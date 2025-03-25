@@ -7,7 +7,7 @@ import { X } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
-import type { MouseEvent, ReactNode } from 'react'
+import type { MouseEvent, ReactNode, CSSProperties } from 'react'
 
 interface IProps {
 	children: ReactNode
@@ -17,6 +17,7 @@ interface IProps {
 	bodyClassName?: HTMLDivElement['className']
 	title?: string | number
 	width?: string | number
+	height?: string | number
 	maskClosable?: boolean
 	disableOverflow?: boolean
 	disablePadding?: boolean
@@ -36,6 +37,7 @@ const Index = (props: IProps) => {
 		bodyClassName,
 		title,
 		width,
+		height,
 		maskClosable,
 		disableOverflow,
 		disablePadding,
@@ -74,18 +76,32 @@ const Index = (props: IProps) => {
 		setOnbody(container === document.body)
 	}, [container])
 
-	const transform = useMemo(() => {
+	const { align, transform, style } = useMemo(() => {
 		switch (placement) {
 			case 'left':
-				return 'translate3d(-100%, 0px, 0px)'
+				return {
+					style: { width: width ?? 300 } as CSSProperties,
+					transform: 'translate3d(-100%, 0px, 0px)'
+				}
 			case 'right':
-				return 'translate3d(100%, 0px, 0px)'
+				return {
+					align: 'justify_end',
+					style: { width: width ?? 300 } as CSSProperties,
+					transform: 'translate3d(100%, 0px, 0px)'
+				}
 			case 'top':
-				return 'translate3d(0px, -100%, 0px)'
+				return {
+					style: { width: '100%', height: height ?? 300 } as CSSProperties,
+					transform: 'translate3d(0px, -100%, 0px)'
+				}
 			case 'bottom':
-				return 'translate3d(0px, 100%, 0px)'
+				return {
+					align: 'align_end',
+					style: { width: '100%', height: height ?? 300 } as CSSProperties,
+					transform: 'translate3d(0px, 100%, 0px)'
+				}
 		}
-	}, [placement])
+	}, [placement, width, height])
 
 	if (!exsit) return null
 
@@ -111,7 +127,8 @@ const Index = (props: IProps) => {
 							on_body && styles.on_body,
 							disableOverflow && styles.disableOverflow,
 							disablePadding && styles.disablePadding,
-							'if_modal_wrap w_100 h_100 border_box flex align_end'
+							'if_modal_wrap w_100 h_100 border_box flex',
+							align
 						)}
 						ref={ref_content_wrap}
 						style={{ zIndex: zIndex ? zIndex + 1 : 1002 }}
@@ -126,7 +143,7 @@ const Index = (props: IProps) => {
 							animate={{ transform: 'translate3d(0px, 0px, 0px)' }}
 							exit={{ transform }}
 							transition={{ duration: 0.18, ease: 'easeInOut' }}
-							style={{ width: width ?? 300 }}
+							style={style}
 							ref={ref_content}
 						>
 							{title && (

@@ -1,0 +1,14 @@
+._local {
+	:global {
+		.bg {
+			background-position: 50%;
+			background-size: cover;
+			transition: background ease 0.3s;
+		}
+
+		.mask {
+			background-color: rgba(0, 0, 0, 0.3);
+			backdrop-filter: blur(15px);
+		}
+	}
+}

@@ -1,16 +1,16 @@
-import { useEventListener, useFocusWithin, useMemoizedFn } from 'ahooks'
-import { debounce } from 'lodash-es'
-import { useEffect, useRef, useState, Fragment } from 'react'
+import { useMemoizedFn } from 'ahooks'
+import { useRef, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { apps_home_drawer } from '@/appdata'
-import { LazyElement, Modal, ModuleIcon, SimpleEmpty } from '@/components'
-import { ArrowBendDownLeft, ArrowDown, ArrowUp, MagnifyingGlass, Trash, X } from '@phosphor-icons/react'
+import { Modal, SimpleEmpty } from '@/components'
+import { ArrowBendDownLeft, ArrowDown, ArrowUp, Trash } from '@phosphor-icons/react'
 
+import Input from './components/Input'
+import Result from './components/Result'
 import styles from './index.css'
 
-import type { IPropsSearch } from '@/layout/types'
-import type { KeyboardEvent, MouseEvent } from 'react'
+import type { IPropsSearch, IPropsSearchInput, IPropsSearchInputRef, IPropsSearchResult } from '@/layout/types'
+import type { MouseEvent } from 'react'
 
 const Index = (props: IPropsSearch) => {
 	const {
@@ -27,90 +27,46 @@ const Index = (props: IPropsSearch) => {
 		clearSearchHistory
 	} = props
 	const { t } = useTranslation()
-	const ref = useRef<HTMLInputElement>(null)
-	const focusing = useFocusWithin(ref)
-	const [compositing, setCompositing] = useState(false)
-	const [text, setText] = useState('')
+	const ref = useRef<IPropsSearchInputRef>(null)
 
-	useEventListener('compositionstart', () => setCompositing(true), { target: ref })
+	const props_search_input: IPropsSearchInput = {
+		search_ref: ref,
+		module,
+		items,
+		index,
+		setModule,
+		searchByInput,
+		onClose,
+		onCheck,
+		changeSearchIndex,
+		clearSearchHistory
+	}
 
-	useEventListener(
-		'compositionend',
-		() => {
-			setCompositing(false)
-			searchByInput(ref.current?.value!)
-			setText(ref.current?.value!)
-		},
-		{ target: ref }
-	)
-
-	const handleChangeIndex = useMemoizedFn(e => {
-		const event = e as KeyboardEvent
-
-		if (event.key === 'Enter') {
-			event.preventDefault()
-
-			const target = items[index]
-
-			if (!target) return
-
-			onCheck({ id: target.item.id, file: target.file })
-		}
-
-		if (event.key === 'Escape') {
-			event.preventDefault()
-			onClose()
-		}
-
-		if (event.key === 'ArrowUp') {
-			event.preventDefault()
-			changeSearchIndex(index - 1)
-		}
-
-		if (event.key === 'ArrowDown') {
-			event.preventDefault()
-			changeSearchIndex(index + 1)
-		}
-	})
-
-	useEffect(() => {
-		if (!open) return
-
-		document.addEventListener('keydown', handleChangeIndex)
-
-		return () => document.removeEventListener('keydown', handleChangeIndex)
-	}, [open])
-
-	const onInput = useMemoizedFn(
-		debounce(({ target: { value } }) => {
-			if (compositing) return
-
-			searchByInput(value)
-			setText(value)
-		}, 600)
-	)
-
-	const clear = useMemoizedFn(() => {
-		ref.current!.value = ''
-
-		searchByInput('')
-		setText('')
-	})
+	const props_search_result: IPropsSearchResult = {
+		module,
+		items,
+		index,
+		text: ref.current?.text!,
+		onCheck,
+		changeSearchIndex
+	}
 
 	const onSearchItem = useMemoizedFn((e: MouseEvent<HTMLDivElement>) => {
 		const target = e.target as HTMLDivElement
 		const text = target.getAttribute('data-text')
 
 		if (!text) return
+		if (!ref.current) return
 
-		ref.current!.value = text
+		ref.current.input.value = text
 
 		searchByInput(text)
-		setText(text)
+		ref.current.setText(text)
 	})
 
 	return (
 		<Modal
+			className={styles.wrap}
 			bodyClassName={styles._local}
 			maskClosable
 			disableOverflow
@@ -120,63 +76,10 @@ const Index = (props: IPropsSearch) => {
 			onCancel={onClose}
 		>
 			<div className='flex flex_column'>
-				<div className='input_wrap w_100 relative flex align_center'>
-					<MagnifyingGlass
-						className={$cx('icon_search absolute transition_normal', focusing && 'focusing')}
-						size={18}
-					></MagnifyingGlass>
-					<input
-						type='text'
-						className='input_search w_100 border_box'
-						placeholder={`${t('dirtree.search_placeholder')}${t(`modules.${module}`)}`}
-						autoFocus
-						maxLength={30}
-						ref={ref}
-						onInput={onInput}
-					/>
-					{text && (
-						<div
-							className='btn_clear flex justify_center align_center absolute clickable'
-							onClick={clear}
-						>
-							<X size={15}></X>
-						</div>
-					)}
-				</div>
-				<div className='apps_wrap flex'>
-					{apps_home_drawer.map(item => (
-						<div
-							className={$cx(
-								'app_item flex align_center clickable',
-								module === item && 'active'
-							)}
-							onClick={() => setModule(item)}
-							key={item}
-						>
-							<ModuleIcon className='mr_2' type={item}></ModuleIcon>
-							{t(`modules.${item}`)}
-						</div>
-					))}
-				</div>
+				<Input {...props_search_input}></Input>
 				<div className='search_items_wrap w_100 border_box flex flex_column'>
 					{items.length > 0 ? (
-						items.map(({ item, file, setting }, idx) => (
-							<LazyElement
-								type='search'
-								path={module}
-								props={{
-									item,
-									file,
-									setting,
-									text,
-									active: idx === index,
-									index: idx,
-									changeSearchIndex,
-									onCheck
-								}}
-								key={item.id}
-							></LazyElement>
-						))
+						<Result {...props_search_result}></Result>
 					) : (
 						<Fragment>
 							{history.length > 0 && (

@@ -1,0 +1,73 @@
+._local {
+	:global {
+		.icon_search {
+			left: 12px;
+			color: var(--color_text_light);
+			font-size: 18px;
+
+			.icon {
+				&.focusing,
+				&:hover {
+					color: var(--color_text);
+				}
+			}
+		}
+
+		.input_search {
+			height: 46px;
+			padding-right: 39px;
+			padding-left: 39px;
+			border: none;
+			border-bottom: var(--border);
+			outline: none;
+			background-color: transparent;
+			box-shadow: none;
+		}
+
+		.btn_clear {
+			right: 9px;
+			width: 21px;
+			height: 21px;
+			border-radius: 50%;
+
+			&:hover {
+				background-color: var(--color_bg_2);
+			}
+		}
+
+		.select_wrap {
+			z-index: 10;
+			top: 100%;
+			line-height: 1;
+			padding-bottom: 1px;
+			background-color: var(--color_border_soft);
+			gap: 1px;
+			backdrop-filter: var(--blur);
+
+			.app_item {
+				flex: 1;
+				padding: 12px 0;
+				color: var(--color_text_greylight);
+				background-color: var(--color_bg);
+
+				&:hover {
+					color: var(--color_text);
+					background-color: var(--color_bg_1);
+				}
+
+				&.active {
+					color: var(--color_text);
+				}
+
+				svg {
+					margin-bottom: 6px;
+					font-size: 21px;
+				}
+
+				.name {
+					font-size: 10px;
+				}
+			}
+		}
+	}
+}

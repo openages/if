@@ -1,7 +1,7 @@
 import { matchPath } from 'react-router-dom'
 
 import { getObjectKeys } from '@/utils'
-import { CalendarCheck, CheckCircle, ClockCountdown, GearSix, MarkdownLogo, Star, Timer } from '@phosphor-icons/react'
+import { CalendarCheck, CheckCircle, ClockCountdown, Feather, GearSix, Star, Timer } from '@phosphor-icons/react'
 
 import type { App } from '@/types'
 
@@ -117,22 +117,30 @@ export const apps_home_page = [
 	{
 		id: 'todo',
 		Icon: CheckCircle,
-		color: '#388e3c'
+		color: '#388e3c',
+		event: 'homepage.showDirtree',
+		args: 'todo'
 	},
 	{
 		id: 'note',
-		Icon: MarkdownLogo,
-		color: '#444'
+		Icon: Feather,
+		color: '#222',
+		event: 'homepage.showDirtree',
+		args: 'note'
 	},
 	{
 		id: 'schedule',
 		Icon: CalendarCheck,
-		color: '#536dfe'
+		color: '#536dfe',
+		event: 'homepage.showDirtree',
+		args: 'schedule'
 	},
 	{
 		id: 'pomo',
 		Icon: Timer,
-		color: '#ffab00'
+		color: '#ffab00',
+		event: 'homepage.showDirtree',
+		args: 'pomo'
 	},
 	{
 		id: 'setting',
@@ -145,21 +153,24 @@ export const apps_home_page = [
 		text: 'layout.Home.star',
 		Icon: Star,
 		color: '#512da8',
-		event: 'global.setting.toggleVisible'
+		event: 'homepage.showFiles',
+		args: 'star'
 	},
 	{
 		id: 'latest_files',
 		text: 'layout.Home.latest',
 		Icon: ClockCountdown,
 		color: '#607d8b',
-		event: 'global.setting.toggleVisible'
+		event: 'homepage.showFiles',
+		args: 'latest'
 	}
 ]
 
 export const module_default_icon = {
 	note: ':book-open-text-light:',
 	pomo: ':watch:',
-	schedule: ':date:'
+	schedule: ':date:',
+	homepage: ':browser:'
 }
 
 export const module_group = {
@@ -168,6 +179,8 @@ export const module_group = {
 	data: ['table', 'form', 'chart', 'api', 'dataflow', 'database'],
 	setting: ['setting']
 }
+
+export const pages = ['__homepage__']
 
 export const isWidget = (pathname: string) => {
 	const match = matchPath('/widgets/:type', pathname)

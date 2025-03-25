@@ -104,8 +104,8 @@ export default class Index {
 		}
 	}
 
-	toggleHomepage() {
-		this.visible_homepage = !this.visible_homepage
+	toggleHomeDrawer(v?: boolean) {
+		this.visible_homepage = v !== undefined ? v : !this.visible_homepage
 	}
 
 	onAppUpdate() {
@@ -217,7 +217,7 @@ export default class Index {
 	}
 
 	on() {
-		$app.Event.on('global.app.toggleHomepage', this.toggleHomepage)
+		$app.Event.on('global.app.toggleHomeDrawer', this.toggleHomeDrawer)
 		$app.Event.on('global.app.setLatest', this.setLatest)
 		$app.Event.on('global.app.removeFile', this.removeFile)
 	}
@@ -228,7 +228,7 @@ export default class Index {
 
 		this.utils.off()
 
-		$app.Event.off('global.app.toggleHomepage', this.toggleHomepage)
+		$app.Event.off('global.app.toggleHomeDrawer', this.toggleHomeDrawer)
 		$app.Event.off('global.app.setLatest', this.setLatest)
 		$app.Event.off('global.app.removeFile', this.removeFile)
 	}

@@ -5,13 +5,14 @@ import { Memo } from '@/icons'
 import {
 	AppWindow,
 	Barbell,
+	Browser,
 	CalendarCheck,
 	ChartBarHorizontal,
 	CheckCircle,
 	Clipboard,
 	Database,
+	Feather,
 	GearSix,
-	MarkdownLogo,
 	MicrosoftPowerpointLogo,
 	Table,
 	TextColumns,
@@ -27,25 +28,18 @@ import type { App } from '@/types'
 
 interface IProps extends IconProps {
 	type: App.ModuleType
-	with_color?: boolean
-	ignore_size?: boolean
 }
 
 const Index = (props: IProps) => {
-	const { type, with_color, ignore_size, className, ...icon_props } = props
+	const { type, className, ...icon_props } = props
 
-	const target_class = $cx(icon_props?.weight === 'duotone' && styles._local, with_color && styles[type], className)
+	const target_class = $cx(icon_props?.weight === 'duotone' && styles._local, className)
 	const target_props = { ...omit(icon_props, 'ref'), className: target_class }
 
 	return match(type)
 		.with('todo', () => <CheckCircle {...target_props} />)
 		.with('memo', () => <Memo {...target_props} />)
-		.with('note', () => (
-			<MarkdownLogo
-				{...target_props}
-				size={ignore_size ? undefined : target_props.size ? Number(target_props.size) - 3 : '1em'}
-			/>
-		))
+		.with('note', () => <Feather {...target_props} />)
 		.with('page', () => <AppWindow {...target_props} />)
 		.with('whiteboard', () => <Clipboard {...target_props} />)
 		.with('ppt', () => <MicrosoftPowerpointLogo {...target_props} />)
@@ -59,6 +53,7 @@ const Index = (props: IProps) => {
 		.with('dataflow', () => <TreeStructure {...target_props} />)
 		.with('database', () => <Database {...target_props} />)
 		.with('setting', () => <GearSix {...target_props} />)
+		.with('homepage', () => <Browser {...target_props} />)
 		.exhaustive()
 }
 

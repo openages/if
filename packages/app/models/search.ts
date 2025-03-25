@@ -1,5 +1,4 @@
 import { makeAutoObservable } from 'mobx'
-import scrollIntoView from 'smooth-scroll-into-view-if-needed'
 import { injectable } from 'tsyringe'
 
 import Utils from '@/models/utils'
@@ -65,6 +64,26 @@ export default class Index {
 				.find({
 					selector: {
 						content: { $regex: `.*${text}.*`, $options: 'i' }
+					},
+					index: 'file_id'
+				})
+				.exec()
+
+			const file_ids = docs.map(item => item.file_id)
+
+			const files = await $db.dirtree_items.findByIds(file_ids).exec()
+
+			this.items = file_ids.map((_, index) => ({
+				item: getDocItem(docs[index]),
+				file: getDocItem(files.get(docs[index].file_id)!)!
+			}))
+		}
+
+		if (this.module === 'schedule') {
+			const docs = await $db.schedule_items
+				.find({
+					selector: {
+						text: { $regex: `.*${text}.*`, $options: 'i' }
 					},
 					index: 'file_id'
 				})
@@ -155,16 +174,6 @@ export default class Index {
 		if (index < 0 || index > this.items.length - 1) return
 
 		this.index = index
-
-		const id = this.items[index]?.item?.id
-
-		if (!id) return
-
-		scrollIntoView(document.getElementById(`search_item_${id}`)!, {
-			behavior: 'smooth',
-			inline: 'center',
-			block: 'nearest'
-		})
 	}
 
 	clearSearchHistory() {

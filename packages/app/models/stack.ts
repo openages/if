@@ -89,14 +89,22 @@ export default class Index {
 		const last_view = target_views.at(-1)
 
 		if (!last_view || last_view?.fixed) {
-			target_views.push(view)
+			if (view.top) {
+				target_views.unshift(view)
+			} else {
+				target_views.push(view)
+			}
 		} else {
 			target_views.splice(target_views.length - 1, 1, view)
 		}
 
 		target_views.forEach(item => (item.active = false))
 
-		target_views[target_views.length - 1].active = true
+		if (view.top) {
+			target_views[0].active = true
+		} else {
+			target_views[target_views.length - 1].active = true
+		}
 
 		this.focus.view = target_views.length - 1
 
@@ -110,10 +118,6 @@ export default class Index {
 		const target_view_id = target_view.id
 
 		this.handleStackOffs(target_view_id)
-
-		if (local.getItem(`${target_view.module}_active_file`).id === target_view.id) {
-			local.setItem(`${target_view.module}_active_file`, {})
-		}
 
 		if (target_view.module === 'pomo') {
 			$app.Event.emit(`pomo/${target_view.file.id}/stopRecord`)

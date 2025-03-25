@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { LoadingCircle } from '@/components'
 import { useGlobal } from '@/context/app'
 import { is_dev } from '@/utils'
-import { CalendarCheck, Check, CheckCircle, MarkdownLogo, Timer, WifiSlash, X } from '@phosphor-icons/react'
+import { CalendarCheck, Check, CheckCircle, Feather, Timer, WifiSlash, X } from '@phosphor-icons/react'
 
 import styles from './index.css'
 
@@ -178,7 +178,7 @@ const Index = () => {
 						))}
 						{Array.from({ length: 1 }).map((_, index) => (
 							<div className='feature flex align_center' key={index}>
-								<MarkdownLogo className='icon_feature' weight='bold'></MarkdownLogo>
+								<Feather className='icon_feature' weight='bold'></Feather>
 								<span className='desc'>
 									{t(`setting.Billing.pro.note.${index as 0}`)}
 								</span>

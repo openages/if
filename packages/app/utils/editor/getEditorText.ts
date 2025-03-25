@@ -4,6 +4,8 @@ import { note_nodes, text_nodes } from '@/Editor/nodes'
 import { $restoreNodeFromJson } from '@/Editor/utils'
 
 export default (state: string, fragment?: boolean) => {
+	if (!state) return
+
 	const editor = createEditor({ nodes: fragment ? note_nodes : text_nodes })
 
 	editor._headless = true
@@ -24,6 +26,8 @@ export default (state: string, fragment?: boolean) => {
 	}
 
 	const text = editor.getEditorState().read(() => $getRoot().getTextContent())
+
+	editor.reset()
 
 	return text
 }

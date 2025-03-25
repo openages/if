@@ -22,7 +22,7 @@ const Index = (props: IPropsStacksNavBarColumn) => {
 		click,
 		remove,
 		update,
-		showHomepage
+		showHomeDrawer
 	} = props
 	const { active, isOver, setNodeRef } = useDroppable({
 		id: `nav_column_${column_index}`,
@@ -44,7 +44,7 @@ const Index = (props: IPropsStacksNavBarColumn) => {
 			<If condition={show_homepage_btn!}>
 				<div
 					className='btn_homepage h_100 border_box flex justify_center align_center clickable no_drag'
-					onClick={showHomepage}
+					onClick={showHomeDrawer}
 				>
 					<House></House>
 				</div>

@@ -21,5 +21,7 @@ export default {
 		plan: 'Plan',
 		data: 'Data',
 		setting: 'Setting'
-	}
+	},
+
+	homepage: 'Homepage'
 }

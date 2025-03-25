@@ -58,13 +58,7 @@ export default class Index {
 		this.module = module
 		this.actions = actions
 
-		const disposer = setStorageWhenChange(
-			[
-				{ [`${this.module}_active_file`]: 'current_item' },
-				{ [`${this.module}_open_folder`]: 'open_folder' }
-			],
-			this
-		)
+		const disposer = setStorageWhenChange([{ [`${this.module}_open_folder`]: 'open_folder' }], this)
 
 		this.on()
 		this.watchItems()

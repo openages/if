@@ -5,8 +5,10 @@ import { useEffect, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 
-import { Logo, Show } from '@/components'
+import { Show } from '@/components'
 import { useGlobal } from '@/context/app'
+import { WinActions } from '@/layout/components'
+import { is_win_electron } from '@/utils'
 import { ArrowRight, Copy, PlayCircle, Power, XCircle } from '@phosphor-icons/react'
 
 import styles from './index.css'
@@ -88,14 +90,22 @@ const Index = () => {
 
 	const Content = (
 		<Show
-			className={$cx(styles._local, 'w_100vw h_100vh fixed z_index_1000 flex justify_center align_center')}
+			className={$cx(
+				styles._local,
+				'w_100vw h_100vh fixed top_0 z_index_1000 flex justify_center align_center'
+			)}
 			visible={global.screenlock.screenlock_open}
 		>
+			<div
+				className='is_drag w_100 absolute z_index_10 top_0 left_0 flex justify_end'
+				style={{ height: 36 }}
+			>
+				<If condition={is_win_electron}>
+					<WinActions></WinActions>
+				</If>
+			</div>
 			<div className='bg_wrap w_100 absolute left_0'></div>
 			<div className='blur_wrap w_100 h_100 absolute top_0 left_0 flex flex_column align_center justify_center'></div>
-			<div className='logo absolute' onClick={clickTimes}>
-				<Logo color='white' size={24}></Logo>
-			</div>
 			<Time></Time>
 			<Form
 				className='content_wrap absolute flex flex_column align_center justify_center'
@@ -144,7 +154,7 @@ const Index = () => {
 					</When>
 					<Otherwise>
 						{global.screenlock.password_mode ? (
-							<div className='input_wrap password relative'>
+							<div className='input_wrap password relative' key='password_mode'>
 								<Item name='password' noStyle>
 									<Input
 										className={$cx(
@@ -180,7 +190,7 @@ const Index = () => {
 									type='submit'
 									disabled={!btn_active}
 								>
-									确认
+									{t('common.confirm')}
 								</button>
 							</div>
 						)}

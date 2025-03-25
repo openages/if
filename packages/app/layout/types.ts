@@ -1,5 +1,6 @@
 import type { GlobalModel } from '@/context/app'
 import type { App, DirTree } from '@/types'
+import type { RefObject } from 'react'
 
 export interface IPropsSidebar {
 	current_module: App.ModuleType
@@ -31,7 +32,7 @@ export interface IPropsStacks {
 	setResizing: (v: boolean) => boolean
 	observe: GlobalModel['stack']['observe']
 	unobserve: GlobalModel['stack']['unobserve']
-	showHome: () => void
+	showHomeDrawer: () => void
 }
 
 export interface IPropsStacksNavBar
@@ -58,7 +59,7 @@ export interface IPropsStacksNavBarColumn extends Omit<IPropsStacksNavBar, 'colu
 }
 
 export interface IPropsStacksNavBarView
-	extends Omit<IPropsStacksNavBarColumn, 'column' | 'move' | 'resizing' | 'showHome'> {
+	extends Omit<IPropsStacksNavBarColumn, 'column' | 'move' | 'resizing' | 'showHomeDrawer'> {
 	view_index: number
 	view: IPropsStacksNavBar['columns'][number]['views'][number]
 	drag_overlay?: boolean
@@ -119,6 +120,37 @@ export interface IPropsSearch {
 	clearSearchHistory: () => void
 }
 
+export interface IPropsSearchInputRef {
+	text: string
+	input: HTMLInputElement
+	setText: (v: string) => void
+}
+
+export interface IPropsSearchInput {
+	className?: string
+	search_ref: RefObject<IPropsSearchInputRef>
+	module: GlobalModel['search']['module']
+	items: GlobalModel['search']['items']
+	index: GlobalModel['search']['index']
+	setModule: (v: IPropsSearch['module']) => void
+	searchByInput: GlobalModel['search']['searchByInput']
+	onClose: GlobalModel['search']['closeSearch']
+	onCheck: GlobalModel['search']['onCheck']
+	changeSearchIndex: (index: number) => void
+	clearSearchHistory: () => void
+	showResult?: () => void
+}
+
+export interface IPropsSearchResult {
+	module: GlobalModel['search']['module']
+	items: GlobalModel['search']['items']
+	index: GlobalModel['search']['index']
+	text: string
+	onCheck: GlobalModel['search']['onCheck']
+	changeSearchIndex: (index: number) => void
+	hideResult?: () => void
+}
+
 export interface IPropsSetting {
 	visible: GlobalModel['setting']['visible']
 	onClose: () => void
@@ -157,8 +189,4 @@ export interface IPropsHomeDrawerApps {
 
 export interface IPropsHomeDrawerDirtree {
 	active: App.ModuleType
-}
-
-export interface IPropsHomePage {
-	apps: GlobalModel['app']['apps']
 }

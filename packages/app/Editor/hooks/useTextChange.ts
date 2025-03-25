@@ -31,7 +31,11 @@ export default (args: Args) => {
 
 		if (!state) return
 
-		editor.setEditorState(parseEditorState(state, editor))
+		const target_editor_state = parseEditorState(state, editor)
+
+		if (target_editor_state.isEmpty()) return
+
+		editor.setEditorState(target_editor_state)
 
 		setEditorSize($getEditorSize(editor))
 	}, [text])

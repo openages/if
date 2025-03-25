@@ -7,12 +7,12 @@ import { container } from 'tsyringe'
 
 import { useGlobal } from '@/context/app'
 
-import { Actions, DirItems, DragLine, Modal, Options, Search } from './components'
+import { Actions, DirItems, Modal, Options } from './components'
 import styles from './index.css'
 import Model from './model'
 
 import type { Extend } from '@/types'
-import type { IProps, IPropsSearch, IPropsActions, IPropsDirItems, IPropsModal, IPropsOptions } from './types'
+import type { IProps, IPropsActions, IPropsDirItems, IPropsModal, IPropsOptions } from './types'
 
 const Index = (props: IProps) => {
 	const { module, actions, height = '100vh' } = props
@@ -46,10 +46,6 @@ const Index = (props: IProps) => {
 		x.focusing_index = []
 	})
 
-	const props_search: IPropsSearch = {
-		showSearch: useMemoizedFn(() => $app.Event.emit('global.app.showSearch'))
-	}
-
 	const props_dir_items: IPropsDirItems = {
 		module: x.module,
 		data: ($copy(x.node_tree.tree) as Extend.DirTree.TransformedItems) || [],
@@ -59,7 +55,7 @@ const Index = (props: IProps) => {
 		open_folder: $copy(x.open_folder),
 		star_ids: global.app.star_files.map(item => item.id),
 		onClick: useMemoizedFn(v => {
-			$app.Event.emit('global.app.toggleHomepage')
+			$app.Event.emit('global.app.toggleHomeDrawer', false)
 
 			x.onClick(v)
 		}),

@@ -13,6 +13,7 @@ interface IProps {
 	children: ReactNode
 	open: boolean
 	className?: HTMLDivElement['className']
+	wrapClassName?: HTMLDivElement['className']
 	bodyClassName?: HTMLDivElement['className']
 	title?: string | number
 	width?: string | number
@@ -32,6 +33,7 @@ const Index = (props: IProps) => {
 		children,
 		open,
 		className,
+		wrapClassName,
 		bodyClassName,
 		title,
 		width,

@@ -1,0 +1,42 @@
+._local {
+	--icon_col: 5;
+	--icon_row: 3;
+	--unit_h: 1vh;
+
+	flex: 1;
+
+	&.as_tab {
+		--unit_h: calc((100vh - 36px) / 100);
+	}
+
+	:global {
+		.app_items {
+			display: grid;
+			grid-template-columns: repeat(var(--icon_col), calc(100% / var(--icon_col)));
+			grid-template-rows: repeat(var(--icon_row), calc(100% / var(--icon_row)));
+			place-items: center;
+
+			.app_item {
+				padding: 6% 9%;
+
+				.icon_wrap {
+					max-width: min(66%, 90px);
+					max-height: 60%;
+					padding: min(15%, 18px, calc(2.4 * var(--unit_h)));
+					border-radius: 50%;
+					background-color: rgba(255, 255, 255, 1);
+					aspect-ratio: 1;
+					backdrop-filter: var(--blur);
+				}
+
+				.item_name {
+					line-height: 1;
+					margin-top: 9px;
+					color: rgba(255, 255, 255, 0.8);
+					letter-spacing: 0.3px;
+					font-size: 12px;
+				}
+			}
+		}
+	}
+}

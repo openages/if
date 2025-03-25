@@ -1,6 +1,6 @@
 import { App } from './app'
 
-import type { DirTree } from './dirtree'
+import type { DirTree } from './schema/dirtree_items'
 
 export namespace Stack {
 	export interface View {
@@ -9,6 +9,7 @@ export namespace Stack {
 		file: DirTree.Item
 		active: boolean
 		fixed: boolean
+		top?: boolean
 	}
 
 	export interface Column {

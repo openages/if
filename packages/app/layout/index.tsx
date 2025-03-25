@@ -13,15 +13,17 @@ import { isWidget } from '@/appdata'
 import { Drawer, GlobalLoading, LazyElement } from '@/components'
 import { GlobalContext, GlobalModel } from '@/context/app'
 import { useAntdLocale, useCurrentModule, useTheme } from '@/hooks'
-import { is_prod, is_sandbox } from '@/utils'
+import { WinActions } from '@/layout/components'
+import HomePage from '@/modules/homepage'
+import { is_prod, is_sandbox, is_win_electron } from '@/utils'
 
-import { AntdApp, HomeDrawer, HomePage, Screenlock, Search, Setting, Stacks } from './components'
+import { AntdApp, HomeDrawer, Screenlock, Search, Setting, Stacks } from './components'
 import { useGlobalNavigate, useGlobalTranslate, usePathChange } from './hooks'
 import styles from './index.css'
 
 import type { AppProps } from 'antd'
 import type { ConfigProviderProps } from 'antd/es/config-provider'
-import type { IPropsStacks, IPropsSearch, IPropsSetting, IPropsHomeDrawer, IPropsHomePage } from './types'
+import type { IPropsStacks, IPropsSearch, IPropsSetting, IPropsHomeDrawer } from './types'
 import type { Stack } from '@/types'
 
 const Index = () => {
@@ -31,7 +33,6 @@ const Index = () => {
 	const outlet = useOutlet()!
 	const locale = useAntdLocale(global.locale.lang)
 	const current_module = useCurrentModule()
-	const apps = $copy(global.app.apps)
 	const columns = $copy(global.stack.columns)
 
 	useGlobalNavigate()
@@ -75,7 +76,7 @@ const Index = () => {
 		setResizing: useMemoizedFn((v: boolean) => (global.stack.resizing = v)),
 		observe: useMemoizedFn(global.stack.observe),
 		unobserve: useMemoizedFn(global.stack.unobserve),
-		showHome: useMemoizedFn(() => (global.app.visible_homepage = true))
+		showHomeDrawer: useMemoizedFn(() => (global.app.visible_homepage = true))
 	}
 
 	const props_search: IPropsSearch = {
@@ -85,7 +86,11 @@ const Index = () => {
 		items: $copy(global.search.items),
 		index: $copy(global.search.index),
 		history: $copy(global.search.history),
-		setModule: useMemoizedFn(v => (global.search.module = v)),
+		setModule: useMemoizedFn(v => {
+			global.search.items = []
+			global.search.index = 0
+			global.search.module = v
+		}),
 		searchByInput: useMemoizedFn(global.search.searchByInput),
 		onClose: useMemoizedFn(global.search.closeSearch),
 		onCheck: useMemoizedFn(global.search.onCheck),
@@ -123,10 +128,6 @@ const Index = () => {
 		onStarFilesDragEnd: useMemoizedFn(global.app.onStarFilesDragEnd)
 	}
 
-	const props_home_page: IPropsHomePage = {
-		apps: $copy(global.app.apps)
-	}
-
 	const props_modal_homepage = {
 		bodyClassName: styles.modal_homepage,
 		open: global.app.visible_homepage,
@@ -158,13 +159,21 @@ const Index = () => {
 							<When condition={is_widget}>{outlet}</When>
 							<Otherwise>
 								<GlobalLoading></GlobalLoading>
-								<div className='w_100vw h_100vh border_box'>
+								<div className='w_100vw h_100vh border_box relative'>
 									<Choose>
 										<When condition={columns.length > 0}>
 											<Stacks {...props_stacks}></Stacks>
 										</When>
 										<Otherwise>
-											<HomePage {...props_home_page}></HomePage>
+											<div
+												className='is_drag w_100 absolute z_index_10 top_0 left_0 flex justify_end'
+												style={{ height: 36 }}
+											>
+												<If condition={is_win_electron}>
+													<WinActions></WinActions>
+												</If>
+											</div>
+											<HomePage></HomePage>
 										</Otherwise>
 									</Choose>
 								</div>

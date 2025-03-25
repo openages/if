@@ -21,5 +21,7 @@ export default {
 		plan: '计划',
 		data: '数据',
 		setting: '设置'
-	}
+	},
+
+	homepage: '主页'
 }

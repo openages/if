@@ -1,0 +1,39 @@
+.btn_bg_select {
+	right: 18px;
+	bottom: 18px;
+	width: 27px;
+	height: 27px;
+	border-radius: 50%;
+	opacity: 0.3;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.3);
+	transition: opacity 0.18s ease;
+	font-size: 15px;
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+._local {
+	gap: 12px;
+
+	:global {
+		.img_wrap {
+			flex: 1;
+			height: max(90px, 10vw);
+			max-height: 180px;
+			border-radius: var(--radius_large);
+
+			&.active {
+				outline: 1.5px solid var(--color_text);
+				outline-offset: 2.4px;
+			}
+
+			img {
+				border-radius: var(--radius_large);
+				object-fit: cover;
+			}
+		}
+	}
+}
