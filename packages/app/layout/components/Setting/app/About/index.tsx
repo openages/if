@@ -13,11 +13,11 @@ const Index = () => {
 				<a className='media_item' href='https://if.openages.com'>
 					Website
 				</a>
-				<a className='media_item' href='https://www.reddit.com/r/ifinity/'>
-					Reddit
+				<a className='media_item' href='https://github.com/openages/if_releases'>
+					Github
 				</a>
-				<a className='media_item' href='https://x.com/_ifapp_'>
-					X(Twitter)
+				<a className='media_item' href='https://discord.gg/sUYAR2B84h'>
+					Discord
 				</a>
 				<a className='media_item' href='https://if.openages.com/privacy'>
 					Privacy Policy
