@@ -25,3 +25,6 @@
 [submodule "packages/if_admin"]
 	path = packages/if_admin
 	url = git@1yasa:openages/if_admin.git
+[submodule "packages/if_releases"]
+	path = packages/if_releases
+	url = git@1yasa:openages/if_releases.git
