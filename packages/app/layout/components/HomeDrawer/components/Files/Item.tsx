@@ -36,12 +36,12 @@ const Index = (props: IPropsHomeDrawerFilesItem) => {
 				</Choose>
 			</div>
 			<div className='title_wrap flex align_center'>{item.name}</div>
-			<div className='icon_module_wrap flex justify_center align_center'>
+			<div className='icon_module_wrap flex justify_center align_center ml_6'>
 				<ModuleIcon type={item.module as App.ModuleType}></ModuleIcon>
 			</div>
 			<If condition={tab === 'star'}>
 				<div
-					className='star_icon_wrap none align_center clickable'
+					className='star_icon_wrap none align_center clickable ml_4'
 					onClick={e => {
 						e.stopPropagation()
 

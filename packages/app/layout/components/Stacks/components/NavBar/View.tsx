@@ -75,7 +75,7 @@ const Index = (props: IPropsStacksNavBarView) => {
 							</Choose>
 						</div>
 						<span className='name_wrap ml_2'>{view.file.name}</span>
-						<div className='icon_module_wrap flex justify_center align_center ml_2'>
+						<div className='icon_module_wrap flex justify_center align_center ml_6'>
 							<If condition={!pages.includes(view.id)}>
 								<ModuleIcon type={view.module}></ModuleIcon>
 							</If>

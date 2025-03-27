@@ -60,7 +60,7 @@ const Index = (props: IPropsDirItem_Item) => {
 				{type === 'file' && (
 					<div
 						className={$cx(
-							'star_icon_wrap align_center clickable',
+							'star_icon_wrap align_center clickable ml_4',
 							star ? 'star flex' : 'none'
 						)}
 						onClick={starFile}
