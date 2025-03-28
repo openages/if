@@ -7,7 +7,7 @@ import { schedule } from '@/appdata'
 import { useText, useTextChange, Text } from '@/Editor'
 import { useDraggable, useDroppable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
-import { Check, Info, X } from '@phosphor-icons/react'
+import { Check, DotsThreeVertical, X } from '@phosphor-icons/react'
 
 import { useDragLength } from '../../hooks'
 import { getTimeText } from '../../utils'
@@ -28,24 +28,22 @@ const Index = (props: IPropsTimeBlock) => {
 		month_mode,
 		step,
 		at_bottom,
-		year_scale,
 		dnd_data,
 		updateTimeBlock,
 		removeTimeBlock,
 		copyTimeBlock,
 		changeTimeBlockLength
 	} = props
-	const context_menu_items = useContextMenuItems()
 	const { t } = useTranslation()
+	const [focus, setFocus] = useState(false)
+	const context_menu_items = useContextMenuItems()
 	const { visible_detail, toggleVisibleDetail } = useVisibleDetail()
 	const status = useTodos(item?.todos || [])
 	const tag_styles = useTagStyles(tags, item.tag)
 	const timeline = useMemo(() => angle_row_id !== undefined, [angle_row_id])
 	const look = useLook({ item, month_mode, step, timeline })
-	const time = useTime({ year_scale, item, timeline })
+	const time = useTime({ item, timeline })
 	const { start_time, end_time } = item
-
-	const [focus, setFocus] = useState(false)
 
 	const { stopPropagationContextMenu, onKeyDown, onAction } = useHandlers({
 		item,
@@ -89,12 +87,12 @@ const Index = (props: IPropsTimeBlock) => {
 		update: v => updateTimeBlock(item.id, { text: v })
 	})
 
+	useTextChange({ ref_editor, text: item.text })
+
 	const { value: time_value } = useMemo(
 		() => getTimeText(dayjs(item.start_time), dayjs(item.end_time)),
 		[start_time, end_time]
 	)
-
-	useTextChange({ ref_editor, text: item.text })
 
 	return (
 		<Popover
@@ -143,13 +141,17 @@ const Index = (props: IPropsTimeBlock) => {
 						<div className='drag_line w_100 absolute bottom_0 right_0' ref={drag_ref}></div>
 					</If>
 					<div
-						className={$cx(
-							'btn_detail none justify_center align_center absolute clickable',
-							visible_detail && 'visible_detail'
-						)}
+						className='btn_detail flex justify_center align_center absolute clickable'
 						onClick={toggleVisibleDetail}
 					>
-						{visible_detail ? <X size={12}></X> : <Info size={14}></Info>}
+						<Choose>
+							<When condition={visible_detail}>
+								<X size={12}></X>
+							</When>
+							<Otherwise>
+								<DotsThreeVertical size={14} weight='bold'></DotsThreeVertical>
+							</Otherwise>
+						</Choose>
 					</div>
 					<div
 						className='timeblock_content_wrap w_100 h_100 border_box flex flex_column absolute top_0 left_0'

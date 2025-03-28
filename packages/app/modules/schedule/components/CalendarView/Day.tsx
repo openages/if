@@ -80,7 +80,12 @@ const Index = (props: IPropsCalendarViewDay) => {
 			onContextMenu={onContextMenu}
 			ref={setNodeRef}
 		>
-			<div className='hours_wrap w_100 flex flex_column'>
+			<div
+				className={$cx(
+					'hours_wrap w_100 flex flex_column',
+					[0, 6].includes(day_info.value.day()) && 'relax_day'
+				)}
+			>
 				{hours.map(item => (
 					<span
 						className='hour_item w_100 border_box flex justify_center align_center'

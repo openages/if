@@ -18,21 +18,39 @@
 		:global {
 			.btn_now_wrap {
 				width: 90px;
-				border-right: var(--border_light);
+				border-right: unset;
 			}
 
 			.weekday_items {
+				position: relative;
 				width: calc(100% - 90px);
-			}
-		}
-	}
 
-	&.timeline_month {
-		:global {
-			.weekday_items {
+				&::after {
+					position: absolute;
+					bottom: 0;
+					left: -1px;
+					width: 1px;
+					height: 4px;
+					background-color: var(--color_border_light);
+					content: '';
+				}
+
 				.weekday_item {
 					position: relative;
+					overflow: visible;
 					border-right: none;
+
+					&.today {
+						&::after {
+							bottom: 0px;
+							left: -3.5px;
+							width: 6px;
+							height: 3px;
+							border-top-left-radius: 6px;
+							border-top-right-radius: 6px;
+							background-color: var(--color_text);
+						}
+					}
 
 					&::after {
 						position: absolute;
@@ -42,6 +60,32 @@
 						height: 4px;
 						background-color: var(--color_border_light);
 						content: '';
+					}
+
+					.date_wrap {
+						position: absolute;
+						left: -50%;
+						width: 100%;
+						line-height: 1;
+						font-family: var(--font_serif);
+
+						&.today {
+							.week_info,
+							.date {
+								font-weight: bold;
+							}
+						}
+
+						.week_info {
+							margin-bottom: 4px;
+							color: var(--color_text);
+							font-size: 8px;
+						}
+
+						.date {
+							color: var(--color_text);
+							font-size: 12px;
+						}
 					}
 				}
 			}
@@ -65,19 +109,10 @@
 
 				&.today {
 					font-weight: 500;
+				}
 
-					.date {
-						width: 18px;
-						height: 15px;
-						line-height: 13px;
-						box-sizing: border-box;
-						border: 1px solid var(--color_text);
-						border-radius: 3px;
-						color: var(--color_text);
-						text-align: center;
-						font-size: 10px;
-						font-weight: 500;
-					}
+				&.relax_day {
+					background-color: var(--color_bg_1);
 				}
 
 				&.hidden_time_scale {
@@ -88,14 +123,8 @@
 					justify-content: center;
 				}
 
-				&.timeline_narrow {
-					.date {
-						color: var(--color_text);
-					}
-				}
-
 				.date {
-					color: var(--color_text_softlight);
+					color: var(--color_text_light);
 					font-size: 10px;
 				}
 			}

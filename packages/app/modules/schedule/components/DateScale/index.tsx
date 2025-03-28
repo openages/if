@@ -19,13 +19,6 @@ const Index = (props: IPropsDateScale) => {
 		[view, scale, days]
 	)
 
-	const { timeline_month, timeline_narrow } = useMemo(() => {
-		return {
-			timeline_month: view === 'timeline' && scale === 'month',
-			timeline_narrow: view === 'timeline' && (scale === 'month' || scale === 'year')
-		}
-	}, [view, scale])
-
 	return (
 		<div
 			className={$cx(
@@ -33,8 +26,7 @@ const Index = (props: IPropsDateScale) => {
 				styles._local,
 				!show_time_scale && styles.hidden_time_scale,
 				scale === 'day' && styles.day_scale,
-				view === 'timeline' && styles.timeline,
-				timeline_month && styles.timeline_month
+				view === 'timeline' && styles.timeline
 			)}
 		>
 			{(show_time_scale || view === 'timeline') && (
@@ -55,27 +47,38 @@ const Index = (props: IPropsDateScale) => {
 						className={$cx(
 							'weekday_item border_box flex align_center',
 							item.is_today && 'today',
-							!show_time_scale && !timeline && 'hidden_time_scale',
-							!not_fixed && 'fixed_view',
-							!timeline_narrow ? 'justify_between' : 'justify_center',
-							timeline_narrow && 'timeline_narrow'
+							!timeline && [0, 6].includes(item.value.day()) && 'relax_day',
+							!timeline && !show_time_scale && 'hidden_time_scale',
+							!not_fixed && 'fixed_view'
 						)}
 						style={{ width: `calc(100% / ${show_time_scale || timeline ? days.length : 7})` }}
 						key={index}
 					>
-						<div className='flex align_center'>
-							{!timeline_narrow && <span className='weekday mr_6'>{item.weekday}</span>}
-							{not_fixed && (show_time_scale || timeline) && (
-								<span className='date'>
-									{timeline && scale === 'year'
-										? item.value.format('MMMM')
-										: item.date}
-								</span>
-							)}
-						</div>
-						{not_fixed && (show_time_scale || timeline) && !timeline_narrow && (
-							<DayExtra item={item}></DayExtra>
-						)}
+						<Choose>
+							<When condition={timeline}>
+								<div
+									className={$cx(
+										'date_wrap flex flex_column justify_center absolute',
+										item.is_today && 'today'
+									)}
+								>
+									<span className='week_info flex justify_center'>
+										{item.weekday}
+									</span>
+									<span className='date flex justify_center'>{item.date}</span>
+								</div>
+							</When>
+							<Otherwise>
+								<div className='flex align_center'>
+									<span className='weekday mr_6'>{item.weekday}</span>
+									{not_fixed && show_time_scale && (
+										<span className='date'>{item.date}</span>
+									)}
+								</div>
+							</Otherwise>
+						</Choose>
+
+						{not_fixed && show_time_scale && !timeline && <DayExtra item={item}></DayExtra>}
 					</div>
 				))}
 			</div>

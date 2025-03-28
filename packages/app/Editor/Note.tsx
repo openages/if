@@ -1,5 +1,6 @@
 import convertFromString from '@/Editor/utils/convertFromString'
 import getNodesFromText from '@/Editor/utils/getNodesFromText'
+import { useStackId } from '@/hooks'
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
@@ -47,13 +48,14 @@ import { onError } from './utils'
 import type { IPropsNote } from './types'
 
 const Index = (props: IPropsNote) => {
-	const { id, collection, setEditor } = props
+	const { collection, setEditor } = props
+	const stack_id = useStackId()
 
 	return (
 		<div className={$cx('__editor_container w_100 relative', ...note_style)}>
 			<LexicalComposer
 				initialConfig={{
-					refs: { id, getNodesFromText, convertFromString },
+					refs: { id: stack_id, getNodesFromText, convertFromString },
 					namespace: 'editor',
 					nodes: note_nodes,
 					theme: token,

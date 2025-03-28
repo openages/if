@@ -21,7 +21,7 @@ const Index = (props: IPropsCalendarViewTimeBlockSignal) => {
 
 		target['top'] = 6
 		target['width'] = item.length * step
-		target['height'] = 36
+		target['height'] = 48
 
 		return target
 	}, [item, step, timeline])

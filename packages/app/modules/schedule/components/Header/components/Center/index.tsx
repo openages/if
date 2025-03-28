@@ -23,7 +23,7 @@ const Footer = $app.memo(({ scale, changeCurrent }: IPropsFooter) => {
 	const setCurrentWeek = useMemoizedFn(() => changeCurrent(dayjs()))
 
 	return (
-		<div className='w_100 clickable' onClick={setCurrentWeek}>
+		<div className='w_100 text_center clickable' onClick={setCurrentWeek}>
 			{scale === 'month' ? t('common.current_month') : t('common.current_week')}
 		</div>
 	)
@@ -44,9 +44,9 @@ const Index = (props: IPropsHeaderCenter) => {
 	const picker = useMemo(() => {
 		return match(scale!)
 			.with('day', () => ({ value: 'date', offset: -51 }))
-			.with('week', () => ({ value: 'week', offset: -66 }))
+			.with('week', () => ({ value: 'week', offset: -72 }))
 			.with('month', () =>
-				view === 'timeline' ? { value: 'date', offset: -51 } : { value: 'month', offset: -40 }
+				view === 'timeline' ? { value: 'date', offset: -75 } : { value: 'month', offset: -75 }
 			)
 			.with('year', () => ({ value: 'year', offset: -40 }))
 			.exhaustive()

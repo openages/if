@@ -49,14 +49,9 @@ export default (theme: Theme, color_main: string) => {
 				controlHeightXS: 20
 			},
 			DatePicker: {
-				controlHeight: 24,
-				cellHeight: 24,
-				cellWidth: 24,
-				timeCellHeight: 24,
-				timeColumnWidth: 36,
-				textHeight: 30,
-				fontSize: 12,
-				colorSplit: 'transparent'
+				cellHeight: 26,
+				cellWidth: 26,
+				fontSize: 12
 			},
 			Dropdown: {
 				controlItemBgHover: vars.color_bg_2

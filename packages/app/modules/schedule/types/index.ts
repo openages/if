@@ -125,7 +125,6 @@ export interface IPropsMonthViewDay {
 export interface IPropsTimelineView {
 	unpaid: boolean
 	container: RefObject<HTMLDivElement>
-	scale: Model['scale']
 	days: Model['days']
 	setting_timeline_angles: Schedule.Setting['timeline_angles']
 	timeline_rows: Model['timeline_rows']
@@ -145,10 +144,8 @@ export interface IPropsTimelineViewDay {
 export interface IPropsTimelineViewRow {
 	unpaid: boolean
 	container: RefObject<HTMLDivElement>
-	scale: Model['scale']
 	tags: Schedule.Setting['tags']
 	step: number
-	limit: number
 	days_length: number
 	angle_index: number
 	row_index: number
@@ -172,7 +169,6 @@ export interface IPropsTimeBlock {
 	month_mode?: boolean
 	step?: number
 	at_bottom?: boolean
-	year_scale?: boolean
 	dnd_data?: any
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']
@@ -201,8 +197,8 @@ export interface IPropsSettingsModal {
 export interface IPropsScanline {
 	scanline?: RefObject<HTMLDivElement>
 	timeline?: boolean
-	scale?: Model['scale']
 	step?: number
+	start_day?: string
 	scrollToScanline?: () => void
 }
 

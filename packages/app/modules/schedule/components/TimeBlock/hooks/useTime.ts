@@ -1,33 +1,20 @@
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { getCrossTime } from '../../../utils'
 
 import type { IPropsTimeBlock } from '@/modules/schedule/types'
 
-interface Args extends Pick<IPropsTimeBlock, 'year_scale' | 'item'> {
+interface Args extends Pick<IPropsTimeBlock, 'item'> {
 	timeline: boolean
 }
 
 export default (args: Args) => {
-	const { year_scale, item, timeline } = args
-	const { t } = useTranslation()
+	const { item, timeline } = args
 
 	return useMemo(() => {
 		const start_time = dayjs(item.raw_start_time ?? item.start_time)
 		const end_time = dayjs(item.raw_end_time ?? item.end_time)
-
-		if (year_scale) {
-			const months = end_time.diff(start_time, 'month')
-
-			return {
-				time: `${start_time.format('MMMM')} - ${end_time.format('MMMM')}`,
-				cross_time: `${months}${t('common.letter_space')}${t(
-					`common.time.month${months > 1 ? 's' : ''}`
-				)}`
-			}
-		}
 
 		const cross_time = getCrossTime(start_time, end_time, timeline)
 
@@ -42,5 +29,5 @@ export default (args: Args) => {
 				cross_time
 			}
 		}
-	}, [year_scale, item, timeline])
+	}, [item, timeline])
 }

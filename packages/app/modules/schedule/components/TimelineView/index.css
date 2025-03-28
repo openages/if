@@ -4,22 +4,35 @@
 	:global {
 		.timeline_angle {
 			padding-left: 90px;
-			border-bottom: var(--border_light);
 
 			.angle_header {
 				width: 90px;
 				line-height: 1.2;
-				padding: 0 12px;
+				padding: 12px;
 				border-right: var(--border_light);
+				border-bottom: var(--border_light);
+				font-family: var(--font_serif);
 				font-size: 12px;
 				font-weight: 500;
 			}
 
 			.angle_rows {
 				padding: 6px 0;
+				border-bottom: var(--border_light);
+
+				.row_day_items {
+					.row_day_item {
+						flex: 1;
+						border-right: var(--border_light);
+
+						&.relax_day {
+							background-color: var(--color_bg_1);
+						}
+					}
+				}
 
 				.timeline_row {
-					height: 36px;
+					height: 48px;
 					padding: 6px 0;
 				}
 			}

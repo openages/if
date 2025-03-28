@@ -7,7 +7,7 @@ import styles from './index.css'
 import type { IPropsScanline } from '../../types'
 
 const Index = (props: IPropsScanline) => {
-	const { scanline, timeline, scale, step, scrollToScanline } = props
+	const { scanline, timeline, step, start_day, scrollToScanline } = props
 	const [offset, setOffset] = useState<number | string>(0)
 	const mounted = useRef(false)
 
@@ -15,24 +15,13 @@ const Index = (props: IPropsScanline) => {
 		const now = dayjs()
 
 		if (timeline) {
-			if (scale !== 'year') {
-				let begin = null
+			let begin = null
 
-				if (scale === 'day') begin = now.startOf('day')
-				if (scale === 'week') begin = now.startOf('week')
-				if (scale === 'month') begin = now.startOf('month')
+			begin = dayjs(start_day)
 
-				const target = (now.diff(begin, 'hours') * step!) / 12
+			const target = (now.diff(begin, 'hours') * step!) / 24
 
-				setOffset(target + 90)
-			} else {
-				const begin = now.startOf('year')
-				const days = now.diff(begin, 'day')
-				const total_days = begin.isLeapYear() ? 366 : 365
-				const target = ((days / total_days) * 100).toFixed(2)
-
-				setOffset(`calc(${target}% + 90px)`)
-			}
+			setOffset(target + 90)
 		} else {
 			const begin = now.startOf('day')
 			const target = (now.diff(begin, 'minutes') * 16) / 20
@@ -62,7 +51,7 @@ const Index = (props: IPropsScanline) => {
 			clearInterval(timer_top)
 			clearTimeout(timer_scroll)
 		}
-	}, [timeline, scale, step])
+	}, [timeline, step, start_day])
 
 	if (timeline && !step) return null
 

@@ -1,7 +1,8 @@
 import { parseEditorState } from 'lexical'
 import niceTry from 'nice-try'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
+import { useCreateEffect } from '@/hooks'
 import { deepEqual } from '@openages/stk/react'
 
 import { $getEditorSize } from '../utils'
@@ -18,7 +19,7 @@ export default (args: Args) => {
 	const { ref_editor, text } = args
 	const [editor_size, setEditorSize] = useState(0)
 
-	useEffect(() => {
+	useCreateEffect(() => {
 		const editor = ref_editor.current
 
 		if (!editor || !text) return
@@ -32,10 +33,11 @@ export default (args: Args) => {
 		if (!state) return
 
 		const target_editor_state = parseEditorState(state, editor)
+		const empty = target_editor_state.isEmpty()
 
-		if (target_editor_state.isEmpty()) return
-
-		editor.setEditorState(target_editor_state)
+		if (!empty) {
+			editor.setEditorState(target_editor_state)
+		}
 
 		setEditorSize($getEditorSize(editor))
 	}, [text])

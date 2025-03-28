@@ -29,9 +29,7 @@ export interface InternalSerializedNode {
 	children?: Array<InternalSerializedNode>
 }
 
-export interface IPropsNote extends IPropsDataLoader {
-	id: string
-}
+export interface IPropsNote extends IPropsDataLoader {}
 
 export interface IPropsText extends IPropsTextLoader, IPropsLinkEditor {
 	id?: HTMLDivElement['id']

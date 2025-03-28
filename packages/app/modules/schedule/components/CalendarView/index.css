@@ -11,8 +11,12 @@
 
 	:global {
 		.hours_wrap {
-			width: calc(100% + 3px);
+			width: 100%;
 			margin-left: -1px;
+
+			&.relax_day {
+				background-color: var(--color_bg_1);
+			}
 
 			.hour_item {
 				height: 48px;

@@ -1,43 +1,5 @@
-[data-theme='dark'] {
-	._local {
-		&.has_tag {
-			color: rgba(var(--color_text_rgb), 1);
-
-			:global {
-				.timeblock_content_wrap {
-					border: 1px solid rgba(var(--tag_color), 0.3);
-					color: rgba(var(--color_text_rgb), 1);
-					background: rgba(var(--tag_color), 0.09);
-
-					.text_wrap {
-						&:empty::after {
-							color: rgba(var(--color_text_rgb), 0.6);
-						}
-
-						.timeblock_placeholder {
-							color: rgba(var(--color_text_rgb), 0.6);
-						}
-					}
-
-					.time {
-						color: rgba(var(--color_text_rgb), 0.6);
-					}
-				}
-			}
-		}
-
-		&.no_tag {
-			:global {
-				.timeblock_content_wrap {
-					border: 1px solid rgba(var(--color_text_rgb), 0.09);
-					background-color: rgba(var(--color_text_rgb), 0.09);
-				}
-			}
-		}
-	}
-}
-
 ._local {
+	z-index: 100;
 	overflow: hidden;
 	outline: none;
 	background-color: var(--color_bg);
@@ -74,8 +36,10 @@
 	}
 
 	&.signal {
-		border: 1px dashed var(--color_text);
-		background-color: var(--color_bg);
+		border-radius: var(--radius);
+		outline: 1px solid var(--color_text);
+		background-color: transparent;
+		backdrop-filter: var(--blur);
 	}
 
 	&.xxsmall {
@@ -195,8 +159,6 @@
 	}
 
 	&.has_tag {
-		color: rgba(var(--tag_color), 0.9);
-
 		::selection {
 			color: var(--color_bg_2);
 			background-color: var(--color_text_sub);
@@ -205,8 +167,7 @@
 		:global {
 			.timeblock_content_wrap {
 				border: 1px solid rgba(var(--tag_color), 0.72);
-				color: rgba(var(--tag_color), 0.9);
-				background: rgba(var(--tag_color), 0.12);
+				background: rgba(var(--tag_color), 0.3);
 
 				.text_wrap {
 					&:empty::after {
@@ -217,10 +178,6 @@
 						color: rgba(var(--tag_color), 0.6);
 					}
 				}
-
-				.time {
-					color: rgba(var(--tag_color), 0.6);
-				}
 			}
 		}
 	}
@@ -229,7 +186,7 @@
 		:global {
 			.timeblock_content_wrap {
 				border: 1px solid rgba(var(--color_text_rgb), 0.12);
-				background-color: rgba(var(--color_text_rgb), 0.012);
+				background-color: var(--color_bg_1);
 			}
 		}
 	}
@@ -305,20 +262,7 @@
 	}
 
 	&.timeline {
-		z-index: 2;
-		height: 38px;
-
-		&.no_tag {
-			:global {
-				.timeblock_content_wrap {
-					background: var(--color_bg_1) !important;
-
-					&::before {
-						background: rgba(var(--color_text_rgb), 0.18);
-					}
-				}
-			}
-		}
+		height: 48px;
 
 		:global {
 			p {
@@ -333,35 +277,28 @@
 			}
 
 			.btn_detail {
-				top: 11.1px;
+				top: 6px;
 				right: 3px;
-				color: var(--color_text) !important;
+				display: flex;
+				border-radius: var(--radius_small);
+				color: var(--color_text_sublight);
+
+				&:hover {
+					color: var(--color_text);
+				}
 			}
 
 			.timeblock_content_wrap {
-				padding: 1px 4px;
-				padding-left: 24px;
-				border: none !important;
-				border-radius: 19px;
-				color: rgba(var(--color_text_rgb), 1);
-				background: rgba(var(--tag_color), 0.12) !important;
-
-				&::before {
-					position: absolute;
-					top: 15px;
-					left: 9px;
-					width: 8px;
-					height: 8px;
-					border-radius: 50%;
-					background: rgba(var(--tag_color), 1);
-					content: '';
-				}
+				padding: 4px 8px;
+				padding-top: 2px;
+				padding-right: 18px;
 
 				.text_wrap {
-					height: 20px;
-					line-height: 20px;
+					height: 24px;
+					line-height: 24px;
 					padding: 0;
 					white-space: nowrap;
+					font-size: 12px;
 
 					&:empty {
 						&::after {
@@ -377,8 +314,7 @@
 				}
 
 				.time {
-					height: 14px;
-					margin-top: 0px;
+					margin-top: 2px;
 					color: rgba(var(--color_text_rgb), 0.42);
 				}
 			}
@@ -395,14 +331,10 @@
 
 		.btn_detail {
 			z-index: 1;
-			top: 1px;
-			right: 1px;
+			top: 3px;
+			right: 0;
 			width: 16px;
 			height: 16px;
-
-			&.visible_detail {
-				display: flex;
-			}
 		}
 
 		.timeblock_content_wrap {
@@ -435,12 +367,16 @@
 					color: var(--color_text_light);
 					font-weight: normal;
 				}
+
+				.__editor_root {
+					width: 100%;
+				}
 			}
 
 			.time {
 				line-height: 1;
 				margin-top: 6px;
-				color: var(--color_text_light);
+				color: rgba(var(--color_text_rgb), 0.42);
 				user-select: none;
 				white-space: nowrap;
 				font-size: 10px;

@@ -9,24 +9,5 @@
 				}
 			}
 		}
-
-		.if-picker-month-panel-container {
-			.if-picker-body {
-				padding: 0;
-			}
-		}
-
-		.if-picker-footer {
-			padding-bottom: 9px;
-
-			.if-picker-ranges {
-				padding: 0;
-				margin-top: 0;
-			}
-
-			.if-picker-footer-extra {
-				line-height: 1;
-			}
-		}
 	}
 }

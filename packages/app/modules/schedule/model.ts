@@ -290,10 +290,9 @@ export default class Index {
 	}) {
 		const { index, row_index, start, length, info, overflow } = args
 		const timeline = this.view === 'timeline'
-		const year_scale = this.scale === 'year'
 		const date = this.days[timeline ? 0 : index].value
 		const target_length = info?.length && !overflow ? info.length : length
-		const { start_time, end_time } = getStartEnd(date, start, target_length, timeline, year_scale)
+		const { start_time, end_time } = getStartEnd(date, start, target_length, timeline)
 		const target_info = (info ? omit(info, ['start', 'length']) : {}) as Partial<Schedule.Item>
 
 		if (this.view === 'fixed') target_info['fixed_scale'] = this.scale
@@ -384,8 +383,7 @@ export default class Index {
 			date,
 			this.move_item.start,
 			this.move_item.length,
-			this.view === 'timeline',
-			this.scale === 'year'
+			this.view === 'timeline'
 		)
 
 		active_item.start = this.move_item.start
@@ -393,7 +391,7 @@ export default class Index {
 		active_item.start_time = start_time
 		active_item.end_time = end_time
 
-		if (this.view !== 'fixed' && this.show_time_scale) {
+		if (this.view !== 'fixed') {
 			active_item.past = dayjs().valueOf() >= active_item.end_time
 		}
 
@@ -456,13 +454,9 @@ export default class Index {
 
 			item.length = target_length
 
-			if (this.scale !== 'year') {
-				item.end_time = dayjs(item.start_time)
-					.add(item.length * 12, 'hours')
-					.valueOf()
-			} else {
-				item.end_time = dayjs(item.start_time).add(item.length, 'month').valueOf()
-			}
+			item.end_time = dayjs(item.start_time)
+				.add(item.length * 24, 'hours')
+				.valueOf()
 
 			this.updateTimeBlock(item.id, { end_time: item.end_time })
 		} else {
@@ -656,26 +650,20 @@ export default class Index {
 
 		const selector: MangoQuerySelector<Schedule.Item> = {}
 
-		if (this.scale !== 'year') {
-			selector['$or'] = [
-				{
-					start_time: { $gte: view_start_time.valueOf() },
-					end_time: { $lte: view_end_time.valueOf() + 1 }
-				},
-				{
-					start_time: { $lt: view_start_time.valueOf() },
-					end_time: { $gt: view_start_time.valueOf() }
-				},
-				{
-					start_time: { $lt: view_end_time.valueOf() + 1 },
-					end_time: { $gt: view_end_time.valueOf() + 1 }
-				}
-			]
-		} else {
-			selector['timeline_year'] = true
-			selector['start_time'] = { $gte: this.current.startOf('year').valueOf() }
-			selector['end_time'] = { $lte: this.current.endOf('year').valueOf() + 1 }
-		}
+		selector['$or'] = [
+			{
+				start_time: { $gte: view_start_time.valueOf() },
+				end_time: { $lte: view_end_time.valueOf() + 1 }
+			},
+			{
+				start_time: { $lt: view_start_time.valueOf() },
+				end_time: { $gt: view_start_time.valueOf() }
+			},
+			{
+				start_time: { $lt: view_end_time.valueOf() + 1 },
+				end_time: { $gt: view_end_time.valueOf() + 1 }
+			}
+		]
 
 		this.timeline_rows_watcher = getTimeBlocks(
 			this.id,
@@ -700,14 +688,8 @@ export default class Index {
 				const start_time = dayjs(item.start_time)
 				const end_time = dayjs(item.end_time)
 
-				if (this.scale !== 'year') {
-					item['start'] = start_time.diff(begin, 'hours') / 12
-					item['length'] = end_time.diff(start_time, 'hours') / 12
-				} else {
-					item['start'] = start_time.diff(begin, 'month')
-					item['length'] = end_time.diff(start_time, 'month')
-				}
-
+				item['start'] = start_time.diff(begin, 'hours') / 24
+				item['length'] = end_time.diff(start_time, 'hours') / 24
 				item['past'] = now.valueOf() >= item.end_time
 
 				target[item.timeline_angle_row_id!].push(item)

@@ -1,6 +1,7 @@
 import { useMemoizedFn } from 'ahooks'
 import { useRef } from 'react'
 
+import getEditorText from '@/utils/getEditorText'
 import { deepEqual } from '@openages/stk/react'
 
 import type { LexicalEditor } from 'lexical'

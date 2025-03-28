@@ -1,4 +1,5 @@
 import getNodesFromText from '@/Editor/utils/getNodesFromText'
+import { useStackId } from '@/hooks'
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
@@ -36,6 +37,7 @@ const Index = (props: IPropsText) => {
 		onContextMenu,
 		onClick
 	} = props
+	const stack_id = useStackId()
 
 	const props_rich_text = {
 		contentEditable: <ContentEditable />,
@@ -56,7 +58,7 @@ const Index = (props: IPropsText) => {
 		>
 			<LexicalComposer
 				initialConfig={{
-					refs: { id: id!, text_mode: !linebreak, getNodesFromText },
+					refs: { id: stack_id, text_mode: !linebreak, getNodesFromText },
 					namespace: 'editor',
 					nodes: text_nodes,
 					theme: token,

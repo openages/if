@@ -129,7 +129,6 @@ const Index = ({ id }: IProps) => {
 	const props_timeline_view: IPropsTimelineView = {
 		unpaid,
 		container,
-		scale: x.scale,
 		days,
 		setting_timeline_angles: $copy(x.setting?.setting?.['timeline_angles'] || []),
 		timeline_rows,

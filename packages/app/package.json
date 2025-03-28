@@ -1,6 +1,6 @@
 {
 	"name": "@openages/if-app",
-	"version": "0.3.6",
+	"version": "0.3.7",
 	"description": "AI with body.",
 	"scripts": {
 		"dev": "cross-env SHELL=browser rspack serve",
@@ -122,8 +122,8 @@
 		"zod": "^3.24.1"
 	},
 	"devDependencies": {
-		"@rspack/cli": "1.3.0-beta.0",
-		"@rspack/core": "1.3.0-beta.0",
+		"@rspack/cli": "1.3.0",
+		"@rspack/core": "1.3.0",
 		"@rspack/plugin-react-refresh": "1.0.1",
 		"@types/color": "^4.2.0",
 		"@types/crypto-js": "^4.2.2",

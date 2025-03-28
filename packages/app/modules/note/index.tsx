@@ -41,7 +41,7 @@ const Index = ({ id }: IProps) => {
 				onChange={x.onChangeFileName}
 				onBlur={x.onBlurFileName}
 			></TextArea>
-			<Note id={id} collection='note_items' setEditor={setEditor}></Note>
+			<Note collection='note_items' setEditor={setEditor}></Note>
 		</div>
 	)
 }

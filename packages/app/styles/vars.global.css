@@ -30,4 +30,6 @@
 
 	--font_family: 'IBMPlexSans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, 'Noto Sans',
 		sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+	--font_serif: 'SourceSerif4', Georgia, ui-serif, serif, '宋体', SimSun, Songti SC;
 }

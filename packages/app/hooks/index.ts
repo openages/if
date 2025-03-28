@@ -26,6 +26,7 @@ export { default as useMountEffect } from './useMountEffect'
 export { default as useDeepLayoutEffect } from './useDeepLayoutEffect'
 export { default as useDeepEffect } from './useDeepEffect'
 export { default as useCreateLayoutEffect } from './useCreateLayoutEffect'
+export { default as useCreateEffect } from './useCreateEffect'
 export { default as useTest } from './useTest'
 
 export * from './useAntdApp'

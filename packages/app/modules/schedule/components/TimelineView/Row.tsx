@@ -15,10 +15,8 @@ const Index = (props: IPropsTimelineViewRow) => {
 	const {
 		unpaid,
 		container,
-		scale,
 		tags,
 		step,
-		limit,
 		days_length,
 		angle_index,
 		row_index,
@@ -58,13 +56,15 @@ const Index = (props: IPropsTimelineViewRow) => {
 
 		$app.Event.emit('schedule/context_menu/hidden', row_id)
 
+		const limit = 2
+
 		let length = limit
 		let overflow = false
 
 		const start = getStartByX(container.current!, step, e.clientX)!
 
-		if (start + limit >= days_length * limit) {
-			length = days_length * limit - start
+		if (start + limit >= days_length) {
+			length = days_length - start
 			overflow = true
 		}
 
@@ -73,6 +73,7 @@ const Index = (props: IPropsTimelineViewRow) => {
 		if (!target_length) return
 
 		setSignal({ start, length: target_length } as IPropsTimelineViewRow['move_item'])
+
 		show({ event: e, props: { index: angle_index, row_index, start, length: target_length, overflow } })
 	})
 
@@ -87,7 +88,6 @@ const Index = (props: IPropsTimelineViewRow) => {
 					angle_row_id={row_id}
 					timeblock_index={timeblock_index}
 					step={step}
-					year_scale={scale === 'year'}
 					dnd_data={{ step, angle_index, row_index, angle_id, row_id }}
 					at_bottom
 					updateTimeBlock={updateTimeBlock}
