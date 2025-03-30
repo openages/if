@@ -168,7 +168,6 @@ export interface IPropsTimeBlock {
 	angle_row_id?: string
 	month_mode?: boolean
 	step?: number
-	at_bottom?: boolean
 	dnd_data?: any
 	updateTimeBlock: Model['updateTimeBlock']
 	removeTimeBlock: Model['removeTimeBlock']

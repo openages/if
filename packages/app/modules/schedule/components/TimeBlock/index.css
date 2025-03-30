@@ -350,6 +350,7 @@
 			.text_wrap {
 				line-height: 14px;
 				outline: none;
+				color: rgba(var(--color_contrast_rgb), 0.81);
 				cursor: text;
 				font-size: 12px;
 				font-weight: 500;

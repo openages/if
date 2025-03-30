@@ -4,7 +4,7 @@ import { injectable } from 'tsyringe'
 import { Utils } from '@/models'
 import { setStorageWhenChange } from '@openages/stk/mobx'
 
-import type { App } from '@/types'
+import type { App, Stack } from '@/types'
 
 export const bgs = [
 	require('@/public/images/bg_homepage_0.jpg'),
@@ -45,9 +45,14 @@ export default class Index {
 		this.drawer_visible = true
 	}
 
+	addMiniApp(module: App.MiniAppType) {
+		$app.Event.emit('global.stack.addMiniApp', { module } as Stack.View)
+	}
+
 	on() {
 		$app.Event.on('homepage.showDirtree', this.showDirtree)
 		$app.Event.on('homepage.showFiles', this.showFiles)
+		$app.Event.on('homepage.addMiniApp', this.addMiniApp)
 	}
 
 	off() {
@@ -55,5 +60,6 @@ export default class Index {
 
 		$app.Event.off('homepage.showDirtree', this.showDirtree)
 		$app.Event.off('homepage.showFiles', this.showFiles)
+		$app.Event.off('homepage.addMiniApp', this.addMiniApp)
 	}
 }

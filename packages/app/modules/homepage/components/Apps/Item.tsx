@@ -10,7 +10,7 @@ const Index = (props: IPropsAppsItem) => {
 	const { t } = useTranslation()
 
 	const onClick = useMemoizedFn(() => {
-		$app.Event.emit(event, args)
+		$app.Event.emit(event, args || id)
 	})
 
 	return (

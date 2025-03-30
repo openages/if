@@ -3,12 +3,12 @@ import { debounce, omit } from 'lodash-es'
 import { makeAutoObservable } from 'mobx'
 import { injectable } from 'tsyringe'
 
+import { mini_app_icon } from '@/appdata'
 import Utils from '@/models/utils'
 import { arrayMove } from '@dnd-kit/sortable'
 import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
-import { local } from '@openages/stk/storage'
 
-import type { DirTree, Stack } from '@/types'
+import type { DirTree, Stack, App } from '@/types'
 import type { DragEndEvent } from '@dnd-kit/core'
 import type { Watch } from '@openages/stk/mobx'
 
@@ -315,6 +315,20 @@ export default class Index {
 		this.columns = $copy(this.columns)
 	}
 
+	addMiniApp(args: { module: App.MiniAppType; top: boolean }) {
+		const { module, top } = args
+		const id = `__${module}__`
+
+		this.add({
+			id,
+			module,
+			file: { id, icon: mini_app_icon[module], name: $t(`modules.${module}`) } as DirTree.Item,
+			active: true,
+			fixed: true,
+			top
+		})
+	}
+
 	handleStackOffs(id: string) {
 		const target_offs = $stack_offs.get(id)
 
@@ -365,6 +379,7 @@ export default class Index {
 	on() {
 		$app.Event.on('global.stack.find', this.find)
 		$app.Event.on('global.stack.add', this.add)
+		$app.Event.on('global.stack.addMiniApp', this.addMiniApp)
 		$app.Event.on('global.stack.updateFile', this.updateFile)
 		$app.Event.on('global.stack.removeFile', this.removeFile)
 	}
@@ -375,6 +390,7 @@ export default class Index {
 
 		$app.Event.off('global.stack.find', this.find)
 		$app.Event.off('global.stack.add', this.add)
+		$app.Event.off('global.stack.addMiniApp', this.addMiniApp)
 		$app.Event.off('global.stack.updateFile', this.updateFile)
 		$app.Event.off('global.stack.removeFile', this.removeFile)
 	}

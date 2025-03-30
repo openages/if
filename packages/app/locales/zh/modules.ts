@@ -23,5 +23,6 @@ export default {
 		setting: '设置'
 	},
 
-	homepage: '主页'
+	homepage: '主页',
+	doc_parser: '文档转换'
 }

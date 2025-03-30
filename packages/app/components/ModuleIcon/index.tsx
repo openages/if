@@ -1,5 +1,5 @@
 import { omit } from 'lodash-es'
-import { match } from 'ts-pattern'
+import { useMemo } from 'react'
 
 import { Memo } from '@/icons'
 import {
@@ -12,6 +12,7 @@ import {
 	Clipboard,
 	Database,
 	Feather,
+	FlipHorizontal,
 	GearSix,
 	MicrosoftPowerpointLogo,
 	Table,
@@ -30,31 +31,35 @@ interface IProps extends IconProps {
 	type: App.ModuleType
 }
 
+const icon_map = {
+	todo: CheckCircle,
+	memo: Memo,
+	note: Feather,
+	page: AppWindow,
+	whiteboard: Clipboard,
+	ppt: MicrosoftPowerpointLogo,
+	pomo: Timer,
+	schedule: CalendarCheck,
+	flag: Barbell,
+	table: Table,
+	form: TextColumns,
+	chart: ChartBarHorizontal,
+	api: WebhooksLogo,
+	dataflow: TreeStructure,
+	database: Database,
+	setting: GearSix,
+	homepage: Browser,
+	doc_parser: FlipHorizontal
+}
+
 const Index = (props: IProps) => {
 	const { type, className, ...icon_props } = props
 
 	const target_class = $cx(icon_props?.weight === 'duotone' && styles._local, className)
 	const target_props = { ...omit(icon_props, 'ref'), className: target_class }
+	const Icon = useMemo(() => icon_map[type], [type])
 
-	return match(type)
-		.with('todo', () => <CheckCircle {...target_props} />)
-		.with('memo', () => <Memo {...target_props} />)
-		.with('note', () => <Feather {...target_props} />)
-		.with('page', () => <AppWindow {...target_props} />)
-		.with('whiteboard', () => <Clipboard {...target_props} />)
-		.with('ppt', () => <MicrosoftPowerpointLogo {...target_props} />)
-		.with('pomo', () => <Timer {...target_props} />)
-		.with('schedule', () => <CalendarCheck {...target_props} />)
-		.with('flag', () => <Barbell {...target_props} />)
-		.with('table', () => <Table {...target_props} />)
-		.with('form', () => <TextColumns {...target_props} />)
-		.with('chart', () => <ChartBarHorizontal {...target_props} />)
-		.with('api', () => <WebhooksLogo {...target_props} />)
-		.with('dataflow', () => <TreeStructure {...target_props} />)
-		.with('database', () => <Database {...target_props} />)
-		.with('setting', () => <GearSix {...target_props} />)
-		.with('homepage', () => <Browser {...target_props} />)
-		.exhaustive()
+	return <Icon {...target_props} />
 }
 
 export default $app.memo(Index)

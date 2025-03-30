@@ -3,6 +3,7 @@ import atoms from './atoms'
 import common from './common'
 import components from './components'
 import dirtree from './dirtree'
+import doc_parser from './doc_parser'
 import editor from './editor'
 import iap from './iap'
 import layout from './layout'
@@ -28,6 +29,7 @@ export default {
 		editor,
 		todo,
 		pomo,
-		schedule
+		schedule,
+		doc_parser
 	}
 } as const

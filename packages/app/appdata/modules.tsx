@@ -1,7 +1,16 @@
 import { matchPath } from 'react-router-dom'
 
 import { getObjectKeys } from '@/utils'
-import { CalendarCheck, CheckCircle, ClockCountdown, Feather, GearSix, Star, Timer } from '@phosphor-icons/react'
+import {
+	CalendarCheck,
+	CheckCircle,
+	ClockCountdown,
+	Feather,
+	FlipHorizontal,
+	GearSix,
+	Star,
+	Timer
+} from '@phosphor-icons/react'
 
 import type { App } from '@/types'
 
@@ -163,14 +172,24 @@ export const apps_home_page = [
 		color: '#607d8b',
 		event: 'homepage.showFiles',
 		args: 'latest'
+	},
+	{
+		id: 'doc_parser',
+		Icon: FlipHorizontal,
+		color: '#00BFA5',
+		event: 'homepage.addMiniApp'
 	}
 ]
+
+export const mini_app_icon = {
+	homepage: ':browser:',
+	doc_parser: ':flip-horizontal:'
+}
 
 export const module_default_icon = {
 	note: ':book-open-text-light:',
 	pomo: ':watch:',
-	schedule: ':date:',
-	homepage: ':browser:'
+	schedule: ':date:'
 }
 
 export const module_group = {

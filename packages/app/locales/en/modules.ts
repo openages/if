@@ -23,5 +23,6 @@ export default {
 		setting: 'Setting'
 	},
 
-	homepage: 'Homepage'
+	homepage: 'Homepage',
+	doc_parser: 'Doc Parser'
 }

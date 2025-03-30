@@ -23,10 +23,8 @@ const fetchRequester: Requester = <TResponse = unknown>(
 	init?: RequestInit,
 	options?: ExcludedFetchOptions
 ) => {
-	return request.raw<TResponse>(input as string, {
-		...init,
-		...options
-	})
+	// @ts-ignore
+	return request.raw<TResponse>(input as string, { ...init, ...options })
 }
 
 export default hc<Api>(BASE_URL + '/api', { fetch: fetchRequester })

@@ -89,7 +89,6 @@ const Index = (props: IPropsTimelineViewRow) => {
 					timeblock_index={timeblock_index}
 					step={step}
 					dnd_data={{ step, angle_index, row_index, angle_id, row_id }}
-					at_bottom
 					updateTimeBlock={updateTimeBlock}
 					removeTimeBlock={removeTimeBlock}
 					copyTimeBlock={copyTimeBlock}

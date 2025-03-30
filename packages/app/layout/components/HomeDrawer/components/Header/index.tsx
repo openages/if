@@ -39,17 +39,8 @@ const Index = (props: IPropsHomeDrawerHeader) => {
 	)
 
 	const showHomePage = useMemoizedFn(() => {
-		$app.Event.emit('global.stack.add', {
-			id: '__homepage__',
+		$app.Event.emit('global.stack.addMiniApp', {
 			module: 'homepage',
-			file: {
-				id: '__homepage__',
-				icon: ':browser:',
-				name: t('modules.homepage')
-			} as DirTree.Item,
-			active: true,
-			fixed: true,
-			outlet: null,
 			top: true
 		} as Stack.View)
 

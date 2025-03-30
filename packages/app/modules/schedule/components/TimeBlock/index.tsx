@@ -27,7 +27,6 @@ const Index = (props: IPropsTimeBlock) => {
 		timeblock_index,
 		month_mode,
 		step,
-		at_bottom,
 		dnd_data,
 		updateTimeBlock,
 		removeTimeBlock,
@@ -101,7 +100,7 @@ const Index = (props: IPropsTimeBlock) => {
 			zIndex={1000}
 			classNames={{ root: $cx('border_popover', 'month_mode_timeblock_popover') }}
 			destroyTooltipOnHide
-			placement={at_bottom ? 'bottom' : 'right'}
+			placement='right'
 			getPopupContainer={() => document.body}
 		>
 			<Dropdown
