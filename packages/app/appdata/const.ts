@@ -13,7 +13,7 @@ export const getSort = (v: 'asc' | 'desc' | 'ascend' | 'descend') => {
 		.exhaustive()
 }
 
-export const support_tomd = ['.pdf', '.html', '.xml', '.excel', '.csv', '.ods', '.numbers']
+export const support_tomd = ['.pdf', '.docx', '.html', '.xml', '.excel', '.csv', '.ods', '.numbers']
 
 export const autolock_map = {
 	'1m': { value: 1, unit: 'minute' },

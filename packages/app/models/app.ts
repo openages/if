@@ -8,7 +8,7 @@ import Utils from '@/models/utils'
 import { getDocItemsData, ipc, is_electron_shell } from '@/utils'
 import { info } from '@/utils/antd'
 import { arrayMove } from '@dnd-kit/sortable'
-import { setStorageWhenChange, useInstanceWatch } from '@openages/stk/mobx'
+import { setStorageWhenChange } from '@openages/stk/mobx'
 
 import type { App, DirTree } from '@/types'
 import type { Subscription } from 'rxjs'
@@ -104,8 +104,14 @@ export default class Index {
 		}
 	}
 
-	toggleHomeDrawer(v?: boolean) {
-		this.visible_homepage = v !== undefined ? v : !this.visible_homepage
+	toggleHomeDrawer(v?: boolean | { tab: Index['homepage_tab']; active: Index['homepage_active'] }) {
+		if (typeof v === 'object') {
+			this.homepage_tab = v.tab
+			this.homepage_active = v.active
+			this.visible_homepage = true
+		} else {
+			this.visible_homepage = v !== undefined ? v : !this.visible_homepage
+		}
 	}
 
 	onAppUpdate() {

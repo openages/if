@@ -1,12 +1,15 @@
+import { useMemoizedFn } from 'ahooks'
 import { useTranslation } from 'react-i18next'
 
 import styles from './index.css'
 
 import type { IPropsActions } from '../../types'
-
 const Index = (props: IPropsActions) => {
 	const { save } = props
 	const { t } = useTranslation()
+
+	const saveAsMd = useMemoizedFn(() => save('fs'))
+	const saveToNote = useMemoizedFn(() => save('note'))
 
 	return (
 		<div
@@ -15,10 +18,10 @@ const Index = (props: IPropsActions) => {
 				styles._local
 			)}
 		>
-			<button className='btn flex justify_center align_center clickable'>
+			<button className='btn flex justify_center align_center clickable' onClick={saveAsMd}>
 				{t('doc_parser.save_as_md')}
 			</button>
-			<button className='btn btn_note flex justify_center align_center clickable'>
+			<button className='btn btn_note flex justify_center align_center clickable' onClick={saveToNote}>
 				{t('doc_parser.save_to_note')}
 			</button>
 		</div>

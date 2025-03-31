@@ -1,3 +1,5 @@
+import Zip from 'jszip'
+
 import type { Buffer } from 'exceljs'
 
 export const convertFile = (file: Blob, type?: 'base64' | 'array_buffer') => {
@@ -38,6 +40,31 @@ export const downloadFile = (filename: string, text: string, ext: string, mime_t
 	link.style.display = 'none'
 	link.href = url
 	link.download = `${filename}.${ext}`
+
+	document.body.appendChild(link)
+
+	link.click()
+
+	document.body.removeChild(link)
+
+	URL.revokeObjectURL(url)
+}
+
+export const downloadFilesZip = async (files: Array<File>, zip_name: string) => {
+	const zip = new Zip()
+
+	for (const file of files) {
+		zip.file(file.name, file)
+	}
+
+	const blob = await zip.generateAsync({ type: 'blob', mimeType: 'application/zip' })
+	const url = URL.createObjectURL(blob)
+
+	const link = document.createElement('a')
+
+	link.style.display = 'none'
+	link.href = url
+	link.download = `${zip_name}.zip`
 
 	document.body.appendChild(link)
 
