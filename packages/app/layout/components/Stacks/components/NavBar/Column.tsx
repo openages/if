@@ -4,7 +4,7 @@ import { WinActions } from '@/layout/components'
 import { is_mac_electron, is_win_electron, onWheel } from '@/utils'
 import { useDroppable } from '@dnd-kit/core'
 import { horizontalListSortingStrategy, SortableContext } from '@dnd-kit/sortable'
-import { House } from '@phosphor-icons/react'
+import { House, Sidebar } from '@phosphor-icons/react'
 
 import styles from './index.css'
 import View from './View'
@@ -46,7 +46,7 @@ const Index = (props: IPropsStacksNavBarColumn) => {
 					className='btn_homepage h_100 border_box flex justify_center align_center clickable no_drag'
 					onClick={showHomeDrawer}
 				>
-					<House></House>
+					<Sidebar></Sidebar>
 				</div>
 			</If>
 			<SortableContext items={column.views} strategy={horizontalListSortingStrategy}>
