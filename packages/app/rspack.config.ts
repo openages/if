@@ -70,7 +70,8 @@ module.exports = defineConfig({
 		css: true,
 		outputModule: is_module,
 		lazyCompilation: false,
-		incremental: is_dev
+		incremental: is_dev,
+		parallelLoader: true
 	},
 	optimization: {
 		minimizer: [
@@ -194,6 +195,7 @@ module.exports = defineConfig({
 				use: [
 					{
 						loader: 'postcss-loader',
+						// parallel: true,
 						options: {
 							postcssOptions: {
 								plugins: ['postcss-import', 'postcss-nested', 'postcss-calc']
